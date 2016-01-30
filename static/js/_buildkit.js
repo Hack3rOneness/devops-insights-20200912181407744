@@ -19,20 +19,20 @@
      */
     function _buildkitBuildPage(){
         var mainNavPath  = 'inc/components/main-nav.html';
-        
+
         //
         // load some global components
         //
         if( FB_CTF !== undefined){
             FB_CTF.loadComponent('#fb-main-nav', mainNavPath, _BUILDKIT.enableNavActiveState);
         }
-        
+
 
         //
         // ok, everything is ready. lets do this
         //
         _BUILDKIT.init();
-        
+
     }
 
 
@@ -57,7 +57,7 @@
         }
 
         _BUILDKIT.init();
-    
+
     }
 
 
@@ -80,9 +80,9 @@
                     FB_CTF.gameboard.captureCountry("Chile");
                 }, 10000);
             }, 4000);
-            
+
         });
-    
+
     }
 
 
@@ -183,10 +183,10 @@
     };
 
     /**
-     * router for the different buildkit pages 
+     * router for the different buildkit pages
      */
     _BUILDKIT.router = function(hash){
-        
+
         var fallback    = 'main',
             loadFile    = ! hash || hash == '' ? fallback : hash;
 
@@ -257,7 +257,7 @@
         //  init all the FB_CTF things and load the gameboard
         //
         if( FB_SECTION === 'pages' ){
-            _buildkitBuildPage();    
+            _buildkitBuildPage();
         } else if( FB_SECTION === 'gameboard' || FB_SECTION === 'viewer-mode' ){
             _BUILDKIT.init();
         } else if( FB_SECTION === 'admin'){
