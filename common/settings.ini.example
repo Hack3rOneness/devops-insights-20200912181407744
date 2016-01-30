@@ -1,0 +1,7 @@
+; This is a sample configuration file
+
+DB_HOST = 'localhost'
+DB_PORT = '3306'
+DB_NAME = 'facebookctf'
+DB_USERNAME = 'ctf'
+DB_PASSWORD = 'ctf'

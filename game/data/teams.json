@@ -1,0 +1,71 @@
+{
+    "DEATH HAXX": {
+        "badge": "4chan-2",
+        "team_members": [
+            "Jane Fonda",
+            "John Doe",
+            "Johnny Appleseed",
+            "Thomas Edison"
+        ],
+        "rank": 2,
+        "school_level": "collegiate",
+        "points":{
+            "base": 67,
+            "quiz": 123,
+            "flag": 90,
+            "total": 280
+        }
+    },
+    "Eagle Eye": {
+        "badge": "eye",
+        "has_alert": true,
+        "team_members": [
+            "Jane Fonda",
+            "John Doe",
+            "Johnny Appleseed",
+            "Thomas Edison"
+        ],
+        "rank": 10,
+        "school_level": "collegiate",
+        "points":{
+            "base": 67,
+            "quiz": 123,
+            "flag": 90,
+            "total": 280
+        }
+    },
+    "Tank SF": {
+        "badge": "tank",
+        "team_members": [
+            "Jane Fonda",
+            "John Doe",
+            "Johnny Appleseed",
+            "Thomas Edison"
+        ],
+        "rank": 1,
+        "school_level": "collegiate",
+        "points":{
+            "base": 67,
+            "quiz": 123,
+            "flag": 90,
+            "total": 280
+        }
+    },
+    "Robocop Squad": {
+        "badge": "robot",
+        "team_members": [
+            "Jane Fonda",
+            "John Doe",
+            "Johnny Appleseed",
+            "Thomas Edison"
+        ],
+        "rank": 9,
+        "school_level": "collegiate",
+        "points":{
+            "base": 67,
+            "quiz": 123,
+            "flag": 90,
+            "total": 280
+        }
+    }
+}

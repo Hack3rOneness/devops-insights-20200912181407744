@@ -1,0 +1,74 @@
+{
+    "Algeria":{
+        "points": 35,
+        "category": "Education",
+        "owner": "DEATH HAXX",
+        "completed": ["Da Invaderz", "DEATH HAXX", "Crookers", "Test", "Nicl", "Tanks", "More HaXX"],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "United Arab Emirates":{
+        "points": 35,
+        "category": "Networking",
+        "owner": "Robocop Squad",
+        "completed": ["Da Invaderz", "DEATH HAXX", "Crookers", "Test", "Nicl", "Tanks", "More HaXX"],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "Albania":{
+        "points": 35,
+        "category": "Networking",
+        "owner": "Robocop Squad",
+        "completed": ["Da Invaderz", "DEATH HAXX", "Crookers", "Test", "Nicl", "Tanks", "More HaXX"],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "Austria":{
+        "points": 35,
+        "category": "Education",
+        "owner": "Robocop Squad",
+        "completed": ["Da Invaderz", "DEATH HAXX", "Crookers", "Test", "Nicl", "Tanks", "More HaXX"],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "Bolivia":{
+        "points": 45,
+        "category": "Education",
+        "owner": "Robocop Squad",
+        "completed": ["Da Invaderz", "DEATH HAXX", "Crookers", "Test", "Nicl", "Tanks", "More HaXX"],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "Brazil":{
+        "points": 45,
+        "category": "System Architecture",
+        "owner": "DEATH HAXX",
+        "completed": [],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "Belize":{
+        "points": 45,
+        "category": "Networking",
+        "owner": "DEATH HAXX",
+        "completed": [],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "Democratic Republic of Congo":{
+        "points": 45,
+        "category": "Server Load",
+        "owner": "Tank SF",
+        "completed": [],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    },
+    "Morocco":{
+        "points": 45,
+        "category": "Education",
+        "owner": "Tank SF",
+        "completed": [],
+        "intro": "Lorem ipsum dolor sit amet",
+        "hint": "Curabitur rutrum urna at lacus vestibulum venenatis. Sed eget vestibulum nisl.Cras aliquet non ante elementum scipit."
+    }
+}

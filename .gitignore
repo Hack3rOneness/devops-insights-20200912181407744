@@ -1,0 +1,14 @@
+# Configuration files
+*.ini
+
+# Vagrant Artifacts
+.vagrant
+.sources
+
+# OS artifacts
+.DS_Store
+
+# Editors
+*~
+\#*\#
+*.swp

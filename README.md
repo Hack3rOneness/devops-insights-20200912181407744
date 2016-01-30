@@ -1,2 +1,3 @@
-# facebook-ctf
-facebook-ctf
+# Facebook CTF
+
+Welcome to Facebook CTF platform
