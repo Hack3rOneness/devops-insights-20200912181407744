@@ -1,19 +1,19 @@
 <?php
 
-/*
-  DB Object
-  Handles all DB Connections & Queries.
-  Anything that will use the DB object requires to pull both the db.php
-  and the config.php.
-*/
+require_once('config.db');
 
-class DBObject {
+class DB {
   private $config = null;
   public $dbh = null;
   public $connected = false;
 
   function __construct($config) {
     $this->config = $config->settings;
+  }
+
+  function __destruct() {
+    $this->connected = false;
+    $this->dbh = null;
   }
 
   public function connect() {
@@ -30,6 +30,7 @@ class DBObject {
     } catch (PDOException $e) {
       error_log("[ db.php ] - Connection error: ".$e->getMessage());
       header('Location: /error.html');
+      die();
     }
   }
 
@@ -38,8 +39,7 @@ class DBObject {
     $this->connected = false;
   }
 
-  public function query($query, $elements = null) {
-    // error_log($query);
+  public static function query($query, $elements = null) {
     if (!$this->connected) {
       $this->connect();
     }
@@ -57,6 +57,7 @@ class DBObject {
     } catch (PDOException $e) {
       error_log("[ db.php ] - Statement error: " . $stmt->errorInfo());
       header('Location: /error.html');
+      die();
     }
 
     $results = array();

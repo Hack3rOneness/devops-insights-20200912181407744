@@ -1,8 +1,5 @@
 <?php
 
-require_once('config.php');
-require_once('db.php');
-
 class Levels {
   private static $db;
 

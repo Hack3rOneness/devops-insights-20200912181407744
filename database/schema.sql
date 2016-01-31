@@ -65,7 +65,7 @@ CREATE TABLE `teams` (
   `password` text DEFAULT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
   `last_score` timestamp NULL DEFAULT NULL,
-  `logo` varchar(256) DEFAULT NULL,
+  `logo` text DEFAULT NULL,
   `admin` tinyint(1) DEFAULT 0,
   `created_ts` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)

@@ -1,8 +1,5 @@
 <?php
 
-require_once('config.php');
-require_once('db.php');
-
 class Teams {
   private static $db;
 
@@ -79,13 +76,6 @@ class Teams {
   public function get_team($team_id) {
     $sql = 'SELECT * FROM teams WHERE id = ? LIMIT 1';
     $elements = array($team_id);
-    return $this->db->query($sql, $elements)[0];
-  }
-
-  // Returns the count of submission failures
-  public function get_failures($id) {
-    $sql = 'SELECT COUNT(*) as count from failures_log where player_id = ?';
-    $elements = array($id);
     return $this->db->query($sql, $elements)[0];
   }
 
