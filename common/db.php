@@ -1,14 +1,15 @@
 <?php
 
-require_once('config.db');
+require_once('utils.php');
 
 class DB {
+  private $settings_file = 'settings.ini';
   private $config = null;
   public $dbh = null;
   public $connected = false;
 
-  function __construct($config) {
-    $this->config = $config->settings;
+  function __construct() {
+    $this->config = parse_ini_file($this->settings_file);
   }
 
   function __destruct() {
@@ -17,20 +18,20 @@ class DB {
   }
 
   public function connect() {
-    define('DB_HOST',     $this->config['DB_HOST']);
-    define('DB_PORT',     $this->config['DB_PORT']);
-    define('DB_NAME',     $this->config['DB_NAME']);
-    define('DB_USERNAME', $this->config['DB_USERNAME']);
-    define('DB_PASSWORD', $this->config['DB_PASSWORD']);
     try {
-      $conn_str = 'mysql:host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME;
-      $this->dbh = new PDO($conn_str, DB_USERNAME, DB_PASSWORD);
+      $conn_str = 'mysql:host='.$this->config['DB_HOST'].';'.
+        'port='.$this->config['DB_PORT'].';'.
+        'dbname='.$this->config['DB_NAME'];
+      $this->dbh = new PDO(
+        $conn_str,
+        $this->config['DB_USERNAME'],
+        $this->config['DB_PASSWORD']
+      );
       $this->connected = true;
 
     } catch (PDOException $e) {
       error_log("[ db.php ] - Connection error: ".$e->getMessage());
-      header('Location: /error.html');
-      die();
+      error_page();
     }
   }
 
@@ -39,7 +40,7 @@ class DB {
     $this->connected = false;
   }
 
-  public static function query($query, $elements = null) {
+  public function query($query, $elements = null) {
     if (!$this->connected) {
       $this->connect();
     }
@@ -56,8 +57,7 @@ class DB {
       $stmt->execute();
     } catch (PDOException $e) {
       error_log("[ db.php ] - Statement error: " . $stmt->errorInfo());
-      header('Location: /error.html');
-      die();
+      error_page();
     }
 
     $results = array();

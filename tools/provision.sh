@@ -18,6 +18,7 @@ mysql -u root --password='root' -e 'CREATE DATABASE facebookctf;'
 # Database schema creation
 mysql -u root --password='root' facebookctf -e 'source /var/www/facebook-ctf/database/schema.sql;'
 mysql -u root --password='root' facebookctf -e 'source /var/www/facebook-ctf/database/countries.sql;'
+mysql -u root --password='root' facebookctf -e 'source /var/www/facebook-ctf/database/logos.sql;'
 
 # Database user creation
 mysql -u root --password='root' -e 'CREATE USER "ctf"@"localhost" IDENTIFIED BY "ctf";'

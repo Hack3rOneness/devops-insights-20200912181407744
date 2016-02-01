@@ -17,8 +17,8 @@ class AdminRequests {
     $this->filters = array(
       'level_id'    => FILTER_VALIDATE_INT,
       'team_id'     => FILTER_VALIDATE_INT,
-      'name'        => FILTER_UNSAFE_RAW,
-      'password'    => FILTER_SANITIZE_STRING,
+      'name'        => FILTER_SANITIZE_STRING,
+      'password'    => FILTER_UNSAFE_RAW,
       'logo_id'     => FILTER_VALIDATE_INT,
       'entity_id'   => FILTER_VALIDATE_INT,
       'description' => FILTER_UNSAFE_RAW,
@@ -30,7 +30,12 @@ class AdminRequests {
       'bonus_fix'   => FILTER_VALIDATE_INT,
       'penalty'     => FILTER_VALIDATE_INT,
       'active'      => FILTER_VALIDATE_INT,
-      'action'      => FILTER_SANITIZE_STRING,
+      'action'      => array(
+        'filter'      => FILTER_VALIDATE_REGEXP,
+        'options'     => array(
+          'regexp'      => '/^[\w-]+$/'
+        ),
+      )
     );
     $this->actions = array(
       'create_team',

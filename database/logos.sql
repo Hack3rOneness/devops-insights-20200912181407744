@@ -8,11 +8,11 @@ DROP TABLE IF EXISTS `logos`;
 CREATE TABLE `logos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `used` tinyint(1) DEFAULT 1,
-  `enabled` tinyint(1) DEFAULT 0,
-  `name` varchar(32) DEFAULT NULL,
-  `logo` varchar(50) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT 1,
+  `name` text DEFAULT NULL,
+  `logo` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

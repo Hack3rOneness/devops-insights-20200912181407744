@@ -1,8 +1,8 @@
-<main role="main" class="fb-main page--solo-registration dashed-background full-height fb-scroll">
+<main role="main" class="fb-main page--registration dashed-background full-height fb-scroll">
 
     <header class="fb-section-header fb-container">
         <h1 class="fb-glitch" data-text="Team Registration">Team Registration</h1>
-        <p class="inner-container">Register to play Capture The Flag here. Once you have registered, simply login</p>
+        <p class="inner-container">Register to play Capture The Flag here. Once you have registered, you will be logged in.</p>
     </header>
 
     <div class="fb-registration">
@@ -10,11 +10,11 @@
             <fieldset class="form-set fb-container container--small">
                 <div class="form-el el--text">
                     <label for="">Team Name</label>
-                    <input type="text">
+                    <input name="teamname" type="text">
                 </div>
                 <div class="form-el el--text">
                     <label for="">Password</label>
-                    <input type="password">
+                    <input name="password" type="password">
                 </div>
             </fieldset>
 
@@ -25,7 +25,7 @@
             </div>
 
             <div class="form-el--actions fb-container container--small">
-                <p><button class="fb-cta cta--yellow" type="submit">Sign Up</button></p>
+                <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerTeam()">Sign Up</button></p>
             </div>
 
         </form>

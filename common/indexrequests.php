@@ -1,6 +1,6 @@
 <?php
 
-class GameRequests {
+class IndexRequests {
 
   private $input_method;
   private $method;
@@ -15,18 +15,28 @@ class GameRequests {
     $this->method = $_SERVER['REQUEST_METHOD'];
     $this->input_method = $inputMethods[$this->method];
     $this->filters = array(
-      'level_id'    => FILTER_VALIDATE_INT,
-      'flag'        => FILTER_UNSAFE_RAW,
-      'action'      => FILTER_SANITIZE_STRING,
+      'teamname'    => FILTER_SANITIZE_STRING,
+      'password'    => FILTER_UNSAFE_RAW,
+      'logo'        => array(
+        'filter'      => FILTER_VALIDATE_REGEXP,
+        'options'     => array(
+          'regexp'      => '/^[\w-]+$/'
+        ),
+      ),
+      'action'      => array(
+        'filter'      => FILTER_VALIDATE_REGEXP,
+        'options'     => array(
+          'regexp'      => '/^[\w-]+$/'
+        ),
+      )
     );
     $this->actions = array(
-      'quiz_answer',
-      'open_level',
-      'submit_flag',
+      'register_team',
+      'login_team',
     );
   }
 
-  public function processGame() {
+  public function processIndex() {
     $this->parameters = filter_input_array($this->input_method, $this->filters);
     if ($this->parameters) {
       $this->action = $this->parameters['action'];

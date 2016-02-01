@@ -1,9 +1,12 @@
 <?php
 
-class Teams {
-  private static $db;
+require_once('db.php');
 
-  function __construct($db) {
+class Teams {
+  private $db;
+
+  function __construct() {
+    $db = new DB();
     $this->db = $db;
     if (!$this->db->connected) {
       $this->db->connect();
