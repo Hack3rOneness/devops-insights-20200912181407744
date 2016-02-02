@@ -6,8 +6,7 @@ class Logos {
   private $db;
 
   function __construct() {
-    $db = new DB();
-    $this->db = $db;
+    $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();
     }

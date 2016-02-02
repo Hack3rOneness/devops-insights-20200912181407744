@@ -14,7 +14,7 @@ function registration_page() {
 }
 
 function game_page() {
-  header('Location: /gameboard.html');
+  header('Location: /gameboard.php');
 }
 
 function admin_page() {

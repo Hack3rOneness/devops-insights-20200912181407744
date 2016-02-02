@@ -5,9 +5,8 @@ require_once('db.php');
 class Levels {
   private $db;
 
-  function __construct($db) {
-    $db = new DB();
-    $this->db = $db;
+  function __construct() {
+    $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();
     }

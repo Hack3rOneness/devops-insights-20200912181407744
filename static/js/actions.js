@@ -1,13 +1,19 @@
-function verifyTeamName() {
-  var teamName = $('.fb-form input[name="teamname"')[0].value;
-  if (teamName.length == 0) {
-    $('.el--text')[0].classList.add('form-error');
-    $('.fb-form input[name="teamname"').on('change', function() {
-      $('.el--text')[0].classList.remove('form-error');
-    });
+function verifyTeamName(context) {
+  if (context === 'register') {
+    var teamName = $('.fb-form input[name="teamname"')[0].value;
+    if (teamName.length == 0) {
+      $('.el--text')[0].classList.add('form-error');
+      $('.fb-form input[name="teamname"').on('change', function() {
+        $('.el--text')[0].classList.remove('form-error');
+      });
     return false;
-  } else {
-    return teamName;
+    } else {
+      return teamName;
+    }
+  }
+  if (context === 'login') {
+    var teamId = $(".fb-form select option:selected")[0].value;
+    return teamId;
   }
 }
 
@@ -37,8 +43,16 @@ function verifyTeamLogo() {
   }
 }
 
+function gameBoard() {
+  window.location.href = '/gameboard.php';
+}
+
+function loginError() {
+  $('.fb-form')[0].classList.add('form-error');
+}
+
 function registerTeam() {
-  var name = verifyTeamName();
+  var name = verifyTeamName('register');
   var password = verifyTeamPassword();
   var logo = verifyTeamLogo();
 
@@ -57,6 +71,7 @@ function registerTeam() {
       var responseData = JSON.parse(data);
       if (responseData.result == 'OK') {
         console.log('Registration OK');
+        gameBoard();
       } else {
         // TODO: Make this a modal
         console.log('Registration failed');
@@ -66,14 +81,14 @@ function registerTeam() {
 }
 
 function loginTeam() {
-  var name = verifyTeamName();
+  var teamId = verifyTeamName('login');
   var password = verifyTeamPassword();
 
-  if (name && password) {
+  if (teamId && password) {
     $.post('index.php',
       {
         action: 'login_team',
-        teamname: name,
+        team_id: teamId,
         password: password
       }
     ).fail(function() {
@@ -83,9 +98,11 @@ function loginTeam() {
       var responseData = JSON.parse(data);
       if (responseData.result == 'OK') {
         console.log('Login OK');
+        gameBoard();
       } else {
         // TODO: Make this a modal
         console.log('Login failed');
+        loginError();
       }
     });
   }

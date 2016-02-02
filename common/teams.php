@@ -6,10 +6,21 @@ class Teams {
   private $db;
 
   function __construct() {
-    $db = new DB();
-    $this->db = $db;
+    $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();
+    }
+  }
+
+  // Verify if login is valid.
+  public function verify_credentials($team_id, $password) {
+    $sql = 'SELECT * FROM teams WHERE id = ? AND (active = 1 OR admin = 1) AND password = ? LIMIT 1';
+    $elements = array($team_id, $password);
+    $team = $this->db->query($sql, $elements);
+    if ($team) {
+      return $team['0'];
+    } else {
+      return false;
     }
   }
 
@@ -58,8 +69,8 @@ class Teams {
   }
 
   // All active teams.
-  public function all_active_team() {
-    $sql = 'SELECT * FROM teams WHERE active = 1 ORDER BY points DESC, created_ts ASC';
+  public function all_active_teams() {
+    $sql = 'SELECT * FROM teams WHERE active = 1 ORDER BY id';
     return $this->db->query($sql);
   }
 

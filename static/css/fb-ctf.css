@@ -1497,7 +1497,8 @@ select[data-dkcacheid] {
   .el--text input[type="text"],
   .el--text input[type="email"],
   .el--text input[type="number"],
-  .el--text input[type="password"] {
+  .el--text input[type="password"],
+  .el--text .dk-select {
     -webkit-box-flex: 1 0 auto;
     -moz-box-flex: 1 0 auto;
     -webkit-flex: 1 0 auto;

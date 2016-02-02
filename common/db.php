@@ -5,17 +5,22 @@ require_once('utils.php');
 class DB {
   private $settings_file = 'settings.ini';
   private $config = null;
-  public $dbh = null;
+  private static $instance;
+  private $dbh = null;
   public $connected = false;
 
-  function __construct() {
+  public static function getInstance() {
+    if (!self::$instance) {
+      self::$instance = new self();
+    }
+    return self::$instance;
+  }
+
+  private function __construct() {
     $this->config = parse_ini_file($this->settings_file);
   }
 
-  function __destruct() {
-    $this->connected = false;
-    $this->dbh = null;
-  }
+  private function __clone() { }
 
   public function connect() {
     try {

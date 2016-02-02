@@ -1,3 +1,11 @@
+<?php
+
+require_once('../common/sessions.php');
+
+sess_start();
+sess_enforce_login();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

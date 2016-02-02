@@ -3,6 +3,7 @@
 require_once('../common/indexrequests.php');
 require_once('../common/teams.php');
 require_once('../common/logos.php');
+require_once('../common/sessions.php');
 require_once('../common/utils.php');
 
 function register_team($teamname, $password, $logo) {
@@ -15,15 +16,28 @@ function register_team($teamname, $password, $logo) {
   $hash = hash('sha256', $password);
   $team_id = $teams->create_team($teamname, $hash, $final_logo);
 
-  // TODO: Login the newly created team
   if ($team_id) {
-    ok_response();
+    //ok_response();
+    login_team($team_id, $password);
   } else {
     error_response();
   }
 }
 
-function login_team($teamname, $password) {
+function login_team($team_id, $password) {
+  $teams = new Teams();
+  $hash = hash('sha256', $password);
+  $team = $teams->verify_credentials($team_id, $hash);
+  if ($team) {
+    sess_start();
+    sess_set('team_id', $team['id']);
+    sess_set('name', $team['name']);
+    if ($team['admin'] == 1) sess_set('admin', $team['admin']);
+    sess_set('IP', $_SERVER['REMOTE_ADDR']);
+    ok_response();
+  } else {
+    error_response();
+  }
 }
 
 $request = new IndexRequests();
@@ -41,7 +55,10 @@ switch ($request->action) {
     );
     break;
   case 'login_team':
-    login_team();
+    login_team(
+      $request->parameters['team_id'],
+      $request->parameters['password']
+    );
     break;
   default:
     start_page();

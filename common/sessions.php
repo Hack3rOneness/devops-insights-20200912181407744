@@ -1,62 +1,113 @@
 <?php
 
+require_once('db.php');
+require_once('utils.php');
 
-// Session expiration is 24 hours.
-define("COOKIE_LIFE", 86400);
+function sess_start() {
+  $sess_name = 'FBCTF';
+  $sess_lifetime = 86400;
+  $sess_domain = $_SERVER['SERVER_NAME'];
+  $sess_secure = false;
+  $sess_httponly = false;
+  $sess_path = '/';
 
-function session_open($session_path, $session_name) {
-    return true;
+  session_set_save_handler(
+    'sess_open',
+    'sess_close',
+    'sess_read',
+    'sess_write',
+    'sess_destroy',
+    'sess_gc'
+  );
+  session_name($sess_name);
+  session_set_cookie_params(
+    $sess_lifetime,
+    $sess_path,
+    $sess_domain,
+    $sess_secure,
+    $sess_httponly
+  );
+  session_start();
+  setcookie(
+    $sess_name,
+    session_id(),
+    time() + $sess_lifetime,
+    $sess_path,
+    $sess_domain,
+    $sess_secure,
+    $sess_httponly
+  );
 }
 
-function session_close() {
-    return true;
+function sess_open($path, $name) {
+  return true;
 }
 
-function session_read($session_id) {
-    $result = '';
-    $session = db_retrieve_session($session_id);
-    if ($session) {
-        $result = $session['data'];
-    } else {
-        db_create_session($session_id, time());
-    }
-    return $result;
+function sess_close() {
+  return true;
 }
 
-function session_write($session_id, $data) {
-    db_update_session($session_id, time(), $data);
-    return true;
+function sess_read($session_id) {
+  $db = DB::getInstance();
+  $sql = 'SELECT data FROM sessions WHERE cookie = ? LIMIT 1';
+  $element = array($session_id);
+  $data = $db->query($sql, $element);
+  if ($data) {
+    return $data['0']['data'];
+  } else {
+    $sql = 'INSERT INTO sessions (cookie, last_access_ts) VALUES (?, NOW())';
+    $element = array($session_id);
+    $db->query($sql, $element);
+    return '';
+  }
+}
+
+function sess_write($session_id, $data) {
+  $db = DB::getInstance();
+  $sql = 'UPDATE sessions SET last_access_ts = NOW(), data = ? WHERE cookie = ? LIMIT 1';
+  $elements = array($data, $session_id);
+  $db->query($sql, $elements);
+  return true;
 }
 
 function sess_destroy($session_id) {
-    db_delete_session($session_id);
-    return true;
+  $db = DB::getInstance();
+  $sql = 'DELETE FROM sessions WHERE cookie = ? LIMIT 1';
+  $element = array($session_id);
+  $db->query($sql, $element);
+  return true;
 }
 
-function session_gc($session_maxlifetime) {
-    db_clear_session($session_maxlifetime);
-    return true;
+function sess_gc($session_maxlifetime) {
+  $gc_time = time() - $session_maxlifetime;
+  $db = DB::getInstance();
+  $sql = 'DELETE FROM sessions WHERE UNIX_TIMESTAMP(last_access_ts) < ?';
+  $element = array($gc_time);
+  $db->query($sql, $element);
+  return true;
 }
 
-function start_ctf_session() {
-    session_set_save_handler("session_open", "session_close", "session_read", "session_write", "sess_destroy", "session_gc");
-    session_name('facebookctf_session');
-    session_set_cookie_params(COOKIE_LIFE, '/', DOMAIN, false, true); // Case: host as an ip address was not creating sessions properly
-    session_start();
-    setcookie(session_name(), session_id(), time()+COOKIE_LIFE, '/', DOMAIN, true, false); // ^
-    header('Strict-Transport-Security: max-age=6000');
+function sess_set($name, $value) {
+  $_SESSION[$name] = $value;
 }
 
-function check_if_admin() {
-  if ($_SESSION['admin'] != '#yoloswaggins') {
-    header('Location: https://'.DOMAIN.'/login.php');
+function sess_logout() {
+  session_destroy();
+  unset($_SESSION['team_id']);
+  start_page();
+  exit();
+}
+
+function sess_enforce_login() {
+  if (!isset($_SESSION['team_id'])) {
+    start_page();
     exit();
   }
 }
 
-function check_if_legal() {
-  if ($_SESSION['legal_accept'] != 'done') {
-    header('Location: https://'.DOMAIN.'/disclaimer.php');
+function sess_enforce_admin() {
+  if (!isset($_SESSION['admin'])) {
+    start_page();
     exit();
   }
 }

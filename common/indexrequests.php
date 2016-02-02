@@ -15,6 +15,7 @@ class IndexRequests {
     $this->method = $_SERVER['REQUEST_METHOD'];
     $this->input_method = $inputMethods[$this->method];
     $this->filters = array(
+      'team_id'     => FILTER_VALIDATE_INT,
       'teamname'    => FILTER_SANITIZE_STRING,
       'password'    => FILTER_UNSAFE_RAW,
       'logo'        => array(

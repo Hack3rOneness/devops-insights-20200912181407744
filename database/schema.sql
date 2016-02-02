@@ -60,13 +60,14 @@ DROP TABLE IF EXISTS `teams`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) DEFAULT 0,
+  `active` tinyint(1) DEFAULT 1,
   `name` text DEFAULT NULL,
   `password` text DEFAULT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
   `last_score` timestamp NULL DEFAULT NULL,
   `logo` text DEFAULT NULL,
   `admin` tinyint(1) DEFAULT 0,
+  `visible` tinyint(1) DEFAULT 1,
   `created_ts` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

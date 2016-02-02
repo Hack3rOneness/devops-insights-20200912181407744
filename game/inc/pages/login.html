@@ -1,3 +1,20 @@
+<?php
+
+function teams_select() {
+  require_once('../../../common/teams.php');
+  $teams = new Teams();
+  $html = '';
+  foreach ($teams->all_active_teams() as $team) {
+    $team_id = $team['id'];
+    $team_name = htmlspecialchars($team['name']);
+    $html .= "<option value=$team_id>$team_name</option>\n";
+  }
+
+  return $html;
+}
+
+$teams_select_html = teams_select();
+echo <<< EOT
 <main role="main" class="fb-main page--login dashed-background full-height fb-scroll">
 
     <header class="fb-section-header fb-container">
@@ -10,7 +27,10 @@
             <fieldset class="form-set fb-container container--small">
                 <div class="form-el el--text">
                     <label for="">Team Name</label>
-                    <input name="teamname" type="text">
+                    <select name="team_id">
+                        <option value="0">Select</option>
+                        {$teams_select_html}
+                    </select>
                 </div>
                 <div class="form-el el--text">
                     <label for="">Password</label>
@@ -30,5 +50,5 @@
 
     </div><!-- .fb-login -->
 
-
 </main><!-- .fb-main -->
+EOT;
