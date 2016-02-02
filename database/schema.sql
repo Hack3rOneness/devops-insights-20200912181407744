@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: facebookctf
+-- Host: localhost    Database: facebook-ctf
 -- ------------------------------------------------------
 -- Server version	5.5.44-0ubuntu0.14.04.1
 
@@ -16,14 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `facebookctf`
+-- Current Database: `facebook-ctf`
 --
 
-/*!40000 DROP DATABASE IF EXISTS `facebookctf`*/;
+/*!40000 DROP DATABASE IF EXISTS `facebook-ctf`*/;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `facebookctf` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `facebook-ctf` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `facebookctf`;
+USE `facebook-ctf`;
 
 --
 -- Table structure for table `levels`
