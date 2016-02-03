@@ -55,7 +55,7 @@ function sess_read($session_id) {
   if ($data) {
     return $data['0']['data'];
   } else {
-    $sql = 'INSERT INTO sessions (cookie, last_access_ts) VALUES (?, NOW())';
+    $sql = 'INSERT INTO sessions (cookie, created_ts, last_access_ts) VALUES (?, NOW(), NOW())';
     $element = array($session_id);
     $db->query($sql, $element);
     return '';
@@ -87,6 +87,12 @@ function sess_gc($session_maxlifetime) {
   return true;
 }
 
+function sess_all() {
+  $db = DB::getInstance();
+  $sql = 'SELECT * FROM sessions ORDER BY last_access_ts DESC';
+  return $db->query($sql);
+}
+
 function sess_set($name, $value) {
   $_SESSION[$name] = $value;
 }
@@ -110,6 +116,10 @@ function sess_enforce_admin() {
     start_page();
     exit();
   }
+}
+
+function sess_admin() {
+  return (bool)(isset($_SESSION['admin']));
 }
 
 ?>

@@ -84,6 +84,7 @@ CREATE TABLE `sessions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cookie` text DEFAULT NULL,
   `data` text,
+  `created_ts` timestamp NULL DEFAULT NULL,
   `last_access_ts` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

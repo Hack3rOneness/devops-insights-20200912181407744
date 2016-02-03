@@ -41,19 +41,11 @@
      */
     function _buildkitBuildAdmin(){
 
-        var hash         = window.location.hash,
-            adminNavPath = 'inc/components/admin-nav.html';
+        var hash         = window.location.hash;
 
         // set up the default hash
         if( hash === '' ){
             window.location.hash = 'setup-instructions';
-        }
-
-        //
-        // load in the admin nav
-        //
-        if( FB_CTF !== undefined ){
-            FB_CTF.loadComponent( '#fb-admin-nav', adminNavPath, _BUILDKIT.enableAdminActiveState);
         }
 
         _BUILDKIT.init();

@@ -2943,6 +2943,15 @@
 
 
         //
+        // prompt logout
+        //
+        $('.js-prompt-logout').on('click', function(event) {
+            event.preventDefault();
+            FB_CTF.modal.loadPopup('action-logout');
+        });
+
+
+        //
         // read more posts
         //
         $('.post-readmore').on('click', function(event) {

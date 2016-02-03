@@ -1,3 +1,12 @@
+<?php
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
+
+sess_start();
+sess_enforce_admin();
+
+echo <<< EOT
+
 <header class="admin-page-header">
     <h3>Sessions</h3>
     <!--
@@ -11,36 +20,41 @@
 
 <div class="admin-sections">
 
+EOT;
 
+$c = 1;
+foreach (sess_all() as $session) {
+  $data = htmlspecialchars($session['data']);
+  echo <<< EOT
     <section class="admin-box section-locked">
         <header class="admin-box-header">
-            <span class="session-name">Session 1: <span class="highlighted--blue">2015-08-04&nbsp;&nbsp;|&nbsp;&nbsp;02:59:09</span></span>
+            <span class="session-name">Session {$c}: <span class="highlighted--blue">{$session['last_access_ts']}</span></span>
 
         </header>
-        
+
         <div class="fb-column-container">
             <div class="col col-1-2 col-pad">
                 <div class="form-el el--block-label el--full-text">
-                    <label class="admin-label">Description</label>
-                    <input type="text" value="sidbvlkjbdvldvnkklndvk">
+                    <label class="admin-label">Cookie</label>
+                    <input type="text" value="{$session['cookie']}">
                 </div>
             </div>
             <div class="col col-1-2 col-pad">
                 <div class="form-el el--block-label el--full-text">
-                    <label class="admin-label">Last Address</label>
-                    <input type="text" value="143865974">
+                    <label class="admin-label">Creation Time</label>
+                    <input type="text" value="{$session['created_ts']}">
                 </div>
             </div>
         </div>
-        
+
         <div class="admin-row">
             <div class="form-el el--block-label el--full-text">
                 <label class="admin-label">Data</label>
-                <input type="text" value="admin[s:13:#coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()))">
+                <input type="text" value="{$data}">
             </div>
         </div>
 
-        
+
         <div class="admin-buttons admin-row">
             <div class="button-right">
                 <a href="#" class="admin--edit" data-action="edit">EDIT</a>
@@ -50,45 +64,12 @@
         </div>
 
     </section>
+EOT;
+  $c++;
+}
 
-
-    <section class="admin-box">
-        <header class="admin-box-header">
-            <span class="session-name">Session 2: <span class="highlighted--blue">2015-08-04&nbsp;&nbsp;|&nbsp;&nbsp;02:59:09</span></span>
-
-        </header>
-        
-        <div class="fb-column-container">
-            <div class="col col-1-2 col-pad">
-                <div class="form-el el--block-label el--full-text">
-                    <label class="admin-label">Description</label>
-                    <input type="text" value="sidbvlkjbdvldvnkklndvk">
-                </div>
-            </div>
-            <div class="col col-1-2 col-pad">
-                <div class="form-el el--block-label el--full-text">
-                    <label class="admin-label">Last Address</label>
-                    <input type="text" value="143865974">
-                </div>
-            </div>
-        </div>
-        
-        <div class="admin-row">
-            <div class="form-el el--block-label el--full-text">
-                <label class="admin-label">Data</label>
-                <input type="text" value="admin[s:13:#coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()))">
-            </div>
-        </div>
-
-        
-        <div class="admin-buttons admin-row">
-            <div class="button-right">
-                <a href="#" class="admin--edit" data-action="edit">EDIT</a>
-                <button class="fb-cta cta--red" data-action="delete">Delete</button>
-                <button class="fb-cta cta--yellow" data-action="save">Save</button>
-            </div>
-        </div>
-
-    </section>
-
+echo <<< EOT
 </div>
+EOT;
+
+?>

@@ -44,11 +44,30 @@ function verifyTeamLogo() {
 }
 
 function gameBoard() {
-  window.location.href = '/gameboard.php';
+  window.location.href = '/gameboard.html';
 }
 
 function loginError() {
   $('.fb-form')[0].classList.add('form-error');
+}
+
+function sendIndexRequest(request_data) {
+  $.post(
+    'index.php',
+    request_data
+  ).fail(function() {
+    // TODO: Make this a modal
+    console.log('ERROR');
+  }).done(function(data) {
+    var responseData = JSON.parse(data);
+    if (responseData.result == 'OK') {
+      console.log('OK');
+      gameBoard();
+    } else {
+      // TODO: Make this a modal
+      console.log('Failed');
+    }
+  });
 }
 
 function registerTeam() {
@@ -57,26 +76,13 @@ function registerTeam() {
   var logo = verifyTeamLogo();
 
   if (name && password && logo) {
-    $.post('index.php',
-      {
-        action: 'register_team',
-        teamname: name,
-        password: password,
-        logo: logo
-      }
-    ).fail(function() {
-      // TODO: Make this a modal
-      console.log('ERROR');
-    }).done(function(data) {
-      var responseData = JSON.parse(data);
-      if (responseData.result == 'OK') {
-        console.log('Registration OK');
-        gameBoard();
-      } else {
-        // TODO: Make this a modal
-        console.log('Registration failed');
-      }
-    });
+    var register_data = {
+      action: 'register_team',
+      teamname: name,
+      password: password,
+      logo: logo
+    };
+    sendIndexRequest(register_data);
   }
 }
 
@@ -85,25 +91,11 @@ function loginTeam() {
   var password = verifyTeamPassword();
 
   if (teamId && password) {
-    $.post('index.php',
-      {
-        action: 'login_team',
-        team_id: teamId,
-        password: password
-      }
-    ).fail(function() {
-      // TODO: Make this a modal
-      console.log('ERROR');
-    }).done(function(data) {
-      var responseData = JSON.parse(data);
-      if (responseData.result == 'OK') {
-        console.log('Login OK');
-        gameBoard();
-      } else {
-        // TODO: Make this a modal
-        console.log('Login failed');
-        loginError();
-      }
-    });
+    var login_data = {
+      action: 'login_team',
+      team_id: teamId,
+      password: password
+    };
+    sendIndexRequest(login_data);
   }
 }

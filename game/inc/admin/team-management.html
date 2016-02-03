@@ -1,3 +1,13 @@
+<?php
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
+
+sess_start();
+sess_enforce_admin();
+
+echo <<< EOT
+
 <header class="admin-page-header">
     <h3>Team Management</h3>
 
@@ -10,11 +20,17 @@
 </header>
 
 <div class="admin-sections">
+EOT;
 
+$c = 1;
+$teams = new Teams();
+foreach ($teams->all_teams() as $team) {
+  $team_name = htmlspecialchars($team['name']);
+  echo <<< EOT
     <section class="admin-box validate-form section-locked">
 
         <header class="admin-box-header">
-            <h3>Team 1</h3>
+            <h3>Team {$c}</h3>
             <div class="admin-section-toggle radio-inline">
                 <input type="radio" name="fb--admin--team--1" id="fb--admin--team--1--on" checked="">
                 <label for="fb--admin--team--1--on">On</label>
@@ -24,18 +40,18 @@
             </div>
         </header>
 
-        
+
         <div class="fb-column-container">
             <div class="col col-pad col-1-2">
                 <div class="form-el el--block-label el--full-text">
                     <label class="admin-label" for="">Team Name</label>
-                    <input type="text" value="Tank SF" disabled="">
+                    <input type="text" value="{$team_name}" disabled="">
                 </div>
             </div>
             <div class="col col-pad col-1-2">
                 <div class="form-el el--block-label el--full-text">
-                    <label class="admin-label" for="">Team Password</label>
-                    <input type="password" value="100Vallejo" disabled="">
+                    <label class="admin-label" for="">Change Password</label>
+                    <input type="password" value="" disabled="">
                 </div>
             </div>
         </div>
@@ -44,7 +60,7 @@
             <label>Team Logo</label>
             <div class="fb-column-container">
                 <div class="col col-shrink">
-                    <div class="post-avatar has-avatar"><svg class="icon icon--badge"><use xlink:href="#icon--badge-invader" /></svg></div>
+                    <div class="post-avatar has-avatar"><svg class="icon icon--badge"><use xlink:href="#icon--badge-{$team['logo']}" /></svg></div>
                 </div>
                 <div class="col col-grow">
                     <div class="selected-logo">
@@ -62,62 +78,15 @@
         </div>
 
     </section>
+EOT;
+  $c++;
+}
 
-
-    <section class="admin-box validate-form">
-
-        <header class="admin-box-header">
-            <h3>Team 2</h3>
-            <div class="admin-section-toggle radio-inline">
-                <input type="radio" name="fb--admin--team--2" id="fb--admin--team--2--on" checked="">
-                <label for="fb--admin--team--2--on">On</label>
-
-                <input type="radio" name="fb--admin--team--2" id="fb--admin--team--2--off">
-                <label for="fb--admin--team--2--off">Off</label>
-            </div>
-        </header>
-
-        
-        <div class="fb-column-container">
-            <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text form-el--required">
-                    <label class="admin-label">Team Name</label>
-                    <input type="text">
-                </div>
-            </div>
-            <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text form-el--required">
-                    <label class="admin-label">Team Password</label>
-                    <input type="password">
-                </div>
-            </div>
-        </div>
-
-        <div class="admin-row el--block-label">
-            <label>Team Logo</label>
-            <div class="fb-column-container">
-                <div class="col col-shrink">
-                    <div class="post-avatar"></div>
-                </div>
-                <div class="col col-grow">
-                    <div class="selected-logo form-el--required">
-                        <label>Selected Logo: </label>
-                        <span class="logo-name"></span>
-                    </div>
-                    <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
-                </div>
-                <div class="col col-shrink admin-buttons">
-                    <a href="#" class="admin--edit" data-action="edit">EDIT</a>
-                    <button class="fb-cta cta--red" data-action="delete">Delete</button>
-                    <button class="fb-cta cta--yellow" data-action="save">Save</button>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
+echo <<< EOT
 </div><!-- .admin-sections -->
 
 <div class="admin-buttons">
     <button class="fb-cta" data-action="add-new">Add Team</button>
 </div>
+EOT;
+?>

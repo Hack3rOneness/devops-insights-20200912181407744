@@ -1,7 +1,8 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
+
 function teams_select() {
-  require_once('../../../common/teams.php');
   $teams = new Teams();
   $html = '';
   foreach ($teams->all_active_teams() as $team) {

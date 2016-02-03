@@ -1,3 +1,13 @@
+<?php
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
+
+sess_start();
+sess_enforce_login();
+sess_enforce_admin();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +34,38 @@
         <!--
          * Main Admin section navigation
         -->
-        <div id="fb-admin-nav" class="admin-nav-bar fb-row-container"></div><!-- /end main navigation -->
+        <div id="fb-admin-nav" class="admin-nav-bar fb-row-container">
+
+          <header class="admin-nav-header row-fixed">
+            <h2>Game Admin</h2>
+          </header>
+          <nav class="admin-nav-links row-fluid">
+            <ul>
+              <li><a href="#setup-instructions">Setup Instructions</a></li>
+              <li><a href="#game-configuration">Game Configuration</a></li>
+              <li><a href="#team-management">Team Management</a></li>
+              <li><a href="#content-management">Content Management</a></li>
+              <li><a href="#logo-management">Logo Management</a></li>
+              <li><a href="#sessions">Sessions</a></li>
+              <li><a href="#scoreboard">Scoreboard</a></li>
+              <li><a href="#registration">Registration</a></li>
+              <li><a href="#global-controls">Global Controls</a></li>
+            </ul>
+
+            <a href="#" class="fb-cta cta--yellow">Begin Game</a>
+          </nav>
+
+          <div class="admin-nav--footer row-fixed">
+
+            <a href="/gameboard.html">Gameboard</a>
+            <a href="#" class="js-prompt-logout">Logout</a>
+            <a></a>
+
+            <span class="branding-el"><svg class="icon icon--social-facebook"><use xlink:href="#icon--social-facebook" /></svg> <span class="has-icon">Powered By Facebook</span></span>
+
+          </div>
+
+        </div><!-- /end main navigation -->
 
         <!--
          * The main stuff
