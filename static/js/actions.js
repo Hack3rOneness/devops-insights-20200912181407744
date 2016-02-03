@@ -1,12 +1,30 @@
+function teamNameFormError() {
+  $('.el--text')[0].classList.add('form-error');
+  $('.fb-form input[name="teamname"').on('change', function() {
+    $('.el--text')[0].classList.remove('form-error');
+  });
+}
+
+function teamPasswordFormError() {
+  $('.el--text')[1].classList.add('form-error');
+  $('.fb-form input[name="password"').on('change', function() {
+    $('.el--text')[1].classList.remove('form-error');
+  });
+}
+
+function teamLogoFormError() {
+  $('.fb-choose-emblem')[0].style.color = 'red';
+  $('.fb-choose-emblem').on('click', function() {
+    $('.fb-choose-emblem')[0].style.color = '';
+  });
+}
+
 function verifyTeamName(context) {
   if (context === 'register') {
     var teamName = $('.fb-form input[name="teamname"')[0].value;
     if (teamName.length == 0) {
-      $('.el--text')[0].classList.add('form-error');
-      $('.fb-form input[name="teamname"').on('change', function() {
-        $('.el--text')[0].classList.remove('form-error');
-      });
-    return false;
+      teamNameFormError();
+      return false;
     } else {
       return teamName;
     }
@@ -20,10 +38,7 @@ function verifyTeamName(context) {
 function verifyTeamPassword() {
   var teamPassword = $('.fb-form input[name="password"')[0].value;
   if (teamPassword.length == 0) {
-    $('.el--text')[1].classList.add('form-error');
-    $('.fb-form input[name="password"').on('change', function() {
-      $('.el--text')[1].classList.remove('form-error');
-    });
+    teamPasswordFormError();
     return false;
   } else {
    return teamPassword;
@@ -35,10 +50,7 @@ function verifyTeamLogo() {
     var teamLogo = $('.fb-slider .active .icon--badge use').attr('xlink:href').replace('#icon--badge-', '');
     return teamLogo;
   } catch(err) {
-    $('.fb-choose-emblem')[0].style.color = 'red';
-    $('.fb-choose-emblem').on('click', function() {
-      $('.fb-choose-emblem')[0].style.color = '';
-    });
+    teamLogoFormError();
     return false;
   }
 }
@@ -66,6 +78,8 @@ function sendIndexRequest(request_data) {
     } else {
       // TODO: Make this a modal
       console.log('Failed');
+      teamNameFormError();
+      teamPasswordFormError();
     }
   });
 }

@@ -68,6 +68,14 @@ class Teams {
     $this->db->query($sql, $elements);
   }
 
+  // Check if a team name is already created.
+  public function team_exist($team_name) {
+    $sql = 'SELECT COUNT(*) FROM teams WHERE name = ?';
+    $element = array($team_name);
+    $exist = $this->db->query($sql, $element);
+    return (bool)$exist[0]['COUNT(*)'];
+  }
+
   // All active teams.
   public function all_active_teams() {
     $sql = 'SELECT * FROM teams WHERE active = 1 ORDER BY id';

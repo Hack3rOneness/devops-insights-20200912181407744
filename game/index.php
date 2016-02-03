@@ -13,13 +13,18 @@ function register_team($teamname, $password, $logo) {
   if (!$logos->check_exists($final_logo)) {
     $final_logo = $logos->random_logo();
   }
-  $hash = hash('sha256', $password);
-  $team_id = $teams->create_team($teamname, $hash, $final_logo);
-
-  if ($team_id) {
-    //ok_response();
-    login_team($team_id, $password);
+  // Verify that this team name is not created yet
+  if (!$teams->team_exist($teamname)) {
+    $hash = hash('sha256', $password);
+    $team_id = $teams->create_team($teamname, $hash, $final_logo);
+      if ($team_id) {
+      //ok_response();
+      login_team($team_id, $password);
+    } else {
+      error_response();
+    }
   } else {
+    // TODO: Make distintions in error responses
     error_response();
   }
 }
