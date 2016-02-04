@@ -17,9 +17,25 @@ class AdminRequests {
     $this->filters = array(
       'level_id'    => FILTER_VALIDATE_INT,
       'team_id'     => FILTER_VALIDATE_INT,
+      'session_id'  => FILTER_VALIDATE_INT,
+      'cookie'      => FILTER_SANITIZE_STRING,
       'name'        => FILTER_SANITIZE_STRING,
       'password'    => FILTER_UNSAFE_RAW,
-      'logo_id'     => FILTER_VALIDATE_INT,
+      'password2'   => array(
+        'filter'      => FILTER_VALIDATE_REGEXP,
+        'options'     => array(
+          'regexp'      => '/^[0-9a-f]{64}$/'
+        ),
+      ),
+      'admin'       => FILTER_VALIDATE_INT,
+      'status'      => FILTER_VALIDATE_INT,
+      'visible'     => FILTER_VALIDATE_INT,
+      'logo'        => array(
+        'filter'      => FILTER_VALIDATE_REGEXP,
+        'options'     => array(
+          'regexp'      => '/^[\w-]+$/'
+        ),
+      ),
       'entity_id'   => FILTER_VALIDATE_INT,
       'description' => FILTER_UNSAFE_RAW,
       'flag'        => FILTER_UNSAFE_RAW,
@@ -44,8 +60,11 @@ class AdminRequests {
       'update_level',
       'delete_team',
       'delete_level',
+      'delete_session',
       'toggle_status_level',
       'toggle_status_team',
+      'toggle_admin_team',
+      'toggle_visible_team'
     );
   }
 

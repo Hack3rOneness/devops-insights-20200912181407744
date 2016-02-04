@@ -68,6 +68,13 @@ class Teams {
     $this->db->query($sql, $elements);
   }
 
+  // Enable or disable team visibility by passing 1 or 0.
+  public function toggle_visible($team_id, $visible) {
+    $sql = 'UPDATE teams SET visible = ? WHERE id = ? LIMIT 1';
+    $elements = array($visible, $team_id);
+    $this->db->query($sql, $elements);
+  }
+
   // Check if a team name is already created.
   public function team_exist($team_name) {
     $sql = 'SELECT COUNT(*) FROM teams WHERE name = ?';

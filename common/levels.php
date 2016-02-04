@@ -102,7 +102,7 @@ class Levels {
     $sql = ($active)
       ? ($active == 1)
         ? 'SELECT * FROM levels WHERE active = 1'
-        : 'SELECT * FROM levels WHERE active = 0';
+        : 'SELECT * FROM levels WHERE active = 0'
       : 'SELECT * FROM levels';
     return $this->db->query($sql);
   }
@@ -112,7 +112,7 @@ class Levels {
     $sql = ($active)
       ? ($active == 1)
         ? 'SELECT * FROM levels WHERE active = 1 AND type = ?'
-        : 'SELECT * FROM levels WHERE active = 0 AND type = ?';
+        : 'SELECT * FROM levels WHERE active = 0 AND type = ?'
       : 'SELECT * FROM levels WHERE type = ?';
     $element = array($type);
     return $this->db->query($sql, $element);
