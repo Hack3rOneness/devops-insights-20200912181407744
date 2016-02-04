@@ -20,6 +20,52 @@ echo <<< EOT
 </header>
 
 <div class="admin-sections">
+
+<section class="admin-box validate-form section-locked completely-hidden">
+  <form class="team_form" name="">
+      <header class="admin-box-header">
+        <h3>New Team</h3>
+      </header>
+
+      <div class="fb-column-container">
+        <div class="col col-pad col-1-2">
+          <div class="form-el el--block-label el--full-text">
+            <label class="admin-label" for="">Team Name</label>
+            <input name="team_name" type="text" value="">
+          </div>
+        </div>
+        <div class="col col-pad col-1-2">
+        <div class="form-el el--block-label el--full-text">
+          <label class="admin-label" for="">Password</label>
+          <input name="password" type="password" value="">
+        </div>
+      </div>
+    </div>
+
+  <div class="admin-row el--block-label">
+    <label>Team Logo</label>
+    <div class="fb-column-container">
+      <div class="col col-shrink">
+        <div class="post-avatar has-avatar"><svg class="icon icon--badge"><use xlink:href="#icon--badge-" /></svg></div>
+        </div>
+      <div class="col col-grow">
+        <div class="selected-logo">
+          <label>Selected Logo: </label>
+          <span class="logo-name"></span>
+        </div>
+        <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
+      </div>
+      <div class="col col-shrink admin-buttons">
+        <a href="#" class="admin--edit" data-action="edit">EDIT</a>
+        <button class="fb-cta cta--red" data-action="delete">Delete</button>
+        <button class="fb-cta cta--yellow js-confirm-save" data-action="create">Create</button>
+      </div>
+    </div>
+  </div>
+
+  </form>
+</section>
+
 EOT;
 
 $c = 1;

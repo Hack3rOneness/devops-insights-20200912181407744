@@ -4168,6 +4168,11 @@ Admin Nav
 /*---------------
 General Admin
 ----------------*/
+.completely-hidden {
+  display: none;
+  visibility: hidden;
+}
+
 .admin-page-header {
   padding-left: 20px;
   padding-right: 20px;

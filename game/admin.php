@@ -17,6 +17,16 @@ switch ($request->action) {
   case 'none':
     admin_page();
     break;
+  case 'create_team':
+    $teams = new Teams();
+    $password = hash('sha256', $request->parameters['password']);
+    $teams->create_team(
+      $request->parameters['name'],
+      $password,
+      $request->parameters['logo']
+    );
+    ok_response();
+    break;
   case 'update_team':
     $teams = new Teams();
     $password = $request->parameters['password'];

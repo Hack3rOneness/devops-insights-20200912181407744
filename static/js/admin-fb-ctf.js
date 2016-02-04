@@ -66,11 +66,12 @@ var $body = $('body');
   function addNewSection( $clicked ){
     var $sectionContainer = $clicked.closest('.admin-buttons').siblings('.admin-sections'),
         $lastSection      = $('.admin-box', $sectionContainer).last(),
-        $newSection       = $lastSection.clone(),
+        $firstSection      = $('.admin-box', $sectionContainer).first(),
+        $newSection       = $firstSection.clone(),
 
         // +1 for the 0-based index, +1 for the new section
         //  being added
-        sectionIndex      = $lastSection.index() + 2;
+        sectionIndex      = $lastSection.index() + 1;
 
         //
         // update some stuff in the cloned section
@@ -90,6 +91,8 @@ var $body = $('body');
     }
 
     $newSection.removeClass('section-locked');
+    $newSection.removeClass('completely-hidden');
+
     $('.emblem-carousel li.active', $newSection).removeClass('active');
     $('.form-error', $newSection).removeClass('form-error');
     $('.post-avatar, .logo-name', $newSection).removeClass('has-avatar').empty();
@@ -194,6 +197,15 @@ var $body = $('body');
     }
   }
 
+  // Generic create
+  function createElement(section) {
+    var elementSection = $('.section-locked form')[0].classList[0];
+    if (elementSection === 'team_form') {
+      createTeam(section);
+      location.reload();
+    } 
+  }
+
   // Delete team
   function deleteTeam(section) {
     var team_id = $('.team_form input[name=team_id]', section)[0].value;
@@ -203,6 +215,22 @@ var $body = $('body');
     };
     if (team_id) {
       return sendAdminRequest(delete_data);
+    }
+  }
+
+  // Create team
+  function createTeam(section) {
+    var team_name = $('.team_form input[name=team_name]', section)[0].value;
+    var team_password = $('.team_form input[name=password]', section)[0].value;
+    var team_logo = $('.logo-name', section)[0].textContent;
+    var create_data = {
+      action: 'create_team',
+      name: team_name,
+      password: team_password,
+      logo: team_logo
+    };
+    if (team_name && team_password && team_logo) {
+      return sendAdminRequest(create_data);
     }
   }
 
@@ -307,12 +335,14 @@ var $body = $('body');
         }
       } else if (action === 'add-new'){
         addNewSection( $self );
+      } else if (action === 'create') {
+        createElement($section);
       } else if (action === 'edit'){
         $section.removeClass( lockClass );
         $('input[type="text"], input[type="password"]', $section).prop("disabled", false);
       } else if( action === 'delete' ){
-        deleteElement($section);
         $section.remove();
+        deleteElement($section);
 
         // rename the section boxes
         $('.admin-box').each(function(i, el){
