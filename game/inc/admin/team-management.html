@@ -22,7 +22,7 @@ echo <<< EOT
 <div class="admin-sections">
 
 <section class="admin-box validate-form section-locked completely-hidden">
-  <form class="team_form" name="">
+  <form class="team_form">
       <header class="admin-box-header">
         <h3>New Team</h3>
       </header>
@@ -98,11 +98,11 @@ foreach ($teams->all_teams() as $team) {
       <header class="admin-box-header">
         <h3>Team {$c}</h3>
         <div class="admin-section-toggle radio-inline">
-          <input type="radio" name="fb--admin--team--{$team['id']}" id="fb--admin--team--{$team['id']}--on" {$team_on}>
-          <label for="fb--admin--team--{$team['id']}--on">On</label>
+          <input type="radio" name="fb--admin--team-{$team['id']}-status" id="fb--admin--team-{$team['id']}-status--on" {$team_on}>
+          <label for="fb--admin--team-{$team['id']}-status--on">On</label>
 
-          <input type="radio" name="fb--admin--team--{$team['id']}" id="fb--admin--team--{$team['id']}--off" {$team_off}>
-          <label for="fb--admin--team--{$team['id']}--off">Off</label>
+          <input type="radio" name="fb--admin--team-{$team['id']}-status" id="fb--admin--team-{$team['id']}-status--off" {$team_off}>
+          <label for="fb--admin--team-{$team['id']}-status--off">Off</label>
         </div>
       </header>
 
@@ -125,21 +125,21 @@ foreach ($teams->all_teams() as $team) {
         <div class="form-el el--block-label">
           <label class="admin-label" for="">Admin Level</label>
           <div class="admin-section-toggle radio-inline">
-            <input type="radio" name="fb--admin--team--{$team['id']}-admin" id="fb--admin--team--{$team['id']}-admin--on" {$team_admin_on}>
-            <label for="fb--admin--team--{$team['id']}-admin--on">On</label>
+            <input type="radio" name="fb--admin--team-{$team['id']}-admin" id="fb--admin--team-{$team['id']}-admin--on" {$team_admin_on}>
+            <label for="fb--admin--team-{$team['id']}-admin--on">On</label>
 
-            <input type="radio" name="fb--admin--team--{$team['id']}-admin" id="fb--admin--team--{$team['id']}-admin--off" {$team_admin_off}>
-            <label for="fb--admin--team--{$team['id']}-admin--off">Off</label>
+            <input type="radio" name="fb--admin--team-{$team['id']}-admin" id="fb--admin--team-{$team['id']}-admin--off" {$team_admin_off}>
+            <label for="fb--admin--team-{$team['id']}-admin--off">Off</label>
           </div>
         </div>
       <div class="form-el el--block-label">
         <label class="admin-label" for="">Visibility </label>
         <div class="admin-section-toggle radio-inline">
-          <input type="radio" name="fb--admin--team--{$team['id']}-visible" id="fb--admin--team--{$team['id']}-visible--on" {$team_visible_on}>
-          <label for="fb--admin--team--{$team['id']}-visible--on">On</label>
+          <input type="radio" name="fb--admin--team-{$team['id']}-visible" id="fb--admin--team-{$team['id']}-visible--on" {$team_visible_on}>
+          <label for="fb--admin--team-{$team['id']}-visible--on">On</label>
 
-          <input type="radio" name="fb--admin--team--{$team['id']}-visible" id="fb--admin--team--{$team['id']}-visible--off" {$team_visible_off}>
-          <label for="fb--admin--team--{$team['id']}-visible--off">Off</label>
+          <input type="radio" name="fb--admin--team-{$team['id']}-visible" id="fb--admin--team-{$team['id']}-visible--off" {$team_visible_off}>
+          <label for="fb--admin--team-{$team['id']}-visible--off">Off</label>
         </div>
       </div>
     </div>

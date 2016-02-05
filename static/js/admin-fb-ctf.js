@@ -179,7 +179,8 @@ var $body = $('body');
 
   // Generic deletion
   function deleteElement(section) {
-    var elementSection = $('.section-locked form')[0].classList[0];
+    var elementSection = $('form', section)[0].classList[0];
+    console.log(elementSection);
     if (elementSection === 'session_form') {
       deleteSession(section);
     } else if (elementSection === 'team_form') {
@@ -189,7 +190,7 @@ var $body = $('body');
 
   // Generic update
   function updateElement(section) {
-    var elementSection = $('.section-locked form')[0].classList[0];
+    var elementSection = $('form', section)[0].classList[0];
     if (elementSection === 'session_form') {
       updateSession(section);
     } else if (elementSection === 'team_form') {
@@ -199,7 +200,8 @@ var $body = $('body');
 
   // Generic create
   function createElement(section) {
-    var elementSection = $('.section-locked form')[0].classList[0];
+    console.log(section);
+    var elementSection = $('form', section)[0].classList[0];
     if (elementSection === 'team_form') {
       createTeam(section);
       location.reload();
@@ -255,13 +257,18 @@ var $body = $('body');
   }
 
   // Toggle team option
-  function toggleTeam(section) {
-    var team_id = 0;
+  function toggleTeam(radio_id) {
+    var team_id = radio_id.split('--')[2].split('-')[1];
+    var radio_action = radio_id.split('--')[2].split('-')[2];
+    var action_value = (radio_id.split('--')[3] === 'on') ? 1 : 0;
     var toggle_data = {
-      action: '',
-      team_id: team_id
+      action: 'toggle_' + radio_action + '_team',
+      team_id: team_id,
+      [radio_action]: action_value
     };
-    return sendAdminRequest(toggle_data);
+    if (team_id && radio_action) {
+      return sendAdminRequest(toggle_data);
+    }
   }
 
   // Delete session
@@ -271,6 +278,7 @@ var $body = $('body');
       action: 'delete_session',
       cookie: session_cookie
     };
+    console.log(delete_data);
     if (session_cookie) {
       return sendAdminRequest(delete_data);
     }
@@ -278,7 +286,7 @@ var $body = $('body');
 
   // Update session
   function updateSession() {
-    var cookie = $('.session_form input[name=cookie]', section)[0].value;;
+    var cookie = $('.session_form input[name=cookie]', section)[0].value;
     var data = '';
     var update_data = {
       action: 'update_session',
@@ -320,27 +328,28 @@ var $body = $('body');
       //
       // route the actions
       //
-      if( action === 'save' ){
+      if (action === 'save') {
         var valid = validateAdminForm( $self );
 
-        if( actionModal && valid === false ){
+        if (actionModal && valid === false){
           actionModal = 'error';
         } else {
           updateElement($section);
         }
 
-        if( valid ){
+        if (valid) {
           $section.addClass( lockClass );
           $('input[type="text"], input[type="password"]', $section).prop("disabled", true);
         }
       } else if (action === 'add-new'){
-        addNewSection( $self );
+        addNewSection($self);
       } else if (action === 'create') {
+
         createElement($section);
       } else if (action === 'edit'){
-        $section.removeClass( lockClass );
+        $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"]', $section).prop("disabled", false);
-      } else if( action === 'delete' ){
+      } else if (action === 'delete') {
         $section.remove();
         deleteElement($section);
 
@@ -354,7 +363,6 @@ var $body = $('body');
         });
       }
 
-
       //
       // if there's a modal
       //
@@ -362,6 +370,17 @@ var $body = $('body');
         FB_CTF.modal.loadPopup( 'action-' + actionModal , function(){
           $('#fb-modal .admin-section-name').text(sectionTitle);
         });
+      }
+    });
+
+    //
+    // radio buttons
+    //
+    $('input[type="radio"]').on('change', function(event) {
+      var $this = $(this);
+      var radio_name = $this.attr('id');
+      if (radio_name.search('team') > 0) {
+        toggleTeam(radio_name);
       }
     });
 

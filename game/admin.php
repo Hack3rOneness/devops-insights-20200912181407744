@@ -45,14 +45,26 @@ switch ($request->action) {
     break;
   case 'toggle_admin_team':
     $teams = new Teams();
+    $teams->toggle_admin(
+      $request->parameters['team_id'],
+      $request->parameters['admin']
+    );
     ok_response();
     break;
   case 'toggle_status_team':
     $teams = new Teams();
+    $teams->toggle_status(
+      $request->parameters['team_id'],
+      $request->parameters['status']
+    );
     ok_response();
     break;
   case 'toggle_visible_team':
     $teams = new Teams();
+    $teams->toggle_visible(
+      $request->parameters['team_id'],
+      $request->parameters['visible']
+    );
     ok_response();
     break;
   case 'delete_team':
