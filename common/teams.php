@@ -89,9 +89,15 @@ class Teams {
     return $this->db->query($sql);
   }
 
+  // All visible teams.
+  public function all_visible_teams() {
+    $sql = 'SELECT * FROM teams WHERE visible = 1 AND active = 1 ORDER BY id';
+    return $this->db->query($sql);
+  }
+
   // Leaderboard order.
   public function leaderboard() {
-    $sql = 'SELECT * FROM teams WHERE active = 1 ORDER BY points DESC, last_score ASC';
+    $sql = 'SELECT name, logo, points, last_score FROM teams WHERE active = 1 AND visible = 1 ORDER BY points DESC, last_score ASC';
     return $this->db->query($sql);
   }
 

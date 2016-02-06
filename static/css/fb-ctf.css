@@ -1767,16 +1767,16 @@ body {
 /* --------------------------------------------
  * --utility
  * -------------------------------------------- */
-.fb-cf:before, .game-progress-indicator:before, .admin-box .admin-box-header:before, .admin-box .logo-management-header:before, .admin-buttons:before,
+.fb-cf:before, .game-progress-indicator:before, .admin-box .admin-box-header:before, .admin-box .logo-management-header:before, .countries-management-header:before, .admin-buttons:before,
 .fb-cf:after,
 .game-progress-indicator:after,
 .admin-box .admin-box-header:after,
-.admin-box .logo-management-header:after,
+.admin-box .logo-management-header:after .countries-management-header:after,
 .admin-buttons:after {
   content: " ";
   display: table; }
 
-.fb-cf:after, .game-progress-indicator:after, .admin-box .admin-box-header:after, .admin-box .logo-management-header:after, .admin-buttons:after {
+.fb-cf:after, .game-progress-indicator:after, .admin-box .admin-box-header:after, .admin-box .logo-management-header:after, .countries-management-header:after, .admin-buttons:after {
   clear: both; }
 
 /* ==============================================================
@@ -4303,6 +4303,12 @@ General Admin
     .admin-box .logo-management-header h6 {
       float: left; }
     .admin-box .logo-management-header a {
+      float: right; }
+  .admin-box .countries-management-header {
+    padding: 20px 20px 0 20px; }
+    .admin-box .countries-management-header h6 {
+      float: left; }
+    .admin-box .countries-management-header a {
       float: right; }
   .admin-box .session-name {
     font-family: 'puristaregular', Courier, monospace;

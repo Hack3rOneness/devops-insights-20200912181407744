@@ -1,40 +1,55 @@
+<?php
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
+
+sess_start();
+sess_enforce_login();
+
+$teams = new Teams();
+$leaders = $teams->leaderboard();
+
+$top_name = htmlspecialchars($leaders[0]['name']);
+$top_points = $leaders[0]['points'];
+echo <<< EOT
 <header class="module-header">
-    <h6>Leaderboard</h6>
+  <h6>Leaderboard</h6>
 </header>
 <div class="module-content">
-    <div class="fb-section-border">
-        <div class="module-top player-info">
-            <h5 class="player-name">Tank SF</h5>
-            <span class="player-rank">Rank 12</span>
-            <span class="player-score">300 Pts</span>
-        </div>
-        <div class="module-scrollable">
-            <ul>
-                <li class="fb-user-card">
-                    <div class="user-avatar"><svg class="icon--badge"><use xlink:href="#icon--badge-boba-fett"></use></svg></div>
-                    <div class="player-info">
-                        <h6>Robocop Squad</h6>
-                        <span class="player-rank">Rank 1</span>
-                        <span class="player-score">300 pts</span>
-                    </div>
-                </li>
-                <li class="fb-user-card">
-                    <div class="user-avatar"><svg class="icon--badge"><use xlink:href="#icon--badge-invader"></use></svg></div>
-                    <div class="player-info">
-                        <h6>Da Invaderz</h6>
-                        <span class="player-rank">Rank 2</span>
-                        <span class="player-score">285 pts</span>
-                    </div>
-                </li>
-                <li class="fb-user-card">
-                    <div class="user-avatar"><svg class="icon--badge"><use xlink:href="#icon--badge-lightning"></use></svg></div>
-                    <div class="player-info">
-                        <h6>Lightning Team</h6>
-                        <span class="player-rank">Rank 3</span>
-                        <span class="player-score">245 pts</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+  <div class="fb-section-border">
+    <div class="module-top player-info">
+      <h5 class="player-name">{$top_name}</h5>
+      <span class="player-rank">Rank 1</span>
+      <span class="player-score">{$top_points} Pts</span>
     </div>
+    <div class="module-scrollable">
+      <ul>
+EOT;
+
+$teams = new Teams();
+$rank = 1;
+$l_max = (sizeof($leaders) > 5) ? 5 : sizeof($leaders);
+for($i = 0; $i<$l_max; $i++) {
+  $team = $leaders[$i];
+  $team_name = htmlspecialchars($team['name']);
+  echo <<< EOT
+        <li class="fb-user-card">
+          <div class="user-avatar"><svg class="icon--badge"><use xlink:href="#icon--badge-{$team['logo']}"></use></svg></div>
+          <div class="player-info">
+            <h6>$team_name</h6>
+            <span class="player-rank">Rank {$rank}</span>
+            <span class="player-score">{$team['points']} pts</span>
+          </div>
+        </li>
+EOT;
+  $rank++;  
+}
+
+echo <<< EOT
+      </ul>
+    </div>
+  </div>
 </div>
+EOT
+
+?>

@@ -320,8 +320,6 @@
 
             var $teamgrid = $('aside[data-module="teams"] .grid-list');
 
-            console.log("test");
-
             //
             // build the team module in the gameboard, which will
             //  list the active teams
@@ -1220,7 +1218,7 @@
                 return df.resolve( TEAM_DATA );
             }
 
-            var loadPath = 'data/teams.json';
+            var loadPath = 'data/teams.php';
 
             return $.get( loadPath, function(data, status, jqxhr){
                 TEAM_DATA = data;

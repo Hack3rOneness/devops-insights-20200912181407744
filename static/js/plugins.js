@@ -1,7 +1,6 @@
 
 /**
  * add the transitionend event to a global var
- * @author tankdesign
  */
 (function (window) {
   var transitions = {
@@ -11,7 +10,7 @@
     'OTransition': 'otransitionend'
   },
   elem = document.createElement('div');
- 
+
   for(var t in transitions){
     if(typeof elem.style[t] !== 'undefined'){
       window.transitionEnd = transitions[t];
@@ -24,7 +23,6 @@
 /**
  * jQuery plugin for adding a class to an element and ensuring that
  *  it is the only sibling with the passed class
- * @author tankdesign
  */
 !(function($){
     $.fn.onlySiblingWithClass = function(className){
@@ -39,7 +37,6 @@
  *  element as the text to be typed, and also adds an option to
  *  "type words" rather than type individual characters (this allows
  *  for a faster typing effect).
- * @author tankdesign
  */
 !(function($){
     $.fn.fb_typed = function(passed_options){
@@ -108,7 +105,7 @@
             //  the typed plugin
             //
             else {
-                $(this).typed(options);    
+                $(this).typed(options);
             }
 
         });
