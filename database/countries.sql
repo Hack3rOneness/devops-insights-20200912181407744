@@ -175,7 +175,7 @@ INSERT INTO `countries` (iso_code, name) VALUES ("AU", "Australia");
 INSERT INTO `countries` (iso_code, name) VALUES ("BR", "Brazil");
 INSERT INTO `countries` (iso_code, name) VALUES ("BZ", "Belize");
 INSERT INTO `countries` (iso_code, name) VALUES ("CD", "Democratic Republic of Congo");
-INSERT INTO `countries` (iso_code, name) VALUES ("CI", "Côte d'Ivoire");
+INSERT INTO `countries` (iso_code, name) VALUES ("CI", "Cote d'Ivoire");
 INSERT INTO `countries` (iso_code, name) VALUES ("CN", "China");
 INSERT INTO `countries` (iso_code, name) VALUES ("DZ", "Algeria");
 INSERT INTO `countries` (iso_code, name) VALUES ("FR", "France");

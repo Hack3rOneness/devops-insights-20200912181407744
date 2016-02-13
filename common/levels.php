@@ -1,6 +1,7 @@
 <?php
 
 require_once('db.php');
+require_once('countries.php');
 
 class Levels {
   private $db;
@@ -34,8 +35,8 @@ class Levels {
     $penalty
   ) {
     $sql = 'INSERT INTO levels '.
-      '(type, description, entity_id, points, bonus, bonus_dec, bonus_fix, flag, penalty, created_ts) '.
-      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
+      '(type, description, entity_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
+      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
     $elements = array(
       $type,
       $description,
@@ -49,7 +50,160 @@ class Levels {
       $penalty
     );
     $this->db->query($sql, $elements);
-    return $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
+    $level_id = $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
+    $countries = new Countries();
+    $countries->toggle_used($entity_id, 1);
+
+    return $level_id;
+  }
+
+  // Create a flag level.
+  public function create_flag_level(
+    $description, 
+    $flag, 
+    $entity_id, 
+    $points,
+    $bonus,
+    $bonus_dec, 
+    $hint, 
+    $penalty
+  ) {
+    return $this->create_level(
+      'flag',
+      $description,
+      $entity_id,
+      $points,
+      $bonus,
+      $bonus_dec,
+      $bonus,
+      $flag,
+      $hint,
+      $penalty
+    );
+  }
+
+  // Update a flag level.
+  public function update_flag_level(
+    $description, 
+    $flag, 
+    $entity_id, 
+    $points,
+    $bonus,
+    $bonus_dec, 
+    $hint, 
+    $penalty,
+    $level_id
+  ) {
+    return $this->update_level(
+      $description,
+      $entity_id,
+      $points,
+      $bonus,
+      $bonus_dec,
+      $bonus,
+      $flag,
+      $hint,
+      $penalty,
+      $level_id
+    );
+  }
+
+  // Create a quiz level.
+  public function create_quiz_level(
+    $question, 
+    $answer, 
+    $entity_id, 
+    $points,
+    $bonus,
+    $bonus_dec, 
+    $hint, 
+    $penalty
+  ) {
+    return $this->create_level(
+      'quiz',
+      $question,
+      $entity_id,
+      $points,
+      $bonus,
+      $bonus_dec,
+      $bonus,
+      $answer,
+      $hint,
+      $penalty
+    );
+  }
+
+  // Update a quiz level.
+  public function update_quiz_level(
+    $question, 
+    $answer, 
+    $entity_id, 
+    $points,
+    $bonus,
+    $bonus_dec, 
+    $hint, 
+    $penalty,
+    $level_id
+  ) {
+    return $this->update_level(
+      $question,
+      $entity_id,
+      $points,
+      $bonus,
+      $bonus_dec,
+      $bonus,
+      $answer,
+      $hint,
+      $penalty,
+      $level_id
+    );
+  }
+
+  // Create a base level.
+  public function create_base_level(
+    $description,
+    $entity_id,
+    $points,
+    $bonus,
+    $hint,
+    $penalty
+  ) {
+    return $this->create_level(
+      'base',
+      $description,
+      $entity_id,
+      $points,
+      $bonus,
+      0,
+      $bonus,
+      '',
+      $hint,
+      $penalty
+    );
+  }
+
+  // Update a base level.
+  public function update_base_level(
+    $description,
+    $entity_id,
+    $points,
+    $bonus,
+    $hint,
+    $penalty,
+    $level_id
+  ) {
+    return $this->create_level(
+      $description,
+      $entity_id,
+      $points,
+      $bonus,
+      0,
+      $bonus,
+      '',
+      $hint,
+      $penalty,
+      $level_id
+    );
   }
 
   // Update level.
@@ -85,6 +239,11 @@ class Levels {
 
   // Delete level.
   public function delete_level($level_id) {
+    // Free country first.
+    $level = $this->get_level($level_id);
+    $countries = new Countries();
+    $countries->toggle_used($level['entity_id'], 0);
+    
     $sql = 'DELETE FROM levels WHERE id = ? LIMIT 1';
     $elements = array($level_id);
     $this->db->query($sql, $elements);

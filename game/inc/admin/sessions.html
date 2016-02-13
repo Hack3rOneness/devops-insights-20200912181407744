@@ -52,7 +52,7 @@ foreach (sess_all() as $session) {
       <div class="admin-row">
         <div class="form-el el--block-label el--full-text">
           <label class="admin-label">Data</label>
-          <input type="text" value="{$data}" disabled>
+          <input name="data" type="text" value="{$data}" disabled>
         </div>
       </div>
 
@@ -61,7 +61,6 @@ foreach (sess_all() as $session) {
         <div class="button-right">
           <a href="#" class="admin--edit" data-action="edit">EDIT</a>
           <button class="fb-cta cta--red" data-action="delete">Delete</button>
-          <button class="fb-cta cta--yellow js-confirm-save" data-action="save">Save</button>
         </div>
       </div>
     </form>

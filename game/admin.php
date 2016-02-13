@@ -4,6 +4,7 @@ require_once('../common/adminrequests.php');
 require_once('../common/teams.php');
 require_once('../common/levels.php');
 require_once('../common/logos.php');
+require_once('../common/countries.php');
 require_once('../common/sessions.php');
 require_once('../common/utils.php');
 
@@ -16,6 +17,104 @@ $request->processAdmin();
 switch ($request->action) {
   case 'none':
     admin_page();
+    break;
+  case 'create_quiz':
+    $levels = new Levels();
+    $levels->create_quiz_level(
+      $request->parameters['question'],
+      $request->parameters['answer'],
+      $request->parameters['entity_id'],
+      $request->parameters['points'],
+      $request->parameters['bonus'],
+      $request->parameters['bonus_dec'],
+      $request->parameters['hint'],
+      $request->parameters['penalty']
+    );
+    ok_response();
+    break;
+  case 'update_quiz':
+    $levels = new Levels();
+    $levels->update_quiz_level(
+      $request->parameters['question'],
+      $request->parameters['answer'],
+      $request->parameters['entity_id'],
+      $request->parameters['points'],
+      $request->parameters['bonus'],
+      $request->parameters['bonus_dec'],
+      $request->parameters['hint'],
+      $request->parameters['penalty'],
+      $request->parameters['level_id']
+    );
+    ok_response();
+    break;
+  case 'create_flag':
+    $levels = new Levels();
+    $levels->create_flag_level(
+      $request->parameters['description'],
+      $request->parameters['flag'],
+      $request->parameters['entity_id'],
+      $request->parameters['points'],
+      $request->parameters['bonus'],
+      $request->parameters['bonus_dec'],
+      $request->parameters['hint'],
+      $request->parameters['penalty']
+    );
+    ok_response();
+    break;
+  case 'update_flag':
+    $levels = new Levels();
+    $levels->update_flag_level(
+      $request->parameters['description'],
+      $request->parameters['flag'],
+      $request->parameters['entity_id'],
+      $request->parameters['points'],
+      $request->parameters['bonus'],
+      $request->parameters['bonus_dec'],
+      $request->parameters['hint'],
+      $request->parameters['penalty'],
+      $request->parameters['level_id']
+    );
+    ok_response();
+    break;
+  case 'create_base':
+    $levels = new Levels();
+    $levels->create_base_level(
+      $request->parameters['description'],
+      $request->parameters['entity_id'],
+      $request->parameters['points'],
+      $request->parameters['bonus'],
+      $request->parameters['hint'],
+      $request->parameters['penalty']
+    );
+    ok_response();
+    break;
+  case 'update_base':
+    $levels = new Levels();
+    $levels->update_base_level(
+      $request->parameters['description'],
+      $request->parameters['entity_id'],
+      $request->parameters['points'],
+      $request->parameters['bonus'],
+      $request->parameters['hint'],
+      $request->parameters['penalty'],
+      $request->parameters['level_id']
+    );
+    ok_response();
+    break;
+  case 'delete_level':
+    $levels = new Levels();
+    $levels->delete_level(
+      $request->parameters['level_id']
+    );
+    ok_response();
+    break;
+  case 'toggle_status_level':
+    $levels = new Levels();
+    $levels->toggle_status(
+      $request->parameters['level_id'],
+      $request->parameters['status']
+    );
+    ok_response();
     break;
   case 'create_team':
     $teams = new Teams();
@@ -64,6 +163,38 @@ switch ($request->action) {
     $teams->toggle_visible(
       $request->parameters['team_id'],
       $request->parameters['visible']
+    );
+    ok_response();
+    break;
+  case 'enable_logo':
+    $logos = new Logos();
+    $logos->toggle_status(
+      $request->parameters['logo_id'],
+      1
+    );
+    ok_response();
+    break;
+  case 'disable_logo':
+    $logos = new Logos();
+    $logos->toggle_status(
+      $request->parameters['logo_id'],
+      0
+    );
+    ok_response();
+    break;
+  case 'enable_country':
+    $countries = new Countries();
+    $countries->toggle_status(
+      $request->parameters['country_id'],
+      1
+    );
+    ok_response();
+    break;
+  case 'disable_country':
+    $countries = new Countries();
+    $countries->toggle_status(
+      $request->parameters['country_id'],
+      0
     );
     ok_response();
     break;

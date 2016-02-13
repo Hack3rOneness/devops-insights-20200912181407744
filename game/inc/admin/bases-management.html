@@ -1,0 +1,193 @@
+<?php
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
+
+sess_start();
+sess_enforce_admin();
+
+function select_countries($selected=0, $used_included = true) {
+  $select_html = '<select name="entity_id">';
+  $select_html .= '<option value="">Select</option>';
+  $countries = new Countries();
+  $all_countries = ($used_included) 
+    ? $countries->all_enabled_countries()
+    : $countries->all_available_countries();
+  foreach ($all_countries as $country) {
+    if ($country['id'] == $selected) {
+      $select_html .= '<option value="'.$country['id'].'" selected>'.$country['name'].'</option>';
+    } else {
+      $select_html .= '<option value="'.$country['id'].'">'.$country['name'].'</option>';
+    }
+  }
+  $select_html .= '</select>';
+
+  return $select_html;
+}
+
+$select_available_html = select_countries(0, false);
+
+echo <<< EOT
+
+<header class="admin-page-header">
+  <h3>Bases Management</h3>
+  <!--
+    * @note
+    * this will reflect the last saved time inside the
+    *  "highlighted" span
+-->
+<span class="admin-section--status">status_<span class="highlighted">2015.10.15</span></span>
+</header>
+
+  <div class="admin-sections">
+EOT;
+
+$levels = new Levels();
+
+// Hidden element for creating new base level.
+echo <<< EOT
+    <section class="admin-box completely-hidden">
+      <form class="level_form base_form">
+        <input type="hidden" name="level_type" value="base">
+        <header class="admin-box-header">
+          <h3>New Base Level</h3>
+        </header>
+
+        <div class="fb-column-container">
+          <div class="col col-pad col-1-2">
+            <div class="form-el el--block-label el--full-text">
+              <label>Description</label>
+              <input name="description" type="text">
+            </div>
+
+            <div class="form-el el--block-label el--full-text">
+              <label for="">Country</label>
+              {$select_available_html}
+            </div>
+          </div>
+
+
+          <div class="col col-pad col-1-2">
+
+            <div class="form-el el--block-label el--full-text">
+              <label>Points</label>
+              <input name="points" type="text">
+            </div>
+            <div class="form-el el--block-label el--full-text">
+              <label>Bonus</label>
+              <input name="bonus" type="text">
+            </div>
+          </div>
+          <div class="col col-pad col-1-2">
+            <div class="form-el el--block-label el--full-text">
+              <label>Hint</label>
+              <input name="hint" type="text">
+            </div>
+            <div class="form-el el--block-label el--full-text">
+              <label>Penalty</label>
+              <input name="penalty" type="text">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="admin-buttons admin-row">
+          <div class="button-right">
+            <a href="#" class="admin--edit" data-action="edit">EDIT</a>
+            <button class="fb-cta cta--red" data-action="delete">Delete</button>
+            <button class="fb-cta cta--yellow" data-action="create">Create</button>
+          </div>
+        </div>
+        </form>
+      </section>
+EOT;
+
+$c = 1;
+foreach ($levels->all_base_levels() as $base) {
+  $base_description = htmlspecialchars($base['description']);
+  $base_hint = htmlspecialchars($base['hint']);
+  $base_countries_select = select_countries($base['entity_id']);
+  $base_on = ($base['active'] == 1)
+    ? 'checked'
+    : '';
+  $base_off = ($base['active'] == 0)
+    ? 'checked'
+    : '';
+
+  echo <<< EOT
+      <section class="admin-box section-locked">
+        <form class="level_form base_form" name="base_{$base['id']}">
+        <input type="hidden" name="level_type" value="base">
+        <input type="hidden" name="level_id" value="{$base['id']}">
+        <header class="admin-box-header">
+          <h3>Base Level {$c}</h3>
+
+          <div class="admin-section-toggle radio-inline">
+            <input type="radio" name="fb--admin--level-{$base['id']}-status" id="fb--admin--level-{$base['id']}-status--on" {$base_on}>
+            <label for="fb--admin--level-{$base['id']}-status--on">On</label>
+
+            <input type="radio" name="fb--admin--level-{$base['id']}-status" id="fb--admin--level-{$base['id']}-status--off" {$base_off}>
+            <label for="fb--admin--level-{$base['id']}-status--off">Off</label>
+          </div>
+        </header>
+
+        <div class="fb-column-container">
+          <div class="col col-pad col-1-2">
+            <div class="form-el el--block-label el--full-text">
+              <label>Description</label>
+              <input name="description" type="text" value="{$base_description}" disabled>
+            </div>
+
+            <div class="form-el el--block-label el--full-text">
+              <label for="">Country</label>
+              {$base_countries_select}
+            </div>
+          </div>
+
+          <div class="col col-pad col-1-2">
+
+            <div class="form-el el--block-label el--full-text">
+              <label>Points</label>
+              <input name="points" type="text" value="{$base['points']}" disabled>
+            </div>
+            <div class="form-el el--block-label el--full-text">
+              <label>Bonus</label>
+              <input name="bonus" type="text" value="{$base['bonus']}" disabled>
+            </div>
+          </div>
+
+          <div class="col col-pad col-1-2">
+            <div class="form-el el--block-label el--full-text">
+              <label>Hint</label>
+              <input name="hint" type="text" value="{$base_hint}" disabled> 
+            </div>
+            <div class="form-el el--block-label el--full-text">
+              <label>Penalty</label>
+              <input name="penalty" type="text" value="{$base['penalty']}" disabled>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="admin-buttons admin-row">
+          <div class="button-right">
+            <a href="#" class="admin--edit" data-action="edit">EDIT</a>
+            <button class="fb-cta cta--red" data-action="delete">Delete</button>
+            <button class="fb-cta cta--yellow" data-action="save-no-validation">Save</button>
+          </div>
+        </div>
+      </form>
+    </section>
+EOT;
+  $c++;
+}
+
+echo <<< EOT
+  </div><!-- .admin-sections -->
+
+  <div class="admin-buttons">
+    <button class="fb-cta" data-action="add-new">Add Base Level</button>
+  </div>
+EOT;
+?>

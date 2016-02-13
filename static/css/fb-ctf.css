@@ -831,6 +831,9 @@ a.interaction {
 .highlighted--blue {
   color: #21b4ba; }
 
+.highlighted--green {
+  color: #00cc00; }
+
 .fb-numbers {
   font-family: 'carbon_plus', 'puristabold', Courier, monospace; }
 

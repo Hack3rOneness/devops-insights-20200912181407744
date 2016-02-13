@@ -4,17 +4,17 @@
 //
 (function(FB_CTF, $, undefined){
 
-    var $body;
+  var $body;
 
     // colors
     var COLOR_LIGHT_BLUE = "#cff8fa",
-        COLOR_TEAL_BLUE  = "#5cf0f6",
-        COLOR_MAIN_BLUE  = "#13242b";
+    COLOR_TEAL_BLUE  = "#5cf0f6",
+    COLOR_MAIN_BLUE  = "#13242b";
 
     // checks
     var ua         = navigator.userAgent.toLowerCase(),
-        is_firefox = ua.indexOf('firefox') > -1,
-        is_ie      = ua.indexOf('msie') > -1;
+    is_firefox = ua.indexOf('firefox') > -1,
+    is_ie      = ua.indexOf('msie') > -1;
 
 
     FB_CTF.currentUser = "Tank SF";
@@ -29,19 +29,19 @@
     /**
      * get the given parameter value
      */
-    function getUrlParameter(sParam) {
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
+     function getUrlParameter(sParam) {
+      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
 
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
+      for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
 
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
+        if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : sParameterName[1];
         }
+      }
     };
 
 
@@ -57,68 +57,68 @@
      * handles all the loading of the modules and the map, as well as
      *  all map-related event listeners and animations
      */
-    FB_CTF.gameboard = (function(){
+     FB_CTF.gameboard = (function(){
 
-        var GAMEBOARD_LOADED = false,
-            LOADING_CLASS    = 'loading',
-            LIST_VIEW        = false,
-            VIEW_ONLY        = false,
-            CURRENT_ZOOM     = 1,
-            COUNTRY_DATA,
-            TEAM_DATA,
-            $gameboard,
-            $listview,
-            $mapSvg,
-            $map,
-            $countryHover;
+      var GAMEBOARD_LOADED = false,
+      LOADING_CLASS    = 'loading',
+      LIST_VIEW        = false,
+      VIEW_ONLY        = false,
+      CURRENT_ZOOM     = 1,
+      COUNTRY_DATA,
+      TEAM_DATA,
+      $gameboard,
+      $listview,
+      $mapSvg,
+      $map,
+      $countryHover;
 
 
         /**
          * enable click and drag capabilities on the map
          */
-        var enableClickAndDrag = (function(){
+         var enableClickAndDrag = (function(){
 
-            if( typeof d3 === 'undefined'){
-                return;
-            }
+          if( typeof d3 === 'undefined'){
+            return;
+          }
 
-            var $window = $(window);
+          var $window = $(window);
 
-            var zoom = d3.behavior.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
+          var zoom = d3.behavior.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
 
-            var svgMap,
-                container;
+          var svgMap,
+          container;
 
-            function init(){
-                svgMap = d3.select('#fb-gameboard-map').call(zoom);
-                container = svgMap.select(".view-controller").call(zoom);
+          function init(){
+            svgMap = d3.select('#fb-gameboard-map').call(zoom);
+            container = svgMap.select(".view-controller").call(zoom);
 
-                $window.on('keyup', function(event){
-                    var key     = event.which,
-                        ww      = $window.width(),
-                        wh      = $window.height(),
-                        zoomin  = is_firefox ? 61 : 187,
-                        zoomout = is_firefox ? 173 : 189;
+            $window.on('keyup', function(event){
+              var key     = event.which,
+              ww      = $window.width(),
+              wh      = $window.height(),
+              zoomin  = is_firefox ? 61 : 187,
+              zoomout = is_firefox ? 173 : 189;
 
                     // the plus (zoom in) or the minus
                     if( key === zoomin || key === zoomout){
 
-                        var multiplier = key === zoomin ? 1 : -1;
+                      var multiplier = key === zoomin ? 1 : -1;
 
                         svgMap.call(zoom.event); // https://github.com/mbostock/d3/issues/2387
 
                         // Record the coordinates (in data space) of the center (in screen space).
                         var center0      = [ 504 , 325],
-                            translate0   = zoom.translate(),
-                            coordinates0 = coordinates(center0),
-                            newScale     = zoom.scale() * Math.pow(2, multiplier);
+                        translate0   = zoom.translate(),
+                        coordinates0 = coordinates(center0),
+                        newScale     = zoom.scale() * Math.pow(2, multiplier);
 
                         if(newScale > 10){
-                            zoom.scale( 10 );
+                          zoom.scale( 10 );
                         } else if(newScale < 1){
-                            zoom.scale( 1 );
+                          zoom.scale( 1 );
                         } else {
-                            zoom.scale( newScale );
+                          zoom.scale( newScale );
                         }
 
                         // Translate back to the center.
@@ -126,9 +126,9 @@
                         zoom.translate([translate0[0] + center0[0] - center1[0], translate0[1] + center0[1] - center1[1]]);
 
                         svgMap.transition().duration(400).call(zoom.event);
-                    }
-                });
-            }
+                      }
+                    });
+          }
 
 
             /**
@@ -143,18 +143,18 @@
              * @param newScale (number) // default = 1
              *   - the zoom level
              */
-            function zoomToPoint(latFocus, lngFocus, newScale){
+             function zoomToPoint(latFocus, lngFocus, newScale){
                 svgMap.call(zoom.event); // https://github.com/mbostock/d3/issues/2387
 
                 // default parameters
                 if( latFocus === undefined )
-                    latFocus = 0;
+                  latFocus = 0;
 
                 if( lngFocus === undefined )
-                    lngFocus = 0;
+                  lngFocus = 0;
 
                 if( newScale === undefined )
-                    newScale = 1;
+                  newScale = 1;
 
 
                 var latModifier = -1 * (1 + (latFocus - 620) / 504);
@@ -164,43 +164,43 @@
                 zoom.translate([latFocus * latModifier, lngFocus * lngModifier]);
 
                 svgMap.transition().duration(400).call(zoom.event);
-            }
+              }
 
 
             /**
              * function to call when the svg is zoomed
              */
-            function zoomed( scale ){
-                var zoomScale      = scale ? scale : d3.event.scale,
-                    xyOffset       = zoomScale,
-                    translateVal   = scale ? "0,0" : d3.event.translate,
-                    indicatorRatio = 1 / zoomScale,
-                    transformRatio = 5.6 - (5.6 * indicatorRatio),
-                    panX           = translateVal[0],
-                    panY           = translateVal[1];
+             function zoomed( scale ){
+              var zoomScale      = scale ? scale : d3.event.scale,
+              xyOffset       = zoomScale,
+              translateVal   = scale ? "0,0" : d3.event.translate,
+              indicatorRatio = 1 / zoomScale,
+              transformRatio = 5.6 - (5.6 * indicatorRatio),
+              panX           = translateVal[0],
+              panY           = translateVal[1];
 
-                FB_CTF.modal.closeHoverPopup();
+              FB_CTF.modal.closeHoverPopup();
 
-                container.attr("style", "transform: translate(" + panX + "px," + panY + "px) scale(" + zoomScale + ")");
+              container.attr("style", "transform: translate(" + panX + "px," + panY + "px) scale(" + zoomScale + ")");
 
-                $('.countries .map-indicator path', $mapSvg).css({
-                    'transform': 'translate(' + transformRatio + 'px,' + transformRatio + 'px) scale(' + indicatorRatio + ')'
+              $('.countries .map-indicator path', $mapSvg).css({
+                'transform': 'translate(' + transformRatio + 'px,' + transformRatio + 'px) scale(' + indicatorRatio + ')'
+              });
+
+              $('.countries .land', $mapSvg).each(function(){
+                var $self    = $(this),
+                modifier = $self.attr('class').indexOf('active') > -1 ? 1 : 1.5;
+
+                $(this).css({
+                  'stroke-width': (indicatorRatio * modifier)
                 });
-
-                $('.countries .land', $mapSvg).each(function(){
-                    var $self    = $(this),
-                        modifier = $self.attr('class').indexOf('active') > -1 ? 1 : 1.5;
-
-                    $(this).css({
-                        'stroke-width': (indicatorRatio * modifier)
-                    });
-                });
+              });
             };
 
             /**
              * get svg coordinates
              */
-            function coordinates(point) {
+             function coordinates(point) {
               var scale = zoom.scale(), translate = zoom.translate();
               return [(point[0] - translate[0]) / scale, (point[1] - translate[1]) / scale];
             }
@@ -208,7 +208,7 @@
             /**
              * get a point
              */
-            function point(coordinates) {
+             function point(coordinates) {
               var scale = zoom.scale(), translate = zoom.translate();
               return [coordinates[0] * scale + translate[0], coordinates[1] * scale + translate[1]];
             }
@@ -216,17 +216,17 @@
             /**
              * get the zoom
              */
-            function getZoom(){
-                return zoom.scale();
+             function getZoom(){
+              return zoom.scale();
             }
 
 
             return {
-                init        : init,
-                zoom        : zoom,
-                getZoom     : getZoom,
-                zoomToPoint : zoomToPoint,
-                zoomed      : zoomed
+              init        : init,
+              zoom        : zoom,
+              getZoom     : getZoom,
+              zoomToPoint : zoomToPoint,
+              zoomed      : zoomed
             };
 
         })(); // enableClickAndDrag
@@ -241,8 +241,7 @@
          * build the gameboard, and display the loading screen while
          *  it's being built
          */
-        function build(){
-
+         function build(){
 
             var countryDataLoaded = getCountryData();
 
@@ -250,18 +249,24 @@
             // add the modules and the map
             //
             var modulesLoaded  = loadModules(),
-                mapLoaded      = loadMap(),
+                mapLoaded,
                 listViewLoaded = loadListView(),
                 teamDataLoaded = loadTeamData(),
                 loadingLoaded  = loadIn();
 
+            if (VIEW_ONLY) {
+              mapLoaded = loadMapView();
+            } else {
+              mapLoaded = loadMap();
+            }
+
             $.when( mapLoaded, countryDataLoaded).done(function(){
-                renderCountryData();
+              renderCountryData();
             });
 
             // do stuff when the map and modules are loaded
             $.when(modulesLoaded, mapLoaded, listViewLoaded, teamDataLoaded, loadingLoaded).done(function(){
-                console.log("modules, map, list view, team data, and loading screen are loaded");
+              console.log("modules, map, list view, team data, and loading screen are loaded");
 
                 // trigger an event for the gameboard loaded, so
                 //  external things know that everything has been
@@ -276,16 +281,16 @@
                 // set up the listeners
                 //
                 if( ! VIEW_ONLY ){
-                    gameEventListeners();
+                  gameEventListeners();
                 }
 
                 //
                 // initialize the tutorial, if the query string is present
                 //
                 if( getUrlParameter('tutorial') === 'false' || VIEW_ONLY || FB_CTF.debug ){
-                    loadOut();
+                  loadOut();
                 } else {
-                    initTutorial();
+                  initTutorial();
                 }
 
                 //
@@ -297,8 +302,8 @@
 
                 // popuplate the team module
                 setupTeams();
-            });
-        }
+              });
+          }
 
 
         /* --------------------------------------------
@@ -311,34 +316,34 @@
          *  active teams (from the team.json data) and event
          *  listeners for the team modal
          */
-        function setupTeams(){
+         function setupTeams(){
 
-            if( TEAM_DATA === undefined ){
-                console.error("No team data available.");
-                return;
-            }
+          if( TEAM_DATA === undefined ){
+            console.error("No team data available.");
+            return;
+          }
 
-            var $teamgrid = $('aside[data-module="teams"] .grid-list');
+          var $teamgrid = $('aside[data-module="teams"] .grid-list');
 
             //
             // build the team module in the gameboard, which will
             //  list the active teams
             //
             $.each( TEAM_DATA, function(teamName, teamData){
-                var alertClass = teamData.has_alert ? ' class="alert"' : '',
-                    markup     = '<li' + alertClass + '><a href="#" data-team="' + teamName + '">' +
-                                    '<svg class="icon--badge"><use xlink:href="#icon--badge-' + teamData.badge + '"/></svg>' +
-                                '</a></li>';
+              var alertClass = teamData.has_alert ? ' class="alert"' : '',
+              markup     = '<li' + alertClass + '><a href="#" data-team="' + teamName + '">' +
+              '<svg class="icon--badge"><use xlink:href="#icon--badge-' + teamData.badge + '"/></svg>' +
+              '</a></li>';
 
-                $teamgrid.append(markup);
+              $teamgrid.append(markup);
             });
 
             //
             // launch the team modals
             //
             $teamgrid.on('click', 'a[data-team]', function(event) {
-                event.preventDefault();
-                var team = $(this).data('team');
+              event.preventDefault();
+              var team = $(this).data('team');
 
                 //
                 // @note - here, let's check to see if the team is
@@ -346,7 +351,7 @@
                 //  we'll set a default for demo purposes.
                 //
                 if( team === undefined || team === ""){
-                    team = "Tank SF";
+                  team = "Tank SF";
                 }
 
                 console.log(team);
@@ -354,14 +359,14 @@
                 var teamData = TEAM_DATA[team];
 
                 if( teamData === undefined){
-                    console.error("Invalid team name in markup");
-                    return;
+                  console.error("Invalid team name in markup");
+                  return;
                 }
 
                 FB_CTF.modal.loadPopup( 'team', function(){
-                    var $modal       = $('#fb-modal'),
-                        rank         = teamData.rank + "",
-                        $teamMembers = $('.team-members', $modal);
+                  var $modal       = $('#fb-modal'),
+                  rank         = teamData.rank + "",
+                  $teamMembers = $('.team-members', $modal);
 
                     // team name
                     $('.team-name', $modal).text(team.replace(' ', '_'));
@@ -371,7 +376,7 @@
 
                     // team members
                     $.each( teamData.team_members, function(){
-                        $teamMembers.append('<li>' + this + '</li>');
+                      $teamMembers.append('<li>' + this + '</li>');
                     });
 
                     // school level
@@ -379,7 +384,7 @@
 
                     // rank
                     if( rank.length === 1 ){
-                        rank = "0" + rank;
+                      rank = "0" + rank;
                     }
                     $('.points-number', $modal).text( rank );
 
@@ -388,11 +393,11 @@
                     $('.points--quiz', $modal).text( teamData.points.quiz);
                     $('.points--flag', $modal).text( teamData.points.flag);
                     $('.points--total', $modal).text( teamData.points.total);
-                });
+                  });
 
 
-            });
-        }
+              });
+          }
 
 
         /* --------------------------------------------
@@ -407,14 +412,14 @@
          * @param capturedBy (string)
          *   - the capturing team
          */
-        function getCapturedByMarkup( capturedBy ){
-            if( capturedBy === undefined ){
-                return "Uncaptured";
-            }
+         function getCapturedByMarkup( capturedBy ){
+          if( capturedBy === undefined ){
+            return "Uncaptured";
+          }
 
-            var capturedClass = capturedBy === FB_CTF.currentUser ? 'your-name' : 'opponent-name';
+          var capturedClass = capturedBy === FB_CTF.currentUser ? 'your-name' : 'opponent-name';
 
-            return '<span class="' + capturedClass + '">' + capturedBy + '</span>';
+          return '<span class="' + capturedClass + '">' + capturedBy + '</span>';
         }
 
 
@@ -422,52 +427,52 @@
          * automatically scroll through the content on the sidebar
          *  modules. This happens in the "view only" mode
          */
-        function autoScrollModules(){
-            var $modules = $('aside[data-module="under-attack"], aside[data-module="leaderboard-viewmode"]');
+         function autoScrollModules(){
+          var $modules = $('aside[data-module="under-attack"], aside[data-module="leaderboard-viewmode"]');
 
-            $modules.each(function(){
-                var $scrollable    = $('.module-scrollable', this),
-                    scrollHeight   = $scrollable.children('ul').height() - $scrollable.height(),
-                    scrollTime     = scrollHeight / .05,
-                    scrollInterval;
+          $modules.each(function(){
+            var $scrollable    = $('.module-scrollable', this),
+            scrollHeight   = $scrollable.children('ul').height() - $scrollable.height(),
+            scrollTime     = scrollHeight / .05,
+            scrollInterval;
 
 
-                $scrollable.on('mouseover', function(event) {
-                    event.preventDefault();
-                    clearInterval( scrollInterval );
-                });
-                $scrollable.on('mouseout', startScroll);
+            $scrollable.on('mouseover', function(event) {
+              event.preventDefault();
+              clearInterval( scrollInterval );
+            });
+            $scrollable.on('mouseout', startScroll);
 
 
                 /**
                  * start the scrolling interval
                  */
-                function startScroll(){
-                    scrollInterval = setInterval( function(){
-                        var st = $scrollable.scrollTop(),
-                            scrollLeft = $('ul', $scrollable).height() - $scrollable.height();
+                 function startScroll(){
+                  scrollInterval = setInterval( function(){
+                    var st = $scrollable.scrollTop(),
+                    scrollLeft = $('ul', $scrollable).height() - $scrollable.height();
 
-                        if( st >= scrollLeft ){
-                            $scrollable.scrollTop(0);
-                        } else {
-                            $scrollable.scrollTop( st + 1 );
-                        }
+                    if( st >= scrollLeft ){
+                      $scrollable.scrollTop(0);
+                    } else {
+                      $scrollable.scrollTop( st + 1 );
+                    }
 
 
-                    }, 20);
+                  }, 20);
                 }
 
                 startScroll();
-            });
+              });
         }
 
 
         /**
          * the event listeners for the game
          */
-        function gameEventListeners(){
+         function gameEventListeners(){
 
-            var $svgCountries = $('.countries > g', $mapSvg);
+          var $svgCountries = $('.countries > g', $mapSvg);
 
             /* --------------------------------------------
              * --modules
@@ -477,10 +482,10 @@
             // open the module
             //
             $( 'aside[data-module]' ).on('click', '.module-header', function(event) {
-                event.preventDefault();
-                $(this).closest('aside').toggleClass('active');
+              event.preventDefault();
+              $(this).closest('aside').toggleClass('active');
 
-                $body.trigger('module-changestate');
+              $body.trigger('module-changestate');
             })
 
             //
@@ -488,36 +493,36 @@
             //  has, check the listview to rearrange it
             //
             $body.on('module-changestate', function(){
-                var rightModules       = false,
-                    bottomModules      = false,
-                    margin             = '25%',
-                    $listviewContainer = $('.listview-container', $listview);
+              var rightModules       = false,
+              bottomModules      = false,
+              margin             = '25%',
+              $listviewContainer = $('.listview-container', $listview);
 
-                $( 'aside[data-module].active' ).each(function(){
-                    var $container = $(this).closest('.fb-module-container');
+              $( 'aside[data-module].active' ).each(function(){
+                var $container = $(this).closest('.fb-module-container');
 
-                    if ($container.hasClass('column-right')){
-                        rightModules = true;
+                if ($container.hasClass('column-right')){
+                  rightModules = true;
 
-                        if($container.width() > 350){
-                            margin = '390px';
-                        }
+                  if($container.width() > 350){
+                    margin = '390px';
+                  }
 
-                    } else if ($container.hasClass('container--row')){
-                        bottomModules = true;
-                    }
-                });
-
-                if(rightModules){
-                    $listviewContainer.css('right', margin);
-                } else {
-                    $listviewContainer.css('right', '10px');
+                } else if ($container.hasClass('container--row')){
+                  bottomModules = true;
                 }
-                if(bottomModules){
-                    $listviewContainer.css('bottom', '34vh');
-                } else {
-                    $listviewContainer.css('bottom', '100px');
-                }
+              });
+
+              if(rightModules){
+                $listviewContainer.css('right', margin);
+              } else {
+                $listviewContainer.css('right', '10px');
+              }
+              if(bottomModules){
+                $listviewContainer.css('bottom', '34vh');
+              } else {
+                $listviewContainer.css('bottom', '100px');
+              }
             });
 
 
@@ -530,13 +535,13 @@
             // create new individual chat
             //
             $body.on('click', '.add-new-help-chat', function(event) {
-                event.preventDefault();
-                var country = $(this).data('country'),
-                    $alerts = $('aside[data-module="world-chat"] .alerts'),
-                    $chat   = $('li.alert-placeholder', $alerts).eq(0).clone();
+              event.preventDefault();
+              var country = $(this).data('country'),
+              $alerts = $('aside[data-module="world-chat"] .alerts'),
+              $chat   = $('li.alert-placeholder', $alerts).eq(0).clone();
 
-                $chat.removeClass('alert-placeholder').attr('data-help', country).appendTo( $alerts ).find('.alert .highlighted').text(country);
-                $('.js-expand-individual-chat', $chat).trigger('click');
+              $chat.removeClass('alert-placeholder').attr('data-help', country).appendTo( $alerts ).find('.alert .highlighted').text(country);
+              $('.js-expand-individual-chat', $chat).trigger('click');
             });
 
 
@@ -544,16 +549,16 @@
             // delete alert
             //
             $body.on('click', '.js-delete-alert', function(event) {
-                event.preventDefault();
-                var $self = $(this),
-                    $li   = $self.closest('li').addClass('removing');
+              event.preventDefault();
+              var $self = $(this),
+              $li   = $self.closest('li').addClass('removing');
 
-                $self.closest('.alerts').removeClass('individual-chat-enabled')
-                    .closest('aside').removeClass('individual-chat-active');
+              $self.closest('.alerts').removeClass('individual-chat-enabled')
+              .closest('aside').removeClass('individual-chat-active');
 
-                setTimeout(function(){
-                    $li.remove();
-                }, 400);
+              setTimeout(function(){
+                $li.remove();
+              }, 400);
             });
 
 
@@ -561,13 +566,13 @@
             // expand individual chat
             //
             $body.on('click', '.js-expand-individual-chat', function(event) {
-                event.preventDefault();
+              event.preventDefault();
 
-                $(this).closest('li').toggleClass('active')
-                    .closest('.alerts').toggleClass('individual-chat-enabled')
-                    .closest('aside').toggleClass('individual-chat-active');
+              $(this).closest('li').toggleClass('active')
+              .closest('.alerts').toggleClass('individual-chat-enabled')
+              .closest('aside').toggleClass('individual-chat-active');
 
-                $body.trigger('module-changestate');
+              $body.trigger('module-changestate');
             });
 
 
@@ -579,23 +584,23 @@
             // filter the map based on category
             //
             $('input[name="fb--module--filter--category"]').on('change', function(event) {
-                event.preventDefault();
-                var category = $(this).val();
+              event.preventDefault();
+              var category = $(this).val();
 
-                $svgCountries.each(function(){
-                    var countryGroup = d3.select(this);
+              $svgCountries.each(function(){
+                var countryGroup = d3.select(this);
 
-                    countryGroup.classed("inactive", false);
-                    countryGroup.classed("highlighted", false);
+                countryGroup.classed("inactive", false);
+                countryGroup.classed("highlighted", false);
 
-                    if( category !== "All" ){
-                        if( countryGroup.attr('data-category') === category){
-                            countryGroup.classed('highlighted', true);
-                        } else {
-                            countryGroup.classed('inactive', true);
-                        }
-                    }
-                });
+                if( category !== "All" ){
+                  if( countryGroup.attr('data-category') === category){
+                    countryGroup.classed('highlighted', true);
+                  } else {
+                    countryGroup.classed('inactive', true);
+                  }
+                }
+              });
             });
 
 
@@ -603,44 +608,44 @@
             // filter the map based on status
             //
             $('input[name="fb--map-select"]').on('change', function(event) {
-                event.preventDefault();
-                var select = $(this).val();
+              event.preventDefault();
+              var select = $(this).val();
 
-                $svgCountries.each(function(){
-                    var countryGroup = d3.select(this),
-                        captureTeam  = countryGroup.attr('data-captured');
+              $svgCountries.each(function(){
+                var countryGroup = d3.select(this),
+                captureTeam  = countryGroup.attr('data-captured');
 
-                    countryGroup.classed("inactive", false);
-                    countryGroup.classed("highlighted", false);
+                countryGroup.classed("inactive", false);
+                countryGroup.classed("highlighted", false);
 
-                    if( select !== "all" ){
-                        if( ( select === "your-team" && captureTeam === FB_CTF.currentUser ) ||
-                            ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.currentUser ) ){
-                            countryGroup.classed('highlighted', true);
-                        } else {
-                            countryGroup.classed('inactive', true);
-                        }
-                    }
-                });
+                if( select !== "all" ){
+                  if( ( select === "your-team" && captureTeam === FB_CTF.currentUser ) ||
+                    ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.currentUser ) ){
+                    countryGroup.classed('highlighted', true);
+                } else {
+                  countryGroup.classed('inactive', true);
+                }
+              }
+            });
 
-                $('tr', $listview).each(function(){
-                    var $tr         = $(this),
-                        $self       = $tr.removeClass('inactive highlighted'),
-                        captureTeam = $self.data('captured');
+              $('tr', $listview).each(function(){
+                var $tr         = $(this),
+                $self       = $tr.removeClass('inactive highlighted'),
+                captureTeam = $self.data('captured');
 
-                    if(select !== "all"){
-                        if(
-                            ( select === "your-team" && captureTeam === FB_CTF.currentUser ) ||
-                            ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.currentUser ) ||
-                            ( select === "give-help" && $('.status--give-help', $tr).length > 0 ) ||
-                            ( select === "need-help" && $('.status--incoming-help', $tr).length > 0 )
-                        ){
-                            $self.addClass('highlighted');
-                        } else {
-                            $self.addClass('inactive');
-                        }
-                    }
-                });
+                if(select !== "all"){
+                  if(
+                    ( select === "your-team" && captureTeam === FB_CTF.currentUser ) ||
+                    ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.currentUser ) ||
+                    ( select === "give-help" && $('.status--give-help', $tr).length > 0 ) ||
+                    ( select === "need-help" && $('.status--incoming-help', $tr).length > 0 )
+                    ){
+                    $self.addClass('highlighted');
+                } else {
+                  $self.addClass('inactive');
+                }
+              }
+            });
             });
 
 
@@ -648,16 +653,16 @@
             // activity module filter
             //
             $('input[name="fb--module--activity"]').on('change', function(event) {
-                event.preventDefault();
-                var $self  = $(this),
-                    select = $self.val(),
-                    $li    = $self.closest('.module-content').find('.activity-stream li').show();
+              event.preventDefault();
+              var $self  = $(this),
+              select = $self.val(),
+              $li    = $self.closest('.module-content').find('.activity-stream li').show();
 
-                if( select !== "all" ){
-                    $li.filter( function(){
-                        return $(this).attr('class') !== select;
-                    }).hide();
-                }
+              if( select !== "all" ){
+                $li.filter( function(){
+                  return $(this).attr('class') !== select;
+                }).hide();
+              }
             });
 
 
@@ -670,27 +675,27 @@
             // on country click, open the "capture country" modal
             //
             $map.on('click', '.country-hover g', function( event ){
-                event.preventDefault();
+              event.preventDefault();
 
-                var country = $('[class~="land"]', this).attr('title');
+              var country = $('[class~="land"]', this).attr('title');
 
-                CURRENT_ZOOM = enableClickAndDrag.getZoom();
-                captureCountry( country );
+              CURRENT_ZOOM = enableClickAndDrag.getZoom();
+              captureCountry( country );
             });
 
             //
             // hover on a country
             //
             $map.hoverIntent({
-                over     : countryHover,
-                out      : function(){},
-                selector : '.countries > g',
+              over     : countryHover,
+              out      : function(){},
+              selector : '.countries > g',
             });
 
             $countryHover.on('mouseleave', function(event) {
-                event.preventDefault();
-                FB_CTF.modal.closeHoverPopup();
-                $countryHover.empty();
+              event.preventDefault();
+              FB_CTF.modal.closeHoverPopup();
+              $countryHover.empty();
             });
 
         } // function gameEventListeners()
@@ -713,23 +718,23 @@
          *   - an optional parameter for the team that is attempting
          *      to capture the given country
          */
-        function captureCountry(country, capturingTeam) {
+         function captureCountry(country, capturingTeam) {
 
-            var $selectCountry    = $('.countries .land[title="' + country + '"]', $mapSvg),
-                capturedBy        = getCapturedByMarkup( $selectCountry.closest('g').data('captured') ),
-                showAnimation     = !( is_ie || LIST_VIEW ),
-                animationDuration = !showAnimation ? 0 : 600;
+          var $selectCountry    = $('.countries .land[title="' + country + '"]', $mapSvg),
+          capturedBy        = getCapturedByMarkup( $selectCountry.closest('g').data('captured') ),
+          showAnimation     = !( is_ie || LIST_VIEW ),
+          animationDuration = !showAnimation ? 0 : 600;
 
             // make sure there's a country node
             if($selectCountry.length === 0){
-                console.error( country + ' is not a valid country' );
-                return;
+              console.error( country + ' is not a valid country' );
+              return;
             }
 
             if( $countryHover.has('g').length === 0 ){
-                var $hoveredCountry = $( '.countries .land[title="' + country + '"]', $mapSvg ).closest('g').clone();
-                $countryHover.data( $hoveredCountry.data() );
-                $countryHover.empty().append( $hoveredCountry );
+              var $hoveredCountry = $( '.countries .land[title="' + country + '"]', $mapSvg ).closest('g').clone();
+              $countryHover.data( $hoveredCountry.data() );
+              $countryHover.empty().append( $hoveredCountry );
             }
 
             // close the hover popup
@@ -737,23 +742,23 @@
 
             // engage the crosshairs animation
             if( showAnimation ){
-                engageCrosshairs();
+              engageCrosshairs();
             }
 
             // if there's no data, don't continue
             if( ! COUNTRY_DATA ){
-                return;
+              return;
             }
 
 
             if( VIEW_ONLY ){
-                setTimeout(function(){
-                    captureViewOnly( country, capturedBy, capturingTeam );
-                }, animationDuration);
+              setTimeout(function(){
+                captureViewOnly( country, capturedBy, capturingTeam );
+              }, animationDuration);
             } else {
-                setTimeout( function(){
-                    launchCaptureModal( country, capturedBy );
-                }, animationDuration);
+              setTimeout( function(){
+                launchCaptureModal( country, capturedBy );
+              }, animationDuration);
             }
 
         } // function countryClick();
@@ -772,35 +777,35 @@
          *   - an optional parameter for the team that is attempting
          *      to capture the given country
          */
-        function captureViewOnly( country, capturedBy, capturingTeam ){
+         function captureViewOnly( country, capturedBy, capturingTeam ){
 
-            if( capturingTeam === undefined ){
-                capturingTeam = FB_CTF.currentUser;
-            }
+          if( capturingTeam === undefined ){
+            capturingTeam = FB_CTF.currentUser;
+          }
 
-            FB_CTF.modal.viewmodePopup( function(){
-                var $container = $('#fb-country-popup'),
-                    positionX  = $('.longitude-focus').position().left + 60,
-                    positionY  = $('.latitude-focus').position().top - $container.height() - 60,
-                    points     = COUNTRY_DATA && COUNTRY_DATA[country] ? COUNTRY_DATA[country].points : 0;
+          FB_CTF.modal.viewmodePopup( function(){
+            var $container = $('#fb-country-popup'),
+            positionX  = $('.longitude-focus').position().left + 60,
+            positionY  = $('.latitude-focus').position().top - $container.height() - 60,
+            points     = COUNTRY_DATA && COUNTRY_DATA[country] ? COUNTRY_DATA[country].points : 0;
 
-                $('.capturing-team-name', $container).text( capturingTeam );
-                $('.points-value', $container).text( '+ ' + points + ' Pts');
-                $('.country-owner', $container).html( capturedBy );
-                $('.country-name', $container).text( country );
+            $('.capturing-team-name', $container).text( capturingTeam );
+            $('.points-value', $container).text( '+ ' + points + ' Pts');
+            $('.country-owner', $container).html( capturedBy );
+            $('.country-name', $container).text( country );
 
-                $container.css({
-                    left : positionX + 'px',
-                    top  : positionY + 'px'
-                });
-
-                setTimeout(function(){
-                    removeCaptured();
-                    FB_CTF.modal.closeHoverPopup();
-
-                    enableClickAndDrag.zoomToPoint();
-                }, 5000);
+            $container.css({
+              left : positionX + 'px',
+              top  : positionY + 'px'
             });
+
+            setTimeout(function(){
+              removeCaptured();
+              FB_CTF.modal.closeHoverPopup();
+
+              enableClickAndDrag.zoomToPoint();
+            }, 5000);
+          });
         }
 
 
@@ -811,20 +816,20 @@
          *   - if this is called from an event listener, it comes with
          *      an event object
          */
-        function removeCaptured(event){
-            if(event)
-                event.preventDefault();
+         function removeCaptured(event){
+          if(event)
+            event.preventDefault();
 
-            console.log(CURRENT_ZOOM);
+          console.log(CURRENT_ZOOM);
 
-            if(CURRENT_ZOOM < 1.1){
-                enableClickAndDrag.zoomToPoint();
-            }
+          if(CURRENT_ZOOM < 1.1){
+            enableClickAndDrag.zoomToPoint();
+          }
 
-            $('[class~="country-clicked"]', $mapSvg).fadeOut(function(){
-                $(this).remove();
-            });
-            $countryHover.empty();
+          $('[class~="country-clicked"]', $mapSvg).fadeOut(function(){
+            $(this).remove();
+          });
+          $countryHover.empty();
         }
 
 
@@ -838,44 +843,44 @@
          * @param capturedBy (string)
          *   - the user or team who has captured this country
          */
-        function launchCaptureModal( country, capturedBy ){
-            var data = COUNTRY_DATA[country];
+         function launchCaptureModal( country, capturedBy ){
+          var data = COUNTRY_DATA[country];
 
-            FB_CTF.modal.loadPopup('country-capture', function(){
-                var $container = $('.fb-modal-content'),
-                    intro      = data ? data.intro : '',
-                    hint       = data ? data.hint : '',
-                    points     = data ? data.points : '',
-                    category   = data ? data.category : '',
-                    completed  = data ? data.completed : '';
+          FB_CTF.modal.loadPopup('country-capture', function(){
+            var $container = $('.fb-modal-content'),
+            intro      = data ? data.intro : '',
+            hint       = data ? data.hint : '',
+            points     = data ? data.points : '',
+            category   = data ? data.category : '',
+            completed  = data ? data.completed : '';
 
-                $('.country-name', $container).text(country);
-                $('.capture-text', $container).text(intro);
-                $('.capture-hint div', $container).text(hint);
-                $('.points-number', $container).text(points);
-                $('.country-category', $container).text(category);
-                $('.country-owner', $container).html(capturedBy);
+            $('.country-name', $container).text(country);
+            $('.capture-text', $container).text(intro);
+            $('.capture-hint div', $container).text(hint);
+            $('.points-number', $container).text(points);
+            $('.country-category', $container).text(category);
+            $('.country-owner', $container).html(capturedBy);
 
-                if( completed instanceof Array){
-                    $.each(completed, function(){
-                        $('.completed-list', $container).append('<li>' + this + '</li>');
-                    });
-                }
+            if( completed instanceof Array){
+              $.each(completed, function(){
+                $('.completed-list', $container).append('<li>' + this + '</li>');
+              });
+            }
 
                 //
                 // event listeners
                 //
                 $('.js-trigger-hint', $container).on('click', function(event) {
-                    event.preventDefault();
-                    $(this).onlySiblingWithClass('active').closest('.fb-modal-content').removeClass('help-enabled').addClass('hint-enabled');
+                  event.preventDefault();
+                  $(this).onlySiblingWithClass('active').closest('.fb-modal-content').removeClass('help-enabled').addClass('hint-enabled');
                 });
                 $('.js-trigger-help', $container).on('click', function(event) {
-                    event.preventDefault();
-                    $(this).onlySiblingWithClass('active').closest('.fb-modal-content').removeClass('hint-enabled').addClass('help-enabled');
+                  event.preventDefault();
+                  $(this).onlySiblingWithClass('active').closest('.fb-modal-content').removeClass('hint-enabled').addClass('help-enabled');
                 });
 
                 $('.js-close-modal', $container).on('click', removeCaptured);
-            });
+              });
         } // function launchCaptureModal();
 
 
@@ -883,35 +888,35 @@
         /**
          * on hover of a country in the svg
          */
-        function countryHover(event){
-            if(event)
-                event.preventDefault();
+         function countryHover(event){
+          if(event)
+            event.preventDefault();
 
-            var $self      = $(this),
-                country    = $('[class~="land"]', $self).attr('title'),
-                capturedBy = getCapturedByMarkup( $self.data('captured') ),
-                mouse_x    = event.pageX,
-                mouse_y    = event.pageY;
+          var $self      = $(this),
+          country    = $('[class~="land"]', $self).attr('title'),
+          capturedBy = getCapturedByMarkup( $self.data('captured') ),
+          mouse_x    = event.pageX,
+          mouse_y    = event.pageY;
 
-            if( ! COUNTRY_DATA ){
-                return;
-            }
+          if( ! COUNTRY_DATA ){
+            return;
+          }
 
-            var data = COUNTRY_DATA[country];
+          var data = COUNTRY_DATA[country];
 
-            FB_CTF.modal.countryHoverPopup(function(){
-                var $container = $('#fb-country-popup').css({
-                        left : mouse_x + 'px',
-                        top  : mouse_y + 'px'
-                    }),
-                    points     = data ? data.points : '',
-                    category   = data ? data.category : ''
+          FB_CTF.modal.countryHoverPopup(function(){
+            var $container = $('#fb-country-popup').css({
+              left : mouse_x + 'px',
+              top  : mouse_y + 'px'
+            }),
+            points     = data ? data.points : '',
+            category   = data ? data.category : ''
 
-                $('.country-name', $container).text(country);
-                $('.points-number', $container).text(points);
-                $('.country-category', $container).text(category);
-                $('.country-owner', $container).html(capturedBy);
-            });
+            $('.country-name', $container).text(country);
+            $('.points-number', $container).text(points);
+            $('.country-category', $container).text(category);
+            $('.country-owner', $container).html(capturedBy);
+          });
 
             //
             // add the country path to the hover group so we can
@@ -929,18 +934,18 @@
          * the crosshairs interstitial animation that takes place
          *  before the "capture_country" modal appears
          */
-        function engageCrosshairs(){
+         function engageCrosshairs(){
 
-            var svgMap           = d3.select('#fb-gameboard-map'),
-                hoveredCountry   = svgMap.select('.country-hover .land'),
-                indicator        = svgMap.select('.country-hover .map-indicator');
+          var svgMap           = d3.select('#fb-gameboard-map'),
+          hoveredCountry   = svgMap.select('.country-hover .land'),
+          indicator        = svgMap.select('.country-hover .map-indicator');
 
             //
             // make sure the indicator exists. The double [0] checks
             //  the d3 syntax.
             //
             if( ! indicator[0][0] ){
-                return;
+              return;
             }
 
             var indicatorStyle   = indicator.attr('transform'),
@@ -966,25 +971,25 @@
                 mapWidth         = $mapSvg.width(),
                 zoom             = enableClickAndDrag.getZoom();
 
-            zoom = zoom < 2 ? 2 : zoom;
+                zoom = zoom < 2 ? 2 : zoom;
 
-            var zoomRatio        = 1/zoom,
+                var zoomRatio        = 1/zoom,
                 focusAdjusted    = 10 * zoomRatio,
                 latLngAdjusted   = 1 / (5.6 * zoomRatio),
                 xRatio           = (1 / zoomRatio) / 10;
 
-            enableClickAndDrag.zoomToPoint( latFocus, lngFocus, 2 );
+                enableClickAndDrag.zoomToPoint( latFocus, lngFocus, 2 );
 
 
             // add a slightly transparent background to overlay
             //  the rest of the map
             country_clicked.append('rect')
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('width', mapWidth)
-                .attr('height', mapHeight)
-                .attr('fill', '#13242b')
-                .attr('style', 'opacity:.6');
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', mapWidth)
+            .attr('height', mapHeight)
+            .attr('fill', '#13242b')
+            .attr('style', 'opacity:.6');
 
             // add the hovered country path
             $country_clicked.append( hoveredCountry.node() );
@@ -992,62 +997,62 @@
             // add the crosshairs
             var crosshairs_xy_translate = 'translate(' + (latFocus + xRatio - 100) + 'px,' + (lngFocus - xRatio - 100) + 'px) scale(' + zoomRatio + ')';
             var crosshairs_xy = country_clicked.append('g')
-                .attr('class', 'crosshairs')
-                .attr('style', 'transform:' + crosshairs_xy_translate + '; -webkit-transform:' + crosshairs_xy_translate + ';-moz-transform:' + crosshairs_xy_translate + ';');
+            .attr('class', 'crosshairs')
+            .attr('style', 'transform:' + crosshairs_xy_translate + '; -webkit-transform:' + crosshairs_xy_translate + ';-moz-transform:' + crosshairs_xy_translate + ';');
 
             var crosshairs = crosshairs_xy.append('g').attr('class', 'crosshairs-rotate');
 
             // x
             var latLines_translate = 'translate(' + xRatio + 'px,' + (lngFocus - xRatio - 100) + 'px)';
             var latLines = country_clicked.append('g')
-                .attr('class', 'latitude-focus')
-                .attr('stroke', COLOR_TEAL_BLUE)
-                .attr('stroke-width', zoomRatio)
-                .attr('style', 'transform:' + latLines_translate + ';-webkit-transform:' + latLines_translate + ';-moz-transform:' + latLines_translate + ';');
+            .attr('class', 'latitude-focus')
+            .attr('stroke', COLOR_TEAL_BLUE)
+            .attr('stroke-width', zoomRatio)
+            .attr('style', 'transform:' + latLines_translate + ';-webkit-transform:' + latLines_translate + ';-moz-transform:' + latLines_translate + ';');
             latLines.append('path').attr('d', "M0,0L" + (latFocus - focusAdjusted) + ",0" );
             latLines.append('path').attr('d', "M" + (latFocus + focusAdjusted) + ",0L" + mapWidth + ",0" );
 
             // y
             var lngLines_translate = 'translate(' + (latFocus + xRatio - 100) + 'px,-' + xRatio + 'px)';
             var lngLines = country_clicked.append('g')
-                .attr('class', 'longitude-focus')
-                .attr('stroke', COLOR_TEAL_BLUE)
-                .attr('stroke-width', zoomRatio)
-                .attr('style', 'transform:' + lngLines_translate + ';-webkit-transform:' + lngLines_translate + ';-moz-transform:' + lngLines_translate + ';');
+            .attr('class', 'longitude-focus')
+            .attr('stroke', COLOR_TEAL_BLUE)
+            .attr('stroke-width', zoomRatio)
+            .attr('style', 'transform:' + lngLines_translate + ';-webkit-transform:' + lngLines_translate + ';-moz-transform:' + lngLines_translate + ';');
 
             lngLines.append('path').attr('d', "M0,0L0," + (lngFocus - focusAdjusted) );
             lngLines.append('path').attr('d', "M0," + (lngFocus + focusAdjusted) + "L0," + mapHeight );
 
             // circles
             crosshairs.append('circle')
-                .attr('cx', 0).attr('cy', 0).attr('r', 30)
-                .attr('fill', 'none')
-                .attr('stroke-dasharray', '31.4 15.7')
-                .attr('style', 'transform:rotate(-75deg);-webkit-transform:rotate(-75deg);-moz-transform:rotate(-75deg)')
-                .attr('stroke', COLOR_TEAL_BLUE);
+            .attr('cx', 0).attr('cy', 0).attr('r', 30)
+            .attr('fill', 'none')
+            .attr('stroke-dasharray', '31.4 15.7')
+            .attr('style', 'transform:rotate(-75deg);-webkit-transform:rotate(-75deg);-moz-transform:rotate(-75deg)')
+            .attr('stroke', COLOR_TEAL_BLUE);
             crosshairs.append('circle')
-                .attr('cx', 0).attr('cy', 0).attr('r', 35)
-                .attr('fill', 'none')
-                .attr('stroke-dasharray', '9.158333333 45.79167')
-                .attr('style', 'transform:rotate(-53deg);-webkit-transform:rotate(-53deg);-moz-transform:rotate(-53deg)')
-                .attr('stroke-width', 2)
-                .attr('stroke', COLOR_TEAL_BLUE);
+            .attr('cx', 0).attr('cy', 0).attr('r', 35)
+            .attr('fill', 'none')
+            .attr('stroke-dasharray', '9.158333333 45.79167')
+            .attr('style', 'transform:rotate(-53deg);-webkit-transform:rotate(-53deg);-moz-transform:rotate(-53deg)')
+            .attr('stroke-width', 2)
+            .attr('stroke', COLOR_TEAL_BLUE);
 
             setTimeout(function(){
-                var latLines_active = 'translate(' + xRatio + 'px,' + (lngFocus - xRatio) + 'px)';
-                latLines.attr('style', 'transform:' + latLines_active + ';-webkit-transform:' + latLines_active + ';-moz-transform:' + latLines_active + ';');
+              var latLines_active = 'translate(' + xRatio + 'px,' + (lngFocus - xRatio) + 'px)';
+              latLines.attr('style', 'transform:' + latLines_active + ';-webkit-transform:' + latLines_active + ';-moz-transform:' + latLines_active + ';');
 
-                var latLines_active = 'translate(' + (latFocus + xRatio) + 'px,-' + xRatio + 'px)';
-                lngLines.attr('style', 'transform:' + latLines_active + ';-webkit-transform:' + latLines_active + ';-moz-transform:' + latLines_active + ';');
+              var latLines_active = 'translate(' + (latFocus + xRatio) + 'px,-' + xRatio + 'px)';
+              lngLines.attr('style', 'transform:' + latLines_active + ';-webkit-transform:' + latLines_active + ';-moz-transform:' + latLines_active + ';');
 
-                var crosshairs_xy_active = 'translate(' + (latFocus + xRatio) + 'px,' + (lngFocus - xRatio) + 'px) scale(' + zoomRatio + ')';
-                crosshairs_xy.attr('style', 'transform:' + crosshairs_xy_active + ';-webkit-transform:' + crosshairs_xy_active + ';-moz-transform:' + crosshairs_xy_active + ';');
+              var crosshairs_xy_active = 'translate(' + (latFocus + xRatio) + 'px,' + (lngFocus - xRatio) + 'px) scale(' + zoomRatio + ')';
+              crosshairs_xy.attr('style', 'transform:' + crosshairs_xy_active + ';-webkit-transform:' + crosshairs_xy_active + ';-moz-transform:' + crosshairs_xy_active + ';');
             }, 10);
 
 
             // add the indicator
             $country_clicked.append( indicator.node() );
-        }
+          }
 
 
 
@@ -1064,58 +1069,58 @@
          * @return Deferred
          *   - indicate that this jqxhr request is all done
          */
-        function loadIn(){
-            var df            = $.Deferred(),
-                $loadModal    = $('#gameboard-loading'),
-                loadPath      = 'inc/gameboard/loading.html';
+         function loadIn(){
+          var df            = $.Deferred(),
+          $loadModal    = $('#gameboard-loading'),
+          loadPath      = 'inc/gameboard/loading.html';
 
-            if($loadModal.length === 0){
-                $loadModal = $('<div id="gameboard-loading" class="fb-loading" />').appendTo( $gameboard );
+          if($loadModal.length === 0){
+            $loadModal = $('<div id="gameboard-loading" class="fb-loading" />').appendTo( $gameboard );
+          }
+
+          FB_CTF.loadComponent( $loadModal, loadPath, function(){
+            $gameboard.addClass( LOADING_CLASS);
+
+            var $loadingCells = $('.gameboard-loading .indicator-cell'),
+            $currCell     = $loadingCells.eq(0),
+            loadInterval;
+
+            loadInterval = setInterval(function(){
+
+              if($currCell.length === 0){
+                clearInterval(loadInterval);
+              }
+              $currCell.addClass('active');
+              $currCell = $currCell.next();
+
+            }, 450 );
+
+            if(! FB_CTF.debug ){
+              $('.boot-sequence').fb_typed({
+                typeSpeed  : 1,
+                humanize   : false,
+                showCursor : false,
+                typeWords  : true,
+                callback   : function() {
+                  setTimeout(function(){
+                    df.resolve();
+                  }, 400);
+                }
+              });
+            } else {
+              df.resolve();
             }
 
-            FB_CTF.loadComponent( $loadModal, loadPath, function(){
-                $gameboard.addClass( LOADING_CLASS);
+          });
 
-                var $loadingCells = $('.gameboard-loading .indicator-cell'),
-                    $currCell     = $loadingCells.eq(0),
-                    loadInterval;
-
-                loadInterval = setInterval(function(){
-
-                    if($currCell.length === 0){
-                        clearInterval(loadInterval);
-                    }
-                    $currCell.addClass('active');
-                    $currCell = $currCell.next();
-
-                }, 450 );
-
-                if(! FB_CTF.debug ){
-                    $('.boot-sequence').fb_typed({
-                        typeSpeed  : 1,
-                        humanize   : false,
-                        showCursor : false,
-                        typeWords  : true,
-                        callback   : function() {
-                            setTimeout(function(){
-                                df.resolve();
-                            }, 400);
-                        }
-                    });
-                } else {
-                    df.resolve();
-                }
-
-            });
-
-            return df;
+          return df;
         }
 
         /**
          * the gameboard is done loading. Hide the loading screen
          */
-        function loadOut(){
-            $gameboard.removeClass( LOADING_CLASS);
+         function loadOut(){
+          $gameboard.removeClass( LOADING_CLASS);
         }
 
 
@@ -1125,110 +1130,135 @@
          * @return Promise
          *   - when all the modules are loaded, return a promise
          */
-        function loadModules(){
-            var $modules      = $('aside[data-module]', $gameboard),
-                df            = $.Deferred(),
-                deferredArray = [];
+         function loadModules(){
+          var $modules      = $('aside[data-module]', $gameboard),
+          df            = $.Deferred(),
+          deferredArray = [];
 
-            $modules.each(function(){
-                var $self      = $(this),
-                    module     = $self.data('module'),
-                    modulePath = 'inc/gameboard/modules/' + module + '.html';
+          $modules.each(function(){
+            var $self      = $(this),
+            module     = $self.data('module'),
+            modulePath = 'inc/gameboard/modules/' + module + '.html';
 
-                var get = $.get( modulePath, function( data, status, jqxhr){
-                    $self.html(data);
-                }).error(function(){
-                    console.error("There was a problem retrieving the module.");
-                    console.log(modulePath);
-                    console.error("/error");
-                });
-
-                deferredArray.push(get);
+            var get = $.get( modulePath, function( data, status, jqxhr){
+              $self.html(data);
+            }).error(function(){
+              console.error("There was a problem retrieving the module.");
+              console.log(modulePath);
+              console.error("/error");
             });
 
-            $.when.apply($, deferredArray).done(function(){
-                console.log("modules loaded");
+            deferredArray.push(get);
+          });
 
-                if( VIEW_ONLY ){
-                    autoScrollModules();
-                }
+          $.when.apply($, deferredArray).done(function(){
+            console.log("modules loaded");
 
-                df.resolve();
-            });
+            if( VIEW_ONLY ){
+              autoScrollModules();
+            }
 
-            return df;
+            df.resolve();
+          });
+
+          return df;
         }
 
         /**
-         * load the svg map. This inserts the svg into the page and
-         *  then sets up some jquery object variables for use
-         *  elsewhere in this module.
+         * load the svg map for gameboard. This inserts the svg into the 
+         * page and then sets up some jquery object variables for use
+         * elsewhere in this module.
          */
-        function loadMap(){
-            var mapPath = '/static/svg/map/world.php';
+         function loadMap(){
+          var mapPath = '/static/svg/map/world.php';
 
-            return $.get( mapPath, function(data, status, jqxhr){
-                console.log("map loaded");
+          return $.get( mapPath, function(data, status, jqxhr){
+            console.log("map loaded");
 
-                $map = $('.fb-map');
-                $map.html(data);
+            $map = $('.fb-map');
+            $map.html(data);
 
-                $mapSvg = $('#fb-gameboard-map');
-                $countryHover = $('[class~="country-hover"]', $mapSvg);
+            $mapSvg = $('#fb-gameboard-map');
+            $countryHover = $('[class~="country-hover"]', $mapSvg);
 
-                enableClickAndDrag.init();
+            enableClickAndDrag.init();
 
-            }, 'html').error(function(){
-                console.error("There was a problem loading the svg map");
-                console.error("/error");
-            });
+          }, 'html').error(function(){
+            console.error("There was a problem loading the svg map");
+            console.error("/error");
+          });
+        }
+
+       /**
+         * load the svg map for view-mode. This inserts the svg into the 
+         * page and then sets up some jquery object variables for use
+         * elsewhere in this module.
+         */
+         function loadMapView(){
+          var mapPath = '/static/svg/map/world-view.php';
+
+          return $.get( mapPath, function(data, status, jqxhr){
+            console.log("map loaded");
+
+            $map = $('.fb-map');
+            $map.html(data);
+
+            $mapSvg = $('#fb-gameboard-map');
+            $countryHover = $('[class~="country-hover"]', $mapSvg);
+
+            enableClickAndDrag.init();
+
+          }, 'html').error(function(){
+            console.error("There was a problem loading the svg map");
+            console.error("/error");
+          });
         }
 
 
         /**
          * load the list view for the game
          */
-        function loadListView(){
-            var listViewPath = 'inc/gameboard/listview.html';
+         function loadListView(){
+          var listViewPath = 'inc/gameboard/listview.html';
 
-            return $.get( listViewPath, function(data, status, jqxhr){
-                console.log("List view loaded");
+          return $.get( listViewPath, function(data, status, jqxhr){
+            console.log("List view loaded");
 
-                $listview = $('.fb-listview');
+            $listview = $('.fb-listview');
 
-                $listview.html(data);
+            $listview.html(data);
 
-                listviewEventListeners( $listview );
+            listviewEventListeners( $listview );
 
-            }, 'html').error(function(){
-                console.error("There was a problem loading the List View");
-                console.error("/error");
-            });
+          }, 'html').error(function(){
+            console.error("There was a problem loading the List View");
+            console.error("/error");
+          });
         }
 
 
         /**
          * load the team data
          */
-        function loadTeamData(){
+         function loadTeamData(){
 
-            var df = $.Deferred();
+          var df = $.Deferred();
 
-            if( TEAM_DATA ){
-                return df.resolve( TEAM_DATA );
-            }
+          if( TEAM_DATA ){
+            return df.resolve( TEAM_DATA );
+          }
 
-            var loadPath = 'data/teams.php';
+          var loadPath = 'data/teams.php';
 
-            return $.get( loadPath, function(data, status, jqxhr){
-                TEAM_DATA = data;
-            }, 'json').error( function( jqhxr, status, error){
-                console.error("There was a problem retrieving the team data.");
-                console.log(loadPath);
-                console.log(status);
-                console.log(error);
-                console.error("/error");
-            });
+          return $.get( loadPath, function(data, status, jqxhr){
+            TEAM_DATA = data;
+          }, 'json').error( function( jqhxr, status, error){
+            console.error("There was a problem retrieving the team data.");
+            console.log(loadPath);
+            console.log(status);
+            console.log(error);
+            console.error("/error");
+          });
 
         }
 
@@ -1239,25 +1269,25 @@
          * @return Deferred
          *   - indicate that this jqxhr request is all done
          */
-        function getCountryData(){
+         function getCountryData(){
 
-            var df = $.Deferred();
+          var df = $.Deferred();
 
-            if(COUNTRY_DATA){
-                return df.resolve(COUNTRY_DATA);
-            }
+          if(COUNTRY_DATA){
+            return df.resolve(COUNTRY_DATA);
+          }
 
-            var loadPath = 'data/country-data.json';
+          var loadPath = 'data/country-data.json';
 
-            return $.get( loadPath, function(data, status, jqxhr){
-                COUNTRY_DATA = data;
-            }, 'json').error(function(jqxhr, status, error){
-                console.error("There was a problem retrieving the game data.");
-                console.log(loadPath);
-                console.log(status);
-                console.log(error);
-                console.error("/error");
-            });
+          return $.get( loadPath, function(data, status, jqxhr){
+            COUNTRY_DATA = data;
+          }, 'json').error(function(jqxhr, status, error){
+            console.error("There was a problem retrieving the game data.");
+            console.log(loadPath);
+            console.log(status);
+            console.log(error);
+            console.error("/error");
+          });
         }
 
 
@@ -1266,24 +1296,24 @@
          * since a lot of the data is in an external file, go through
          *  that data and markup the svg so we can use in
          */
-        function renderCountryData(){
+         function renderCountryData(){
 
-            if( ! COUNTRY_DATA){
-                return;
-            }
+          if( ! COUNTRY_DATA){
+            return;
+          }
 
-            $('.countries .land', $mapSvg).each(function(){
-                var $countryPath = $(this),
-                    $group       = $countryPath.closest('g'),
-                    country      = $countryPath.attr('title'),
-                    data         = COUNTRY_DATA[country];
+          $('.countries .land', $mapSvg).each(function(){
+            var $countryPath = $(this),
+            $group       = $countryPath.closest('g'),
+            country      = $countryPath.attr('title'),
+            data         = COUNTRY_DATA[country];
 
-                if( data ){
+            if( data ){
 
                     // add the category
                     $group.attr('data-category', data.category );
-                }
-            });
+                  }
+                });
 
         }
 
@@ -1297,10 +1327,10 @@
         /**
          * toggle the list view on/off
          */
-        function toggleListView( enabled ){
+         function toggleListView( enabled ){
 
-            var activeClass = 'listview-enabled',
-                toggle      = enabled === undefined ? ! LIST_VIEW : enabled ? true : false;
+          var activeClass = 'listview-enabled',
+          toggle      = enabled === undefined ? ! LIST_VIEW : enabled ? true : false;
 
                 // the containers (for moving the modules around)
                 $containerLeft  = $('.fb-module-container.container--column.column-left'),
@@ -1312,20 +1342,20 @@
                 $module_leaderboard = $('aside[data-module="leaderboard"]'),
                 $module_domination  = $('aside[data-module="world-domination"]');
 
-            if( toggle ){
-                $gameboard.addClass( activeClass );
-                LIST_VIEW = true;
-                $module_activity.prependTo( $containerRow ).addClass('module--outer-left');
-                $module_domination.appendTo( $containerLeft );
-                $module_leaderboard.prependTo( $containerRight );
-            } else {
-                $gameboard.removeClass( activeClass );
-                LIST_VIEW = false;
-                $module_leaderboard.appendTo( $containerLeft );
-                $module_activity.appendTo( $containerLeft ).removeClass('module--outer-left');
-                $module_domination.prependTo( $containerRow );
-            }
-        }
+                if( toggle ){
+                  $gameboard.addClass( activeClass );
+                  LIST_VIEW = true;
+                  $module_activity.prependTo( $containerRow ).addClass('module--outer-left');
+                  $module_domination.appendTo( $containerLeft );
+                  $module_leaderboard.prependTo( $containerRight );
+                } else {
+                  $gameboard.removeClass( activeClass );
+                  LIST_VIEW = false;
+                  $module_leaderboard.appendTo( $containerLeft );
+                  $module_activity.appendTo( $containerLeft ).removeClass('module--outer-left');
+                  $module_domination.prependTo( $containerRow );
+                }
+              }
 
 
         /**
@@ -1334,16 +1364,16 @@
          * @param $listview (jquery object)
          *   - the listview
          */
-        function listviewEventListeners( $listview ){
+         function listviewEventListeners( $listview ){
 
             //
             // click on the row, engage the "capture_country"
             //  modal, except for in a couple situations
             //
             $('tr', $listview).on('click', function(event) {
-                event.preventDefault();
-                var $tr     = $(this).closest('tr'),
-                    country = $tr.data('country');
+              event.preventDefault();
+              var $tr     = $(this).closest('tr'),
+              country = $tr.data('country');
 
                 //
                 // try to capture the country if:
@@ -1351,47 +1381,47 @@
                 //   - the country is NOT captured
                 //
                 if( ! $tr.hasClass('help-enabled') && $tr.data('captured') === undefined ){
-                    captureCountry( country );
+                  captureCountry( country );
                 }
 
-            });
+              });
 
             //
             // the incoming help status
             //
             $('tr .status--incoming-help', $listview).on('click', function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                var country = $(this).closest('tr').data('country');
+              event.preventDefault();
+              event.stopPropagation();
+              var country = $(this).closest('tr').data('country');
 
-                FB_CTF.modal.loadPopup('country-help', function(){
-                    $('#fb-modal .add-new-help-chat').data('country', country);
-                    $('#fb-modal .country-name').text(country);
-                });
+              FB_CTF.modal.loadPopup('country-help', function(){
+                $('#fb-modal .add-new-help-chat').data('country', country);
+                $('#fb-modal .country-name').text(country);
+              });
             });
 
             //
             // offer to give help to someone who needs it
             //
             $('tr .status--give-help', $listview).on('click', function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                var country = $(this).closest('tr').data('country');
-                FB_CTF.modal.loadPopup('country-help-opponent', function(){
-                    $('#fb-modal .add-new-help-chat').data('country', country);
-                });
+              event.preventDefault();
+              event.stopPropagation();
+              var country = $(this).closest('tr').data('country');
+              FB_CTF.modal.loadPopup('country-help-opponent', function(){
+                $('#fb-modal .add-new-help-chat').data('country', country);
+              });
             });
 
             //
             // click on the timer to launch the individual chat
             //
             $('tr .status--timer', $listview).on('click', function(event) {
-                event.preventDefault();
-                event.stopPropagation();
-                var country = $(this).closest('tr').data('country');
-                $('.alerts li[data-help="' + country + '"] .js-expand-individual-chat').trigger('click');
+              event.preventDefault();
+              event.stopPropagation();
+              var country = $(this).closest('tr').data('country');
+              $('.alerts li[data-help="' + country + '"] .js-expand-individual-chat').trigger('click');
             });
-        }
+          }
 
 
         /* --------------------------------------------
@@ -1402,15 +1432,15 @@
         /**
          * init the tutorial modals
          */
-        function initTutorial(event){
-            if(event)
-                event.preventDefault();
+         function initTutorial(event){
+          if(event)
+            event.preventDefault();
 
-            var firstTutorial = 'tool-bars',
-                tutorialSteps = 8,
-                currStepIndex = 1;
+          var firstTutorial = 'tool-bars',
+          tutorialSteps = 8,
+          currStepIndex = 1;
 
-            FB_CTF.modal.load('tutorial--' + firstTutorial, function(){
+          FB_CTF.modal.load('tutorial--' + firstTutorial, function(){
 
                 // we're done loading stuff, so remove the laoding class
                 loadOut();
@@ -1422,39 +1452,39 @@
 
                 // enable the "next tutorial" button
                 $('#fb-buildkit').on('click', 'a[data-next-tutorial]', function(event) {
-                    event.preventDefault();
-                    var next = $(this).data('nextTutorial');
+                  event.preventDefault();
+                  var next = $(this).data('nextTutorial');
 
-                    if(next){
-                        var loadPath = 'inc/modals/tutorial--' + next + '.html';
-                        currStepIndex++;
-                        FB_CTF.loadComponent('#fb-modal', loadPath, buildTutorial);
-                    } else {
-                        closeTutorial();
-                    }
+                  if(next){
+                    var loadPath = 'inc/modals/tutorial--' + next + '.html';
+                    currStepIndex++;
+                    FB_CTF.loadComponent('#fb-modal', loadPath, buildTutorial);
+                  } else {
+                    closeTutorial();
+                  }
                 });
-            });
+              });
 
             /**
              * things to do after the tutorial step gets loaded
              */
-            function buildTutorial(){
-                var $tutorial    = $('.fb-tutorial'),
-                    $progressBar = $('.tutorial-progress', $tutorial),
-                    currStep     = $tutorial.data('tutorialStep');
+             function buildTutorial(){
+              var $tutorial    = $('.fb-tutorial'),
+              $progressBar = $('.tutorial-progress', $tutorial),
+              currStep     = $tutorial.data('tutorialStep');
 
                 // build the tutorial progress bar
                 for( var i = 0; i < tutorialSteps; i++){
-                    var markup = i < currStepIndex ? '<li class="step-filled" />' : '<li />';
-                    $progressBar.append( markup );
+                  var markup = i < currStepIndex ? '<li class="step-filled" />' : '<li />';
+                  $progressBar.append( markup );
                 }
 
                 $body.removeClass(function(){
-                    var stepName = $(this).data('tutorial');
-                    return 'tutorial-step--' + stepName;
+                  var stepName = $(this).data('tutorial');
+                  return 'tutorial-step--' + stepName;
                 }).data('tutorial', currStep).addClass('tutorial-active tutorial-step--' + currStep);
+              }
             }
-        }
 
         /**
          * close the tutorial
@@ -1463,12 +1493,12 @@
          *   - if this function is called from an event listener,
          *      prevent the default action
          */
-        function closeTutorial(event){
-            if(event)
-                event.preventDefault();
+         function closeTutorial(event){
+          if(event)
+            event.preventDefault();
 
-            $body.removeAttr('class').removeData('tutorial');
-            FB_CTF.modal.close();
+          $body.removeAttr('class').removeData('tutorial');
+          FB_CTF.modal.close();
         }
 
 
@@ -1480,7 +1510,7 @@
         /**
          * init the gameboard
          */
-        function init(){
+         function init(){
 
             // init the jquery object variables
             $gameboard = $('#fb-gameboard');
@@ -1488,25 +1518,25 @@
             VIEW_ONLY = $body.data('section') === 'viewer-mode';
 
             if( GAMEBOARD_LOADED === false ){
-               build();
-            }
-        }
+             build();
+           }
+         }
 
 
         /**
          * utility function to check if the game is currently in
          *  view-only mode
          */
-        function isViewMode(){
-            return VIEW_ONLY;
+         function isViewMode(){
+          return VIEW_ONLY;
         }
 
         return{
-            init               : init,
-            data               : getCountryData,
-            captureCountry     : captureCountry,
-            initTutorial       : initTutorial,
-            toggleListView     : toggleListView,
+          init               : init,
+          data               : getCountryData,
+          captureCountry     : captureCountry,
+          initTutorial       : initTutorial,
+          toggleListView     : toggleListView,
 
             // clos the tutorial
             closeTutorial      : closeTutorial,
@@ -1516,7 +1546,7 @@
 
             // check to see if we're in view mode (for external use)
             isViewMode         : isViewMode
-        };
+          };
 
     })(); // gameboard
 
@@ -1524,53 +1554,53 @@
     /**
      * --modal
      */
-    FB_CTF.modal = (function(){
+     FB_CTF.modal = (function(){
 
-        var LOAD_EXT        = '.html',
-            ACTIVE_CLASS    = 'visible',
-            POPUP_CLASSES   = 'fb-modal-wrapper modal--popup',
-            DEFAULT_CLASSES = 'fb-modal-wrapper modal--default',
-            MODAL_DIR       = 'inc/modals/',
-            $modalContainer,
-            $modal,
-            $countryHover;
+      var LOAD_EXT        = '.html',
+      ACTIVE_CLASS    = 'visible',
+      POPUP_CLASSES   = 'fb-modal-wrapper modal--popup',
+      DEFAULT_CLASSES = 'fb-modal-wrapper modal--default',
+      MODAL_DIR       = 'inc/modals/',
+      $modalContainer,
+      $modal,
+      $countryHover;
 
 
         /**
          * initialize the modal, including grabbing the modal div and
          *  setting up event listeners
          */
-        function init(){
-            $modal = $('#fb-modal');
-            $modalContainer = $('#fb-buildkit');
-            $countryHover = $('#fb-country-popup');
+         function init(){
+          $modal = $('#fb-modal');
+          $modalContainer = $('#fb-buildkit');
+          $countryHover = $('#fb-country-popup');
 
             //
             // trigger the launch of a modal
             //
             $body.on('click', '.js-launch-modal', function(event) {
-                event.preventDefault();
-                var modal = $(this).data('modal'),
-                    cb;
+              event.preventDefault();
+              var modal = $(this).data('modal'),
+              cb;
 
                 //
                 // if we're launching the login modal, add the active
                 //  class to the nav item
                 //
                 if(modal === 'login'){
-                    $('.fb-main-nav a').removeClass('active');
-                    $(this).addClass('active');
+                  $('.fb-main-nav a').removeClass('active');
+                  $(this).addClass('active');
                 }
 
                 load(modal, cb);
-            });
+              });
 
 
             //
             // close the modal
             //
             $body.on('click', '.js-close-modal', close);
-        }
+          }
 
         /**
          * close the modal
@@ -1579,11 +1609,11 @@
          *   - if this function call comes from an event listener,
          *      prevent the default action
          */
-        function close( event ){
-            if(event)
-                event.preventDefault();
+         function close( event ){
+          if(event)
+            event.preventDefault();
 
-            $('div[id^="fb-modal"]').removeClass( ACTIVE_CLASS );
+          $('div[id^="fb-modal"]').removeClass( ACTIVE_CLASS );
 
             //
             // @NOTICE
@@ -1591,10 +1621,10 @@
             //  in case it was altered when the modal was launched.
             //
             if( _BUILDKIT !== undefined ){
-                _BUILDKIT.enableNavActiveState();
+              _BUILDKIT.enableNavActiveState();
             }
 
-        }
+          }
 
         /**
          * close the poup
@@ -1603,11 +1633,11 @@
          *   - if this function call comes from an event listener,
          *      prevent the default action
          */
-        function closeHoverPopup( event ){
-            if(event)
-                event.preventDefault();
+         function closeHoverPopup( event ){
+          if(event)
+            event.preventDefault();
 
-            $countryHover.removeClass( ACTIVE_CLASS );
+          $countryHover.removeClass( ACTIVE_CLASS );
         }
 
         /**
@@ -1622,13 +1652,13 @@
          * @param cb (function)
          *   - the callback
          */
-        function openAndLoad( $modal, loadPath, cb){
-            FB_CTF.loadComponent( $modal, loadPath, function(){
-                if( typeof cb === 'function' ){
-                    cb();
-                }
-                $modal.addClass( ACTIVE_CLASS );
-            });
+         function openAndLoad( $modal, loadPath, cb){
+          FB_CTF.loadComponent( $modal, loadPath, function(){
+            if( typeof cb === 'function' ){
+              cb();
+            }
+            $modal.addClass( ACTIVE_CLASS );
+          });
         }
 
 
@@ -1650,11 +1680,11 @@
          * @param cb (function)
          *   - a callback function for after the modal content loads
          */
-        function loadPopup(modalName, cb){
-            _load(modalName, POPUP_CLASSES, MODAL_DIR, cb);
+         function loadPopup(modalName, cb){
+          _load(modalName, POPUP_CLASSES, MODAL_DIR, cb);
         }
         function load(modalName, cb){
-            _load(modalName, DEFAULT_CLASSES, MODAL_DIR, cb);
+          _load(modalName, DEFAULT_CLASSES, MODAL_DIR, cb);
         }
 
 
@@ -1676,20 +1706,20 @@
          *   - a callback function for after the modal content loads
          *
          */
-        function _load(modalName, modalClasses, loadDir, cb){
-            var loadPath = loadDir + modalName + LOAD_EXT;
+         function _load(modalName, modalClasses, loadDir, cb){
+          var loadPath = loadDir + modalName + LOAD_EXT;
 
-            closeHoverPopup();
+          closeHoverPopup();
 
-            modalClasses += ' modal--' + modalName;
+          modalClasses += ' modal--' + modalName;
 
-            if( $modal.length === 0 ){
-                $modal = $('<div id="fb-modal" class="' + modalClasses + '" />').appendTo( $modalContainer );
-            } else {
-                $modal.removeAttr('class').addClass(modalClasses);
-            }
+          if( $modal.length === 0 ){
+            $modal = $('<div id="fb-modal" class="' + modalClasses + '" />').appendTo( $modalContainer );
+          } else {
+            $modal.removeAttr('class').addClass(modalClasses);
+          }
 
-            openAndLoad($modal, loadPath, cb);
+          openAndLoad($modal, loadPath, cb);
         }
 
 
@@ -1705,17 +1735,17 @@
          * @param cb (function)
          *   - callback funtion for after the persistent modal is loaded
          */
-        function loadPersistent(modalName, cb){
+         function loadPersistent(modalName, cb){
 
-            var loadPath = MODAL_DIR + modalName + LOAD_EXT,
-                modalId  = 'fb-modal-persistent--' + modalName,
-                $modal   = $(modalId);
+          var loadPath = MODAL_DIR + modalName + LOAD_EXT,
+          modalId  = 'fb-modal-persistent--' + modalName,
+          $modal   = $(modalId);
 
-            if($modal.length === 0){
-                $modal = $('<div id="' + modalId + '" class="' + POPUP_CLASSES + '" />').appendTo( $modalContainer );
-            }
+          if($modal.length === 0){
+            $modal = $('<div id="' + modalId + '" class="' + POPUP_CLASSES + '" />').appendTo( $modalContainer );
+          }
 
-            FB_CTF.loadComponent($modal, loadPath, cb);
+          FB_CTF.loadComponent($modal, loadPath, cb);
         }
 
         /**
@@ -1724,10 +1754,10 @@
          * @param modalName (string)
          *   - the name of the modal to open
          */
-        function openPersistent(modalName){
-            var modalId = '#fb-modal-persistent--' + modalName;
+         function openPersistent(modalName){
+          var modalId = '#fb-modal-persistent--' + modalName;
 
-            $(modalId).addClass( ACTIVE_CLASS );
+          $(modalId).addClass( ACTIVE_CLASS );
         }
 
 
@@ -1737,13 +1767,13 @@
          * @param cb (function)
          *   - a callback to render the country data in the popup
          */
-        function countryHoverPopup(cb){
-            var loadPath = 'inc/modals/country-popup.html';
-            if( $countryHover.length === 0 ){
-                $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo( $modalContainer );
-            }
+         function countryHoverPopup(cb){
+          var loadPath = 'inc/modals/country-popup.html';
+          if( $countryHover.length === 0 ){
+            $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo( $modalContainer );
+          }
 
-            openAndLoad($countryHover, loadPath, cb);
+          openAndLoad($countryHover, loadPath, cb);
         }
 
 
@@ -1753,18 +1783,18 @@
          * @param cb (function)
          *   - a callback to render the country data in the popup
          */
-        function viewmodePopup( cb ){
-            var loadPath = 'inc/modals/country-popup--viewmode.html';
-            if( $countryHover.length === 0 ){
-                $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--view-only" />').appendTo( $modalContainer );
-            }
+         function viewmodePopup( cb ){
+          var loadPath = 'inc/modals/country-popup--viewmode.html';
+          if( $countryHover.length === 0 ){
+            $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--view-only" />').appendTo( $modalContainer );
+          }
 
-            openAndLoad($countryHover, loadPath, cb);
+          openAndLoad($countryHover, loadPath, cb);
         }
 
 
         return {
-            init              : init,
+          init              : init,
 
             // loads the basic modal
             load              : load,
@@ -1789,16 +1819,16 @@
 
             // close the regular modal
             close             : close
-        };
+          };
     })(); // modal
 
 
     /**
      * --slider
      */
-    FB_CTF.slider = (function(){
+     FB_CTF.slider = (function(){
 
-        var selector = '.fb-slider';
+      var selector = '.fb-slider';
 
         /**
          * init the slider
@@ -1807,30 +1837,30 @@
          *   - an optional callback function to run after
          *      the slider loads
          */
-        function init( cb ){
+         function init( cb ){
 
-            var itemWidth = $(selector).closest('#fb-modal').length > 0 ? 90 : 120 ;
+          var itemWidth = $(selector).closest('#fb-modal').length > 0 ? 90 : 120 ;
 
-            $(selector).flexslider({
-                namespace  : "fb-slider-",
-                animation  : "slide",
-                selector   : ".slides > li",
-                slideshow  : false,
-                minItems   : 2,
-                itemWidth  : itemWidth,
-                maxItems   : 7,
-                move       : 1,
-                controlNav : false,
-                start      : function(){
-                    if( typeof cb === 'function' ){
-                        cb();
-                    }
-                }
-            });
+          $(selector).flexslider({
+            namespace  : "fb-slider-",
+            animation  : "slide",
+            selector   : ".slides > li",
+            slideshow  : false,
+            minItems   : 2,
+            itemWidth  : itemWidth,
+            maxItems   : 7,
+            move       : 1,
+            controlNav : false,
+            start      : function(){
+              if( typeof cb === 'function' ){
+                cb();
+              }
+            }
+          });
         }
 
         return {
-            init : init
+          init : init
         };
     })(); // slider
 
@@ -1839,45 +1869,45 @@
      * --graphics
      * build graphics (like the scorecard) using d3
      */
-    FB_CTF.graphics = (function(){
+     FB_CTF.graphics = (function(){
 
         /**
          * set up event listeners
          */
-        function init(){
+         function init(){
 
-            $('.fb-graphic').each(function(){
-                var $graphic = $(this),
-                    datafile = $graphic.data('file');
+          $('.fb-graphic').each(function(){
+            var $graphic = $(this),
+            datafile = $graphic.data('file');
 
-                if($graphic.hasClass('initialized')){
-                    return;
-                }
+            if($graphic.hasClass('initialized')){
+              return;
+            }
 
-                $graphic.addClass('initialized');
+            $graphic.addClass('initialized');
 
-                build(this, datafile);
+            build(this, datafile);
 
-            });
+          });
 
             //
             // scoreboard filter
             //
             $('input[name="fb-scoreboard-filter"]').on('change', function(event) {
-                event.preventDefault();
-                var team = $(this).val(),
-                    $teamLine = $('.scoreboard-graphic-container .team-score-line[data-team="' + team + '"]');
+              event.preventDefault();
+              var team = $(this).val(),
+              $teamLine = $('.scoreboard-graphic-container .team-score-line[data-team="' + team + '"]');
 
 
-                if(this.checked){
-                    $teamLine.show();
-                } else {
-                    $teamLine.hide();
-                }
+              if(this.checked){
+                $teamLine.show();
+              } else {
+                $teamLine.hide();
+              }
 
 
             });
-        }
+          }
 
         /**
          * build the graph
@@ -1888,126 +1918,126 @@
          * @param datafile (string)
          *   - the file to load, which contains the data
          */
-        function build( svgEl, datafile ){
+         function build( svgEl, datafile ){
 
-            if(datafile === undefined){
-                return;
-            }
+          if(datafile === undefined){
+            return;
+          }
 
-            var $container = $(svgEl).closest('.scoreboard-graphic-container');
+          var $container = $(svgEl).closest('.scoreboard-graphic-container');
 
-            $.get( datafile , function(data, status, jqxhr){
+          $.get( datafile , function(data, status, jqxhr){
 
-                var scores = data;
+            var scores = data;
 
-                var minMaxArray = [];
+            var minMaxArray = [];
 
-                $.each(scores, function(){
-                    $.merge(minMaxArray, this.values);
-                });
+            $.each(scores, function(){
+              $.merge(minMaxArray, this.values);
+            });
 
-                var graphic  = d3.select( svgEl ),
-                    MARGIN   = {left: 60, right: 20, bottom:40},
-                    WIDTH    = $container.length > 0 ? $container.width() - MARGIN.left - MARGIN.right : 820 - MARGIN.left - MARGIN.right,
-                    HEIGHT   = 220 - MARGIN.bottom,
+            var graphic  = d3.select( svgEl ),
+            MARGIN   = {left: 60, right: 20, bottom:40},
+            WIDTH    = $container.length > 0 ? $container.width() - MARGIN.left - MARGIN.right : 820 - MARGIN.left - MARGIN.right,
+            HEIGHT   = 220 - MARGIN.bottom,
 
-                    X_START  = 1,
-                    X_LENGTH = 10,
-                    xRange   = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
+            X_START  = 1,
+            X_LENGTH = 10,
+            xRange   = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
 
-                    yRange   = d3.scale.linear().range([HEIGHT - 0, 0]).domain([d3.min(minMaxArray, function (d) {
-                        return d.score;
-                    }), d3.max(minMaxArray, function (d) {
-                        return d.score + 10;
-                    }) ]),
+            yRange   = d3.scale.linear().range([HEIGHT - 0, 0]).domain([d3.min(minMaxArray, function (d) {
+              return d.score;
+            }), d3.max(minMaxArray, function (d) {
+              return d.score + 10;
+            }) ]),
 
-                    xAxis = d3.svg.axis().scale(xRange).ticks( X_LENGTH );
+            xAxis = d3.svg.axis().scale(xRange).ticks( X_LENGTH );
 
-                    yAxis = d3.svg.axis().scale(yRange).ticks(6).orient("left");
+            yAxis = d3.svg.axis().scale(yRange).ticks(6).orient("left");
 
-                graphic.append("svg:g").attr("class", "x axis").attr("transform", "translate(" + MARGIN.left + "," + HEIGHT + ")").call(xAxis)
-                    .selectAll('line').attr('transform', 'translate(0, -6)');
-                graphic.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + MARGIN.left + ",0)").call(yAxis)
-                    .selectAll('line').attr('transform', 'translate(6,0)');
+            graphic.append("svg:g").attr("class", "x axis").attr("transform", "translate(" + MARGIN.left + "," + HEIGHT + ")").call(xAxis)
+            .selectAll('line').attr('transform', 'translate(0, -6)');
+            graphic.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + MARGIN.left + ",0)").call(yAxis)
+            .selectAll('line').attr('transform', 'translate(6,0)');
 
                 // Add the text label for the Y axis
                 graphic.append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 0)
-                    .attr("x",0 - (HEIGHT / 2))
-                    .attr("dy", "1em")
-                    .attr("stroke", "#fff")
-                    .style("text-anchor", "middle")
-                    .text("Score");
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0)
+                .attr("x",0 - (HEIGHT / 2))
+                .attr("dy", "1em")
+                .attr("stroke", "#fff")
+                .style("text-anchor", "middle")
+                .text("Score");
 
                 var lineFunc = d3.svg.line().x(function(d) {
-                    return xRange(d.time) + MARGIN.left;
+                  return xRange(d.time) + MARGIN.left;
                 }).y(function(d) {
-                    return yRange(d.score);
+                  return yRange(d.score);
                 }).interpolate('linear');
 
                 graphic.append('svg:rect')
-                    .attr('width', WIDTH)
-                    .attr('height', HEIGHT)
-                    .attr('x', MARGIN.left)
-                    .attr('fill', '#142e35');
+                .attr('width', WIDTH)
+                .attr('height', HEIGHT)
+                .attr('x', MARGIN.left)
+                .attr('fill', '#142e35');
 
                 var graphLine = graphic.append('svg:g').attr('class', 'mouseline').attr('opacity', "0");
 
                 graphLine.append('svg:path')
-                    .attr('stroke', COLOR_LIGHT_BLUE)
-                    .attr('stroke-width', 2)
-                    .attr('d', "M0,0L0," + HEIGHT);
+                .attr('stroke', COLOR_LIGHT_BLUE)
+                .attr('stroke-width', 2)
+                .attr('d', "M0,0L0," + HEIGHT);
 
                 graphLine.append('circle')
-                    .attr('cx', 0)
-                    .attr('cy', 5)
-                    .attr('r', 5)
-                    .attr('stroke', COLOR_LIGHT_BLUE)
-                    .attr('fill', 'black')
-                    .attr('stroke-width', 2);
+                .attr('cx', 0)
+                .attr('cy', 5)
+                .attr('r', 5)
+                .attr('stroke', COLOR_LIGHT_BLUE)
+                .attr('fill', 'black')
+                .attr('stroke-width', 2);
 
                 scores.forEach(function(d, i){
-                    graphic.append('svg:path')
-                        .attr('d', lineFunc(d.values))
-                        .attr('class', 'team-score-line')
-                        .attr('stroke', d.color)
-                        .attr('data-team', d.team)
-                        .attr('stroke-width', 2)
-                        .attr('fill', 'none');
+                  graphic.append('svg:path')
+                  .attr('d', lineFunc(d.values))
+                  .attr('class', 'team-score-line')
+                  .attr('stroke', d.color)
+                  .attr('data-team', d.team)
+                  .attr('stroke-width', 2)
+                  .attr('fill', 'none');
                 });
 
                 graphic.append('svg:rect')
-                    .attr('width', WIDTH)
-                    .attr('height', HEIGHT)
-                    .attr('x', MARGIN.left)
-                    .attr('fill', 'none')
-                    .attr('pointer-events', 'all')
-                    .on('mouseout', function(){
-                        d3.select(".mouseline").attr("opacity", "0");
-                    })
-                    .on('mouseover', function(){
-                        d3.select(".mouseline").attr("opacity", "1");
-                    })
-                    .on('mousemove', function() {
-                        var xCoor = d3.mouse(this)[0];
-                        d3.select('.mouseline').attr('transform', 'translate(' + xCoor + ',0)');
-                    });
+                .attr('width', WIDTH)
+                .attr('height', HEIGHT)
+                .attr('x', MARGIN.left)
+                .attr('fill', 'none')
+                .attr('pointer-events', 'all')
+                .on('mouseout', function(){
+                  d3.select(".mouseline").attr("opacity", "0");
+                })
+                .on('mouseover', function(){
+                  d3.select(".mouseline").attr("opacity", "1");
+                })
+                .on('mousemove', function() {
+                  var xCoor = d3.mouse(this)[0];
+                  d3.select('.mouseline').attr('transform', 'translate(' + xCoor + ',0)');
+                });
 
 
-            }, 'json').error(function(jqxhr, status, error){
+              }, 'json').error(function(jqxhr, status, error){
                 console.error("There was a problem retrieving the game scores.");
                 console.log(status);
                 console.log(error);
                 console.error("/error");
-            });
+              });
 
-        }
+            }
 
-        return {
-            init  : init,
-            build : build
-        };
+            return {
+              init  : init,
+              build : build
+            };
     })(); // graphics
 
 
@@ -2015,13 +2045,13 @@
     /**
      * --command line
      */
-    FB_CTF.command_line = (function(){
+     FB_CTF.command_line = (function(){
 
-        var loadPath  = 'data/command-line.json',
-            modalName = 'command-line',
-            $cmdPromptList,
-            $cmdResultsList,
-            COMMAND_DATA;
+      var loadPath  = 'data/command-line.json',
+      modalName = 'command-line',
+      $cmdPromptList,
+      $cmdResultsList,
+      COMMAND_DATA;
 
 
         /**
@@ -2029,10 +2059,10 @@
          *  - the keyup on the window to trigger the command line
          *  - the keyup on the input prompt
          */
-        function eventListeners(){
+         function eventListeners(){
 
-            var $promptInput        = $('#command-prompt--input'),
-                $filterResultsInput = $('#command-prompt--filter-results'),
+          var $promptInput        = $('#command-prompt--input'),
+          $filterResultsInput = $('#command-prompt--filter-results'),
 
                 // since the modal is fading in, we need to delay the
                 //  focus so that it actually focuses when the modal
@@ -2045,28 +2075,28 @@
             //
             $(window).on('keyup', function(event) {
 
-                var key = event.which;
+              var key = event.which;
 
                 // if the forward slash has been pressed
                 if( key === 191){
-                    event.preventDefault();
+                  event.preventDefault();
 
-                    FB_CTF.modal.close();
-                    FB_CTF.modal.closeHoverPopup();
-                    FB_CTF.modal.openPersistent( modalName );
-                    if( $('li', $cmdPromptList).length % 2 === 0){
-                        $cmdPromptList.addClass('offset');
-                    }
-                    setTimeout(function(){
-                        $promptInput.focus();
-                    }, animDelay);
+                  FB_CTF.modal.close();
+                  FB_CTF.modal.closeHoverPopup();
+                  FB_CTF.modal.openPersistent( modalName );
+                  if( $('li', $cmdPromptList).length % 2 === 0){
+                    $cmdPromptList.addClass('offset');
+                  }
+                  setTimeout(function(){
+                    $promptInput.focus();
+                  }, animDelay);
 
                 }
                 // esc closes the command prompt
                 else if (key === 27){
-                    clearCommandPrompt();
-                    FB_CTF.gameboard.closeTutorial();
-                    $('.js-close-modal').trigger('click');
+                  clearCommandPrompt();
+                  FB_CTF.gameboard.closeTutorial();
+                  $('.js-close-modal').trigger('click');
                 }
 
             }); // window.on('keyup')
@@ -2076,79 +2106,79 @@
             // type in the command line prompt
             //
             $promptInput.on('keyup', function(event) {
-                event.preventDefault();
+              event.preventDefault();
 
-                var $self         = $(this),
-                    key           = event.which,
-                    cmd           = $self.val(),
-                    $autocomplete = $self.siblings('.autocomplete');
+              var $self         = $(this),
+              key           = event.which,
+              cmd           = $self.val(),
+              $autocomplete = $self.siblings('.autocomplete');
 
                 // if the "enter" key has been pressed
                 if(key === 13){
-                    var autocompleteCmd = $autocomplete.text(),
-                        selectedCmd     = COMMAND_DATA.commands[cmd];
+                  var autocompleteCmd = $autocomplete.text(),
+                  selectedCmd     = COMMAND_DATA.commands[cmd];
 
-                    if( selectedCmd === undefined ){
-                        selectedCmd = COMMAND_DATA.commands[autocompleteCmd];
-
-                        if( selectedCmd ){
-                            $promptInput.val( autocompleteCmd );
-                        }
-                    }
+                  if( selectedCmd === undefined ){
+                    selectedCmd = COMMAND_DATA.commands[autocompleteCmd];
 
                     if( selectedCmd ){
-                        chooseCommand( selectedCmd );
-                        $promptInput.trigger('blur');
-                        $filterResultsInput.trigger('focus');
-                    } else {
-                        $cmdResultsList.append('<li>Invalid command</li>');
+                      $promptInput.val( autocompleteCmd );
                     }
+                  }
+
+                  if( selectedCmd ){
+                    chooseCommand( selectedCmd );
+                    $promptInput.trigger('blur');
+                    $filterResultsInput.trigger('focus');
+                  } else {
+                    $cmdResultsList.append('<li>Invalid command</li>');
+                  }
 
                 }
                 // up arrow goes up in results box
                 else if (key === 38){
-                    var $active = $cmdPromptList.find('li.selected');
+                  var $active = $cmdPromptList.find('li.selected');
 
-                    if($active.prevAll(':not(.hidden)').length > 0){
-                        $active = $active.removeClass('selected').prevAll(':not(.hidden)').eq(0).addClass('selected');
-                    }
+                  if($active.prevAll(':not(.hidden)').length > 0){
+                    $active = $active.removeClass('selected').prevAll(':not(.hidden)').eq(0).addClass('selected');
+                  }
 
-                    $promptInput.val( $active.text() );
-                    $autocomplete.empty();
-                    checkSelectedVisible();
+                  $promptInput.val( $active.text() );
+                  $autocomplete.empty();
+                  checkSelectedVisible();
                 }
                 // down arrow goes down in results box
                 else if(key === 40 ){
-                    var $active = $cmdPromptList.find('li.selected');
+                  var $active = $cmdPromptList.find('li.selected');
 
-                    if($active.nextAll(':not(.hidden)').length > 0){
-                        $active = $active.removeClass('selected').nextAll(':not(.hidden)').eq(0).addClass('selected');
-                    }
+                  if($active.nextAll(':not(.hidden)').length > 0){
+                    $active = $active.removeClass('selected').nextAll(':not(.hidden)').eq(0).addClass('selected');
+                  }
 
-                    if( $active.length === 0 ){
-                        $active = $cmdPromptList.find('li:not(.hidden)').eq(0).addClass('selected');
-                    }
+                  if( $active.length === 0 ){
+                    $active = $cmdPromptList.find('li:not(.hidden)').eq(0).addClass('selected');
+                  }
 
-                    $promptInput.val( $active.text() );
-                    $autocomplete.empty();
-                    checkSelectedVisible();
+                  $promptInput.val( $active.text() );
+                  $autocomplete.empty();
+                  checkSelectedVisible();
                 }
                 // the user is actually typing
                 else {
 
-                    $('li', $cmdPromptList).removeClass('hidden selected').filter(function(){
-                        var text = $(this).text();
-                        return text.indexOf(cmd) !== 0;
-                    }).addClass('hidden');
+                  $('li', $cmdPromptList).removeClass('hidden selected').filter(function(){
+                    var text = $(this).text();
+                    return text.indexOf(cmd) !== 0;
+                  }).addClass('hidden');
 
-                    if( cmd !== "" ){
-                        var first = $cmdPromptList.find('li:not(.hidden)').eq(0).text();
-                        $autocomplete.text(first);
-                    } else {
-                        $autocomplete.empty();
-                    }
+                  if( cmd !== "" ){
+                    var first = $cmdPromptList.find('li:not(.hidden)').eq(0).text();
+                    $autocomplete.text(first);
+                  } else {
+                    $autocomplete.empty();
+                  }
 
-                    $cmdResultsList.empty();
+                  $cmdResultsList.empty();
                 }
             }); // $promptInput.on('keyup')
 
@@ -2157,123 +2187,123 @@
             // filter the results from the selected command
             //
             $filterResultsInput.on('keyup', function( event ){
-                event.preventDefault();
+              event.preventDefault();
 
-                var $self         = $(this),
-                    key           = event.which,
-                    search        = $self.val(),
-                    $autocomplete = $self.siblings('.autocomplete'),
-                    $selected     = $cmdResultsList.find('li.selected');
+              var $self         = $(this),
+              key           = event.which,
+              search        = $self.val(),
+              $autocomplete = $self.siblings('.autocomplete'),
+              $selected     = $cmdResultsList.find('li.selected');
 
-                if( key === 13 ){
+              if( key === 13 ){
 
-                    $('body').trigger('command-option-selected', {
-                        selected : $selected.text()
-                    });
-                }
+                $('body').trigger('command-option-selected', {
+                  selected : $selected.text()
+                });
+              }
                 // up arrow goes up in results box
                 else if (key === 38){
-                    var $active = $cmdResultsList.find('li.selected');
+                  var $active = $cmdResultsList.find('li.selected');
 
-                    if($active.prevAll(':not(.hidden)').length > 0){
-                        $active = $active.removeClass('selected').prevAll(':not(.hidden)').eq(0).addClass('selected');
-                    }
+                  if($active.prevAll(':not(.hidden)').length > 0){
+                    $active = $active.removeClass('selected').prevAll(':not(.hidden)').eq(0).addClass('selected');
+                  }
 
-                    $filterResultsInput.val( $active.text() );
-                    $autocomplete.empty();
-                    checkSelectedVisible();
+                  $filterResultsInput.val( $active.text() );
+                  $autocomplete.empty();
+                  checkSelectedVisible();
                 }
                 // down arrow goes down in results box
                 else if(key === 40 ){
-                    var $active = $cmdResultsList.find('li.selected');
+                  var $active = $cmdResultsList.find('li.selected');
 
-                    if($active.nextAll(':not(.hidden)').length > 0){
-                        $active = $active.removeClass('selected').nextAll(':not(.hidden)').eq(0).addClass('selected');
-                    }
+                  if($active.nextAll(':not(.hidden)').length > 0){
+                    $active = $active.removeClass('selected').nextAll(':not(.hidden)').eq(0).addClass('selected');
+                  }
 
-                    if( $active.length === 0 ){
-                        $active = $cmdResultsList.find('li:not(.hidden)').eq(0).addClass('selected');
-                    }
+                  if( $active.length === 0 ){
+                    $active = $cmdResultsList.find('li:not(.hidden)').eq(0).addClass('selected');
+                  }
 
-                    $filterResultsInput.val( $active.text() );
-                    $autocomplete.empty();
-                    checkSelectedVisible();
+                  $filterResultsInput.val( $active.text() );
+                  $autocomplete.empty();
+                  checkSelectedVisible();
                 }
                 // else if the use is actually typing
                 else {
-                    var $selected = $cmdResultsList.find('li').removeClass('hidden selected').filter(function(){
-                        var val = $(this).text().toLowerCase();
-                        return val.indexOf(search.toLowerCase()) !== 0;
-                    }).addClass('hidden');
+                  var $selected = $cmdResultsList.find('li').removeClass('hidden selected').filter(function(){
+                    var val = $(this).text().toLowerCase();
+                    return val.indexOf(search.toLowerCase()) !== 0;
+                  }).addClass('hidden');
 
-                    if($selected.hasClass('hidden')){
-                        $selected.removeClass('selected');
+                  if($selected.hasClass('hidden')){
+                    $selected.removeClass('selected');
 
-                        if( $selected.nextAll(':not(.hidden)').length > 0){
-                            $selected.nextAll(':not(.hidden)').eq(0).addClass('selected');
-                        } else if( $selected.prevAll(':not(.hidden)').length > 0){
-                            $selected.prevAll(':not(.hidden)').eq(0).addClass('selected');
-                        }
+                    if( $selected.nextAll(':not(.hidden)').length > 0){
+                      $selected.nextAll(':not(.hidden)').eq(0).addClass('selected');
+                    } else if( $selected.prevAll(':not(.hidden)').length > 0){
+                      $selected.prevAll(':not(.hidden)').eq(0).addClass('selected');
+                    }
+                  }
+
+                  if( search !== "" ){
+                    var first = $cmdResultsList.find('li:not(.hidden)').eq(0).text();
+
+                    if( search.charAt(0) === search.charAt(0).toLowerCase() ){
+                      first = first.toLowerCase();
                     }
 
-                    if( search !== "" ){
-                        var first = $cmdResultsList.find('li:not(.hidden)').eq(0).text();
+                    $autocomplete.text(first);
+                  } else {
+                    $autocomplete.empty();
+                  }
 
-                        if( search.charAt(0) === search.charAt(0).toLowerCase() ){
-                            first = first.toLowerCase();
-                        }
-
-                        $autocomplete.text(first);
-                    } else {
-                        $autocomplete.empty();
-                    }
-
-                    if($selected.length === 0){
-                        $cmdResultsList.find('li').eq(0).addClass('selected');
-                    }
+                  if($selected.length === 0){
+                    $cmdResultsList.find('li').eq(0).addClass('selected');
+                  }
                 }
-            });
+              });
         } // event listeners
 
 
         /**
          * clear all the command prompt stuff
          */
-        function clearCommandPrompt(){
-            var $promptInput        = $('#command-prompt--input'),
-                $filterResultsInput = $('#command-prompt--filter-results');
+         function clearCommandPrompt(){
+          var $promptInput        = $('#command-prompt--input'),
+          $filterResultsInput = $('#command-prompt--filter-results');
 
-            $('.fb-command-line .autocomplete').empty();
-            $promptInput.val('');
-            $filterResultsInput.val('');
-            $cmdResultsList.empty();
-            $cmdPromptList.find('li').removeClass('hidden selected');
+          $('.fb-command-line .autocomplete').empty();
+          $promptInput.val('');
+          $filterResultsInput.val('');
+          $cmdResultsList.empty();
+          $cmdPromptList.find('li').removeClass('hidden selected');
         }
 
         /**
          * check to see if the selected option is visible in
          *  the container
          */
-        function checkSelectedVisible(){
-            var $selected = $cmdResultsList.find('li.selected');
+         function checkSelectedVisible(){
+          var $selected = $cmdResultsList.find('li.selected');
 
-            if($selected.length === 0){
-                return;
-            }
+          if($selected.length === 0){
+            return;
+          }
 
-            var resultsListScroll = $cmdResultsList.scrollTop(),
-                resultListHeight  = $cmdResultsList.height(),
-                selectedPos       = $selected.position();
+          var resultsListScroll = $cmdResultsList.scrollTop(),
+          resultListHeight  = $cmdResultsList.height(),
+          selectedPos       = $selected.position();
 
-            if( selectedPos.top > resultListHeight ){
-                $cmdResultsList.animate({
-                    scrollTop : (resultsListScroll + selectedPos.top) + 'px'
-                })
-            } else if( selectedPos.top < 0){
-                $cmdResultsList.animate({
-                    scrollTop : (resultsListScroll + selectedPos.top) + 'px'
-                })
-            }
+          if( selectedPos.top > resultListHeight ){
+            $cmdResultsList.animate({
+              scrollTop : (resultsListScroll + selectedPos.top) + 'px'
+            })
+          } else if( selectedPos.top < 0){
+            $cmdResultsList.animate({
+              scrollTop : (resultsListScroll + selectedPos.top) + 'px'
+            })
+          }
         }
 
 
@@ -2284,53 +2314,53 @@
          * @param cmdData (object)
          *   - an object with data for the selected command
          */
-        function chooseCommand( cmdData ){
-            var results     = cmdData.results,
-                cmdFunction = cmdData.function;
+         function chooseCommand( cmdData ){
+          var results     = cmdData.results,
+          cmdFunction = cmdData.function;
 
-            if( results ){
-                if( typeof results === "string" ){
-                    var list = COMMAND_DATA.results_library[results];
+          if( results ){
+            if( typeof results === "string" ){
+              var list = COMMAND_DATA.results_library[results];
 
-                    if(list){
-                        $.each( list, function(index, listItem){
-                            $cmdResultsList.append('<li>' + listItem + '</li>');
-                        });
-                    }
-                } else{
-                    $.each( results, function(index, listItem){
-                        $cmdResultsList.append('<li>' + listItem + '</li>');
-                    });
-                }
-
-                $cmdResultsList.find('li:first-child').addClass('selected');
+              if(list){
+                $.each( list, function(index, listItem){
+                  $cmdResultsList.append('<li>' + listItem + '</li>');
+                });
+              }
+            } else{
+              $.each( results, function(index, listItem){
+                $cmdResultsList.append('<li>' + listItem + '</li>');
+              });
             }
 
-            if( cmdFunction ){
-                var funcName = cmdFunction.name,
-                    param    = cmdFunction.param;
+            $cmdResultsList.find('li:first-child').addClass('selected');
+          }
 
-                switch(funcName){
-                    case 'change-radio':
-                        cmd_changeRadio(param);
-                        break;
-                    case 'capture-country':
-                        cmd_captureCountry();
-                        break;
-                    case 'close-module':
-                        cmd_closeModule();
-                        break;
-                    case 'open-module':
-                        cmd_openModule();
-                        break;
-                    case 'open-listview':
-                        cmd_toggleListView();
-                        break;
-                    default:
-                        console.error("That command's associated function is undefined.");
-                        break;
-                }
+          if( cmdFunction ){
+            var funcName = cmdFunction.name,
+            param    = cmdFunction.param;
+
+            switch(funcName){
+              case 'change-radio':
+              cmd_changeRadio(param);
+              break;
+              case 'capture-country':
+              cmd_captureCountry();
+              break;
+              case 'close-module':
+              cmd_closeModule();
+              break;
+              case 'open-module':
+              cmd_openModule();
+              break;
+              case 'open-listview':
+              cmd_toggleListView();
+              break;
+              default:
+              console.error("That command's associated function is undefined.");
+              break;
             }
+          }
         }
 
 
@@ -2346,41 +2376,41 @@
          * @param inputName (string)
          *   - the input name we're looking to change
          */
-        function cmd_changeRadio( inputName ){
-            $('body').on('command-option-selected', function(event, data){
+         function cmd_changeRadio( inputName ){
+          $('body').on('command-option-selected', function(event, data){
 
-                if(inputName === 'fb--module--filter--category'){
-                    $('aside[data-module="filter"]').addClass('active');
-                    $body.trigger('module-changestate');
-                }
+            if(inputName === 'fb--module--filter--category'){
+              $('aside[data-module="filter"]').addClass('active');
+              $body.trigger('module-changestate');
+            }
 
-                $('input[name="' + inputName + '"]').prop('checked', false);
+            $('input[name="' + inputName + '"]').prop('checked', false);
 
-                $('input[name="' + inputName + '"][value="' + data.selected + '"]').trigger('change').prop('checked', true);
+            $('input[name="' + inputName + '"][value="' + data.selected + '"]').trigger('change').prop('checked', true);
 
-                FB_CTF.modal.close();
-                clearCommandPrompt();
+            FB_CTF.modal.close();
+            clearCommandPrompt();
 
-                $('body').off('command-option-selected');
-            });
+            $('body').off('command-option-selected');
+          });
         }
 
         /**
          * capture a country
          */
-        function cmd_captureCountry(){
+         function cmd_captureCountry(){
 
-            $('body').on('command-option-selected', function(event, data){
+          $('body').on('command-option-selected', function(event, data){
 
-                var country = data.selected;
+            var country = data.selected;
 
-                FB_CTF.modal.close();
-                clearCommandPrompt();
+            FB_CTF.modal.close();
+            clearCommandPrompt();
 
-                FB_CTF.gameboard.captureCountry( country );
+            FB_CTF.gameboard.captureCountry( country );
 
-                $('body').off('command-option-selected');
-            });
+            $('body').off('command-option-selected');
+          });
 
         }
 
@@ -2388,64 +2418,64 @@
         /**
          * close a module
          */
-        function cmd_closeModule(){
-            $('body').on('command-option-selected', function(event, data){
+         function cmd_closeModule(){
+          $('body').on('command-option-selected', function(event, data){
 
-                var module = data.selected;
+            var module = data.selected;
 
-                if( module === "All" ){
-                    $('aside').removeClass('active');
-                } else {
-                    $('aside[data-name="' + module + '"]').removeClass('active');
-                }
-                $body.trigger('module-changestate');
+            if( module === "All" ){
+              $('aside').removeClass('active');
+            } else {
+              $('aside[data-name="' + module + '"]').removeClass('active');
+            }
+            $body.trigger('module-changestate');
 
-                FB_CTF.modal.close();
-                clearCommandPrompt();
+            FB_CTF.modal.close();
+            clearCommandPrompt();
 
-                $('body').off('command-option-selected');
-            });
+            $('body').off('command-option-selected');
+          });
         }
 
         /**
          * open a module
          */
-        function cmd_openModule(){
-            $('body').on('command-option-selected', function(event, data){
+         function cmd_openModule(){
+          $('body').on('command-option-selected', function(event, data){
 
-                var module = data.selected;
+            var module = data.selected;
 
-                if( module === "All" ){
-                    $('aside').addClass('active');
-                } else {
-                    $('aside[data-name="' + module + '"]').addClass('active');
-                }
-                $body.trigger('module-changestate');
+            if( module === "All" ){
+              $('aside').addClass('active');
+            } else {
+              $('aside[data-name="' + module + '"]').addClass('active');
+            }
+            $body.trigger('module-changestate');
 
-                FB_CTF.modal.close();
-                clearCommandPrompt();
+            FB_CTF.modal.close();
+            clearCommandPrompt();
 
-                $('body').off('command-option-selected');
-            });
+            $('body').off('command-option-selected');
+          });
         }
 
 
         /**
          * toggle the list view
          */
-        function cmd_toggleListView(){
+         function cmd_toggleListView(){
 
-            $('body').on('command-option-selected', function(event, data){
+          $('body').on('command-option-selected', function(event, data){
 
-                var enable = data.selected === "On" ? true : false;
+            var enable = data.selected === "On" ? true : false;
 
-                FB_CTF.gameboard.toggleListView( enable );
+            FB_CTF.gameboard.toggleListView( enable );
 
-                FB_CTF.modal.close();
-                clearCommandPrompt();
+            FB_CTF.modal.close();
+            clearCommandPrompt();
 
-                $('body').off('command-option-selected');
-            });
+            $('body').off('command-option-selected');
+          });
         }
 
 
@@ -2457,35 +2487,35 @@
         /**
          * init the command line functionality
          */
-        function init(){
+         function init(){
 
-            FB_CTF.modal.loadPersistent( modalName , function(){
-                $.get( loadPath , function(data, status, jqxhr){
+          FB_CTF.modal.loadPersistent( modalName , function(){
+            $.get( loadPath , function(data, status, jqxhr){
 
-                    $cmdPromptList = $('.fb-command-line .command-list ul');
-                    $cmdResultsList = $('.fb-command-line .command-results ul');
+              $cmdPromptList = $('.fb-command-line .command-list ul');
+              $cmdResultsList = $('.fb-command-line .command-results ul');
 
-                    COMMAND_DATA = data;
+              COMMAND_DATA = data;
 
-                    if( COMMAND_DATA && COMMAND_DATA.commands){
-                        $.each( COMMAND_DATA.commands, function(command, cmdData){
-                            $cmdPromptList.append( '<li>' + command + '</li>');
-                        });
-
-                        eventListeners();
-                    }
-
-                }, 'json').error(function(){
-                    console.error("There was a problem retrieving the commands.");
-                    console.error("/error");
+              if( COMMAND_DATA && COMMAND_DATA.commands){
+                $.each( COMMAND_DATA.commands, function(command, cmdData){
+                  $cmdPromptList.append( '<li>' + command + '</li>');
                 });
+
+                eventListeners();
+              }
+
+            }, 'json').error(function(){
+              console.error("There was a problem retrieving the commands.");
+              console.error("/error");
             });
+          });
 
         }
 
 
         return {
-            init: init
+          init: init
         };
     })(); // command line
 
@@ -2495,7 +2525,7 @@
      * --public
      * -------------------------------------------- */
 
-    FB_CTF.init = function(){
+     FB_CTF.init = function(){
 
         //
         // set up global variables
@@ -2532,7 +2562,7 @@
             // load the grpahics
             FB_CTF.graphics.init();
 
-        }).trigger('content-loaded');
+          }).trigger('content-loaded');
 
 
         /* --------------------------------------------
@@ -2543,18 +2573,18 @@
         // computer typed text effect
         //
         $(".typed-text").fb_typed({
-            typeSpeed: 2,
-            showCursor: false,
+          typeSpeed: 2,
+          showCursor: false,
         });
 
         //
         // add the img glitch
         //
         var glitchImgMarkup  = '<img src="/static/img/bg--dashes.svg">',
-            $glitchContainer = $('<div class="img-glitch-wrapper active">' + glitchImgMarkup + glitchImgMarkup + glitchImgMarkup + '</div>').appendTo('.fb-img-glitch');
+        $glitchContainer = $('<div class="img-glitch-wrapper active">' + glitchImgMarkup + glitchImgMarkup + glitchImgMarkup + '</div>').appendTo('.fb-img-glitch');
 
         setInterval(function(){
-            $glitchContainer.toggleClass('active');
+          $glitchContainer.toggleClass('active');
         }, 4000);
 
 
@@ -2573,18 +2603,18 @@
         // radio tabs
         //
         $('.radio-tabs').each(function(){
-            var $tabs       = $(this),
-                $tabContent = $tabs.next('.tab-content-container');
+          var $tabs       = $(this),
+          $tabContent = $tabs.next('.tab-content-container');
 
-            if( $tabContent.length > 0 ){
-                $('input[type="radio"]', $tabs).on('change', function(event) {
-                    event.preventDefault();
-                    var tab = this.value;
+          if( $tabContent.length > 0 ){
+            $('input[type="radio"]', $tabs).on('change', function(event) {
+              event.preventDefault();
+              var tab = this.value;
 
-                    $('.radio-tab-content[data-tab="' + tab + '"]').onlySiblingWithClass('active');
+              $('.radio-tab-content[data-tab="' + tab + '"]').onlySiblingWithClass('active');
 
-                });
-            }
+            });
+          }
         })
 
 
@@ -2594,35 +2624,35 @@
         //
         var filteredCategories = [];
         $('.trending-list input[type="checkbox"]').on('change', function(event) {
-            event.preventDefault();
-            var $posts    = $('.post-list--main .fb-post:not(.pinned-post)').removeClass('hidden'),
-                isChecked = this.checked,
-                category  = $(this).val();
+          event.preventDefault();
+          var $posts    = $('.post-list--main .fb-post:not(.pinned-post)').removeClass('hidden'),
+          isChecked = this.checked,
+          category  = $(this).val();
 
-            if( isChecked ){
-                filteredCategories.push(category);
-            } else {
-                var index = filteredCategories.indexOf(category);
-                filteredCategories.splice(index, 1);
-            }
+          if( isChecked ){
+            filteredCategories.push(category);
+          } else {
+            var index = filteredCategories.indexOf(category);
+            filteredCategories.splice(index, 1);
+          }
 
-            if(filteredCategories.length === 0){
+          if(filteredCategories.length === 0){
+            return;
+          }
+
+          $posts.filter(function(){
+            var categories = $(this).data('categories'),
+            hasCat     = true;
+
+            $.each( filteredCategories, function(i, cat){
+              if( categories.indexOf(cat) > -1 ){
+                hasCat = false;
                 return;
-            }
+              }
+            });
 
-            $posts.filter(function(){
-                var categories = $(this).data('categories'),
-                    hasCat     = true;
-
-                $.each( filteredCategories, function(i, cat){
-                    if( categories.indexOf(cat) > -1 ){
-                        hasCat = false;
-                        return;
-                    }
-                });
-
-                return hasCat;
-            }).addClass('hidden');
+            return hasCat;
+          }).addClass('hidden');
         });
 
 
@@ -2630,8 +2660,8 @@
         // init the tutorial
         //
         $('.fb-init-tutorial').on('click', function(event) {
-            event.preventDefault();
-            FB_CTF.gameboard.initTutorial();
+          event.preventDefault();
+          FB_CTF.gameboard.initTutorial();
         });
 
 
@@ -2639,13 +2669,13 @@
         // click events
         //
         $body.on('click', '.click-effect', function(){
-            var $self = $(this).addClass('clicked');
+          var $self = $(this).addClass('clicked');
 
-            $self.find('span').on('animationend', function(){
-                $self.removeClass('clicked');
+          $self.find('span').on('animationend', function(){
+            $self.removeClass('clicked');
 
-                $self.off('animationend');
-            });
+            $self.off('animationend');
+          });
         });
 
 
@@ -2653,8 +2683,8 @@
         // prompt logout
         //
         $('.js-prompt-logout').on('click', function(event) {
-            event.preventDefault();
-            FB_CTF.modal.loadPopup('action-logout');
+          event.preventDefault();
+          FB_CTF.modal.loadPopup('action-logout');
         });
 
 
@@ -2662,42 +2692,42 @@
         // read more posts
         //
         $('.post-readmore').on('click', function(event) {
-            event.preventDefault();
-            var $self    = $(this),
-                $content = $self.closest('.post-content').toggleClass('show-full');
+          event.preventDefault();
+          var $self    = $(this),
+          $content = $self.closest('.post-content').toggleClass('show-full');
 
-            if( $content.hasClass('show-full') ){
-                $self.text('Close Post');
-            } else {
-                $self.text('Read More');
-            }
+          if( $content.hasClass('show-full') ){
+            $self.text('Close Post');
+          } else {
+            $self.text('Read More');
+          }
         });
 
         //
         // rules table of contents
         //
         $('.rules--table-of-contents li a').on('click', function(event) {
-            event.preventDefault();
+          event.preventDefault();
 
-            var $rules         = $('.fb-rules section'),
-                index          = $(this).parent().index(),
-                offset         = $('.page--rules .fb-section-header').innerHeight(),
-                $selectedRule  = $rules.eq(index),
-                rulesScrollTop = $selectedRule.position().top + offset;
+          var $rules         = $('.fb-rules section'),
+          index          = $(this).parent().index(),
+          offset         = $('.page--rules .fb-section-header').innerHeight(),
+          $selectedRule  = $rules.eq(index),
+          rulesScrollTop = $selectedRule.position().top + offset;
 
-            $('.page--rules').animate({
-                scrollTop: rulesScrollTop + 'px'
-            });
+          $('.page--rules').animate({
+            scrollTop: rulesScrollTop + 'px'
+          });
         });
 
         //
         // choose a logo
         //
         $body.on('click', '.emblem-carousel .slides li', function(event) {
-            event.preventDefault();
-            $(this).onlySiblingWithClass('active');
+          event.preventDefault();
+          $(this).onlySiblingWithClass('active');
         });
-    }
+      }
 
 
     /**
@@ -2712,17 +2742,17 @@
      * @param cb (function)
      *   - callback function for when the load is successful
      */
-    FB_CTF.loadComponent = function(target, component, cb){
+     FB_CTF.loadComponent = function(target, component, cb){
 
-        var $target = typeof target === 'object' ? target : $(target);
+      var $target = typeof target === 'object' ? target : $(target);
 
-        $target.load( component, function(response, status, jqxhr){
-            if(status === "error"){
-                console.error("There was a problem loading the component:");
-                console.log("target: " + target);
-                console.log("component: " + component);
-                console.error("/end error");
-            } else {
+      $target.load( component, function(response, status, jqxhr){
+        if(status === "error"){
+          console.error("There was a problem loading the component:");
+          console.log("target: " + target);
+          console.log("component: " + component);
+          console.error("/end error");
+        } else {
                 //
                 // fire the "content-loaded" event to initialize any
                 //  dynamic content that is in the loaded content
@@ -2730,10 +2760,10 @@
                 $('body').trigger('content-loaded', {component: component});
 
                 if( typeof cb === 'function'){
-                    cb();
+                  cb();
                 }
-            }
-        });
+              }
+            });
     }
 
 
@@ -2741,7 +2771,7 @@
     /**
      * set up stuff on document ready
      */
-    $(document).ready(function() {
+     $(document).ready(function() {
 
         //
         // check to make sure that we're not using the buildkit, and
@@ -2750,10 +2780,10 @@
         //  if we are using the buildkit.
         //
         if( typeof _BUILDKIT === 'undefined' ){
-            FB_CTF.init();
+          FB_CTF.init();
         }
-    });
+      });
 
 
-})(window.FB_CTF = window.FB_CTF || {}, jQuery);
+   })(window.FB_CTF = window.FB_CTF || {}, jQuery);
 
