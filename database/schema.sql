@@ -38,6 +38,7 @@ CREATE TABLE `levels` (
   `type` varchar(4) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `entity_id` int(11) DEFAULT NULL,
+  `category_id` int(11) NOT NULL DEFAULT '1',
   `points` int(11) NOT NULL DEFAULT '0',
   `bonus` int(11) NOT NULL DEFAULT '0',
   `bonus_dec` int(11) NOT NULL DEFAULT '0',
@@ -50,6 +51,25 @@ CREATE TABLE `levels` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `categories`
+--
+
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` text DEFAULT NULL,
+  `created_ts` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `categories` WRITE;
+INSERT INTO `categories` (category, created_ts) VALUES("None", NOW());
+INSERT INTO `categories` (category, created_ts) VALUES("Quiz", NOW());
+UNLOCK TABLES;
 
 --
 -- Table structure for table `teams`

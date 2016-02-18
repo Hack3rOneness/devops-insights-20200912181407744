@@ -26,7 +26,25 @@ function select_countries($selected=0, $used_included = true) {
   return $select_html;
 }
 
+function select_categories($selected=0) {
+  $select_html = '<select name="category_id">';
+  $select_html .= '<option value="">Select</option>';
+  $levels = new Levels();
+  $categories = $levels->all_categories();
+  foreach ($categories as $category) {
+    if ($category['id'] == $selected) {
+      $select_html .= '<option value="'.$category['id'].'" selected>'.$category['category'].'</option>';
+    } else {
+      $select_html .= '<option value="'.$category['id'].'">'.$category['category'].'</option>';
+    }
+  }
+  $select_html .= '</select>';
+
+  return $select_html;
+}
+
 $select_available_html = select_countries(0, false);
+$select_categories_html = select_categories(0);
 
 echo <<< EOT
 
@@ -55,15 +73,24 @@ echo <<< EOT
         </header>
 
         <div class="fb-column-container">
+          
           <div class="col col-pad col-1-2">
+            
             <div class="form-el el--block-label el--full-text">
               <label>Description</label>
               <input name="description" type="text">
             </div>
+            
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Country</label>
+                {$select_available_html}
+              </div>
 
-            <div class="form-el el--block-label el--full-text">
-              <label for="">Country</label>
-              {$select_available_html}
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Category</label>
+                {$select_categories_html}
+              </div>
             </div>
 
             <div class="form-el el--block-label el--full-text">
@@ -102,7 +129,9 @@ echo <<< EOT
                 <input name="penalty" type="text">
               </div>
             </div>
+
           </div>
+          
         </div>
 
         <div class="admin-buttons admin-row">
@@ -122,6 +151,7 @@ foreach ($levels->all_flag_levels() as $flag) {
   $flag_flag = htmlspecialchars($flag['flag']);
   $flag_hint = htmlspecialchars($flag['hint']);
   $flag_countries_select = select_countries($flag['entity_id']);
+  $flag_categories_select = select_categories($flag['category_id']);
   $flag_on = ($flag['active'] == 1)
     ? 'checked'
     : '';
@@ -153,10 +183,17 @@ foreach ($levels->all_flag_levels() as $flag) {
               <input name="description" type="text" value="{$flag_description}" disabled>
             </div>
 
-            <div class="form-el el--block-label el--full-text">
-              <label for="">Country</label>
-              {$flag_countries_select}
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Country</label>
+                {$flag_countries_select}
+              </div>
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Categories</label>
+                {$flag_categories_select}
+              </div>
             </div>
+            
 
             <div class="form-el el--block-label el--full-text">
               <label>Hint</label>
@@ -214,7 +251,7 @@ echo <<< EOT
   </div><!-- .admin-sections -->
 
   <div class="admin-buttons">
-    <button class="fb-cta" data-action="add-new">Add Base Level</button>
+    <button class="fb-cta" data-action="add-new">Add Flag Level</button>
   </div>
 EOT;
 ?>

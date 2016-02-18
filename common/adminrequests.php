@@ -45,7 +45,9 @@ class AdminRequests {
         ),
       ),
       'entity_id'   => FILTER_VALIDATE_INT,
-      'country_id'   => FILTER_VALIDATE_INT,
+      'category_id' => FILTER_VALIDATE_INT,
+      'category'    => FILTER_SANITIZE_STRING,
+      'country_id'  => FILTER_VALIDATE_INT,
       'description' => FILTER_UNSAFE_RAW,
       'question'    => FILTER_UNSAFE_RAW,
       'flag'        => FILTER_UNSAFE_RAW,
@@ -82,6 +84,8 @@ class AdminRequests {
       'toggle_visible_team',
       'enable_country',
       'disable_country',
+      'create_category',
+      'delete_category',
       'enable_logo',
       'disable_logo'
     );

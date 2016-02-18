@@ -184,7 +184,9 @@ var $body = $('body');
       deleteTeam(section); 
     } else if (elementSection === 'level_form') {
       deleteLevel(section);
-    }
+    } else if (elementSection === 'categories_form') {
+      deleteCategory(section);
+    } 
   }
 
   // Generic update
@@ -204,7 +206,9 @@ var $body = $('body');
       createTeam(section);
     } else if (elementSection === 'level_form') {
       createLevel(section);
-    }
+    } else if (elementSection === 'categories_form') {
+      createCategory(section);
+    } 
     location.reload();
   }
 
@@ -216,6 +220,30 @@ var $body = $('body');
       level_id: level_id
     };
     if (level_id) {
+      sendAdminRequest(delete_data);
+    }
+  }
+
+  // Create category
+  function createCategory(section) {
+    var category = $('.categories_form input[name=category]', section)[0].value;
+    var create_data = {
+      action: 'create_category',
+      category: category
+    };
+    if (category) {
+      sendAdminRequest(create_data);
+    }
+  }
+
+  // Delete category
+  function deleteCategory(section) {
+    var category_id = $('.categories_form input[name=category_id]', section)[0].value;
+    var delete_data = {
+      action: 'delete_category',
+      category_id: category_id
+    };
+    if (category_id) {
       sendAdminRequest(delete_data);
     }
   }
@@ -267,6 +295,7 @@ var $body = $('body');
     var description = $('.level_form input[name=description]', section)[0].value;
     var flag = $('.level_form input[name=flag]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
+    var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
     var bonus = $('.level_form input[name=bonus]', section)[0].value;
     var bonus_dec = $('.level_form input[name=bonus_dec]', section)[0].value;
@@ -277,6 +306,7 @@ var $body = $('body');
       description: description,
       flag: flag,
       entity_id: entity_id,
+      category_id: category_id,
       points: points,
       bonus: bonus,
       bonus_dec: bonus_dec,
@@ -292,6 +322,7 @@ var $body = $('body');
   function createBaseLevel(section) {
     var description = $('.level_form input[name=description]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
+    var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
     var bonus = $('.level_form input[name=bonus]', section)[0].value;
     var hint = $('.level_form input[name=hint]', section)[0].value;
@@ -300,6 +331,7 @@ var $body = $('body');
       action: 'create_base',
       description: description,
       entity_id: entity_id,
+      category_id: category_id,
       points: points,
       bonus: bonus,
       hint: hint,
@@ -359,6 +391,7 @@ var $body = $('body');
     var description = $('.level_form input[name=description]', section)[0].value;
     var flag = $('.level_form input[name=flag]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
+    var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
     var bonus = $('.level_form input[name=bonus]', section)[0].value;
     var bonus_dec = $('.level_form input[name=bonus_dec]', section)[0].value;
@@ -370,6 +403,7 @@ var $body = $('body');
       description: description,
       flag: flag,
       entity_id: entity_id,
+      category_id: category_id,
       points: points,
       bonus: bonus,
       bonus_dec: bonus_dec,
@@ -386,6 +420,7 @@ var $body = $('body');
   function updateBaseLevel(section) {
     var description = $('.level_form input[name=description]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
+    var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
     var bonus = $('.level_form input[name=bonus]', section)[0].value;
     var hint = $('.level_form input[name=hint]', section)[0].value;
@@ -395,6 +430,7 @@ var $body = $('body');
       action: 'update_base',
       description: description,
       entity_id: entity_id,
+      category_id: category_id,
       points: points,
       bonus: bonus,
       hint: hint,

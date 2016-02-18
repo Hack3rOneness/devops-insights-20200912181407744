@@ -26,6 +26,7 @@ class Levels {
     $type,
     $description,
     $entity_id,
+    $category_id,
     $points,
     $bonus,
     $bonus_dec,
@@ -35,12 +36,13 @@ class Levels {
     $penalty
   ) {
     $sql = 'INSERT INTO levels '.
-      '(type, description, entity_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
-      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
+      '(type, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
+      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
     $elements = array(
       $type,
       $description,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -61,7 +63,8 @@ class Levels {
   public function create_flag_level(
     $description, 
     $flag, 
-    $entity_id, 
+    $entity_id,
+    $category_id,
     $points,
     $bonus,
     $bonus_dec, 
@@ -72,6 +75,7 @@ class Levels {
       'flag',
       $description,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -86,7 +90,8 @@ class Levels {
   public function update_flag_level(
     $description, 
     $flag, 
-    $entity_id, 
+    $entity_id,
+    $category_id,
     $points,
     $bonus,
     $bonus_dec, 
@@ -97,6 +102,7 @@ class Levels {
     return $this->update_level(
       $description,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -119,10 +125,13 @@ class Levels {
     $hint, 
     $penalty
   ) {
+    $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
+    $category_id = $this->db->query($sql)[0]['id'];
     return $this->create_level(
       'quiz',
       $question,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -145,9 +154,12 @@ class Levels {
     $penalty,
     $level_id
   ) {
+    $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
+    $category_id = $this->db->query($sql)[0]['id'];
     return $this->update_level(
       $question,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -163,6 +175,7 @@ class Levels {
   public function create_base_level(
     $description,
     $entity_id,
+    $category_id,
     $points,
     $bonus,
     $hint,
@@ -172,6 +185,7 @@ class Levels {
       'base',
       $description,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       0,
@@ -186,15 +200,17 @@ class Levels {
   public function update_base_level(
     $description,
     $entity_id,
+    $category_id,
     $points,
     $bonus,
     $hint,
     $penalty,
     $level_id
   ) {
-    return $this->create_level(
+    return $this->update_level(
       $description,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       0,
@@ -210,6 +226,7 @@ class Levels {
   public function update_level(
     $description,
     $entity_id,
+    $category_id,
     $points,
     $bonus,
     $bonus_dec,
@@ -219,12 +236,13 @@ class Levels {
     $penalty,
     $level_id
   ) {
-    $sql = 'UPDATE levels SET description = ?, entity_id = ?, points = ?, '.
+    $sql = 'UPDATE levels SET description = ?, entity_id = ?, category_id = ?, points = ?, '.
       'bonus = ?, bonus_dec = ?, bonus_fix = ?, flag = ?, hint = ?, '.
       'penalty = ? WHERE id = ? LIMIT 1';
     $elements = array(
       $description,
       $entity_id,
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -297,5 +315,33 @@ class Levels {
     $sql = 'SELECT * FROM levels WHERE id = ? LIMIT 1';
     $elements = array($level_id);
     return $this->db->query($sql, $elements)[0];
+  }
+
+  // All categories.
+  public function all_categories() {
+    $sql = 'SELECT * FROM categories';
+    return $this->db->query($sql);
+  }
+
+  // Delete category.
+  public function delete_category($category_id) {
+    $sql = 'DELETE FROM categories WHERE id = ? LIMIT 1';
+    $elements = array($category_id);
+    $this->db->query($sql, $elements);
+  }
+
+  // Create category.
+  public function create_category($category) {
+    $sql = 'INSERT INTO categories (category, created_ts) VALUES (?, NOW())';
+    $element = array($category);
+    $this->db->query($sql, $element);
+    return $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
+  }
+
+  // Update category.
+  public function update_category($category, $category_id) {
+    $sql = 'UPDATE categories SET category = ? WHERE id = ? LIMIT 1';
+    $elements = array($category, $category_id);
+    $this->db->query($sql, $elements);
   }
 }

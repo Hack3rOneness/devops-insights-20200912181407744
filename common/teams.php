@@ -34,7 +34,7 @@ class Teams {
 
   // Create a team and return the created team id.
   public function create_team($name, $password, $logo) {
-    $sql = 'INSERT INTO teams (name, password, logo, created_ts) VALUES (?, ?, ?, NOW());';
+    $sql = 'INSERT INTO teams (name, password, logo, created_ts) VALUES (?, ?, ?, NOW())';
     $elements = array($name, $password, $logo);
     $this->db->query($sql, $elements);
     return $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];

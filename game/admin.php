@@ -53,6 +53,7 @@ switch ($request->action) {
       $request->parameters['description'],
       $request->parameters['flag'],
       $request->parameters['entity_id'],
+      $request->parameters['category_id'],
       $request->parameters['points'],
       $request->parameters['bonus'],
       $request->parameters['bonus_dec'],
@@ -67,6 +68,7 @@ switch ($request->action) {
       $request->parameters['description'],
       $request->parameters['flag'],
       $request->parameters['entity_id'],
+      $request->parameters['category_id'],
       $request->parameters['points'],
       $request->parameters['bonus'],
       $request->parameters['bonus_dec'],
@@ -81,6 +83,7 @@ switch ($request->action) {
     $levels->create_base_level(
       $request->parameters['description'],
       $request->parameters['entity_id'],
+      $request->parameters['category_id'],
       $request->parameters['points'],
       $request->parameters['bonus'],
       $request->parameters['hint'],
@@ -93,6 +96,7 @@ switch ($request->action) {
     $levels->update_base_level(
       $request->parameters['description'],
       $request->parameters['entity_id'],
+      $request->parameters['category_id'],
       $request->parameters['points'],
       $request->parameters['bonus'],
       $request->parameters['hint'],
@@ -215,6 +219,20 @@ switch ($request->action) {
   case 'delete_session':
     sess_destroy(
       $request->parameters['cookie']
+    );
+    ok_response();
+    break;
+  case 'delete_category':
+    $levels = new Levels();
+    $levels->delete_category(
+      $request->parameters['category_id']
+    );
+    ok_response();
+    break;
+  case 'create_category':
+    $levels = new Levels();
+    $levels->create_category(
+      $request->parameters['category']
     );
     ok_response();
     break;

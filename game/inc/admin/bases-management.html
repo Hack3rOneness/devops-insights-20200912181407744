@@ -26,7 +26,25 @@ function select_countries($selected=0, $used_included = true) {
   return $select_html;
 }
 
+function select_categories($selected=0) {
+  $select_html = '<select name="category_id">';
+  $select_html .= '<option value="">Select</option>';
+  $levels = new Levels();
+  $categories = $levels->all_categories();
+  foreach ($categories as $category) {
+    if ($category['id'] == $selected) {
+      $select_html .= '<option value="'.$category['id'].'" selected>'.$category['category'].'</option>';
+    } else {
+      $select_html .= '<option value="'.$category['id'].'">'.$category['category'].'</option>';
+    }
+  }
+  $select_html .= '</select>';
+
+  return $select_html;
+}
+
 $select_available_html = select_countries(0, false);
+$select_categories_html = select_categories(0);
 
 echo <<< EOT
 
@@ -55,39 +73,51 @@ echo <<< EOT
         </header>
 
         <div class="fb-column-container">
+
           <div class="col col-pad col-1-2">
+
             <div class="form-el el--block-label el--full-text">
               <label>Description</label>
               <input name="description" type="text">
             </div>
+            
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Country</label>
+                {$select_available_html}
+              </div>
 
-            <div class="form-el el--block-label el--full-text">
-              <label for="">Country</label>
-              {$select_available_html}
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Category</label>
+                {$select_categories_html}
+              </div>
             </div>
           </div>
 
-
           <div class="col col-pad col-1-2">
 
-            <div class="form-el el--block-label el--full-text">
-              <label>Points</label>
-              <input name="points" type="text">
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Points</label>
+                <input name="points" type="text">
+              </div>
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Bonus</label>
+                <input name="bonus" type="text">
+              </div>
             </div>
-            <div class="form-el el--block-label el--full-text">
-              <label>Bonus</label>
-              <input name="bonus" type="text">
-            </div>
-          </div>
-          <div class="col col-pad col-1-2">
-            <div class="form-el el--block-label el--full-text">
-              <label>Hint</label>
+
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Hint</label>
               <input name="hint" type="text">
+              </div>
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Hint Penalty</label>
+                <input name="penalty" type="text">
+              </div>
             </div>
-            <div class="form-el el--block-label el--full-text">
-              <label>Penalty</label>
-              <input name="penalty" type="text">
-            </div>
+
           </div>
 
         </div>
@@ -99,8 +129,8 @@ echo <<< EOT
             <button class="fb-cta cta--yellow" data-action="create">Create</button>
           </div>
         </div>
-        </form>
-      </section>
+      </form>
+    </section>
 EOT;
 
 $c = 1;
@@ -108,6 +138,7 @@ foreach ($levels->all_base_levels() as $base) {
   $base_description = htmlspecialchars($base['description']);
   $base_hint = htmlspecialchars($base['hint']);
   $base_countries_select = select_countries($base['entity_id']);
+  $base_categories_select = select_categories($base['category_id']);
   $base_on = ($base['active'] == 1)
     ? 'checked'
     : '';
@@ -133,39 +164,51 @@ foreach ($levels->all_base_levels() as $base) {
         </header>
 
         <div class="fb-column-container">
+
           <div class="col col-pad col-1-2">
+
             <div class="form-el el--block-label el--full-text">
               <label>Description</label>
               <input name="description" type="text" value="{$base_description}" disabled>
             </div>
+            
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Country</label>
+                {$base_countries_select}
+              </div>
 
-            <div class="form-el el--block-label el--full-text">
-              <label for="">Country</label>
-              {$base_countries_select}
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label for="">Category</label>
+                {$base_categories_select}
+              </div>
             </div>
           </div>
 
           <div class="col col-pad col-1-2">
 
-            <div class="form-el el--block-label el--full-text">
-              <label>Points</label>
-              <input name="points" type="text" value="{$base['points']}" disabled>
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Points</label>
+                <input name="points" type="text" value="{$base['points']}" disabled>
+              </div>
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Bonus</label>
+                <input name="bonus" type="text" value="{$base['bonus']}" disabled>
+              </div>
             </div>
-            <div class="form-el el--block-label el--full-text">
-              <label>Bonus</label>
-              <input name="bonus" type="text" value="{$base['bonus']}" disabled>
-            </div>
-          </div>
 
-          <div class="col col-pad col-1-2">
-            <div class="form-el el--block-label el--full-text">
-              <label>Hint</label>
-              <input name="hint" type="text" value="{$base_hint}" disabled> 
+            <div class="form-el fb-column-container col-gutters">
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Hint</label>
+                <input name="hint" type="text" value="{$base_hint}" disabled> 
+              </div>
+              <div class="col col-1-2 el--block-label el--full-text">
+                <label>Hint Penalty</label>
+                <input name="penalty" type="text" value="{$base['penalty']}" disabled>
+              </div>
             </div>
-            <div class="form-el el--block-label el--full-text">
-              <label>Penalty</label>
-              <input name="penalty" type="text" value="{$base['penalty']}" disabled>
-            </div>
+
           </div>
 
         </div>
