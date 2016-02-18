@@ -64,4 +64,12 @@ class Countries {
     $sql = 'SELECT * FROM countries WHERE enabled = 1 AND used = 0 ORDER BY name';
     return $this->db->query($sql);
   }
+
+  // Check if country is in an active level.
+  public function is_active_level($country_id) {
+    $sql = 'SELECT COUNT(*) FROM levels WHERE entity_id = ? AND active = 1 LIMIT 1';
+    $element = array($country_id);
+    $is_active = $this->db->query($sql, $element);
+    return (bool)$is_active[0]['COUNT(*)'];
+  }  
 }

@@ -18,6 +18,11 @@ EOT;
 $countries = new Countries();
 foreach ($countries->all_enabled_countries() as $country) {
 	$active = ($country['used'] == 1) ? 'active' : '';
+	if ($country['used'] == 1) {
+		$active = ($countries->is_active_level($country['id'])) ? 'active' : '';
+	} else {
+		$active = '';
+	}
 	echo <<< EOT
 			<g>
 				<path id="{$country['iso_code']}" title="{$country['name']}" class="land {$active}" d="{$country['d']}"></path>

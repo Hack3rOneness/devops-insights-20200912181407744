@@ -16,8 +16,8 @@ class Levels {
   // Check to see if the level is active.
   public function check_level_status($level_id) {
     $sql = 'SELECT COUNT(*) FROM levels WHERE id = ? AND active = 1 LIMIT 1';
-    $elements = array($level_id);
-    $is_active = $this->db->query($sql, $elements);
+    $element = array($level_id);
+    $is_active = $this->db->query($sql, $element);
     return (bool)$is_active[0]['COUNT(*)'];
   }
 
