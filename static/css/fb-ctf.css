@@ -1127,6 +1127,18 @@ table {
     font-size: .8em;
     text-transform: uppercase; }
 
+/**
+ * --point circles
+ */
+.inactive-country {
+  font-family: 'puristasemibold', Courier, monospace;
+  margin: 0 auto;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: #f00;
+  font-size: 2em;
+  display: block;}
+
 /* --------------------------------------------
  * --status spans
  * -------------------------------------------- */
@@ -4135,6 +4147,7 @@ Admin Nav
   text-align: center; }
   .admin-nav-links ul li a {
     font-family: 'puristabold', Courier, monospace;
+    text-align: left;
     text-transform: uppercase;
     letter-spacing: .2em;
     display: block;

@@ -1,33 +1,33 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
 
 sess_start();
 sess_enforce_login();
 
-$teams = new Teams();
-$rank = 1;
-$leaderboard = $teams->leaderboard();
-$teams_data = (object) array();
-foreach ($leaderboard as $team) {
-	$team_data = (object) array(
-		'badge' => $team['logo'],
-		'team_members' => array(),
-		'rank' => $rank,
-		'school_level' => 'collegiate',
-		'points' => array(
-			'base' => 0,
-			'quiz' => 0,
-			'flag' => 0,
-			'total' => (int)$team['points']
-		)
+$levels = new Levels();
+$countries = new Countries();
+
+$countries_data = (object) array();
+foreach ($levels->all_levels(1) as $level) {
+	$country = $countries->get_country($level['entity_id']);
+	$category = $levels->get_category($level['category_id']);
+	$hint = ($level['hint']) ? 'yes' : 'no';
+	$country_data = (object) array(
+		'points' => (int) $level['points'],
+		'bonus' => (int) $level['bonus'],
+		'category' => $category['category'],
+		'owner' => array(),
+		'completed' => array(),
+		'intro' => $level['description'],
+		'hint' => $hint,
 	);
-	$teams_data->{$team['name']} = $team_data;
-	$rank++;
+	$countries_data->{$country['name']} = $country_data;
 }
 
 header('Content-Type: application/json');
-print json_encode($teams_data, JSON_PRETTY_PRINT);
+print json_encode($countries_data, JSON_PRETTY_PRINT);
 
 ?>

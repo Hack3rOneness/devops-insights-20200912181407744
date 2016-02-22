@@ -344,4 +344,11 @@ class Levels {
     $elements = array($category, $category_id);
     $this->db->query($sql, $elements);
   }
+
+  // Get category.
+  public function get_category($category_id) {
+    $sql = 'SELECT * FROM categories WHERE id = ? LIMIT 1';
+    $element = array($category_id);
+    return $this->db->query($sql, $element)[0];
+  }
 }

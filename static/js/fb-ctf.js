@@ -220,7 +220,6 @@
               return zoom.scale();
             }
 
-
             return {
               init        : init,
               zoom        : zoom,
@@ -230,7 +229,6 @@
             };
 
         })(); // enableClickAndDrag
-
 
 
         //
@@ -740,16 +738,20 @@
             // close the hover popup
             FB_CTF.modal.closeHoverPopup();
 
+            // if there's no data, don't continue
+            if (! COUNTRY_DATA) {
+              return;
+            }
+
+            // if the country is not active, don't continue
+            if (! COUNTRY_DATA[country]) {
+              return;
+            }
+
             // engage the crosshairs animation
             if( showAnimation ){
               engageCrosshairs();
             }
-
-            // if there's no data, don't continue
-            if( ! COUNTRY_DATA ){
-              return;
-            }
-
 
             if( VIEW_ONLY ){
               setTimeout(function(){
@@ -892,7 +894,7 @@
           if(event)
             event.preventDefault();
 
-          var $self      = $(this),
+          var $self  = $(this),
           country    = $('[class~="land"]', $self).attr('title'),
           capturedBy = getCapturedByMarkup( $self.data('captured') ),
           mouse_x    = event.pageX,
@@ -901,23 +903,34 @@
           if( ! COUNTRY_DATA ){
             return;
           }
-
+          
           var data = COUNTRY_DATA[country];
 
-          FB_CTF.modal.countryHoverPopup(function(){
-            var $container = $('#fb-country-popup').css({
-              left : mouse_x + 'px',
-              top  : mouse_y + 'px'
-            }),
-            points     = data ? data.points : '',
-            category   = data ? data.category : ''
+          if (data) {       
+            FB_CTF.modal.countryHoverPopup(function(){
+              var $container = $('#fb-country-popup').css({
+                left : mouse_x + 'px',
+                top  : mouse_y + 'px'
+              }),
+              points     = data ? data.points : '',
+              category   = data ? data.category : ''
 
-            $('.country-name', $container).text(country);
-            $('.points-number', $container).text(points);
-            $('.country-category', $container).text(category);
-            $('.country-owner', $container).html(capturedBy);
-          });
+              $('.country-name', $container).text(country);
+              $('.points-number', $container).text(points);
+              $('.country-category', $container).text(category);
+              $('.country-owner', $container).html(capturedBy);
+            });
+          } else {
 
+            FB_CTF.modal.countryInactiveHoverPopup(function(){
+              var $container = $('#fb-country-popup').css({
+                left : mouse_x + 'px',
+                top  : mouse_y + 'px'
+              });
+
+              $('.country-name', $container).text(country);
+            });
+          }
             //
             // add the country path to the hover group so we can
             //  see the outline
@@ -926,8 +939,6 @@
             $countryHover.data( $self.data() ).empty().append(clone);
 
         } // function countryHover();
-
-
 
 
         /**
@@ -1277,7 +1288,7 @@
             return df.resolve(COUNTRY_DATA);
           }
 
-          var loadPath = 'data/country-data.json';
+          var loadPath = 'data/country-data.php';
 
           return $.get( loadPath, function(data, status, jqxhr){
             COUNTRY_DATA = data;
@@ -1308,12 +1319,11 @@
             country      = $countryPath.attr('title'),
             data         = COUNTRY_DATA[country];
 
-            if( data ){
-
-                    // add the category
-                    $group.attr('data-category', data.category );
-                  }
-                });
+            if (data) {
+            // add the category
+              $group.attr('data-category', data.category );
+            }
+          });
 
         }
 
@@ -1776,6 +1786,21 @@
           openAndLoad($countryHover, loadPath, cb);
         }
 
+        /**
+         * a specific function for rendering a inactive country hover popup
+         *
+         * @param cb (function)
+         *   - a callback to render the country data in the popup
+         */
+         function countryInactiveHoverPopup(cb){
+          var loadPath = 'inc/modals/country-inactive-popup.html';
+          if( $countryHover.length === 0 ){
+            $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo( $modalContainer );
+          }
+
+          openAndLoad($countryHover, loadPath, cb);
+        }
+
 
         /**
          * the code for the popup in the view-only mode
@@ -1810,6 +1835,9 @@
 
             // load and show the popup modal for a country hover
             countryHoverPopup : countryHoverPopup,
+
+            // load and show the popup modal for an inactive country hover
+            countryInactiveHoverPopup : countryInactiveHoverPopup,
 
             // load and show the view only country info
             viewmodePopup     : viewmodePopup,
@@ -2047,7 +2075,7 @@
      */
      FB_CTF.command_line = (function(){
 
-      var loadPath  = 'data/command-line.json',
+      var loadPath  = 'data/command-line.php',
       modalName = 'command-line',
       $cmdPromptList,
       $cmdResultsList,
@@ -2344,6 +2372,9 @@
               case 'change-radio':
               cmd_changeRadio(param);
               break;
+              case 'show-team':
+              cmd_showTeam();
+              break;
               case 'capture-country':
               cmd_captureCountry();
               break;
@@ -2412,6 +2443,23 @@
             $('body').off('command-option-selected');
           });
 
+        }
+
+        /**
+         * show team's info
+         */
+         function cmd_showTeam(){
+          $('body').on('command-option-selected', function(event, data){
+
+            var team = data.selected;
+
+            console.log('Show team ' + team);
+
+            FB_CTF.modal.close();
+            clearCommandPrompt();
+
+            $('body').off('command-option-selected');
+          });
         }
 
 

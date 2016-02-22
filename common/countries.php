@@ -53,11 +53,18 @@ class Countries {
     return $this->db->query($sql);
   }
 
-  // All enabled countries.
-  public function all_enabled_countries() {
-    $sql = 'SELECT * FROM countries WHERE enabled = 1 ORDER BY name';
+  // All enabled countries. The weird sorting is because SVG lack of z-index
+  // and things looking like shit in the map. See issue #20.
+  public function all_enabled_countries($map=false) {
+    if ($map) {
+      $sql = 'SELECT * FROM countries WHERE enabled = 1 ORDER BY CHAR_LENGTH(d)';
+    } else {
+      $sql = 'SELECT * FROM countries WHERE enabled = 1 ORDER BY name';
+    }
     return $this->db->query($sql);
   }
+
+  // All map countries. 
 
   // All not used and enabled countries.
   public function all_available_countries() {
@@ -71,5 +78,12 @@ class Countries {
     $element = array($country_id);
     $is_active = $this->db->query($sql, $element);
     return (bool)$is_active[0]['COUNT(*)'];
-  }  
+  }
+
+  // Retrieve country by id.
+  public function get_country($country_id) {
+    $sql = 'SELECT * FROM countries WHERE id = ? LIMIT 1';
+    $element = array($country_id);
+    return $this->db->query($sql, $element)[0];
+  }
 }
