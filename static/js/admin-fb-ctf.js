@@ -122,7 +122,21 @@ var $body = $('body');
     FB_CTF.slider.init();
   }
 
+  /**
+   * add a new attachment
+   *
+   * @param $clicked (jquery object)
+   *   - the clicked button
+   */
+  function addNewAttachment( $clicked ){
+    var $attachments      = $('.attachments', $clicked),
+        $newAttachment    = $('.new-attachment-hidden', $clicked),
+        $addedAttachment  = $newAttachment.clone();
 
+    $addedAttachment.removeClass('completely-hidden');
+    $addedAttachment.removeClass('new-attachment-hidden');
+    $attachments.append($addedAttachment);
+  }
 
   /**
    * render the registration page, updating text and values
@@ -168,11 +182,58 @@ var $body = $('body');
       var responseData = JSON.parse(data);
       if (responseData.result == 'OK') {
         console.log('OK');
+        return true;
       } else {
         // TODO: Make this a modal
         console.log('Failed');
+        return false;
       }
     });
+  }
+
+  // Create new attachment
+  function createAttachment(clicked) {
+    var level_id = $('.attachment_form input[name=level_id]', clicked)[0].value;
+    var filename = $('.attachment_form input[name=filename]', clicked)[0].value;
+    var attachment_file = $('.attachment_form input[name=attachment_file]', clicked)[0].files[0];
+
+    if (level_id && filename && attachment_file) {
+      var formData = new FormData();
+      formData.append('attachment_file', attachment_file);
+      formData.append('action', 'create_attachment');
+      formData.append('level_id', level_id);
+      formData.append('filename', filename);
+
+      $.ajax({
+        url: 'admin.php',
+        type: 'POST',
+        data: formData,
+        enctype: 'multipart/form-data',
+        processData: false,
+        contentType: false
+      }).done(function(data) {
+        var responseData = JSON.parse(data);
+        if (responseData.result == 'OK') {
+          console.log('OK');
+        } else {
+          // TODO: Make this a modal
+          console.log('Failed');
+        }
+      }); 
+    }
+  }
+
+  // Delete attachment
+  function deleteAttachment(clicked) {
+    var attachment_id = $('.attachment_form input[name=attachment_id]', clicked)[0].value;
+    var delete_data = {
+      action: 'delete_attachment',
+      attachment_id: attachment_id
+    };
+
+    if (attachment_id) {
+      sendAdminRequest(delete_data);
+    }
   }
 
   // Generic deletion
@@ -186,7 +247,7 @@ var $body = $('body');
       deleteLevel(section);
     } else if (elementSection === 'categories_form') {
       deleteCategory(section);
-    } 
+    }
   }
 
   // Generic update
@@ -615,7 +676,6 @@ var $body = $('body');
       } else if (action === 'delete') {
         $section.remove();
         deleteElement($section);
-
         // rename the section boxes
         $('.admin-box').each(function(i, el){
           var $titleObj  = $('.admin-box-header h3', el),
@@ -632,6 +692,19 @@ var $body = $('body');
         toggleCountry($section);
       } else if (action === 'enable-country') {
         toggleCountry($section);
+      } else if (action === 'add-attachment') {
+        addNewAttachment($section);
+      } else if (action === 'create-attachment') {
+        var $containingDiv = $self.closest('.new-attachment');
+        createAttachment($containingDiv);
+      } else if (action === 'delete-new-attachment') {
+        var $containingDiv = $self.closest('.new-attachment');
+        $containingDiv.remove();
+        deleteAttachment($containingDiv);
+      } else if (action === 'delete-attachment') {
+        var $containingDiv = $self.closest('.existing-attachment');
+        $containingDiv.remove();
+        deleteAttachment($containingDiv);
       } 
 
       //

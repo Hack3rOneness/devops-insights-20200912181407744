@@ -2,6 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/attachments.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
 
 sess_start();
@@ -62,6 +63,7 @@ echo <<< EOT
 EOT;
 
 $levels = new Levels();
+$attachments = new Attachments();
 
 // Hidden element for creating new flag level
 echo <<< EOT
@@ -199,6 +201,7 @@ foreach ($levels->all_flag_levels() as $flag) {
               <label>Hint</label>
               <input name="hint" type="text" value="{$flag_hint}" disabled>
             </div>
+
           </div>
 
           <div class="col col-pad col-1-2">
@@ -232,7 +235,63 @@ foreach ($levels->all_flag_levels() as $flag) {
               </div>
             </div>
           </div>
-        </div>
+          </form>
+        </div> <!-- fb-column-container -->
+
+        <div class="attachments">
+
+          <div class="new-attachment new-attachment-hidden fb-column-container completely-hidden">
+            <div class="col col-pad col-1-3">
+              <div class="form-el">
+                <form class="attachment_form" action="admin.php" method="POST" enctype="multipart/form-data">
+                  <input type="hidden" name="action" value="create_attachment">
+                  <input type="hidden" name="level_id" value="{$flag['id']}">
+                  <div class="col el--block-label el--full-text">
+                    <label>New Attachment:</label>
+                    <input name="filename" type="text">
+                    <input name="attachment_file" type="file">
+                  </div>
+              </div>
+            </div>
+            <div class="admin-buttons col col-pad col-1-3">
+              <div class="col el--block-label el--full-text">
+                <button class="fb-cta cta--red" data-action="delete-new-attachment">X</button>
+                <button class="fb-cta cta--yellow" data-action="create-attachment">Create</button>
+              </div>
+              </form>
+            </div>
+          </div>
+EOT;
+
+  if ($attachments->has_attachments($flag['id'])) {
+    $a_c = 1;
+    foreach ($attachments->all_attachments($flag['id']) as $attachment) {
+      echo <<< EOT
+          <div class="existing-attachment fb-column-container">
+            <div class="col col-pad col-2-3">
+              <div class="form-el">
+                <form class="attachment_form">
+                  <input type="hidden" name="attachment_id" value="{$attachment['id']}">
+                  <div class="col el--block-label el--full-text">
+                    <label>Attachment {$a_c}:</label>
+                    <input name="filename" type="text" value="{$attachment['filename']}" disabled>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="admin-buttons col col-pad col-1-3">
+              <div class="col el--block-label el--full-text">
+                <button class="fb-cta cta--red" data-action="delete-attachment">X</button>
+              </div>
+            </div>
+          </div>
+EOT;
+      $a_c++;
+    }
+  }
+
+  echo <<< EOT
+        </div> <!-- attachments -->
 
         <div class="admin-buttons admin-row">
           <div class="button-right">
@@ -240,8 +299,11 @@ foreach ($levels->all_flag_levels() as $flag) {
             <button class="fb-cta cta--red" data-action="delete">Delete</button>
             <button class="fb-cta cta--yellow" data-action="save-no-validation">Save</button>
           </div>
-        </div>
-      </form>
+        
+          <div class="button-left">
+            <button class="fb-cta" data-action="add-attachment">Add Attachment</button>
+          </div>
+      </div>
     </section>
 EOT;
   $c++;

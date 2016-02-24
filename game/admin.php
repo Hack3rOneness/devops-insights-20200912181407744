@@ -3,6 +3,7 @@
 require_once('../common/adminrequests.php');
 require_once('../common/teams.php');
 require_once('../common/levels.php');
+require_once('../common/attachments.php');
 require_once('../common/logos.php');
 require_once('../common/countries.php');
 require_once('../common/sessions.php');
@@ -233,6 +234,32 @@ switch ($request->action) {
     $levels = new Levels();
     $levels->create_category(
       $request->parameters['category']
+    );
+    ok_response();
+    break;
+  case 'create_attachment':
+    $attachments = new Attachments();
+    $result = $attachments->create(
+      'attachment_file',
+      $request->parameters['filename'],
+      $request->parameters['level_id']
+    );
+    if ($result) {
+      ok_response();  
+    }
+    break;
+  case 'update_attachment':
+    $attachments = new Attachments();
+    $attachments->update(
+      $request->parameters['filename'],
+      $request->parameters['level_id']
+    );
+    ok_response();
+    break;
+  case 'delete_attachment':
+    $attachments = new Attachments();
+    $attachments->delete(
+      $request->parameters['attachment_id']
     );
     ok_response();
     break;

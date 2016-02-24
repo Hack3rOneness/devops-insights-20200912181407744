@@ -72,6 +72,23 @@ INSERT INTO `categories` (category, created_ts) VALUES("Quiz", NOW());
 UNLOCK TABLES;
 
 --
+-- Table structure for table `level_attachments`
+--
+
+DROP TABLE IF EXISTS `attachments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attachments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `level_id` int(11) DEFAULT NULL,
+  `filename` text NULL DEFAULT NULL,
+  `type` text NULL DEFAULT NULL,
+  `created_ts` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `teams`
 --
 

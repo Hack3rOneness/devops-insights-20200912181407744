@@ -12,3 +12,7 @@
 *~
 \#*\#
 *.swp
+
+# Attachments directory
+game/data/attachments/*
+!game/data/attachments/index.php

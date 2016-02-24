@@ -45,6 +45,14 @@ class AdminRequests {
         ),
       ),
       'entity_id'   => FILTER_VALIDATE_INT,
+      'attachment_id' => FILTER_VALIDATE_INT,
+      'filename'    => array(
+        'filter'      => FILTER_VALIDATE_REGEXP,
+        'options'     => array(
+          'regexp'      => '/^[\w\-\.]+$/'
+         ),
+      ), 
+      'attachment_file' => FILTER_UNSAFE_RAW,
       'category_id' => FILTER_VALIDATE_INT,
       'category'    => FILTER_SANITIZE_STRING,
       'country_id'  => FILTER_VALIDATE_INT,
@@ -87,7 +95,10 @@ class AdminRequests {
       'create_category',
       'delete_category',
       'enable_logo',
-      'disable_logo'
+      'disable_logo',
+      'create_attachment',
+      'update_attachment',
+      'delete_attachment'
     );
   }
 
