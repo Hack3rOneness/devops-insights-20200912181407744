@@ -78,7 +78,7 @@ echo <<< EOT
 
             <div class="form-el el--block-label el--full-text">
               <label>Description</label>
-              <input name="description" type="text">
+              <textarea name="description" placeholder="Level description" rows="4"></textarea>
             </div>
             
             <div class="form-el fb-column-container col-gutters">
@@ -169,7 +169,7 @@ foreach ($levels->all_base_levels() as $base) {
 
             <div class="form-el el--block-label el--full-text">
               <label>Description</label>
-              <input name="description" type="text" value="{$base_description}" disabled>
+              <textarea name="description" rows="4" disabled>{$base_description}</textarea>
             </div>
             
             <div class="form-el fb-column-container col-gutters">

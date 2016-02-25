@@ -80,7 +80,7 @@ echo <<< EOT
             
             <div class="form-el el--block-label el--full-text">
               <label>Description</label>
-              <input name="description" type="text">
+              <textarea name="description" placeholder="Level description" rows="4"></textarea>
             </div>
             
             <div class="form-el fb-column-container col-gutters">
@@ -182,7 +182,7 @@ foreach ($levels->all_flag_levels() as $flag) {
           <div class="col col-pad col-1-2">
             <div class="form-el el--block-label el--full-text">
               <label>Description</label>
-              <input name="description" type="text" value="{$flag_description}" disabled>
+              <textarea name="description" rows="4" disabled>{$flag_description}</textarea>
             </div>
 
             <div class="form-el fb-column-container col-gutters">

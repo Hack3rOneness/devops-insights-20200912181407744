@@ -848,18 +848,30 @@
          function launchCaptureModal( country, capturedBy ){
           var data = COUNTRY_DATA[country];
 
+          console.log(data);
+
           FB_CTF.modal.loadPopup('country-capture', function(){
             var $container = $('.fb-modal-content'),
             intro      = data ? data.intro : '',
             hint       = data ? data.hint : '',
+            hint_cost  = data ? data.hint_cost : 0,
             points     = data ? data.points : '',
             category   = data ? data.category : '',
-            completed  = data ? data.completed : '';
+            type       = data ? data.type : '',
+            completed  = data ? data.completed : '',
+            links      = data ? data.attachments : '';
 
             $('.country-name', $container).text(country);
             $('.capture-text', $container).text(intro);
-            $('.capture-hint div', $container).text(hint);
+            if( links instanceof Array){
+              $.each(links, function(){
+                var f = this.split('_')[1];
+                $('.capture-links', $container).append('<a target="_blank" href="' + this + '">' + f + '</a></br>');
+              });
+            }
+            //$('.capture-hint div', $container).text(hint);
             $('.points-number', $container).text(points);
+            $('.country-type', $container).text(type);
             $('.country-category', $container).text(category);
             $('.country-owner', $container).html(capturedBy);
 
@@ -869,20 +881,20 @@
               });
             }
 
-                //
-                // event listeners
-                //
-                $('.js-trigger-hint', $container).on('click', function(event) {
-                  event.preventDefault();
-                  $(this).onlySiblingWithClass('active').closest('.fb-modal-content').removeClass('help-enabled').addClass('hint-enabled');
-                });
-                $('.js-trigger-help', $container).on('click', function(event) {
-                  event.preventDefault();
-                  $(this).onlySiblingWithClass('active').closest('.fb-modal-content').removeClass('hint-enabled').addClass('help-enabled');
-                });
-
-                $('.js-close-modal', $container).on('click', removeCaptured);
+            //
+            // event listeners
+            //
+            if (hint == 'no') {
+              $('.js-trigger-hint span', $container).text('No Hint');
+            } else {
+              $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
+              $('.js-trigger-hint', $container).on('click', function(event) {
+                event.preventDefault();
+                $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
               });
+            }
+            $('.js-close-modal', $container).on('click', removeCaptured);
+          });
         } // function launchCaptureModal();
 
 
@@ -913,12 +925,13 @@
                 top  : mouse_y + 'px'
               }),
               points     = data ? data.points : '',
-              category   = data ? data.category : ''
+              category   = data ? data.category : '',
+              type   = data ? data.type : ''
 
               $('.country-name', $container).text(country);
               $('.points-number', $container).text(points);
+              $('.country-type', $container).text(type);
               $('.country-category', $container).text(category);
-              $('.country-owner', $container).html(capturedBy);
             });
           } else {
 

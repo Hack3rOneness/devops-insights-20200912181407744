@@ -58,7 +58,7 @@ echo <<< EOT
           <div class="col col-pad col-1-2">
             <div class="form-el el--block-label el--full-text">
               <label>Question</label>
-              <input name="question" type="text">
+              <textarea name="question" placeholder="Quiz question" rows="4"></textarea>
             </div>
 
             <div class="form-el el--block-label el--full-text">
@@ -148,7 +148,7 @@ foreach ($levels->all_quiz_levels() as $quiz) {
           <div class="col col-pad col-1-2">
             <div class="form-el el--block-label el--full-text">
               <label>Question</label>
-              <input name="question" type="text" value="{$quiz_question}" disabled>
+              <textarea name="question" rows="4" disabled>{$quiz_question}</textarea>
             </div>
 
             <div class="form-el el--block-label el--full-text">

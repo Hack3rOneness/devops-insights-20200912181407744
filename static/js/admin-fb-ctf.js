@@ -327,7 +327,7 @@ var $body = $('body');
 
   // Create quiz level
   function createQuizLevel(section) {
-    var question = $('.level_form input[name=question]', section)[0].value;
+    var question = $('.level_form textarea[name=question]', section)[0].value;
     var answer = $('.level_form input[name=answer]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
@@ -353,7 +353,7 @@ var $body = $('body');
 
   // Create flag level
   function createFlagLevel(section) {
-    var description = $('.level_form input[name=description]', section)[0].value;
+    var description = $('.level_form textarea[name=description]', section)[0].value;
     var flag = $('.level_form input[name=flag]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
@@ -381,7 +381,7 @@ var $body = $('body');
 
   // Create base level
   function createBaseLevel(section) {
-    var description = $('.level_form input[name=description]', section)[0].value;
+    var description = $('.level_form textarea[name=description]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
@@ -421,7 +421,7 @@ var $body = $('body');
 
   // Update quiz level
   function updateQuizLevel(section) {
-    var question = $('.level_form input[name=question]', section)[0].value;
+    var question = $('.level_form textarea[name=question]', section)[0].value;
     var answer = $('.level_form input[name=answer]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
@@ -449,7 +449,7 @@ var $body = $('body');
 
   // Update flag level
   function updateFlagLevel(section) {
-    var description = $('.level_form input[name=description]', section)[0].value;
+    var description = $('.level_form textarea[name=description]', section)[0].value;
     var flag = $('.level_form input[name=flag]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
@@ -479,7 +479,7 @@ var $body = $('body');
 
   // Update base level
   function updateBaseLevel(section) {
-    var description = $('.level_form input[name=description]', section)[0].value;
+    var description = $('.level_form textarea[name=description]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
@@ -672,7 +672,7 @@ var $body = $('body');
         createElement($section);
       } else if (action === 'edit'){
         $section.removeClass(lockClass);
-        $('input[type="text"], input[type="password"]', $section).prop("disabled", false);
+        $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", false);
       } else if (action === 'delete') {
         $section.remove();
         deleteElement($section);
