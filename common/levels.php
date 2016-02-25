@@ -417,4 +417,11 @@ class Levels {
     // kthxbai
     return true;
   }
+
+  // All teams that have completed this level
+  public function completed_by($level_id) {
+    $sql = 'SELECT t.name as name FROM teams t,scores_log s WHERE s.level_id = ?';
+    $element = array($level_id);
+    return $this->db->query($sql, $element);
+  }
 }

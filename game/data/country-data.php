@@ -24,6 +24,10 @@ foreach ($levels->all_levels(1) as $level) {
 			array_push($attachments_list, $attachment['filename']);
 		}
 	}
+	$completed_by = array();
+	foreach ($levels->completed_by($level['id']) as $c) {
+		array_push($completed_by, $c['name']);
+	}
 	$country_data = (object) array(
 		'level_id' => $level['id'],
 		'intro' => $level['description'],
@@ -32,7 +36,7 @@ foreach ($levels->all_levels(1) as $level) {
 		'bonus' => (int) $level['bonus'],
 		'category' => $category['category'],
 		'owner' => array(),
-		'completed' => array(),
+		'completed' => $completed_by,
 		'hint' => $hint,
 		'hint_cost' => $hint_cost,
 		'attachments' => $attachments_list
