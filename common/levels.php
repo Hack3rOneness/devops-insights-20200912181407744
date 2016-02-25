@@ -351,4 +351,70 @@ class Levels {
     $element = array($category_id);
     return $this->db->query($sql, $element)[0];
   }
+
+  // Check if flag is correct.
+  public function check_answer($level_id, $answer) {
+    $sql = 'SELECT flag FROM levels WHERE active = 1 AND id = ? LIMIT 1';
+    $element = array($level_id);
+    $flag = $this->db->query($sql, $element)[0]['flag'];
+
+    // TODO: Implement bad answers logging
+    return (bool)(strtoupper($flag) == strtoupper($answer));
+  }
+
+  // Adjust bonus.
+  public function adjust_bonus($level_id) {
+    $sql = 'UPDATE levels SET bonus = GREATEST(bonus - bonus_dec, 0) WHERE id = ? LIMIT 1';
+    $element = array($level_id);
+    $this->db->query($sql, $element);
+  }
+
+  // Log successful score.
+  public function log_valid_score($level_id, $team_id, $points) {
+    $sql = 'INSERT INTO scores_log (ts, level_id, team_id, points) VALUES (NOW(), ?, ?, ?)';
+    $elements = array($level_id, $team_id, $points);
+    $this->db->query($sql, $elements);
+  }
+
+  // Log attempt on score.
+  public function log_failed_score($level_id, $team_id, $flag) {
+    $sql = 'INSERT INTO failures_log (ts, level_id, team_id, flag) VALUES(NOW(), ?, ?, ?)';
+    $elements = array($level_id, $team_id, $flag);
+    $this->db->query($sql, $elements);
+  }
+
+  // Check if there is a previous score.
+  public function previous_score($level_id, $team_id) {
+    $sql = 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
+    $elements = array($level_id, $team_id);
+    $have_score = $this->db->query($sql, $elements); 
+    return (bool)$have_score[0]['COUNT(*)'];
+  }
+
+  // Score level.
+  public function score_level($level_id, $team_id) {
+    // Check if team has already scored this level
+    if ($this->previous_score($level_id, $team_id)) {
+      return false;
+    }
+
+    $level = $this->get_level($level_id);
+    
+    // Calculate points to give
+    $points = $level['points'] + $level['bonus'];
+    
+    // Adjust bonus
+    $this->adjust_bonus($level_id);
+    
+    // Score!
+    $sql = 'UPDATE teams SET points = points + ? WHERE id = ? LIMIT 1';
+    $elements = array($points, $team_id);
+    $this->db->query($sql, $elements);
+
+    // Log the score...
+    $this->log_valid_score($level_id, $team_id, $points);
+
+    // kthxbai
+    return true;
+  }
 }

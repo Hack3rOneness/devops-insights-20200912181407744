@@ -25,6 +25,7 @@ foreach ($levels->all_levels(1) as $level) {
 		}
 	}
 	$country_data = (object) array(
+		'level_id' => $level['id'],
 		'intro' => $level['description'],
 		'type'  => $level['type'],
 		'points' => (int) $level['points'],

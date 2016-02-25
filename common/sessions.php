@@ -122,4 +122,8 @@ function sess_admin() {
   return (bool)(isset($_SESSION['admin']));
 }
 
+function sess_team() {
+  return $_SESSION['team_id'];
+}
+
 ?>

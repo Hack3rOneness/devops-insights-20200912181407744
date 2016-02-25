@@ -848,10 +848,9 @@
          function launchCaptureModal( country, capturedBy ){
           var data = COUNTRY_DATA[country];
 
-          console.log(data);
-
           FB_CTF.modal.loadPopup('country-capture', function(){
             var $container = $('.fb-modal-content'),
+            level_id   = data ? data.level_id : 0,
             intro      = data ? data.intro : '',
             hint       = data ? data.hint : '',
             hint_cost  = data ? data.hint_cost : 0,
@@ -862,6 +861,7 @@
             links      = data ? data.attachments : '';
 
             $('.country-name', $container).text(country);
+            $('input[name=level_id]', $container).attr('value',level_id);
             $('.capture-text', $container).text(intro);
             if( links instanceof Array){
               $.each(links, function(){
@@ -893,6 +893,37 @@
                 $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
               });
             }
+            $('.js-trigger-score', $container).on('click', function(event) {
+                event.preventDefault();
+
+                var score_level = $('input[name=level_id]', $container)[0].value;
+                var score_answer = $('input[name=answer]', $container)[0].value;
+                var score_data = {
+                  action: 'answer_level',
+                  level_id: score_level,
+                  answer: score_answer
+                };
+
+                $.post(
+                  'game.php',
+                  score_data
+                ).fail(function() {
+                  // TODO: Make this a modal
+                  console.log('ERROR');
+                }).done(function(data) {
+                  var responseData = JSON.parse(data);
+                  if (responseData.result == 'OK') {
+                    console.log('OK');
+                    $('input[name=answer]', $container).css("background-color","green");
+                    $('.js-trigger-score', $container).text('YES!');
+                  } else {
+                  // TODO: Make this a modal
+                    console.log('Failed');
+                    $('input[name=answer]', $container).css("background-color","red");
+                    $('.js-trigger-score', $container).text('NOPE :(');
+                  }
+                });
+              });
             $('.js-close-modal', $container).on('click', removeCaptured);
           });
         } // function launchCaptureModal();

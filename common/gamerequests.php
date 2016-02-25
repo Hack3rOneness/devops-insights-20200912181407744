@@ -16,7 +16,7 @@ class GameRequests {
     $this->input_method = $inputMethods[$this->method];
     $this->filters = array(
       'level_id'    => FILTER_VALIDATE_INT,
-      'flag'        => FILTER_UNSAFE_RAW,
+      'answer'        => FILTER_UNSAFE_RAW,
       'action'      => array(
         'filter'      => FILTER_VALIDATE_REGEXP,
         'options'     => array(
@@ -25,9 +25,8 @@ class GameRequests {
       )
     );
     $this->actions = array(
-      'quiz_answer',
       'open_level',
-      'submit_flag',
+      'answer_level',
     );
   }
 

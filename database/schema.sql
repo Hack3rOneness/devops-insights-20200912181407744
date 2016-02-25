@@ -158,8 +158,23 @@ CREATE TABLE `scores_log` (
   `team_id` int(11) DEFAULT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
   `level_id` int(11) DEFAULT NULL,
-  `entity_id` int(11) DEFAULT NULL,
-  `type` varchar(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `failures_log`
+--
+
+DROP TABLE IF EXISTS `failures_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scores_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ts` timestamp NULL DEFAULT NULL,
+  `team_id` int(11) DEFAULT NULL,
+  `level_id` int(11) DEFAULT NULL,
+  `flag` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -175,24 +190,6 @@ CREATE TABLE `attacks_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ts` timestamp NULL DEFAULT NULL,
   `team_id` int(11) DEFAULT NULL,
-  `level_id` int(11) DEFAULT NULL,
-  `entity_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `failures_log`
---
-
-DROP TABLE IF EXISTS `failures_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `failures_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` timestamp NULL DEFAULT NULL,
-  `team_id` int(11) DEFAULT NULL,
-  `flag` text DEFAULT NULL,
   `level_id` int(11) DEFAULT NULL,
   `entity_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
