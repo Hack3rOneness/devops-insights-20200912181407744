@@ -18,16 +18,23 @@ foreach ($levels->all_levels(1) as $level) {
 	$category = $levels->get_category($level['category_id']);
 	$hint = ($level['hint']) ? 'yes' : 'no';
 	$hint_cost = ($level['penalty'] === 0) ? 0 : $level['penalty'];
+
+	// All attachments for this level
 	$attachments_list = array();
 	if ($attachments->has_attachments($level['id'])) {
 		foreach ($attachments->all_attachments($level['id']) as $attachment) {
 			array_push($attachments_list, $attachment['filename']);
 		}
 	}
+
+	// All teams that have completed this level
 	$completed_by = array();
 	foreach ($levels->completed_by($level['id']) as $c) {
 		array_push($completed_by, $c['name']);
 	}
+
+	// Who is the first owner of this level
+	$owner = $completed_by[0];
 	$country_data = (object) array(
 		'level_id' => $level['id'],
 		'intro' => $level['description'],
@@ -35,7 +42,7 @@ foreach ($levels->all_levels(1) as $level) {
 		'points' => (int) $level['points'],
 		'bonus' => (int) $level['bonus'],
 		'category' => $category['category'],
-		'owner' => array(),
+		'owner' => $owner,
 		'completed' => $completed_by,
 		'hint' => $hint,
 		'hint_cost' => $hint_cost,

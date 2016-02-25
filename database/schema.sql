@@ -169,7 +169,7 @@ CREATE TABLE `scores_log` (
 DROP TABLE IF EXISTS `failures_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `scores_log` (
+CREATE TABLE `failures_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ts` timestamp NULL DEFAULT NULL,
   `team_id` int(11) DEFAULT NULL,
