@@ -34,7 +34,7 @@ foreach ($levels->all_levels(1) as $level) {
 	}
 
 	// Who is the first owner of this level
-	$owner = $completed_by[0];
+	$owner = ($completed_by) ? $completed_by[0] : 'Uncaptured';
 	$country_data = (object) array(
 		'level_id' => $level['id'],
 		'intro' => $level['description'],

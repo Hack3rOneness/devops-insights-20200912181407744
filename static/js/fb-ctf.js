@@ -858,6 +858,7 @@
             category   = data ? data.category : '',
             type       = data ? data.type : '',
             completed  = data ? data.completed : '',
+            owner      = data ? data.owner : '',
             links      = data ? data.attachments : '';
 
             $('.country-name', $container).text(country);
@@ -873,7 +874,7 @@
             $('.points-number', $container).text(points);
             $('.country-type', $container).text(type);
             $('.country-category', $container).text(category);
-            $('.country-owner', $container).html(capturedBy);
+            $('.country-owner', $container).html(owner);
 
             if( completed instanceof Array){
               $.each(completed, function(){
