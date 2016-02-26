@@ -141,6 +141,9 @@
                 console.log("loadPath: " + loadPath);
                 console.log(response);
                 console.error("/end error");
+
+                // Redirect to error page
+                window.location = '/index.html#error';
             } else {
 
                 if( FB_CTF !== undefined ){

@@ -52,6 +52,7 @@ function login_team($team_id, $password) {
     if ($team['admin'] == 1) sess_set('admin', $team['admin']);
     sess_set('IP', $_SERVER['REMOTE_ADDR']);
     ok_response();
+    game_page();
   } else {
     error_response();
     exit;

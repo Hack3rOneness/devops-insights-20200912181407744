@@ -7,7 +7,7 @@
 rm /etc/apache2/sites-enabled/scotchbox.local.conf
 
 # Apply our apache configuration
-cp /var/www/facebook-ctf/tools/000-default.conf /etc/apache2/sites-enabled/000-default.conf
+cp /var/www/facebook-ctf/tools/fbctf.conf /etc/apache2/sites-enabled/fbctf.conf
 
 # Restart apache
 service apache2 restart
