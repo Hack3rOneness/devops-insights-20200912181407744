@@ -28,6 +28,10 @@ switch ($request->action) {
   			$request->parameters['level_id'],
   			sess_team()
   		);
+      // Update teams last score
+      $teams = new Teams();
+      $teams->last_score(sess_team());
+      
   		ok_response();
   	} else {
       $levels->log_failed_score(

@@ -23,7 +23,9 @@ foreach ($leaderboard as $team) {
 			'total' => (int)$team['points']
 		)
 	);
-	$teams_data->{$team['name']} = $team_data;
+	if ($team['name']) {
+		$teams_data->{$team['name']} = $team_data;	
+	}
 	$rank++;
 }
 

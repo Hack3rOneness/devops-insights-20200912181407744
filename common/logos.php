@@ -14,10 +14,13 @@ class Logos {
 
   // Check to see if the team is active.
   public function check_exists($logo) {
-    $sql = 'SELECT COUNT(*) FROM logos WHERE name = ? AND enabled = 1 LIMIT 1';
-    $elements = array($logo);
-    $exists = $this->db->query($sql, $elements);
-    return (bool)$exists[0]['COUNT(*)'];
+    $all_logos = $this->all_enabled_logos();
+    foreach ($all_logos as $l) {
+      if ($logo == $l['name']) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // Enable or disable logo by passing 1 or 0.
@@ -30,7 +33,7 @@ class Logos {
   // Retrieve a random logo from the table.
   public function random_logo() {
     $sql = 'SELECT name FROM logos WHERE enabled = 1 ORDER BY RAND() LIMIT 1';
-    $this->db->query($sql)[0]['name'];
+    return $this->db->query($sql)[0]['name'];
   }
 
   // Retrieve how many teams are using one logo.

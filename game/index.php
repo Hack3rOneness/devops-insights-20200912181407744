@@ -13,19 +13,31 @@ function register_team($teamname, $password, $logo) {
   if (!$logos->check_exists($final_logo)) {
     $final_logo = $logos->random_logo();
   }
+
+  // Check if team name is not empty or just spaces
+  if ((!$teamname) || (trim($teamname) == "")) {
+    error_response();
+    exit;
+  }
+
+  // Trim team name to 20 chars, to avoid breaking UI
+  $shortname = substr($teamname, 0, 20);
+  
   // Verify that this team name is not created yet
-  if (!$teams->team_exist($teamname)) {
+  if (!$teams->team_exist($shortname)) {
     $hash = hash('sha256', $password);
-    $team_id = $teams->create_team($teamname, $hash, $final_logo);
+    $team_id = $teams->create_team($shortname, $hash, $final_logo);
       if ($team_id) {
       //ok_response();
       login_team($team_id, $password);
     } else {
       error_response();
+      exit;
     }
   } else {
     // TODO: Make distintions in error responses
     error_response();
+    exit;
   }
 }
 
@@ -42,6 +54,7 @@ function login_team($team_id, $password) {
     ok_response();
   } else {
     error_response();
+    exit;
   }
 }
 

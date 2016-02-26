@@ -370,9 +370,9 @@ class Levels {
   }
 
   // Log successful score.
-  public function log_valid_score($level_id, $team_id, $points) {
-    $sql = 'INSERT INTO scores_log (ts, level_id, team_id, points) VALUES (NOW(), ?, ?, ?)';
-    $elements = array($level_id, $team_id, $points);
+  public function log_valid_score($level_id, $team_id, $points, $type) {
+    $sql = 'INSERT INTO scores_log (ts, level_id, team_id, points, type) VALUES (NOW(), ?, ?, ?, ?)';
+    $elements = array($level_id, $team_id, $points, $type);
     $this->db->query($sql, $elements);
   }
 
@@ -412,7 +412,7 @@ class Levels {
     $this->db->query($sql, $elements);
 
     // Log the score...
-    $this->log_valid_score($level_id, $team_id, $points);
+    $this->log_valid_score($level_id, $team_id, $points, $level['type']);
 
     // kthxbai
     return true;
@@ -420,7 +420,7 @@ class Levels {
 
   // All teams that have completed this level
   public function completed_by($level_id) {
-    $sql = 'SELECT name FROM teams WHERE id IN (SELECT team_id FROM scores_log WHERE level_id = ? ORDER BY ts)';
+    $sql = 'SELECT name FROM teams WHERE id IN (SELECT team_id FROM scores_log WHERE level_id = ? ORDER BY ts) AND visible = 1 AND active = 1';
     $element = array($level_id);
     return $this->db->query($sql, $element);
   }
