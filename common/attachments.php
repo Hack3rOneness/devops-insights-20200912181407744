@@ -26,7 +26,7 @@ class Attachments {
       $tmp_name = $_FILES[$file_param]['tmp_name'];
       $type = $_FILES[$file_param]['type'];
       $md5_str = md5_file($tmp_name);
-      $local_filename .= $md5_str . '_' . $filename;
+      $local_filename .= md5($md5_str.$level_id) . '_' . $filename;
       move_uploaded_file($tmp_name, $_SERVER['DOCUMENT_ROOT'] . $local_filename);
     } else {
       return false;

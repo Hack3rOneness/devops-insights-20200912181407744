@@ -135,6 +135,12 @@ var $body = $('body');
 
     $addedAttachment.removeClass('completely-hidden');
     $addedAttachment.removeClass('new-attachment-hidden');
+    
+    $("input[type=file]", $addedAttachment).change(function (e){
+      var fileName = e.target.files[0].name;
+      $("input[name=filename]", $addedAttachment)[0].value = fileName;
+    });
+
     $attachments.append($addedAttachment);
   }
 
@@ -178,7 +184,7 @@ var $body = $('body');
       // TODO: Make this a modal
       console.log('ERROR');
     }).done(function(data) {
-      console.log(data);
+      //console.log(data);
       var responseData = JSON.parse(data);
       if (responseData.result == 'OK') {
         console.log('OK');
@@ -192,10 +198,10 @@ var $body = $('body');
   }
 
   // Create new attachment
-  function createAttachment(clicked) {
-    var level_id = $('.attachment_form input[name=level_id]', clicked)[0].value;
-    var filename = $('.attachment_form input[name=filename]', clicked)[0].value;
-    var attachment_file = $('.attachment_form input[name=attachment_file]', clicked)[0].files[0];
+  function createAttachment(section) {
+    var level_id = $('.attachment_form input[name=level_id]', section)[0].value;
+    var filename = $('.attachment_form input[name=filename]', section)[0].value;
+    var attachment_file = $('.attachment_form input[name=attachment_file]', section)[0].files[0];
 
     if (level_id && filename && attachment_file) {
       var formData = new FormData();
@@ -215,6 +221,9 @@ var $body = $('body');
         var responseData = JSON.parse(data);
         if (responseData.result == 'OK') {
           console.log('OK');
+          $('.attachment_form label', section).html('Created!');
+          $('.attachment_form input[type=file]', section)[0].remove();
+          $('.admin-buttons', section.closest('.new-attachment')).remove();
         } else {
           // TODO: Make this a modal
           console.log('Failed');
@@ -224,8 +233,8 @@ var $body = $('body');
   }
 
   // Delete attachment
-  function deleteAttachment(clicked) {
-    var attachment_id = $('.attachment_form input[name=attachment_id]', clicked)[0].value;
+  function deleteAttachment(section) {
+    var attachment_id = $('.attachment_form input[name=attachment_id]', section)[0].value;
     var delete_data = {
       action: 'delete_attachment',
       attachment_id: attachment_id
