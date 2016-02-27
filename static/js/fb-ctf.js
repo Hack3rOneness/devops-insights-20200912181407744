@@ -341,7 +341,7 @@
             //
             $teamgrid.on('click', 'a[data-team]', function(event) {
               event.preventDefault();
-              var team = $(this).data('team');
+              var team = String($(this).data('team'));
 
                 //
                 // @note - here, let's check to see if the team is
@@ -367,7 +367,7 @@
                   $teamMembers = $('.team-members', $modal);
 
                     // team name
-                    $('.team-name', $modal).text(team.replace(' ', '_'));
+                    $('.team-name', $modal).text(team);
 
                     // team badge
                     $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
@@ -1300,8 +1300,8 @@
 
           var df = $.Deferred();
 
-          if( TEAM_DATA ){
-            return df.resolve( TEAM_DATA );
+          if (TEAM_DATA){
+            return df.resolve(TEAM_DATA);
           }
 
           var loadPath = 'data/teams.php';
