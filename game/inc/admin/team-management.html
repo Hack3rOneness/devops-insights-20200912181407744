@@ -113,6 +113,10 @@ foreach ($teams->all_teams() as $team) {
             <label class="admin-label" for="">Team Name</label>
             <input name="team_name" type="text" value="{$team_name}" disabled>
           </div>
+          <div class="form-el el--block-label el--full-text">
+            <label class="admin-label" for="">Score</label>
+            <input name="points" type="text" value="{$team['points']}" disabled>
+          </div>
         </div>
         <div class="col col-pad col-1-3">
         <div class="form-el el--block-label el--full-text">

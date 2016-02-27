@@ -21,7 +21,7 @@ function teamLogoFormError() {
 
 function verifyTeamName(context) {
   if (context === 'register') {
-    var teamName = $('.fb-form input[name="teamname"')[0].value;
+    var teamName = String($('.fb-form input[name="teamname"')[0].value);
     if (teamName.length == 0) {
       teamNameFormError();
       return false;
@@ -113,3 +113,17 @@ function loginTeam() {
     sendIndexRequest(login_data);
   }
 }
+
+// Capture enter key presses on login and registration forms
+$(document).on('keypress', 'input', function(e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    var form_action = $('input[name=action]', e.target.form)[0].value;
+    if (form_action == 'register_team') {
+      registerTeam();
+    }
+    if (e.target.form.input[0].name == 'login_team') {
+      loginTeam();
+    }
+  } 
+});

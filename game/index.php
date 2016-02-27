@@ -25,10 +25,10 @@ function register_team($teamname, $password, $logo) {
   
   // Verify that this team name is not created yet
   if (!$teams->team_exist($shortname)) {
+    error_log($shortname);
     $hash = hash('sha256', $password);
     $team_id = $teams->create_team($shortname, $hash, $final_logo);
       if ($team_id) {
-      //ok_response();
       login_team($team_id, $password);
     } else {
       error_response();
@@ -52,7 +52,6 @@ function login_team($team_id, $password) {
     if ($team['admin'] == 1) sess_set('admin', $team['admin']);
     sess_set('IP', $_SERVER['REMOTE_ADDR']);
     ok_response();
-    game_page();
   } else {
     error_response();
     exit;

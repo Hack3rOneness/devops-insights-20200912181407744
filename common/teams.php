@@ -41,9 +41,9 @@ class Teams {
   }
 
   // Update team.
-  public function update_team($name, $password, $logo, $team_id) {
-    $sql = 'UPDATE teams SET name = ?, password = ?, logo = ? WHERE id = ? LIMIT 1';
-    $elements = array($name, $password, $logo, $team_id);
+  public function update_team($name, $password, $logo, $points, $team_id) {
+    $sql = 'UPDATE teams SET name = ?, password = ?, logo = ? , points = ? WHERE id = ? LIMIT 1';
+    $elements = array($name, $password, $logo, $points, $team_id);
     $this->db->query($sql, $elements);
   }
 

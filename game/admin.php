@@ -143,6 +143,7 @@ switch ($request->action) {
       $request->parameters['name'],
       $new_password,
       $request->parameters['logo'],
+      $request->parameters['points'],
       $request->parameters['team_id']
     );
     ok_response();

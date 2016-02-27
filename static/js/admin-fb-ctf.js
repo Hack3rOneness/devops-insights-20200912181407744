@@ -535,6 +535,7 @@ var $body = $('body');
   function updateTeam(section) {
     var team_id = $('.team_form input[name=team_id]', section)[0].value;
     var team_name = $('.team_form input[name=team_name]', section)[0].value;
+    var team_points = $('.team_form input[name=points]', section)[0].value;
     var team_password = $('.team_form input[name=password]', section)[0].value;
     var team_password2 = $('.team_form input[name=password2]', section)[0].value;
     var team_logo = $('.logo-name', section)[0].textContent;
@@ -542,6 +543,7 @@ var $body = $('body');
       action: 'update_team',
       team_id: team_id,
       name: team_name,
+      points: team_points,
       password: team_password,
       password2: team_password2,
       logo: team_logo

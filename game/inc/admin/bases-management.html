@@ -32,6 +32,11 @@ function select_categories($selected=0) {
   $levels = new Levels();
   $categories = $levels->all_categories();
   foreach ($categories as $category) {
+    // Skip Quiz in bases
+    if ($category['category'] == 'Quiz') {
+      continue;
+    }
+
     if ($category['id'] == $selected) {
       $select_html .= '<option value="'.$category['id'].'" selected>'.$category['category'].'</option>';
     } else {

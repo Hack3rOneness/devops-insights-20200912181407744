@@ -866,7 +866,7 @@
             $('.capture-text', $container).text(intro);
             if( links instanceof Array){
               $.each(links, function(){
-                var f = this.split('_')[1];
+                var f = this.substr(this.indexOf('_') +1 );
                 $('.capture-links', $container).append('<a target="_blank" href="' + this + '">' + f + '</a></br>');
               });
             }
