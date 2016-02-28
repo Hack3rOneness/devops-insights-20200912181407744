@@ -896,7 +896,13 @@
                     $('.js-trigger-score', $container).text('NOPE :(');
                   }
                 });
-              });
+            });
+            $($container).on('keypress', function(e) {
+              if (e.keyCode == 13) {
+                e.preventDefault();
+                $('.js-trigger-score').click();
+              }
+            });  
             $('.js-close-modal', $container).on('click', removeCaptured);
           });
         } // function launchCaptureModal();

@@ -359,7 +359,7 @@ class Levels {
     $flag = $this->db->query($sql, $element)[0]['flag'];
 
     // TODO: Implement bad answers logging
-    return (bool)(strtoupper($flag) == strtoupper($answer));
+    return (bool)(strtoupper(trim($flag)) == strtoupper(trim($answer)));
   }
 
   // Adjust bonus.
