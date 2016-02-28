@@ -97,7 +97,7 @@ class Teams {
 
   // Leaderboard order.
   public function leaderboard() {
-    $sql = 'SELECT name, logo, points, last_score FROM teams WHERE active = 1 AND visible = 1 ORDER BY points DESC, last_score ASC';
+    $sql = 'SELECT id, name, logo, points, last_score FROM teams WHERE active = 1 AND visible = 1 ORDER BY points DESC, last_score ASC';
     return $this->db->query($sql);
   }
 
@@ -136,5 +136,16 @@ class Teams {
   public function teams_count() {
     $sql = 'SELECT COUNT(*) AS count FROM teams';
     return $this->db->query($sql)[0];
+  }
+
+  // Get rank position for a team
+  public function my_rank($team_id) {
+    $rank = 1;
+    foreach ($this->leaderboard() as $team) {
+      if ($team_id == $team['id']) {
+        return $rank;
+      }
+      $rank++;
+    }
   }
 }

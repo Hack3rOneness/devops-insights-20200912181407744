@@ -297,28 +297,29 @@
                 // popuplate the team module
                 setupTeams();
 
-                // Kick off all the timers to keep data refreshed
+                // Kick off all the timers to keep data refreshed, not on view mode
+                if (!VIEW_ONLY) {
+                  // Countries
+                  setInterval( function() {
+                    getCountryData();
+                    refreshMapData();
+                  }, FB_CTF.data.CONF.refreshCountries);
 
-                // Countries
-                setInterval( function() {
-                  getCountryData();
-                  refreshMapData();
-                }, FB_CTF.data.CONF.refreshCountries);
+                  // Teams
+                  setInterval( function() {
+                    loadTeamData();
+                  }, FB_CTF.data.CONF.refreshTeams);
 
-                // Teams
-                setInterval( function() {
-                  loadTeamData();
-                }, FB_CTF.data.CONF.refreshTeams);
+                  // Commands
+                  setInterval( function() {
+                    FB_CTF.command_line.loadCommandsData();
+                  }, FB_CTF.data.CONF.refreshCmd);
 
-                // Commands
-                setInterval( function() {
-                  FB_CTF.command_line.loadCommandsData();
-                }, FB_CTF.data.CONF.refreshCmd);
-
-                // Configuration
-                setInterval( function() {
-                  loadConfData();
-                }, FB_CTF.data.CONF.refreshConf);
+                  // Configuration
+                  setInterval( function() {
+                    loadConfData();
+                  }, FB_CTF.data.CONF.refreshConf);
+                }
               });
           }
 

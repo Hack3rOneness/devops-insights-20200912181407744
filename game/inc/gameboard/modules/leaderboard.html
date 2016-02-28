@@ -13,6 +13,7 @@ $my_team = $teams->get_team(sess_team());
 
 $my_name = htmlspecialchars($my_team['name']);
 $my_points = $my_team['points'];
+$my_rank = $teams->my_rank(sess_team());
 
 echo <<< EOT
 <header class="module-header">
@@ -22,7 +23,7 @@ echo <<< EOT
   <div class="fb-section-border">
     <div class="module-top player-info">
       <h5 class="player-name">{$my_name}</h5>
-      <span class="player-rank">Rank 1</span>
+      <span class="player-rank">Rank {$my_rank}</span>
       <span class="player-score">{$my_points} Pts</span>
     </div>
     <div class="module-scrollable">

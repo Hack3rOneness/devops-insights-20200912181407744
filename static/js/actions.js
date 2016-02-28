@@ -122,7 +122,7 @@ $(document).on('keypress', 'input', function(e) {
     if (form_action == 'register_team') {
       registerTeam();
     }
-    if (e.target.form.input[0].name == 'login_team') {
+    if (e.target.form[0].value == 'login_team') {
       loginTeam();
     }
   } 
