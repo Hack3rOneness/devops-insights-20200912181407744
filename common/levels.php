@@ -384,8 +384,10 @@ class Levels {
   }
 
   // Check if there is a previous score.
-  public function previous_score($level_id, $team_id) {
-    $sql = 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
+  public function previous_score($level_id, $team_id, $any_team=false) {
+    $sql = ($any_team)
+      ? 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id != ?'
+      : 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
     $elements = array($level_id, $team_id);
     $have_score = $this->db->query($sql, $elements); 
     return (bool)$have_score[0]['COUNT(*)'];

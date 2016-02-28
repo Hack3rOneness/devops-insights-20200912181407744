@@ -16,11 +16,8 @@
     is_firefox = ua.indexOf('firefox') > -1,
     is_ie      = ua.indexOf('msie') > -1;
 
-
-    FB_CTF.currentUser = "Tank SF";
-
     FB_CTF.debug = true;
-
+    FB_CTF.data = Object();
 
     /* --------------------------------------------
      * --util
@@ -64,8 +61,6 @@
       LIST_VIEW        = false,
       VIEW_ONLY        = false,
       CURRENT_ZOOM     = 1,
-      COUNTRY_DATA,
-      TEAM_DATA,
       $gameboard,
       $listview,
       $mapSvg,
@@ -248,6 +243,7 @@
             //
             var modulesLoaded  = loadModules(),
                 mapLoaded,
+                confDataLoaded = loadConfData(),
                 listViewLoaded = loadListView(),
                 teamDataLoaded = loadTeamData(),
                 loadingLoaded  = loadIn();
@@ -263,8 +259,8 @@
             });
 
             // do stuff when the map and modules are loaded
-            $.when(modulesLoaded, mapLoaded, listViewLoaded, teamDataLoaded, loadingLoaded).done(function(){
-              console.log("modules, map, list view, team data, and loading screen are loaded");
+            $.when(modulesLoaded, mapLoaded, confDataLoaded, listViewLoaded, teamDataLoaded, loadingLoaded).done(function(){
+              console.log("modules, map, conf data, list view, team data, and loading screen are loaded");
 
                 // trigger an event for the gameboard loaded, so
                 //  external things know that everything has been
@@ -278,7 +274,7 @@
                 //
                 // set up the listeners
                 //
-                if( ! VIEW_ONLY ){
+                if (!VIEW_ONLY) {
                   gameEventListeners();
                 }
 
@@ -300,6 +296,29 @@
 
                 // popuplate the team module
                 setupTeams();
+
+                // Kick off all the timers to keep data refreshed
+
+                // Countries
+                setInterval( function() {
+                  getCountryData();
+                  refreshMapData();
+                }, FB_CTF.data.CONF.refreshCountries);
+
+                // Teams
+                setInterval( function() {
+                  loadTeamData();
+                }, FB_CTF.data.CONF.refreshTeams);
+
+                // Commands
+                setInterval( function() {
+                  FB_CTF.command_line.loadCommandsData();
+                }, FB_CTF.data.CONF.refreshCmd);
+
+                // Configuration
+                setInterval( function() {
+                  loadConfData();
+                }, FB_CTF.data.CONF.refreshConf);
               });
           }
 
@@ -311,12 +330,12 @@
 
         /**
          * set up the team module in the gameboard with the list of
-         *  active teams (from the team.json data) and event
+         *  active teams (from the teams.php data) and event
          *  listeners for the team modal
          */
          function setupTeams(){
 
-          if( TEAM_DATA === undefined ){
+          if( FB_CTF.data.TEAMS === undefined ){
             console.error("No team data available.");
             return;
           }
@@ -327,7 +346,7 @@
             // build the team module in the gameboard, which will
             //  list the active teams
             //
-            $.each( TEAM_DATA, function(teamName, teamData){
+            $.each( FB_CTF.data.TEAMS, function(teamName, teamData){
               var alertClass = teamData.has_alert ? ' class="alert"' : '',
               markup     = '<li' + alertClass + '><a href="#" data-team="' + teamName + '">' +
               '<svg class="icon--badge"><use xlink:href="#icon--badge-' + teamData.badge + '"/></svg>' +
@@ -349,12 +368,12 @@
                 //  we'll set a default for demo purposes.
                 //
                 if( team === undefined || team === ""){
-                  team = "Tank SF";
+                  team = "Facebook CTF";
                 }
 
                 console.log(team);
 
-                var teamData = TEAM_DATA[team];
+                var teamData = FB_CTF.data.TEAMS[team];
 
                 if( teamData === undefined){
                   console.error("Invalid team name in markup");
@@ -415,7 +434,7 @@
             return "Uncaptured";
           }
 
-          var capturedClass = capturedBy === FB_CTF.currentUser ? 'your-name' : 'opponent-name';
+          var capturedClass = capturedBy === FB_CTF.data.CONF.currentTeam ? 'your-name' : 'opponent-name';
 
           return '<span class="' + capturedClass + '">' + capturedBy + '</span>';
         }
@@ -430,10 +449,9 @@
 
           $modules.each(function(){
             var $scrollable    = $('.module-scrollable', this),
-            scrollHeight   = $scrollable.children('ul').height() - $scrollable.height(),
-            scrollTime     = scrollHeight / .05,
-            scrollInterval;
-
+                scrollHeight   = $scrollable.children('ul').height() - $scrollable.height(),
+                scrollTime     = scrollHeight / .05,
+                scrollInterval;
 
             $scrollable.on('mouseover', function(event) {
               event.preventDefault();
@@ -442,28 +460,25 @@
             $scrollable.on('mouseout', startScroll);
 
 
-                /**
-                 * start the scrolling interval
-                 */
-                 function startScroll(){
-                  scrollInterval = setInterval( function(){
-                    var st = $scrollable.scrollTop(),
-                    scrollLeft = $('ul', $scrollable).height() - $scrollable.height();
+            /**
+             * start the scrolling interval
+             */
+            function startScroll(){
+              scrollInterval = setInterval( function(){
+                var st = $scrollable.scrollTop(),
+                scrollLeft = $('ul', $scrollable).height() - $scrollable.height();
 
-                    if( st >= scrollLeft ){
-                      $scrollable.scrollTop(0);
-                    } else {
-                      $scrollable.scrollTop( st + 1 );
-                    }
-
-
-                  }, 20);
+                if( st >= scrollLeft ){
+                  $scrollable.scrollTop(0);
+                } else {
+                  $scrollable.scrollTop( st + 1 );
                 }
+              }, 20);
+            }
 
-                startScroll();
-              });
-        }
-
+          startScroll();
+        });
+      }
 
         /**
          * the event listeners for the game
@@ -523,57 +538,6 @@
               }
             });
 
-
-            /* --------------------------------------------
-             * --alerts
-             * -------------------------------------------- */
-
-
-            //
-            // create new individual chat
-            //
-            $body.on('click', '.add-new-help-chat', function(event) {
-              event.preventDefault();
-              var country = $(this).data('country'),
-              $alerts = $('aside[data-module="world-chat"] .alerts'),
-              $chat   = $('li.alert-placeholder', $alerts).eq(0).clone();
-
-              $chat.removeClass('alert-placeholder').attr('data-help', country).appendTo( $alerts ).find('.alert .highlighted').text(country);
-              $('.js-expand-individual-chat', $chat).trigger('click');
-            });
-
-
-            //
-            // delete alert
-            //
-            $body.on('click', '.js-delete-alert', function(event) {
-              event.preventDefault();
-              var $self = $(this),
-              $li   = $self.closest('li').addClass('removing');
-
-              $self.closest('.alerts').removeClass('individual-chat-enabled')
-              .closest('aside').removeClass('individual-chat-active');
-
-              setTimeout(function(){
-                $li.remove();
-              }, 400);
-            });
-
-
-            //
-            // expand individual chat
-            //
-            $body.on('click', '.js-expand-individual-chat', function(event) {
-              event.preventDefault();
-
-              $(this).closest('li').toggleClass('active')
-              .closest('.alerts').toggleClass('individual-chat-enabled')
-              .closest('aside').toggleClass('individual-chat-active');
-
-              $body.trigger('module-changestate');
-            });
-
-
             /* --------------------------------------------
              * --inputs
              * -------------------------------------------- */
@@ -617,8 +581,8 @@
                 countryGroup.classed("highlighted", false);
 
                 if( select !== "all" ){
-                  if( ( select === "your-team" && captureTeam === FB_CTF.currentUser ) ||
-                    ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.currentUser ) ){
+                  if( ( select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam ) ||
+                    ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam ) ){
                     countryGroup.classed('highlighted', true);
                 } else {
                   countryGroup.classed('inactive', true);
@@ -633,8 +597,8 @@
 
                 if(select !== "all"){
                   if(
-                    ( select === "your-team" && captureTeam === FB_CTF.currentUser ) ||
-                    ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.currentUser ) ||
+                    ( select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam ) ||
+                    ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam ) ||
                     ( select === "give-help" && $('.status--give-help', $tr).length > 0 ) ||
                     ( select === "need-help" && $('.status--incoming-help', $tr).length > 0 )
                     ){
@@ -739,12 +703,12 @@
             FB_CTF.modal.closeHoverPopup();
 
             // if there's no data, don't continue
-            if (! COUNTRY_DATA) {
+            if (! FB_CTF.data.COUNTRIES) {
               return;
             }
 
             // if the country is not active, don't continue
-            if (! COUNTRY_DATA[country]) {
+            if (! FB_CTF.data.COUNTRIES[country]) {
               return;
             }
 
@@ -782,14 +746,14 @@
          function captureViewOnly( country, capturedBy, capturingTeam ){
 
           if( capturingTeam === undefined ){
-            capturingTeam = FB_CTF.currentUser;
+            capturingTeam = FB_CTF.data.CONF.currentTeam;
           }
 
           FB_CTF.modal.viewmodePopup( function(){
             var $container = $('#fb-country-popup'),
             positionX  = $('.longitude-focus').position().left + 60,
             positionY  = $('.latitude-focus').position().top - $container.height() - 60,
-            points     = COUNTRY_DATA && COUNTRY_DATA[country] ? COUNTRY_DATA[country].points : 0;
+            points     = FB_CTF.data.COUNTRIES && FB_CTF.data.COUNTRIES[country] ? FB_CTF.data.COUNTRIES[country].points : 0;
 
             $('.capturing-team-name', $container).text( capturingTeam );
             $('.points-value', $container).text( '+ ' + points + ' Pts');
@@ -846,14 +810,14 @@
          *   - the user or team who has captured this country
          */
          function launchCaptureModal( country, capturedBy ){
-          var data = COUNTRY_DATA[country];
+          var data = FB_CTF.data.COUNTRIES[country];
 
           FB_CTF.modal.loadPopup('country-capture', function(){
             var $container = $('.fb-modal-content'),
             level_id   = data ? data.level_id : 0,
             intro      = data ? data.intro : '',
             hint       = data ? data.hint : '',
-            hint_cost  = data ? data.hint_cost : 0,
+            hint_cost  = data ? data.hint_cost : -1,
             points     = data ? data.points : '',
             category   = data ? data.category : '',
             type       = data ? data.type : '',
@@ -870,7 +834,6 @@
                 $('.capture-links', $container).append('<a target="_blank" href="' + this + '">' + f + '</a></br>');
               });
             }
-            //$('.capture-hint div', $container).text(hint);
             $('.points-number', $container).text(points);
             $('.country-type', $container).text(type);
             $('.country-category', $container).text(category);
@@ -885,12 +848,21 @@
             //
             // event listeners
             //
-            if (hint == 'no') {
+            if (hint_cost == -1) {
               $('.js-trigger-hint span', $container).text('No Hint');
+              $('.capture-hint div', $container).text('No Hint');
             } else {
-              $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
+              if (hint_cost == 0) {
+                $('.js-trigger-hint span', $container).text('Free Hint');
+                $('.capture-hint div', $container).text(hint);
+              } else {
+                $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
+              }
+              
               $('.js-trigger-hint', $container).on('click', function(event) {
                 event.preventDefault();
+                // Request hint remotely
+                $('.capture-hint div', $container).text(hint);
                 $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
               });
             }
@@ -944,11 +916,11 @@
           mouse_x    = event.pageX,
           mouse_y    = event.pageY;
 
-          if( ! COUNTRY_DATA ){
+          if( ! FB_CTF.data.COUNTRIES ){
             return;
           }
           
-          var data = COUNTRY_DATA[country];
+          var data = FB_CTF.data.COUNTRIES[country];
 
           if (data) {       
             FB_CTF.modal.countryHoverPopup(function(){
@@ -1298,16 +1270,12 @@
          */
          function loadTeamData(){
 
-          var df = $.Deferred();
-
-          if (TEAM_DATA){
-            return df.resolve(TEAM_DATA);
-          }
-
           var loadPath = 'data/teams.php';
 
           return $.get( loadPath, function(data, status, jqxhr){
-            TEAM_DATA = data;
+            FB_CTF.data.TEAMS = data;
+            var df = $.Deferred();
+            return df.resolve(FB_CTF.data.TEAMS);
           }, 'json').error( function( jqhxr, status, error){
             console.error("There was a problem retrieving the team data.");
             console.log(loadPath);
@@ -1318,6 +1286,65 @@
 
         }
 
+        /**
+         * load the configuration data
+         */
+         function loadConfData(){
+
+          var loadPath = 'data/conf.php';
+
+          return $.get( loadPath, function(data, status, jqxhr){
+            FB_CTF.data.CONF = data;
+            var df = $.Deferred();
+            return df.resolve(FB_CTF.data.CONF);
+          }, 'json').error( function( jqhxr, status, error){
+            console.error("There was a problem retrieving the conf data.");
+            console.log(loadPath);
+            console.log(status);
+            console.log(error);
+            console.error("/error");
+          });
+        }
+
+        /**
+         * refresh the map data
+         */
+         function refreshMapData(){
+
+          var loadPath = 'data/map-data.php';
+
+          return $.get( loadPath, function(data, status, jqxhr){
+            $.each(data, function(key, value){
+              if (value.status == 'active') {
+                if (!$('#' + key).hasClass('active')) {
+                  $('#' + key)[0].classList.add('active');
+                }
+              } else {
+                $('#' + key)[0].classList.remove('active');
+                $('#' + key)[0].parentNode.removeAttribute('data-captured');
+                $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
+                $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
+              }
+              if (value.captured == 'you') {
+                $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
+                $('#' + key)[0].parentNode.children[1].classList.add("captured--you");
+                $('#' + key)[0].parentNode.removeAttribute('data-captured');
+                $('#' + key)[0].parentNode.setAttribute('data-captured', value.datacaptured);
+              } else if (value.captured == 'opponent') {
+                $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
+                $('#' + key)[0].parentNode.children[1].classList.add("captured--opponent");
+                $('#' + key)[0].parentNode.removeAttribute('data-captured');
+                $('#' + key)[0].parentNode.setAttribute('data-captured', value.datacaptured);
+              }
+            });
+          }, 'json').error( function( jqhxr, status, error){
+            console.error("There was a problem retrieving the map data.");
+            console.log(loadPath);
+            console.log(status);
+            console.log(error);
+            console.error("/error");
+          });
+        }
 
         /**
          * get the game data, which is stored as json
@@ -1327,16 +1354,12 @@
          */
          function getCountryData(){
 
-          var df = $.Deferred();
-
-          if(COUNTRY_DATA){
-            return df.resolve(COUNTRY_DATA);
-          }
-
           var loadPath = 'data/country-data.php';
 
           return $.get( loadPath, function(data, status, jqxhr){
-            COUNTRY_DATA = data;
+            FB_CTF.data.COUNTRIES = data;
+            var df = $.Deferred();
+            return df.resolve(FB_CTF.data.COUNTRIES);
           }, 'json').error(function(jqxhr, status, error){
             console.error("There was a problem retrieving the game data.");
             console.log(loadPath);
@@ -1346,15 +1369,13 @@
           });
         }
 
-
-
         /**
          * since a lot of the data is in an external file, go through
          *  that data and markup the svg so we can use in
          */
          function renderCountryData(){
 
-          if( ! COUNTRY_DATA){
+          if (!FB_CTF.data.COUNTRIES) {
             return;
           }
 
@@ -1362,7 +1383,7 @@
             var $countryPath = $(this),
             $group       = $countryPath.closest('g'),
             country      = $countryPath.attr('title'),
-            data         = COUNTRY_DATA[country];
+            data         = FB_CTF.data.COUNTRIES[country];
 
             if (data) {
             // add the category
@@ -1371,7 +1392,6 @@
           });
 
         }
-
 
 
         /* --------------------------------------------
@@ -1593,15 +1613,15 @@
           initTutorial       : initTutorial,
           toggleListView     : toggleListView,
 
-            // clos the tutorial
-            closeTutorial      : closeTutorial,
+          // clos the tutorial
+          closeTutorial      : closeTutorial,
 
-            // enable the zoomable stuff from console
-            enableClickAndDrag : enableClickAndDrag,
+          // enable the zoomable stuff from console
+          enableClickAndDrag : enableClickAndDrag,
 
-            // check to see if we're in view mode (for external use)
-            isViewMode         : isViewMode
-          };
+          // check to see if we're in view mode (for external use)
+          isViewMode         : isViewMode
+        };
 
     })(); // gameboard
 
@@ -2123,8 +2143,29 @@
       var loadPath  = 'data/command-line.php',
       modalName = 'command-line',
       $cmdPromptList,
-      $cmdResultsList,
-      COMMAND_DATA;
+      $cmdResultsList;
+
+        /**
+         * load the commands data
+         */
+         function loadCommandsData(){
+
+          var loadPath = 'data/command-line.php';
+
+          return $.get( loadPath, function(data, status, jqxhr){
+            FB_CTF.data.COMMAND = data;
+            var df = $.Deferred();
+            return df.resolve(FB_CTF.data.COMMAND);
+          }, 'json').error( function( jqhxr, status, error){
+            console.error("There was a problem retrieving the commands data.");
+            console.log(loadPath);
+            console.log(status);
+            console.log(error);
+            console.error("/error");
+          });
+
+        }
+
 
 
         /**
@@ -2152,6 +2193,12 @@
 
                 // if the forward slash has been pressed
                 if( key === 191){
+
+                  // No command line if typing happens in a input text
+                  if (event.target instanceof HTMLInputElement) {
+                    return false;
+                  }
+
                   event.preventDefault();
 
                   FB_CTF.modal.close();
@@ -2189,10 +2236,10 @@
                 // if the "enter" key has been pressed
                 if(key === 13){
                   var autocompleteCmd = $autocomplete.text(),
-                  selectedCmd     = COMMAND_DATA.commands[cmd];
+                  selectedCmd     = FB_CTF.data.COMMAND.commands[cmd];
 
                   if( selectedCmd === undefined ){
-                    selectedCmd = COMMAND_DATA.commands[autocompleteCmd];
+                    selectedCmd = FB_CTF.data.COMMAND.commands[autocompleteCmd];
 
                     if( selectedCmd ){
                       $promptInput.val( autocompleteCmd );
@@ -2393,7 +2440,7 @@
 
           if( results ){
             if( typeof results === "string" ){
-              var list = COMMAND_DATA.results_library[results];
+              var list = FB_CTF.data.COMMAND.results_library[results];
 
               if(list){
                 $.each( list, function(index, listItem){
@@ -2498,10 +2545,46 @@
 
             var team = data.selected;
 
-            console.log('Show team ' + team);
-
             FB_CTF.modal.close();
             clearCommandPrompt();
+
+            var teamData = FB_CTF.data.TEAMS[team];
+
+            if( teamData === undefined){
+              console.error("Invalid team name in markup");
+              return;
+            }
+
+              FB_CTF.modal.loadPopup( 'team', function(){
+                var $modal       = $('#fb-modal'),
+                rank         = teamData.rank + "",
+                $teamMembers = $('.team-members', $modal);
+
+                // team name
+                $('.team-name', $modal).text(team);
+                // team badge
+                $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
+
+                // team members
+                $.each( teamData.team_members, function(){
+                  $teamMembers.append('<li>' + this + '</li>');
+                });
+
+                // school level
+                $('.school-level', $modal).text( teamData.school_level );
+
+                // rank
+                if( rank.length === 1 ){
+                  rank = "0" + rank;
+                }
+                $('.points-number', $modal).text( rank );
+
+                // team points
+                $('.points--base', $modal).text( teamData.points.base);
+                $('.points--quiz', $modal).text( teamData.points.quiz);
+                $('.points--flag', $modal).text( teamData.points.flag);
+                $('.points--total', $modal).text( teamData.points.total);
+              });
 
             $('body').off('command-option-selected');
           });
@@ -2588,10 +2671,10 @@
               $cmdPromptList = $('.fb-command-line .command-list ul');
               $cmdResultsList = $('.fb-command-line .command-results ul');
 
-              COMMAND_DATA = data;
+              FB_CTF.data.COMMAND = data;
 
-              if( COMMAND_DATA && COMMAND_DATA.commands){
-                $.each( COMMAND_DATA.commands, function(command, cmdData){
+              if( FB_CTF.data.COMMAND && FB_CTF.data.COMMAND.commands){
+                $.each( FB_CTF.data.COMMAND.commands, function(command, cmdData){
                   $cmdPromptList.append( '<li>' + command + '</li>');
                 });
 
@@ -2608,7 +2691,8 @@
 
 
         return {
-          init: init
+          init: init,
+          loadCommandsData: loadCommandsData
         };
     })(); // command line
 
@@ -2879,4 +2963,3 @@
 
 
    })(window.FB_CTF = window.FB_CTF || {}, jQuery);
-

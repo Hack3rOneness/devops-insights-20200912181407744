@@ -12,7 +12,7 @@ echo <<< EOT
 EOT;
 
 $countries = new Countries();
-foreach ($countries->all_enabled_countries(true) as $country) {
+foreach ($countries->all_map_countries(true) as $country) {
 	$active = (($country['used'] == 1) && ($countries->is_active_level($country['id'])))
 		? 'active'
 		: '';

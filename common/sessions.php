@@ -126,4 +126,8 @@ function sess_team() {
   return $_SESSION['team_id'];
 }
 
+function sess_teamname() {
+  return $_SESSION['name'];
+}
+
 ?>

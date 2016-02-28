@@ -9,8 +9,11 @@ sess_enforce_login();
 $teams = new Teams();
 $leaders = $teams->leaderboard();
 
-$top_name = htmlspecialchars($leaders[0]['name']);
-$top_points = $leaders[0]['points'];
+$my_team = $teams->get_team(sess_team());
+
+$my_name = htmlspecialchars($my_team['name']);
+$my_points = $my_team['points'];
+
 echo <<< EOT
 <header class="module-header">
   <h6>Leaderboard</h6>
@@ -18,9 +21,9 @@ echo <<< EOT
 <div class="module-content">
   <div class="fb-section-border">
     <div class="module-top player-info">
-      <h5 class="player-name">{$top_name}</h5>
+      <h5 class="player-name">{$my_name}</h5>
       <span class="player-rank">Rank 1</span>
-      <span class="player-score">{$top_points} Pts</span>
+      <span class="player-score">{$my_points} Pts</span>
     </div>
     <div class="module-scrollable">
       <ul>

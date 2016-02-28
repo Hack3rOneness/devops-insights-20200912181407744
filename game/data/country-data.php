@@ -16,9 +16,14 @@ $countries_data = (object) array();
 foreach ($levels->all_levels(1) as $level) {
 	$country = $countries->get_country($level['entity_id']);
 	$category = $levels->get_category($level['category_id']);
-	$hint = ($level['hint']) ? 'yes' : 'no';
-	$hint_cost = ($level['penalty'] === 0) ? 0 : $level['penalty'];
-
+	if ($level['hint']) {
+		$hint_cost = $level['penalty'];
+		$hint = ($hint_cost == 0) ? $level['hint'] : 'yes';
+	} else {
+		$hint_cost = -1;
+		$hint = 'no';
+	}
+	
 	// All attachments for this level
 	$attachments_list = array();
 	if ($attachments->has_attachments($level['id'])) {

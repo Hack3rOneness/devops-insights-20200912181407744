@@ -14,9 +14,13 @@ class Countries {
 
   // Retrieve how many levels are using one country.
   public function who_uses($country_id) {
-    $sql = 'SELECT * FROM levels WHERE entity_id = ?';
+    $sql = 'SELECT * FROM levels WHERE entity_id = ? AND active = 1 LIMIT 1';
     $element = array($country_id);
-    return $this->db->query($sql, $element);
+    $who_uses = $this->db->query($sql, $element);
+    if ($who_uses) {
+      return $who_uses[0];
+    }
+    return $who_uses;
   }
 
   // Enable or disable country by passing 1 or 0.
@@ -65,6 +69,10 @@ class Countries {
   }
 
   // All map countries. 
+  public function all_map_countries() {
+    $sql = 'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)';
+    return $this->db->query($sql);
+  }
 
   // All not used and enabled countries.
   public function all_available_countries() {
