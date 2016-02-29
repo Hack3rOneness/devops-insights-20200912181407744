@@ -824,15 +824,24 @@
             type       = data ? data.type : '',
             completed  = data ? data.completed : '',
             owner      = data ? data.owner : '',
-            links      = data ? data.attachments : '';
+            attachments= data ? data.attachments : '',
+            links      = data ? data.links : '';
 
             $('.country-name', $container).text(country);
             $('input[name=level_id]', $container).attr('value',level_id);
             $('.capture-text', $container).text(intro);
+            if( attachments instanceof Array){
+              $.each(attachments, function(){
+                var f = this.substr(this.indexOf('_') +1 );
+                $('.capture-links', $container).append('[ <a target="_blank" href="' + this + '">' + f + '</a> ] ');
+              });
+            }
             if( links instanceof Array){
+              var link_c = 1;
               $.each(links, function(){
                 var f = this.substr(this.indexOf('_') +1 );
-                $('.capture-links', $container).append('<a target="_blank" href="' + this + '">' + f + '</a></br>');
+                $('.capture-links', $container).append('[ <a target="_blank" href="' + this + '">Link ' + link_c + '</a> ]');
+                link_c++;
               });
             }
             $('.points-number', $container).text(points);

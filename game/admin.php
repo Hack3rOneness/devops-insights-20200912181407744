@@ -4,6 +4,7 @@ require_once('../common/adminrequests.php');
 require_once('../common/teams.php');
 require_once('../common/levels.php');
 require_once('../common/attachments.php');
+require_once('../common/links.php');
 require_once('../common/logos.php');
 require_once('../common/countries.php');
 require_once('../common/sessions.php');
@@ -261,6 +262,31 @@ switch ($request->action) {
     $attachments = new Attachments();
     $attachments->delete(
       $request->parameters['attachment_id']
+    );
+    ok_response();
+    break;
+  case 'create_link':
+    $links = new Links();
+    $result = $links->create(
+      $request->parameters['link'],
+      $request->parameters['level_id']
+    );
+    if ($result) {
+      ok_response();  
+    }
+    break;
+  case 'update_link':
+    $links = new Links();
+    $links->update(
+      $request->parameters['link'],
+      $request->parameters['link_id']
+    );
+    ok_response();
+    break;
+  case 'delete_link':
+    $links = new Links();
+    $links->delete(
+      $request->parameters['link_id']
     );
     ok_response();
     break;

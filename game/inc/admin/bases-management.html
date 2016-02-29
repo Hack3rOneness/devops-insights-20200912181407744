@@ -3,6 +3,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/attachments.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/links.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
 
 sess_start();
@@ -69,6 +70,7 @@ EOT;
 
 $levels = new Levels();
 $attachments = new Attachments();
+$links = new Links();
 
 // Hidden element for creating new base level.
 echo <<< EOT
@@ -275,6 +277,60 @@ EOT;
   echo <<< EOT
         </div> <!-- attachments -->
 
+        <div class="links">
+
+          <div class="new-link new-link-hidden fb-column-container completely-hidden">
+            <div class="col col-pad col-1-3">
+              <div class="form-el">
+                <form class="link_form" action="admin.php" method="POST">
+                  <input type="hidden" name="action" value="create_link">
+                  <input type="hidden" name="level_id" value="{$base['id']}">
+                  <div class="col el--block-label el--full-text">
+                    <label>New Link:</label>
+                    <input name="link" type="text">
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="admin-buttons col col-pad col-1-3">
+              <div class="col el--block-label el--full-text">
+                <button class="fb-cta cta--red" data-action="delete-new-link">X</button>
+                <button class="fb-cta cta--yellow" data-action="create-link">Create</button>
+              </div>
+            </div>
+          </div>
+EOT;
+
+  if ($links->has_links($base['id'])) {
+    $a_c = 1;
+    foreach ($links->all_links($base['id']) as $link) {
+      echo <<< EOT
+          <div class="existing-link fb-column-container">
+            <div class="col col-pad col-2-3">
+              <div class="form-el">
+                <form class="link_form">
+                  <input type="hidden" name="link_id" value="{$link['id']}">
+                  <div class="col el--block-label el--full-text">
+                    <label>Link {$a_c}:</label>
+                    <input name="link" type="text" value="{$link['link']}" disabled>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="admin-buttons col col-pad col-1-3">
+              <div class="col el--block-label el--full-text">
+                <button class="fb-cta cta--red" data-action="delete-link">X</button>
+              </div>
+            </div>
+          </div>
+EOT;
+      $a_c++;
+    }
+  }
+
+  echo <<< EOT
+        </div> <!-- links -->
+
         <div class="admin-buttons admin-row">
           <div class="button-right">
             <a href="#" class="admin--edit" data-action="edit">EDIT</a>
@@ -283,7 +339,8 @@ EOT;
           </div>
 
           <div class="button-left">
-            <button class="fb-cta" data-action="add-attachment">Add Attachment</button>
+            <button class="fb-cta" data-action="add-attachment">+ Attachment</button>
+            <button class="fb-cta" data-action="add-link">+ Link</button>
           </div>
 
         </div>

@@ -53,6 +53,8 @@ class AdminRequests {
          ),
       ), 
       'attachment_file' => FILTER_UNSAFE_RAW,
+      'link_id'     => FILTER_VALIDATE_INT,
+      'link'        => FILTER_VALIDATE_URL,
       'category_id' => FILTER_VALIDATE_INT,
       'category'    => FILTER_SANITIZE_STRING,
       'country_id'  => FILTER_VALIDATE_INT,
@@ -98,7 +100,10 @@ class AdminRequests {
       'disable_logo',
       'create_attachment',
       'update_attachment',
-      'delete_attachment'
+      'delete_attachment',
+      'create_link',
+      'update_link',
+      'delete_link'
     );
   }
 

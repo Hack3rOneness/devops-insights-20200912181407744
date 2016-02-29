@@ -145,6 +145,23 @@ var $body = $('body');
   }
 
   /**
+   * add a new link
+   *
+   * @param $clicked (jquery object)
+   *   - the clicked button
+   */
+  function addNewLink( $clicked ){
+    var $links      = $('.links', $clicked),
+        $newLink    = $('.new-link-hidden', $clicked),
+        $addedLink  = $newLink.clone();
+
+    $addedLink.removeClass('completely-hidden');
+    $addedLink.removeClass('new-link-hidden');
+
+    $links.append($addedLink);
+  }
+
+  /**
    * render the registration page, updating text and values
    *  based on the number of players that have been set
    */
@@ -229,6 +246,52 @@ var $body = $('body');
           console.log('Failed');
         }
       }); 
+    }
+  }
+
+  // Create new link
+  function createLink(section) {
+    var level_id = $('.link_form input[name=level_id]', section)[0].value;
+    var link = $('.link_form input[name=link]', section)[0].value;
+    var create_data = {
+      action: 'create_link',
+      link: link,
+      level_id: level_id
+    };
+
+    if (level_id && link) {
+      $.post(
+        'admin.php',
+        create_data
+      ).fail(function() {
+        // TODO: Make this a modal
+        console.log('ERROR');
+      }).done(function(data) {
+        //console.log(data);
+        var responseData = JSON.parse(data);
+        if (responseData.result == 'OK') {
+          console.log('OK');
+          $('.link_form label', section).html('Created!');
+          $('.admin-buttons', section.closest('.new-link')).remove();
+        } else {
+          // TODO: Make this a modal
+          console.log('Failed');
+          return false;
+        }
+      }); 
+    }
+  }
+
+  // Delete link
+  function deleteLink(section) {
+    var link_id = $('.link_form input[name=link_id]', section)[0].value;
+    var delete_data = {
+      action: 'delete_link',
+      link_id: link_id
+    };
+
+    if (link_id) {
+      sendAdminRequest(delete_data);
     }
   }
 
@@ -716,6 +779,19 @@ var $body = $('body');
         var $containingDiv = $self.closest('.existing-attachment');
         $containingDiv.remove();
         deleteAttachment($containingDiv);
+      } else if (action === 'add-link') {
+        addNewLink($section);
+      } else if (action === 'create-link') {
+        var $containingDiv = $self.closest('.new-link');
+        createLink($containingDiv);
+      } else if (action === 'delete-new-link') {
+        var $containingDiv = $self.closest('.new-link');
+        $containingDiv.remove();
+        deleteLink($containingDiv);
+      } else if (action === 'delete-link') {
+        var $containingDiv = $self.closest('.existing-link');
+        $containingDiv.remove();
+        deleteLink($containingDiv);
       } 
 
       //
