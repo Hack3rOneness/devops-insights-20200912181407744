@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 require_once('db.php');
 require_once('utils.php');
@@ -129,5 +129,3 @@ function sess_team() {
 function sess_teamname() {
   return $_SESSION['name'];
 }
-
-?>

@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 require_once('../common/adminrequests.php');
 require_once('../common/teams.php');
@@ -247,7 +247,7 @@ switch ($request->action) {
       $request->parameters['level_id']
     );
     if ($result) {
-      ok_response();  
+      ok_response();
     }
     break;
   case 'update_attachment':
@@ -272,7 +272,7 @@ switch ($request->action) {
       $request->parameters['level_id']
     );
     if ($result) {
-      ok_response();  
+      ok_response();
     }
     break;
   case 'update_link':
@@ -294,5 +294,3 @@ switch ($request->action) {
     admin_page();
     break;
 }
-
-?>

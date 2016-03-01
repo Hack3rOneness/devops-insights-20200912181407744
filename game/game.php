@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 require_once('../common/gamerequests.php');
 require_once('../common/levels.php');
@@ -17,37 +17,34 @@ switch ($request->action) {
     game_page();
     break;
   case 'answer_level':
-  	$levels = new Levels();
+    $levels = new Levels();
     // Check if answer is valid
-  	if ($levels->check_answer(
-  		$request->parameters['level_id'],
-  		$request->parameters['answer']
-  	)) {
+    if ($levels->check_answer(
+        $request->parameters['level_id'],
+        $request->parameters['answer']
+    )) {
       // Give points!
       $levels->score_level(
-  			$request->parameters['level_id'],
-  			sess_team()
-  		);
+            $request->parameters['level_id'],
+            sess_team()
+        );
       // Update teams last score
       $teams = new Teams();
       $teams->last_score(sess_team());
-      
-  		ok_response();
-  	} else {
+
+        ok_response();
+    } else {
       $levels->log_failed_score(
         $request->parameters['level_id'],
         sess_team(),
         $request->parameters['answer']
       );
-  		error_response();	
-  	}
-  	break;
+        error_response();
+    }
+    break;
   case 'open_level':
-  	break;
+    break;
   default:
     game_page();
     break;
 }
-
-
-?>

@@ -1,5 +1,3 @@
-<?php
+<?hh
 
 header('Location: /index.html');
-
-?>

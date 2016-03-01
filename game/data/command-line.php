@@ -23,16 +23,16 @@ $results_library_key = "results_library";
 $countries_results = array();
 $countries_key = "country_list";
 foreach ($countries->all_enabled_countries() as $country) {
-	if (
-		($country['used'] == 1) && ($countries->is_active_level($country['id']))
-	) {
-		array_push($countries_results, $country['name']);
-	} 
+  if (
+    ($country['used'] == 1) && ($countries->is_active_level($country['id']))
+  ) {
+    array_push($countries_results, $country['name']);
+  }
 }
 
 // List of modules
 $modules_results = array(
-	"All", "Leaderboard", "Activity", "Teams", "Filter", "World Domination", "Game Clock"
+  "All", "Leaderboard", "Activity", "Teams", "Filter", "World Domination", "Game Clock"
 );
 $modules_key = "modules";
 
@@ -40,17 +40,17 @@ $modules_key = "modules";
 $teams_results = array();
 $teams_key = "teams";
 foreach ($teams->all_visible_teams() as $team) {
-	array_push($teams_results, $team['name']);
+  array_push($teams_results, $team['name']);
 }
 
 // List of level categories.
 $categories_results = array();
 $categories_key = "categories";
 foreach ($levels->all_categories() as $category) {
-	array_push($categories_results, $category['category']);
+  array_push($categories_results, $category['category']);
 }
 array_push($categories_results, "All");
-		
+
 $results_library->{$countries_key} = $countries_results;
 $results_library->{$modules_key} = $modules_results;
 $results_library->{$teams_key} = $teams_results;
@@ -120,5 +120,3 @@ $commands_line_data->{$results_library_key} = $results_library;
 $commands_line_data->{$commands_key} = $commands;
 header('Content-Type: application/json');
 print json_encode($commands_line_data, JSON_PRETTY_PRINT);
-
-?>

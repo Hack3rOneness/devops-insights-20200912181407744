@@ -1,7 +1,6 @@
-<?php
+<?hh
 
 class GameRequests {
-
   private $input_method;
   private $method;
   private $filters = array();
@@ -10,7 +9,7 @@ class GameRequests {
   public $action;
   public $parameters = array();
 
-  function __construct() {
+  public function __construct() {
     $inputMethods = array('POST' => INPUT_POST);
     $this->method = $_SERVER['REQUEST_METHOD'];
     $this->input_method = $inputMethods[$this->method];

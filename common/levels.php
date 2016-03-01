@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 require_once('db.php');
 require_once('countries.php');
@@ -6,7 +6,7 @@ require_once('countries.php');
 class Levels {
   private $db;
 
-  function __construct() {
+  public function __construct() {
     $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();
@@ -61,14 +61,14 @@ class Levels {
 
   // Create a flag level.
   public function create_flag_level(
-    $description, 
-    $flag, 
+    $description,
+    $flag,
     $entity_id,
     $category_id,
     $points,
     $bonus,
-    $bonus_dec, 
-    $hint, 
+    $bonus_dec,
+    $hint,
     $penalty
   ) {
     return $this->create_level(
@@ -88,14 +88,14 @@ class Levels {
 
   // Update a flag level.
   public function update_flag_level(
-    $description, 
-    $flag, 
+    $description,
+    $flag,
     $entity_id,
     $category_id,
     $points,
     $bonus,
-    $bonus_dec, 
-    $hint, 
+    $bonus_dec,
+    $hint,
     $penalty,
     $level_id
   ) {
@@ -116,13 +116,13 @@ class Levels {
 
   // Create a quiz level.
   public function create_quiz_level(
-    $question, 
-    $answer, 
-    $entity_id, 
+    $question,
+    $answer,
+    $entity_id,
     $points,
     $bonus,
-    $bonus_dec, 
-    $hint, 
+    $bonus_dec,
+    $hint,
     $penalty
   ) {
     $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
@@ -144,13 +144,13 @@ class Levels {
 
   // Update a quiz level.
   public function update_quiz_level(
-    $question, 
-    $answer, 
-    $entity_id, 
+    $question,
+    $answer,
+    $entity_id,
     $points,
     $bonus,
-    $bonus_dec, 
-    $hint, 
+    $bonus_dec,
+    $hint,
     $penalty,
     $level_id
   ) {
@@ -261,7 +261,7 @@ class Levels {
     $level = $this->get_level($level_id);
     $countries = new Countries();
     $countries->toggle_used($level['entity_id'], 0);
-    
+
     $sql = 'DELETE FROM levels WHERE id = ? LIMIT 1';
     $elements = array($level_id);
     $this->db->query($sql, $elements);
@@ -285,7 +285,7 @@ class Levels {
   }
 
   // All levels by type. Active, inactive or all.
-  public function all_type_levels($active=null, $type) {
+  public function all_type_levels($active, $type) {
     $sql = ($active)
       ? ($active == 1)
         ? 'SELECT * FROM levels WHERE active = 1 AND type = ?'
@@ -389,7 +389,7 @@ class Levels {
       ? 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id != ?'
       : 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
     $elements = array($level_id, $team_id);
-    $have_score = $this->db->query($sql, $elements); 
+    $have_score = $this->db->query($sql, $elements);
     return (bool)$have_score[0]['COUNT(*)'];
   }
 
@@ -401,13 +401,13 @@ class Levels {
     }
 
     $level = $this->get_level($level_id);
-    
+
     // Calculate points to give
     $points = $level['points'] + $level['bonus'];
-    
+
     // Adjust bonus
     $this->adjust_bonus($level_id);
-    
+
     // Score!
     $sql = 'UPDATE teams SET points = points + ? WHERE id = ? LIMIT 1';
     $elements = array($points, $team_id);

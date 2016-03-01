@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 function login_page() {
   header('Location: /index.html#login');
@@ -39,5 +39,3 @@ function ok_response() {
 function error_response() {
   request_response('ERROR');
 }
-
-?>

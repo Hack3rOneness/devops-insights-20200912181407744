@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 require_once('../common/indexrequests.php');
 require_once('../common/teams.php');
@@ -22,7 +22,7 @@ function register_team($teamname, $password, $logo) {
 
   // Trim team name to 20 chars, to avoid breaking UI
   $shortname = substr($teamname, 0, 20);
-  
+
   // Verify that this team name is not created yet
   if (!$teams->team_exist($shortname)) {
     error_log($shortname);
@@ -82,6 +82,3 @@ switch ($request->action) {
     start_page();
     break;
 }
-
-
-?>
