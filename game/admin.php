@@ -1,24 +1,23 @@
-<?php
+<?hh
 
+include('../vendor/autoload.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 
 sess_start();
 sess_enforce_login();
 sess_enforce_admin();
 
-?>
-
-<!DOCTYPE html>
+echo
+<x:doctype>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Facebook CTF | Admin</title>
-    <link rel="icon" type="image/png" href="static/img/favicon.png">
-    <link rel="stylesheet" href="static/css/fb-ctf.css">
-
-</head>
-<body data-section="admin">
+    <link rel="icon" type="image/png" href="static/img/favicon.png"/>
+    <link rel="stylesheet" href="static/css/fb-ctf.css" />
+  </head>
+  <body data-section="admin">
 
     <!--
      *
@@ -64,9 +63,11 @@ sess_enforce_admin();
             <a href="#" class="js-prompt-logout">Logout</a>
             <a></a>
 
-            <span class="branding-el"><svg class="icon icon--social-facebook"><use xlink:href="#icon--social-facebook" /></svg> <span class="has-icon">Powered By Facebook</span></span>
-
-          </div>
+            <span class="branding-el">
+            <!-- <svg class="icon icon--social-facebook">
+              <use xlink:href="#icon--social-facebook" />
+            </svg> -->
+            <span class="has-icon">Powered By Facebook</span></span>xhp</div>
 
         </div><!-- /end main navigation -->
 
@@ -87,3 +88,4 @@ sess_enforce_admin();
 
 </body>
 </html>
+</x:doctype>;

@@ -1,3 +1,6 @@
+# Composer libraries
+vendor
+
 # HHVM files
 www.pid
 

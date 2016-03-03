@@ -1,0 +1,7 @@
+{
+    "name": "hhvm/hack-example-site",
+    "description": "An example website built with Hack",
+    "require": {
+        "facebook/xhp-lib": "2.x"
+    }
+}
