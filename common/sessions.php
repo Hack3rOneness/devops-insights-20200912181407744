@@ -53,7 +53,7 @@ function sess_read($session_id) {
   $element = array($session_id);
   $data = $db->query($sql, $element);
   if ($data) {
-    return $data['0']['data'];
+    return $data[0]['data'];
   } else {
     $sql = 'INSERT INTO sessions (cookie, created_ts, last_access_ts) VALUES (?, NOW(), NOW())';
     $element = array($session_id);
