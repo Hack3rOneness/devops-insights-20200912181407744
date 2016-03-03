@@ -36,7 +36,7 @@ function verifyTeamName(context) {
 }
 
 function verifyTeamPassword() {
-  var teamPassword = $('.fb-form input[name="password"')[0].value;
+  var teamPassword = $('.fb-form input[name="password"]')[0].value;
   if (teamPassword.length == 0) {
     teamPasswordFormError();
     return false;

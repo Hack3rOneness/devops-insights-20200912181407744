@@ -25,7 +25,7 @@ class Links {
   // Modify existing link.
   public function update($link, $level_id, $link_id) {
     $sql = 'UPDATE links SET link = ?, level_id = ? WHERE id = ? LIMIT 1';
-    $elements = array($filename, $level_id, $attachment_id);
+    $elements = array($link, $level_id, $link_id);
     $this->db->query($sql, $elements);
   }
 
