@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Facebook CTF | Gameboard</title>
-    <link rel="icon" type="image/png" href="/static/img/favicon.png">
-    <link rel="stylesheet" href="/static/css/fb-ctf.css">
+    <link rel="icon" type="image/png" href="static/img/favicon.png">
+    <link rel="stylesheet" href="static/css/fb-ctf.css">
 
 </head>
 <body data-section="viewer-mode">
@@ -26,10 +26,10 @@
     <div id="fb-buildkit" class="fb-page"></div><!-- #fb-buildkit -->
 
 
-    <script type="text/javascript" src="/static/js/vendor/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="/static/js/vendor/d3.min.js"></script>
-    <script type="text/javascript" src="/static/js/plugins.js"></script>
-    <script type="text/javascript" src="/static/js/_buildkit.js"></script>
-    <script type="text/javascript" src="/static/js/fb-ctf.js"></script>
+    <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="static/js/vendor/d3.min.js"></script>
+    <script type="text/javascript" src="static/js/plugins.js"></script>
+    <script type="text/javascript" src="static/js/_buildkit.js"></script>
+    <script type="text/javascript" src="static/js/fb-ctf.js"></script>
 </body>
 </html>

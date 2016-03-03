@@ -1116,7 +1116,7 @@
          function loadIn(){
           var df            = $.Deferred(),
           $loadModal    = $('#gameboard-loading'),
-          loadPath      = 'inc/gameboard/loading.html';
+          loadPath      = 'inc/gameboard/loading.php';
 
           if($loadModal.length === 0){
             $loadModal = $('<div id="gameboard-loading" class="fb-loading" />').appendTo( $gameboard );
@@ -1182,7 +1182,7 @@
           $modules.each(function(){
             var $self      = $(this),
             module     = $self.data('module'),
-            modulePath = 'inc/gameboard/modules/' + module + '.html';
+            modulePath = 'inc/gameboard/modules/' + module + '.php';
 
             var get = $.get( modulePath, function( data, status, jqxhr){
               $self.html(data);
@@ -1214,7 +1214,7 @@
          * elsewhere in this module.
          */
          function loadMap(){
-          var mapPath = '/static/svg/map/world.php';
+          var mapPath = 'static/svg/map/world.php';
 
           return $.get( mapPath, function(data, status, jqxhr){
             console.log("map loaded");
@@ -1239,7 +1239,7 @@
          * elsewhere in this module.
          */
          function loadMapView(){
-          var mapPath = '/static/svg/map/world-view.php';
+          var mapPath = 'static/svg/map/world-view.php';
 
           return $.get( mapPath, function(data, status, jqxhr){
             console.log("map loaded");
@@ -1263,7 +1263,7 @@
          * load the list view for the game
          */
          function loadListView(){
-          var listViewPath = 'inc/gameboard/listview.html';
+          var listViewPath = 'inc/gameboard/listview.php';
 
           return $.get( listViewPath, function(data, status, jqxhr){
             console.log("List view loaded");
@@ -1547,7 +1547,7 @@
                   var next = $(this).data('nextTutorial');
 
                   if(next){
-                    var loadPath = 'inc/modals/tutorial--' + next + '.html';
+                    var loadPath = 'inc/modals/tutorial--' + next + '.php';
                     currStepIndex++;
                     FB_CTF.loadComponent('#fb-modal', loadPath, buildTutorial);
                   } else {
@@ -1647,7 +1647,7 @@
      */
      FB_CTF.modal = (function(){
 
-      var LOAD_EXT        = '.html',
+      var LOAD_EXT        = '.php',
       ACTIVE_CLASS    = 'visible',
       POPUP_CLASSES   = 'fb-modal-wrapper modal--popup',
       DEFAULT_CLASSES = 'fb-modal-wrapper modal--default',
@@ -1859,7 +1859,7 @@
          *   - a callback to render the country data in the popup
          */
          function countryHoverPopup(cb){
-          var loadPath = 'inc/modals/country-popup.html';
+          var loadPath = 'inc/modals/country-popup.php';
           if( $countryHover.length === 0 ){
             $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo( $modalContainer );
           }
@@ -1874,7 +1874,7 @@
          *   - a callback to render the country data in the popup
          */
          function countryInactiveHoverPopup(cb){
-          var loadPath = 'inc/modals/country-inactive-popup.html';
+          var loadPath = 'inc/modals/country-inactive-popup.php';
           if( $countryHover.length === 0 ){
             $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo( $modalContainer );
           }
@@ -1890,7 +1890,7 @@
          *   - a callback to render the country data in the popup
          */
          function viewmodePopup( cb ){
-          var loadPath = 'inc/modals/country-popup--viewmode.html';
+          var loadPath = 'inc/modals/country-popup--viewmode.php';
           if( $countryHover.length === 0 ){
             $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--view-only" />').appendTo( $modalContainer );
           }
@@ -2733,7 +2733,7 @@
         //  solution. This can be removed if the sprite is included
         //  via some server-side solution.
         //
-        FB_CTF.loadComponent('#fb-svg-sprite', '/static/svg/icons/build/icons.svg' );
+        FB_CTF.loadComponent('#fb-svg-sprite', 'static/svg/icons/build/icons.svg' );
 
 
         // load the modal
@@ -2773,7 +2773,7 @@
         //
         // add the img glitch
         //
-        var glitchImgMarkup  = '<img src="/static/img/bg--dashes.svg">',
+        var glitchImgMarkup  = '<img src="static/img/bg--dashes.svg">',
         $glitchContainer = $('<div class="img-glitch-wrapper active">' + glitchImgMarkup + glitchImgMarkup + glitchImgMarkup + '</div>').appendTo('.fb-img-glitch');
 
         setInterval(function(){

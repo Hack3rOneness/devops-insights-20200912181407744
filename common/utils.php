@@ -1,28 +1,28 @@
 <?hh
 
 function login_page() {
-  header('Location: /index.html#login');
+  header('Location: /index.php#login');
 }
 
 function error_page() {
-  header('Location: /index.html#error');
+  header('Location: /index.php#error');
   die();
 }
 
 function registration_page() {
-  header('Location: /index.html#registration');
+  header('Location: /index.php#registration');
 }
 
 function game_page() {
-  header('Location: /gameboard.html');
+  header('Location: /gameboard.php');
 }
 
 function admin_page() {
-  header('Location: /admin.html');
+  header('Location: /admin.php');
 }
 
 function start_page() {
-  header('Location: /index.html');
+  header('Location: /index.php');
 }
 
 function request_response($msg) {

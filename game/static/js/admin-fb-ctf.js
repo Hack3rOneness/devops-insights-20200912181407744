@@ -195,7 +195,7 @@ var $body = $('body');
    */
   function sendAdminRequest(request_data) {
     $.post(
-      'admin.php',
+      'adminaction.php',
       request_data
     ).fail(function() {
       // TODO: Make this a modal
@@ -228,7 +228,7 @@ var $body = $('body');
       formData.append('filename', filename);
 
       $.ajax({
-        url: 'admin.php',
+        url: 'adminaction.php',
         type: 'POST',
         data: formData,
         enctype: 'multipart/form-data',
@@ -261,7 +261,7 @@ var $body = $('body');
 
     if (level_id && link) {
       $.post(
-        'admin.php',
+        'adminaction.php',
         create_data
       ).fail(function() {
         // TODO: Make this a modal
@@ -845,7 +845,7 @@ var $body = $('body');
       FB_CTF.modal.loadPopup('choose-logo', function(){
         var $modal = $('#fb-modal');
 
-        FB_CTF.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.html', function(){
+        FB_CTF.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.php', function(){
           FB_CTF.slider.init();
         });
 

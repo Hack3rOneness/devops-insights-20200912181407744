@@ -14,11 +14,11 @@ sess_enforce_login();
                 <li>
                     <a>Navigation</a>
                     <ul class="subnav">
-                        <li><a href="/viewer-mode.html">View Mode</a></li>
+                        <li><a href="/viewer-mode.php">View Mode</a></li>
                         <li><a href="#" class="fb-init-tutorial">Tutorial</a></li>
                         <?php
                           if (sess_admin()) {
-                            echo '<li><a href="admin.html">Admin</a></li>';
+                            echo '<li><a href="admin.php">Admin</a></li>';
                           }
                         ?>
                         <li><a href="#" class="js-prompt-logout">Logout</a></li>
@@ -27,7 +27,7 @@ sess_enforce_login();
             </ul>
 
             <div class="branding">
-                <a href="gameboard.html">
+                <a href="gameboard.php">
                     <div class="branding-rules">
                         <span class="branding-el"><svg class="icon icon--social-facebook"><use xlink:href="#icon--social-facebook" /></svg> <span class="has-icon">Powered By Facebook</span></span>
                     </div>

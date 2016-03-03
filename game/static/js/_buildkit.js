@@ -18,7 +18,7 @@
      * set up and build the page, then run the init sequence
      */
     function _buildkitBuildPage(){
-        var mainNavPath  = 'inc/components/main-nav.html';
+        var mainNavPath  = 'inc/components/main-nav.php';
 
         //
         // load some global components
@@ -124,7 +124,7 @@
 
         var loadDir     = 'inc',
             loadSection = FB_SECTION,
-            fileExt     = '.html',
+            fileExt     = '.php',
             loadPath    = loadDir + '/' + loadSection + '/' + file + fileExt;
 
         //
@@ -143,7 +143,7 @@
                 console.error("/end error");
 
                 // Redirect to error page
-                window.location = '/index.html#error';
+                window.location = '/index.php#error';
             } else {
 
                 if( FB_CTF !== undefined ){
@@ -152,10 +152,10 @@
                     //  we need to load them **after** the requested page fragment
                     //  gets loaded
                     //
-                    FB_CTF.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.html', function(){
+                    FB_CTF.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.php', function(){
                         FB_CTF.slider.init();
                     });
-                    FB_CTF.loadComponent('#fb-page-footer', 'inc/components/footer.html', function(){
+                    FB_CTF.loadComponent('#fb-page-footer', 'inc/components/footer.php', function(){
                         $body.trigger('footer-loaded');
                     });
 

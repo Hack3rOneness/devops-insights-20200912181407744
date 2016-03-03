@@ -2,6 +2,6 @@
 
 DB_HOST = 'localhost'
 DB_PORT = '3306'
-DB_NAME = 'facebook-ctf'
-DB_USERNAME = 'ctf'
-DB_PASSWORD = 'ctf'
+DB_NAME = 'DATABASE'
+DB_USERNAME = 'MYUSER'
+DB_PASSWORD = 'MYPWD'
