@@ -23,12 +23,10 @@ class DB {
   private function __clone(): void { }
 
   public function connect(): void {
-    invariant($this->config !== null, "Config can not be null");
     try {
-      // TODO: Use must_have_idx
-      $host = idx($this->config, 'DB_HOST');
-      $port = idx($this->config, 'DB_PORT');
-      $db_name = idx($this->config, 'DB_NAME');
+      $host = must_have_idx($this->config, 'DB_HOST');
+      $port = must_have_idx($this->config, 'DB_PORT');
+      $db_name = must_have_idx($this->config, 'DB_NAME');
       $conn_str = sprintf(
         'mysql:host=%s;port=%s;dbname=%s',
         $host,
@@ -36,8 +34,8 @@ class DB {
         $db_name,
       );
 
-      $username = idx($this->config, 'DB_USERNAME');
-      $password = idx($this->config, 'DB_PASSWORD');
+      $username = must_have_idx($this->config, 'DB_USERNAME');
+      $password = must_have_idx($this->config, 'DB_PASSWORD');
       $this->dbh = new PDO(
         $conn_str,
         $username,
