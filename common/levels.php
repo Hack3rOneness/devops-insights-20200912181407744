@@ -8,7 +8,7 @@ class Levels {
 
   public function __construct() {
     $this->db = DB::getInstance();
-    if (!$this->db->connected) {
+    if (!$this->db->isConnected()) {
       $this->db->connect();
     }
   }
