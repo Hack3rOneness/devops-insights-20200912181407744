@@ -16,7 +16,7 @@ rm /etc/apache2/sites-enabled/scotchbox.local.conf
 service apache2 stop
 
 # Copy HHVM configuration
-cp /var/www/facebook-ctf/tools/server.ini /etc/hhvm/server.ini
+cp /var/www/facebook-ctf/tools/server.hhvm /etc/hhvm/server.ini
 
 # Restart HHVM
 service hhvm restart
