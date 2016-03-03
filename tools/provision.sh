@@ -4,21 +4,36 @@
 #
 
 # Install HHVM
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
-sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
-sudo apt-get update
-sudo apt-get install hhvm
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
+add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
+apt-get update
+apt-get install hhvm -y
 
 # Remove apache configuration
 rm /etc/apache2/sites-enabled/scotchbox.local.conf
 
+# Stop apache
+service apache2 stop
+
+# Copy HHVM configuration
+cp /var/www/facebook-ctf/tools/server.ini /etc/hhvm/server.ini
+
+# Restart HHVM
+service hhvm restart
+
+# Make HHVM to start on restart
+update-rc.d hhvm defaults
+
+# Disable apache to start
+update-rc.d apache2 disable
+
 # Apply our apache configuration
-cp /var/www/facebook-ctf/tools/fbctf.conf /etc/apache2/sites-available/fbctf.conf
-rm -Rf /etc/apache2/sites-enabled/*.conf
-ln -s /etc/apache2/sites-available/fbctf.conf /etc/apache2/sites-enabled/fbctf.conf
+#cp /var/www/facebook-ctf/tools/fbctf.conf /etc/apache2/sites-available/fbctf.conf
+#rm -Rf /etc/apache2/sites-enabled/*.conf
+#ln -s /etc/apache2/sites-available/fbctf.conf /etc/apache2/sites-enabled/fbctf.conf
 
 # Restart apache
-service apache2 restart
+#service apache2 restart
 
 # Database creation
 DB="facebook-ctf"
