@@ -17,4 +17,3 @@ $conf_data->{'refreshCmd'} = 30000;
 header('Content-Type: application/json');
 print json_encode($conf_data, JSON_PRETTY_PRINT);
 
-?>

@@ -56,7 +56,7 @@ function verifyTeamLogo() {
 }
 
 function gameBoard() {
-  window.location.href = '/gameboard.html';
+  window.location.href = '/gameboard.php';
 }
 
 function loginError() {
@@ -65,7 +65,7 @@ function loginError() {
 
 function sendIndexRequest(request_data) {
   $.post(
-    'index.php',
+    'indexaction.php',
     request_data
   ).fail(function() {
     // TODO: Make this a modal

@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 require_once('db.php');
 
@@ -7,14 +7,12 @@ class Attachments {
   // TODO: Configure this
   private $attachments_dir = '/data/attachments/';
 
-  function __construct() {
+  public function __construct() {
     $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();
     }
   }
-
-  // 
 
   // Create attachment for a given level.
   public function create($file_param, $filename, $level_id) {

@@ -1,7 +1,6 @@
-<?php
+<?hh
 
 class AdminRequests {
-
   private $input_method;
   private $method = '';
   private $filters = array();
@@ -10,7 +9,7 @@ class AdminRequests {
   public $action = 'none';
   public $parameters = array();
 
-  function __construct() {
+  public function __construct() {
     $inputMethods = array('POST' => INPUT_POST);
     $this->method = $_SERVER['REQUEST_METHOD'];
     $this->input_method = $inputMethods[$this->method];
@@ -51,7 +50,7 @@ class AdminRequests {
         'options'     => array(
           'regexp'      => '/^[\w\-\.]+$/'
          ),
-      ), 
+      ),
       'attachment_file' => FILTER_UNSAFE_RAW,
       'link_id'     => FILTER_VALIDATE_INT,
       'link'        => FILTER_VALIDATE_URL,

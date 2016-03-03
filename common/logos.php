@@ -1,11 +1,11 @@
-<?php
+<?hh
 
 require_once('db.php');
 
 class Logos {
   private $db;
 
-  function __construct() {
+  public function __construct() {
     $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();

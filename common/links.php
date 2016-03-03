@@ -1,18 +1,16 @@
-<?php
+<?hh
 
 require_once('db.php');
 
 class Links {
   private $db;
 
-  function __construct() {
+  public function __construct() {
     $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();
     }
   }
-
-  // 
 
   // Create link for a given level.
   public function create($link, $level_id) {

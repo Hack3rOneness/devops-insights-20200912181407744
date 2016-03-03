@@ -1,11 +1,11 @@
-<?php
+<?hh
 
 require_once('db.php');
 
 class Countries {
   private $db;
 
-  function __construct() {
+  public function __construct() {
     $this->db = DB::getInstance();
     if (!$this->db->connected) {
       $this->db->connect();
@@ -68,7 +68,7 @@ class Countries {
     return $this->db->query($sql);
   }
 
-  // All map countries. 
+  // All map countries.
   public function all_map_countries() {
     $sql = 'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)';
     return $this->db->query($sql);

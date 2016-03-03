@@ -6,7 +6,7 @@
     </header>
 
     <div class="fb-registration">
-        <form action="index.php" method="POST" class="fb-form">
+        <form class="fb-form">
             <input type="hidden" name="action" value="register_team">
             <fieldset class="form-set fb-container container--small">
                 <div class="form-el el--text">
