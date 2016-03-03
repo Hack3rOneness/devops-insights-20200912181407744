@@ -1,41 +1,55 @@
-<?hh
+<?hh // strict
 
-function login_page() {
-  header('Location: /index.php#login');
+function redirect(string $location): void {
+  header('Location: '.$location);
 }
 
-function error_page() {
-  header('Location: /index.php#error');
+function login_page(): void {
+  redirect('/index.php#login');
+}
+
+function error_page(): void {
+  redirect('/index.php#error');
   die();
 }
 
-function registration_page() {
-  header('Location: /index.php#registration');
+function registration_page(): void {
+  redirect('/index.php#registration');
 }
 
-function game_page() {
-  header('Location: /gameboard.php');
+function game_page(): void {
+  redirect('/gameboard.php');
 }
 
-function admin_page() {
-  header('Location: /admin.php');
+function admin_page(): void {
+  redirect('/admin.php');
 }
 
-function start_page() {
-  header('Location: /index.php');
+function start_page(): void {
+  redirect('/index.php');
 }
 
-function request_response($msg) {
+function request_response(string $msg): void {
   $response_data = array(
-    'result' => $msg
+    'result' => $msg,
   );
   echo json_encode($response_data);
 }
 
-function ok_response() {
+function ok_response(): void {
   request_response('OK');
 }
 
-function error_response() {
+function error_response(): void {
   request_response('ERROR');
+}
+
+function must_have_idx<Tk, Tv>(
+  ?KeyedContainer<Tk, Tv> $arr,
+  Tk $idx,
+): Tv {
+  invariant($arr !== null, 'Container is null');
+  $result = idx($arr, $idx);
+  invariant($result !== null, sprintf('Index %s not found in container', $idx));
+  return $result;
 }

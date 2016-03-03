@@ -1,7 +1,6 @@
 <?hh // strict
 
 require_once('utils.php');
-require_once('funs.php');
 
 class DB {
   private string $settings_file = 'settings.ini';
