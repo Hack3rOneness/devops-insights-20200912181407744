@@ -67,7 +67,7 @@ mysql -u root --password='root' -e "FLUSH PRIVILEGES;"
 
 # Create settings.ini
 echo "Generating settings.ini"
-cat /var/www/facebook-ctf/common/settings.ini.example | sed "s/MYUSER/$U/g" | sed "s/MYPWD/$P/g" > /var/www/facebook-ctf/common/settings.ini
+cat /var/www/facebook-ctf/common/settings.ini.example | sed "s/DATABASE/$DB/g" | sed "s/MYUSER/$U/g" | sed "s/MYPWD/$P/g" > /var/www/facebook-ctf/common/settings.ini
 
 # Ascii art is always appreciated
 echo '   __               _                 _     _____ _______ ______  '  > /etc/motd.tail
