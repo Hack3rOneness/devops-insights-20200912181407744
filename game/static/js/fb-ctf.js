@@ -2771,17 +2771,6 @@
         });
 
         //
-        // add the img glitch
-        //
-        var glitchImgMarkup  = '<img src="static/img/bg--dashes.svg">',
-        $glitchContainer = $('<div class="img-glitch-wrapper active">' + glitchImgMarkup + glitchImgMarkup + glitchImgMarkup + '</div>').appendTo('.fb-img-glitch');
-
-        setInterval(function(){
-          $glitchContainer.toggleClass('active');
-        }, 4000);
-
-
-        //
         // dropkick - for select form elements
         //
         $('select').dropkick();
