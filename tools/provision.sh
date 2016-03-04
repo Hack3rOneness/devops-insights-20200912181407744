@@ -18,6 +18,15 @@ rm /etc/apache2/sites-enabled/scotchbox.local.conf
 # Copy HHVM configuration
 cp /var/www/facebook-ctf/tools/server.hhvm /etc/hhvm/server.ini
 
+# Enable HHVM globally
+/usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
+
+# Install Composer
+cd /var/www/facebook-ctf
+curl -sS https://getcomposer.org/installer | php
+php composer.phar install
+mv composer.phar /usr/local/bin
+
 # Restart HHVM
 service hhvm restart
 
