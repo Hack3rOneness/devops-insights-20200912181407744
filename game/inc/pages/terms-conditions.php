@@ -1,4 +1,4 @@
-<main role="main" class="fb-main page--terms-conditions fb-row-container full-height dashed-background">
+<main role="main" class="fb-main page--terms-conditions fb-row-container full-height">
 
     <header class="fb-section-header fb-container row-fixed no-shrink">
         <h1 class="fb-glitch" data-text="Terms + Conditions">Terms + Conditions</h1>

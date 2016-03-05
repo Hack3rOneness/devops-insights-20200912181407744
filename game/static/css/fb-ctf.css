@@ -2240,12 +2240,6 @@ body {
   padding-bottom: 20px; }
 
 /**
- * --dashed background
- */
-.dashed-background {
-  background: url(../img/bg--dashes.svg) center center no-repeat; }
-
-/**
  * --centered main
  */
 .fb-centered-main {
@@ -3766,7 +3760,7 @@ body[data-section="gameboard"] .fb-page {
   bottom: 0;
   right: 0;
   left: 0;
-  background: #13242b url(../img/bg--dashes.svg) center center no-repeat;
+  background: #13242b;
   z-index: 10;
   visibility: hidden;
   opacity: 0; }

@@ -16,7 +16,7 @@ function teams_select() {
 
 $teams_select_html = teams_select();
 echo <<< EOT
-<main role="main" class="fb-main page--login dashed-background full-height fb-scroll">
+<main role="main" class="fb-main page--login full-height fb-scroll">
 
     <header class="fb-section-header fb-container">
         <h1 class="fb-glitch" data-text="Team Login">Team Login</h1>

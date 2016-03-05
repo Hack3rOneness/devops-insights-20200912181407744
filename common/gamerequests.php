@@ -26,6 +26,7 @@ class GameRequests {
     $this->actions = array(
       'open_level',
       'answer_level',
+      'get_hint'
     );
   }
 

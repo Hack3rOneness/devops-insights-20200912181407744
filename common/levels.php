@@ -376,6 +376,13 @@ class Levels {
     $this->db->query($sql, $elements);
   }
 
+  // Log hint request hint.
+  public function log_get_hint($level_id, $team_id, $penalty) {
+    $sql = 'INSERT INTO hints_log (ts, level_id, team_id, penalty) VALUES (NOW(), ?, ?, ?)';
+    $elements = array($level_id, $team_id, $penalty);
+    $this->db->query($sql, $elements);
+  }
+
   // Log attempt on score.
   public function log_failed_score($level_id, $team_id, $flag) {
     $sql = 'INSERT INTO failures_log (ts, level_id, team_id, flag) VALUES(NOW(), ?, ?, ?)';
@@ -409,7 +416,7 @@ class Levels {
     $this->adjust_bonus($level_id);
 
     // Score!
-    $sql = 'UPDATE teams SET points = points + ? WHERE id = ? LIMIT 1';
+    $sql = 'UPDATE teams SET points = points + ?, last_score = NOW() WHERE id = ? LIMIT 1';
     $elements = array($points, $team_id);
     $this->db->query($sql, $elements);
 
@@ -418,6 +425,46 @@ class Levels {
 
     // kthxbai
     return true;
+  }
+
+  // Check if there is a previous hint.
+  public function previous_hint($level_id, $team_id, $any_team=false) {
+    $sql = ($any_team)
+      ? 'SELECT COUNT(*) FROM hints_log WHERE level_id = ? AND team_id != ?'
+      : 'SELECT COUNT(*) FROM hints_log WHERE level_id = ? AND team_id = ?';
+    $elements = array($level_id, $team_id);
+    $have_hint = $this->db->query($sql, $elements);
+    return (bool)$have_hint[0]['COUNT(*)'];
+  }
+
+  // Get hint.
+  public function get_hint($level_id, $team_id) {
+    $level = $this->get_level($level_id);
+    $penalty = $level['penalty'];
+
+    // Check if team has already gotten this hint
+    if ($this->previous_hint($level_id, $team_id)) {
+      $penalty = 0;
+    }
+
+    // Make sure team has enough points to pay
+    $sql = 'SELECT points FROM teams where id = ? LIMIT 1';
+    $element = array($team_id);
+    $team_points = $this->db->query($sql, $element)[0]['points'];
+    if ($team_points < $penalty) {
+      return false;
+    }
+
+    // Adjust points
+    $sql = 'UPDATE teams SET points = points - ? WHERE id = ? LIMIT 1';
+    $elements = array($penalty, $team_id);
+    $this->db->query($sql, $elements);
+
+    // Log the hint
+    $this->log_get_hint($level_id, $team_id, $penalty);
+
+    // Hint!
+    return $level['hint'];
   }
 
   // All teams that have completed this level

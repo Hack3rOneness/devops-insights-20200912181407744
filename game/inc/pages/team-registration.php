@@ -1,4 +1,4 @@
-<main role="main" class="fb-main page--team-registration dashed-background full-height fb-scroll">
+<main role="main" class="fb-main page--team-registration full-height fb-scroll">
     
     <header class="fb-section-header fb-container">
         <h1 class="fb-glitch" data-text="Team Registration">Team Registration</h1>

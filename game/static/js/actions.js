@@ -21,7 +21,7 @@ function teamLogoFormError() {
 
 function verifyTeamName(context) {
   if (context === 'register') {
-    var teamName = String($('.fb-form input[name="teamname"')[0].value);
+    var teamName = String($('.fb-form input[name="teamname"]')[0].value);
     if (teamName.length == 0) {
       teamNameFormError();
       return false;

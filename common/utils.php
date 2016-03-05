@@ -36,6 +36,14 @@ function request_response(string $msg): void {
   echo json_encode($response_data);
 }
 
+function hint_response(string $msg, string $result): void {
+  $response_data = array(
+    'hint' => $msg,
+    'result' => $result,
+  );
+  echo json_encode($response_data);
+}
+
 function ok_response(): void {
   request_response('OK');
 }

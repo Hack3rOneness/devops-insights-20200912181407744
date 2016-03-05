@@ -42,6 +42,18 @@ switch ($request->action) {
         error_response();
     }
     break;
+  case 'get_hint':
+    $levels = new Levels();
+    $requested_hint = $levels->get_hint(
+      $request->parameters['level_id'],
+      sess_team()
+    );
+    if ($requested_hint) {
+      hint_response($requested_hint, 'OK');
+    } else {
+      hint_response('', 'ERROR');
+    }
+    break;
   case 'open_level':
     break;
   default:

@@ -858,22 +858,48 @@
             //
             // event listeners
             //
-            if (hint_cost == -1) {
+            if (hint_cost == -2) {
+              $('.js-trigger-hint span', $container).text('Too expensive');
+              $('.capture-hint div', $container).text('Too expensive');
+            } else if (hint_cost == -1) {
               $('.js-trigger-hint span', $container).text('No Hint');
               $('.capture-hint div', $container).text('No Hint');
             } else {
               if (hint_cost == 0) {
                 $('.js-trigger-hint span', $container).text('Free Hint');
-                $('.capture-hint div', $container).text(hint);
+                $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
+		            $('.capture-hint div', $container).text(hint);
               } else {
                 $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
               }
               
               $('.js-trigger-hint', $container).on('click', function(event) {
                 event.preventDefault();
-                // Request hint remotely
-                $('.capture-hint div', $container).text(hint);
-                $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
+               
+		$(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled'); 
+                var hint_level = $('input[name=level_id]', $container)[0].value;
+                var hint_data = {
+                  action: 'get_hint',
+                  level_id: hint_level
+                };
+
+                $.post(
+                  'game.php',
+                  hint_data
+                ).fail(function() {
+                  // TODO: Make this a modal
+                  console.log('ERROR');
+                }).done(function(data) {
+                  var responseData = JSON.parse(data);
+                  if (responseData.result == 'OK') {
+                    console.log('OK');
+		    console.log('Hint: ' + responseData.hint);
+                    $('.capture-hint div', $container).text(responseData.hint);
+                  } else {
+                    console.log('Failed');
+                    $('.js-trigger-hint span', $container).text('ERROR');
+                  }
+                });
               });
             }
             $('.js-trigger-score', $container).on('click', function(event) {
@@ -2651,7 +2677,6 @@
           });
         }
 
-
         /**
          * toggle the list view
          */
@@ -2669,8 +2694,6 @@
             $('body').off('command-option-selected');
           });
         }
-
-
 
         /* --------------------------------------------
          * --init
@@ -2735,10 +2758,8 @@
         //
         FB_CTF.loadComponent('#fb-svg-sprite', 'static/svg/icons/build/icons.svg' );
 
-
         // load the modal
         FB_CTF.modal.init();
-
 
         //
         // any modules that does stuff based on loaded content (for
@@ -2757,7 +2778,6 @@
 
           }).trigger('content-loaded');
 
-
         /* --------------------------------------------
          * --more generic stuff
          * -------------------------------------------- */
@@ -2774,8 +2794,6 @@
         // dropkick - for select form elements
         //
         $('select').dropkick();
-
-
 
         /* --------------------------------------------
          * --global event listeners
@@ -2798,8 +2816,6 @@
             });
           }
         })
-
-
 
         //
         // trending list filtering
@@ -2911,7 +2927,6 @@
         });
       }
 
-
     /**
      * load a component into a target on the site
      *
@@ -2948,8 +2963,6 @@
       });
     }
 
-
-
     /**
      * set up stuff on document ready
      */
@@ -2968,3 +2981,5 @@
 
 
    })(window.FB_CTF = window.FB_CTF || {}, jQuery);
+
+

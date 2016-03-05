@@ -5,6 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/attachments.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/links.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
 
 sess_start();
 sess_enforce_login();
@@ -13,14 +14,28 @@ $levels = new Levels();
 $countries = new Countries();
 $attachments = new Attachments();
 $links = new Links();
+$teams = new Teams();
+
+$my_team = $teams->get_team(sess_team());
 
 $countries_data = (object) array();
 foreach ($levels->all_levels(1) as $level) {
   $country = $countries->get_country($level['entity_id']);
   $category = $levels->get_category($level['category_id']);
   if ($level['hint']) {
-    $hint_cost = $level['penalty'];
-    $hint = ($hint_cost == 0) ? $level['hint'] : 'yes';
+    // There is hint, can this team afford it?
+    if ($level['penalty'] > $my_team['points']) {
+      $hint_cost = -1;
+      $hint = 'no';
+    } else {
+      // Has this team requested this hint before?
+      if ($levels->previous_hint($level['id'], $my_team['id'])) {
+        $hint_cost = 0;
+      } else {
+        $hint_cost = $level['penalty'];
+      }
+      $hint = ($hint_cost == 0) ? $level['hint'] : 'yes';
+    }
   } else {
     $hint_cost = -1;
     $hint = 'no';
