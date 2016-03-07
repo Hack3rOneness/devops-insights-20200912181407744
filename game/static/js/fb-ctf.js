@@ -876,7 +876,7 @@
               $('.js-trigger-hint', $container).on('click', function(event) {
                 event.preventDefault();
                
-		$(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled'); 
+		            $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled'); 
                 var hint_level = $('input[name=level_id]', $container)[0].value;
                 var hint_data = {
                   action: 'get_hint',
@@ -925,11 +925,19 @@
                     console.log('OK');
                     $('input[name=answer]', $container).css("background-color","green");
                     $('.js-trigger-score', $container).text('YES!');
+                    setTimeout(function(){
+                      $('.js-close-modal', $container).click();
+                    }, 2000);
                   } else {
                   // TODO: Make this a modal
                     console.log('Failed');
                     $('input[name=answer]', $container).css("background-color","red");
                     $('.js-trigger-score', $container).text('NOPE :(');
+                    setTimeout(function(){
+                      $('.js-trigger-score', $container).text('SUBMIT');
+                      $('input[name=answer]')[0].value = '';
+                      $('input[name=answer]', $container).css("background-color","");
+                    }, 2000);
                   }
                 });
             });
