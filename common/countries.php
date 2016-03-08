@@ -94,4 +94,10 @@ class Countries {
     $element = array($country_id);
     return $this->db->query($sql, $element)[0];
   }
+
+  // Retrieve a random country.
+  public function random_country() {
+    $sql = 'SELECT id FROM countries WHERE enabled = 1 AND used = 0 ORDER BY RAND() LIMIT 1';
+    return $this->db->query($sql)[0]['id'];
+  }
 }

@@ -35,13 +35,19 @@ class Levels {
     $hint,
     $penalty
   ) {
+    $countries = new Countries();
+    if ($entity_id === 0) {
+      $ent_id = $countries->random_country();
+    } else {
+      $ent_id = $ent_id;
+    }
     $sql = 'INSERT INTO levels '.
       '(type, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
       'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
     $elements = array(
       $type,
       $description,
-      $entity_id,
+      $ent_id,
       $category_id,
       $points,
       $bonus,
@@ -53,8 +59,7 @@ class Levels {
     );
     $this->db->query($sql, $elements);
     $level_id = $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
-    $countries = new Countries();
-    $countries->toggle_used($entity_id, 1);
+    $countries->toggle_used($ent_id, 1);
 
     return $level_id;
   }
@@ -236,12 +241,18 @@ class Levels {
     $penalty,
     $level_id
   ) {
+    $countries = new Countries();
+    if ($entity_id === 0) {
+      $ent_id = $countries->random_country();
+    } else {
+      $ent_id = $ent_id;
+    }
     $sql = 'UPDATE levels SET description = ?, entity_id = ?, category_id = ?, points = ?, '.
       'bonus = ?, bonus_dec = ?, bonus_fix = ?, flag = ?, hint = ?, '.
       'penalty = ? WHERE id = ? LIMIT 1';
     $elements = array(
       $description,
-      $entity_id,
+      $ent_id,
       $category_id,
       $points,
       $bonus,

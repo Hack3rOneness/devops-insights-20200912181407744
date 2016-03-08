@@ -9,7 +9,7 @@ sess_enforce_admin();
 
 function select_countries($selected=0, $used_included = true) {
   $select_html = '<select name="entity_id">';
-  $select_html .= '<option value="">Select</option>';
+  $select_html .= '<option value="0">Auto</option>';
   $countries = new Countries();
   $all_countries = ($used_included) 
     ? $countries->all_enabled_countries()
