@@ -23,13 +23,13 @@ $my_name = htmlspecialchars(sess_teamname());
 foreach ($levels->all_levels(1) as $level) {
   $country = $countries->get_country($level['entity_id']);
   $category = $levels->get_category($level['category_id']);
-  if ($levels->previous_score($country_level['id'], $my_team)) {
+  if ($levels->previous_score($level['id'], $my_team)) {
     $span_status = '<span class="fb-status status--yours">Captured</span>';
   } else {
     $span_status = '<span class="fb-status status--open">Open</span>';
   }
   echo <<< EOT
-    <tr data-country="{$country['name']}" class="">
+    <tr data-country="{$country['name']}">
       <td width="38%">{$country['name']}</td>
       <td width="10%">{$level['points']}</td>
       <td width="22%">{$category['category']}</td>
