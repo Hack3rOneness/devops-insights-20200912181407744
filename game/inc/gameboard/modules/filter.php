@@ -14,15 +14,20 @@ echo <<< EOT
   <div class="fb-section-border">
     <div class="module-top">
       <div class="radio-tabs">
-        <input type="radio" name="fb--module--filter" id="fb--module--filter--category" checked="">
+        <input type="radio" name="fb--module--filter" value="category" id="fb--module--filter--category" checked>
         <label for="fb--module--filter--category" class="click-effect"><span>Category</span></label>
 
-        <input type="radio" name="fb--module--filter" id="fb--module--filter--point-value">
-        <label for="fb--module--filter--point-value" class="click-effect"><span>Point Value</span></label>
+        <input type="radio" name="fb--module--filter" value="status" id="fb--module--filter--status">
+        <label for="fb--module--filter--status" class="click-effect"><span>Status</span></label>
       </div>
     </div>
     <div class="module-scrollable">
-      <ul class="radio-list radio-tab-content active">
+
+      <ul class="radio-list radio-tab-content category-filter-content active">
+        <li>
+          <input type="radio" name="fb--module--filter--category" value="All" id="fb--module--filter--category--all" checked>
+          <label for="fb--module--filter--category--all" class="click-effect">All</span></label>
+        </li>
 EOT;
 
 $levels = new Levels();
@@ -39,9 +44,19 @@ EOT;
 }
 
 echo <<< EOT
+      </ul>
+      <ul class="radio-list radio-tab-content status-filter-content">
         <li>
-          <input type="radio" name="fb--module--filter--category" value="All" id="fb--module--filter--category--all">
-          <label for="fb--module--filter--category--all" class="click-effect">All</span></label>
+          <input type="radio" name="fb--module--filter--status" value="All" id="fb--module--filter--status--all" checked>
+          <label for="fb--module--filter--status--all" class="click-effect">All</span></label>
+        </li>
+        <li>
+          <input type="radio" name="fb--module--filter--status" value="completed" id="fb--module--filter--status--completed">
+          <label for="fb--module--filter--status--completed" class="click-effect">Completed</span></label>
+        </li>
+        <li>
+          <input type="radio" name="fb--module--filter--status" value="remaining" id="fb--module--filter--status--remaining">
+          <label for="fb--module--filter--status--remaining" class="click-effect">Remaining</span></label>
         </li>
       </ul>
     </div>

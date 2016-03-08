@@ -48,7 +48,7 @@ sess_enforce_login();
             <label for="fb--map-select--you" class="click-effect"><span class="your-name"><svg class="icon icon--team-indicator your-team"><use xlink:href="#icon--team-indicator"></use></svg>You</span></label>
 
             <input type="radio" name="fb--map-select" id="fb--map-select--enemy" value="opponent-team">
-            <label for="fb--map-select--enemy" class="click-effect"><span class="opponent-name"><svg class="icon icon--team-indicator opponent-team"><use xlink:href="#icon--team-indicator"></use></svg>Enemy</span></label>
+            <label for="fb--map-select--enemy" class="click-effect"><span class="opponent-name"><svg class="icon icon--team-indicator opponent-team"><use xlink:href="#icon--team-indicator"></use></svg>Others</span></label>
 
             <input type="radio" name="fb--map-select" id="fb--map-select--all" value="all" checked="">
             <label for="fb--map-select--all" class="click-effect"><span>All</span></label>

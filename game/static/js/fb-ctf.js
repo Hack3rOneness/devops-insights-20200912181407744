@@ -435,7 +435,7 @@
             return "Uncaptured";
           }
 
-          var capturedClass = capturedBy === FB_CTF.data.CONF.currentTeam ? 'your-name' : 'opponent-name';
+          var capturedClass = (capturedBy === FB_CTF.data.CONF.currentTeam) ? 'your-name' : 'opponent-name';
 
           return '<span class="' + capturedClass + '">' + capturedBy + '</span>';
         }
@@ -566,9 +566,47 @@
               });
             });
 
-
             //
             // filter the map based on status
+            //
+            $('input[name="fb--module--filter--status"]').on('change', function(event) {
+              event.preventDefault();
+              var status = $(this).val();
+
+              $svgCountries.each(function(){
+                var countryGroup = d3.select(this);
+
+                countryGroup.classed("inactive", false);
+                countryGroup.classed("highlighted", false);
+
+                if( status !== "All" ){
+                  if( countryGroup.attr('data-status') === status){
+                    countryGroup.classed('highlighted', true);
+                  } else {
+                    countryGroup.classed('inactive', true);
+                  }
+                }
+              });
+            });
+
+            //
+            // filter the filters
+            //
+            $('input[name="fb--module--filter"]').on('change', function(event) {
+              event.preventDefault();
+              var filter_type = $(this).val();
+              if (filter_type === 'category') {
+                $('.status-filter-content').removeClass('active');
+                $('.category-filter-content').addClass('active');
+              }
+              if (filter_type === 'status') {
+                $('.category-filter-content').removeClass('active');
+                $('.status-filter-content').addClass('active');
+              }
+            });
+
+            //
+            // filter the map based on captured
             //
             $('input[name="fb--map-select"]').on('change', function(event) {
               event.preventDefault();
@@ -1436,8 +1474,12 @@
             data         = FB_CTF.data.COUNTRIES[country];
 
             if (data) {
-            // add the category
-              $group.attr('data-category', data.category );
+              // add the category
+              $group.attr('data-category', data.category);
+              // add the status
+              var completed_list = data.completed;
+              var data_status = (completed_list.indexOf(FB_CTF.data.CONF.currentTeam) >= 0) ? 'completed' : 'remaining';
+              $group.attr('data-status', data_status);
             }
           });
 

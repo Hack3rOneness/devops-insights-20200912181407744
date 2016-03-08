@@ -33,7 +33,8 @@ foreach ($countries->all_map_countries(true) as $country) {
 			$data_captured = 'data-captured="'.$my_name.'"';
 		} else if ($levels->previous_score($country_level['id'], $my_team, true)) {
 			$captured_by = 'captured--opponent';
-			$data_captured = '';
+			$completed_by = $levels->completed_by($country_level['id'])[0];
+			$data_captured = 'data-captured="' . htmlspecialchars($completed_by['name']) . '"';
 		} else {
 			$captured_by = '';
 			$data_captured = '';

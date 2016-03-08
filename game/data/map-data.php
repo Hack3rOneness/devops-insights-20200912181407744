@@ -26,7 +26,8 @@ foreach ($countries->all_enabled_countries(true) as $country) {
       $data_captured = $my_name;
     } else if ($levels->previous_score($country_level['id'], $my_team, true)) {
       $captured_by = 'opponent';
-      $data_captured = '';
+      $completed_by = $levels->completed_by($country_level['id'])[0];
+      $data_captured = $completed_by['name'];
     } else {
       $captured_by = 'no';
       $data_captured = 'no';
