@@ -9,5 +9,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "facebookCTF-Dev"
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.vm.synced_folder ".", "/var/www/facebook-ctf", :mount_options => ["dmode=777", "fmode=666"], :create => true
-  config.vm.provision "shell", path: "tools/provision_dev.sh"
+  config.vm.provision "shell", path: "tools/provision.sh"
 end

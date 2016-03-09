@@ -37,13 +37,24 @@ function install_nginx() {
 	log "Installing nginx"
 	package nginx
 
-	if [[ $__type = "dev" ]]; then
-		sudo cat "$__path/tools/fbctf_nginx_dev.conf" | sed "s|CTFPATH|$__path/game|g" > /etc/nginx/sites-available/fbctf.conf
-	elif [[ $__type = "prod" ]]; then
-		read -p ' -> SSL Certificate file location? ' __cert
-		read -p ' -> SSL Key Certificate file location? ' __key
-		sudo cat "$__path/tools/fbctf_nginx_prod.conf" | sed "s|CTFPATH|$__path/game|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" > /etc/nginx/sites-available/fbctf.conf
+	log "Deploying certificates"
+	sudo mkdir -p /etc/nginx/certs
+
+	if [[ $__type = "self" ]]; then
+		__csr="/etc/nginx/certs/self.csr"
+		__cert="/etc/nginx/certs/self.crt"
+		__key="/etc/nginx/certs/self.key"
+		sudo openssl req -nodes -newkey rsa:2048 -keyout "$__key" -out "$__csr" -subj "/O=Facebook CTF"
+		sudo openssl x509 -req -days 365 -in "$__csr" -signkey "$__key" -out "$__cert"
+	elif [[ $__type = "prod" ]]; then	
+		__cert="/etc/nginx/certs/fbctf.csr"
+		__key="/etc/nginx/certs/fbctf.key"
+		read -p ' -> SSL Certificate file location? ' __mycert
+		read -p ' -> SSL Key Certificate file location? ' __mykey
+		sudo cp "$__mycert" "$__cert"
+		sudo cp "$__mykey" "$__key"
 	fi
+	sudo cat "$__path/tools/nginx.conf" | sed "s|CTFPATH|$__path/game|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" > /etc/nginx/sites-available/fbctf.conf
 	sudo rm /etc/nginx/sites-enabled/default
 	sudo ln -s /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
 
@@ -63,7 +74,7 @@ function install_hhvm() {
 	package hhvm
 
 	log "Copying HHVM configuration"
-	sudo cp "$__path/tools/hhvm.conf" /etc/hhvm/server.ini
+	sudo cat "$__path/tools/hhvm.conf" | sed "s|CTFPATH|$__path/game|g" > /etc/hhvm/server.ini
 
 	log "HHVM as PHP systemwide"
 	sudo /usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60

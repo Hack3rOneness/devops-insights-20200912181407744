@@ -37,7 +37,11 @@ sudo service apache2 stop
 apt-get autoremove
 
 # Install nginx
-install_nginx "$CTF_PATH" "dev"
+if [ -z "$1" ]; then
+	install_nginx "$CTF_PATH" "self"
+else
+	install_nginx "$CTF_PATH" "$1"
+fi
 
 # Database creation
 import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH"
@@ -45,7 +49,7 @@ import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH"
 # Make attachments folder world writable
 sudo chmod 777 "$CTF_PATH/game/data/attachments"
 
-log 'Facebook-CTF development environment is complete!'
+log 'Facebook-CTF deployment is complete!'
 
 exit 0
 # kthxbai

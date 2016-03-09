@@ -52,6 +52,7 @@ class Links {
   public function has_links($level_id) {
     $sql = 'SELECT COUNT(*) FROM links WHERE level_id = ?';
     $element = array($level_id);
-    return (bool)$this->db->query($sql, $element)[0]['COUNT(*)'];
+    $has_links = $this->db->query($sql, $element);
+    return (bool)$has_links[0]['COUNT(*)'];
   }
 }

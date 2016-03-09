@@ -74,6 +74,11 @@ class Attachments {
   public function has_attachments($level_id) {
     $sql = 'SELECT COUNT(*) FROM attachments WHERE level_id = ?';
     $element = array($level_id);
-    return (bool)$this->db->query($sql, $element)[0]['COUNT(*)'];
+    $attachment = $this->db->query($sql, $element);
+    if ($attachment) {
+      return (bool)$attachment[0]['COUNT(*)'];
+    } else {
+      return false;
+    }
   }
 }

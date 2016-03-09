@@ -7,8 +7,8 @@ function sess_start() {
   $sess_name = 'FBCTF';
   $sess_lifetime = 86400;
   $sess_domain = $_SERVER['SERVER_NAME'];
-  $sess_secure = false;
-  $sess_httponly = false;
+  $sess_secure = true;
+  $sess_httponly = true;
   $sess_path = '/';
 
   session_set_save_handler(

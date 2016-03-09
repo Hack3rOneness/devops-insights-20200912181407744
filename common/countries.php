@@ -92,7 +92,13 @@ class Countries {
   public function get_country($country_id) {
     $sql = 'SELECT * FROM countries WHERE id = ? LIMIT 1';
     $element = array($country_id);
-    return $this->db->query($sql, $element)[0];
+    $country = $this->db->query($sql, $element);
+    if ($country) {
+      return $country[0];  
+    } else {
+      return false;
+    }
+    
   }
 
   // Retrieve a random country.
