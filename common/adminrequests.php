@@ -36,6 +36,12 @@ class AdminRequests {
       'admin'       => FILTER_VALIDATE_INT,
       'status'      => FILTER_VALIDATE_INT,
       'visible'     => FILTER_VALIDATE_INT,
+      'all_type'    => array(
+        'filter'      => FILTER_VALIDATE_REGEXP,
+        'options'     => array(
+          'regexp'      => '/^[a-z]{4}$/'
+        ),
+      ),
       'logo_id'     => FILTER_VALIDATE_INT,
       'logo'        => array(
         'filter'      => FILTER_VALIDATE_REGEXP,
@@ -85,9 +91,11 @@ class AdminRequests {
       'update_team',
       'delete_team',
       'delete_level',
+      'delete_all',
       'update_session',
       'delete_session',
       'toggle_status_level',
+      'toggle_status_all',
       'toggle_status_team',
       'toggle_admin_team',
       'toggle_visible_team',
@@ -102,11 +110,13 @@ class AdminRequests {
       'delete_attachment',
       'create_link',
       'update_link',
-      'delete_link'
+      'delete_link',
+      'reset_game'
     );
   }
 
   public function processAdmin() {
+
     $this->parameters = filter_input_array($this->input_method, $this->filters);
     if ($this->parameters) {
       $this->action = $this->parameters['action'];

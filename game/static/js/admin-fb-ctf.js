@@ -640,6 +640,27 @@ var $body = $('body');
     }
   }
 
+  // Toggle All
+  function toggleAll(radio_id) {
+    var action_type = radio_id.split('--')[2].split('_')[1];
+    var action_value = (radio_id.split('--')[3] === 'on') ? 1 : 0;
+    var toggle_data = {
+      action: 'toggle_status_all',
+      all_type: action_type,
+      status: action_value
+    };
+    if (action_type) {
+      sendAdminRequest(toggle_data);
+      if (action_value) {
+        $('input[type=radio][id*=on]').prop('checked', true);
+        $('input[type=radio][id*=off]').prop('checked', false);
+      } else {
+        $('input[type=radio][id*=on]').prop('checked', false);
+        $('input[type=radio][id*=off]').prop('checked', true);
+      }
+    }
+  }
+
   // Toggle level option
   function toggleLevel(radio_id) {
     var level_id = radio_id.split('--')[2].split('-')[1];
@@ -810,7 +831,9 @@ var $body = $('body');
     $('input[type="radio"]').on('change', function(event) {
       var $this = $(this);
       var radio_name = $this.attr('id');
-      if (radio_name.search('team') > 0) {
+      if (radio_name.search('all') > 0) {
+        toggleAll(radio_name);
+      } else if (radio_name.search('team') > 0) {
         toggleTeam(radio_name);
       } else if (radio_name.search('level') > 0) {
         toggleLevel(radio_name);

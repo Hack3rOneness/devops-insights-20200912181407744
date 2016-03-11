@@ -45,7 +45,7 @@
 
         // set up the default hash
         if( hash === '' ){
-            window.location.hash = 'setup-instructions';
+            window.location.hash = '';
         }
 
         _BUILDKIT.init();

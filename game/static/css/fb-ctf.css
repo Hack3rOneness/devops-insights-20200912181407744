@@ -3581,8 +3581,8 @@ body[data-section="gameboard"] .fb-page {
       stroke-opacity: 1;
       stroke-width: 1.5; }
       .fb-map svg .land.active {
-        fill: #101e23;
-	stroke: #23424e;
+        fill: #1f3b47;
+	      stroke: #36687c;
         stroke-width: 1; }
     .fb-map svg .country-hover .land {
       fill: transparent; }

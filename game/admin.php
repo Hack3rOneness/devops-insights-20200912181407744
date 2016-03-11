@@ -20,18 +20,17 @@ class AdminController extends Controller {
             </header>
             <nav class="admin-nav-links row-fluid">
               <ul>
-                <li><a href="#setup-instructions">Setup Instructions</a></li>
                 <li><a href="#game-configuration">Game Configuration</a></li>
-                <li><a href="#team-management">Teams</a></li>
-                <li><a href="#categories-management">Levels: Categories</a></li>
+                <li><a href="#game-controls">Game Controls</a></li>
                 <li><a href="#quiz-management">Levels: Quiz</a></li>
                 <li><a href="#flags-management">Levels: Flags</a></li>
                 <li><a href="#bases-management">Levels: Bases</a></li>
-                <li><a href="#logo-management">Logos</a></li>
-                <li><a href="#countries-management">Countries</a></li>
-                <li><a href="#sessions">Sessions</a></li>
+                <li><a href="#categories-management">Levels: Categories</a></li>
+                <li><a href="#countries-management">Levels: Countries</a></li>
+                <li><a href="#team-management">Teams</a></li>
+                <li><a href="#logo-management">Teams: Logos</a></li>
+                <li><a href="#sessions">Teams: Sessions</a></li>
                 <li><a href="#scoreboard">Scoreboard</a></li>
-                <li><a href="#global-controls">Global Controls</a></li>
               </ul>
 
               <a href="#" class="fb-cta cta--yellow">Begin Game</a>

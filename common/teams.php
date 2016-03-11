@@ -61,6 +61,13 @@ class Teams {
     $this->db->query($sql, $elements);
   }
 
+  // Enable or disable all teams by passing 1 or 0.
+  public function toggle_status_all($status) {
+    $sql = 'UPDATE teams SET active = ? WHERE id > 0';
+    $element = array($status);
+    $this->db->query($sql, $element);
+  }
+
   // Sets toggles team admin status.
   public function toggle_admin($team_id, $admin) {
     $sql = 'UPDATE teams SET admin = ? WHERE id = ? LIMIT 1';

@@ -144,6 +144,60 @@ CREATE TABLE `sessions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `configuration`
+--
+
+DROP TABLE IF EXISTS `configuration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `configuration` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `game` tinyint(1) DEFAULT '0',
+  `scoring` tinyint(1) DEFAULT '0',
+  `teams` int(1) DEFAULT '0',
+  `teams_cycle` int(1) DEFAULT '0',
+  `map` tinyint(1) DEFAULT '0',
+  `map_cycle` int(11) DEFAULT '0',
+  `conf` tinyint(1) DEFAULT '0',
+  `conf_cycle` int(11) DEFAULT '0',
+  `cmd` tinyint(1) DEFAULT '0',
+  `cmd_cycle` int(11) DEFAULT '0',
+  `registration` tinyint(1) NOT NULL DEFAULT '0',
+  `registration_names` tinyint(4) DEFAULT '0',
+  `registration_login` tinyint(1) NOT NULL DEFAULT '0',
+  `registration_type` tinyint(4) DEFAULT '0',
+  `registration_players` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE `configuration` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `field` text DEFAULT NOT NULL UNIQUE,
+  `value` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `configuration` WRITE;
+INSERT INTO `configuration` (field, value) VALUES("game", 0);
+INSERT INTO `configuration` (field, value) VALUES("scoring", 0);
+INSERT INTO `configuration` (field, value) VALUES("teams", 0);
+INSERT INTO `configuration` (field, value) VALUES("teams_cycle", 0);
+INSERT INTO `configuration` (field, value) VALUES("map", 0);
+INSERT INTO `configuration` (field, value) VALUES("map_cycle", 0);
+INSERT INTO `configuration` (field, value) VALUES("conf", 0);
+INSERT INTO `configuration` (field, value) VALUES("conf_cycle", 0);
+INSERT INTO `configuration` (field, value) VALUES("cmd", 0);
+INSERT INTO `configuration` (field, value) VALUES("cmd_cycle", 0);
+INSERT INTO `configuration` (field, value) VALUES("registration", 0);
+INSERT INTO `configuration` (field, value) VALUES("registration_names", 0);
+INSERT INTO `configuration` (field, value) VALUES("registration_login", 0);
+INSERT INTO `configuration` (field, value) VALUES("registration_type", 0);
+INSERT INTO `configuration` (field, value) VALUES("registration_players", 0);
+UNLOCK TABLES;
+
+--
 -- Table structure for table `registration_log`
 --
 

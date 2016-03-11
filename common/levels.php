@@ -285,6 +285,19 @@ class Levels {
     $this->db->query($sql, $elements);
   }
 
+  // Enable or disable all levels by passing 1 or 0.
+  public function toggle_status_all($active, $type=null) {
+    if ($type) {
+      $sql = 'UPDATE levels SET active = ? WHERE type = ?';
+      $elements = array($active, $type);
+      $this->db->query($sql, $elements);
+    } else {
+      $sql = 'UPDATE levels SET active = ? WHERE id > 0';
+      $element = array($active);
+      $this->db->query($sql, $element);
+    }
+  }
+
   // All levels. Active, inactive or all.
   public function all_levels($active=null) {
     $sql = ($active)
@@ -301,7 +314,7 @@ class Levels {
       ? ($active == 1)
         ? 'SELECT * FROM levels WHERE active = 1 AND type = ?'
         : 'SELECT * FROM levels WHERE active = 0 AND type = ?'
-      : 'SELECT * FROM levels WHERE type = ?';
+      : 'SELECT * FROM levels WHERE type = ? ORDER BY active DESC';
     $element = array($type);
     return $this->db->query($sql, $element);
   }

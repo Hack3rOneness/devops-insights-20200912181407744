@@ -303,7 +303,7 @@
                   setInterval( function() {
                     getCountryData();
                     refreshMapData();
-                  }, FB_CTF.data.CONF.refreshCountries);
+                  }, FB_CTF.data.CONF.refreshMap);
 
                   // Teams
                   setInterval( function() {

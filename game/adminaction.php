@@ -122,6 +122,22 @@ switch ($request->action) {
     );
     ok_response();
     break;
+  case 'toggle_status_all':
+    if ($request->parameters['all_type'] === 'team') {
+      $teams = new Teams();
+      $teams->toggle_status_all(
+        $request->parameters['status']
+      );
+      ok_response();
+    } else {
+      $levels = new Levels();
+      $levels->toggle_status_all(
+        $request->parameters['status'],
+        $request->parameters['all_type']
+      );
+      ok_response();
+    }
+    break;
   case 'create_team':
     $teams = new Teams();
     $password = hash('sha256', $request->parameters['password']);

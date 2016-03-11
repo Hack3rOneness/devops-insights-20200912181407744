@@ -62,7 +62,7 @@ echo <<< EOT
     * this will reflect the last saved time inside the
     *  "highlighted" span
 -->
-<span class="admin-section--status">status_<span class="highlighted">2015.10.15</span></span>
+<span class="admin-section--status">status_<span class="highlighted">OK</span></span>
 </header>
 
   <div class="admin-sections">
@@ -151,6 +151,20 @@ echo <<< EOT
           </div>
         </div>
         </form>
+      </section>
+
+      <section class="admin-box">
+        <header class="admin-box-header">
+          <h3>All Flag Levels</h3>
+          <form class="all_flag_form">
+            <div class="admin-section-toggle radio-inline col">
+              <input type="radio" name="fb--admin--all_flag" id="fb--admin--all_flag--on">
+              <label for="fb--admin--all_flag--on">On</label>
+              <input type="radio" name="fb--admin--all_flag" id="fb--admin--all_flag--off">
+              <label for="fb--admin--all_flag--off">Off</label>
+            </div>
+          </form>
+        </header>
       </section>
 EOT;
 

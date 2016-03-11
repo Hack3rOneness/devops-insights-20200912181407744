@@ -16,7 +16,7 @@ echo <<< EOT
     * this will reflect the last saved time inside the
     *  "highlighted" span
     -->
-    <span class="admin-section--status">status_<span class="highlighted">2015.10.15</span></span>
+    <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
 </header>
 
 <div class="admin-sections">
@@ -64,6 +64,20 @@ echo <<< EOT
   </div>
 
   </form>
+</section>
+
+<section class="admin-box">
+  <header class="admin-box-header">
+    <h3>All Teams</h3>
+    <form class="all_team_form">
+      <div class="admin-section-toggle radio-inline col">
+        <input type="radio" name="fb--admin--all_team" id="fb--admin--all_team--on">
+        <label for="fb--admin--all_team--on">On</label>
+        <input type="radio" name="fb--admin--all_team" id="fb--admin--all_team--off">
+        <label for="fb--admin--all_team--off">Off</label>
+      </div>
+    </form>
+  </header>
 </section>
 
 EOT;
@@ -119,56 +133,57 @@ foreach ($teams->all_teams() as $team) {
           </div>
         </div>
         <div class="col col-pad col-1-3">
-        <div class="form-el el--block-label el--full-text">
-          <label class="admin-label" for="">Change Password</label>
-          <input name="password" type="password" value="{$team['password']}" disabled>
-          <input type="hidden" name="password2" value="{$team['password']}">
-        </div>
-      </div>
-      <div class="col col-pad col-1-3">
-        <div class="form-el el--block-label">
-          <label class="admin-label" for="">Admin Level</label>
-          <div class="admin-section-toggle radio-inline">
-            <input type="radio" name="fb--admin--team-{$team['id']}-admin" id="fb--admin--team-{$team['id']}-admin--on" {$team_admin_on}>
-            <label for="fb--admin--team-{$team['id']}-admin--on">On</label>
-
-            <input type="radio" name="fb--admin--team-{$team['id']}-admin" id="fb--admin--team-{$team['id']}-admin--off" {$team_admin_off}>
-            <label for="fb--admin--team-{$team['id']}-admin--off">Off</label>
+          <div class="form-el el--block-label el--full-text">
+            <label class="admin-label" for="">New Password</label>
+            <input name="password" type="password" value="{$team['password']}" disabled>
+            <input type="hidden" name="password2" value="{$team['password']}">
           </div>
         </div>
-      <div class="form-el el--block-label">
-        <label class="admin-label" for="">Visibility </label>
-        <div class="admin-section-toggle radio-inline">
-          <input type="radio" name="fb--admin--team-{$team['id']}-visible" id="fb--admin--team-{$team['id']}-visible--on" {$team_visible_on}>
-          <label for="fb--admin--team-{$team['id']}-visible--on">On</label>
+        <div class="col col-pad col-1-3">
+          <div class="form-el el--block-label">
+            <label class="admin-label" for="">Admin Level</label>
+            <div class="admin-section-toggle radio-inline">
+              <input type="radio" name="fb--admin--team-{$team['id']}-admin" id="fb--admin--team-{$team['id']}-admin--on" {$team_admin_on}>
+              <label for="fb--admin--team-{$team['id']}-admin--on">On</label>
 
-          <input type="radio" name="fb--admin--team-{$team['id']}-visible" id="fb--admin--team-{$team['id']}-visible--off" {$team_visible_off}>
-          <label for="fb--admin--team-{$team['id']}-visible--off">Off</label>
+              <input type="radio" name="fb--admin--team-{$team['id']}-admin" id="fb--admin--team-{$team['id']}-admin--off" {$team_admin_off}>
+              <label for="fb--admin--team-{$team['id']}-admin--off">Off</label>
+            </div>
+          </div>
+          <div class="form-el el--block-label">
+            <label class="admin-label" for="">Visibility </label>
+            <div class="admin-section-toggle radio-inline">
+              <input type="radio" name="fb--admin--team-{$team['id']}-visible" id="fb--admin--team-{$team['id']}-visible--on" {$team_visible_on}>
+              <label for="fb--admin--team-{$team['id']}-visible--on">On</label>
+
+              <input type="radio" name="fb--admin--team-{$team['id']}-visible" id="fb--admin--team-{$team['id']}-visible--off" {$team_visible_off}>
+              <label for="fb--admin--team-{$team['id']}-visible--off">Off</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-row el--block-label">
+        <label>Team Logo</label>
+        <div class="fb-column-container">
+          <div class="col col-shrink">
+            <div class="post-avatar has-avatar"><svg class="icon icon--badge"><use xlink:href="#icon--badge-{$team['logo']}" /></svg></div>
+          </div>
+          <div class="col col-grow">
+            <div class="selected-logo">
+              <label>Selected Logo: </label>
+              <span class="logo-name">{$team['logo']}</span>
+            </div>
+            <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
+          </div>
+          <div class="col col-shrink admin-buttons">
+            <a href="#" class="admin--edit" data-action="edit">EDIT</a>
+            <button class="fb-cta cta--red" data-action="delete">Delete</button>
+            <button class="fb-cta cta--yellow js-confirm-save" data-action="save">Save</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="admin-row el--block-label">
-    <label>Team Logo</label>
-    <div class="fb-column-container">
-      <div class="col col-shrink">
-        <div class="post-avatar has-avatar"><svg class="icon icon--badge"><use xlink:href="#icon--badge-{$team['logo']}" /></svg></div>
-        </div>
-      <div class="col col-grow">
-        <div class="selected-logo">
-          <label>Selected Logo: </label>
-          <span class="logo-name">{$team['logo']}</span>
-        </div>
-        <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
-      </div>
-      <div class="col col-shrink admin-buttons">
-        <a href="#" class="admin--edit" data-action="edit">EDIT</a>
-        <button class="fb-cta cta--red" data-action="delete">Delete</button>
-        <button class="fb-cta cta--yellow js-confirm-save" data-action="save">Save</button>
-      </div>
-    </div>
-  </div>
 
   </form>
 </section>
