@@ -5,11 +5,11 @@ function redirect(string $location): void {
 }
 
 function login_page(): void {
-  redirect('/index.php#login');
+  redirect('/index.php?page=login');
 }
 
 function error_page(): void {
-  redirect('/index.php#error');
+  redirect('/index.php?page=error');
   die();
 }
 

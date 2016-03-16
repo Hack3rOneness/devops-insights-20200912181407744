@@ -2,11 +2,28 @@
 
 include('../vendor/autoload.php');
 
+final class UNSAFE_HTML
+  implements XHPAlwaysValidChild, XHPUnsafeRenderable {
+  private $html;
+
+  public function __construct($html) {
+    $this->html = $html;
+  }
+
+  public function toHTMLString() {
+    return $this->html;
+  }
+}
+
 abstract class Controller {
 
-  abstract public function renderBody(): :xhp;
+  public function UNSAFE_HTML($html) {
+    return new UNSAFE_HTML($html);
+  }
 
-  public function render(string $title): :xhp {
+  abstract public function renderBody(string $page): :xhp;
+
+  public function render(string $title, string $page): :xhp {
     return
       <x:doctype>
       <html lang="en">
@@ -17,7 +34,7 @@ abstract class Controller {
         <link rel="icon" type="image/png" href="static/img/favicon.png"/>
         <link rel="stylesheet" href="static/css/fb-ctf.css"/>
       </head>
-      {$this->renderBody()}
+      {$this->renderBody($page)}
       </html>
     </x:doctype>;
   }

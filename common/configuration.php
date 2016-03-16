@@ -12,6 +12,12 @@ class Configuration {
     }
   }
 
+  public function get($field) {
+    $sql = 'SELECT value FROM configuration WHERE field = ? LIMIT 1';
+    $element = array($field);
+    return $this->db->query($sql, $element)[0]['value'];
+  }
+
   // Change configuration field.
   public function change($field, $value) {
     $sql = 'UPDATE configuration SET value = ? WHERE field = ? LIMIT 1';

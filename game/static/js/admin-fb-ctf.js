@@ -166,7 +166,7 @@ var $body = $('body');
    *  based on the number of players that have been set
    */
   function renderRegistrationPage(){
-    var $sections = $('#fb-buildkit .admin-sections');
+    var $sections = $('#fb-main-content .admin-sections');
 
     if (PLAYERS_PER_TEAM > 1) {
       var $playerList = $('.player-list'),
@@ -742,7 +742,7 @@ var $body = $('body');
           action       = $self.data('action'),
           actionModal  = $self.data('actionModal'),
           lockClass    = 'section-locked',
-          sectionTitle = $self.closest('#fb-buildkit').find('.admin-page-header h3').text().replace(' ', '_');
+          sectionTitle = $self.closest('#fb-main-content').find('.admin-page-header h3').text().replace(' ', '_');
 
       //
       // route the actions

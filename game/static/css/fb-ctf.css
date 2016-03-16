@@ -1799,6 +1799,12 @@ body {
    *
    * layout styles for columns and sections
    ============================================================== */
+.fb-sprite {
+  height: 0; 
+  width: 0; 
+  position: absolute; 
+  visibility: hidden; }
+
 .fb-viewport {
   height: 100vh;
   display: -webkit-box;

@@ -1,6 +1,6 @@
 <?hh
 
-require_once('../common/gamerequests.php');
+require_once('request.php');
 require_once('../common/levels.php');
 require_once('../common/teams.php');
 require_once('../common/sessions.php');
@@ -9,8 +9,23 @@ require_once('../common/utils.php');
 sess_start();
 sess_enforce_login();
 
-$request = new GameRequests();
-$request->processGame();
+$filters = array(
+  'POST' => array(
+    'level_id'    => FILTER_VALIDATE_INT,
+    'answer'        => FILTER_UNSAFE_RAW,
+    'action'      => array(
+      'filter'      => FILTER_VALIDATE_REGEXP,
+      'options'     => array(
+        'regexp'      => '/^[\w-]+$/'
+    ),
+  )
+);
+$actions = array(
+  'register_team',
+  'login_team',
+);
+$request = new Request($filters, $actions);
+$request->processRequest();
 
 switch ($request->action) {
   case 'none':
@@ -20,26 +35,25 @@ switch ($request->action) {
     $levels = new Levels();
     // Check if answer is valid
     if ($levels->check_answer(
-        $request->parameters['level_id'],
-        $request->parameters['answer']
+      $request->parameters['level_id'],
+      $request->parameters['answer']
     )) {
       // Give points!
       $levels->score_level(
-            $request->parameters['level_id'],
-            sess_team()
-        );
+        $request->parameters['level_id'],
+        sess_team()
+      );
       // Update teams last score
       $teams = new Teams();
       $teams->last_score(sess_team());
-
-        ok_response();
+      ok_response();
     } else {
       $levels->log_failed_score(
         $request->parameters['level_id'],
         sess_team(),
         $request->parameters['answer']
       );
-        error_response();
+      error_response();
     }
     break;
   case 'get_hint':

@@ -1,6 +1,6 @@
 <?hh
 
-require_once('../common/indexrequests.php');
+require_once('request.php');
 require_once('../common/teams.php');
 require_once('../common/logos.php');
 require_once('../common/sessions.php');
@@ -25,7 +25,6 @@ function register_team($teamname, $password, $logo) {
 
   // Verify that this team name is not created yet
   if (!$teams->team_exist($shortname)) {
-    error_log($shortname);
     $hash = hash('sha256', $password);
     $team_id = $teams->create_team($shortname, $hash, $final_logo);
       if ($team_id) {
@@ -58,8 +57,31 @@ function login_team($team_id, $password) {
   }
 }
 
-$request = new IndexRequests();
-$request->processIndex();
+$filters = array(
+  'POST' => array(
+    'team_id'     => FILTER_VALIDATE_INT,
+    'teamname'    => FILTER_SANITIZE_STRING,
+    'password'    => FILTER_UNSAFE_RAW,
+    'logo'        => array(
+      'filter'      => FILTER_VALIDATE_REGEXP,
+      'options'     => array(
+        'regexp'      => '/^[\w-]+$/'
+      ),
+    ),
+    'action'      => array(
+      'filter'      => FILTER_VALIDATE_REGEXP,
+      'options'     => array(
+        'regexp'      => '/^[\w-]+$/'
+      ),
+    )
+  )
+);
+$actions = array(
+  'register_team',
+  'login_team',
+);
+$request = new Request($filters, $actions);
+$request->processRequest();
 
 switch ($request->action) {
   case 'none':
