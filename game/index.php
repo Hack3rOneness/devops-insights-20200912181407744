@@ -2,6 +2,7 @@
 
 require_once('request.php');
 require_once('controller.php');
+require_once('components.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/logos.php');
@@ -105,9 +106,8 @@ class IndexController extends Controller {
     $logos = new Logos();
     $logos_list = <ul class="slides" />;
     foreach ($logos->all_enabled_logos() as $logo) {
-      // TODO: This is bad
-      $logo_name = htmlspecialchars($logo['name']);
-      $logos_list->appendChild(<li>{$this->UNSAFE_HTML('<svg class="icon--badge"><use xlink:href="#icon--badge-'.$logo_name.'"/></svg>')}</li>);
+      $xlink_href = '#icon--badge-'.$logo['name'];
+      $logos_list->appendChild(<li><svg class="icon--badge"><use xlink:href={$xlink_href}/></svg></li>);
     }
     return
       <div class="fb-slider fb-container container--large">
@@ -208,7 +208,10 @@ class IndexController extends Controller {
           </div>
         </main>
         <div class="row-fixed branding-el">
-          {$this->UNSAFE_HTML('<svg class="icon icon--social-facebook"><use xlink:href="#icon--social-facebook" /></svg> <span class="has-icon">Powered By Facebook</span>')}
+          <svg class="icon icon--social-facebook">
+            <use xlink:href="#icon--social-facebook"/>
+          </svg>
+          <span class="has-icon"> Powered By Facebook</span>
         </div>
       </div>;
   }
@@ -225,14 +228,10 @@ class IndexController extends Controller {
           <a href="/">
             <div class="branding-rules">
               <span class="branding-el">
-                {
-                  $this->UNSAFE_HTML('
-                    <svg class="icon icon--social-facebook">
-                      <use xlink:href="#icon--social-facebook"/>
-                    </svg>
-                  ')
-                }
-                <span class="has-icon">Powered By Facebook</span>
+                <svg class="icon icon--social-facebook">
+                  <use xlink:href="#icon--social-facebook"/>
+                </svg>
+                <span class="has-icon"> Powered By Facebook</span>
               </span>
             </div>
           </a>

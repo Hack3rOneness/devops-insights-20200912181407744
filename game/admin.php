@@ -2,6 +2,7 @@
 
 require_once('request.php');
 require_once('controller.php');
+require_once('components.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/attachments.php');
@@ -890,7 +891,11 @@ class AdminController extends Controller {
               <label>Team Logo</label>
               <div class="fb-column-container">
                 <div class="col col-shrink">
-                  <div class="post-avatar has-avatar">{$this->UNSAFE_HTML('<svg class="icon icon--badge"><use xlink:href="#icon--badge-" /></svg>')}</div>
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use xlink:href="#icon--badge-"/>
+                    </svg>
+                  </div>
                 </div>
                 <div class="col col-grow">
                   <div class="selected-logo">
@@ -926,7 +931,7 @@ class AdminController extends Controller {
     $c = 1;
     $teams = new Teams();
     foreach ($teams->all_teams() as $team) {
-      $team_logo = htmlspecialchars($team['logo']);
+      $xlink_href = '#icon--badge-'.$team['logo'];
       $team_active_on = ($team['active'] === '1');
       $team_active_off = ($team['active'] === '0');
       $team_admin_on = ($team['admin'] === '1');
@@ -1000,7 +1005,11 @@ class AdminController extends Controller {
               <label>Team Logo</label>
               <div class="fb-column-container">
                 <div class="col col-shrink">
-                  <div class="post-avatar has-avatar">{$this->UNSAFE_HTML('<svg class="icon icon--badge"><use xlink:href="#icon--badge-'.$team_logo.'" /></svg>')}</div>
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use xlink:href={$xlink_href} />
+                    </svg>
+                  </div>
                 </div>
                 <div class="col col-grow">
                   <div class="selected-logo">
@@ -1041,7 +1050,7 @@ class AdminController extends Controller {
     
     $logos = new Logos();
     foreach ($logos->all_logos() as $logo) {
-      $logo_name = htmlspecialchars($logo['name']);
+      $xlink_href = '#icon--badge-'.$logo['name'];
       $using_logo = $logos->who_uses($logo['name']);
       $current_use = ($using_logo) ? 'Yes' : 'No';
       if ($logo['enabled'] == 1) {
@@ -1073,12 +1082,16 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-shrink">
-                <div class="post-avatar has-avatar">{$this->UNSAFE_HTML('<svg class="icon icon--badge"><use xlink:href="#icon--badge-'.$logo_name.'" /></use></svg>')}</div>
+                <div class="post-avatar has-avatar">
+                  <svg class="icon icon--badge">
+                    <use xlink:href={$xlink_href}></use>
+                  </svg>
+                </div>
               </div>
               <div class="col col-pad col-grow">
                 <div class="selected-logo">
                   <label>Logo Name: </label>
-                  <span class="logo-name">{$logo_name}</span>
+                  <span class="logo-name">{$logo['name']}</span>
                 </div>
                 <div class="selected-logo">
                   <label>In use: </label>
@@ -1200,8 +1213,10 @@ class AdminController extends Controller {
           <a href="#" class="js-prompt-logout">Logout</a>
           <a></a>
           <span class="branding-el">
-            <span class="has-icon">Powered By Facebook</span>
-          </span>
+            <svg class="icon icon--social-facebook">
+              <use xlink:href="#icon--social-facebook" />
+            </svg>
+            <span class="has-icon"> Powered By Facebook</span></span>
         </div>
       </div>;
   }

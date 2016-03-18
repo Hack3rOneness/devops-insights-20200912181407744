@@ -1,11 +1,14 @@
-<?hh
+<?hh //strict
 
 require_once('request.php');
 require_once('controller.php');
+require_once('components.php');
 
 class ViewModeController extends Controller {
 
   public function renderMainContent(): :xhp {
+    //$viewmodepage = new WorldMapController(true);
+    //$map = $viewmodepage->render();
     return
       <div id="fb-gameboard" class="fb-gameboard gameboard--viewmode">
         <div class="gameboard-header">
@@ -13,7 +16,14 @@ class ViewModeController extends Controller {
             <div class="branding">
               <a href="/">
                 <div class="branding-rules">
-                  <span class="branding-el">{$this->UNSAFE_HTML('<svg class="icon icon--social-facebook"><use xlink:href="#icon--social-facebook" /></svg>')} <span class="has-icon">Powered By Facebook</span></span>
+                  <span class="branding-el">
+                    <svg class="icon icon--social-facebook">
+                      <use xlink:href="#icon--social-facebook">
+
+                      </use>
+                    </svg>
+                    <span class="has-icon"> Powered By Facebook</span>
+                  </span>
                 </div>
               </a>
             </div>

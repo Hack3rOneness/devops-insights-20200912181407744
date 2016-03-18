@@ -2,6 +2,7 @@
 
 require_once('request.php');
 require_once('controller.php');
+require_once('components.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 
 sess_start();
@@ -32,7 +33,13 @@ class GameboardController extends Controller {
               <a href="gameboard.php">
                 <div class="branding-rules">
                   <span class="branding-el">
-                  {$this->UNSAFE_HTML('<svg class="icon icon--social-facebook"><use xlink:href="#icon--social-facebook" /></svg>')} <span class="has-icon"> Powered By Facebook</span></span>
+                    <svg class="icon icon--social-facebook">
+                      <use xlink:href="#icon--social-facebook">
+
+                      </use>
+                    </svg>
+                    <span class="has-icon"> Powered By Facebook</span>
+                  </span>
                 </div>
               </a>
             </div>
@@ -44,10 +51,23 @@ class GameboardController extends Controller {
           </nav>
           <div class="radio-tabs fb-map-select">
             <input type="radio" name="fb--map-select" id="fb--map-select--you" value="your-team"/>
-            <label for="fb--map-select--you" class="click-effect"><span class="your-name">{$this->UNSAFE_HTML('<svg class="icon icon--team-indicator your-team"><use xlink:href="#icon--team-indicator"></use></svg>')}You</span></label>
+            <label for="fb--map-select--you" class="click-effect">
+              <span class="your-name">
+                <svg class="icon icon--team-indicator your-team">
+                  <use xlink:href="#icon--team-indicator">
 
+                  </use>
+                </svg>You</span>
+            </label>
             <input type="radio" name="fb--map-select" id="fb--map-select--enemy" value="opponent-team"/>
-            <label for="fb--map-select--enemy" class="click-effect"><span class="opponent-name">{$this->UNSAFE_HTML('<svg class="icon icon--team-indicator opponent-team"><use xlink:href="#icon--team-indicator"></use></svg>')}Others</span></label>
+            <label for="fb--map-select--enemy" class="click-effect">
+              <span class="opponent-name">
+                <svg class="icon icon--team-indicator opponent-team">
+                  <use xlink:href="#icon--team-indicator">
+
+                  </use>
+                </svg>Others</span>
+            </label>
             <input type="radio" name="fb--map-select" id="fb--map-select--all" value="all" />
             <label for="fb--map-select--all" class="click-effect"><span>All</span></label>
           </div>
@@ -72,11 +92,11 @@ class GameboardController extends Controller {
   public function renderPage(string $page): :xhp {
     switch ($page) {
       case 'main':
-      return $this->renderMainContent();
-      break;
-    default:
-      return $this->renderMainContent();
-      break;
+        return $this->renderMainContent();
+        break;
+      default:
+        return $this->renderMainContent();
+        break;
     }
   }
 
@@ -114,6 +134,7 @@ $filters = array(
 $actions = array('none');
 $pages = array(
   'main',
+  'viewmode',
 );
 $request = new Request($filters, $actions, $pages);
 $request->processRequest();
