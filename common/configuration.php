@@ -12,6 +12,12 @@ class Configuration {
     }
   }
 
+  public function create($field, $value) {
+    $sql = 'INSERT INTO configuration (field, value) VALUES(?, ?) LIMIT 1';
+    $elements = array($field, $value);
+    $this->db->query($sql, $elements);
+  }
+
   public function get($field) {
     $sql = 'SELECT value FROM configuration WHERE field = ? LIMIT 1';
     $element = array($field);

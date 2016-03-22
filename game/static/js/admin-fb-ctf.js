@@ -609,7 +609,6 @@ var $body = $('body');
     var team_name = $('.team_form input[name=team_name]', section)[0].value;
     var team_points = $('.team_form input[name=points]', section)[0].value;
     var team_password = $('.team_form input[name=password]', section)[0].value;
-    var team_password2 = $('.team_form input[name=password2]', section)[0].value;
     var team_logo = $('.logo-name', section)[0].textContent;
     var update_data = {
       action: 'update_team',
@@ -617,10 +616,9 @@ var $body = $('body');
       name: team_name,
       points: team_points,
       password: team_password,
-      password2: team_password2,
       logo: team_logo
     };
-    if (team_id && team_name && team_password && team_password2 && team_logo) {
+    if (team_id && team_name && team_password && team_logo) {
       sendAdminRequest(update_data);
     }
   }

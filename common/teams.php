@@ -12,13 +12,22 @@ class Teams {
     }
   }
 
+  // Generate salted hash using bcrypt.
+  public function generate_hash($password) {
+    $options = array(
+      'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+      'cost' => 12,
+    );
+    return password_hash($password, PASSWORD_BCRYPT, $options);
+  }
+
   // Verify if login is valid.
   public function verify_credentials($team_id, $password) {
-    $sql = 'SELECT * FROM teams WHERE id = ? AND (active = 1 OR admin = 1) AND password = ? LIMIT 1';
-    $elements = array($team_id, $password);
-    $team = $this->db->query($sql, $elements);
-    if ($team) {
-      return $team['0'];
+    $sql = 'SELECT * FROM teams WHERE id = ? AND (active = 1 OR admin = 1) LIMIT 1';
+    $element = array($team_id);
+    $team = $this->db->query($sql, $element)[0];
+    if (password_verify($password, $team['password'])) {
+      return $team;
     } else {
       return false;
     }
@@ -41,9 +50,16 @@ class Teams {
   }
 
   // Update team.
-  public function update_team($name, $password, $logo, $points, $team_id) {
-    $sql = 'UPDATE teams SET name = ?, password = ?, logo = ? , points = ? WHERE id = ? LIMIT 1';
-    $elements = array($name, $password, $logo, $points, $team_id);
+  public function update_team($name, $logo, $points, $team_id) {
+    $sql = 'UPDATE teams SET name = ?, logo = ? , points = ? WHERE id = ? LIMIT 1';
+    $elements = array($name, $logo, $points, $team_id);
+    $this->db->query($sql, $elements);
+  }
+
+  // Update team password.
+  public function update_team_password($password, $team_id) {
+    $sql = 'UPDATE teams SET password = ? WHERE id = ? LIMIT 1';
+    $elements = array($password, $team_id);
     $this->db->query($sql, $elements);
   }
 

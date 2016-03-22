@@ -26,24 +26,37 @@ class IndexController extends Controller {
   }
 
   public function renderCountdownContent(): :xhp {
+    sess_start();
+    if (sess_active()) {
+      $play_nav =
+        <form class="fb-form inner-container">
+          <p>Get ready for the CTF to start and access the gameboard now!</p>
+          <div class="form-el--actions">
+            <a href="/gameboard.php" class="fb-cta cta--yellow">Gameboard</a>
+          </div>
+        </form>;
+    } else {
+      $play_nav =
+        <form class="fb-form inner-container">
+          <p>Get ready for the CTF to start and register your team now!</p>
+          <div class="form-el--actions">
+            <a href="/index.php?page=registration" class="fb-cta cta--yellow">Register Team</a>
+          </div>
+        </form>;
+    }
     return
       <div class="fb-row-container full-height fb-scroll">
         <main role="main" class="fb-main page--game-status row-fluid no-shrink center-vertically fb-img-glitch">
           <div class="fb-container fb-centered-main">
             <h3 class="title-lead">Upcoming Game</h3>
-            <h1 class="fb-glitch" data-text="February 10, 2016">February 29, 2016</h1>
+            <h1 class="fb-glitch" data-text="Soon">Soon</h1>
             <ul class="upcoming-game-countdown">
-              <li><span class="count-number">00</span>_days</li>
-              <li><span class="count-number">00</span>_hours</li>
-              <li><span class="count-number">00</span>_minutes</li>
-              <li><span class="count-number">00</span>_seconds</li>
+              <li><span class="count-number">--</span>_days</li>
+              <li><span class="count-number">--</span>_hours</li>
+              <li><span class="count-number">--</span>_minutes</li>
+              <li><span class="count-number">--</span>_seconds</li>
             </ul>
-            <form class="fb-form inner-container">
-              <p>Get ready for the CTF to start and register your team now!</p>
-              <div class="form-el--actions">
-                <a href="/index.php?page=registration" class="fb-cta cta--yellow">Register Team</a>
-              </div>
-            </form>
+            {$play_nav}
           </div>
         </main>
       </div>;
@@ -210,6 +223,7 @@ class IndexController extends Controller {
         <div class="row-fixed branding-el">
           <svg class="icon icon--social-facebook">
             <use xlink:href="#icon--social-facebook"/>
+
           </svg>
           <span class="has-icon"> Powered By Facebook</span>
         </div>
@@ -217,6 +231,22 @@ class IndexController extends Controller {
   }
 
   public function renderMainNav(): :xhp {
+    sess_start();
+    if (sess_active()) {
+      $session_nav =
+        <ul class="nav-right">
+          <li></li>
+          <li><a href="/gameboard.php" data-active="gameboard">Gameboard</a></li>
+          <li></li>
+        </ul>;
+    } else {
+      $session_nav =
+        <ul class="nav-right">
+          <li><a href="/index.php?page=registration" data-active="registration">Registration</a></li>
+          <li></li>
+          <li><a href="/index.php?page=login" data-active="login">Login</a></li>
+        </ul>;
+    } 
     return
       <nav class="fb-main-nav fb-navigation">
         <ul class="nav-left">
@@ -230,17 +260,14 @@ class IndexController extends Controller {
               <span class="branding-el">
                 <svg class="icon icon--social-facebook">
                   <use xlink:href="#icon--social-facebook"/>
+
                 </svg>
                 <span class="has-icon"> Powered By Facebook</span>
               </span>
             </div>
           </a>
         </div>
-        <ul class="nav-right">
-          <li><a href="/index.php?page=registration" data-active="registration">Registration</a></li>
-          <li></li>
-          <li><a href="/index.php?page=login" data-active="login">Login</a></li>
-        </ul>
+        {$session_nav}
       </nav>;
   }
 

@@ -1306,7 +1306,7 @@
        * load the configuration data
        */
       function loadConfData(){
-        var loadPath = 'data/conf.php';
+        var loadPath = 'data/configuration.php';
 
         return $.get( loadPath, function(data, status, jqxhr){
           FB_CTF.data.CONF = data;

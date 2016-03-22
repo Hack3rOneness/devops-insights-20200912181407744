@@ -104,6 +104,10 @@ function sess_logout() {
   exit();
 }
 
+function sess_active() {
+  return (bool)(isset($_SESSION['team_id']));
+}
+
 function sess_enforce_login() {
   if (!isset($_SESSION['team_id'])) {
     start_page();

@@ -25,8 +25,8 @@ function register_team($teamname, $password, $logo) {
 
   // Verify that this team name is not created yet
   if (!$teams->team_exist($shortname)) {
-    $hash = hash('sha256', $password);
-    $team_id = $teams->create_team($shortname, $hash, $final_logo);
+    $password_hash = $teams->generate_hash($password);
+    $team_id = $teams->create_team($shortname, $password_hash, $final_logo);
       if ($team_id) {
       login_team($team_id, $password);
     } else {
@@ -42,8 +42,7 @@ function register_team($teamname, $password, $logo) {
 
 function login_team($team_id, $password) {
   $teams = new Teams();
-  $hash = hash('sha256', $password);
-  $team = $teams->verify_credentials($team_id, $hash);
+  $team = $teams->verify_credentials($team_id, $password);
   if ($team) {
     sess_start();
     sess_set('team_id', $team['id']);

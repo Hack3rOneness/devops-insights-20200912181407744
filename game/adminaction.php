@@ -28,12 +28,6 @@ $filters = array(
     'data'        => FILTER_UNSAFE_RAW,
     'name'        => FILTER_SANITIZE_STRING,
     'password'    => FILTER_UNSAFE_RAW,
-    'password2'   => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[0-9a-f]{64}$/'
-      ),
-    ),
     'admin'       => FILTER_VALIDATE_INT,
     'status'      => FILTER_VALIDATE_INT,
     'visible'     => FILTER_VALIDATE_INT,
@@ -242,29 +236,29 @@ switch ($request->action) {
     break;
   case 'create_team':
     $teams = new Teams();
-    $password = hash('sha256', $request->parameters['password']);
+    $password_hash = $teams->generate_hash($request->parameters['password']);
     $teams->create_team(
       $request->parameters['name'],
-      $password,
+      $password_hash,
       $request->parameters['logo']
     );
     ok_response();
     break;
   case 'update_team':
     $teams = new Teams();
-    $password = $request->parameters['password'];
-    $password2 = $request->parameters['password2'];
-    $new_password = $password;
-    if ($password != $password2) {
-      $new_password = hash('sha256', $password);
-    }
     $teams->update_team(
       $request->parameters['name'],
-      $new_password,
       $request->parameters['logo'],
       $request->parameters['points'],
       $request->parameters['team_id']
     );
+    if (strlen($request->parameters['password']) > 0) {
+      $password_hash = $teams->generate_hash($request->parameters['password']);
+      $teams->update_team_password(
+        $password_hash,
+        $request->parameters['team_id']
+      );
+    }
     ok_response();
     break;
   case 'toggle_admin_team':

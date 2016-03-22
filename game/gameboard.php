@@ -25,6 +25,7 @@ class GameboardController extends Controller {
                   <li><a href="/viewer-mode.php">View Mode</a></li>
                   <li><a href="#" class="fb-init-tutorial">Tutorial</a></li>
                   {$admin_link}
+                  <li><a href="/index.php?page=rules" target="_blank">Rules</a></li>
                   <li><a href="#" class="js-prompt-logout">Logout</a></li>
                 </ul>
               </li>

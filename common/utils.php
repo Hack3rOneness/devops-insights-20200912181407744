@@ -14,7 +14,7 @@ function error_page(): void {
 }
 
 function registration_page(): void {
-  redirect('/index.php#registration');
+  redirect('/index.php?page=registration');
 }
 
 function game_page(): void {

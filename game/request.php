@@ -14,7 +14,7 @@ class Request {
   public function __construct($filters, $actions, $pages) {
     $inputMethods = array(
       'POST' => INPUT_POST, 
-      'GET' => INPUT_GET
+      'GET' => INPUT_GET,
     );
     $this->method = $_SERVER['REQUEST_METHOD'];
     $this->input_method = $inputMethods[$this->method];

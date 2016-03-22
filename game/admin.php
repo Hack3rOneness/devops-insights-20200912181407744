@@ -976,8 +976,7 @@ class AdminController extends Controller {
               <div class="col col-pad col-1-3">
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label" for="">Change Password</label>
-                  <input name="password" type="password" value={$team['password']} disabled={true}/>
-                  <input type="hidden" name="password2" value={$team['password']}/>
+                  <input name="password" type="password" disabled={true}/>
                 </div>
               </div>
               <div class="col col-pad col-1-3">
@@ -1014,7 +1013,7 @@ class AdminController extends Controller {
                 <div class="col col-grow">
                   <div class="selected-logo">
                     <label>Selected Logo: </label>
-                    <span class="logo-name">{$team_logo}</span>
+                    <span class="logo-name">{$team['logo']}</span>
                   </div>
                   <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
                 </div>
