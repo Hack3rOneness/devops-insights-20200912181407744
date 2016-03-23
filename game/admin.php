@@ -1197,7 +1197,7 @@ class AdminController extends Controller {
             <li><a href="/admin.php?page=controls">Game Controls</a></li>
             <li><a href="/admin.php?page=quiz">Levels: Quiz</a></li>
             <li><a href="/admin.php?page=flags">Levels: Flags</a></li>
-            <li><a href="/admin.php?page=bases">Levels: Bases</a></li>
+            <!--<li><a href="/admin.php?page=bases">Levels: Bases</a></li>-->
             <li><a href="/admin.php?page=categories">Levels: Categories</a></li>
             <li><a href="/admin.php?page=countries">Levels: Countries</a></li>
             <li><a href="/admin.php?page=teams">Teams</a></li>

@@ -12,13 +12,20 @@ class Teams {
     }
   }
 
-  // Generate salted hash using bcrypt.
+  // Generate salted hash.
   public function generate_hash($password) {
     $options = array(
-      'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
       'cost' => 12,
     );
-    return password_hash($password, PASSWORD_BCRYPT, $options);
+    return password_hash($password, PASSWORD_DEFAULT, $options);
+  }
+
+  // Checks if hash need refreshing.
+  public function regenerate_hash($password_hash) {
+    $options = array(
+      'cost' => 12,
+    );
+    return (bool)password_needs_rehash($password_hash, PASSWORD_DEFAULT, $options);
   }
 
   // Verify if login is valid.
@@ -26,7 +33,11 @@ class Teams {
     $sql = 'SELECT * FROM teams WHERE id = ? AND (active = 1 OR admin = 1) LIMIT 1';
     $element = array($team_id);
     $team = $this->db->query($sql, $element)[0];
-    if (password_verify($password, $team['password'])) {
+    if (password_verify($password, $team['password_hash'])) {
+      if ($this->regenerate_hash($team['password_hash'])) {
+        $new_hash = $this->generate_hash($password);
+        $this->update_team_password($new_hash, $team_id);
+      }
       return $team;
     } else {
       return false;
@@ -42,9 +53,9 @@ class Teams {
   }
 
   // Create a team and return the created team id.
-  public function create_team($name, $password, $logo) {
-    $sql = 'INSERT INTO teams (name, password, logo, created_ts) VALUES (?, ?, ?, NOW())';
-    $elements = array($name, $password, $logo);
+  public function create_team($name, $password_hash, $logo) {
+    $sql = 'INSERT INTO teams (name, password_hash, logo, created_ts) VALUES (?, ?, ?, NOW())';
+    $elements = array($name, $password_hash, $logo);
     $this->db->query($sql, $elements);
     return $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
   }
@@ -57,9 +68,9 @@ class Teams {
   }
 
   // Update team password.
-  public function update_team_password($password, $team_id) {
-    $sql = 'UPDATE teams SET password = ? WHERE id = ? LIMIT 1';
-    $elements = array($password, $team_id);
+  public function update_team_password($password_hash, $team_id) {
+    $sql = 'UPDATE teams SET password_hash = ? WHERE id = ? LIMIT 1';
+    $elements = array($password_hash, $team_id);
     $this->db->query($sql, $elements);
   }
 

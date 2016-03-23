@@ -115,7 +115,7 @@ CREATE TABLE `teams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) DEFAULT 1,
   `name` text DEFAULT NULL,
-  `password` text DEFAULT NULL,
+  `password_hash` text DEFAULT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
   `last_score` timestamp NULL DEFAULT NULL,
   `logo` text DEFAULT NULL,
@@ -162,6 +162,7 @@ CREATE TABLE `configuration` (
 LOCK TABLES `configuration` WRITE;
 INSERT INTO `configuration` (field, value) VALUES("game", "0");
 INSERT INTO `configuration` (field, value) VALUES("next_game", "0");
+INSERT INTO `configuration` (field, value) VALUES("game_duration", "10800");
 INSERT INTO `configuration` (field, value) VALUES("scoring", "0");
 INSERT INTO `configuration` (field, value) VALUES("teams", "1");
 INSERT INTO `configuration` (field, value) VALUES("teams_cycle", "5000");

@@ -126,5 +126,5 @@ function import_empty_db() {
 	local PASSWORD=$(head -c 500 /dev/urandom | md5sum | cut -d" " -f1)
 	log "The password for admin is: $PASSWORD"
 	HASH=$(hhvm -f "$__path/tools/hash.php" "$PASSWORD")
-	mysql -u "$__user" --password="$__pwd" "$__db" -e "INSERT INTO teams (name, password, admin, logo, created_ts) VALUES('admin', '$HASH', 1, 'admin', NOW());"
+	mysql -u "$__user" --password="$__pwd" "$__db" -e "INSERT INTO teams (name, password_hash, admin, logo, created_ts) VALUES('admin', '$HASH', 1, 'admin', NOW());"
 }
