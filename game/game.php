@@ -17,7 +17,8 @@ $filters = array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
         'regexp'      => '/^[\w-]+$/'
-    ),
+      ),
+    )
   )
 );
 $actions = array(

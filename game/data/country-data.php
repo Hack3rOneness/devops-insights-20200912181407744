@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
@@ -21,6 +21,10 @@ $my_team = $teams->get_team(sess_team());
 $countries_data = (object) array();
 foreach ($levels->all_levels(1) as $level) {
   $country = $countries->get_country($level['entity_id']);
+  if (!$country) {
+    continue;
+  }
+  
   $category = $levels->get_category($level['category_id']);
   if ($level['hint']) {
     // There is hint, can this team afford it?

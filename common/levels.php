@@ -39,7 +39,7 @@ class Levels {
     if ($entity_id === 0) {
       $ent_id = $countries->random_country();
     } else {
-      $ent_id = $ent_id;
+      $ent_id = $entity_id;
     }
     $sql = 'INSERT INTO levels '.
       '(type, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.

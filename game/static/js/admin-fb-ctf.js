@@ -403,8 +403,6 @@ var $body = $('body');
     var answer = $('.level_form input[name=answer]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
-    var bonus = $('.level_form input[name=bonus]', section)[0].value;
-    var bonus_dec = $('.level_form input[name=bonus_dec]', section)[0].value;
     var hint = $('.level_form input[name=hint]', section)[0].value;
     var penalty = $('.level_form input[name=penalty]', section)[0].value;
     var create_data = {
@@ -413,8 +411,6 @@ var $body = $('body');
       answer: answer,
       entity_id: entity_id,
       points: points,
-      bonus: bonus,
-      bonus_dec: bonus_dec,
       hint: hint,
       penalty: penalty
     };
@@ -430,8 +426,6 @@ var $body = $('body');
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
-    var bonus = $('.level_form input[name=bonus]', section)[0].value;
-    var bonus_dec = $('.level_form input[name=bonus_dec]', section)[0].value;
     var hint = $('.level_form input[name=hint]', section)[0].value;
     var penalty = $('.level_form input[name=penalty]', section)[0].value;
     var create_data = {
@@ -441,8 +435,6 @@ var $body = $('body');
       entity_id: entity_id,
       category_id: category_id,
       points: points,
-      bonus: bonus,
-      bonus_dec: bonus_dec,
       hint: hint,
       penalty: penalty
     };
@@ -457,7 +449,6 @@ var $body = $('body');
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
-    var bonus = $('.level_form input[name=bonus]', section)[0].value;
     var hint = $('.level_form input[name=hint]', section)[0].value;
     var penalty = $('.level_form input[name=penalty]', section)[0].value;
     var create_data = {
@@ -466,7 +457,6 @@ var $body = $('body');
       entity_id: entity_id,
       category_id: category_id,
       points: points,
-      bonus: bonus,
       hint: hint,
       penalty: penalty
     };
@@ -838,7 +828,6 @@ var $body = $('body');
       }
     });
 
-
     //
     // modal actionable
     //
@@ -853,6 +842,101 @@ var $body = $('body');
       }, 5000);
     });
 
+    //
+    // category filter select (flags, bases)
+    //
+    $('select[name="category_filter"]').on('change', function(event) {
+      var $this = $(this);
+      var filter = $('option:selected', $this)[0].value;
+      if (filter === 'all') {
+        $('section[id!=new-element]').each(function(){
+          //console.log(this);
+          $(this).removeClass("completely-hidden");
+        });
+      } else {
+        $('section[id!=new-element]').each(function(){
+          $(this).addClass("completely-hidden");
+        });
+        var targets = $('option:contains("' + filter + '"):selected[class!=filter_option]');
+        targets.each(function(){
+          var target = $(this).closest('section[id!=new-element]')[0];
+          $(target).removeClass("completely-hidden");
+          //console.log($(this).closest('section[id!=new-element]')[0]);
+        });
+      }
+    });
+
+    //
+    // status filter select (quiz, flags, bases)
+    //
+    $('select[name="status_filter"]').on('change', function(event) {
+      var $this = $(this);
+      var filter = $('option:selected', $this)[0].value;
+      if (filter === 'all') {
+        $('section[id!=new-element]').each(function(){
+          $(this).removeClass("completely-hidden");
+        });
+      } else {
+        $('section[id!=new-element]').each(function(){
+          $(this).addClass("completely-hidden");
+        });
+        var filter_string = 'off';
+        if (filter === 'Enabled') {
+          filter_string = 'on';
+        } 
+        var targets = $('input[type="radio"][id*="status--'+ filter_string +'"]:checked[class!=filter_option]');
+        targets.each(function(){
+          var target = $(this).closest('section[id!=new-element]')[0];
+          $(target).removeClass("completely-hidden");
+        });
+      }
+    });
+
+    //
+    // use filter select (countries)
+    //
+    $('select[name="use_filter"]').on('change', function(event) {
+      var $this = $(this);
+      var filter = $('option:selected', $this)[0].value;
+      if (filter === 'all') {
+        $('section[id!=new-element]').each(function(){
+          $(this).removeClass("completely-hidden");
+        });
+      } else {
+        $('section[id!=new-element]').each(function(){
+          $(this).addClass("completely-hidden");
+        });
+        var targets = $('.country-use');
+        targets.each(function(){
+          if ($(this).text() === filter) {
+            var target = $(this).closest('section[id!=new-element]')[0];
+            $(target).removeClass("completely-hidden");
+          }
+        });
+      }
+    });
+
+    //
+    // status filter select (countries)
+    //
+    $('select[name="country_status_filter"]').on('change', function(event) {
+      var $this = $(this);
+      var filter = $('option:selected', $this)[0].value;
+      if (filter === 'all') {
+        $('section[id!=new-element]').each(function(){
+          $(this).removeClass("completely-hidden");
+        });
+      } else {
+        $('section[id!=new-element]').each(function(){
+          $(this).addClass("completely-hidden");
+        });
+        var targets = $('.country-'+filter);
+        targets.each(function(){
+          var target = $(this).closest('section[id!=new-element]')[0];
+          $(target).removeClass("completely-hidden");
+        });
+      }
+    });
 
     //
     // select a logo

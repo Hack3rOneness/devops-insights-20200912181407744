@@ -8,6 +8,7 @@ require_once('../common/links.php');
 require_once('../common/logos.php');
 require_once('../common/countries.php');
 require_once('../common/sessions.php');
+require_once('../common/configuration.php');
 require_once('../common/utils.php');
 
 sess_start();
@@ -118,13 +119,16 @@ switch ($request->action) {
     break;
   case 'create_quiz':
     $levels = new Levels();
+    $c = new Configuration();
+    $bonus = $c->get('default_bonus');
+    $bonus_dec = $c->get('default_bonusdec');
     $levels->create_quiz_level(
       $request->parameters['question'],
       $request->parameters['answer'],
       $request->parameters['entity_id'],
       $request->parameters['points'],
-      $request->parameters['bonus'],
-      $request->parameters['bonus_dec'],
+      $bonus,
+      $bonus_dec,
       $request->parameters['hint'],
       $request->parameters['penalty']
     );
@@ -147,14 +151,17 @@ switch ($request->action) {
     break;
   case 'create_flag':
     $levels = new Levels();
+    $c = new Configuration();
+    $bonus = $c->get('default_bonus');
+    $bonus_dec = $c->get('default_bonusdec');
     $levels->create_flag_level(
       $request->parameters['description'],
       $request->parameters['flag'],
       $request->parameters['entity_id'],
       $request->parameters['category_id'],
       $request->parameters['points'],
-      $request->parameters['bonus'],
-      $request->parameters['bonus_dec'],
+      $bonus,
+      $bonus_dec,
       $request->parameters['hint'],
       $request->parameters['penalty']
     );
@@ -178,12 +185,14 @@ switch ($request->action) {
     break;
   case 'create_base':
     $levels = new Levels();
+    $c = new Configuration();
+    $bonus = $c->get('default_bonus');
     $levels->create_base_level(
       $request->parameters['description'],
       $request->parameters['entity_id'],
       $request->parameters['category_id'],
       $request->parameters['points'],
-      $request->parameters['bonus'],
+      $bonus,
       $request->parameters['hint'],
       $request->parameters['penalty']
     );
