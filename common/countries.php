@@ -12,6 +12,14 @@ class Countries {
     }
   }
 
+  // Make sure all the countries used field is good.
+  public function used_adjust() {
+    $sql1 = 'UPDATE countries SET used = 1 WHERE id IN (SELECT entity_id FROM levels)';
+    $sql2 = 'UPDATE countries SET used = 0 WHERE id NOT IN (SELECT entity_id FROM levels)';
+    $this->db->query($sql1);
+    $this->db->query($sql2);
+  }
+
   // Retrieve how many levels are using one country.
   public function who_uses($country_id) {
     $sql = 'SELECT * FROM levels WHERE entity_id = ? AND active = 1 LIMIT 1';

@@ -10,6 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/links.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/logos.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/configuration.php');
 
 sess_start();
 sess_enforce_login();
@@ -17,20 +18,19 @@ sess_enforce_admin();
 
 class AdminController extends Controller {
 
-  private function generateCountriesSelect(int $selected, boolean $used_included): :xhp {
+  private function generateCountriesSelect(int $selected): :xhp {
     $countries = new Countries();
     $select = <select name="entity_id" />;
-    $all_countries = ($used_included) 
-      ? $countries->all_enabled_countries()
-      : $countries->all_available_countries();
+    
+    if ($selected === 0) {
+      $select->appendChild(<option value="0" selected={true}>Auto</option>);
+    } else {
+      $country = $countries->get_country($selected);
+      $select->appendChild(<option value={$country['id']} selected={true}>{$country['name']}</option>);
+    }
 
-    $select->appendChild(<option value={"0"} selected={true}>Auto</option>);
-    foreach ($all_countries as $country) {
-      if ($country['id'] == $selected) {
-        $select->appendChild(<option value={$country['id']} selected={true}>{$country['name']}</option>);
-      } else {
-        $select->appendChild(<option value={$country['id']}>{$country['name']}</option>);
-      }
+    foreach ($countries->all_available_countries() as $country) {
+      $select->appendChild(<option value={$country['id']}>{$country['name']}</option>);
     }
 
     return $select;
@@ -42,11 +42,11 @@ class AdminController extends Controller {
     $select = <select name="category_id" />;
 
     foreach ($categories as $category) {
-      if ($category['category'] == 'Quiz') {
+      if ($category['category'] === 'Quiz') {
         continue;
       }
 
-      if ($category['id'] == $selected) {
+      if ($category['id'] === $selected) {
         $select->appendChild(<option value={$category['id']} selected={true}>{$category['category']}</option>);
       } else {
         $select->appendChild(<option value={$category['id']}>{$category['category']}</option>);
@@ -63,7 +63,7 @@ class AdminController extends Controller {
 
     $select->appendChild(<option class="filter_option" value="all" selected={true}>All Categories</option>);
     foreach ($categories as $category) {
-      if ($category['category'] == 'Quiz') {
+      if ($category['category'] === 'Quiz') {
         continue;
       }
       $select->appendChild(<option class="filter_option" value={$category['category']}>{$category['category']}</option>);
@@ -73,8 +73,67 @@ class AdminController extends Controller {
   }
 
   public function renderConfigurationContent(): :xhp {
+    $c = new Configuration();
+
     return
-      <h1>ADMIN CONFIGURATION</h1>;
+      <div>
+        <header class="admin-page-header">
+          <h3>Game Configuration</h3>
+          <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
+        </header>
+        <div class="admin-sections">
+          <section class="admin-box">
+            <header class="admin-box-header">
+              <h3>Registration</h3>
+              <div class="admin-section-toggle radio-inline">
+                <input type="radio" name="fb--admin--registration" id="fb--admin--registration--on" checked={true}/>
+                <label for="fb--admin--registration--on">On</label>
+                <input type="radio" name="fb--admin--registration" id="fb--admin--registration--off"/>
+                <label for="fb--admin--registration--off">Off</label>
+              </div>
+            </header>
+            <div class="fb-column-container">
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label">
+                  <label>Registration Names</label>
+                  <div class="admin-section-toggle radio-inline">
+                    <input type="radio" name="fb--admin--registration-names" id="fb--admin--registration-names--on" checked={true}/>
+                    <label for="fb--admin--registration-names--on">On</label>
+                    <input type="radio" name="fb--admin--registration-names" id="fb--admin--registration-names--off"/>
+                    <label for="fb--admin--registration-names--off">Off</label>
+                  </div>
+                </div>
+                <div class="form-el el--block-label">
+                  <label for="">Players Per Team</label>
+                  <input type="number" value="1" id="fb-admin--players-per-team" max="12" min="1"/>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label">
+                  <label>Enforce Logic</label>
+                  <div class="admin-section-toggle radio-inline">
+                    <input type="radio" name="fb--admin--enfofce-logic" id="fb--admin--enfofce-logic--on" checked={true}/>
+                    <label for="fb--admin--enfofce-logic--on">On</label>
+                    <input type="radio" name="fb--admin--enfofce-logic" id="fb--admin--enfofce-logic--off"/>
+                    <label for="fb--admin--enfofce-logic--off">Off</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label">
+                  <label>Registration Login</label>
+                  <div class="admin-section-toggle radio-inline">
+                    <input type="radio" name="fb--admin--registration-login" id="fb--admin--registration-login--on" checked={true}/>
+                    <label for="fb--admin--registration-login--on">On</label>
+                    <input type="radio" name="fb--admin--registration-login" id="fb--admin--registration-login--off"/>
+                    <label for="fb--admin--registration-login--off">Off</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>;
   }
 
   public function renderControlsContent(): :xhp {
@@ -99,7 +158,7 @@ class AdminController extends Controller {
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect(0, false)}
+                  {$this->generateCountriesSelect(0)}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
@@ -204,7 +263,7 @@ class AdminController extends Controller {
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect((int)$quiz['entity_id'], true)}
+                  {$this->generateCountriesSelect((int)$quiz['entity_id'])}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
@@ -282,7 +341,7 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect(0, false)}
+                    {$this->generateCountriesSelect(0)}
                   </div>
               <div class="col col-1-2 el--block-label el--full-text">
                 <label for="">Category</label>
@@ -499,7 +558,7 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect((int)$flag['entity_id'], true)}
+                    {$this->generateCountriesSelect((int)$flag['entity_id'])}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Categories</label>
@@ -590,7 +649,7 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect(0, false)}
+                    {$this->generateCountriesSelect(0)}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Category</label>
@@ -807,7 +866,7 @@ class AdminController extends Controller {
                     <div class="form-el fb-column-container col-gutters">
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Country</label>
-                        {$this->generateCountriesSelect((int)$base['entity_id'], true)}
+                        {$this->generateCountriesSelect((int)$base['entity_id'])}
                       </div>
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Category</label>
@@ -977,7 +1036,7 @@ class AdminController extends Controller {
     foreach ($countries->all_countries() as $country) {
       $using_country = $countries->who_uses($country['id']);
       $current_use = ($using_country) ? 'Yes' : 'No';
-      if ($country['enabled'] == 1) {
+      if ($country['enabled'] === 1) {
         $highlighted_action = 'disable-country';
         $highlighted_color = 'highlighted--red country-enabled';
       } else {
@@ -1065,6 +1124,7 @@ class AdminController extends Controller {
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
                       <use xlink:href="#icon--badge-"/>
+
                     </svg>
                   </div>
                 </div>
@@ -1178,6 +1238,7 @@ class AdminController extends Controller {
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
                       <use xlink:href={$xlink_href} />
+
                     </svg>
                   </div>
                 </div>
@@ -1223,7 +1284,7 @@ class AdminController extends Controller {
       $xlink_href = '#icon--badge-'.$logo['name'];
       $using_logo = $logos->who_uses($logo['name']);
       $current_use = ($using_logo) ? 'Yes' : 'No';
-      if ($logo['enabled'] == 1) {
+      if ($logo['enabled'] === 1) {
         $highlighted_action = 'disable-logo';
         $highlighted_color = 'highlighted--red';
       } else {
@@ -1255,6 +1316,7 @@ class AdminController extends Controller {
                 <div class="post-avatar has-avatar">
                   <svg class="icon icon--badge">
                     <use xlink:href={$xlink_href}></use>
+
                   </svg>
                 </div>
               </div>
@@ -1368,7 +1430,7 @@ class AdminController extends Controller {
             <li><a href="/admin.php?page=controls">Game Controls</a></li>
             <li><a href="/admin.php?page=quiz">Levels: Quiz</a></li>
             <li><a href="/admin.php?page=flags">Levels: Flags</a></li>
-            <!--<li><a href="/admin.php?page=bases">Levels: Bases</a></li>-->
+            <li><a href="/admin.php?page=bases">Levels: Bases</a></li>
             <li><a href="/admin.php?page=categories">Levels: Categories</a></li>
             <li><a href="/admin.php?page=countries">Levels: Countries</a></li>
             <li><a href="/admin.php?page=teams">Teams</a></li>

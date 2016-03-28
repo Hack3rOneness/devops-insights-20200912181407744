@@ -6,6 +6,7 @@ require_once('components.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/logos.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/configuration.php');
 
 class IndexController extends Controller {
 
@@ -44,12 +45,19 @@ class IndexController extends Controller {
           </div>
         </form>;
     }
+    $c = new Configuration();
+    $next_game = $c->get('next_game');
+    if ($next_game === "0") {
+      $next_game_text = "Soon";
+    } else {
+      $next_game_text = $next_game;
+    }
     return
       <div class="fb-row-container full-height fb-scroll">
         <main role="main" class="fb-main page--game-status row-fluid no-shrink center-vertically fb-img-glitch">
           <div class="fb-container fb-centered-main">
             <h3 class="title-lead">Upcoming Game</h3>
-            <h1 class="fb-glitch" data-text="Soon">Soon</h1>
+            <h1 class="fb-glitch" data-text={$next_game_text}>{$next_game_text}</h1>
             <ul class="upcoming-game-countdown">
               <li><span class="count-number">--</span>_days</li>
               <li><span class="count-number">--</span>_hours</li>
@@ -68,7 +76,9 @@ class IndexController extends Controller {
         <main role="main" class="fb-main page--rules fb-scroll">
           <header class="fb-section-header fb-container">
             <h1 class="fb-glitch" data-text="Official CTF Rules">Official CTF Rules</h1>
-            {$this->UNSAFE_HTML('<p class="inner-container typed-text">Lorem ipsum dolor sit amet, nec quem fugit ea. Novum decore scriptorem appellantur, partem iriure lobortis sed. </p>')}
+            <p class="inner-container typed-text">
+              Lorem ipsum dolor sit amet, nec quem fugit ea. Novum decore scriptorem appellantur, partem iriure lobortis sed. 
+            </p>
           </header>
           <div class="fb-rules">
             <section>
@@ -77,17 +87,18 @@ class IndexController extends Controller {
                 <h6>LOREM IPSUM DOLOR SIT</h6>
               </header>
               <div class="rule-main">
-                {$this->UNSAFE_HTML('<p>Lorem ipsum dolor sit amet, nec quem fugit ea. Novum scriptorem appellantur, partem iriure lobortis sed. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis.</p>')}
-                {$this->UNSAFE_HTML('<p>Lorem ipsum dolor sit amet, nec quem fugit ea. Novum scriptorem appellantur, partem iriure lobortis sed. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis.</p>')}
-                {$this->UNSAFE_HTML('<p>
-                  <ul>
-                    <li>Lorem ipsum</li>
-                    <li>Ipsum dolor sit</li>
-                    <li>Cum decore ceirois</li>
-                    <li>Dolor sit</li>
-                    <li>lorem ipsum</li>
-                  </ul>
-                </p>')}
+                <p>Lorem ipsum dolor sit amet, nec quem fugit ea. Novum scriptorem appellantur, partem iriure lobortis sed. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis.
+                </p>
+                <p>Lorem ipsum dolor sit amet, nec quem fugit ea. Novum scriptorem appellantur, partem iriure lobortis sed. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis.
+                </p>
+                <p></p>
+                <ul>
+                  <li>Lorem ipsum</li>
+                  <li>Ipsum dolor sit</li>
+                  <li>Cum decore ceirois</li>
+                  <li>Dolor sit</li>
+                  <li>lorem ipsum</li>
+                </ul>
               </div>
             </section>
           </div>
@@ -204,7 +215,7 @@ class IndexController extends Controller {
           <h1 class="fb-glitch" data-text="ERROR">ERROR</h1>
         </header>
         <div class="fb-actionable">
-          <h1>{$this->UNSAFE_HTML('¯\_(ツ)_/¯')}</h1>
+          <h1>¯\_(ツ)_/¯</h1>
           <a href="/index.php" class="fb-cta cta--yellow">Start Over</a>
         </div>
       </main>;

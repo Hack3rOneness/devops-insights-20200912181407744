@@ -71,7 +71,7 @@ var $body = $('body');
 
         // +1 for the 0-based index, +1 for the new section
         //  being added
-        sectionIndex      = $lastSection.index() + 1;
+        sectionIndex      = $lastSection.index();
 
         //
         // update some stuff in the cloned section

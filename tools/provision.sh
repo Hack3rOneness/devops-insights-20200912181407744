@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 # Facebook CTF: Provision script for vagrant dev environment
+# 
+# Usage: ./provision.sh [self | prod]
 #
 
 # Things we will use

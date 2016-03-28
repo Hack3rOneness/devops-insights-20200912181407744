@@ -59,6 +59,8 @@ class Levels {
     );
     $this->db->query($sql, $elements);
     $level_id = $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
+
+    // Toggle used entity
     $countries->toggle_used($ent_id, 1);
 
     return $level_id;
@@ -264,6 +266,9 @@ class Levels {
       $level_id
     );
     $this->db->query($sql, $elements);
+
+    // Adjust used entities
+    $countries->used_adjust();
   }
 
   // Delete level.
