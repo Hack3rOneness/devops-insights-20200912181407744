@@ -1,9 +1,10 @@
 <?hh
 
 class Attachments {
-  private $db;
+  private DB $db;
+
   // TODO: Configure this
-  private $attachments_dir = '/data/attachments/';
+  private string $attachments_dir = '/data/attachments/';
 
   public function __construct() {
     $this->db = DB::getInstance();
@@ -13,7 +14,7 @@ class Attachments {
   }
 
   // Create attachment for a given level.
-  public function create($file_param, $filename, $level_id) {
+  public function create($file_param, $filename, $level_id): bool {
     $type = '';
     $local_filename =  $this->attachments_dir;
 
@@ -41,14 +42,14 @@ class Attachments {
   }
 
   // Modify existing attachment.
-  public function update($filename, $level_id, $attachment_id) {
+  public function update($filename, $level_id, $attachment_id): void {
     $sql = 'UPDATE attachments SET filename = ?, level_id = ? WHERE id = ? LIMIT 1';
     $elements = array($filename, $level_id, $attachment_id);
     $this->db->query($sql, $elements);
   }
 
   // Delete existing attachment.
-  public function delete($attachment_id) {
+  public function delete($attachment_id): void {
     $sql = 'DELETE FROM attachments WHERE id = ? LIMIT 1';
     $element = array($attachment_id);
     $this->db->query($sql, $element);
@@ -69,7 +70,7 @@ class Attachments {
   }
 
   // Check if a level has attachments.
-  public function has_attachments($level_id) {
+  public function has_attachments($level_id): bool {
     $sql = 'SELECT COUNT(*) FROM attachments WHERE level_id = ?';
     $element = array($level_id);
     $attachment = $this->db->query($sql, $element);

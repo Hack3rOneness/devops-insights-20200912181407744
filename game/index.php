@@ -125,7 +125,7 @@ class IndexController extends Controller {
     $logos_list = <ul class="slides" />;
     foreach ($logos->all_enabled_logos() as $logo) {
       $xlink_href = '#icon--badge-'.$logo['name'];
-      $logos_list->appendChild(<li><svg class="icon--badge"><use xlink:href={$xlink_href}/></svg></li>);
+      $logos_list->appendChild(<li><svg class="icon--badge"><use xlink:href={$xlink_href}></use></svg></li>);
     }
     return
       <div class="fb-slider fb-container container--large">

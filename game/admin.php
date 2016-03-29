@@ -1114,7 +1114,6 @@ class AdminController extends Controller {
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
                       <use xlink:href="#icon--badge-"/>
-
                     </svg>
                   </div>
                 </div>

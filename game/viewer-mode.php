@@ -15,7 +15,6 @@ class ViewModeController extends Controller {
                   <span class="branding-el">
                     <svg class="icon icon--social-facebook">
                       <use xlink:href="#icon--social-facebook">
-
                       </use>
                     </svg>
                     <span class="has-icon"> Powered By Facebook</span>

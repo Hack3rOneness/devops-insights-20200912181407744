@@ -7,13 +7,13 @@ class Request {
   private $actions = array();
   private $pages = array();
 
-  public string $action;
-  public string $page;
+  public string $action = 'none';
+  public string $page = 'main';
   public $parameters = array();
 
   public function __construct($filters, $actions, $pages) {
     $inputMethods = array(
-      'POST' => INPUT_POST, 
+      'POST' => INPUT_POST,
       'GET' => INPUT_GET,
     );
     $this->method = $_SERVER['REQUEST_METHOD'];
@@ -25,7 +25,7 @@ class Request {
 
   public function processRequest() {
     $this->parameters = filter_input_array(
-      $this->input_method, 
+      $this->input_method,
       $this->filters[$this->method]
     );
     if ($this->parameters) {

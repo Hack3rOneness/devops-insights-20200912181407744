@@ -33,7 +33,6 @@ class GameboardController extends Controller {
                   <span class="branding-el">
                     <svg class="icon icon--social-facebook">
                       <use xlink:href="#icon--social-facebook">
-
                       </use>
                     </svg>
                     <span class="has-icon"> Powered By Facebook</span>
@@ -53,7 +52,6 @@ class GameboardController extends Controller {
               <span class="your-name">
                 <svg class="icon icon--team-indicator your-team">
                   <use xlink:href="#icon--team-indicator">
-
                   </use>
                 </svg>You</span>
             </label>
@@ -62,7 +60,6 @@ class GameboardController extends Controller {
               <span class="opponent-name">
                 <svg class="icon icon--team-indicator opponent-team">
                   <use xlink:href="#icon--team-indicator">
-
                   </use>
                 </svg>Others</span>
             </label>

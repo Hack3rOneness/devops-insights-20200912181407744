@@ -15,7 +15,6 @@ class :svg extends :xhp:svg-element {
     Stringish preserveAspectRatio;
   category %flow, %phrase;
 
-
   children (:use | :defs | :g)*;
   protected $tagName = 'svg';
 }
