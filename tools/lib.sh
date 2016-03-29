@@ -94,6 +94,7 @@ function install_composer() {
 	curl -sS https://getcomposer.org/installer | php
 	php composer.phar install
 	sudo mv composer.phar /usr/bin
+	sudo chmod +x /usr/bin/composer.phar
 }
 
 function import_empty_db() {
