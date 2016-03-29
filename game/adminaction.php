@@ -1,15 +1,6 @@
 <?hh
 
-require_once('request.php');
-require_once('../common/teams.php');
-require_once('../common/levels.php');
-require_once('../common/attachments.php');
-require_once('../common/links.php');
-require_once('../common/logos.php');
-require_once('../common/countries.php');
-require_once('../common/sessions.php');
-require_once('../common/configuration.php');
-require_once('../common/utils.php');
+require_once('../vendor/autoload.php');
 
 sess_start();
 sess_enforce_admin();

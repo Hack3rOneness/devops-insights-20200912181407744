@@ -1,12 +1,6 @@
 <?hh
 
-require_once('request.php');
-require_once('controller.php');
-require_once('components.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/logos.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/configuration.php');
+require_once('../vendor/autoload.php');
 
 class IndexController extends Controller {
 
@@ -77,7 +71,7 @@ class IndexController extends Controller {
           <header class="fb-section-header fb-container">
             <h1 class="fb-glitch" data-text="Official CTF Rules">Official CTF Rules</h1>
             <p class="inner-container typed-text">
-              Lorem ipsum dolor sit amet, nec quem fugit ea. Novum decore scriptorem appellantur, partem iriure lobortis sed. 
+              Lorem ipsum dolor sit amet, nec quem fugit ea. Novum decore scriptorem appellantur, partem iriure lobortis sed.
             </p>
           </header>
           <div class="fb-rules">
@@ -178,7 +172,7 @@ class IndexController extends Controller {
     foreach ($teams->all_active_teams() as $team) {
       $select->appendChild(<option value={$team['id']}>{$team['name']}</option>);
     }
-    return 
+    return
       <main role="main" class="fb-main page--login full-height fb-scroll">
         <header class="fb-section-header fb-container">
           <h1 class="fb-glitch" data-text="Team Login">Team Login</h1>
@@ -257,7 +251,7 @@ class IndexController extends Controller {
           <li></li>
           <li><a href="/index.php?page=login" data-active="login">Login</a></li>
         </ul>;
-    } 
+    }
     return
       <nav class="fb-main-nav fb-navigation">
         <ul class="nav-left">

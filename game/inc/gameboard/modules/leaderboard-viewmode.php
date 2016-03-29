@@ -1,8 +1,6 @@
 <?hh
 
-include($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/components.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 class LeaderboardViewController {
   public function render(): :xhp {

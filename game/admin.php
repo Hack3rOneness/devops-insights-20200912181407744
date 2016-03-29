@@ -1,16 +1,6 @@
 <?hh
 
-require_once('request.php');
-require_once('controller.php');
-require_once('components.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/attachments.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/links.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/logos.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/configuration.php');
+require_once('../vendor/autoload.php');
 
 sess_start();
 sess_enforce_login();
@@ -21,7 +11,7 @@ class AdminController extends Controller {
   private function generateCountriesSelect(int $selected): :xhp {
     $countries = new Countries();
     $select = <select name="entity_id" />;
-    
+
     if ($selected === 0) {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
     } else {
@@ -142,7 +132,7 @@ class AdminController extends Controller {
   }
 
   public function renderQuizContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
         <section id="new-element" class="admin-box completely-hidden">
           <form class="level_form quiz_form">
@@ -307,7 +297,7 @@ class AdminController extends Controller {
           </form>
         </section>
       );
-      $c++;      
+      $c++;
     }
 
     return
@@ -324,7 +314,7 @@ class AdminController extends Controller {
   }
 
   public function renderFlagsContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
         <section id="new-element" class="admin-box completely-hidden">
           <form class="level_form flag_form">
@@ -432,7 +422,7 @@ class AdminController extends Controller {
 
       $flag_id = 'flag_id'.$flag['id'];
 
-      $attachments_div = 
+      $attachments_div =
         <div class="attachments">
           <div class="new-attachment new-attachment-hidden fb-column-container completely-hidden">
             <div class="col col-pad col-1-3">
@@ -484,7 +474,7 @@ class AdminController extends Controller {
         $a_c++;
       }
 
-      $links_div = 
+      $links_div =
         <div class="links">
           <div class="new-link new-link-hidden fb-column-container completely-hidden">
             <div class="col col-pad col-1-3">
@@ -632,7 +622,7 @@ class AdminController extends Controller {
   }
 
   public function renderBasesContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
         <section id="new-element" class="admin-box completely-hidden">
           <form class="level_form base_form">
@@ -740,7 +730,7 @@ class AdminController extends Controller {
 
       $base_id = 'base_id'.$base['id'];
 
-      $attachments_div = 
+      $attachments_div =
         <div class="attachments">
           <div class="new-attachment new-attachment-hidden fb-column-container completely-hidden">
             <div class="col col-pad col-1-3">
@@ -792,7 +782,7 @@ class AdminController extends Controller {
         $a_c++;
       }
 
-      $links_div = 
+      $links_div =
         <div class="links">
           <div class="new-link new-link-hidden fb-column-container completely-hidden">
             <div class="col col-pad col-1-3">
@@ -888,7 +878,7 @@ class AdminController extends Controller {
                     <div class="form-el fb-column-container col-gutters">
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label>Hint</label>
-                        <input name="hint" type="text" value={$base['hint']} disabled={true}/> 
+                        <input name="hint" type="text" value={$base['hint']} disabled={true}/>
                       </div>
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label>Hint Penalty</label>
@@ -930,7 +920,7 @@ class AdminController extends Controller {
   }
 
   public function renderCategoriesContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
       </div>;
 
@@ -998,7 +988,7 @@ class AdminController extends Controller {
   }
 
   public function renderCountriesContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
       </div>;
 
@@ -1046,7 +1036,7 @@ class AdminController extends Controller {
       $current_status = strtoupper(split('-', $highlighted_action)[0]);
 
       if (!$using_country) {
-        $status_action = 
+        $status_action =
           <a class={$highlighted_color} href="#" data-action={$highlighted_action}>
             {$current_status}
           </a>;
@@ -1096,7 +1086,7 @@ class AdminController extends Controller {
   }
 
   public function renderTeamsContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
         <section class="admin-box validate-form section-locked completely-hidden">
           <form class="team_form">
@@ -1179,7 +1169,7 @@ class AdminController extends Controller {
       $team_visible_name = 'fb--admin--team-'.$team['id'].'-visible';
       $team_visible_on_id = 'fb--admin--team-'.$team['id'].'-visible--on';
       $team_visible_off_id = 'fb--admin--team-'.$team['id'].'-visible--off';
-      
+
       $adminsections->appendChild(
         <section class="admin-box validate-form section-locked">
           <form class="team_form" name={$team['id']}>
@@ -1275,10 +1265,10 @@ class AdminController extends Controller {
   }
 
   public function renderLogosContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
       </div>;
-    
+
     $logos = new Logos();
     foreach ($logos->all_logos() as $logo) {
       $xlink_href = '#icon--badge-'.$logo['name'];
@@ -1353,7 +1343,7 @@ class AdminController extends Controller {
   }
 
   public function renderSessionsContent(): :xhp {
-    $adminsections = 
+    $adminsections =
       <div class="admin-sections">
       </div>;
 
@@ -1427,11 +1417,11 @@ class AdminController extends Controller {
           End Game
         </a>;
     } else {
-      $game_action = 
+      $game_action =
         <a href="#" class="fb-cta cta--yellow js-begin-game">
           Begin Game
         </a>;
-    } 
+    }
     return
       <div id="fb-admin-nav" class="admin-nav-bar fb-row-container">
         <header class="admin-nav-header row-fixed">

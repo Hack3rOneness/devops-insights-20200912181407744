@@ -1,7 +1,5 @@
 <?hh
 
-require_once('db.php');
-
 class Countries {
   private $db;
 
@@ -102,11 +100,11 @@ class Countries {
     $element = array($country_id);
     $country = $this->db->query($sql, $element);
     if ($country) {
-      return $country[0];  
+      return $country[0];
     } else {
       return false;
     }
-    
+
   }
 
   // Retrieve a random country.

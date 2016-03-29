@@ -1,8 +1,6 @@
 <?hh
 
-include($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 sess_start();
 sess_enforce_login();
@@ -27,7 +25,7 @@ class FilterController {
           <input type="radio" name="fb--module--filter--category" value={$category['category']} id={$cagegory_id}/>
           <label for={$cagegory_id} class="click-effect"><span>{$category['category']}</span></label>
         </li>
-      );  
+      );
     }
 
     return

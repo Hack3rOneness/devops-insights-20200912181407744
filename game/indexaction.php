@@ -1,10 +1,6 @@
 <?hh
 
-require_once('request.php');
-require_once('../common/teams.php');
-require_once('../common/logos.php');
-require_once('../common/sessions.php');
-require_once('../common/utils.php');
+require_once('../vendor/autoload.php');
 
 function register_team($teamname, $password, $logo) {
   $teams = new Teams();

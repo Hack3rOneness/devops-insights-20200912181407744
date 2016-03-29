@@ -1,7 +1,5 @@
 <?hh // strict
 
-require_once('utils.php');
-
 class DB {
   private string $settings_file = 'settings.ini';
   private ?array<string, string> $config = null;

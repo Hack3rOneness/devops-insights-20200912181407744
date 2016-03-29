@@ -1,7 +1,5 @@
 <?hh
 
-include('../vendor/autoload.php');
-
 final class UNSAFE_HTML
   implements XHPAlwaysValidChild, XHPUnsafeRenderable {
   private $html;

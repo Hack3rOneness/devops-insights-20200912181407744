@@ -1,8 +1,6 @@
 <?hh //strict
 
-require_once('request.php');
-require_once('controller.php');
-require_once('components.php');
+require_once('../vendor/autoload.php');
 
 class ViewModeController extends Controller {
 

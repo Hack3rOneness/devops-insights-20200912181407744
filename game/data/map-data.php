@@ -1,14 +1,11 @@
 <?hh
 
-require_once('controller.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/levels.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/countries.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 sess_start();
 sess_enforce_login();
 
-class MapDataController extends Controller {
+class MapDataController extends DataController {
   public function generateData() {
     $levels = new Levels();
     $countries = new Countries();

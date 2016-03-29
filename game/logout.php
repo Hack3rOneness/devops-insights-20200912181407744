@@ -1,6 +1,6 @@
 <?hh
 
-require_once('../common/sessions.php');
+require_once('../vendor/autoload.php');
 
 // TODO: Make a confirmation modal?
 sess_start();

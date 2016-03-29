@@ -1,7 +1,6 @@
-  <?php
+<?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/configuration.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 sess_start();
 sess_enforce_admin();

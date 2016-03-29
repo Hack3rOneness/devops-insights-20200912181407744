@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2884f50e68a9b6f4cf366126bfbff535",
+    "hash": "0792dcfe7d3313223b20a9743fd391ab",
     "content-hash": "7df2e7e6000b81e72e0f2b6454b2761e",
     "packages": [
         {
             "name": "facebook/xhp-lib",
-            "version": "2.2.4",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/xhp-lib.git",
-                "reference": "8b770c8c0a7f59bbd7244a52d5044effa84ddf91"
+                "reference": "571674608bb099c2ce01952816f606e6781dd475"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/xhp-lib/zipball/8b770c8c0a7f59bbd7244a52d5044effa84ddf91",
-                "reference": "8b770c8c0a7f59bbd7244a52d5044effa84ddf91",
+                "url": "https://api.github.com/repos/facebook/xhp-lib/zipball/571674608bb099c2ce01952816f606e6781dd475",
+                "reference": "571674608bb099c2ce01952816f606e6781dd475",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 "hhvm",
                 "xhp"
             ],
-            "time": "2016-01-20 18:48:31"
+            "time": "2016-03-28 21:09:59"
         }
     ],
     "packages-dev": [],

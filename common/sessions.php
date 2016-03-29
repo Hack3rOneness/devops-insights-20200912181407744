@@ -1,8 +1,5 @@
 <?hh
 
-require_once('db.php');
-require_once('utils.php');
-
 function sess_start() {
   $sess_name = 'FBCTF';
   $sess_lifetime = 86400;

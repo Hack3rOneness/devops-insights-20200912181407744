@@ -1,13 +1,11 @@
 <?hh
 
-require_once('controller.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 sess_start();
 sess_enforce_login();
 
-class TeamDataController extends Controller {
+class TeamDataController extends DataController {
   public function generateData() {
     $teams = new Teams();
     $rank = 1;

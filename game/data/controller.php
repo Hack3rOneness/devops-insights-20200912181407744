@@ -1,6 +1,6 @@
 <?hh
 
-abstract class Controller {
+abstract class DataController {
 
   abstract public function generateData();
 

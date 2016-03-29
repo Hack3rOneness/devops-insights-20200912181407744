@@ -1,7 +1,5 @@
 <?hh
 
-require_once('db.php');
-
 class Attachments {
   private $db;
   // TODO: Configure this

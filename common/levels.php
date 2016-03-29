@@ -1,8 +1,5 @@
 <?hh
 
-require_once('db.php');
-require_once('countries.php');
-
 class Levels {
   private $db;
 

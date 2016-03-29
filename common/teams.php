@@ -1,7 +1,5 @@
 <?hh
 
-require_once('db.php');
-
 class Teams {
   private $db;
 

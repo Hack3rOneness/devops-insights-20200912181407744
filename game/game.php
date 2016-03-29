@@ -1,9 +1,6 @@
 <?hh
 
-require_once('request.php');
-require_once('controller.php');
-require_once('components.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
+require_once('../vendor/autoload.php');
 
 sess_start();
 sess_enforce_login();

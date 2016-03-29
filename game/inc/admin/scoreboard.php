@@ -19,18 +19,18 @@
 
 
 <div class="tab-content-container scoreboard-graphic-container">
-  
+
   <div class="radio-tab-content active" data-tab="flags">
-    
+
     <div class="admin-sections">
       <section class="admin-box">
 
         <div class="logo-management-header">
           <h6>Flag 01</h6>
         </div>
-        
+
         <div class="fb-column-container">
-          
+
           <div class="col col-shrink col-pad">
             <div class="post-avatar has-avatar"><svg class="icon icon--badge"><use xlink:href="#icon--badge-invader" /></svg></div>
           </div>
@@ -74,9 +74,9 @@
         <div class="logo-management-header">
           <h6>Flag 02</h6>
         </div>
-        
+
         <div class="fb-column-container">
-          
+
           <div class="col col-shrink col-pad">
             <div class="post-avatar has-avatar"><svg class="icon icon--badge"><use xlink:href="#icon--badge-car" /></svg></div>
           </div>
@@ -84,32 +84,32 @@
             <dl>
               <dt>Team:</dt>
               <dd>Tank SF</dd>
-              
+
               <dt>Time:</dt>
               <dd>02:59:09</dd>
-              
+
               <dt>Date:</dt>
               <dd>2015-08-04</dd>
-              
+
               <dt>Total Points:</dt>
               <dd>280</dd>
-              
+
             </dl>
           </div>
           <div class="col col-grow col-pad">
             <dl>
               <dt>Country:</dt>
               <dd>United States of America</dd>
-              
+
               <dt>Points:</dt>
               <dd>+35</dd>
-              
+
               <dt>Flag Level:</dt>
               <dd>Expert</dd>
-              
+
               <dt>Solution Time:</dt>
               <dd>00:15:23</dd>
-              
+
             </dl>
           </div>
         </div>
@@ -120,7 +120,7 @@
 
 
   <div class="radio-tab-content" data-tab="timeline">
-    
+
     <div class="scorboard-graphic">
       <svg class="fb-graphic" data-file="data/scores-partial.json" width="100%" height="180"></svg>
     </div>
@@ -143,7 +143,7 @@
     </div>
 
     <div class="game-scoreboard fb-row-container">
-      
+
       <table class="row-fixed">
         <thead>
           <tr>
@@ -253,10 +253,7 @@
           </tbody>
         </table>
       </div>
-      
+
     </div>
   </div><!-- data-tab="timeline" -->
 </div>
-
-
-

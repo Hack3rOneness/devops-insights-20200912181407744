@@ -1,9 +1,6 @@
 <?hh
 
-include($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/components.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 sess_start();
 sess_enforce_login();
