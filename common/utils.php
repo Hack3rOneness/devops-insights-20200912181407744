@@ -18,7 +18,7 @@ function registration_page(): void {
 }
 
 function game_page(): void {
-  redirect('/gameboard.php');
+  redirect('/game.php');
 }
 
 function admin_page(): void {

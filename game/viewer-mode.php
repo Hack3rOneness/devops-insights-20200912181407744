@@ -7,8 +7,6 @@ require_once('components.php');
 class ViewModeController extends Controller {
 
   public function renderMainContent(): :xhp {
-    //$viewmodepage = new WorldMapController(true);
-    //$map = $viewmodepage->render();
     return
       <div id="fb-gameboard" class="fb-gameboard gameboard--viewmode">
         <div class="gameboard-header">
@@ -31,8 +29,7 @@ class ViewModeController extends Controller {
         </div>
         <div class="fb-map"></div>
         <div class="fb-module-container container--row">
-          <aside data-name="World Domination" class="module--outer-left active" data-module="world-domination"></aside>
-          <aside data-name="Leaderboard" class="module--inner-left active" data-module="leaderboard-viewmode"></aside>
+          <aside data-name="Leaderboard" class="module--outer-left active" data-module="leaderboard-viewmode"></aside>
           <aside data-name="Under Attack" class="module--inner-right active" data-module="under-attack"></aside>
           <aside data-name="Game Clock" class="module--outer-right active" data-module="game-clock"></aside>
         </div>
@@ -54,7 +51,9 @@ class ViewModeController extends Controller {
     return
       <body data-section="viewer-mode">
         <div class="fb-sprite" id="fb-svg-sprite"></div>
-        <div id="fb-main-content" class="fb-page">{$this->renderPage($page)}</div>
+        <div id="fb-main-content" class="fb-page">
+          {$this->renderPage($page)}
+        </div>
         <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="static/js/vendor/d3.min.js"></script>
         <script type="text/javascript" src="static/js/plugins.js"></script>

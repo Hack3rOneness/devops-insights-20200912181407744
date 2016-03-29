@@ -1419,6 +1419,19 @@ class AdminController extends Controller {
   }
 
   public function renderMainNav(): :xhp {
+    $c = new Configuration();
+    $game_status = (boolean) $c->get('game');
+    if ($game_status) {
+      $game_action =
+        <a href="#" class="fb-cta cta--red js-end-game">
+          End Game
+        </a>;
+    } else {
+      $game_action = 
+        <a href="#" class="fb-cta cta--yellow js-begin-game">
+          Begin Game
+        </a>;
+    } 
     return
       <div id="fb-admin-nav" class="admin-nav-bar fb-row-container">
         <header class="admin-nav-header row-fixed">
@@ -1438,10 +1451,10 @@ class AdminController extends Controller {
             <li><a href="/admin.php?page=sessions">Teams: Sessions</a></li>
             <li><a href="/admin.php?page=scoreboard">Scoreboard</a></li>
           </ul>
-          <a href="#" class="fb-cta cta--yellow">Begin Game</a>
+          {$game_action}
         </nav>
         <div class="admin-nav--footer row-fixed">
-          <a href="/gameboard.php">Gameboard</a>
+          <a href="/game.php">Gameboard</a>
           <a href="#" class="js-prompt-logout">Logout</a>
           <a></a>
           <span class="branding-el">

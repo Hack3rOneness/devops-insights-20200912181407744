@@ -3381,6 +3381,24 @@ body {
       .fb-gameboard aside[data-module][data-module="activity"] .activity-stream li span {
         font-family: 'Source Code Pro', Courier, monospace;
         font-weight: 700; }
+    .fb-gameboard aside[data-module][data-module="announcements"] .activity-stream li {
+      position: relative;
+      padding: 4px 0 4px 18px; }
+      .fb-gameboard aside[data-module][data-module="announcements"] .activity-stream li:before {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain; }
+      .fb-gameboard aside[data-module][data-module="announcements"] .activity-stream li:before {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-300%20391.6%2010%2010.4%22%3E%3Cstyle%3E.st0%7Bfill%3A%23EAD44D%3B%7D%3C%2Fstyle%3E%3Cpath%20class%3D%22st0%22%20d%3D%22M-299.7%20391.9l9.1%204.8v.1l-9.1%204.8v-9.7z%22%2F%3E%3C%2Fsvg%3E"); }
+      .fb-gameboard aside[data-module][data-module="announcements"] .activity-stream li span {
+        font-family: 'Source Code Pro', Courier, monospace;
+        font-weight: 700; }
     .fb-gameboard aside[data-module][data-module="under-attack"] .activity-stream li {
       margin: 8px 0; }
     .fb-gameboard aside[data-module][data-module="under-attack"] .activity-stream .team-name {

@@ -4,7 +4,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/components.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/teams.php');
 
-class LeaderboardController {
+class LeaderboardViewController {
   public function render(): :xhp {
     $leaderboard_ul = <ul></ul>;
 
@@ -43,5 +43,5 @@ class LeaderboardController {
   }
 }
 
-$leaderboard_generated = new LeaderboardController();
+$leaderboard_generated = new LeaderboardViewController();
 echo $leaderboard_generated->render();

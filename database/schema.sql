@@ -154,31 +154,32 @@ CREATE TABLE `configuration` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `field` varchar(100) NOT NULL,
   `value` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `field` (`field`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `configuration` WRITE;
-INSERT INTO `configuration` (field, value) VALUES("game", "0");
-INSERT INTO `configuration` (field, value) VALUES("next_game", "0");
-INSERT INTO `configuration` (field, value) VALUES("game_duration", "10800");
-INSERT INTO `configuration` (field, value) VALUES("scoring", "0");
-INSERT INTO `configuration` (field, value) VALUES("teams", "1");
-INSERT INTO `configuration` (field, value) VALUES("teams_cycle", "5000");
-INSERT INTO `configuration` (field, value) VALUES("map", "1");
-INSERT INTO `configuration` (field, value) VALUES("map_cycle", "5000");
-INSERT INTO `configuration` (field, value) VALUES("conf", "1");
-INSERT INTO `configuration` (field, value) VALUES("conf_cycle", "30000");
-INSERT INTO `configuration` (field, value) VALUES("cmd", "1");
-INSERT INTO `configuration` (field, value) VALUES("cmd_cycle", "30000");
-INSERT INTO `configuration` (field, value) VALUES("registration", "0");
-INSERT INTO `configuration` (field, value) VALUES("registration_names", "0");
-INSERT INTO `configuration` (field, value) VALUES("registration_login", "1");
-INSERT INTO `configuration` (field, value) VALUES("registration_type", "0");
-INSERT INTO `configuration` (field, value) VALUES("registration_players", "3");
-INSERT INTO `configuration` (field, value) VALUES("default_bonus", "30");
-INSERT INTO `configuration` (field, value) VALUES("default_bonusdec", "10");
+INSERT INTO `configuration` (field, value) VALUES("game", "0", "(Boolean) Game is ongoing");
+INSERT INTO `configuration` (field, value) VALUES("next_game", "0", "(Date) Next game to happen");
+INSERT INTO `configuration` (field, value) VALUES("game_duration", "10800", "(Integer) Duration of game");
+INSERT INTO `configuration` (field, value) VALUES("scoring", "0", "(Boolean) Ability score levels");
+INSERT INTO `configuration` (field, value) VALUES("teams", "1", "(Boolean) Display current active teams");
+INSERT INTO `configuration` (field, value) VALUES("teams_cycle", "5000", "(Integer) Refresh rate for teams in milliseconds");
+INSERT INTO `configuration` (field, value) VALUES("map", "1", "(Boolean) Display current map");
+INSERT INTO `configuration` (field, value) VALUES("map_cycle", "5000", "(Integer) Refresh rate for map in milliseconds");
+INSERT INTO `configuration` (field, value) VALUES("conf", "1", "(Boolean) Send current configuration");
+INSERT INTO `configuration` (field, value) VALUES("conf_cycle", "30000", "(Integer) Refresh rate for configuration values in milliseconds");
+INSERT INTO `configuration` (field, value) VALUES("cmd", "1", "(Boolean) Send current commands");
+INSERT INTO `configuration` (field, value) VALUES("cmd_cycle", "30000", "(Integer) Refresh rate for commands in milliseconds");
+INSERT INTO `configuration` (field, value) VALUES("registration", "0", "(Boolean) Ability to register teams");
+INSERT INTO `configuration` (field, value) VALUES("registration_names", "0", "(Boolean) Registration will ask for names");
+INSERT INTO `configuration` (field, value) VALUES("registration_login", "1", "(Boolean) Registration will automatically login");
+INSERT INTO `configuration` (field, value) VALUES("registration_type", "1", "(Integer) Type of registration: 1 - Open; 2 - Tokenized; 3 - Needs confirmation");
+INSERT INTO `configuration` (field, value) VALUES("registration_players", "3", "(Integer) Number of players per team");
+INSERT INTO `configuration` (field, value) VALUES("default_bonus", "30", "(Integer) Default value for bonus in levels");
+INSERT INTO `configuration` (field, value) VALUES("default_bonusdec", "10", "(Integer) Default bonus decrement in levels");
 UNLOCK TABLES;
 
 --

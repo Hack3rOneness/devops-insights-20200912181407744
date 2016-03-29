@@ -56,7 +56,7 @@ function verifyTeamLogo() {
 }
 
 function gameBoard() {
-  window.location.href = '/gameboard.php';
+  window.location.href = '/game.php';
 }
 
 function loginError() {

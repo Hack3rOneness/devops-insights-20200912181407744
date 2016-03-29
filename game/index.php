@@ -33,7 +33,7 @@ class IndexController extends Controller {
         <form class="fb-form inner-container">
           <p>Get ready for the CTF to start and access the gameboard now!</p>
           <div class="form-el--actions">
-            <a href="/gameboard.php" class="fb-cta cta--yellow">Gameboard</a>
+            <a href="/game.php" class="fb-cta cta--yellow">Gameboard</a>
           </div>
         </form>;
     } else {
@@ -247,7 +247,7 @@ class IndexController extends Controller {
       $session_nav =
         <ul class="nav-right">
           <li></li>
-          <li><a href="/gameboard.php" data-active="gameboard">Gameboard</a></li>
+          <li><a href="/game.php" data-active="gameboard">Gameboard</a></li>
           <li></li>
         </ul>;
     } else {
@@ -346,6 +346,7 @@ $filters = array(
     )
   )
 );
+
 $actions = array('none');
 $pages = array(
   'main',
@@ -356,6 +357,8 @@ $pages = array(
   'error',
   'mobile',
 );
+
 $request = new Request($filters, $actions, $pages);
 $request->processRequest();
+
 echo $indexpage->render('Facebook CTF', $request->page);

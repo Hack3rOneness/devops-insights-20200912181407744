@@ -1,18 +1,14 @@
 <?hh
 
+require_once('controller.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/sessions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../common/configuration.php');
 
 sess_start();
 sess_enforce_login();
 
-class ConfigurationController {
-	private function jsonSend($data) {
-		header('Content-Type: application/json');
-		print json_encode($data, JSON_PRETTY_PRINT);
-	}
-
-	public function generateConfiguration() {
+class ConfigurationController extends Controller {
+	public function generateData() {
 		$conf_data = (object) array();
 
 		$c = new Configuration();
@@ -28,4 +24,4 @@ class ConfigurationController {
 }
 
 $conf = new ConfigurationController();
-$conf->generateConfiguration();
+$conf->generateData();

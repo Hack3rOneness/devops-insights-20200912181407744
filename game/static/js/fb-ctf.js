@@ -883,7 +883,7 @@
               };
 
               $.post(
-                'game.php',
+                'gameaction.php',
                 hint_data
               ).fail(function() {
               // TODO: Make this a modal
@@ -913,7 +913,7 @@
             };
 
             $.post(
-              'game.php',
+              'gameaction.php',
               score_data
             ).fail(function() {
               // TODO: Make this a modal

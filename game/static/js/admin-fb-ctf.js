@@ -977,6 +977,21 @@ var $body = $('body');
       PLAYERS_PER_TEAM = val;
     });
 
+    //
+    // begin game
+    //
+    $('.js-begin-game').on('click', function(event) {
+      event.preventDefault();
+      FB_CTF.modal.loadPopup('action-begin-game');
+    });
+
+    //
+    // end game
+    //
+    $('.js-end-game').on('click', function(event) {
+      event.preventDefault();
+      FB_CTF.modal.loadPopup('action-end-game');
+    });
 
     //
     // prompt logout
