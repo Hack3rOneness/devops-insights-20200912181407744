@@ -60,6 +60,8 @@ $filters = array(
     'bonus_dec'   => FILTER_VALIDATE_INT,
     'penalty'     => FILTER_VALIDATE_INT,
     'active'      => FILTER_VALIDATE_INT,
+    'field'       => FILTER_UNSAFE_RAW,
+    'value'       => FILTER_UNSAFE_RAW,
     'action'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
@@ -99,6 +101,9 @@ $actions = array(
   'create_link',
   'update_link',
   'delete_link',
+  'begin_game',
+  'change_configuration',
+  'end_game',
   'reset_game'
 );
 $request = new Request($filters, $actions);
@@ -400,6 +405,29 @@ switch ($request->action) {
     $links->delete(
       $request->parameters['link_id']
     );
+    ok_response();
+    break;
+  case 'change_configuration':
+    $conf = new Configuration();
+    $field = $request->parameters['field'];
+    if ($conf->valid_field($field)) {
+      $conf->change(
+        $field,
+        $request->parameters['value']
+      );
+      ok_response();
+    } else {
+      error_response();
+    }
+    break;
+  case 'begin_game':
+    $control = new Control();
+    $control->begin();
+    ok_response();
+    break;
+  case 'end_game':
+    $control = new Control();
+    $control->end();
     ok_response();
     break;
   default:

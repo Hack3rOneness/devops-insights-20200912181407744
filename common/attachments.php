@@ -25,9 +25,9 @@ class Attachments {
       $md5_str = md5_file($tmp_name);
       // Avoid php shells
       if (strpos($filename, '.php') !== false) {
-        $local_filename .= md5($md5_str.$level_id) . '_' . $filename . '.txt';
+        $local_filename .= $filename . '_' . $md5_str . '.txt';
       } else {
-        $local_filename .= md5($md5_str.$level_id) . '_' . $filename;
+        $local_filename .= $filename . '_' . $md5_str;
       }
       move_uploaded_file($tmp_name, $_SERVER['DOCUMENT_ROOT'] . $local_filename);
     } else {

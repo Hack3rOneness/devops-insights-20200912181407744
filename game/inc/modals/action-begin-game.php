@@ -8,10 +8,10 @@
     </a>
   </header>
   <div class="action-main">
-    <p>Are you sure you want to kick off the game?</p>
+    <p>Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start</p>
     <div class="action-actionable">
       <a href="#" class="fb-cta cta--red js-close-modal">No</a>
-      <a href="#" class="fb-cta cta--yellow">Yes</a>
+      <a href="#" class="fb-cta cta--yellow" onclick="beginGame()">Yes</a>
     </div>
   </div>
 </div>

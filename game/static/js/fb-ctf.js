@@ -242,7 +242,6 @@
       if (VIEW_ONLY) {
         mapLoaded = loadMapView();
       } else {
-        console.log('LOADED');
         mapLoaded = loadMap();
       }
 
@@ -858,8 +857,8 @@
           // event listeners
           //
           if (hint_cost == -2) {
-            $('.js-trigger-hint span', $container).text('Too expensive');
-            $('.capture-hint div', $container).text('Too expensive');
+            $('.js-trigger-hint span', $container).text('Need more points');
+            $('.capture-hint div', $container).text('Need more points');
           } else if (hint_cost == -1) {
             $('.js-trigger-hint span', $container).text('No Hint');
             $('.capture-hint div', $container).text('No Hint');

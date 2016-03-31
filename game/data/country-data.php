@@ -25,8 +25,8 @@ class CountryDataController extends DataController {
       $category = $levels->get_category($level['category_id']);
       if ($level['hint']) {
         // There is hint, can this team afford it?
-        if ($level['penalty'] > $my_team['points']) {
-          $hint_cost = -1;
+        if ($level['penalty'] > $my_team['points']) { // Not enough points
+          $hint_cost = -2;
           $hint = 'no';
         } else {
           // Has this team requested this hint before?
@@ -37,7 +37,7 @@ class CountryDataController extends DataController {
           }
           $hint = ($hint_cost == 0) ? $level['hint'] : 'yes';
         }
-      } else {
+      } else { // No hints
         $hint_cost = -1;
         $hint = 'no';
       }

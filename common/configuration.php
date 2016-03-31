@@ -29,6 +29,13 @@ class Configuration {
     $this->db->query($sql, $elements);
   }
 
+  // Check if field is valid.
+  public function valid_field($field) {
+    $sql = 'SELECT COUNT(*) FROM configuration WHERE field = ? LIMIT 1';
+    $element = array($field);
+    return (bool)$this->db->query($sql, $element)[0]['COUNT(*)'];
+  }
+
   // All the configuration.
   public function all_configuration() {
     $sql = 'SELECT * FROM configuration';

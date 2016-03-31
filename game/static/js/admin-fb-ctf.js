@@ -1,3 +1,55 @@
+/**
+ * finishes the currently running game
+ */
+function beginGame() {
+  var begin_data = {
+      action: 'begin_game'
+    };
+  sendAdminRequest(begin_data);
+  location.reload();
+}
+
+/**
+ * kicks off a new game
+ */
+function endGame() {
+  var end_data = {
+      action: 'end_game'
+    };
+  sendAdminRequest(end_data);
+  location.reload();
+}
+
+/**
+ * submits an ajax request to the admin endpoint
+ *
+ * @param  request_data (request object)
+ *   - the parameters for the request.
+ *
+ * @return Boolean
+ *   - whether or not the request was succesful
+ */
+function sendAdminRequest(request_data) {
+  $.post(
+    'adminaction.php',
+    request_data
+  ).fail(function() {
+    // TODO: Make this a modal
+    console.log('ERROR');
+  }).done(function(data) {
+    //console.log(data);
+    var responseData = JSON.parse(data);
+    if (responseData.result == 'OK') {
+      console.log('OK');
+      return true;
+    } else {
+      // TODO: Make this a modal
+      console.log('Failed');
+      return false;
+    }
+  });
+}
+
 var $body = $('body');
 
 /**
@@ -17,7 +69,7 @@ var $body = $('body');
    * @return Boolean
    *   - whether or not the form is valud
    */
-  function validateAdminForm( $clicked ){
+  function validateAdminForm($clicked) {
     var valid         = true,
         $validateForm = $clicked.closest('.validate-form')
         $required     = $('.form-el--required', $validateForm),
@@ -55,7 +107,6 @@ var $body = $('body');
 
     return valid;
   }
-
 
   /**
    * add a new section
@@ -182,36 +233,6 @@ var $body = $('body');
         $playerList.append( $newRow );
       }
     }
-  }
-
-  /**
-   * submits an ajax request to the admin endpoint
-   *
-   * @param  request_data (request object)
-   *   - the parameters for the request.
-   *
-   * @return Boolean
-   *   - whether or not the request was succesful
-   */
-  function sendAdminRequest(request_data) {
-    $.post(
-      'adminaction.php',
-      request_data
-    ).fail(function() {
-      // TODO: Make this a modal
-      console.log('ERROR');
-    }).done(function(data) {
-      //console.log(data);
-      var responseData = JSON.parse(data);
-      if (responseData.result == 'OK') {
-        console.log('OK');
-        return true;
-      } else {
-        // TODO: Make this a modal
-        console.log('Failed');
-        return false;
-      }
-    });
   }
 
   // Create new attachment
@@ -664,6 +685,19 @@ var $body = $('body');
     }
   }
 
+  function toggleConfiguration(radio_id) {
+    var radio_action = radio_id.split('--')[2];
+    var action_value = (radio_id.split('--')[3] === 'on') ? 1 : 0;
+    var toggle_data = {
+      action: 'change_configuration',
+      field: radio_action,
+      value: action_value
+    };
+    if (radio_action) {
+      sendAdminRequest(toggle_data);
+    }
+  }
+
   function toggleLogo(section) {
   // Toggle logo status
     var logo_id = $('.logo_form input[name=logo_id]', section)[0].value;
@@ -683,7 +717,7 @@ var $body = $('body');
     var country_id = $('.country_form input[name=country_id]', section)[0].value;
     var action_value = $('.country_form input[name=status_action]', section)[0].value;
     var toggle_data = {
-      action: action_value + '_country',
+      action: action_value,
       country_id: country_id
     };
     if (country_id && action_value) {
@@ -819,12 +853,21 @@ var $body = $('body');
     $('input[type="radio"]').on('change', function(event) {
       var $this = $(this);
       var radio_name = $this.attr('id');
-      if (radio_name.search('all') > 0) {
-        toggleAll(radio_name);
-      } else if (radio_name.search('team') > 0) {
-        toggleTeam(radio_name);
-      } else if (radio_name.search('level') > 0) {
-        toggleLevel(radio_name);
+      
+      if (radio_name.search('fb--teams') === 0) {
+        if (radio_name.search('all') > 0) {
+          toggleAll(radio_name);
+        } else {
+          toggleTeam(radio_name);
+        }
+      } else if (radio_name.search('fb--levels') === 0) {
+        if (radio_name.search('all') > 0) {
+          toggleAll(radio_name);
+        } else {
+          toggleLevel(radio_name);
+        }
+      } else if (radio_name.search('fb--conf') === 0) {
+        toggleConfiguration(radio_name);
       }
     });
 
@@ -978,7 +1021,7 @@ var $body = $('body');
     });
 
     //
-    // begin game
+    // prompt begin game
     //
     $('.js-begin-game').on('click', function(event) {
       event.preventDefault();
@@ -986,7 +1029,7 @@ var $body = $('body');
     });
 
     //
-    // end game
+    // prompt end game
     //
     $('.js-end-game').on('click', function(event) {
       event.preventDefault();
