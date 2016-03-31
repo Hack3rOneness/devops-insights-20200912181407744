@@ -23,11 +23,15 @@ class Attachments {
       $tmp_name = $_FILES[$file_param]['tmp_name'];
       $type = $_FILES[$file_param]['type'];
       $md5_str = md5_file($tmp_name);
+
+      // Extract extension and name
+      $parts = pathinfo($filename);
+
       // Avoid php shells
       if (strpos($filename, '.php') !== false) {
-        $local_filename .= $filename . '_' . $md5_str . '.txt';
+        $local_filename .= $parts['filename'] . '_' . $md5_str . '.txt';
       } else {
-        $local_filename .= $filename . '_' . $md5_str;
+        $local_filename .= $parts['filename'] . '_' . $md5_str . '.' . $parts['extension'];
       }
       move_uploaded_file($tmp_name, $_SERVER['DOCUMENT_ROOT'] . $local_filename);
     } else {
@@ -50,6 +54,18 @@ class Attachments {
 
   // Delete existing attachment.
   public function delete($attachment_id): void {
+    // Copy file to deleted folder
+    $filename = $this->get_attachment($attachment_id)['filename'];
+    $parts = pathinfo($filename);
+    error_log('Copying from ' . $filename . ' to ' . $parts['dirname'] . '/deleted/' . $parts['basename']);
+    $origin = $_SERVER['DOCUMENT_ROOT'] . $filename;
+    $dest = $_SERVER['DOCUMENT_ROOT'] . $parts['dirname'] . '/deleted/' . $parts['basename'];
+    copy($origin, $dest);
+
+    // Delete file.
+    unlink($origin);
+
+    // Delete from table.
     $sql = 'DELETE FROM attachments WHERE id = ? LIMIT 1';
     $element = array($attachment_id);
     $this->db->query($sql, $element);
@@ -66,7 +82,7 @@ class Attachments {
   public function get_attachment($attachment_id) {
     $sql = 'SELECT * FROM attachments WHERE id = ? LIMIT 1';
     $element = array($attachment_id);
-    return $this->db->query($sql, $element);
+    return $this->db->query($sql, $element)[0];
   }
 
   // Check if a level has attachments.

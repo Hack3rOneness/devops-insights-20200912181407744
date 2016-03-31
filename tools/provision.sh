@@ -50,6 +50,7 @@ import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH"
 
 # Make attachments folder world writable
 sudo chmod 777 "$CTF_PATH/game/data/attachments"
+sudo chmod 777 "$CTF_PATH/game/data/attachments/deleted"
 
 log 'Facebook-CTF deployment is complete!'
 

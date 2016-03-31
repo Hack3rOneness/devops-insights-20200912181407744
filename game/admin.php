@@ -8,11 +8,11 @@ sess_enforce_admin();
 
 class AdminController extends Controller {
 
-  private function generateCountriesSelect(int $selected): :xhp {
+  private function generateCountriesSelect(string $selected): :xhp {
     $countries = new Countries();
     $select = <select name="entity_id" />;
 
-    if ($selected === 0) {
+    if ($selected === "0") {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
     } else {
       $country = $countries->get_country($selected);
@@ -26,7 +26,7 @@ class AdminController extends Controller {
     return $select;
   }
 
-  private function generateLevelCategoriesSelect(int $selected): :xhp {
+  private function generateLevelCategoriesSelect(string $selected): :xhp {
     $levels = new Levels();
     $categories = $levels->all_categories();
     $select = <select name="category_id" />;
@@ -306,7 +306,7 @@ class AdminController extends Controller {
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect(0)}
+                  {$this->generateCountriesSelect("0")}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
@@ -411,7 +411,7 @@ class AdminController extends Controller {
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect((int)$quiz['entity_id'])}
+                  {$this->generateCountriesSelect($quiz['entity_id'])}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
@@ -489,11 +489,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect(0)}
+                    {$this->generateCountriesSelect("0")}
                   </div>
               <div class="col col-1-2 el--block-label el--full-text">
                 <label for="">Category</label>
-                {$this->generateLevelCategoriesSelect(0)}
+                {$this->generateLevelCategoriesSelect("0")}
               </div>
             </div>
           </div>
@@ -617,6 +617,7 @@ class AdminController extends Controller {
                     <div class="col el--block-label el--full-text">
                       <label>Attachment {$a_c}:</label>
                       <input name="filename" type="text" value={$attachment['filename']} disabled={true}/>
+                      <a href={$attachment['filename']} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
@@ -668,6 +669,7 @@ class AdminController extends Controller {
                     <div class="col el--block-label el--full-text">
                       <label>Link {$l_c}:</label>
                       <input name="link" type="text" value={$link['link']} disabled={true}/>
+                      <a href={$link['link']} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
@@ -706,11 +708,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect((int)$flag['entity_id'])}
+                    {$this->generateCountriesSelect($flag['entity_id'])}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Categories</label>
-                    {$this->generateLevelCategoriesSelect((int)$flag['category_id'])}
+                    {$this->generateLevelCategoriesSelect($flag['category_id'])}
                   </div>
                 </div>
               </div>
@@ -797,11 +799,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect(0)}
+                    {$this->generateCountriesSelect("0")}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Category</label>
-                    {$this->generateLevelCategoriesSelect(0)}
+                    {$this->generateLevelCategoriesSelect("0")}
                   </div>
                 </div>
               </div>
@@ -925,6 +927,7 @@ class AdminController extends Controller {
                     <div class="col el--block-label el--full-text">
                       <label>Attachment {$a_c}:</label>
                       <input name="filename" type="text" value={$attachment['filename']} disabled={true}/>
+                      <a href={$attachment['filename']} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
@@ -976,6 +979,7 @@ class AdminController extends Controller {
                     <div class="col el--block-label el--full-text">
                       <label>Link {$l_c}:</label>
                       <input name="link" type="text" value={$link['link']} disabled={true}/>
+                      <a href={$link['link']} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
@@ -1014,11 +1018,11 @@ class AdminController extends Controller {
                     <div class="form-el fb-column-container col-gutters">
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Country</label>
-                        {$this->generateCountriesSelect((int)$base['entity_id'])}
+                        {$this->generateCountriesSelect($base['entity_id'])}
                       </div>
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Category</label>
-                        {$this->generateLevelCategoriesSelect((int)$base['category_id'])}
+                        {$this->generateLevelCategoriesSelect($base['category_id'])}
                       </div>
                     </div>
                   </div>

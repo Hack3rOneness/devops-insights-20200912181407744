@@ -782,6 +782,7 @@ var $body = $('body');
           $('input[type="text"], input[type="password"]', $section).prop("disabled", true);
         }
       } else if (action === 'save-no-validation'){
+        $section.addClass(lockClass);
         updateElement($section);
       } else if (action === 'add-new'){
         addNewSection($self);

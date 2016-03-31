@@ -8,6 +8,7 @@
   <form class="fb-form country-capture-form">
     <input name="level_id" type="hidden" value="">
     <textarea rows="4" class="capture-text" disabled></textarea>
+    </br>
     <div class="capture-links"></div>
     </br>
     <fieldset class="form-set">
