@@ -1974,34 +1974,50 @@
 
         $.get( datafile , function(data, status, jqxhr){
           var scores = data;
-          var minMaxArray = [];
+          var maxScore = 0;
           $.each(scores, function(){
-            $.merge(minMaxArray, this.values);
+            $.each(this.values, function(){
+              if (this.score > maxScore) {
+                maxScore = this.score;
+              }
+            });
           });
-
+          var maxYaxis = parseInt(maxScore) + 30;
+          
           var graphic  = d3.select( svgEl ),
               MARGIN   = {left: 60, right: 20, bottom:40},
               WIDTH    = $container.length > 0 ? $container.width() - MARGIN.left - MARGIN.right : 820 - MARGIN.left - MARGIN.right,
               HEIGHT   = 220 - MARGIN.bottom,
 
               X_START  = 1,
-              X_LENGTH = 10,
+              X_LENGTH = FB_CTF.data.CONF.progressiveCount,
               xRange   = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
-
-              yRange   = d3.scale.linear().range([HEIGHT - 0, 0]).domain([d3.min(minMaxArray, function (d) {
+              /*yRange   = d3.scale.linear().range([HEIGHT, 0]).domain([d3.min(minMaxArray, function (d) {
                 return d.score;
               }), d3.max(minMaxArray, function (d) {
-                return d.score + 10;
-              }) ]),
+                return d.score + 30;
+              }) ]),*/
+              yRange   = d3.scale.linear().range([HEIGHT, 0]).domain([0, maxYaxis]),
 
-              xAxis = d3.svg.axis().scale(xRange).ticks( X_LENGTH );
+              xAxis = d3.svg.axis().tickFormat("").scale(xRange).ticks(X_LENGTH);
 
               yAxis = d3.svg.axis().scale(yRange).ticks(6).orient("left");
 
-              graphic.append("svg:g").attr("class", "x axis").attr("transform", "translate(" + MARGIN.left + "," + HEIGHT + ")").call(xAxis)
-                .selectAll('line').attr('transform', 'translate(0, -6)');
-              graphic.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + MARGIN.left + ",0)").call(yAxis)
-                .selectAll('line').attr('transform', 'translate(6,0)');
+          graphic.append("svg:g").attr("class", "x axis").attr("transform", "translate(" + MARGIN.left + "," + HEIGHT + ")").call(xAxis)
+            .selectAll('line').attr('transform', 'translate(0, -6)');
+
+          // Add the text label for the X axis
+          graphic.append("text")
+            .attr("transform", "rotate(0)")
+            .attr("y", HEIGHT + MARGIN.right)
+            .attr("x", (WIDTH + MARGIN.left / 2))
+            .attr("dy", "1em")
+            .attr("stroke", "#fff")
+            .style("text-anchor", "middle")
+            .text("Time");
+
+          graphic.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + MARGIN.left + ",0)").call(yAxis)
+            .selectAll('line').attr('transform', 'translate(6,0)');
 
           // Add the text label for the Y axis
           graphic.append("text")

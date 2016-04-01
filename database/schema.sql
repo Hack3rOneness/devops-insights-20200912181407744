@@ -163,7 +163,9 @@ CREATE TABLE `configuration` (
 LOCK TABLES `configuration` WRITE;
 INSERT INTO `configuration` (field, value, description) VALUES("game", "0", "(Boolean) Game is ongoing");
 INSERT INTO `configuration` (field, value, description) VALUES("next_game", "0", "(Date) Next game to happen");
-INSERT INTO `configuration` (field, value, description) VALUES("game_duration", "10800", "(Integer) Duration of game");
+INSERT INTO `configuration` (field, value, description) VALUES("game_duration", "10800", "(Integer) Duration of game in seconds");
+INSERT INTO `configuration` (field, value, description) VALUES("start_ts", "0", "(Integer) Timestamp of start");
+INSERT INTO `configuration` (field, value, description) VALUES("end_ts", "0", "(Integer) Timestamp of end");
 INSERT INTO `configuration` (field, value, description) VALUES("scoring", "0", "(Boolean) Ability score levels");
 INSERT INTO `configuration` (field, value, description) VALUES("teams", "1", "(Boolean) Display current active teams");
 INSERT INTO `configuration` (field, value, description) VALUES("teams_cycle", "5000", "(Integer) Refresh rate for teams in milliseconds");
@@ -304,6 +306,7 @@ CREATE TABLE `ranking_log` (
   `ts` timestamp NULL DEFAULT NULL,
   `team_name` text DEFAULT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
+  `iteration` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

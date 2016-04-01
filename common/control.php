@@ -24,6 +24,12 @@ class Control {
     $conf = new Configuration();
     $conf->change('game', '1');
 
+    // Take timestamp of start
+    //$conf->change('start_ts', time());
+
+    // Calculate timestamp of the end
+    //$conf->change('end_ts', time());
+
     // Kick off progressive scoreboard
     $conf->change('ranking', '1');
     $this->progressive_scoreboard();
@@ -52,7 +58,7 @@ class Control {
   }
 
   public function take_progressive() {
-    $sql = 'INSERT INTO ranking_log (ts, team_name, points) (SELECT NOW(), name, points FROM teams)';
+    $sql = 'INSERT INTO ranking_log (ts, team_name, points, iteration) (SELECT NOW(), name, points, (SELECT IFNULL(MAX(iteration)+1, 1) FROM ranking_log) FROM teams)';
     $this->db->query($sql);
   }
 

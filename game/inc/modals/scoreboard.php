@@ -35,12 +35,13 @@ class ScoreboardController {
           <h4>scoreboard_</h4>
           <a href="#" class="js-close-modal">
             <svg class="icon icon--close">
-              <use xlink:href="#icon--close"></use>
+              <use xlink:href="#icon--close"/>
+              
             </svg>
           </a>
         </div>
-        <div class="scorboard-graphic scoreboard-graphic-container">
-          <svg class="fb-graphic" data-file="data/scores.json" width={820} height={220}></svg>
+        <div class="scoreboard-graphic scoreboard-graphic-container">
+          <svg class="fb-graphic" data-file="data/scores.php" width={820} height={220}></svg>
         </div>
         <div class="game-progress fb-progress-bar fb-cf row-fixed">
           <div class="indicator game-progress-indicator">

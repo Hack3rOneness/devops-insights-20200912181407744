@@ -133,6 +133,13 @@ class Teams {
     return $this->db->query($sql);
   }
 
+  // Progressive points.
+  public function progressive($team_name) {
+    $sql = 'SELECT * FROM ranking_log WHERE team_name = ? GROUP BY iteration ORDER BY points ASC';
+    $element = array($team_name);
+    return $this->db->query($sql, $element);
+  }
+
   // All teams.
   public function all_teams() {
     $sql = 'SELECT * FROM teams ORDER BY points DESC';

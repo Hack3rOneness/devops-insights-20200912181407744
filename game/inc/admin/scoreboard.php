@@ -122,7 +122,7 @@
   <div class="radio-tab-content" data-tab="timeline">
 
     <div class="scorboard-graphic">
-      <svg class="fb-graphic" data-file="data/scores-partial.json" width="100%" height="180"></svg>
+      <svg class="fb-graphic" data-file="data/scores.php" width="100%" height="180"></svg>
     </div>
 
     <div class="game-progress fb-progress-bar fb-cf row-fixed">

@@ -3878,14 +3878,14 @@ body[data-section="gameboard"] .fb-page {
 /**
  * --graphic
  */
-.scorboard-graphic {
+.scoreboard-graphic {
   margin: 20px 0; }
-  .scorboard-graphic svg .axis line, .scorboard-graphic svg .axis path {
+  .scoreboard-graphic svg .axis line, .scoreboard-graphic svg .axis path {
     fill: none;
     stroke: #cff8fa;
     stroke-width: 2;
     shape-rendering: crispEdges; }
-  .scorboard-graphic svg .axis text {
+  .scoreboard-graphic svg .axis text {
     stroke: #75a5ba; }
 
 /* ------------------------------------------

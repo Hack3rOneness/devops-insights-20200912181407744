@@ -10,6 +10,11 @@ class Configuration {
     }
   }
 
+  public function progressive_count() {
+    $sql = 'SELECT COUNT(DISTINCT(iteration)) AS C FROM ranking_log';
+    return $this->db->query($sql)[0]['C'];
+  }
+
   public function create($field, $value) {
     $sql = 'INSERT INTO configuration (field, value) VALUES(?, ?) LIMIT 1';
     $elements = array($field, $value);
