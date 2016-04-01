@@ -171,6 +171,12 @@ class Teams {
     $this->db->query($sql, $elements);
   }
 
+  // Set all points to zero for all teams.
+  public function reset_points() {
+    $sql = 'UPDATE teams SET points = 0 WHERE id > 0';
+    $this->db->query($sql);
+  }
+
   // Teams total number.
   public function teams_count() {
     $sql = 'SELECT COUNT(*) AS count FROM teams';

@@ -11,6 +11,10 @@ class Control {
   }
 
   public function begin() {
+    // Reset all points
+    $teams = new Teams();
+    $teams->reset_points();
+
     // Clear scores log
     $this->reset_scores();
 
@@ -30,7 +34,8 @@ class Control {
     // Calculate timestamp of the end
     //$conf->change('end_ts', time());
 
-    // Kick off progressive scoreboard
+    // Reset and kick off progressive scoreboard
+    $this->reset_progressive();
     $conf->change('ranking', '1');
     $this->progressive_scoreboard();
   }
@@ -50,7 +55,7 @@ class Control {
     $cycle = (int)$conf->get('ranking_cycle');
 
     while ($take_scoreboard) {
-      take_progressive();
+      $this->take_progressive();
       sleep($cycle);
       $take_scoreboard = (bool)$conf->get('ranking');
       $cycle = (int)$conf->get('ranking_cycle');
@@ -59,6 +64,11 @@ class Control {
 
   public function take_progressive() {
     $sql = 'INSERT INTO ranking_log (ts, team_name, points, iteration) (SELECT NOW(), name, points, (SELECT IFNULL(MAX(iteration)+1, 1) FROM ranking_log) FROM teams)';
+    $this->db->query($sql);
+  }
+
+  public function reset_progressive() {
+    $sql = 'DELETE FROM ranking_log WHERE id > 0';
     $this->db->query($sql);
   }
 
