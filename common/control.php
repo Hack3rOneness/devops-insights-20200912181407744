@@ -15,6 +15,8 @@ class Control {
     $teams = new Teams();
     $teams->reset_points();
 
+    $conf = new Configuration();
+
     // Clear scores log
     $this->reset_scores();
 
@@ -25,8 +27,10 @@ class Control {
     $this->reset_failures();
 
     // Mark game as started
-    $conf = new Configuration();
     $conf->change('game', '1');
+
+    // Enable scoring
+    $conf->change('scoring', '1');
 
     // Take timestamp of start
     $start_ts = time();
@@ -50,6 +54,9 @@ class Control {
     // Mark game as finished
     $conf = new Configuration();
     $conf->change('game', '0');
+
+    // Disable scoring
+    $conf->change('scoring', '0');
 
     // Stop progressive scoreboard
     $conf->change('ranking', '0');
