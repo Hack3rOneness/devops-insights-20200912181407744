@@ -26,23 +26,31 @@ class WorldMapController {
 
   $countries = new Countries();
   $levels = new Levels();
+  $conf = new Configuration();
 
   foreach ($countries->all_map_countries(true) as $country) {
-    $path_class = (($country['used'] === '1') && ($countries->is_active_level($country['id'])))
-      ? 'land active'
-      : 'land';
-    $map_indicator = 'map-indicator ';
-    $data_captured = null;
-    $country_level = $countries->who_uses($country['id']);
-    if ($country_level) {
-      if ($levels->previous_score($country_level['id'], sess_team())) {
-        $map_indicator .= 'captured--you';
-        $data_captured = sess_teamname();
-      } else if ($levels->previous_score($country_level['id'], sess_team(), true)) {
-        $map_indicator .= 'captured--opponent';
-        $completed_by = $levels->completed_by($country_level['id'])[0];
-        $data_captured = $completed_by['name'];
+    if ($conf->get('map') === '1') {
+      $path_class = (($country['used'] === '1') && ($countries->is_active_level($country['id'])))
+        ? 'land active'
+        : 'land';
+      $map_indicator = 'map-indicator ';
+      $data_captured = null;
+      $country_level = $countries->who_uses($country['id']);
+
+      if ($country_level) {
+        if ($levels->previous_score($country_level['id'], sess_team())) {
+          $map_indicator .= 'captured--you';
+          $data_captured = sess_teamname();
+        } else if ($levels->previous_score($country_level['id'], sess_team(), true)) {
+          $map_indicator .= 'captured--opponent';
+          $completed_by = $levels->completed_by($country_level['id'])[0];
+          $data_captured = $completed_by['name'];
+        }
       }
+    } else {
+      $path_class = 'land';
+      $map_indicator = 'map-indicator ';
+      $data_captured = null;
     }
 
     $g =

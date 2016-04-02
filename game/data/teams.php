@@ -8,9 +8,17 @@ sess_enforce_login();
 class TeamDataController extends DataController {
   public function generateData() {
     $teams = new Teams();
+    $conf = new Configuration();
     $rank = 1;
     $leaderboard = $teams->leaderboard();
     $teams_data = (object) array();
+
+    // If refresing is disabled, exit
+    if ($conf->get('teams') === '0') {
+      $this->jsonSend($teams_data);
+      exit;
+    }
+    
     foreach ($leaderboard as $team) {
       $team_data = (object) array(
         'badge' => $team['logo'],

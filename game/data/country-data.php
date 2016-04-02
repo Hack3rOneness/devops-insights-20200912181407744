@@ -12,10 +12,18 @@ class CountryDataController extends DataController {
     $attachments = new Attachments();
     $links = new Links();
     $teams = new Teams();
+    $conf = new Configuration();
 
     $my_team = $teams->get_team(sess_team());
 
     $countries_data = (object) array();
+
+    // If refresing is disabled, exit
+    if ($conf->get('map') === '0') {
+      $this->jsonSend($countries_data);
+      exit;
+    }
+
     foreach ($levels->all_levels(1) as $level) {
       $country = $countries->get_country($level['entity_id']);
       if (!$country) {
