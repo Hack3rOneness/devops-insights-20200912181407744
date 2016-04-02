@@ -55,6 +55,8 @@ switch ($request->action) {
         );
         error_response();
       }
+    } else {
+      error_response();
     }
     break;
   case 'get_hint':

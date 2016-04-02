@@ -9,7 +9,7 @@ class AnnouncementsModuleController {
   public function render(): :xhp {
     $control = new Control();
     $announcements = $control->all_announcements();
-    $announcements_ul = <ul class="activity-stream"></ul>;
+    $announcements_ul = <ul class="activity-stream announcements-list"></ul>;
     if ($announcements) {
       foreach ($announcements as $announcement) {
         $announcements_ul->appendChild(

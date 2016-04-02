@@ -28,7 +28,6 @@ class LeaderboardDataController extends DataController {
         'badge' => $team['logo'],
         'team_members' => array(),
         'rank' => $rank,
-        'school_level' => 'collegiate',
         'points' => array(
           'base' => 0,
           'quiz' => 0,

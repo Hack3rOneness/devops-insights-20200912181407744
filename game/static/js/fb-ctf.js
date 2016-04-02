@@ -283,6 +283,10 @@
           
           // Load initial configuration
           loadConfData();
+
+          // Load initial announcements
+          loadAnnouncementsData();
+
           // Load initial command line
           FB_CTF.command_line.loadCommandsData();
           FB_CTF.command_line.init();
@@ -306,8 +310,11 @@
           setInterval( function() {
             if (FB_CTF.data.CONF.teams === '1') {
               loadTeamData();
+              //loadLeaderboardData();
               clearTeams();
+              //clearLeaderboard();
               setupTeams();
+              //setupLeaderboard();
             } else {
               clearTeams();
             }
@@ -321,6 +328,17 @@
               console.log('Commands not refreshed');
             }
           }, FB_CTF.data.CONF.refreshCmd);
+
+          // Announcements
+          setInterval( function() {
+            //if (FB_CTF.data.CONF.cmd === '1') {
+              loadAnnouncementsData();
+              clearAnnouncements();
+              setupAnnouncements();
+            //} else {
+            //  console.log('Commands not refreshed');
+            //}
+          }, FB_CTF.data.CONF.refreshMap);
         }
       });
     }
@@ -333,6 +351,26 @@
     function clearTeams(){
       var $teamgrid = $('aside[data-module="teams"] .grid-list');
       $('li', $teamgrid).remove();
+    }
+
+    function clearAnnouncements(){
+      var $announcements = $('.announcements-list');
+      $('li', $announcements).remove();
+    }
+
+    function setupAnnouncements(){
+      if( FB_CTF.data.ANNOUNCEMENTS === undefined ){
+        console.error("No announcements data available.");
+        return;
+      }
+
+      var $announcements = $('.announcements-list');
+
+
+      $.each(FB_CTF.data.ANNOUNCEMENTS, function(ann_index, ann_text) {
+        var element  = '<li><span class="announcement-highlight"></span>' + ann_text + '</li>';
+        $announcements.append(element);
+      });
     }
 
     /**
@@ -1310,6 +1348,44 @@
           return df.resolve(FB_CTF.data.TEAMS);
         }, 'json').error( function( jqhxr, status, error){
           console.error("There was a problem retrieving the team data.");
+          console.log(loadPath);
+          console.log(status);
+          console.log(error);
+          console.error("/error");
+        });
+      }
+
+      /**
+       * load the leaderboard data
+       */
+      function loadLeaderboardData(){
+        var loadPath = 'data/leaderboard.php';
+
+        return $.get( loadPath, function(data, status, jqxhr){
+          FB_CTF.data.LEADERBOARD = data;
+          var df = $.Deferred();
+          return df.resolve(FB_CTF.data.LEADERBOARD);
+        }, 'json').error( function( jqhxr, status, error){
+          console.error("There was a problem retrieving the leaderboard data.");
+          console.log(loadPath);
+          console.log(status);
+          console.log(error);
+          console.error("/error");
+        });
+      }
+
+      /**
+       * load the announcements data
+       */
+      function loadAnnouncementsData(){
+        var loadPath = 'data/announcements.php';
+
+        return $.get( loadPath, function(data, status, jqxhr){
+          FB_CTF.data.ANNOUNCEMENTS = data;
+          var df = $.Deferred();
+          return df.resolve(FB_CTF.data.ANNOUNCEMENTS);
+        }, 'json').error( function( jqhxr, status, error){
+          console.error("There was a problem retrieving the announcements data.");
           console.log(loadPath);
           console.log(status);
           console.log(error);
