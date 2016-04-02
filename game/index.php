@@ -134,72 +134,110 @@ class IndexController extends Controller {
   }
 
   public function renderRegistrationContent(): :xhp {
-    return
-      <main role="main" class="fb-main page--registration full-height fb-scroll">
-        <header class="fb-section-header fb-container">
-          <h1 class="fb-glitch" data-text="Team Registration">Team Registration</h1>
-          <p class="inner-container">Register to play Capture The Flag here. Once you have registered, you will be logged in.</p>
-        </header>
-        <div class="fb-registration">
-          <form class="fb-form">
-            <input type="hidden" name="action" value="register_team"/>
-            <fieldset class="form-set fb-container container--small">
-              <div class="form-el el--text">
-                <label for="">Team Name</label>
-                <input name="teamname" type="text" size={20} />
+    $conf = new Configuration();
+    if ($conf->get('registration') === '1') {
+      return
+        <main role="main" class="fb-main page--registration full-height fb-scroll">
+          <header class="fb-section-header fb-container">
+            <h1 class="fb-glitch" data-text="Team Registration">Team Registration</h1>
+            <p class="inner-container">Register to play Capture The Flag here. Once you have registered, you will be logged in.</p>
+          </header>
+          <div class="fb-registration">
+            <form class="fb-form">
+              <input type="hidden" name="action" value="register_team"/>
+              <fieldset class="form-set fb-container container--small">
+                <div class="form-el el--text">
+                  <label for="">Team Name</label>
+                  <input name="teamname" type="text" size={20} />
+                </div>
+                <div class="form-el el--text">
+                  <label for="">Password</label>
+                  <input name="password" type="password"/>
+                </div>
+              </fieldset>
+              <div class="fb-choose-emblem">
+                <h6>Choose an Emblem</h6>
+                <div class="emblem-carousel">{$this->renderLogosSelection()}</div>
               </div>
-              <div class="form-el el--text">
-                <label for="">Password</label>
-                <input name="password" type="password"/>
+              <div class="form-el--actions fb-container container--small">
+                <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerTeam()">Sign Up</button></p>
               </div>
-            </fieldset>
-            <div class="fb-choose-emblem">
-              <h6>Choose an Emblem</h6>
-              <div class="emblem-carousel">{$this->renderLogosSelection()}</div>
-            </div>
-            <div class="form-el--actions fb-container container--small">
-              <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerTeam()">Sign Up</button></p>
-            </div>
-          </form>
-        </div>
-      </main>;
+            </form>
+          </div>
+        </main>;
+      } else {
+        return
+          <div class="fb-row-container full-height fb-scroll">
+            <main role="main" class="fb-main page--game-status row-fluid no-shrink center-vertically fb-img-glitch">
+              <div class="fb-container fb-centered-main">
+                <h3 class="title-lead">Team Registration</h3>
+                <h1 class="fb-glitch" data-text="Not Available">Not Available</h1>
+                <form class="fb-form inner-container">
+                  <p>Team Registration will be open soon, stay tuned!</p>
+                  <div class="form-el--actions">
+                    <a href="/index.php?page=registration" class="fb-cta cta--yellow">Try Again</a>
+                  </div>
+                </form>
+              </div>
+            </main>
+          </div>;
+      }
   }
 
   public function renderLoginContent(): :xhp {
-    $teams = new Teams();
-    $select = <select name="team_id" />;
-    $select->appendChild(<option value="0">Select</option>);
-    foreach ($teams->all_active_teams() as $team) {
-      $select->appendChild(<option value={$team['id']}>{$team['name']}</option>);
-    }
-    return
-      <main role="main" class="fb-main page--login full-height fb-scroll">
-        <header class="fb-section-header fb-container">
-          <h1 class="fb-glitch" data-text="Team Login">Team Login</h1>
-          <p class="inner-container">Please login here. If you have not registered, you may do so by clicking "Sign Up" below. </p>
-        </header>
-        <div class="fb-login">
-          <form class="fb-form">
-            <input type="hidden" name="action" value="login_team"/>
-            <fieldset class="form-set fb-container container--small">
-              <div class="form-el el--text">
-                <label for="">Team Name</label>
-                {$select}
+    $conf = new Configuration();
+    if ($conf->get('login') === '1') {
+      $teams = new Teams();
+      $select = <select name="team_id" />;
+      $select->appendChild(<option value="0">Select</option>);
+      foreach ($teams->all_active_teams() as $team) {
+        $select->appendChild(<option value={$team['id']}>{$team['name']}</option>);
+      }
+      return
+        <main role="main" class="fb-main page--login full-height fb-scroll">
+          <header class="fb-section-header fb-container">
+            <h1 class="fb-glitch" data-text="Team Login">Team Login</h1>
+            <p class="inner-container">Please login here. If you have not registered, you may do so by clicking "Sign Up" below. </p>
+          </header>
+          <div class="fb-login">
+            <form class="fb-form">
+              <input type="hidden" name="action" value="login_team"/>
+              <fieldset class="form-set fb-container container--small">
+                <div class="form-el el--text">
+                  <label for="">Team Name</label>
+                  {$select}
+                </div>
+                <div class="form-el el--text">
+                  <label for="">Password</label>
+                  <input name="password" type="password"/>
+                </div>
+              </fieldset>
+              <div class="form-el--actions">
+                <button id="login_button" class="fb-cta cta--yellow" type="button" onclick="loginTeam()">Login</button>
               </div>
-              <div class="form-el el--text">
-                <label for="">Password</label>
-                <input name="password" type="password"/>
+              <div class="form-el--footer">
+                <a href="/index.php?page=registration">Sign Up</a>
               </div>
-            </fieldset>
-            <div class="form-el--actions">
-              <button id="login_button" class="fb-cta cta--yellow" type="button" onclick="loginTeam()">Login</button>
-            </div>
-            <div class="form-el--footer">
-              <a href="/index.php?page=registration">Sign Up</a>
-            </div>
-          </form>
-        </div>
-      </main>;
+            </form>
+          </div>
+        </main>;
+      } else {
+        return
+          <div class="fb-row-container full-height fb-scroll">
+            <main role="main" class="fb-main page--game-status row-fluid no-shrink center-vertically fb-img-glitch">
+              <div class="fb-container fb-centered-main">
+                <h3 class="title-lead">Team Login</h3>
+                <h1 class="fb-glitch" data-text="Not Available">Not Available</h1>
+                <form class="fb-form inner-container">
+                  <p>Team Login will be open soon, stay tuned!</p>
+                  <div class="form-el--actions">
+                    <a href="/index.php?page=login" class="fb-cta cta--yellow">Try Again</a>
+                  </div>
+                </form>
+              </div>
+            </main>
+          </div>;
+      }
   }
 
   public function renderErrorPage(): :xhp {

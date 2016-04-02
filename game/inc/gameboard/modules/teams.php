@@ -7,6 +7,29 @@ sess_enforce_login();
 
 class TeamModuleController {
   public function render(): :xhp {
+    $teams = new Teams();
+    $leaderboard = $teams->leaderboard();
+    $rank = 1;
+    $conf = new Configuration();
+
+    $list = <ul class="grid-list"></ul>;
+
+    if ($conf->get('teams') === '1') {
+      foreach ($leaderboard as $team) {
+        $iconbadge = '#icon--badge-' . $team['logo'];
+        $list->appendChild(
+          <li>
+            <a href="#" data-team={$team['name']}>
+              <svg class="icon--badge">
+                <use xlink:href={$iconbadge}/>
+
+                </svg>
+            </a>
+          </li>
+        );
+      }
+    }
+    
     return
       <div>
         <header class="module-header">
@@ -23,7 +46,7 @@ class TeamModuleController {
               </div>
             </div>
             <div class="module-scrollable">
-              <ul class="grid-list"></ul>
+              {$list}
             </div>
           </div>
         </div>

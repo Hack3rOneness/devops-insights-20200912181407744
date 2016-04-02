@@ -187,7 +187,7 @@ class AdminController extends Controller {
                 <input type="radio" name="fb--conf--login" id="fb--conf--login--on" checked={$login_on}/>
                 <label for="fb--conf--login--on">On</label>
                 <input type="radio" name="fb--conf--login" id="fb--conf--login--off"checked={$login_off}/>
-                <label for="fb--admin--login--off">Off</label>
+                <label for="fb--conf--login--off">Off</label>
               </div>
             </header>
             <div class="fb-column-container">
@@ -348,7 +348,27 @@ class AdminController extends Controller {
 
   public function renderControlsContent(): :xhp {
     return
-      <h1>ADMIN CONTROLS</h1>;
+      <div>
+        <header class="admin-page-header">
+          <h3>Game Controls</h3>
+          <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
+        </header>
+        <div class="admin-sections">
+          <section class="admin-box">
+            <header class="admin-box-header">
+              <h3>Announcements</h3>
+            </header>
+            <div class="fb-column-container">
+              <div class="col col-pad col-1-4">
+                <div class="form-el el--block-label el--full-text">
+                  <label for="">New Announcement</label>
+                  <input type="text" value="" id="fb--conf--announcement"/>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>;
   }
 
   public function renderQuizContent(): :xhp {

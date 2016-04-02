@@ -30,28 +30,31 @@ switch ($request->action) {
     game_page();
     break;
   case 'answer_level':
-    $levels = new Levels();
-    // Check if answer is valid
-    if ($levels->check_answer(
-      $request->parameters['level_id'],
-      $request->parameters['answer']
-    )) {
-      // Give points!
-      $levels->score_level(
+    $conf = new Configuration();
+    if ($conf->get('scoring') === '1') {
+      $levels = new Levels();
+      // Check if answer is valid
+      if ($levels->check_answer(
         $request->parameters['level_id'],
-        sess_team()
-      );
-      // Update teams last score
-      $teams = new Teams();
-      $teams->last_score(sess_team());
-      ok_response();
-    } else {
-      $levels->log_failed_score(
-        $request->parameters['level_id'],
-        sess_team(),
         $request->parameters['answer']
-      );
-      error_response();
+      )) {
+        // Give points!
+        $levels->score_level(
+          $request->parameters['level_id'],
+          sess_team()
+        );
+        // Update teams last score
+        $teams = new Teams();
+        $teams->last_score(sess_team());
+        ok_response();
+      } else {
+        $levels->log_failed_score(
+          $request->parameters['level_id'],
+          sess_team(),
+          $request->parameters['answer']
+        );
+        error_response();
+      }
     }
     break;
   case 'get_hint':
