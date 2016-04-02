@@ -43,6 +43,7 @@ function login_team($team_id, $password) {
     sess_start();
     sess_set('team_id', $team['id']);
     sess_set('name', $team['name']);
+    sess_set('csrf_token', base64_encode(openssl_random_pseudo_bytes(16)));
     if ($team['admin'] == 1) sess_set('admin', $team['admin']);
     sess_set('IP', $_SERVER['REMOTE_ADDR']);
     ok_response();

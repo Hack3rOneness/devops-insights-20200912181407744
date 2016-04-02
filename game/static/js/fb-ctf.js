@@ -278,38 +278,51 @@
           initTutorial();
         }
 
-        //
-        // init some other stuff
-        //
-
-        // load the command line
-        FB_CTF.command_line.init();
-
-        // popuplate the team module
-        setupTeams();
-
         // Kick off all the timers to keep data refreshed, not on view mode
         if (!VIEW_ONLY) {
+          
+          // Load initial configuration
+          loadConfData();
+          // Load initial command line
+          FB_CTF.command_line.loadCommandsData();
+          FB_CTF.command_line.init();
+
+          // Configuration reloader
+          setInterval( function() {
+            loadConfData();
+          }, FB_CTF.data.CONF.refreshConf);
+
           // Countries
           setInterval( function() {
-            getCountryData();
-            refreshMapData();
+            if (FB_CTF.data.CONF.map === '1') {  
+              getCountryData();
+              refreshMapData();
+            } else {
+              clearMapData();
+            }
           }, FB_CTF.data.CONF.refreshMap);
 
           // Teams
           setInterval( function() {
-            loadTeamData();
+            if (FB_CTF.data.CONF.teams === '1') {
+              loadTeamData();
+              clearTeams();
+              setupTeams();
+            } else {
+              clearTeams();
+            }
           }, FB_CTF.data.CONF.refreshTeams);
 
           // Commands
           setInterval( function() {
-            FB_CTF.command_line.loadCommandsData();
+            if (FB_CTF.data.CONF.cmd === '1') {
+              FB_CTF.command_line.loadCommandsData();
+              FB_CTF.command_line.clearCommands();
+              FB_CTF.command_line.init();
+            } else {
+              FB_CTF.command_line.clearCommands();
+            }
           }, FB_CTF.data.CONF.refreshCmd);
-
-          // Configuration
-          setInterval( function() {
-            loadConfData();
-          }, FB_CTF.data.CONF.refreshConf);
         }
       });
     }
@@ -317,6 +330,12 @@
     /* --------------------------------------------
      * --setup
      * -------------------------------------------- */
+
+
+    function clearTeams(){
+      var $teamgrid = $('aside[data-module="teams"] .grid-list');
+      $('li', $teamgrid).remove();
+    }
 
     /**
      * set up the team module in the gameboard with the list of
@@ -1360,6 +1379,30 @@
       }
 
       /**
+       * clear the map data
+       */
+      function clearMapData(){
+        var loadPath = 'data/map-data.php';
+
+        return $.get( loadPath, function(data, status, jqxhr){
+          $.each(data, function(key, value){
+            $('#' + key)[0].classList.remove('active');
+            $('#' + key)[0].parentNode.removeAttribute('data-captured');
+            $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
+            $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
+          });
+        }, 'json').error( function( jqhxr, status, error){
+          console.error("There was a problem retrieving the map data.");
+          console.log(loadPath);
+          console.log(status);
+          console.log(error);
+          console.error("/error");
+        });
+      }
+
+
+
+      /**
        * get the game data, which is stored as json
        *
        * @return Deferred
@@ -2110,7 +2153,7 @@
       function loadCommandsData(){
         var loadPath = 'data/command-line.php';
 
-        return $.get( loadPath, function(data, status, jqxhr){
+        return $.get(loadPath, function(data, status, jqxhr) {
           FB_CTF.data.COMMAND = data;
           var df = $.Deferred();
           return df.resolve(FB_CTF.data.COMMAND);
@@ -2325,7 +2368,7 @@
       /**
        * clear all the command prompt stuff
        */
-      function clearCommandPrompt(){
+      function clearCommandPrompt() {
         var $promptInput        = $('#command-prompt--input'),
             $filterResultsInput = $('#command-prompt--filter-results');
         $('.fb-command-line .autocomplete').empty();
@@ -2336,13 +2379,21 @@
       }
 
       /**
+       * clear all the commands
+       */
+      function clearCommands() {
+        var $commandlist = $('.command-list');
+        $('li', $commandlist).remove();
+      }
+
+      /**
        * check to see if the selected option is visible in
        *  the container
        */
-      function checkSelectedVisible(){
+      function checkSelectedVisible() {
         var $selected = $cmdResultsList.find('li.selected');
 
-        if($selected.length === 0){
+        if ($selected.length === 0) { 
           return;
         }
 
@@ -2350,11 +2401,11 @@
             resultListHeight  = $cmdResultsList.height(),
             selectedPos       = $selected.position();
 
-        if( selectedPos.top > resultListHeight ){
+        if (selectedPos.top > resultListHeight) {
           $cmdResultsList.animate({
             scrollTop : (resultsListScroll + selectedPos.top) + 'px'
           })
-        } else if( selectedPos.top < 0){
+        } else if (selectedPos.top < 0) {
           $cmdResultsList.animate({
             scrollTop : (resultsListScroll + selectedPos.top) + 'px'
           })
@@ -2372,28 +2423,28 @@
         var results     = cmdData.results,
             cmdFunction = cmdData.function;
 
-        if( results ){
-          if( typeof results === "string" ){
+        if (results) { 
+          if (typeof results === "string") {
             var list = FB_CTF.data.COMMAND.results_library[results];
 
-            if(list){
+            if (list) {
               $.each( list, function(index, listItem){
                 $cmdResultsList.append('<li>' + listItem + '</li>');
               });
             }
-          } else{
-            $.each( results, function(index, listItem){
+          } else {
+            $.each(results, function(index, listItem){
               $cmdResultsList.append('<li>' + listItem + '</li>');
             });
           }
           $cmdResultsList.find('li:first-child').addClass('selected');
         }
 
-        if( cmdFunction ){
+        if (cmdFunction) {
           var funcName = cmdFunction.name,
               param    = cmdFunction.param;
 
-          switch(funcName){
+          switch (funcName) {
             case 'change-radio':
               cmd_changeRadio(param);
               break;
@@ -2575,16 +2626,16 @@
        * init the command line functionality
        */
       function init(){
-        FB_CTF.modal.loadPersistent( modalName , function(){
-          $.get( loadPath , function(data, status, jqxhr){
+        FB_CTF.modal.loadPersistent(modalName, function(){
+          $.get(loadPath , function(data, status, jqxhr){
             $cmdPromptList = $('.fb-command-line .command-list ul');
             $cmdResultsList = $('.fb-command-line .command-results ul');
 
             FB_CTF.data.COMMAND = data;
 
             if (FB_CTF.data.COMMAND && FB_CTF.data.COMMAND.commands) {
-              $.each( FB_CTF.data.COMMAND.commands, function(command, cmdData){
-                $cmdPromptList.append( '<li>' + command + '</li>');
+              $.each(FB_CTF.data.COMMAND.commands, function(command, cmdData){
+                $cmdPromptList.append('<li>' + command + '</li>');
               });
               eventListeners();
             }
@@ -2597,7 +2648,8 @@
 
       return {
         init: init,
-        loadCommandsData: loadCommandsData
+        loadCommandsData: loadCommandsData,
+        clearCommands: clearCommands
       };
     })(); // command line
 

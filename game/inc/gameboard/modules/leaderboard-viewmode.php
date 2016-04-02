@@ -2,7 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-class LeaderboardViewController {
+class LeaderboardModuleViewController {
   public function render(): :xhp {
     $leaderboard_ul = <ul></ul>;
 
@@ -41,5 +41,5 @@ class LeaderboardViewController {
   }
 }
 
-$leaderboard_generated = new LeaderboardViewController();
+$leaderboard_generated = new LeaderboardModuleViewController();
 echo $leaderboard_generated->render();

@@ -130,3 +130,7 @@ function sess_team() {
 function sess_teamname() {
   return $_SESSION['name'];
 }
+
+function sess_csrf_token() {
+  return $_SESSION['csrf_token'];
+}

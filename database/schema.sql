@@ -166,13 +166,14 @@ INSERT INTO `configuration` (field, value, description) VALUES("next_game", "0",
 INSERT INTO `configuration` (field, value, description) VALUES("game_duration", "10800", "(Integer) Duration of game in seconds");
 INSERT INTO `configuration` (field, value, description) VALUES("start_ts", "0", "(Integer) Timestamp of start");
 INSERT INTO `configuration` (field, value, description) VALUES("end_ts", "0", "(Integer) Timestamp of end");
+INSERT INTO `configuration` (field, value, description) VALUES("timer", "0", "(Boolean) Timer is enabled");
 INSERT INTO `configuration` (field, value, description) VALUES("scoring", "0", "(Boolean) Ability score levels");
-INSERT INTO `configuration` (field, value, description) VALUES("teams", "1", "(Boolean) Display current active teams");
-INSERT INTO `configuration` (field, value, description) VALUES("teams_cycle", "5000", "(Integer) Refresh rate for teams in milliseconds");
+INSERT INTO `configuration` (field, value, description) VALUES("teams", "1", "(Boolean) Display current active teams and leaderboard");
+INSERT INTO `configuration` (field, value, description) VALUES("teams_cycle", "5000", "(Integer) Refresh rate for teams/leaderboard in milliseconds");
 INSERT INTO `configuration` (field, value, description) VALUES("map", "1", "(Boolean) Display current map");
 INSERT INTO `configuration` (field, value, description) VALUES("map_cycle", "5000", "(Integer) Refresh rate for map in milliseconds");
 INSERT INTO `configuration` (field, value, description) VALUES("conf", "1", "(Boolean) Send current configuration");
-INSERT INTO `configuration` (field, value, description) VALUES("conf_cycle", "30000", "(Integer) Refresh rate for configuration values in milliseconds");
+INSERT INTO `configuration` (field, value, description) VALUES("conf_cycle", "10000", "(Integer) Refresh rate for configuration values in milliseconds");
 INSERT INTO `configuration` (field, value, description) VALUES("cmd", "1", "(Boolean) Send current commands");
 INSERT INTO `configuration` (field, value, description) VALUES("cmd_cycle", "30000", "(Integer) Refresh rate for commands in milliseconds");
 INSERT INTO `configuration` (field, value, description) VALUES("ranking", "0", "(Boolean) Progressive ranking is enabled");
@@ -307,6 +308,21 @@ CREATE TABLE `ranking_log` (
   `team_name` text DEFAULT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
   `iteration` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `announcements_log`
+--
+
+DROP TABLE IF EXISTS `announcements_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `announcements_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ts` timestamp NULL DEFAULT NULL,
+  `announcement` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

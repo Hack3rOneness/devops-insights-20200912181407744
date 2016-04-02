@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 sess_start();
 sess_enforce_login();
 
-class FilterController {
+class FilterModuleController {
   public function render(): :xhp {
     $categories_ul = <ul class="radio-list radio-tab-content category-filter-content active"></ul>;
     $categories_ul->appendChild(
@@ -66,5 +66,5 @@ class FilterController {
   }
 }
 
-$filter_generated = new FilterController();
+$filter_generated = new FilterModuleController();
 echo $filter_generated->render();

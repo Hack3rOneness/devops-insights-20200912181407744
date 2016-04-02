@@ -73,6 +73,21 @@ class AdminController extends Controller {
     return $select;
   }
 
+  private function configurationDurationSelect(): :xhp {
+    $conf = new Configuration();
+    $duration = (int)$conf->get('game_duration');
+    $select = <select name="game_duration"></select>;
+
+    for ($i=1; $i<=24; $i++) {
+      $x = 60 * 60 * $i;
+      $s = ($i > 1) ? 's' : '';
+      $x_str = $i . ' Hour' . $s;
+      $select->appendChild(<option class="duration_option" value={(string)$x} selected={($duration === $x)}>{$x_str}</option>);
+    }
+
+    return $select;
+  }
+
   public function renderConfigurationContent(): :xhp {
     $conf = new Configuration();
 
@@ -100,7 +115,17 @@ class AdminController extends Controller {
     $map_off = ($conf->get('map') === '0');
     $conf_on = ($conf->get('conf') === '1');
     $conf_off = ($conf->get('conf') === '0');
+    $timer_on = ($conf->get('timer') === '1');
+    $timer_off = ($conf->get('timer') === '0');
 
+    if ($conf->get('start_ts') === '0') {
+      $start_ts = 'Not started yet';
+      $end_ts = 'Not started yet';
+    } else {
+      $start_ts = date("H:i:s D m/d/Y", $conf->get('start_ts'));
+      $end_ts = date("H:i:s D m/d/Y", $conf->get('end_ts'));
+    }
+  
     return
       <div>
         <header class="admin-page-header">
@@ -276,6 +301,43 @@ class AdminController extends Controller {
                 <div class="form-el el--block-label">
                   <label for="">Config Cycle (ms)</label>
                   <input type="text" value={$conf->get('conf_cycle')} id="fb--conf--conf_cycle"/>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="admin-box">
+            <header class="admin-box-header">
+              <h3>Timer</h3>
+              <div class="admin-section-toggle radio-inline">
+                <input type="radio" name="fb--conf--timer" id="fb--conf--timer--on" checked={$timer_on}/>
+                <label for="fb--conf--timer--on">On</label>
+                <input type="radio" name="fb--conf--timer" id="fb--conf--timer--off"checked={$timer_off}/>
+                <label for="fb--admin--timer--off">Off</label>
+              </div>
+            </header>
+            <div class="fb-column-container">
+              <div class="col col-pad col-1-4">
+                <div class="form-el el--block-label el--full-text">
+                  <label for="">Server Time</label>
+                  <input type="text" value={date("H:i:s D m/d/Y", time())} id="fb--conf--server_time" disabled={true}/>
+                </div>
+              </div>
+              <div class="col col-pad col-2-4">
+                <div class="form-el el--block-label el--full-text">
+                  <label for="">Game Duration</label>
+                  {$this->configurationDurationSelect()}
+                </div>
+              </div>
+              <div class="col col-pad col-2-4">
+                <div class="form-el el--block-label el--full-text">
+                  <label for="">Begin Time</label>
+                  <input type="text" value={$start_ts} id="fb--conf--start_ts" disabled={true}/>
+                </div>
+              </div>
+              <div class="col col-pad col-3-4">
+                <div class="form-el el--block-label el--full-text">
+                  <label for="">Expected End Time</label>
+                  <input type="text" value={$end_ts} id="fb--conf--end_ts" disabled={true}/>
                 </div>
               </div>
             </div>
@@ -1665,6 +1727,7 @@ class AdminController extends Controller {
   public function renderBody(string $page): :xhp {
     return
       <body data-section="admin">
+        <input type="hidden" name="lolololol" value={sess_csrf_token()}/>
         <div style="height: 0; width: 0; position: absolute; visibility: hidden" id="fb-svg-sprite"></div>
         <div class="fb-viewport admin-viewport">
           {$this->renderMainNav()}

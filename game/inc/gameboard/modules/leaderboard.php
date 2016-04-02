@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 sess_start();
 sess_enforce_login();
 
-class LeaderboardController {
+class LeaderboardModuleController {
   public function render(): :xhp {
     $leaderboard_ul = <ul></ul>;
 
@@ -62,5 +62,5 @@ class LeaderboardController {
   }
 }
 
-$leaderboard_generated = new LeaderboardController();
+$leaderboard_generated = new LeaderboardModuleController();
 echo $leaderboard_generated->render();

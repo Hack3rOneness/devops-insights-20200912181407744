@@ -29,10 +29,16 @@ class Control {
     $conf->change('game', '1');
 
     // Take timestamp of start
-    //$conf->change('start_ts', time());
+    $start_ts = time();
+    $conf->change('start_ts', $start_ts);
 
     // Calculate timestamp of the end
-    //$conf->change('end_ts', time());
+    $duration = $conf->get('game_duration');
+    $end_ts = $start_ts + $duration;
+    $conf->change('end_ts', $end_ts);
+
+    // Kick off timer
+    $conf->change('timer', '1');
 
     // Reset and kick off progressive scoreboard
     $this->reset_progressive();
@@ -47,6 +53,13 @@ class Control {
 
     // Stop progressive scoreboard
     $conf->change('ranking', '0');
+
+    // Put timestampts to zero
+    $conf->change('start_ts', '0');
+    $conf->change('end_ts', '0');
+
+    // Stop timer
+    $conf->change('timer', '0');
   }
 
   public function progressive_scoreboard() {

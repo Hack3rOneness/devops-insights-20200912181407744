@@ -98,6 +98,7 @@ class GameboardController extends Controller {
   public function renderBody(string $page): :xhp {
     return
       <body data-section="gameboard">
+        <input type="hidden" name="lolololol" value={sess_csrf_token()}/>
         <div class="fb-sprite" id="fb-svg-sprite"></div>
         <div id="fb-main-content" class="fb-page">{$this->renderPage($page)}</div>
         <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
