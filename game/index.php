@@ -71,52 +71,81 @@ class IndexController extends Controller {
           <header class="fb-section-header fb-container">
             <h1 class="fb-glitch" data-text="Official CTF Rules">Official CTF Rules</h1>
             <p class="inner-container typed-text">
-              Lorem ipsum dolor sit amet, nec quem fugit ea. Novum decore scriptorem appellantur, partem iriure lobortis sed.
+              Following actions are prohibited, unless explicitly told otherwise by event Admins.
             </p>
           </header>
           <div class="fb-rules">
             <section>
               <header class="rule-section-header">
-                <h3>Rule Topic 1</h3>
-                <h6>LOREM IPSUM DOLOR SIT</h6>
+                <h3>Rule 1</h3>
+                <h6>Cooperation</h6>
               </header>
               <div class="rule-main">
-                <p>Lorem ipsum dolor sit amet, nec quem fugit ea. Novum scriptorem appellantur, partem iriure lobortis sed. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis.
-                </p>
-                <p>Lorem ipsum dolor sit amet, nec quem fugit ea. Novum scriptorem appellantur, partem iriure lobortis sed. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis. Sed tractatos sapientem deterruisset ex, ut vim ancillae verterem id est novum dolor partem iriure lobortis perfecto iriure lobortis.
+                <p>No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it. 
                 </p>
                 <p></p>
-                <ul>
-                  <li>Lorem ipsum</li>
-                  <li>Ipsum dolor sit</li>
-                  <li>Cum decore ceirois</li>
-                  <li>Dolor sit</li>
-                  <li>lorem ipsum</li>
-                </ul>
               </div>
             </section>
+            <section>
+              <header class="rule-section-header">
+                <h3>Rule 2</h3>
+                <h6>Attacking Scoreboard</h6>
+              </header>
+              <div class="rule-main">
+                <p>No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately. 
+                </p>
+                <p></p>
+              </div>
+            </section>
+            <section>
+              <header class="rule-section-header">
+                <h3>Rule 3</h3>
+                <h6>Sabotage</h6>
+              </header>
+              <div class="rule-main">
+                <p>Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress. 
+                </p>
+                <p></p>
+              </div>
+            </section>
+            <section>
+              <header class="rule-section-header">
+                <h3>Rule 4</h3>
+                <h6>Bruteforcing</h6>
+              </header>
+              <div class="rule-main">
+                <p>No brute forcing of challenge flag/ keys against the scoring site. 
+                </p>
+                <p></p>
+              </div>
+            </section>
+            <section>
+              <header class="rule-section-header">
+                <h3>Rule 5</h3>
+                <h6>Denial Of Service</h6>
+              </header>
+              <div class="rule-main">
+                <p>DoSing the CTF platform or any of the challenges is forbidden. 
+                </p>
+                <p></p>
+              </div>
+            </section>
+            <section>
+              <header class="rule-section-header">
+                <h3>Legal</h3>
+                <h6>Disclaimer</h6>
+              </header>
+              <div class="rule-main">
+                <p>By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest. 
+                </p>
+              </div>
+            </section>
+            <p>If you have any questions about what is or is not allowed, please ask an organizer.</p>
+            <p></p>
+            <p>Have fun!</p>
+            <p></p>
           </div>
         </main>
-        <aside class="fb-secondary fb-row-container">
-          <div class="row-fixed">
-            <div class="fb-search">
-              <input type="search" placeholder="Type to search"/>
-            </div>
-          </div>
-          <div class="blog--top-posts row-fluid fb-row-container">
-            <header class="row-fixed aside-section-header">
-              <h5>Table of Contents</h5>
-            </header>
-            <ul class="rules--table-of-contents row-fluid">
-              <li><a href="#">Rule Topic 1</a></li>
-              <li><a href="#">Rule Topic 2</a></li>
-              <li><a href="#">Rule Topic 3</a></li>
-              <li><a href="#">Rule Topic 4</a></li>
-              <li><a href="#">Rule Topic 5</a></li>
-              <li><a href="#">Rule Topic 6</a></li>
-            </ul>
-          </div>
-        </aside>
       </div>;
   }
 

@@ -317,10 +317,8 @@
           setInterval( function() {
             if (FB_CTF.data.CONF.cmd === '1') {
               FB_CTF.command_line.loadCommandsData();
-              FB_CTF.command_line.clearCommands();
-              FB_CTF.command_line.init();
             } else {
-              FB_CTF.command_line.clearCommands();
+              console.log('Commands not refreshed');
             }
           }, FB_CTF.data.CONF.refreshCmd);
         }
@@ -2383,6 +2381,9 @@
       function clearCommands() {
         var $commandlist = $('.command-list');
         $('li', $commandlist).remove();
+
+        var $commandresults = $('.row-fluid');
+        $('li', $commandresults).remove();
       }
 
       /**

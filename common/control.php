@@ -69,6 +69,17 @@ class Control {
     $conf->change('timer', '0');
   }
 
+  public function new_announcement($announcement) {
+    $sql = 'INSERT INTO announcements_log (ts, announcement) (SELECT NOW(), ?) LIMIT 1';
+    $element = array($announcement);
+    $this->db->query($sql, $element);
+  }
+
+  public function all_announcements() {
+    $sql = 'SELECT * FROM announcements_log ORDER BY ts';
+    return $this->db->query($sql);
+  }
+
   public function progressive_scoreboard() {
     $conf = new Configuration();
     $take_scoreboard = (bool)$conf->get('ranking');

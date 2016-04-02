@@ -153,6 +153,13 @@ class Teams {
     return $this->db->query($sql, $elements)[0];
   }
 
+  // Get points by type.
+  public function points_by_type($team_id, $type) {
+    $sql = 'SELECT IFNULL(SUM(points), 0) AS points FROM scores_log WHERE type = ? AND team_id = ?';
+    $elements = array($type, $team_id);
+    return $this->db->query($sql, $elements)[0]['points'];
+  }
+
   // Get healthy status for points.
   public function get_points_health($team_id) {
     $sql = 'SELECT t.points AS points, sum(s.points) AS sum FROM teams AS t, score_log AS s WHERE t.id = ? AND s.team_id = ?';

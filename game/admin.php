@@ -347,6 +347,31 @@ class AdminController extends Controller {
   }
 
   public function renderControlsContent(): :xhp {
+    $control = new Control();
+    $announcements = null;//$control->all_announcements();
+    $announcements_div = <div></div>;
+    if ($announcements) {
+      foreach ($announcements as $announcement) {
+        $announcements_div->appendChild(
+          <div class="fb-column-container">
+            <div class="col col-pad col-1-4">
+              {$announcement['ts']}
+            </div>
+            <div class="col col-pad col-3-4">
+              {$announcement['announcement']}
+            </div>
+          </div>
+        );
+      }
+    } else {
+      $announcements_div->appendChild(
+        <div class="fb-column-container">
+          <div class="col col-pad col-1-4">
+            No Announcements
+          </div>
+        </div>
+      );
+    }
     return
       <div>
         <header class="admin-page-header">
@@ -359,13 +384,18 @@ class AdminController extends Controller {
               <h3>Announcements</h3>
             </header>
             <div class="fb-column-container">
+              <div class="col col-pad col-3-4">
+                <div class="form-el el--block-label el--full-text">
+                  <input type="text" placeholder="Write New Announcement here" value="" id="fb--conf--announcement"/>
+                </div>
+              </div>
               <div class="col col-pad col-1-4">
                 <div class="form-el el--block-label el--full-text">
-                  <label for="">New Announcement</label>
-                  <input type="text" value="" id="fb--conf--announcement"/>
+                  <button class="fb-cta cta--yellow" data-action="create">Create</button>
                 </div>
               </div>
             </div>
+            {$announcements_div}
           </section>
         </div>
       </div>;

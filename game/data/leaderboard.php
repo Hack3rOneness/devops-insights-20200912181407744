@@ -5,12 +5,16 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 sess_start();
 sess_enforce_login();
 
-class TeamDataController extends DataController {
+class LeaderboardDataController extends DataController {
   public function generateData() {
     $teams = new Teams();
     $conf = new Configuration();
-    $rank = 1;
-    $leaderboard = $teams->leaderboard();
+
+    $leaders = $teams->leaderboard();
+    $my_team = $teams->get_team(sess_team());
+    $my_rank = $teams->my_rank(sess_team());
+
+
     $teams_data = (object) array();
 
     // If refresing is disabled, exit
@@ -26,9 +30,9 @@ class TeamDataController extends DataController {
         'rank' => $rank,
         'school_level' => 'collegiate',
         'points' => array(
-          'base' => (int)$teams->points_by_type($team['id'], 'base'),
-          'quiz' => (int)$teams->points_by_type($team['id'], 'quiz'),
-          'flag' => (int)$teams->points_by_type($team['id'], 'flag'),
+          'base' => 0,
+          'quiz' => 0,
+          'flag' => 0,
           'total' => (int)$team['points']
         )
       );
@@ -42,5 +46,5 @@ class TeamDataController extends DataController {
   }
 }
 
-$teamsData = new TeamDataController();
-$teamsData->generateData();
+$leaderboardData = new LeaderboardDataController();
+$leaderboardData->generateData();

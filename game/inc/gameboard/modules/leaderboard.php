@@ -10,34 +10,36 @@ class LeaderboardModuleController {
     $leaderboard_ul = <ul></ul>;
 
     $teams = new Teams();
-    $leaders = $teams->leaderboard();
-
     $my_team = $teams->get_team(sess_team());
     $my_rank = $teams->my_rank(sess_team());
 
-    $teams = new Teams();
-    $rank = 1;
-    $l_max = (sizeof($leaders) > 5) ? 5 : sizeof($leaders);
-    for($i = 0; $i<$l_max; $i++) {
-      $team = $leaders[$i];
-      $xlink_href = '#icon--badge-'.$team['logo'];
-      $leaderboard_ul->appendChild(
-        <li class="fb-user-card">
-          <div class="user-avatar">
-            <svg class="icon--badge">
-              <use xlink:href={$xlink_href}></use>
+    // If refresing is enabled, do the needful
+    $conf = new Configuration();
+    if ($conf->get('teams') === '1') {
+      $leaders = $teams->leaderboard();
+      $rank = 1;
+      $l_max = (sizeof($leaders) > 5) ? 5 : sizeof($leaders);
+      for($i = 0; $i<$l_max; $i++) {
+        $team = $leaders[$i];
+        $xlink_href = '#icon--badge-'.$team['logo'];
+        $leaderboard_ul->appendChild(
+          <li class="fb-user-card">
+            <div class="user-avatar">
+              <svg class="icon--badge">
+                <use xlink:href={$xlink_href}></use>
 
-            </svg>
-          </div>
-          <div class="player-info">
-            <h6>{$team['name']}</h6>
-            <span class="player-rank">Rank {$rank}</span>
-            <br></br>
-            <span class="player-score">{$team['points']} pts</span>
-          </div>
-        </li>
-      );
-      $rank++;
+              </svg>
+            </div>
+            <div class="player-info">
+              <h6>{$team['name']}</h6>
+              <span class="player-rank">Rank {$rank}</span>
+              <br></br>
+              <span class="player-score">{$team['points']} pts</span>
+            </div>
+          </li>
+        );
+        $rank++;
+      }
     }
 
     return

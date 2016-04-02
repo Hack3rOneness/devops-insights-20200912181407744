@@ -9,24 +9,28 @@ class ScoreboardController {
   public function render(): :xhp {
     $scoreboard_tbody = <tbody></tbody>;
 
-    $teams = new Teams();
-    $rank = 1;
-    $leaderboard = $teams->leaderboard();
+    // If refresing is enabled, do the needful
+    $conf = new Configuration();
+    if ($conf->get('teams') === '1') {
+      $teams = new Teams();
+      $rank = 1;
+      $leaderboard = $teams->leaderboard();
 
-    foreach ($leaderboard as $team) {
-      $team_id = 'fb-scoreboard--team-'.$team['id'];
-      $scoreboard_tbody->appendChild(
-        <tr>
-          <td style="width: 10%;" class="el--radio">
-            <input type="checkbox" name="fb-scoreboard-filter" id={$team_id} value={$team['name']} checked={true}/>
-            <label class="click-effect" for={$team_id}><span></span></label>
-          </td>
-          <td style="width: 10%;">{$rank}</td>
-          <td style="width: 50%;">{$team['name']}</td>
-          <td style="width: 30%;">{$team['points']}</td>
-        </tr>
-      );
-      $rank++;
+      foreach ($leaderboard as $team) {
+        $team_id = 'fb-scoreboard--team-'.$team['id'];
+        $scoreboard_tbody->appendChild(
+          <tr>
+            <td style="width: 10%;" class="el--radio">
+              <input type="checkbox" name="fb-scoreboard-filter" id={$team_id} value={$team['name']} checked={true}/>
+              <label class="click-effect" for={$team_id}><span></span></label>
+            </td>
+            <td style="width: 10%;">{$rank}</td>
+            <td style="width: 50%;">{$team['name']}</td>
+            <td style="width: 30%;">{$team['points']}</td>
+          </tr>
+        );
+        $rank++;
+      }
     }
 
     return

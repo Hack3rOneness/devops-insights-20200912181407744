@@ -7,6 +7,8 @@ sess_enforce_login();
 
 class AnnouncementsModuleController {
   public function render(): :xhp {
+    $announcements_ul = <ul class="activity-stream"></ul>;
+    // $announcements_ul->appendChild(<li><span class="announcement-highlight">Level</span> has been opened</li>);
     return
       <div>
         <header class="module-header">
@@ -17,10 +19,7 @@ class AnnouncementsModuleController {
             <div class="module-top">
             </div>
             <div class="module-scrollable">
-              <ul class="activity-stream">
-                <li><span class="announcement-highlight">Level</span> has been opened</li>
-                <li><span class="announcement-highlight">Level</span> has been closed</li>
-              </ul>
+              {$announcements_ul}
             </div>
           </div>
         </div>
