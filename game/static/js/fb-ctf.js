@@ -849,7 +849,7 @@
           $('.capture-text', $container).text(intro);
           if( attachments instanceof Array){
             $.each(attachments, function(){
-              var f = this.substr(this.indexOf('/') +1 );
+              var f = this.substr(this.lastIndexOf('/') +1 );
               $('.capture-links', $container).append('[ <a target="_blank" href="' + this + '">' + f + '</a> ] ');
             });
           }
