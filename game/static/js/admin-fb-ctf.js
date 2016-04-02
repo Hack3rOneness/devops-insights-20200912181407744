@@ -366,6 +366,19 @@ var $body = $('body');
     location.reload();
   }
 
+  // Create announcement
+  function createAnnouncement(section) {
+    var announcement = $('input[name=new_announcement]', section)[0].value;
+    var create_data = {
+      action: 'create_announcement',
+      announcement: announcement
+    };
+    if (announcement) {
+      sendAdminRequest(create_data);
+    }
+    location.reload();
+  }
+
   // Delete level
   function deleteLevel(section) {
     var level_id = $('.level_form input[name=level_id]', section)[0].value;
@@ -788,6 +801,8 @@ var $body = $('body');
         addNewSection($self);
       } else if (action === 'create') {
         createElement($section);
+      } else if (action === 'create-announcement') {
+        createAnnouncement($section);
       } else if (action === 'edit'){
         $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", false);

@@ -348,7 +348,7 @@ class AdminController extends Controller {
 
   public function renderControlsContent(): :xhp {
     $control = new Control();
-    $announcements = null;//$control->all_announcements();
+    $announcements = $control->all_announcements();
     $announcements_div = <div></div>;
     if ($announcements) {
       foreach ($announcements as $announcement) {
@@ -386,12 +386,14 @@ class AdminController extends Controller {
             <div class="fb-column-container">
               <div class="col col-pad col-3-4">
                 <div class="form-el el--block-label el--full-text">
-                  <input type="text" placeholder="Write New Announcement here" value="" id="fb--conf--announcement"/>
+                  <input type="text" name="new_announcement" placeholder="Write New Announcement here" value=""/>
                 </div>
               </div>
               <div class="col col-pad col-1-4">
                 <div class="form-el el--block-label el--full-text">
-                  <button class="fb-cta cta--yellow" data-action="create">Create</button>
+                  <div class="admin-buttons">
+                    <button class="fb-cta cta--yellow" data-action="create-announcement">Create</button>
+                  </div>
                 </div>
               </div>
             </div>

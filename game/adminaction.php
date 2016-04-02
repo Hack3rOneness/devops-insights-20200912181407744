@@ -62,6 +62,7 @@ $filters = array(
     'active'      => FILTER_VALIDATE_INT,
     'field'       => FILTER_UNSAFE_RAW,
     'value'       => FILTER_UNSAFE_RAW,
+    'announcement'=> FILTER_UNSAFE_RAW,
     'action'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
@@ -103,6 +104,7 @@ $actions = array(
   'delete_link',
   'begin_game',
   'change_configuration',
+  'create_announcement',
   'end_game',
   'reset_game'
 );
@@ -419,6 +421,13 @@ switch ($request->action) {
     } else {
       error_response();
     }
+    break;
+  case 'create_announcement':
+    $control = new Control();
+    $control->new_announcement(
+      $request->parameters['announcement']
+    );
+    ok_response();
     break;
   case 'begin_game':
     $control = new Control();

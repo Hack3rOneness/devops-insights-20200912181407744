@@ -7,8 +7,19 @@ sess_enforce_login();
 
 class AnnouncementsModuleController {
   public function render(): :xhp {
+    $control = new Control();
+    $announcements = $control->all_announcements();
     $announcements_ul = <ul class="activity-stream"></ul>;
-    // $announcements_ul->appendChild(<li><span class="announcement-highlight">Level</span> has been opened</li>);
+    if ($announcements) {
+      foreach ($announcements as $announcement) {
+        $announcements_ul->appendChild(
+          <li>
+            <span class="announcement-highlight"></span>{$announcement['announcement']}
+          </li>
+        );
+      }
+    }
+    
     return
       <div>
         <header class="module-header">

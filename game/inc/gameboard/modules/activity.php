@@ -6,24 +6,8 @@ sess_start();
 sess_enforce_login();
 
 class ActivityModuleController {
-  public function render(): :xhp {
-    return
-      <div>
-        <header class="module-header">
-          <h6>Activity</h6>
-        </header>
-        <div class="module-content">
-          <div class="fb-section-border">
-            <div class="module-top">
-              <div class="radio-tabs">
-                <input type="radio" name="fb--module--activity" id="fb--module--activity--your-team" value="your-team"/>
-                <label for="fb--module--activity--your-team" class="click-effect"><span>Your Team</span></label>
-                <input type="radio" name="fb--module--activity" id="fb--module--activity--everyone" checked={true} value="all"/>
-                <label for="fb--module--activity--everyone" class="click-effect"><span>Everyone</span></label>
-              </div>
-            </div>
-            <div class="module-scrollable">
-              <ul class="activity-stream">
+  /*
+  <ul class="activity-stream">
                 <li class="opponent-team">
                   <span class="opponent-name">Team 1</span> captured India
                 </li>
@@ -40,6 +24,28 @@ class ActivityModuleController {
                   <span class="opponent-name">Team 3</span> captured India
                 </li>
               </ul>
+  */
+  
+  // $activity_ul->appendChild();
+  public function render(): :xhp {
+    $activity_ul = <ul class="activity-stream"></ul>;
+    return
+      <div>
+        <header class="module-header">
+          <h6>Activity</h6>
+        </header>
+        <div class="module-content">
+          <div class="fb-section-border">
+            <div class="module-top">
+              <div class="radio-tabs">
+                <input type="radio" name="fb--module--activity" id="fb--module--activity--your-team" value="your-team"/>
+                <label for="fb--module--activity--your-team" class="click-effect"><span>Your Team</span></label>
+                <input type="radio" name="fb--module--activity" id="fb--module--activity--everyone" checked={true} value="all"/>
+                <label for="fb--module--activity--everyone" class="click-effect"><span>Everyone</span></label>
+              </div>
+            </div>
+            <div class="module-scrollable">
+              {$activity_ul}
             </div>
           </div>
         </div>
