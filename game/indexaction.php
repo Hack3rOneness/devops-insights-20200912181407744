@@ -60,7 +60,7 @@ function login_team($team_id, $password) {
 $filters = array(
   'POST' => array(
     'team_id'     => FILTER_VALIDATE_INT,
-    'teamname'    => FILTER_SANITIZE_STRING,
+    'teamname'    => FILTER_UNSAFE_RAW,
     'password'    => FILTER_UNSAFE_RAW,
     'logo'        => array(
       'filter'      => FILTER_VALIDATE_REGEXP,

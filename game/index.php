@@ -177,7 +177,7 @@ class IndexController extends Controller {
               <fieldset class="form-set fb-container container--small">
                 <div class="form-el el--text">
                   <label for="">Team Name</label>
-                  <input name="teamname" type="text" size={20} />
+                  <input name="teamname" type="text" maxlength={20} />
                 </div>
                 <div class="form-el el--text">
                   <label for="">Password</label>
