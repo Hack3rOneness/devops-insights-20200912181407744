@@ -22,3 +22,5 @@ www.pid
 # Attachments directory
 game/data/attachments/*
 !game/data/attachments/index.php
+game/data/attachments/deleted/*
+!game/data/attachments/deleted/index.php
