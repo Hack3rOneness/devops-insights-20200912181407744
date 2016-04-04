@@ -8,7 +8,8 @@ sess_enforce_login();
 $filters = array(
   'POST' => array(
     'level_id'    => FILTER_VALIDATE_INT,
-    'answer'        => FILTER_UNSAFE_RAW,
+    'answer'      => FILTER_UNSAFE_RAW,
+    'csrf_token'  => FILTER_UNSAFE_RAW,  
     'action'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
@@ -24,6 +25,13 @@ $actions = array(
 );
 $request = new Request($filters, $actions);
 $request->processRequest();
+
+if ($request->action !== 'none') {
+  // CSRF check
+  if ($request->parameters['csrf_token'] !== sess_csrf_token()) {
+    error_page();
+  }
+}
 
 switch ($request->action) {
   case 'none':

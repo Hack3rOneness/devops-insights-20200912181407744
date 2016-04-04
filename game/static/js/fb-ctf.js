@@ -930,9 +930,11 @@
                
 		          $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled'); 
               var hint_level = $('input[name=level_id]', $container)[0].value;
+              var csrf_token = $('input[name=csrf_token]')[0].value;
               var hint_data = {
                 action: 'get_hint',
-                level_id: hint_level
+                level_id: hint_level,
+                csrf_token: csrf_token
               };
 
               $.post(
@@ -959,10 +961,12 @@
 
             var score_level = $('input[name=level_id]', $container)[0].value;
             var score_answer = $('input[name=answer]', $container)[0].value;
+            var csrf_token = $('input[name=csrf_token]')[0].value;
             var score_data = {
               action: 'answer_level',
               level_id: score_level,
-              answer: score_answer
+              answer: score_answer,
+              csrf_token: csrf_token
             };
 
             $.post(

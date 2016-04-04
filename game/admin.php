@@ -1779,7 +1779,7 @@ class AdminController extends Controller {
   public function renderBody(string $page): :xhp {
     return
       <body data-section="admin">
-        <input type="hidden" name="lolololol" value={sess_csrf_token()}/>
+        <input type="hidden" name="csrf_token" value={sess_csrf_token()}/>
         <div style="height: 0; width: 0; position: absolute; visibility: hidden" id="fb-svg-sprite"></div>
         <div class="fb-viewport admin-viewport">
           {$this->renderMainNav()}

@@ -30,6 +30,8 @@ function endGame() {
  *   - whether or not the request was succesful
  */
 function sendAdminRequest(request_data) {
+  var csrf_token = $('input[name=csrf_token]')[0].value;
+  request_data.csrf_token = csrf_token;
   $.post(
     'adminaction.php',
     request_data
@@ -274,10 +276,12 @@ var $body = $('body');
   function createLink(section) {
     var level_id = $('.link_form input[name=level_id]', section)[0].value;
     var link = $('.link_form input[name=link]', section)[0].value;
+    var csrf_token = $('input[name=csrf_token]')[0].value; 
     var create_data = {
       action: 'create_link',
       link: link,
-      level_id: level_id
+      level_id: level_id,
+      csrf_token: csrf_token
     };
 
     if (level_id && link) {

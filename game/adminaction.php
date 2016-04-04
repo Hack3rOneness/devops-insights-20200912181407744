@@ -63,6 +63,7 @@ $filters = array(
     'field'       => FILTER_UNSAFE_RAW,
     'value'       => FILTER_UNSAFE_RAW,
     'announcement'=> FILTER_UNSAFE_RAW,
+    'csrf_token'  => FILTER_UNSAFE_RAW, 
     'action'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
@@ -110,6 +111,13 @@ $actions = array(
 );
 $request = new Request($filters, $actions);
 $request->processRequest();
+
+if ($request->action !== 'none') {
+  // CSRF check
+  if ($request->parameters['csrf_token'] !== sess_csrf_token()) {
+    error_page();
+  }
+}
 
 switch ($request->action) {
   case 'none':
