@@ -101,13 +101,22 @@ function registerTeam() {
 }
 
 function loginTeam() {
-  var teamId = verifyTeamName('login');
-  var password = verifyTeamPassword();
+  var loginSelect = $('.fb-form input[name="login_select"]')[0].value;
+  var team, password, teamParam;
+  
+  if (loginSelect === 'on') {
+    team = verifyTeamName('login');
+    teamParam = 'team_id';
+  } else {
+    team = $('.fb-form input[name="team_name"]')[0].value;
+    teamParam = 'teamname';
+  }
+  password = verifyTeamPassword();
 
-  if (teamId && password) {
+  if (team && password) {
     var login_data = {
       action: 'login_team',
-      team_id: teamId,
+      [teamParam]: team,
       password: password
     };
     sendIndexRequest(login_data);

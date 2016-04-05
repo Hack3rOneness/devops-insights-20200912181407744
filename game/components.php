@@ -5,7 +5,7 @@ abstract class :xhp:svg-element extends :xhp:html-element {
 
 class :svg extends :xhp:svg-element {
   attribute
-    int width,
+    Stringish width,
     int height,
     Stringish xmlns,
     Stringish xmlns:amcharts,

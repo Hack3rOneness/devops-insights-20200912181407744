@@ -177,11 +177,11 @@ class IndexController extends Controller {
               <fieldset class="form-set fb-container container--small">
                 <div class="form-el el--text">
                   <label for="">Team Name</label>
-                  <input name="teamname" type="text" maxlength={20} />
+                  <input autocomplete="off" name="teamname" type="text" maxlength={20}/>
                 </div>
                 <div class="form-el el--text">
                   <label for="">Password</label>
-                  <input name="password" type="password"/>
+                  <input autocomplete="off" name="password" type="password"/>
                 </div>
               </fieldset>
               <div class="fb-choose-emblem">
@@ -217,11 +217,18 @@ class IndexController extends Controller {
     $conf = new Configuration();
     if ($conf->get('login') === '1') {
       $teams = new Teams();
-      $select = <select name="team_id" />;
-      $select->appendChild(<option value="0">Select</option>);
-      foreach ($teams->all_active_teams() as $team) {
-        $select->appendChild(<option value={$team['id']}>{$team['name']}</option>);
+
+      $login_team = <input autocomplete="off" name="team_name" type="text" maxlength={20}/>;
+      $login_select = "off";
+      if ($conf->get('login_select') === '1') {
+        $login_select = "on";
+        $login_team = <select name="team_id" />;
+        $login_team->appendChild(<option value="0">Select</option>);
+        foreach ($teams->all_active_teams() as $team) {
+          $login_team->appendChild(<option value={$team['id']}>{$team['name']}</option>);
+        }
       }
+
       return
         <main role="main" class="fb-main page--login full-height fb-scroll">
           <header class="fb-section-header fb-container">
@@ -231,14 +238,15 @@ class IndexController extends Controller {
           <div class="fb-login">
             <form class="fb-form">
               <input type="hidden" name="action" value="login_team"/>
+              <input type="hidden" name="login_select" value={$login_select}/>
               <fieldset class="form-set fb-container container--small">
                 <div class="form-el el--text">
                   <label for="">Team Name</label>
-                  {$select}
+                  {$login_team}
                 </div>
                 <div class="form-el el--text">
                   <label for="">Password</label>
-                  <input name="password" type="password"/>
+                  <input autocomplete="off" name="password" type="password"/>
                 </div>
               </fieldset>
               <div class="form-el--actions">

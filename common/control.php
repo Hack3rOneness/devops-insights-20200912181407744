@@ -46,20 +46,16 @@ class Control {
 
     // Reset and kick off progressive scoreboard
     $this->reset_progressive();
-    $conf->change('ranking', '1');
     $this->progressive_scoreboard();
   }
 
   public function end() {
-    // Mark game as finished
+    // Mark game as finished and it stops progressive scoreboard
     $conf = new Configuration();
     $conf->change('game', '0');
 
     // Disable scoring
     $conf->change('scoring', '0');
-
-    // Stop progressive scoreboard
-    $conf->change('ranking', '0');
 
     // Put timestampts to zero
     $conf->change('start_ts', '0');
@@ -82,13 +78,13 @@ class Control {
 
   public function progressive_scoreboard() {
     $conf = new Configuration();
-    $take_scoreboard = (bool)$conf->get('ranking');
+    $take_scoreboard = (bool)$conf->get('game');
     $cycle = (int)$conf->get('ranking_cycle');
 
     while ($take_scoreboard) {
       $this->take_progressive();
       sleep($cycle);
-      $take_scoreboard = (bool)$conf->get('ranking');
+      $take_scoreboard = (bool)$conf->get('game');
       $cycle = (int)$conf->get('ranking_cycle');
     }
   }

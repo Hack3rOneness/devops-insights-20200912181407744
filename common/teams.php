@@ -153,6 +153,13 @@ class Teams {
     return $this->db->query($sql, $elements)[0];
   }
 
+  // Get a single team, by name.
+  public function get_team_by_name($team_name) {
+    $sql = 'SELECT * FROM teams WHERE name = ? LIMIT 1';
+    $elements = array($team_name);
+    return $this->db->query($sql, $elements)[0];
+  }
+
   // Get points by type.
   public function points_by_type($team_id, $type) {
     $sql = 'SELECT IFNULL(SUM(points), 0) AS points FROM scores_log WHERE type = ? AND team_id = ?';

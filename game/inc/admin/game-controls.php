@@ -1,20 +1,7 @@
-<?php
-
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
-
-sess_start();
-sess_enforce_admin();
-
-?>
   <header class="admin-page-header">
     <h3>Game Controls</h3>
-    <!--
-    * @note
-    * this will reflect the last saved time inside the
-    *  "highlighted" span
-  -->
-  <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
-</header>
+    <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
+  </header>
 
 
 <div class="admin-sections">

@@ -171,7 +171,6 @@ INSERT INTO `configuration` (field, value, description) VALUES("timer", "0", "(B
 INSERT INTO `configuration` (field, value, description) VALUES("scoring", "0", "(Boolean) Ability score levels");
 INSERT INTO `configuration` (field, value, description) VALUES("teams", "1", "(Boolean) Display current active teams and leaderboard");
 INSERT INTO `configuration` (field, value, description) VALUES("map", "1", "(Boolean) Display current map");
-#INSERT INTO `configuration` (field, value, description) VALUES("ranking", "0", "(Boolean) Progressive ranking is enabled");
 INSERT INTO `configuration` (field, value, description) VALUES("ranking_cycle", "300", "(Integer) Frequency to take ranking in seconds");
 INSERT INTO `configuration` (field, value, description) VALUES("registration", "0", "(Boolean) Ability to register teams");
 INSERT INTO `configuration` (field, value, description) VALUES("registration_names", "0", "(Boolean) Registration will ask for names");
@@ -181,9 +180,34 @@ INSERT INTO `configuration` (field, value, description) VALUES("registration_pla
 INSERT INTO `configuration` (field, value, description) VALUES("login", "1", "(Boolean) Ability to login");
 INSERT INTO `configuration` (field, value, description) VALUES("login_select", "1", "(Boolean) Login selecting the team");
 INSERT INTO `configuration` (field, value, description) VALUES("login_strongpasswords", "0", "(Boolean) Enforce using strong passwords");
-INSERT INTO `configuration` (field, value, description) VALUES("password_type", "1", "(Integer) Type of passwords (incremental): 1 - Anything; 2 - Minimum length of 8 chars; 3 - Numbers and letters; 4 - Caps and special chars");
+INSERT INTO `configuration` (field, value, description) VALUES("password_type", "1", "(Integer) Type of passwords: See password_types");
 INSERT INTO `configuration` (field, value, description) VALUES("default_bonus", "30", "(Integer) Default value for bonus in levels");
 INSERT INTO `configuration` (field, value, description) VALUES("default_bonusdec", "10", "(Integer) Default bonus decrement in levels");
+UNLOCK TABLES;
+
+--
+-- Table structure for table `password_types`
+--
+
+DROP TABLE IF EXISTS `password_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `field` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `regex` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `field` (`field`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `password_types` WRITE;
+INSERT INTO `password_types` (field, regex, description) VALUES("1", "/.*/", "Anything is valid, no policy enforced");
+INSERT INTO `password_types` (field, regex, description) VALUES("2", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[0-9]).*$/", "Minimum length of 8 chars, with numbers and letters. No caps");
+INSERT INTO `password_types` (field, regex, description) VALUES("3", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/", "Minimum length of 8 chars. Numbers, Lowercase and uppercase letters");
+INSERT INTO `password_types` (field, regex, description) VALUES("4", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/", "Minimum length of 8 chars. Numbers, Lowercase and uppercase letters and special characters");
+
 UNLOCK TABLES;
 
 --

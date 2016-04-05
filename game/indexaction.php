@@ -6,6 +6,14 @@ function register_team($teamname, $password, $logo) {
   $teams = new Teams();
   $logos = new Logos();
   $conf = new Configuration();
+
+  // Check if registration is enabled
+  if ($conf->get('registration') === '0') {
+    error_response('Registration failed', 'registration');
+    exit;
+  }
+
+  // Check logo
   $final_logo = $logo;
   if (!$logos->check_exists($final_logo)) {
     $final_logo = $logos->random_logo();
@@ -42,6 +50,15 @@ function register_team($teamname, $password, $logo) {
 
 function login_team($team_id, $password) {
   $teams = new Teams();
+  $conf = new Configuration();
+
+  // Check if login is enabled
+  if ($conf->get('login') === '0') {
+    error_response('Login failed', 'login');
+    exit;
+  }
+
+  // Verify credentials
   $team = $teams->verify_credentials($team_id, $password);
   if ($team) {
     sess_start();
@@ -99,8 +116,24 @@ switch ($request->action) {
     );
     break;
   case 'login_team':
+    $conf = new Configuration();
+    if ($conf->get('login_select') === '1') {
+      $team_id = $request->parameters['team_id'];
+    } else {
+      $teams = new Teams();
+      $team_name = $request->parameters['teamname'];
+      if ($teams->team_exist($team_name)) {
+        $team_id = $teams->get_team_by_name($team_name)['id'];
+
+      } else {
+        error_response('Login failed', 'login');
+        exit;
+      }
+    }
+
+    // If we are here, login!
     login_team(
-      $request->parameters['team_id'],
+      $team_id,
       $request->parameters['password']
     );
     break;

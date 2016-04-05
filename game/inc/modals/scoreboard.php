@@ -45,7 +45,7 @@ class ScoreboardController {
           </a>
         </div>
         <div class="scoreboard-graphic scoreboard-graphic-container">
-          <svg class="fb-graphic" data-file="data/scores.php" width={820} height={220}></svg>
+          <svg class="fb-graphic" data-file="data/scores.php" width="820" height={220}></svg>
         </div>
         <div class="game-progress fb-progress-bar fb-cf row-fixed">
           <div class="indicator game-progress-indicator">
