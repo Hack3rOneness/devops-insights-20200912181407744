@@ -29,9 +29,11 @@ function start_page(): void {
   redirect('/index.php');
 }
 
-function request_response(string $msg): void {
+function request_response(string $result, string $msg, string $redirect): void {
   $response_data = array(
-    'result' => $msg,
+    'result' => $result,
+    'message' => $msg,
+    'redirect' => $redirect,
   );
   echo json_encode($response_data);
 }
@@ -44,12 +46,12 @@ function hint_response(string $msg, string $result): void {
   echo json_encode($response_data);
 }
 
-function ok_response(): void {
-  request_response('OK');
+function ok_response(string $msg, string $redirect): void {
+  request_response('OK', $msg, $redirect);
 }
 
-function error_response(): void {
-  request_response('ERROR');
+function error_response(string $msg, string $redirect): void {
+  request_response('ERROR', $msg, $redirect);
 }
 
 function must_have_idx<Tk, Tv>(

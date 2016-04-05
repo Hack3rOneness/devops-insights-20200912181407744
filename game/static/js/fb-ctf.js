@@ -299,21 +299,29 @@
           // Countries
           setInterval( function() {
             if (FB_CTF.data.CONF.map === '1') {  
+              // Map
               getCountryData();
               refreshMapData();
+              // Announcements
+              loadAnnouncementsData();
+              clearAnnouncements();
+              setupAnnouncements();
             } else {
               clearMapData();
+              clearAnnouncements();
             }
           }, FB_CTF.data.CONF.refreshMap);
 
           // Teams
           setInterval( function() {
             if (FB_CTF.data.CONF.teams === '1') {
+              // Teams
               loadTeamData();
-              //loadLeaderboardData();
               clearTeams();
-              //clearLeaderboard();
               setupTeams();
+              // Leaderboard
+              //loadLeaderboardData();
+              //clearLeaderboard();
               //setupLeaderboard();
             } else {
               clearTeams();
@@ -322,23 +330,8 @@
 
           // Commands
           setInterval( function() {
-            if (FB_CTF.data.CONF.cmd === '1') {
-              FB_CTF.command_line.loadCommandsData();
-            } else {
-              console.log('Commands not refreshed');
-            }
+            FB_CTF.command_line.loadCommandsData();
           }, FB_CTF.data.CONF.refreshCmd);
-
-          // Announcements
-          setInterval( function() {
-            //if (FB_CTF.data.CONF.cmd === '1') {
-              loadAnnouncementsData();
-              clearAnnouncements();
-              setupAnnouncements();
-            //} else {
-            //  console.log('Commands not refreshed');
-            //}
-          }, FB_CTF.data.CONF.refreshMap);
         }
       });
     }
@@ -945,7 +938,7 @@
                 console.log('ERROR');
               }).done(function(data) {
                 var responseData = JSON.parse(data);
-                if (responseData.result == 'OK') {
+                if (responseData.result === 'OK') {
                   console.log('OK');
 		              console.log('Hint: ' + responseData.hint);
                   $('.capture-hint div', $container).text(responseData.hint);
@@ -977,7 +970,7 @@
               console.log('ERROR');
             }).done(function(data) {
               var responseData = JSON.parse(data);
-              if (responseData.result == 'OK') {
+              if (responseData.result === 'OK') {
                 console.log('OK');
                 $('input[name=answer]', $container).css("background-color","green");
                 $('.js-trigger-score', $container).text('YES!');

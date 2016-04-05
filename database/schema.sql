@@ -120,6 +120,7 @@ CREATE TABLE `teams` (
   `last_score` timestamp NULL DEFAULT NULL,
   `logo` text DEFAULT NULL,
   `admin` tinyint(1) DEFAULT 0,
+  `protected` tinyint(1) DEFAULT 0,
   `visible` tinyint(1) DEFAULT 1,
   `created_ts` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -169,14 +170,8 @@ INSERT INTO `configuration` (field, value, description) VALUES("end_ts", "0", "(
 INSERT INTO `configuration` (field, value, description) VALUES("timer", "0", "(Boolean) Timer is enabled");
 INSERT INTO `configuration` (field, value, description) VALUES("scoring", "0", "(Boolean) Ability score levels");
 INSERT INTO `configuration` (field, value, description) VALUES("teams", "1", "(Boolean) Display current active teams and leaderboard");
-INSERT INTO `configuration` (field, value, description) VALUES("teams_cycle", "5000", "(Integer) Refresh rate for teams/leaderboard in milliseconds");
 INSERT INTO `configuration` (field, value, description) VALUES("map", "1", "(Boolean) Display current map");
-INSERT INTO `configuration` (field, value, description) VALUES("map_cycle", "5000", "(Integer) Refresh rate for map in milliseconds");
-INSERT INTO `configuration` (field, value, description) VALUES("conf", "1", "(Boolean) Send current configuration");
-INSERT INTO `configuration` (field, value, description) VALUES("conf_cycle", "10000", "(Integer) Refresh rate for configuration values in milliseconds");
-INSERT INTO `configuration` (field, value, description) VALUES("cmd", "1", "(Boolean) Send current commands");
-INSERT INTO `configuration` (field, value, description) VALUES("cmd_cycle", "30000", "(Integer) Refresh rate for commands in milliseconds");
-INSERT INTO `configuration` (field, value, description) VALUES("ranking", "0", "(Boolean) Progressive ranking is enabled");
+#INSERT INTO `configuration` (field, value, description) VALUES("ranking", "0", "(Boolean) Progressive ranking is enabled");
 INSERT INTO `configuration` (field, value, description) VALUES("ranking_cycle", "300", "(Integer) Frequency to take ranking in seconds");
 INSERT INTO `configuration` (field, value, description) VALUES("registration", "0", "(Boolean) Ability to register teams");
 INSERT INTO `configuration` (field, value, description) VALUES("registration_names", "0", "(Boolean) Registration will ask for names");
@@ -186,6 +181,7 @@ INSERT INTO `configuration` (field, value, description) VALUES("registration_pla
 INSERT INTO `configuration` (field, value, description) VALUES("login", "1", "(Boolean) Ability to login");
 INSERT INTO `configuration` (field, value, description) VALUES("login_select", "1", "(Boolean) Login selecting the team");
 INSERT INTO `configuration` (field, value, description) VALUES("login_strongpasswords", "0", "(Boolean) Enforce using strong passwords");
+INSERT INTO `configuration` (field, value, description) VALUES("password_type", "1", "(Integer) Type of passwords (incremental): 1 - Anything; 2 - Minimum length of 8 chars; 3 - Numbers and letters; 4 - Caps and special chars");
 INSERT INTO `configuration` (field, value, description) VALUES("default_bonus", "30", "(Integer) Default value for bonus in levels");
 INSERT INTO `configuration` (field, value, description) VALUES("default_bonusdec", "10", "(Integer) Default bonus decrement in levels");
 UNLOCK TABLES;

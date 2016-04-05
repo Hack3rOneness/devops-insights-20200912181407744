@@ -870,10 +870,10 @@ var $body = $('body');
     //
     // radio buttons
     //
-    $('input[type="radio"]').on('change', function(event) {
+    $('input[type=radio]').on('change', function(event) {
       var $this = $(this);
       var radio_name = $this.attr('id');
-      
+
       if (radio_name.search('fb--teams') === 0) {
         if (radio_name.search('all') > 0) {
           toggleAll(radio_name);

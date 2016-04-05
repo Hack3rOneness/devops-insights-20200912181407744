@@ -366,6 +366,9 @@ class IndexController extends Controller {
     case 'countdown':
       return $this->renderCountdownContent();
       break;
+    case 'game':
+      game_page();
+      break;
     default:
       return $this->renderMainContent();
       break;
@@ -417,6 +420,7 @@ $pages = array(
   'login',
   'error',
   'mobile',
+  'game',
 );
 
 $request = new Request($filters, $actions, $pages);

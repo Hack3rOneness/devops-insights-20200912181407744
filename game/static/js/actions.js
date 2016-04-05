@@ -55,8 +55,8 @@ function verifyTeamLogo() {
   }
 }
 
-function gameBoard() {
-  window.location.href = '/game.php';
+function goToPage(page) {
+  window.location.href = '/index.php?page=' + page;
 }
 
 function loginError() {
@@ -72,9 +72,9 @@ function sendIndexRequest(request_data) {
     console.log('ERROR');
   }).done(function(data) {
     var responseData = JSON.parse(data);
-    if (responseData.result == 'OK') {
-      console.log('OK');
-      gameBoard();
+    if (responseData.result === 'OK') {
+      console.log('OK:' + responseData.message);
+      goToPage(responseData.redirect); 
     } else {
       // TODO: Make this a modal
       console.log('Failed');

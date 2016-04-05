@@ -5,6 +5,7 @@ require_once('../vendor/autoload.php');
 function register_team($teamname, $password, $logo) {
   $teams = new Teams();
   $logos = new Logos();
+  $conf = new Configuration();
   $final_logo = $logo;
   if (!$logos->check_exists($final_logo)) {
     $final_logo = $logos->random_logo();
@@ -12,7 +13,7 @@ function register_team($teamname, $password, $logo) {
 
   // Check if team name is not empty or just spaces
   if ((!$teamname) || (trim($teamname) == "")) {
-    error_response();
+    error_response('Registration failed', 'registration');
     exit;
   }
 
@@ -24,14 +25,17 @@ function register_team($teamname, $password, $logo) {
     $password_hash = $teams->generate_hash($password);
     $team_id = $teams->create_team($shortname, $password_hash, $final_logo);
       if ($team_id) {
-      login_team($team_id, $password);
+        if ($conf->get('registration_login') === '1') {
+          login_team($team_id, $password);
+        } else {
+          ok_response('Registration succesful', 'login');
+        }
     } else {
-      error_response();
+      error_response('Registration failed', 'registration');
       exit;
     }
   } else {
-    // TODO: Make distintions in error responses
-    error_response();
+    error_response('Registration failed', 'registration');
     exit;
   }
 }
@@ -50,9 +54,9 @@ function login_team($team_id, $password) {
       }
       sess_set('IP', $_SERVER['REMOTE_ADDR']);
     }
-    ok_response();
+    ok_response('Login succesful', 'game');
   } else {
-    error_response();
+    error_response('Login failed', 'login');
     exit;
   }
 }
@@ -80,7 +84,7 @@ $actions = array(
   'register_team',
   'login_team',
 );
-$request = new Request($filters, $actions);
+$request = new Request($filters, $actions, array());
 $request->processRequest();
 
 switch ($request->action) {

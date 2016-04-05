@@ -15,6 +15,12 @@ $filters = array(
       'options'     => array(
         'regexp'      => '/^[\w-]+$/'
       ),
+    ),
+    'page'      => array(
+      'filter'      => FILTER_VALIDATE_REGEXP,
+      'options'     => array(
+        'regexp'      => '/^[\w-]+$/'
+      ), 
     )
   )
 );
@@ -23,7 +29,7 @@ $actions = array(
   'get_hint',
   'open_level',
 );
-$request = new Request($filters, $actions);
+$request = new Request($filters, $actions, array());
 $request->processRequest();
 
 if ($request->action !== 'none') {
@@ -54,17 +60,17 @@ switch ($request->action) {
         // Update teams last score
         $teams = new Teams();
         $teams->last_score(sess_team());
-        ok_response();
+        ok_response('Success', 'game');
       } else {
         $levels->log_failed_score(
           $request->parameters['level_id'],
           sess_team(),
           $request->parameters['answer']
         );
-        error_response();
+        error_response('Failed', 'game');
       }
     } else {
-      error_response();
+      error_response('Failed', 'game');
     }
     break;
   case 'get_hint':
@@ -80,7 +86,7 @@ switch ($request->action) {
     }
     break;
   case 'open_level':
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   default:
     game_page();

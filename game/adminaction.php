@@ -68,7 +68,13 @@ $filters = array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
         'regexp'      => '/^[\w-]+$/'
-      ),
+      ), 
+    ),
+    'page'      => array(
+      'filter'      => FILTER_VALIDATE_REGEXP,
+      'options'     => array(
+        'regexp'      => '/^[\w-]+$/'
+      ), 
     )
   )
 );
@@ -109,7 +115,7 @@ $actions = array(
   'end_game',
   'reset_game'
 );
-$request = new Request($filters, $actions);
+$request = new Request($filters, $actions, array());
 $request->processRequest();
 
 if ($request->action !== 'none') {
@@ -138,7 +144,7 @@ switch ($request->action) {
       $request->parameters['hint'],
       $request->parameters['penalty']
     );
-    ok_response();
+    ok_response('Created succesfully', 'admin');
     break;
   case 'update_quiz':
     $levels = new Levels();
@@ -153,7 +159,7 @@ switch ($request->action) {
       $request->parameters['penalty'],
       $request->parameters['level_id']
     );
-    ok_response();
+    ok_response('Updated succesfully', 'admin');
     break;
   case 'create_flag':
     $levels = new Levels();
@@ -171,7 +177,7 @@ switch ($request->action) {
       $request->parameters['hint'],
       $request->parameters['penalty']
     );
-    ok_response();
+    ok_response('Created succesfully', 'admin');
     break;
   case 'update_flag':
     $levels = new Levels();
@@ -187,7 +193,7 @@ switch ($request->action) {
       $request->parameters['penalty'],
       $request->parameters['level_id']
     );
-    ok_response();
+    ok_response('Updated succesfully', 'admin');
     break;
   case 'create_base':
     $levels = new Levels();
@@ -202,7 +208,7 @@ switch ($request->action) {
       $request->parameters['hint'],
       $request->parameters['penalty']
     );
-    ok_response();
+    ok_response('Created succesfully', 'admin');
     break;
   case 'update_base':
     $levels = new Levels();
@@ -216,14 +222,14 @@ switch ($request->action) {
       $request->parameters['penalty'],
       $request->parameters['level_id']
     );
-    ok_response();
+    ok_response('Updated succesfully', 'admin');
     break;
   case 'delete_level':
     $levels = new Levels();
     $levels->delete_level(
       $request->parameters['level_id']
     );
-    ok_response();
+    ok_response('Deleted succesfully', 'admin');
     break;
   case 'toggle_status_level':
     $levels = new Levels();
@@ -231,7 +237,7 @@ switch ($request->action) {
       $request->parameters['level_id'],
       $request->parameters['status']
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'toggle_status_all':
     if ($request->parameters['all_type'] === 'team') {
@@ -239,14 +245,14 @@ switch ($request->action) {
       $teams->toggle_status_all(
         $request->parameters['status']
       );
-      ok_response();
+      ok_response('Success', 'admin');
     } else {
       $levels = new Levels();
       $levels->toggle_status_all(
         $request->parameters['status'],
         $request->parameters['all_type']
       );
-      ok_response();
+      ok_response('Success', 'admin');
     }
     break;
   case 'create_team':
@@ -257,7 +263,7 @@ switch ($request->action) {
       $password_hash,
       $request->parameters['logo']
     );
-    ok_response();
+    ok_response('Created succesfully', 'admin');
     break;
   case 'update_team':
     $teams = new Teams();
@@ -274,7 +280,7 @@ switch ($request->action) {
         $request->parameters['team_id']
       );
     }
-    ok_response();
+    ok_response('Updated succesfully', 'admin');
     break;
   case 'toggle_admin_team':
     $teams = new Teams();
@@ -282,7 +288,7 @@ switch ($request->action) {
       $request->parameters['team_id'],
       $request->parameters['admin']
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'toggle_status_team':
     $teams = new Teams();
@@ -290,7 +296,7 @@ switch ($request->action) {
       $request->parameters['team_id'],
       $request->parameters['status']
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'toggle_visible_team':
     $teams = new Teams();
@@ -298,7 +304,7 @@ switch ($request->action) {
       $request->parameters['team_id'],
       $request->parameters['visible']
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'enable_logo':
     $logos = new Logos();
@@ -306,7 +312,7 @@ switch ($request->action) {
       $request->parameters['logo_id'],
       1
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'disable_logo':
     $logos = new Logos();
@@ -314,7 +320,7 @@ switch ($request->action) {
       $request->parameters['logo_id'],
       0
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'enable_country':
     $countries = new Countries();
@@ -322,7 +328,7 @@ switch ($request->action) {
       $request->parameters['country_id'],
       1
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'disable_country':
     $countries = new Countries();
@@ -330,41 +336,41 @@ switch ($request->action) {
       $request->parameters['country_id'],
       0
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'delete_team':
     $teams = new Teams();
     $teams->delete_team(
       $request->parameters['team_id']
     );
-    ok_response();
+    ok_response('Deleted successfully', 'admin');
     break;
   case 'update_session':
     sess_write(
       $request->parameters['cookie'],
       $request->parameters['data']
     );
-    ok_response();
+    ok_response('Updated successfully', 'admin');
     break;
   case 'delete_session':
     sess_destroy(
       $request->parameters['cookie']
     );
-    ok_response();
+    ok_response('Deleted successfully', 'admin');
     break;
   case 'delete_category':
     $levels = new Levels();
     $levels->delete_category(
       $request->parameters['category_id']
     );
-    ok_response();
+    ok_response('Deleted successfully', 'admin');
     break;
   case 'create_category':
     $levels = new Levels();
     $levels->create_category(
       $request->parameters['category']
     );
-    ok_response();
+    ok_response('Deleted successfully', 'admin');
     break;
   case 'create_attachment':
     $attachments = new Attachments();
@@ -374,7 +380,7 @@ switch ($request->action) {
       $request->parameters['level_id']
     );
     if ($result) {
-      ok_response();
+      ok_response('Created successfully', 'admin');
     }
     break;
   case 'update_attachment':
@@ -383,14 +389,14 @@ switch ($request->action) {
       $request->parameters['filename'],
       $request->parameters['level_id']
     );
-    ok_response();
+    ok_response('Updated successfully', 'admin');
     break;
   case 'delete_attachment':
     $attachments = new Attachments();
     $attachments->delete(
       $request->parameters['attachment_id']
     );
-    ok_response();
+    ok_response('Deleted successfully', 'admin');
     break;
   case 'create_link':
     $links = new Links();
@@ -399,7 +405,7 @@ switch ($request->action) {
       $request->parameters['level_id']
     );
     if ($result) {
-      ok_response();
+      ok_response('Created successfully', 'admin');
     }
     break;
   case 'update_link':
@@ -408,14 +414,14 @@ switch ($request->action) {
       $request->parameters['link'],
       $request->parameters['link_id']
     );
-    ok_response();
+    ok_response('Updated succesfully', 'admin');
     break;
   case 'delete_link':
     $links = new Links();
     $links->delete(
       $request->parameters['link_id']
     );
-    ok_response();
+    ok_response('Deleted successfully', 'admin');
     break;
   case 'change_configuration':
     $conf = new Configuration();
@@ -425,9 +431,9 @@ switch ($request->action) {
         $field,
         $request->parameters['value']
       );
-      ok_response();
+      ok_response('Success', 'admin');
     } else {
-      error_response();
+      error_response('Invalid configuration', 'admin');
     }
     break;
   case 'create_announcement':
@@ -435,17 +441,17 @@ switch ($request->action) {
     $control->new_announcement(
       $request->parameters['announcement']
     );
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'begin_game':
     $control = new Control();
     $control->begin();
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   case 'end_game':
     $control = new Control();
     $control->end();
-    ok_response();
+    ok_response('Success', 'admin');
     break;
   default:
     admin_page();

@@ -28,8 +28,10 @@ class Request {
       $this->input_method,
       $this->filters[$this->method]
     );
-    if ($this->parameters) {
+    if ($this->parameters['action']) {
       $this->action = $this->parameters['action'];
+    }
+    if ($this->parameters['page']) {
       $this->page = $this->parameters['page'];
     }
     if ((!in_array($this->action, $this->actions))) {
