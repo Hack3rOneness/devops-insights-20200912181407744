@@ -63,6 +63,7 @@ $filters = array(
     'field'       => FILTER_UNSAFE_RAW,
     'value'       => FILTER_UNSAFE_RAW,
     'announcement'=> FILTER_UNSAFE_RAW,
+    'announcement_id' => FILTER_VALIDATE_INT,
     'csrf_token'  => FILTER_UNSAFE_RAW, 
     'action'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
@@ -112,6 +113,7 @@ $actions = array(
   'begin_game',
   'change_configuration',
   'create_announcement',
+  'delete_announcement',
   'end_game',
   'reset_game'
 );
@@ -440,6 +442,14 @@ switch ($request->action) {
     $control = new Control();
     $control->new_announcement(
       $request->parameters['announcement']
+    );
+    ok_response('Success', 'admin');
+    break;
+  case 'delete_announcement':
+    $control = new Control();
+    error_log('deleting ' .$request->parameters['announcement_id']);
+    $control->delete_announcement(
+      $request->parameters['announcement_id']
     );
     ok_response('Success', 'admin');
     break;

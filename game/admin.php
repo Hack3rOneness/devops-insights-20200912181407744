@@ -322,23 +322,35 @@ class AdminController extends Controller {
     if ($announcements) {
       foreach ($announcements as $announcement) {
         $announcements_div->appendChild(
-          <div class="fb-column-container">
-            <div class="col col-pad col-1-4">
-              {$announcement['ts']}
-            </div>
-            <div class="col col-pad col-3-4">
-              {$announcement['announcement']}
-            </div>
-          </div>
+          <section class="admin-box">
+            <form class="announcements_form">
+              <input type="hidden" name="announcement_id" value={$announcement['id']}/>
+              <header class="countries-management-header">
+                <h6>{$announcement['ts']}</h6>
+                <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
+              </header>
+              <div class="fb-column-container">
+                <div class="col col-pad">
+                  <div class="selected-logo">
+                    <span class="logo-name">{$announcement['announcement']}</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </section>  
         );
       }
     } else {
       $announcements_div->appendChild(
-        <div class="fb-column-container">
-          <div class="col col-pad col-1-4">
-            No Announcements
+        <section class="admin-box">
+          <div class="fb-column-container">
+            <div class="col col-pad">
+              <div class="selected-logo-text">
+                <span class="logo-name">No Announcements</span>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       );
     }
     return
@@ -366,8 +378,8 @@ class AdminController extends Controller {
                 </div>
               </div>
             </div>
-            {$announcements_div}
-          </section>
+          </section>  
+          {$announcements_div}
         </div>
       </div>;
   }

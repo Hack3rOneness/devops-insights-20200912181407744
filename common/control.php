@@ -71,8 +71,14 @@ class Control {
     $this->db->query($sql, $element);
   }
 
+  public function delete_announcement($announcement_id) {
+    $sql = 'DELETE FROM announcements_log WHERE id = ? LIMIT 1';
+    $element = array($announcement_id);
+    $this->db->query($sql, $element);
+  }
+
   public function all_announcements() {
-    $sql = 'SELECT * FROM announcements_log ORDER BY ts';
+    $sql = 'SELECT * FROM announcements_log ORDER BY ts DESC';
     return $this->db->query($sql);
   }
 

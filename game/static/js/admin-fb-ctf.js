@@ -344,6 +344,8 @@ var $body = $('body');
       deleteLevel(section);
     } else if (elementSection === 'categories_form') {
       deleteCategory(section);
+    } else if (elementSection === 'announcements_form') {
+      deleteAnnouncement(section);
     }
   }
 
@@ -381,6 +383,19 @@ var $body = $('body');
       sendAdminRequest(create_data);
     }
     location.reload();
+  }
+
+  // Delete announcement
+  function deleteAnnouncement(section) {
+    var announcement_id = $('.announcements_form input[name=announcement_id]', section)[0].value;
+    var delete_data = {
+      action: 'delete_announcement',
+      announcement_id: announcement_id
+    };
+    if (announcement_id) {
+      console.log(delete_data);
+      sendAdminRequest(delete_data);
+    }
   }
 
   // Delete level
@@ -814,13 +829,13 @@ var $body = $('body');
         $section.remove();
         deleteElement($section);
         // rename the section boxes
-        $('.admin-box').each(function(i, el){
+        /*$('.admin-box').each(function(i, el){
           var $titleObj  = $('.admin-box-header h3', el),
                title     = $titleObj.text(),
                newTitle  = title.substring( 0, title.lastIndexOf(" ") + 1 ) + (i + 1);
 
           $titleObj.text(newTitle);
-        });
+        });*/
       } else if (action === 'disable-logo') {
         toggleLogo($section);
       } else if (action === 'enable-logo') {
