@@ -16,7 +16,7 @@ class Attachments {
   // Create attachment for a given level.
   public function create($file_param, $filename, $level_id): bool {
     $type = '';
-    $local_filename =  $this->attachments_dir;
+    $local_filename = $this->attachments_dir;
 
     // First we put the file in its place
     if (isset($_FILES[$file_param])) {
@@ -28,8 +28,8 @@ class Attachments {
       $parts = pathinfo($filename);
 
       // Avoid php shells
-      if (strpos($filename, '.php') !== false) {
-        $local_filename .= $parts['filename'] . '_' . $md5_str . '.txt';
+      if ($parts['extension'] === 'php') {
+        $local_filename .= $parts['filename'] . '_' . $md5_str . '.' . $parts['extension'] . '.txt';
       } else {
         $local_filename .= $parts['filename'] . '_' . $md5_str . '.' . $parts['extension'];
       }

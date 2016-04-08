@@ -18,7 +18,7 @@ $filters = array(
     'session_id'  => FILTER_VALIDATE_INT,
     'cookie'      => FILTER_SANITIZE_STRING,
     'data'        => FILTER_UNSAFE_RAW,
-    'name'        => FILTER_SANITIZE_STRING,
+    'name'        => FILTER_UNSAFE_RAW,
     'password'    => FILTER_UNSAFE_RAW,
     'admin'       => FILTER_VALIDATE_INT,
     'status'      => FILTER_VALIDATE_INT,
@@ -123,6 +123,7 @@ $request->processRequest();
 if ($request->action !== 'none') {
   // CSRF check
   if ($request->parameters['csrf_token'] !== sess_csrf_token()) {
+    error_log('CSRF Token is invalid');
     error_page();
   }
 }
@@ -383,7 +384,7 @@ switch ($request->action) {
     );
     if ($result) {
       ok_response('Created successfully', 'admin');
-    }
+    } 
     break;
   case 'update_attachment':
     $attachments = new Attachments();
@@ -447,7 +448,6 @@ switch ($request->action) {
     break;
   case 'delete_announcement':
     $control = new Control();
-    error_log('deleting ' .$request->parameters['announcement_id']);
     $control->delete_announcement(
       $request->parameters['announcement_id']
     );

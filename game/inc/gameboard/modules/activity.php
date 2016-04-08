@@ -6,29 +6,31 @@ sess_start();
 sess_enforce_login();
 
 class ActivityModuleController {
-  /*
-  <ul class="activity-stream">
-                <li class="opponent-team">
-                  <span class="opponent-name">Team 1</span> captured India
-                </li>
-                <li class="your-team">
-                  <span class="your-name">My Team</span> captured USA from <span class="opponent-name">Other Team</span>
-                </li>
-                <li class="your-team">
-                  <span class="your-name">My Team</span> captured Afghanistan
-                </li>
-                <li class="opponent-team">
-                  <span class="opponent-name">Team 2</span> captured Canada from <span class="your-name">My Team</span>
-                </li>
-                <li class="opponent-team">
-                  <span class="opponent-name">Team 3</span> captured India
-                </li>
-              </ul>
-  */
-  
-  // $activity_ul->appendChild();
   public function render(): :xhp {
+    $control = new Control();
+    $levels = new Levels();
+    $countries = new Countries();
+    $teams = new Teams();
+
+    $my_team = $teams->get_team(sess_team());
+
     $activity_ul = <ul class="activity-stream"></ul>;
+
+    foreach ($control->all_activity() as $score) {
+      if ($score['team_id'] === sess_team()) {
+        $class_li = 'your-team';
+        $class_span = 'your-name';
+      } else {
+        $class_li = 'opponent-team';
+        $class_span = 'opponent-name';
+      }
+      $activity_ul->appendChild(
+        <li class={$class_li}>
+          [ {$score['time']} ] <span class={$class_span}>{$score['team']}</span> captured {$score['country']}
+        </li>
+      );
+    }
+    
     return
       <div>
         <header class="module-header">
@@ -36,14 +38,6 @@ class ActivityModuleController {
         </header>
         <div class="module-content">
           <div class="fb-section-border">
-            <div class="module-top">
-              <div class="radio-tabs">
-                <input type="radio" name="fb--module--activity" id="fb--module--activity--your-team" value="your-team"/>
-                <label for="fb--module--activity--your-team" class="click-effect"><span>Your Team</span></label>
-                <input type="radio" name="fb--module--activity" id="fb--module--activity--everyone" checked={true} value="all"/>
-                <label for="fb--module--activity--everyone" class="click-effect"><span>Everyone</span></label>
-              </div>
-            </div>
             <div class="module-scrollable">
               {$activity_ul}
             </div>

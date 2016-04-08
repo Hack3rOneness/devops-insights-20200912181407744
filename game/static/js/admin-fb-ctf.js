@@ -6,7 +6,7 @@ function beginGame() {
       action: 'begin_game'
     };
   sendAdminRequest(begin_data);
-  location.reload();
+  window.location.href = location.href;
 }
 
 /**
@@ -17,7 +17,7 @@ function endGame() {
       action: 'end_game'
     };
   sendAdminRequest(end_data);
-  location.reload();
+  window.location.href = location.href;
 }
 
 /**
@@ -242,6 +242,7 @@ var $body = $('body');
     var level_id = $('.attachment_form input[name=level_id]', section)[0].value;
     var filename = $('.attachment_form input[name=filename]', section)[0].value;
     var attachment_file = $('.attachment_form input[name=attachment_file]', section)[0].files[0];
+    var csrf_token = $('input[name=csrf_token]')[0].value;
 
     if (level_id && filename && attachment_file) {
       var formData = new FormData();
@@ -249,6 +250,7 @@ var $body = $('body');
       formData.append('action', 'create_attachment');
       formData.append('level_id', level_id);
       formData.append('filename', filename);
+      formData.append('csrf_token', csrf_token);
 
       $.ajax({
         url: 'adminaction.php',
@@ -284,7 +286,7 @@ var $body = $('body');
       csrf_token: csrf_token
     };
 
-    if (level_id && link) {
+    if ((level_id) && (link)) {
       $.post(
         'adminaction.php',
         create_data
@@ -315,7 +317,7 @@ var $body = $('body');
       link_id: link_id
     };
 
-    if (link_id) {
+    if ((link_id)) {
       sendAdminRequest(delete_data);
     }
   }
@@ -328,7 +330,7 @@ var $body = $('body');
       attachment_id: attachment_id
     };
 
-    if (attachment_id) {
+    if ((attachment_id)) {
       sendAdminRequest(delete_data);
     }
   }
@@ -368,8 +370,8 @@ var $body = $('body');
       createLevel(section);
     } else if (elementSection === 'categories_form') {
       createCategory(section);
-    } 
-    location.reload();
+    }
+    window.location.href = location.href;
   }
 
   // Create announcement
@@ -379,10 +381,10 @@ var $body = $('body');
       action: 'create_announcement',
       announcement: announcement
     };
-    if (announcement) {
+    if ((announcement)) {
       sendAdminRequest(create_data);
     }
-    location.reload();
+    window.location.href = location.href;
   }
 
   // Delete announcement
@@ -392,7 +394,7 @@ var $body = $('body');
       action: 'delete_announcement',
       announcement_id: announcement_id
     };
-    if (announcement_id) {
+    if ((announcement_id)) {
       console.log(delete_data);
       sendAdminRequest(delete_data);
     }
@@ -405,7 +407,7 @@ var $body = $('body');
       action: 'delete_level',
       level_id: level_id
     };
-    if (level_id) {
+    if ((level_id)) {
       sendAdminRequest(delete_data);
     }
   }
@@ -417,7 +419,7 @@ var $body = $('body');
       action: 'create_category',
       category: category
     };
-    if (category) {
+    if ((category)) {
       sendAdminRequest(create_data);
     }
   }
@@ -429,7 +431,7 @@ var $body = $('body');
       action: 'delete_category',
       category_id: category_id
     };
-    if (category_id) {
+    if ((category_id)) {
       sendAdminRequest(delete_data);
     }
   }
@@ -467,7 +469,7 @@ var $body = $('body');
       hint: hint,
       penalty: penalty
     };
-    if (question && answer && entity_id && points) {
+    if ((question) && (answer) && (entity_id) && (points)) {
       sendAdminRequest(create_data);
     }
   }
@@ -491,7 +493,7 @@ var $body = $('body');
       hint: hint,
       penalty: penalty
     };
-    if (description && flag && entity_id && points) {
+    if ((description) && (flag) && (entity_id) && (points)) {
       sendAdminRequest(create_data);
     }
   }
@@ -513,7 +515,7 @@ var $body = $('body');
       hint: hint,
       penalty: penalty
     };
-    if (description && entity_id && points) {
+    if ((description) && (entity_id) && (points)) {
       sendAdminRequest(create_data);
     }
   }
@@ -557,7 +559,7 @@ var $body = $('body');
       penalty: penalty,
       level_id: level_id
     };
-    if (question && answer && entity_id && points) {
+    if ((question) && (answer) && (entity_id) && (points)) {
       sendAdminRequest(update_data);
     }
   }
@@ -587,7 +589,7 @@ var $body = $('body');
       penalty: penalty,
       level_id: level_id
     };
-    if (description && flag && entity_id && points) {
+    if ((description) && (flag) && (entity_id) && (points)) {
       sendAdminRequest(update_data);
     }
   }
@@ -613,7 +615,7 @@ var $body = $('body');
       penalty: penalty,
       level_id: level_id
     };
-    if (description && entity_id && points) {
+    if ((description) && (entity_id) && (points)) {
       sendAdminRequest(update_data);
     }
   }
@@ -625,7 +627,7 @@ var $body = $('body');
       action: 'delete_team',
       team_id: team_id
     };
-    if (team_id) {
+    if ((team_id)) {
       sendAdminRequest(delete_data);
     }
   }
@@ -641,7 +643,7 @@ var $body = $('body');
       password: team_password,
       logo: team_logo
     };
-    if (team_name && team_password && team_logo) {
+    if ((team_name) && (team_password) && (team_logo)) {
       sendAdminRequest(create_data);
     }
   }
@@ -661,7 +663,8 @@ var $body = $('body');
       password: team_password,
       logo: team_logo
     };
-    if (team_id && team_name && team_password && team_logo) {
+    if ((team_id) && (team_name) && (team_password) && (team_logo)) {
+      console.log(update_data);
       sendAdminRequest(update_data);
     }
   }
@@ -676,7 +679,7 @@ var $body = $('body');
       team_id: team_id,
       [radio_action]: action_value
     };
-    if (team_id && radio_action) {
+    if ((team_id) && (radio_action)) {
       sendAdminRequest(toggle_data);
     }
   }
@@ -690,7 +693,7 @@ var $body = $('body');
       all_type: action_type,
       status: action_value
     };
-    if (action_type) {
+    if ((action_type)) {
       sendAdminRequest(toggle_data);
       if (action_value) {
         $('input[type=radio][id*=on]').prop('checked', true);
@@ -712,7 +715,7 @@ var $body = $('body');
       level_id: level_id,
       [radio_action]: action_value
     };
-    if (level_id && radio_action) {
+    if ((level_id) && (radio_action)) {
       sendAdminRequest(toggle_data);
     }
   }
@@ -725,7 +728,7 @@ var $body = $('body');
       field: radio_action,
       value: action_value
     };
-    if (radio_action) {
+    if ((radio_action)) {
       sendAdminRequest(toggle_data);
     }
   }
@@ -738,10 +741,10 @@ var $body = $('body');
       action: action_value + '_logo',
       logo_id: logo_id
     };
-    if (logo_id && action_value) {
+    if ((logo_id) && (action_value)) {
       sendAdminRequest(toggle_data);
     }
-    location.reload();
+    window.location.href = location.href;
   }
 
   function toggleCountry(section) {
@@ -755,7 +758,7 @@ var $body = $('body');
     if (country_id && action_value) {
       sendAdminRequest(toggle_data);
     }
-    location.reload();
+    window.location.href = location.href;
   }
 
   // Delete session
@@ -766,7 +769,7 @@ var $body = $('body');
       cookie: session_cookie
     };
     console.log(delete_data);
-    if (session_cookie) {
+    if ((session_cookie)) {
       sendAdminRequest(delete_data);
     }
   }

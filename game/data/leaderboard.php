@@ -7,41 +7,44 @@ sess_enforce_login();
 
 class LeaderboardDataController extends DataController {
   public function generateData() {
-    $teams = new Teams();
     $conf = new Configuration();
+    $leaderboard_data = (object) array();
+    
+    // If refresing is disabled, exit
+    if ($conf->get('teams') === '0') {
+      $this->jsonSend($leaderboard_data);
+      exit;
+    }
 
+    $teams = new Teams();
     $leaders = $teams->leaderboard();
     $my_team = $teams->get_team(sess_team());
     $my_rank = $teams->my_rank(sess_team());
-
+    $my_team_data = (object) array(
+      'badge' => $my_team['logo'],
+      'points' => (int)$my_team['points'],
+      'rank' => $my_rank
+    );
+    $leaderboard_data->{'my_team'} = $my_team_data;
 
     $teams_data = (object) array();
-
-    // If refresing is disabled, exit
-    if ($conf->get('teams') === '0') {
-      $this->jsonSend($teams_data);
-      exit;
-    }
-    
-    foreach ($leaderboard as $team) {
+    $rank = 1;
+    $l_max = (sizeof($leaders) > 5) ? 5 : sizeof($leaders);
+    for($i = 0; $i<$l_max; $i++) {
+      $team = $leaders[$i];
       $team_data = (object) array(
         'badge' => $team['logo'],
-        'team_members' => array(),
-        'rank' => $rank,
-        'points' => array(
-          'base' => 0,
-          'quiz' => 0,
-          'flag' => 0,
-          'total' => (int)$team['points']
-        )
+        'points' => (int)$team['points'],
+        'rank' => $rank
       );
       if ($team['name']) {
         $teams_data->{$team['name']} = $team_data;
       }
       $rank++;
     }
+    $leaderboard_data->{'leaderboard'} = $teams_data;
 
-    $this->jsonSend($teams_data);
+    $this->jsonSend($leaderboard_data);
   }
 }
 

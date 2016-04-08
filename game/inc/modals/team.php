@@ -1,6 +1,6 @@
 <div class="fb-modal-content">
   <div class="modal-title">
-    <h4>team_<span class="team-name highlighted"></span></h4>
+    <h4>team_[ <span class="team-name highlighted"></span> ]</h4>
     <a href="#" class="js-close-modal"><svg class="icon icon--close"><use xlink:href="#icon--close"/></svg></a>
   </div>
 
@@ -42,4 +42,4 @@
       <div class="point-total points--total fb-numbers"></div>
     </div>
   </footer>
-</div><!-- .fb-modal-content -->
+</div>

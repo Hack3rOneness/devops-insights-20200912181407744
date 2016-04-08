@@ -24,7 +24,6 @@ class TeamDataController extends DataController {
         'badge' => $team['logo'],
         'team_members' => array(),
         'rank' => $rank,
-        'school_level' => 'collegiate',
         'points' => array(
           'base' => (int)$teams->points_by_type($team['id'], 'base'),
           'quiz' => (int)$teams->points_by_type($team['id'], 'quiz'),

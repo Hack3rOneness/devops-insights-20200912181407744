@@ -1354,7 +1354,7 @@ class AdminController extends Controller {
               <div class="col col-pad col-1-2">
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label" for="">Team Name</label>
-                  <input name="team_name" type="text" value=""/>
+                  <input name="team_name" type="text" value="" maxlength={20}/>
                 </div>
               </div>
               <div class="col col-pad col-1-2">

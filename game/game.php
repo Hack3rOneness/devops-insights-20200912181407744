@@ -106,6 +106,7 @@ class GameboardController extends Controller {
         <script type="text/javascript" src="static/js/plugins.js"></script>
         <script type="text/javascript" src="static/js/_buildkit.js"></script>
         <script type="text/javascript" src="static/js/fb-ctf.js"></script>
+        <script type="text/javascript" src="static/js/gameboard.js"></script>
       </body>;
   }
 }

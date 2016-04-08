@@ -26,7 +26,7 @@ class LeaderboardModuleController {
           <li class="fb-user-card">
             <div class="user-avatar">
               <svg class="icon--badge">
-                <use xlink:href={$xlink_href}></use>
+                <use xlink:href={$xlink_href}/>
 
               </svg>
             </div>
@@ -51,11 +51,11 @@ class LeaderboardModuleController {
           <div class="fb-section-border">
             <div class="module-top player-info">
               <h5 class="player-name">{$my_team['name']}</h5>
-              <span class="player-rank">Rank {$my_rank}</span>
+              <span class="player-rank">Your Rank: {$my_rank}</span>
               <br></br>
-              <span class="player-score">{$my_team['points']} Pts</span>
+              <span class="player-score">Your Score: {$my_team['points']} Pts</span>
             </div>
-            <div class="module-scrollable">
+            <div class="module-scrollable leaderboard-info">
               {$leaderboard_ul}
             </div>
           </div>

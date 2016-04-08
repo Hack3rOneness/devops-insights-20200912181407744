@@ -1,4 +1,3 @@
-
 //
 // FB CTF javascript
 //
@@ -284,12 +283,23 @@
           // Load initial configuration
           loadConfData();
 
-          // Load initial announcements
-          loadAnnouncementsData();
-
           // Load initial command line
           FB_CTF.command_line.loadCommandsData();
           FB_CTF.command_line.init();
+
+          // Load initial filters
+          loadFilterModule();
+
+          // Load initial teams related modules and data
+          loadTeamData();
+          var loaded = loadTeamsModule();
+          $.when(loaded).done(function(){
+            activateTeams();
+          });
+          loadLeaderboardModule();
+
+          // Load initial activity
+          loadActivityModule();
 
           // Configuration reloader
           setInterval( function() {
@@ -303,12 +313,15 @@
               getCountryData();
               refreshMapData();
               // Announcements
-              loadAnnouncementsData();
-              clearAnnouncements();
-              setupAnnouncements();
+              loadAnnouncementsModule();
+              // Filter
+              loadFilterModule();
+              // Activity
+              loadActivityModule();
             } else {
               clearMapData();
               clearAnnouncements();
+              clearActivity();
             }
           }, FB_CTF.data.CONF.refreshMap);
 
@@ -317,16 +330,13 @@
             if (FB_CTF.data.CONF.teams === '1') {
               // Teams
               loadTeamData();
-              clearTeams();
-              setupTeams();
-              // Leaderboard
-              //loadLeaderboardData();
-              //clearLeaderboard();
-              //setupLeaderboard();
+              loadTeamsModule();
+              loadLeaderboardModule();
             } else {
               clearTeams();
+              clearLeaderboard();
             }
-          }, FB_CTF.data.CONF.refreshTeams);
+          }, FB_CTF.data.CONF.refreshConf);
 
           // Commands
           setInterval( function() {
@@ -346,483 +356,387 @@
       $('li', $teamgrid).remove();
     }
 
+    function clearLeaderboard(){
+      var $leaderboard = $('aside[data-module="leaderboard"] .leaderboard-info');
+      $('li', $leaderboard).remove();
+    }
+
     function clearAnnouncements(){
-      var $announcements = $('.announcements-list');
+      var $announcements = $('aside[data-module="announcements"] .announcements-list');
       $('li', $announcements).remove();
     }
 
-    function setupAnnouncements(){
-      if( FB_CTF.data.ANNOUNCEMENTS === undefined ){
-        console.error("No announcements data available.");
-        return;
-      }
-
-      var $announcements = $('.announcements-list');
-
-
-      $.each(FB_CTF.data.ANNOUNCEMENTS, function(ann_index, ann_text) {
-        var element  = '<li><span class="announcement-highlight"></span>' + ann_text + '</li>';
-        $announcements.append(element);
-      });
+    function clearActivity(){
+      var $announcements = $('aside[data-module="activity"] .activity-stream');
+      $('li', $announcements).remove();
     }
 
     /**
-     * set up the team module in the gameboard with the list of
-     *  active teams (from the teams.php data) and event
-     *  listeners for the team modal
+     * get the owner of the given country, and return the markup
+     *  for rendering somewhere
+     *
+     * @param capturedBy (string)
+     *   - the capturing team
      */
-    function setupTeams(){
-      if( FB_CTF.data.TEAMS === undefined ){
-        console.error("No team data available.");
-        return;
+    function getCapturedByMarkup( capturedBy ){
+      if( capturedBy === undefined ){
+        return "Uncaptured";
       }
 
-      var $teamgrid = $('aside[data-module="teams"] .grid-list');
+      var capturedClass = (capturedBy === FB_CTF.data.CONF.currentTeam) ? 'your-name' : 'opponent-name';
+        var span = $('<span/>').attr('class', capturedClass).text(capturedBy);
+        return span;
+      }
 
-      //
-      // build the team module in the gameboard, which will
-      //  list the active teams
-      //
-      $.each( FB_CTF.data.TEAMS, function(teamName, teamData){
-        var alertClass = teamData.has_alert ? ' class="alert"' : '',
-        markup  = '<li' + alertClass + '><a href="#" data-team="' + teamName + '">' +
-                  '<svg class="icon--badge"><use xlink:href="#icon--badge-' + teamData.badge + '"/></svg>' +
-                  '</a></li>';
-        $teamgrid.append(markup);
-      });
+      /**
+       * automatically scroll through the content on the sidebar
+       *  modules. This happens in the "view only" mode
+       */
+      function autoScrollModules(){
+        var $modules = $('aside[data-module="under-attack"], aside[data-module="leaderboard-viewmode"]');
 
-      //
-      // launch the team modals
-      //
-      $teamgrid.on('click', 'a[data-team]', function(event) {
-        event.preventDefault();
-        var team = String($(this).data('team'));
+        $modules.each(function(){
+          var $scrollable    = $('.module-scrollable', this),
+              scrollHeight   = $scrollable.children('ul').height() - $scrollable.height(),
+              scrollTime     = scrollHeight / .05,
+              scrollInterval;
 
-        //
-        // @note - here, let's check to see if the team is
-        //  set in the markup. Since this is a buildkit,
-        //  we'll set a default for demo purposes.
-        //
-        if( team === undefined || team === ""){
-          team = "Facebook CTF";
-        }
-
-
-        var teamData = FB_CTF.data.TEAMS[team];
-
-        if( teamData === undefined){
-          console.error("Invalid team name in markup");
-          return;
-        }
-
-        FB_CTF.modal.loadPopup( 'team', function(){
-          var $modal       = $('#fb-modal'),
-          rank         = teamData.rank + "",
-          $teamMembers = $('.team-members', $modal);
-
-            // team name
-            $('.team-name', $modal).text(team);
-
-            // team badge
-            $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
-
-            // team members
-            $.each( teamData.team_members, function(){
-              $teamMembers.append('<li>' + this + '</li>');
-            });
-
-            // school level
-            $('.school-level', $modal).text( teamData.school_level );
-
-            // rank
-            if( rank.length === 1 ){
-              rank = "0" + rank;
-            }
-            $('.points-number', $modal).text( rank );
-
-            // team points
-            $('.points--base', $modal).text( teamData.points.base);
-            $('.points--quiz', $modal).text( teamData.points.quiz);
-            $('.points--flag', $modal).text( teamData.points.flag);
-            $('.points--total', $modal).text( teamData.points.total);
+          $scrollable.on('mouseover', function(event) {
+            event.preventDefault();
+            clearInterval( scrollInterval );
           });
+          $scrollable.on('mouseout', startScroll);
+
+          /**
+           * start the scrolling interval
+           */
+          function startScroll(){
+            scrollInterval = setInterval( function(){
+              var st = $scrollable.scrollTop(),
+              scrollLeft = $('ul', $scrollable).height() - $scrollable.height();
+
+              if( st >= scrollLeft ){
+                $scrollable.scrollTop(0);
+              } else {
+                $scrollable.scrollTop( st + 1 );
+              }
+            }, 20);
+          }
+
+          startScroll();
         });
       }
 
       /**
-       * get the owner of the given country, and return the markup
-       *  for rendering somewhere
-       *
-       * @param capturedBy (string)
-       *   - the capturing team
+       * the event listeners for the game
        */
-      function getCapturedByMarkup( capturedBy ){
-        if( capturedBy === undefined ){
-          return "Uncaptured";
-        }
+      function gameEventListeners(){
+        var $svgCountries = $('.countries > g', $mapSvg);
 
-        var capturedClass = (capturedBy === FB_CTF.data.CONF.currentTeam) ? 'your-name' : 'opponent-name';
-          return '<span class="' + capturedClass + '">' + capturedBy + '</span>';
-        }
+        /* --------------------------------------------
+         * --modules
+         * -------------------------------------------- */
 
-        /**
-         * automatically scroll through the content on the sidebar
-         *  modules. This happens in the "view only" mode
-         */
-        function autoScrollModules(){
-          var $modules = $('aside[data-module="under-attack"], aside[data-module="leaderboard-viewmode"]');
+        //
+        // open the module
+        //
+        $( 'aside[data-module]' ).on('click', '.module-header', function(event) {
+          event.preventDefault();
+          $(this).closest('aside').toggleClass('active');
 
-          $modules.each(function(){
-            var $scrollable    = $('.module-scrollable', this),
-                scrollHeight   = $scrollable.children('ul').height() - $scrollable.height(),
-                scrollTime     = scrollHeight / .05,
-                scrollInterval;
+          // Remember status of module
+          if ($(this).closest('aside').hasClass('active')) {
+            setWidgetStatus($(this).text(), 'open');
+          } else {
+            setWidgetStatus($(this).text(), 'close');
+          }
+          
+          $body.trigger('module-changestate');
+        })
 
-            $scrollable.on('mouseover', function(event) {
-              event.preventDefault();
-              clearInterval( scrollInterval );
-            });
-            $scrollable.on('mouseout', startScroll);
+        //
+        // check to see if a module has changed its state - it it
+        //  has, check the listview to rearrange it
+        //
+        $body.on('module-changestate', function(){
+          var rightModules = false,
+              bottomModules = false,
+              margin = '25%',
+              $listviewContainer = $('.listview-container', $listview);
 
-            /**
-             * start the scrolling interval
-             */
-            function startScroll(){
-              scrollInterval = setInterval( function(){
-                var st = $scrollable.scrollTop(),
-                scrollLeft = $('ul', $scrollable).height() - $scrollable.height();
+          $( 'aside[data-module].active' ).each(function(){
+            var $container = $(this).closest('.fb-module-container');
 
-                if( st >= scrollLeft ){
-                  $scrollable.scrollTop(0);
-                } else {
-                  $scrollable.scrollTop( st + 1 );
-                }
-              }, 20);
-            }
+            if ($container.hasClass('column-right')){
+              rightModules = true;
 
-            startScroll();
-          });
-        }
-
-        /**
-         * the event listeners for the game
-         */
-        function gameEventListeners(){
-          var $svgCountries = $('.countries > g', $mapSvg);
-
-          /* --------------------------------------------
-           * --modules
-           * -------------------------------------------- */
-
-          //
-          // open the module
-          //
-          $( 'aside[data-module]' ).on('click', '.module-header', function(event) {
-            event.preventDefault();
-            $(this).closest('aside').toggleClass('active');
-
-            $body.trigger('module-changestate');
-          })
-
-          //
-          // check to see if a module has changed its state - it it
-          //  has, check the listview to rearrange it
-          //
-          $body.on('module-changestate', function(){
-            var rightModules = false,
-                bottomModules = false,
-                margin = '25%',
-                $listviewContainer = $('.listview-container', $listview);
-
-            $( 'aside[data-module].active' ).each(function(){
-              var $container = $(this).closest('.fb-module-container');
-
-              if ($container.hasClass('column-right')){
-                rightModules = true;
-
-                if($container.width() > 350){
-                  margin = '390px';
-                }
-              } else if ($container.hasClass('container--row')){
-                bottomModules = true;
+              if($container.width() > 350){
+                margin = '390px';
               }
-            });
-
-            if(rightModules){
-              $listviewContainer.css('right', margin);
-            } else {
-              $listviewContainer.css('right', '10px');
-            }
-            if(bottomModules){
-              $listviewContainer.css('bottom', '34vh');
-            } else {
-              $listviewContainer.css('bottom', '100px');
+            } else if ($container.hasClass('container--row')){
+              bottomModules = true;
             }
           });
 
-          /* --------------------------------------------
-           * --inputs
-           * -------------------------------------------- */
+          if(rightModules){
+            $listviewContainer.css('right', margin);
+          } else {
+            $listviewContainer.css('right', '10px');
+          }
+          if(bottomModules){
+            $listviewContainer.css('bottom', '34vh');
+          } else {
+            $listviewContainer.css('bottom', '100px');
+          }
+        });
 
-          //
-          // filter the map based on category
-          //
-          $('input[name="fb--module--filter--category"]').on('change', function(event) {
-            event.preventDefault();
-            var category = $(this).val();
+        /* --------------------------------------------
+         * --inputs
+         * -------------------------------------------- */
 
-            $svgCountries.each(function(){
-              var countryGroup = d3.select(this);
+        //
+        // filter the map based on category
+        //
+        $('input[name="fb--module--filter--category"]').on('change', function(event) {
+          event.preventDefault();
+          var category = $(this).val();
 
-              countryGroup.classed("inactive", false);
-              countryGroup.classed("highlighted", false);
+          $svgCountries.each(function(){
+            var countryGroup = d3.select(this);
 
-              if( category !== "All" ){
-                if( countryGroup.attr('data-category') === category){
-                  countryGroup.classed('highlighted', true);
-                } else {
-                  countryGroup.classed('inactive', true);
-                }
-              }
-            });
-          });
+            countryGroup.classed("inactive", false);
+            countryGroup.classed("highlighted", false);
 
-          //
-          // filter the map based on status
-          //
-          $('input[name="fb--module--filter--status"]').on('change', function(event) {
-            event.preventDefault();
-            var status = $(this).val();
-
-            $svgCountries.each(function(){
-              var countryGroup = d3.select(this);
-
-              countryGroup.classed("inactive", false);
-              countryGroup.classed("highlighted", false);
-
-              if( status !== "All" ){
-                if( countryGroup.attr('data-status') === status){
-                  countryGroup.classed('highlighted', true);
-                } else {
-                  countryGroup.classed('inactive', true);
-                }
-              }
-            });
-          });
-
-          //
-          // filter the filters
-          //
-          $('input[name="fb--module--filter"]').on('change', function(event) {
-            event.preventDefault();
-            var filter_type = $(this).val();
-            if (filter_type === 'category') {
-              $('.status-filter-content').removeClass('active');
-              $('.category-filter-content').addClass('active');
-            }
-            if (filter_type === 'status') {
-              $('.category-filter-content').removeClass('active');
-              $('.status-filter-content').addClass('active');
-            }
-          });
-
-          //
-          // filter the map based on captured
-          //
-          $('input[name="fb--map-select"]').on('change', function(event) {
-            event.preventDefault();
-            var select = $(this).val();
-
-            $svgCountries.each(function(){
-              var countryGroup = d3.select(this),
-              captureTeam  = countryGroup.attr('data-captured');
-
-              countryGroup.classed("inactive", false);
-              countryGroup.classed("highlighted", false);
-
-              if( select !== "all" ){
-                if( ( select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam ) ||
-                  ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam ) ){
-                  countryGroup.classed('highlighted', true);
+            if( category !== "All" ){
+              if( countryGroup.attr('data-category') === category){
+                countryGroup.classed('highlighted', true);
               } else {
                 countryGroup.classed('inactive', true);
               }
             }
           });
+        });
 
-          $('tr', $listview).each(function(){
-            var $tr = $(this),
-                $self = $tr.removeClass('inactive highlighted'),
-                captureTeam = $self.data('captured');
+        //
+        // filter the map based on status
+        //
+        $('input[name="fb--module--filter--status"]').on('change', function(event) {
+          event.preventDefault();
+          var status = $(this).val();
 
-            if (select !== "all") {
-              if(
-                (select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
-                (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam) ||
-                (select === "give-help" && $('.status--give-help', $tr).length > 0) ||
-                (select === "need-help" && $('.status--incoming-help', $tr).length > 0)
-              ){
-                $self.addClass('highlighted');
+          $svgCountries.each(function(){
+            var countryGroup = d3.select(this);
+
+            countryGroup.classed("inactive", false);
+            countryGroup.classed("highlighted", false);
+
+            if( status !== "All" ){
+              if( countryGroup.attr('data-status') === status){
+                countryGroup.classed('highlighted', true);
               } else {
-                $self.addClass('inactive');
+                countryGroup.classed('inactive', true);
               }
             }
           });
         });
 
         //
-        // activity module filter
+        // filter the filters
         //
-        $('input[name="fb--module--activity"]').on('change', function(event) {
+        $('input[name="fb--module--filter"]').on('change', function(event) {
           event.preventDefault();
-          var $self = $(this),
-              select = $self.val(),
-              $li = $self.closest('.module-content').find('.activity-stream li').show();
-
-          if( select !== "all" ){
-            $li.filter( function(){
-              return $(this).attr('class') !== select;
-            }).hide();
+          var filter_type = $(this).val();
+          if (filter_type === 'category') {
+            $('.status-filter-content').removeClass('active');
+            $('.category-filter-content').addClass('active');
+          }
+          if (filter_type === 'status') {
+            $('.category-filter-content').removeClass('active');
+            $('.status-filter-content').addClass('active');
           }
         });
 
-        /* --------------------------------------------
-         * --country interaction
-         * -------------------------------------------- */
-
         //
-        // on country click, open the "capture country" modal
+        // filter the map based on captured
         //
-        $map.on('click', '.country-hover g', function( event ){
+        $('input[name="fb--map-select"]').on('change', function(event) {
           event.preventDefault();
+          var select = $(this).val();
 
-          var country = $('[class~="land"]', this).attr('title');
+          $svgCountries.each(function(){
+            var countryGroup = d3.select(this),
+            captureTeam  = countryGroup.attr('data-captured');
 
-          CURRENT_ZOOM = enableClickAndDrag.getZoom();
-          captureCountry( country );
+            countryGroup.classed("inactive", false);
+            countryGroup.classed("highlighted", false);
+
+            if( select !== "all" ){
+              if( ( select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam ) ||
+                ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam ) ){
+                countryGroup.classed('highlighted', true);
+            } else {
+              countryGroup.classed('inactive', true);
+            }
+          }
         });
 
-        //
-        // hover on a country
-        //
-        $map.hoverIntent({
-          over     : countryHover,
-          out      : function(){},
-          selector : '.countries > g',
-        });
+        $('tr', $listview).each(function(){
+          var $tr = $(this),
+              $self = $tr.removeClass('inactive highlighted'),
+              captureTeam = $self.data('captured');
 
-        $countryHover.on('mouseleave', function(event) {
-          event.preventDefault();
-          FB_CTF.modal.closeHoverPopup();
-          $countryHover.empty();
+          if (select !== "all") {
+            if(
+              (select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
+              (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam) ||
+              (select === "give-help" && $('.status--give-help', $tr).length > 0) ||
+              (select === "need-help" && $('.status--incoming-help', $tr).length > 0)
+            ){
+              $self.addClass('highlighted');
+            } else {
+              $self.addClass('inactive');
+            }
+          }
         });
-      } // function gameEventListeners()
+      });
 
       /* --------------------------------------------
-       * --svg interactions
+       * --country interaction
        * -------------------------------------------- */
 
-      /**
-       * when a country is clicked on:
-       *   - add the crosshairs interaction
-       *   - launch the "capture_country" modal
-       *
-       * @param country (string)
-       *   - the country that is being captured
-       *
-       * @param capturingTeam (string)
-       *   - an optional parameter for the team that is attempting
-       *      to capture the given country
-       */
-      function captureCountry(country, capturingTeam) {
-        var $selectCountry    = $('.countries .land[title="' + country + '"]', $mapSvg),
-            capturedBy        = getCapturedByMarkup( $selectCountry.closest('g').data('captured') ),
-            showAnimation     = !( is_ie || LIST_VIEW ),
-            animationDuration = !showAnimation ? 0 : 600;
+      //
+      // on country click, open the "capture country" modal
+      //
+      $map.on('click', '.country-hover g', function( event ){
+        event.preventDefault();
 
-        // make sure there's a country node
-        if($selectCountry.length === 0){
-          console.error( country + ' is not a valid country' );
-          return;
-        }
+        var country = $('[class~="land"]', this).attr('title');
 
-        if( $countryHover.has('g').length === 0 ){
-          var $hoveredCountry = $( '.countries .land[title="' + country + '"]', $mapSvg ).closest('g').clone();
-          $countryHover.data( $hoveredCountry.data() );
-          $countryHover.empty().append( $hoveredCountry );
-        }
+        CURRENT_ZOOM = enableClickAndDrag.getZoom();
+        captureCountry( country );
+      });
 
-        // close the hover popup
+      //
+      // hover on a country
+      //
+      $map.hoverIntent({
+        over     : countryHover,
+        out      : function(){},
+        selector : '.countries > g',
+      });
+
+      $countryHover.on('mouseleave', function(event) {
+        event.preventDefault();
         FB_CTF.modal.closeHoverPopup();
+        $countryHover.empty();
+      });
+    } // function gameEventListeners()
 
-        // if there's no data, don't continue
-        if (! FB_CTF.data.COUNTRIES) {
-          return;
-        }
+    /* --------------------------------------------
+     * --svg interactions
+     * -------------------------------------------- */
 
-        // if the country is not active, don't continue
-        if (! FB_CTF.data.COUNTRIES[country]) {
-          return;
-        }
+    /**
+     * when a country is clicked on:
+     *   - add the crosshairs interaction
+     *   - launch the "capture_country" modal
+     *
+     * @param country (string)
+     *   - the country that is being captured
+     *
+     * @param capturingTeam (string)
+     *   - an optional parameter for the team that is attempting
+     *      to capture the given country
+     */
+    function captureCountry(country, capturingTeam) {
+      var $selectCountry    = $('.countries .land[title="' + country + '"]', $mapSvg),
+          capturedBy        = getCapturedByMarkup( $selectCountry.closest('g').data('captured') ),
+          showAnimation     = !( is_ie || LIST_VIEW ),
+          animationDuration = !showAnimation ? 0 : 600;
 
-        // engage the crosshairs animation
-        if( showAnimation ){
-          engageCrosshairs();
-        }
-
-        if( VIEW_ONLY ){
-          setTimeout(function(){
-            captureViewOnly( country, capturedBy, capturingTeam );
-          }, animationDuration);
-        } else {
-          setTimeout( function(){
-            launchCaptureModal( country, capturedBy );
-          }, animationDuration);
-        }
-      } // function countryClick();
-
-      /**
-       * the animation that plays when the user is in view-only mode
-       *
-       * @param country (string)
-       *   - the country being captured
-       *
-       * @param capturedBy (string)
-       *   - the user or team who has captured this country
-       *
-       * @param capturingTeam (string)
-       *   - an optional parameter for the team that is attempting
-       *      to capture the given country
-       */
-      function captureViewOnly( country, capturedBy, capturingTeam ){
-        if( capturingTeam === undefined ){
-          capturingTeam = FB_CTF.data.CONF.currentTeam;
-        }
-
-        FB_CTF.modal.viewmodePopup( function(){
-          var $container = $('#fb-country-popup'),
-              positionX  = $('.longitude-focus').position().left + 60,
-              positionY  = $('.latitude-focus').position().top - $container.height() - 60,
-              points     = FB_CTF.data.COUNTRIES && FB_CTF.data.COUNTRIES[country] ? FB_CTF.data.COUNTRIES[country].points : 0;
-
-          $('.capturing-team-name', $container).text( capturingTeam );
-          $('.points-value', $container).text( '+ ' + points + ' Pts');
-          $('.country-owner', $container).html( capturedBy );
-          $('.country-name', $container).text( country );
-
-          $container.css({
-            left : positionX + 'px',
-            top  : positionY + 'px'
-          });
-
-          setTimeout(function(){
-            removeCaptured();
-            FB_CTF.modal.closeHoverPopup();
-
-            enableClickAndDrag.zoomToPoint();
-          }, 5000);
-        });
+      // make sure there's a country node
+      if($selectCountry.length === 0){
+        console.error( country + ' is not a valid country' );
+        return;
       }
+
+      if( $countryHover.has('g').length === 0 ){
+        var $hoveredCountry = $( '.countries .land[title="' + country + '"]', $mapSvg ).closest('g').clone();
+        $countryHover.data( $hoveredCountry.data() );
+        $countryHover.empty().append( $hoveredCountry );
+      }
+
+      // close the hover popup
+      FB_CTF.modal.closeHoverPopup();
+
+      // if there's no data, don't continue
+      if (! FB_CTF.data.COUNTRIES) {
+        return;
+      }
+
+      // if the country is not active, don't continue
+      if (! FB_CTF.data.COUNTRIES[country]) {
+        return;
+      }
+
+      // engage the crosshairs animation
+      if( showAnimation ){
+        engageCrosshairs();
+      }
+
+      if( VIEW_ONLY ){
+        setTimeout(function(){
+          captureViewOnly( country, capturedBy, capturingTeam );
+        }, animationDuration);
+      } else {
+        setTimeout( function(){
+          launchCaptureModal( country, capturedBy );
+        }, animationDuration);
+      }
+    } // function countryClick();
+
+    /**
+     * the animation that plays when the user is in view-only mode
+     *
+     * @param country (string)
+     *   - the country being captured
+     *
+     * @param capturedBy (string)
+     *   - the user or team who has captured this country
+     *
+     * @param capturingTeam (string)
+     *   - an optional parameter for the team that is attempting
+     *      to capture the given country
+     */
+    function captureViewOnly( country, capturedBy, capturingTeam ){
+      if( capturingTeam === undefined ){
+        capturingTeam = FB_CTF.data.CONF.currentTeam;
+      }
+
+      FB_CTF.modal.viewmodePopup( function(){
+        var $container = $('#fb-country-popup'),
+            positionX  = $('.longitude-focus').position().left + 60,
+            positionY  = $('.latitude-focus').position().top - $container.height() - 60,
+            points     = FB_CTF.data.COUNTRIES && FB_CTF.data.COUNTRIES[country] ? FB_CTF.data.COUNTRIES[country].points : 0;
+
+        $('.capturing-team-name', $container).text(capturingTeam);
+        $('.points-value', $container).text('+ ' + points + ' Pts');
+        $('.country-owner', $container).text(capturedBy);
+        $('.country-name', $container).text(country);
+
+        $container.css({
+          left : positionX + 'px',
+          top  : positionY + 'px'
+        });
+
+        setTimeout(function(){
+          removeCaptured();
+          FB_CTF.modal.closeHoverPopup();
+
+          enableClickAndDrag.zoomToPoint();
+        }, 5000);
+      });
+    }
 
       /**
        * remove all the captured/hovered states from the map
@@ -879,24 +793,29 @@
           if( attachments instanceof Array){
             $.each(attachments, function(){
               var f = this.substr(this.lastIndexOf('/') +1 );
-              $('.capture-links', $container).append('[ <a target="_blank" href="' + this + '">' + f + '</a> ] ');
+              var attachment = $('<a/>').attr('target', '_blank').attr('href', this).text('[ ' + f + ' ]');
+              $('.capture-links', $container).append(attachment);
+              $('.capture-links', $container).append($('<br/>'));
             });
           }
           if( links instanceof Array){
             var link_c = 1;
             $.each(links, function(){
-              $('.capture-links', $container).append('[ <a target="_blank" href="' + this + '">Link ' + link_c + '</a> ]');
+              var link = $('<a/>').attr('target', '_blank').attr('href', this).text('[ Link ' + link_c + ' ]');
+              $('.capture-links', $container).append(link);
+              $('.capture-links', $container).append($('<br/>'));
               link_c++;
             });
           }
           $('.points-number', $container).text(points);
           $('.country-type', $container).text(type);
           $('.country-category', $container).text(category);
-          $('.country-owner', $container).html(owner);
+          $('.country-owner', $container).text(owner);
 
           if( completed instanceof Array){
             $.each(completed, function(){
-              $('.completed-list', $container).append('<li>' + this + '</li>');
+              var li = $('<li/>').text(this);
+              $('.completed-list', $container).append(li);
             });
           }
 
@@ -1263,7 +1182,6 @@
         });
 
         $.when.apply($, deferredArray).done(function(){
-          console.log("modules loaded");
           if (VIEW_ONLY) {
             autoScrollModules();
           }
@@ -1282,7 +1200,6 @@
         var mapPath = 'static/svg/map/world.php';
 
         return $.get( mapPath, function(data, status, jqxhr){
-          console.log("map loaded");
           $map = $('.fb-map');
           $map.html(data);
           $mapSvg = $('#fb-gameboard-map');
@@ -1321,8 +1238,7 @@
       function loadListView(){
         var listViewPath = 'inc/gameboard/listview.php';
 
-        return $.get( listViewPath, function(data, status, jqxhr){
-          console.log("List view loaded");
+        return $.get(listViewPath, function(data, status, jqxhr) {
           $listview = $('.fb-listview');
           $listview.html(data);
           listviewEventListeners($listview);
@@ -1332,6 +1248,41 @@
         });
       }
 
+      /**
+       * load module generic
+       */
+      function loadModuleGeneric(loadPath, targetSelector){
+        $.get(loadPath, function( data, status, jqxhr){
+          var $target = $(targetSelector);
+          $target.html(data);
+          var df = $.Deferred();
+          return df.resolve();
+        }).error(function(){
+          console.error("There was a problem retrieving the module.");
+          console.log(loadPath);
+          console.error("/error");
+        });
+      }
+
+      /**
+       * load the teams module
+       */
+      function loadTeamsModule(){
+        var teamsModulePath = 'inc/gameboard/modules/teams.php';
+        var teamsTargetSelector = 'aside[data-module="teams"]';
+
+        return loadModuleGeneric(teamsModulePath, teamsTargetSelector);
+      }
+
+      /**
+       * load the leaderboard module
+       */
+      function loadLeaderboardModule(){
+        var leaderboardModulePath = 'inc/gameboard/modules/leaderboard.php';
+        var leaderboardSelector = 'aside[data-module="leaderboard"]';
+
+        return loadModuleGeneric(leaderboardModulePath, leaderboardSelector);
+      }
 
       /**
        * load the team data
@@ -1339,7 +1290,7 @@
       function loadTeamData(){
         var loadPath = 'data/teams.php';
 
-        return $.get( loadPath, function(data, status, jqxhr){
+        return $.get(loadPath, function(data, status, jqxhr) {
           FB_CTF.data.TEAMS = data;
           var df = $.Deferred();
           return df.resolve(FB_CTF.data.TEAMS);
@@ -1353,41 +1304,33 @@
       }
 
       /**
-       * load the leaderboard data
+       * load the announcements module
        */
-      function loadLeaderboardData(){
-        var loadPath = 'data/leaderboard.php';
+      function loadAnnouncementsModule(){
+        var announcementsModulePath = 'inc/gameboard/modules/announcements.php';
+        var announcementsTargetSelector = 'aside[data-module="announcements"]';
 
-        return $.get( loadPath, function(data, status, jqxhr){
-          FB_CTF.data.LEADERBOARD = data;
-          var df = $.Deferred();
-          return df.resolve(FB_CTF.data.LEADERBOARD);
-        }, 'json').error( function( jqhxr, status, error){
-          console.error("There was a problem retrieving the leaderboard data.");
-          console.log(loadPath);
-          console.log(status);
-          console.log(error);
-          console.error("/error");
-        });
+        return loadModuleGeneric(announcementsModulePath, announcementsTargetSelector);
       }
 
       /**
-       * load the announcements data
+       * load the filter module
        */
-      function loadAnnouncementsData(){
-        var loadPath = 'data/announcements.php';
+      function loadFilterModule(){
+        var filterModulePath = 'inc/gameboard/modules/filter.php';
+        var filterTargetSelector = 'aside[data-module="filter"]';
 
-        return $.get( loadPath, function(data, status, jqxhr){
-          FB_CTF.data.ANNOUNCEMENTS = data;
-          var df = $.Deferred();
-          return df.resolve(FB_CTF.data.ANNOUNCEMENTS);
-        }, 'json').error( function( jqhxr, status, error){
-          console.error("There was a problem retrieving the announcements data.");
-          console.log(loadPath);
-          console.log(status);
-          console.log(error);
-          console.error("/error");
-        });
+        return loadModuleGeneric(filterModulePath, filterTargetSelector);
+      }
+
+      /**
+       * load the activity module
+       */
+      function loadActivityModule(){
+        var activityModulePath = 'inc/gameboard/modules/activity.php';
+        var activityTargetSelector = 'aside[data-module="activity"]';
+
+        return loadModuleGeneric(activityModulePath, activityTargetSelector);
       }
 
       /**
@@ -2502,12 +2445,16 @@
 
             if (list) {
               $.each( list, function(index, listItem){
-                $cmdResultsList.append('<li>' + listItem + '</li>');
+                var li = $('<li/>').text(listItem);
+                $cmdResultsList.append(li);
+                //$cmdResultsList.append('<li>' + listItem + '</li>');
               });
             }
           } else {
             $.each(results, function(index, listItem){
-              $cmdResultsList.append('<li>' + listItem + '</li>');
+              var li = $('<li/>').text(listItem);
+              $cmdResultsList.append(li);
+              //$cmdResultsList.append('<li>' + listItem + '</li>');
             });
           }
           $cmdResultsList.find('li:first-child').addClass('selected');
@@ -2616,8 +2563,6 @@
             $.each( teamData.team_members, function(){
               $teamMembers.append('<li>' + this + '</li>');
             });
-            // school level
-            $('.school-level', $modal).text( teamData.school_level );
             // rank
             if( rank.length === 1 ){
               rank = "0" + rank;
@@ -2642,8 +2587,10 @@
           var module = data.selected;
           if( module === "All" ){
             $('aside').removeClass('active');
+            setAllWidgetStatus('close');
           } else {
             $('aside[data-name="' + module + '"]').removeClass('active');
+            setWidgetStatus(module, 'close');
           }
           $body.trigger('module-changestate');
 
@@ -2663,8 +2610,10 @@
 
           if( module === "All" ){
             $('aside').addClass('active');
+            setAllWidgetStatus('open');
           } else {
             $('aside[data-name="' + module + '"]').addClass('active');
+            setWidgetStatus(module, 'open');
           }
           $body.trigger('module-changestate');
 
@@ -2955,3 +2904,44 @@
       });
      
    })(window.FB_CTF = window.FB_CTF || {}, jQuery);
+
+function activateTeams() {
+  var $teamgrid = $('aside[data-module="teams"]');
+  $teamgrid.on('click', 'a', function(event) {
+    event.preventDefault();
+    var team = String($(this).data('team'));
+    
+    if( team === undefined || team === ""){
+      team = "Facebook CTF";
+    }
+    var teamData = FB_CTF.data.TEAMS[team];
+    if (teamData === undefined) {
+      console.error("Invalid team name in markup");
+      return;
+    }
+    FB_CTF.modal.loadPopup( 'team', function(){
+        var $modal       = $('#fb-modal'),
+            rank         = teamData.rank + "",
+            $teamMembers = $('.team-members', $modal);
+        // team name
+        $('.team-name', $modal).text(team);
+        // team badge
+        $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
+        // team members
+        $.each( teamData.team_members, function(){
+          $teamMembers.append('<li>' + this + '</li>');
+        });
+        // rank
+        if( rank.length === 1 ){
+          rank = "0" + rank;
+        }
+        $('.points-number', $modal).text( rank );
+        // team points
+        $('.points--base', $modal).text( teamData.points.base);
+        $('.points--quiz', $modal).text( teamData.points.quiz);
+        $('.points--flag', $modal).text( teamData.points.flag);
+        $('.points--total', $modal).text( teamData.points.total);
+      });
+
+  });
+}

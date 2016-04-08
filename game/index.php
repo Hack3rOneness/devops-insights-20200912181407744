@@ -225,6 +225,7 @@ class IndexController extends Controller {
         $login_team = <select name="team_id" />;
         $login_team->appendChild(<option value="0">Select</option>);
         foreach ($teams->all_active_teams() as $team) {
+          error_log('Getting ' . $team['name']);
           $login_team->appendChild(<option value={$team['id']}>{$team['name']}</option>);
         }
       }

@@ -23,7 +23,7 @@ class TeamModuleController {
               <svg class="icon--badge">
                 <use xlink:href={$iconbadge}/>
 
-                </svg>
+              </svg>
             </a>
           </li>
         );
