@@ -349,9 +349,16 @@ class Levels {
     return $this->db->query($sql);
   }
 
+  // Check if country is used.
+  public function is_category_used($category_id) {
+    $sql = 'SELECT COUNT(*) FROM levels WHERE category_id = ?';
+    $element = array($category_id);
+    return (bool)($this->db->query($sql, $element)[0]['COUNT(*)']);
+  }
+
   // Delete category.
   public function delete_category($category_id) {
-    $sql = 'DELETE FROM categories WHERE id = ? LIMIT 1';
+    $sql = 'DELETE FROM categories WHERE id = ? AND id NOT IN (SELECT category_id FROM levels) LIMIT 1';
     $elements = array($category_id);
     $this->db->query($sql, $elements);
   }

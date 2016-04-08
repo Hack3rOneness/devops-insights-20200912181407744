@@ -315,6 +315,75 @@ class AdminController extends Controller {
       </div>;
   }
 
+  public function renderAnnouncementsContent(): :xhp {
+    $control = new Control();
+    $announcements = $control->all_announcements();
+    $announcements_div = <div></div>;
+    if ($announcements) {
+      foreach ($announcements as $announcement) {
+        $announcements_div->appendChild(
+          <section class="admin-box">
+            <form class="announcements_form">
+              <input type="hidden" name="announcement_id" value={$announcement['id']}/>
+              <header class="countries-management-header">
+                <h6>{$announcement['ts']}</h6>
+                <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
+              </header>
+              <div class="fb-column-container">
+                <div class="col col-pad">
+                  <div class="selected-logo">
+                    <span class="logo-name">{$announcement['announcement']}</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </section>  
+        );
+      }
+    } else {
+      $announcements_div->appendChild(
+        <section class="admin-box">
+          <div class="fb-column-container">
+            <div class="col col-pad">
+              <div class="selected-logo-text">
+                <span class="logo-name">No Announcements</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+    return
+      <div>
+        <header class="admin-page-header">
+          <h3>Game Controls</h3>
+          <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
+        </header>
+        <div class="admin-sections">
+          <section class="admin-box">
+            <header class="admin-box-header">
+              <h3>Announcements</h3>
+            </header>
+            <div class="fb-column-container">
+              <div class="col col-pad col-3-4">
+                <div class="form-el el--block-label el--full-text">
+                  <input type="text" name="new_announcement" placeholder="Write New Announcement here" value=""/>
+                </div>
+              </div>
+              <div class="col col-pad col-1-4">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button class="fb-cta cta--yellow" data-action="create-announcement">Create</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>  
+          {$announcements_div}
+        </div>
+      </div>;
+  }
+
   public function renderControlsContent(): :xhp {
     $control = new Control();
     $announcements = $control->all_announcements();
@@ -1210,13 +1279,18 @@ class AdminController extends Controller {
     $categories = $levels->all_categories();
 
     foreach ($categories as $category) {
+      if ($levels->is_category_used($category['id'])) {
+        $delete_action = <a></a>;
+      } else {
+        $delete_action = <a class="highlighted--red" href="#" data-action="delete">DELETE</a>;
+      }
       $adminsections->appendChild(
         <section class="admin-box">
           <form class="categories_form">
             <input type="hidden" name="category_id" value={$category['id']}/>
             <header class="countries-management-header">
               <h6>ID{$category['id']}</h6>
-              <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
+              {$delete_action}
             </header>
             <div class="fb-column-container">
               <div class="col col-pad">
@@ -1934,8 +2008,9 @@ class AdminController extends Controller {
         </header>
         <nav class="admin-nav-links row-fluid">
           <ul>
-            <li><a href="/admin.php?page=configuration">Game Configuration</a></li>
-            <li><a href="/admin.php?page=controls">Game Controls</a></li>
+            <li><a href="/admin.php?page=configuration">Configuration</a></li>
+            <li><a href="/admin.php?page=controls">Controls</a></li>
+            <li><a href="/admin.php?page=announcements">Announcements</a></li>
             <li><a href="/admin.php?page=quiz">Levels: Quiz</a></li>
             <li><a href="/admin.php?page=flags">Levels: Flags</a></li>
             <li><a href="/admin.php?page=bases">Levels: Bases</a></li>
@@ -1972,6 +2047,9 @@ class AdminController extends Controller {
         break;
       case 'controls':
         return $this->renderControlsContent();
+        break;
+      case 'announcements':
+        return $this->renderAnnouncementsContent();
         break;
       case 'quiz':
         return $this->renderQuizContent();
@@ -2047,6 +2125,7 @@ $pages = array(
   'main',
   'configuration',
   'controls',
+  'announcements',
   'quiz',
   'flags',
   'bases',
@@ -2056,6 +2135,7 @@ $pages = array(
   'logos',
   'sessions',
   'scoreboard',
+  'logs'
 );
 $request = new Request($filters, $actions, $pages);
 $request->processRequest();
