@@ -1,18 +1,20 @@
 #!/bin/bash
 #
 # Facebook CTF: Provision script for vagrant dev environment
-# 
-# Usage: ./provision.sh [self | prod]
+#
+# Usage: ./provision.sh [dev | prod]
 #
 
-# Things we will use
 DB="facebook-ctf"
 U="ctf"
 P="ctf"
 P_ROOT="root"
 CTF_PATH="/var/www/facebook-ctf"
+MODE=${1:-dev}
 
 source "$CTF_PATH/tools/lib.sh"
+
+log "Provisioning in $MODE mode"
 
 # Ascii art is always appreciated
 set_motd "$CTF_PATH"
@@ -20,8 +22,11 @@ set_motd "$CTF_PATH"
 # Off to a good start...
 sudo apt-get update
 
-# Instal MySQL
+# Install MySQL
 install_mysql "$P_ROOT"
+
+# Install MyCLI
+install_mycli
 
 # Install PHP and git
 package php5
@@ -39,14 +44,11 @@ sudo service apache2 stop
 apt-get autoremove
 
 # Install nginx
-if [ -z "$1" ]; then
-	install_nginx "$CTF_PATH" "self"
-else
-	install_nginx "$CTF_PATH" "$1"
-fi
+install_nginx "$CTF_PATH" "$MODE"
+
 
 # Database creation
-import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH"
+import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH" "$MODE"
 
 # Make attachments folder world writable
 sudo chmod 777 "$CTF_PATH/game/data/attachments"

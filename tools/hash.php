@@ -1,9 +1,9 @@
-<?php
-  $options = array(
-    'cost' => 12,
-  );
-  
-  $password_hash = password_hash($argv[1], PASSWORD_DEFAULT, $options);
-  
-  echo $password_hash;
-?>
+<?hh
+
+$options = array(
+  'Cost' => 12,
+);
+
+$password_hash = password_hash($argv[1], PASSWORD_DEFAULT, $options);
+
+echo $password_hash;
