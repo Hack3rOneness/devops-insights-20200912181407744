@@ -25,8 +25,11 @@ class ScoreboardController {
               <label class="click-effect" for={$team_id}><span></span></label>
             </td>
             <td style="width: 10%;">{$rank}</td>
-            <td style="width: 50%;">{$team['name']}</td>
-            <td style="width: 30%;">{$team['points']}</td>
+            <td style="width: 40%;">{$team['name']}</td>
+            <td style="width: 10%;">{$teams->points_by_type($team['id'], 'quiz')}</td>
+            <td style="width: 10%;">{$teams->points_by_type($team['id'], 'flag')}</td>
+            <td style="width: 10%;">{$teams->points_by_type($team['id'], 'base')}</td>
+            <td style="width: 10%;">{$team['points']}</td>
           </tr>
         );
         $rank++;
@@ -70,7 +73,10 @@ class ScoreboardController {
                 <th style="width: 10%;">filter_</th>
                 <th style="width: 10%;">rank_</th>
                 <th style="width: 50%;">team_name_</th>
-                <th style="width: 30%;">total_pts_</th>
+                <th style="width: 10%;">quiz_pts_</th>
+                <th style="width: 10%;">flag_pts_</th>
+                <th style="width: 10%;">base_pts_</th>
+                <th style="width: 10%;">total_pts_</th>
               </tr>
             </thead>
           </table>

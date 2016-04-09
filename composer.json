@@ -1,8 +1,9 @@
 {
-    "name": "hhvm/hack-example-site",
-    "description": "An example website built with Hack",
+    "name": "facebook-ctf",
+    "description": "Facebook CTF platform",
     "require": {
-        "facebook/xhp-lib": "2.x"
+        "facebook/xhp-lib": "2.x",
+	"doctrine/orm": "*"
     },
     "autoload": {
         "classmap": ["game/", "common/"],

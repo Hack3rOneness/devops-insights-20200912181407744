@@ -1847,7 +1847,7 @@ class AdminController extends Controller {
           </div>
         </div><!-- data-tab="flags" -->
         <div class="radio-tab-content" data-tab="timeline">
-          <div class="scorboard-graphic">
+          <div class="scoreboard-graphic">
             <svg class="fb-graphic" data-file="data/scores.php" width="100%" height={180}></svg>
           </div>
           <div class="game-progress fb-progress-bar fb-cf row-fixed">
@@ -1883,15 +1883,6 @@ class AdminController extends Controller {
             <div class="row-fluid main-data">
               <table class="row-fixed">
                 <tbody>
-                  <tr>
-                    <td style="width: 10%;"></td>
-                    <td style="width: 10%;">01</td>
-                    <td style="width: 40%;">Tank SF</td>
-                    <td style="width: 10%;">50</td>
-                    <td style="width: 0%;">50</td>
-                    <td style="width: 10%;">200</td>
-                    <td style="width: 10%;">300</td>
-                  </tr>
                   <tr>
                     <td></td>
                     <td>02</td>
@@ -1979,7 +1970,189 @@ class AdminController extends Controller {
           </div>
         </div><!-- data-tab="timeline" -->
       </div>
-      </div>;
+    </div>;
+  }
+
+  public function renderLogsContent(): :xhp {
+    return
+      <div>
+      <header class="admin-page-header">
+        <h3>Logs</h3>
+        <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
+      </header>
+      <div class="radio-tabs">
+        <input type="radio" value="scores" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--scores" checked={true}/>
+        <label for="fb--admin--tabs--logs--scores">Scores</label>
+        <input type="radio" value="failures" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--failures"/>
+        <label for="fb--admin--tabs--logs--failures">Failures</label>
+      </div>
+      <div class="tab-content-container">
+        <div class="radio-tab-content active" data-tab="scores">
+          <div class="admin-sections">
+            <section class="admin-box">
+              <div class="logo-management-header">
+                <h6>Flag 01</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use xlink:href="#icon--badge-invader" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Da Invaderz</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>345</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>Algeria</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+            <section class="admin-box">
+              <div class="logo-management-header">
+                <h6>Flag 02</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use xlink:href="#icon--badge-car" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Tank SF</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>280</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>United States of America</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="radio-tab-content" data-tab="failures">
+          <div class="admin-sections">
+            <section class="admin-box">
+              <div class="logo-management-header">
+                <h6>Flag 03</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use xlink:href="#icon--badge-invader" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Da Invaderz</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>345</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>Algeria</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+            <section class="admin-box">
+              <div class="logo-management-header">
+                <h6>Flag 04</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use xlink:href="#icon--badge-car" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Tank SF</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>280</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>United States of America</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>;
   }
 
   public function renderMainContent(): :xhp {
@@ -2020,6 +2193,7 @@ class AdminController extends Controller {
             <li><a href="/admin.php?page=logos">Teams: Logos</a></li>
             <li><a href="/admin.php?page=sessions">Teams: Sessions</a></li>
             <li><a href="/admin.php?page=scoreboard">Scoreboard</a></li>
+            <li><a href="/admin.php?page=logs">Logs</a></li>
           </ul>
           {$game_action}
         </nav>
@@ -2077,6 +2251,9 @@ class AdminController extends Controller {
         break;
       case 'scoreboard':
         return $this->renderScoreboardContent();
+        break;
+      case 'logs':
+        return $this->renderLogsContent();
         break;
       default:
         return $this->renderMainContent();
