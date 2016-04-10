@@ -1,5 +1,7 @@
 <?hh // strict
 
+const MUST_MODIFY = /* UNSAFE_EXPR */ "<<must-modify:\xEE\xFF\xFF>";
+
 function redirect(string $location): void {
   header('Location: '.$location);
 }

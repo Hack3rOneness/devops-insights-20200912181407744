@@ -1,8 +1,7 @@
 <?hh // strict
 
 class Link {
-  /* HH_FIXME[4055] */
-  private static DB $db;
+  private static DB $db = MUST_MODIFY;
 
   public function __construct(private int $id, private int $levelId, private string $link) {
   }
@@ -20,7 +19,7 @@ class Link {
   }
 
   public static function getDb(): DB {
-    if (self::$db === null) {
+    if (self::$db === MUST_MODIFY) {
       self::$db = DB::getInstance();
     }
     if (!self::$db->isConnected()) {
