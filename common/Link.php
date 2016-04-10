@@ -1,9 +1,7 @@
 <?hh // strict
 
-class Link {
-  private static DB $db = MUST_MODIFY;
-
-  public function __construct(private int $id, private int $levelId, private string $link) {
+class Link extends Model {
+  private function __construct(private int $id, private int $levelId, private string $link) {
   }
 
   public function getId(): int {
@@ -16,16 +14,6 @@ class Link {
 
   public function getLink(): string {
     return $this->link;
-  }
-
-  public static function getDb(): DB {
-    if (self::$db === MUST_MODIFY) {
-      self::$db = DB::getInstance();
-    }
-    if (!self::$db->isConnected()) {
-      self::$db->connect();
-    }
-    return self::$db;
   }
 
   // Create link for a given level.

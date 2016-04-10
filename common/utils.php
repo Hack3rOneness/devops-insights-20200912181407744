@@ -1,6 +1,27 @@
 <?hh // strict
 
+/* HH_IGNORE_ERROR[2001] */
 const MUST_MODIFY = /* UNSAFE_EXPR */ "<<must-modify:\xEE\xFF\xFF>";
+
+function getGET(): Map<string, mixed> {
+  /* HH_IGNORE_ERROR[2050] */
+  return new Map($_GET);
+}
+
+function getPOST(): Map<string, mixed> {
+  /* HH_IGNORE_ERROR[2050] */
+  return new Map($_POST);
+}
+
+function getSERVER(): Map<string, mixed> {
+  /* HH_IGNORE_ERROR[2050] */
+  return new Map($_SERVER);
+}
+
+function getFILES(): Map<string, array<string, mixed>> {
+  /* HH_IGNORE_ERROR[2050] */
+  return new Map($_FILES);
+}
 
 function redirect(string $location): void {
   header('Location: '.$location);

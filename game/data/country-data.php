@@ -9,7 +9,6 @@ class CountryDataController extends DataController {
   public function generateData() {
     $levels = new Levels();
     $countries = new Countries();
-    $attachments = new Attachments();
     $teams = new Teams();
     $conf = new Configuration();
 
@@ -51,17 +50,17 @@ class CountryDataController extends DataController {
 
       // All attachments for this level
       $attachments_list = array();
-      if ($attachments->has_attachments($level['id'])) {
-        foreach ($attachments->all_attachments($level['id']) as $attachment) {
-          array_push($attachments_list, $attachment['filename']);
+      if (Attachment::hasAttachments(intval($level['id']))) {
+        foreach (Attachment::allAttachments(intval($level['id'])) as $attachment) {
+          array_push($attachments_list, $attachment->getFilename());
         }
       }
 
       // All links for this level
       $links_list = array();
-      if (Link::hasLinks($level['id'])) {
-        foreach (Link::allLinks($level['id']) as $link) {
-          array_push($links_list, $link['link']);
+      if (Link::hasLinks(intval($level['id']))) {
+        foreach (Link::allLinks(intval($level['id'])) as $link) {
+          array_push($links_list, $link->getLink());
         }
       }
 

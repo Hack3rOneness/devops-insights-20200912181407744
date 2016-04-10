@@ -376,28 +376,25 @@ switch ($request->action) {
     ok_response('Deleted successfully', 'admin');
     break;
   case 'create_attachment':
-    $attachments = new Attachments();
-    $result = $attachments->create(
+    $result = Attachment::create(
       'attachment_file',
       $request->parameters['filename'],
-      $request->parameters['level_id']
+      intval($request->parameters['level_id']),
     );
     if ($result) {
       ok_response('Created successfully', 'admin');
     }
     break;
   case 'update_attachment':
-    $attachments = new Attachments();
-    $attachments->update(
+    Attachment::update(
       $request->parameters['filename'],
-      $request->parameters['level_id']
+      intval($request->parameters['level_id']),
     );
     ok_response('Updated successfully', 'admin');
     break;
   case 'delete_attachment':
-    $attachments = new Attachments();
-    $attachments->delete(
-      $request->parameters['attachment_id']
+    Attachment::delete(
+      intval($request->parameters['attachment_id']),
     );
     ok_response('Deleted successfully', 'admin');
     break;

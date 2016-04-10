@@ -730,7 +730,6 @@ class AdminController extends Controller {
     </div>;
 
     $levels = new Levels();
-    $attachments = new Attachments();
 
     $c = 1;
     foreach ($levels->all_flag_levels() as $flag) {
@@ -768,19 +767,19 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if ($attachments->has_attachments($flag['id'])) {
+      if (Attachment::hasAttachments(intval($flag['id']))) {
         $a_c = 1;
-        foreach ($attachments->all_attachments($flag['id']) as $attachment) {
+        foreach (Attachment::allAttachments(intval($flag['id'])) as $attachment) {
           $attachments_div->appendChild(
             <div class="existing-attachment fb-column-container">
               <div class="col col-pad col-2-3">
                 <div class="form-el">
                   <form class="attachment_form">
-                    <input type="hidden" name="attachment_id" value={$attachment['id']}/>
+                    <input type="hidden" name="attachment_id" value={strval($attachment->getId())}/>
                     <div class="col el--block-label el--full-text">
                       <label>Attachment {$a_c}:</label>
-                      <input name="filename" type="text" value={$attachment['filename']} disabled={true}/>
-                      <a href={$attachment['filename']} target="_blank">Link</a>
+                      <input name="filename" type="text" value={$attachment->getFilename()} disabled={true}/>
+                      <a href={$attachment->getFilename()} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
@@ -1039,7 +1038,6 @@ class AdminController extends Controller {
       </div>;
 
     $levels = new Levels();
-    $attachments = new Attachments();
 
     $c = 1;
     foreach ($levels->all_base_levels() as $base) {
@@ -1059,7 +1057,7 @@ class AdminController extends Controller {
               <div class="form-el">
                 <form class="attachment_form">
                   <input type="hidden" name="action" value="create_attachment"/>
-                  <input type="hidden" name="level_id" value={$base['id']}/>
+                  <input type="hidden" name="level_id" value={strval($base->getId())}/>
                   <div class="col el--block-label el--full-text">
                     <label>New Attachment:</label>
                     <input name="filename" type="text"/>
@@ -1077,19 +1075,19 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if ($attachments->has_attachments($base['id'])) {
+      if (Attachment::hasAttachments(intval($base['id']))) {
         $a_c = 1;
-        foreach ($attachments->all_attachments($base['id']) as $attachment) {
+        foreach (Attachment::allAttachments(intval($base['id'])) as $attachment) {
           $attachments_div->appendChild(
             <div class="existing-attachment fb-column-container">
               <div class="col col-pad col-2-3">
                 <div class="form-el">
                   <form class="attachment_form">
-                    <input type="hidden" name="attachment_id" value={$attachment['id']}/>
+                    <input type="hidden" name="attachment_id" value={strval($attachment->getId())}/>
                     <div class="col el--block-label el--full-text">
                       <label>Attachment {$a_c}:</label>
-                      <input name="filename" type="text" value={$attachment['filename']} disabled={true}/>
-                      <a href={$attachment['filename']} target="_blank">Link</a>
+                      <input name="filename" type="text" value={$attachment->getFilename()} disabled={true}/>
+                      <a href={$attachment->getFilename()} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
