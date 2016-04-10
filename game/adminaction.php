@@ -64,18 +64,18 @@ $filters = array(
     'value'       => FILTER_UNSAFE_RAW,
     'announcement'=> FILTER_UNSAFE_RAW,
     'announcement_id' => FILTER_VALIDATE_INT,
-    'csrf_token'  => FILTER_UNSAFE_RAW, 
+    'csrf_token'  => FILTER_UNSAFE_RAW,
     'action'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
         'regexp'      => '/^[\w-]+$/'
-      ), 
+      ),
     ),
     'page'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
         'regexp'      => '/^[\w-]+$/'
-      ), 
+      ),
     )
   )
 );
@@ -384,7 +384,7 @@ switch ($request->action) {
     );
     if ($result) {
       ok_response('Created successfully', 'admin');
-    } 
+    }
     break;
   case 'update_attachment':
     $attachments = new Attachments();
@@ -402,27 +402,22 @@ switch ($request->action) {
     ok_response('Deleted successfully', 'admin');
     break;
   case 'create_link':
-    $links = new Links();
-    $result = $links->create(
+    Link::create(
       $request->parameters['link'],
-      $request->parameters['level_id']
+      intval($request->parameters['level_id']),
     );
-    if ($result) {
-      ok_response('Created successfully', 'admin');
-    }
+    ok_response('Created successfully', 'admin');
     break;
   case 'update_link':
-    $links = new Links();
-    $links->update(
+    Link::update(
       $request->parameters['link'],
-      $request->parameters['link_id']
+      intval($request->parameters['link_id']),
     );
     ok_response('Updated succesfully', 'admin');
     break;
   case 'delete_link':
-    $links = new Links();
-    $links->delete(
-      $request->parameters['link_id']
+    Link::delete(
+      intval($request->parameters['link_id']),
     );
     ok_response('Deleted successfully', 'admin');
     break;

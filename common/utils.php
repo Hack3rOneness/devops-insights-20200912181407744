@@ -63,3 +63,10 @@ function must_have_idx<Tk, Tv>(
   invariant($result !== null, sprintf('Index %s not found in container', $idx));
   return $result;
 }
+
+function firstx<T>(Traversable<T> $t): T {
+  foreach ($t as $v) {
+    return $v;
+  }
+  invariant_violation('Expected non-empty collection');
+}

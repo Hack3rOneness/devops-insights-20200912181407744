@@ -121,7 +121,7 @@ class AdminController extends Controller {
       $start_ts = date("H:i:s D m/d/Y", $conf->get('start_ts'));
       $end_ts = date("H:i:s D m/d/Y", $conf->get('end_ts'));
     }
-  
+
     return
       <div>
         <header class="admin-page-header">
@@ -269,7 +269,7 @@ class AdminController extends Controller {
               </div>
               <div class="col col-pad col-4-4">
                 <div class="form-el el--block-label">
-                  
+
                 </div>
               </div>
             </div>
@@ -337,7 +337,7 @@ class AdminController extends Controller {
                 </div>
               </div>
             </form>
-          </section>  
+          </section>
         );
       }
     } else {
@@ -378,7 +378,7 @@ class AdminController extends Controller {
                 </div>
               </div>
             </div>
-          </section>  
+          </section>
           {$announcements_div}
         </div>
       </div>;
@@ -406,7 +406,7 @@ class AdminController extends Controller {
                 </div>
               </div>
             </form>
-          </section>  
+          </section>
         );
       }
     } else {
@@ -447,7 +447,7 @@ class AdminController extends Controller {
                 </div>
               </div>
             </div>
-          </section>  
+          </section>
           {$announcements_div}
         </div>
       </div>;
@@ -731,7 +731,6 @@ class AdminController extends Controller {
 
     $levels = new Levels();
     $attachments = new Attachments();
-    $links = new Links();
 
     $c = 1;
     foreach ($levels->all_flag_levels() as $flag) {
@@ -821,19 +820,19 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if ($links->has_links($flag['id'])) {
+      if (Link::hasLinks(intval($flag['id']))) {
         $l_c = 1;
-        foreach ($links->all_links($flag['id']) as $link) {
+        foreach (Link::allLinks(intval($flag['id'])) as $link) {
           $links_div->appendChild(
             <div class="existing-link fb-column-container">
               <div class="col col-pad col-2-3">
                 <div class="form-el">
                   <form class="link_form">
-                    <input type="hidden" name="link_id" value={$link['id']}/>
+                    <input type="hidden" name="link_id" value={strval($link->getId())}/>
                     <div class="col el--block-label el--full-text">
                       <label>Link {$l_c}:</label>
-                      <input name="link" type="text" value={$link['link']} disabled={true}/>
-                      <a href={$link['link']} target="_blank">Link</a>
+                        <input name="link" type="text" value={$link->getLink()} disabled={true}/>
+                      <a href={$link->getLink()} target="_blank">Link</>
                     </div>
                   </form>
                 </div>
@@ -1041,7 +1040,6 @@ class AdminController extends Controller {
 
     $levels = new Levels();
     $attachments = new Attachments();
-    $links = new Links();
 
     $c = 1;
     foreach ($levels->all_base_levels() as $base) {
@@ -1131,19 +1129,19 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if ($links->has_links($base['id'])) {
+      if (Link::hasLinks(intval($base['id']))) {
         $l_c = 1;
-        foreach ($links->all_links($base['id']) as $link) {
+        foreach (Link::allLinks(intval($base['id'])) as $link) {
           $links_div->appendChild(
             <div class="existing-link fb-column-container">
               <div class="col col-pad col-2-3">
                 <div class="form-el">
                   <form class="link_form">
-                    <input type="hidden" name="link_id" value={$link['id']}/>
+                    <input type="hidden" name="link_id" value={strval($link->getId())}/>
                     <div class="col el--block-label el--full-text">
                       <label>Link {$l_c}:</label>
-                      <input name="link" type="text" value={$link['link']} disabled={true}/>
-                      <a href={$link['link']} target="_blank">Link</a>
+                        <input name="link" type="text" value={$link->getLink()} disabled={true}/>
+                        <a href={$link->getLink()} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
@@ -1503,26 +1501,26 @@ class AdminController extends Controller {
       $team_visible_off_id = 'fb--teams--team-'.$team['id'].'-visible--off';
 
       if ($team_protected) {
-        $toggle_status = 
+        $toggle_status =
           <div class="admin-section-toggle radio-inline">
             <input type="radio" name={$team_status_name} id={$team_status_on_id} checked={$team_active_on}/>
             <label for={$team_status_on_id}>On</label>
           </div>;
-        $toggle_admin = 
+        $toggle_admin =
           <div class="admin-section-toggle radio-inline">
             <input type="radio" name={$team_admin_name} id={$team_admin_on_id} checked={$team_admin_on}/>
             <label for={$team_admin_on_id}>On</label>
           </div>;
         $delete_button = <button class="fb-cta cta--red" disabled={true}>Protected</button>;
       } else {
-        $toggle_status = 
+        $toggle_status =
           <div class="admin-section-toggle radio-inline">
             <input type="radio" name={$team_status_name} id={$team_status_on_id} checked={$team_active_on}/>
             <label for={$team_status_on_id}>On</label>
             <input type="radio" name={$team_status_name} id={$team_status_off_id} checked={$team_active_off}/>
             <label for={$team_status_off_id}>Off</label>
           </div>;
-        $toggle_admin = 
+        $toggle_admin =
           <div class="admin-section-toggle radio-inline">
             <input type="radio" name={$team_admin_name} id={$team_admin_on_id} checked={$team_admin_on}/>
             <label for={$team_admin_on_id}>On</label>
@@ -2204,7 +2202,7 @@ class AdminController extends Controller {
           <span class="branding-el">
             <svg class="icon icon--social-facebook">
               <use xlink:href="#icon--social-facebook" />
-              
+
             </svg>
             <span class="has-icon"> Powered By Facebook</span></span>
         </div>

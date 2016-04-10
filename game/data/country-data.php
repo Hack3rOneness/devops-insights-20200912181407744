@@ -10,7 +10,6 @@ class CountryDataController extends DataController {
     $levels = new Levels();
     $countries = new Countries();
     $attachments = new Attachments();
-    $links = new Links();
     $teams = new Teams();
     $conf = new Configuration();
 
@@ -60,8 +59,8 @@ class CountryDataController extends DataController {
 
       // All links for this level
       $links_list = array();
-      if ($links->has_links($level['id'])) {
-        foreach ($links->all_links($level['id']) as $link) {
+      if (Link::hasLinks($level['id'])) {
+        foreach (Link::allLinks($level['id']) as $link) {
           array_push($links_list, $link['link']);
         }
       }
