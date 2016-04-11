@@ -68,7 +68,6 @@ class AdminController extends Controller {
     $select = <select name="registration_type"></select>;
     $select->appendChild(<option class="registration_type_option" value="1" selected={($type === '1')}>Open</option>);
     $select->appendChild(<option class="registration_type_option" value="2" selected={($type === '2')}>Tokenized</option>);
-    $select->appendChild(<option class="registration_type_option" value="3" selected={($type === '3')}>Needs Approval</option>);
 
     return $select;
   }
@@ -147,7 +146,7 @@ class AdminController extends Controller {
                     <input type="radio" name="fb--conf--registration_names" id="fb--conf--registration_names--on" checked={$registration_names_on}/>
                     <label for="fb--conf--registration_names--on">On</label>
                     <input type="radio" name="fb--conf--registration_names" id="fb--conf--registration_names--off" checked={$registration_names_off}/>
-                    <label for="fb--conf--registration-names--off">Off</label>
+                    <label for="fb--conf--registration_names--off">Off</label>
                   </div>
                 </div>
               </div>

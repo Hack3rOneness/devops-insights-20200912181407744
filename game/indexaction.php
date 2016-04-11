@@ -2,6 +2,9 @@
 
 require_once('../vendor/autoload.php');
 
+function register_names($teamname, $password, $logo, $names, $emails) {
+}
+
 function register_team($teamname, $password, $logo) {
   $teams = new Teams();
   $logos = new Logos();
@@ -89,6 +92,8 @@ $filters = array(
         'regexp'      => '/^[\w-]+$/'
       ),
     ),
+    'names'       => FILTER_UNSAFE_RAW,
+    'emails'      => FILTER_UNSAFE_RAW,
     'action'      => array(
       'filter'      => FILTER_VALIDATE_REGEXP,
       'options'     => array(
@@ -99,6 +104,7 @@ $filters = array(
 );
 $actions = array(
   'register_team',
+  'register_names',
   'login_team',
 );
 $request = new Request($filters, $actions, array());
@@ -113,6 +119,15 @@ switch ($request->action) {
       $request->parameters['teamname'],
       $request->parameters['password'],
       $request->parameters['logo']
+    );
+    break;
+  case 'register_names':
+    register_team(
+      $request->parameters['teamname'],
+      $request->parameters['password'],
+      $request->parameters['logo'],
+      $request->parameters['names'],
+      $request->parameters['emails']
     );
     break;
   case 'login_team':

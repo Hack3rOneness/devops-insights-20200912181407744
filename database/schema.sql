@@ -128,6 +128,23 @@ CREATE TABLE `teams` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `teams_data`
+--
+
+DROP TABLE IF EXISTS `teams_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teams_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `team_id` int(11) DEFAULT NULL,
+  `name` text DEFAULT NULL,
+  `email` text DEFAULT NULL,
+  `created_ts` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `sessions`
 --
 

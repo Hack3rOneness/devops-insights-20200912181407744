@@ -89,7 +89,7 @@ function registerTeam() {
   var password = verifyTeamPassword();
   var logo = verifyTeamLogo();
 
-  if (name && password && logo) {
+  if ((name) && (password) && (logo)) {
     var register_data = {
       action: 'register_team',
       teamname: name,
@@ -97,6 +97,35 @@ function registerTeam() {
       logo: logo
     };
     sendIndexRequest(register_data);
+  }
+}
+
+function registerNames() {
+  var name = verifyTeamName('register');
+  var password = verifyTeamPassword();
+  var logo = verifyTeamLogo();
+  var fields = $('.fb-form input[name^="registration_name_"]');
+  var names = [];
+  $.each(fields, function(index, nameField) {
+    names.push(nameField.value);
+  });
+  var emails = [];
+  fields = $('.fb-form input[name^="registration_email_"]');
+  $.each(fields, function(index, value) {
+    emails.push(nameField.value);
+  });
+
+  if ((name) && (password) && (logo)) {
+    var register_data = {
+      action: 'register_names',
+      teamname: name,
+      password: password,
+      logo: logo,
+      names: names,
+      emails: emails
+    };
+    console.log(register_data);
+    //sendIndexRequest(register_data);
   }
 }
 
@@ -113,7 +142,7 @@ function loginTeam() {
   }
   password = verifyTeamPassword();
 
-  if (team && password) {
+  if ((team) && (password)) {
     var login_data = {
       action: 'login_team',
       [teamParam]: team,

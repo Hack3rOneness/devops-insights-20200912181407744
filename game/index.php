@@ -162,55 +162,122 @@ class IndexController extends Controller {
       </div>;
   }
 
+  public function renderRegistrationNames(): :xhp {
+    $conf = new Configuration();
+    $players = intval($conf->get('registration_players'));
+    $names_ul = <ul></ul>;
+
+    for ($i=1; $i<=$players; $i++) {
+      $name_ = 'registration_name_' . $i;
+      $email_ = 'registration_email_' . $i;
+      $names_ul->appendChild(
+        <li class="fb-column-container">
+          <div class="col col-2-4 form-el el--text">
+            <label for="">Name</label>
+            <input name={$name_} type="text"/>
+          </div>
+          <div class="col col-2-4 form-el el--text">
+            <label for="">Email</label>
+            <input name={$email_} type="email"/>
+          </div>
+        </li>
+      );
+    }
+
+    return
+      <main role="main" class="fb-main page--team-registration full-height fb-scroll">
+      <header class="fb-section-header fb-container">
+        <h1 class="fb-glitch" data-text="Team Registration">Team Registration</h1>
+        <p class="inner-container">
+          Register to play Capture The Flag here. Once you have registered, you will be logged in
+        </p>
+      </header>
+      <div class="fb-registration">
+        <form class="fb-form">
+          <input type="hidden" name="action" value="register_names"/>
+          <fieldset class="form-set multiple-registration-list">
+            {$names_ul}
+          </fieldset>
+          <br/><br/>
+          <fieldset class="form-set fb-container container--small">
+            <div class="form-el el--text">
+              <label for="">Team Name</label>
+              <input autocomplete="off" name="teamname" type="text" maxlength={20}/>
+            </div>
+            <div class="form-el el--text">
+              <label for="">Password</label>
+              <input autocomplete="off" name="password" type="password"/>
+            </div>
+          </fieldset>
+          <div class="fb-choose-emblem">
+            <h6>Choose an Emblem</h6>
+            <div class="emblem-carousel">{$this->renderLogosSelection()}</div>
+          </div>
+          <div class="form-el--actions fb-container container--small">
+            <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerNames()">Sign Up</button></p>
+          </div>
+        </form>
+      </div>  
+    </main>;
+  }
+
+  public function renderRegistrationNoNames(): :xhp {
+    return
+      <main role="main" class="fb-main page--registration full-height fb-scroll">
+        <header class="fb-section-header fb-container">
+          <h1 class="fb-glitch" data-text="Team Registration">Team Registration</h1>
+          <p class="inner-container">Register to play Capture The Flag here. Once you have registered, you will be logged in.</p>
+        </header>
+        <div class="fb-registration">
+          <form class="fb-form">
+            <input type="hidden" name="action" value="register_team"/>
+            <fieldset class="form-set fb-container container--small">
+              <div class="form-el el--text">
+                <label for="">Team Name</label>
+                <input autocomplete="off" name="teamname" type="text" maxlength={20}/>
+              </div>
+              <div class="form-el el--text">
+                <label for="">Password</label>
+                <input autocomplete="off" name="password" type="password"/>
+              </div>
+            </fieldset>
+            <div class="fb-choose-emblem">
+              <h6>Choose an Emblem</h6>
+              <div class="emblem-carousel">{$this->renderLogosSelection()}</div>
+            </div>
+            <div class="form-el--actions fb-container container--small">
+              <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerTeam()">Sign Up</button></p>
+            </div>
+          </form>
+        </div>
+      </main>;
+  }
+
   public function renderRegistrationContent(): :xhp {
     $conf = new Configuration();
     if ($conf->get('registration') === '1') {
-      return
-        <main role="main" class="fb-main page--registration full-height fb-scroll">
-          <header class="fb-section-header fb-container">
-            <h1 class="fb-glitch" data-text="Team Registration">Team Registration</h1>
-            <p class="inner-container">Register to play Capture The Flag here. Once you have registered, you will be logged in.</p>
-          </header>
-          <div class="fb-registration">
-            <form class="fb-form">
-              <input type="hidden" name="action" value="register_team"/>
-              <fieldset class="form-set fb-container container--small">
-                <div class="form-el el--text">
-                  <label for="">Team Name</label>
-                  <input autocomplete="off" name="teamname" type="text" maxlength={20}/>
-                </div>
-                <div class="form-el el--text">
-                  <label for="">Password</label>
-                  <input autocomplete="off" name="password" type="password"/>
-                </div>
-              </fieldset>
-              <div class="fb-choose-emblem">
-                <h6>Choose an Emblem</h6>
-                <div class="emblem-carousel">{$this->renderLogosSelection()}</div>
-              </div>
-              <div class="form-el--actions fb-container container--small">
-                <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerTeam()">Sign Up</button></p>
-              </div>
-            </form>
-          </div>
-        </main>;
+      if ($conf->get('registration_names') === '1') {
+        return $this->renderRegistrationNames();
       } else {
-        return
-          <div class="fb-row-container full-height fb-scroll">
-            <main role="main" class="fb-main page--game-status row-fluid no-shrink center-vertically fb-img-glitch">
-              <div class="fb-container fb-centered-main">
-                <h3 class="title-lead">Team Registration</h3>
-                <h1 class="fb-glitch" data-text="Not Available">Not Available</h1>
-                <form class="fb-form inner-container">
-                  <p>Team Registration will be open soon, stay tuned!</p>
-                  <div class="form-el--actions">
-                    <a href="/index.php?page=registration" class="fb-cta cta--yellow">Try Again</a>
-                  </div>
-                </form>
-              </div>
-            </main>
-          </div>;
+        return $this->renderRegistrationNoNames();
       }
+    } else {
+      return
+        <div class="fb-row-container full-height fb-scroll">
+          <main role="main" class="fb-main page--game-status row-fluid no-shrink center-vertically fb-img-glitch">
+            <div class="fb-container fb-centered-main">
+              <h3 class="title-lead">Team Registration</h3>
+              <h1 class="fb-glitch" data-text="Not Available">Not Available</h1>
+              <form class="fb-form inner-container">
+                <p>Team Registration will be open soon, stay tuned!</p>
+                <div class="form-el--actions">
+                  <a href="/index.php?page=registration" class="fb-cta cta--yellow">Try Again</a>
+                </div>
+              </form>
+            </div>
+          </main>
+        </div>;
+  }
   }
 
   public function renderLoginContent(): :xhp {

@@ -58,6 +58,14 @@ class Teams {
     return $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
   }
 
+  // Add data to a team.
+  public function add_team_data($name, $email, $team_id) {
+    $sql = 'INSERT INTO teams_data (name, email, team_id, created_ts) VALUES (?, ?, ?, NOW())';
+    $elements = array($name, $email, $team_id);
+    $this->db->query($sql, $elements);
+    return $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
+  }
+
   // Update team.
   public function update_team($name, $logo, $points, $team_id) {
     $sql = 'UPDATE teams SET name = ?, logo = ? , points = ? WHERE id = ? LIMIT 1';
