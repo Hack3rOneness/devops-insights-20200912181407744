@@ -9,6 +9,7 @@ CREATE TABLE `logos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `used` tinyint(1) DEFAULT 1,
   `enabled` tinyint(1) DEFAULT 1,
+  `protected` tinyint(1) DEFAULT 0,
   `name` text DEFAULT NULL,
   `logo` text DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -21,10 +22,10 @@ CREATE TABLE `logos` (
 
 LOCK TABLES `logos` WRITE;
 /*!40000 ALTER TABLE `logos` DISABLE KEYS */;
+INSERT INTO `logos` (name, logo, protected) VALUES ('admin', '/static/svg/icons/badges/badge-admin.svg', 1);
 INSERT INTO `logos` (name, logo) VALUES ('4chan-2', '/static/svg/icons/badges/badge-4chan-2.svg');
 INSERT INTO `logos` (name, logo) VALUES ('4chan', '/static/svg/icons/badges/badge-4chan.svg');
 INSERT INTO `logos` (name, logo) VALUES ('8ball', '/static/svg/icons/badges/badge-8ball.svg');
-INSERT INTO `logos` (name, logo) VALUES ('admin', '/static/svg/icons/badges/badge-admin.svg');
 INSERT INTO `logos` (name, logo) VALUES ('alien-2', '/static/svg/icons/badges/badge-alien-2.svg');
 INSERT INTO `logos` (name, logo) VALUES ('alien-3', '/static/svg/icons/badges/badge-alien-3.svg');
 INSERT INTO `logos` (name, logo) VALUES ('alien', '/static/svg/icons/badges/badge-alien.svg');

@@ -387,6 +387,14 @@ var $body = $('body');
     window.location.href = location.href;
   }
 
+  // Create tokens
+  function createTokens(section) {
+    var create_data = {
+      action: 'create_tokens'
+    };
+    sendAdminRequest(create_data);
+  }
+
   // Delete announcement
   function deleteAnnouncement(section) {
     var announcement_id = $('.announcements_form input[name=announcement_id]', section)[0].value;
@@ -454,6 +462,7 @@ var $body = $('body');
 
   // Create quiz level
   function createQuizLevel(section) {
+    var title = $('.level_form input[name=title]', section)[0].value;
     var question = $('.level_form textarea[name=question]', section)[0].value;
     var answer = $('.level_form input[name=answer]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
@@ -462,6 +471,7 @@ var $body = $('body');
     var penalty = $('.level_form input[name=penalty]', section)[0].value;
     var create_data = {
       action: 'create_quiz',
+      title: title,
       question: question,
       answer: answer,
       entity_id: entity_id,
@@ -469,13 +479,14 @@ var $body = $('body');
       hint: hint,
       penalty: penalty
     };
-    if ((question) && (answer) && (entity_id) && (points)) {
+    if ((title) && (question) && (answer) && (entity_id) && (points)) {
       sendAdminRequest(create_data);
     }
   }
 
   // Create flag level
   function createFlagLevel(section) {
+    var title = $('.level_form input[name=title]', section)[0].value;
     var description = $('.level_form textarea[name=description]', section)[0].value;
     var flag = $('.level_form input[name=flag]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
@@ -485,6 +496,7 @@ var $body = $('body');
     var penalty = $('.level_form input[name=penalty]', section)[0].value;
     var create_data = {
       action: 'create_flag',
+      title: title,
       description: description,
       flag: flag,
       entity_id: entity_id,
@@ -493,13 +505,14 @@ var $body = $('body');
       hint: hint,
       penalty: penalty
     };
-    if ((description) && (flag) && (entity_id) && (points)) {
+    if ((title) && (description) && (flag) && (entity_id) && (points)) {
       sendAdminRequest(create_data);
     }
   }
 
   // Create base level
   function createBaseLevel(section) {
+    var title = $('.level_form input[name=title]', section)[0].value;
     var description = $('.level_form textarea[name=description]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
@@ -508,6 +521,7 @@ var $body = $('body');
     var penalty = $('.level_form input[name=penalty]', section)[0].value;
     var create_data = {
       action: 'create_base',
+      title: title,
       description: description,
       entity_id: entity_id,
       category_id: category_id,
@@ -515,7 +529,7 @@ var $body = $('body');
       hint: hint,
       penalty: penalty
     };
-    if ((description) && (entity_id) && (points)) {
+    if ((title) && (description) && (entity_id) && (points)) {
       sendAdminRequest(create_data);
     }
   }
@@ -538,6 +552,7 @@ var $body = $('body');
 
   // Update quiz level
   function updateQuizLevel(section) {
+    var title = $('.level_form input[name=title]', section)[0].value;
     var question = $('.level_form textarea[name=question]', section)[0].value;
     var answer = $('.level_form input[name=answer]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
@@ -549,6 +564,7 @@ var $body = $('body');
     var level_id = $('.level_form input[name=level_id]', section)[0].value;
     var update_data = {
       action: 'update_quiz',
+      title: title,
       question: question,
       answer: answer,
       entity_id: entity_id,
@@ -559,13 +575,14 @@ var $body = $('body');
       penalty: penalty,
       level_id: level_id
     };
-    if ((question) && (answer) && (entity_id) && (points)) {
+    if ((title) && (question) && (answer) && (entity_id) && (points)) {
       sendAdminRequest(update_data);
     }
   }
 
   // Update flag level
   function updateFlagLevel(section) {
+    var title = $('.level_form input[name=title]', section)[0].value;
     var description = $('.level_form textarea[name=description]', section)[0].value;
     var flag = $('.level_form input[name=flag]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
@@ -578,6 +595,7 @@ var $body = $('body');
     var level_id = $('.level_form input[name=level_id]', section)[0].value;
     var update_data = {
       action: 'update_flag',
+      title: title,
       description: description,
       flag: flag,
       entity_id: entity_id,
@@ -589,13 +607,14 @@ var $body = $('body');
       penalty: penalty,
       level_id: level_id
     };
-    if ((description) && (flag) && (entity_id) && (points)) {
+    if ((title) && (description) && (flag) && (entity_id) && (points)) {
       sendAdminRequest(update_data);
     }
   }
 
   // Update base level
   function updateBaseLevel(section) {
+    var title = $('.level_form input[name=title]', section)[0].value;
     var description = $('.level_form textarea[name=description]', section)[0].value;
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
@@ -606,6 +625,7 @@ var $body = $('body');
     var level_id = $('.level_form input[name=level_id]', section)[0].value;
     var update_data = {
       action: 'update_base',
+      title: title,
       description: description,
       entity_id: entity_id,
       category_id: category_id,
@@ -615,7 +635,7 @@ var $body = $('body');
       penalty: penalty,
       level_id: level_id
     };
-    if ((description) && (entity_id) && (points)) {
+    if ((title) && (description) && (entity_id) && (points)) {
       sendAdminRequest(update_data);
     }
   }
@@ -733,6 +753,15 @@ var $body = $('body');
     }
   }
 
+  function changeConfiguration(field, value) {
+    var conf_data = {
+      action: 'change_configuration',
+      field: field,
+      value: value
+    };
+    sendAdminRequest(conf_data);
+  }
+
   function toggleLogo(section) {
   // Toggle logo status
     var logo_id = $('.logo_form input[name=logo_id]', section)[0].value;
@@ -825,6 +854,8 @@ var $body = $('body');
         createElement($section);
       } else if (action === 'create-announcement') {
         createAnnouncement($section);
+      } else if (action === 'create-tokens') {
+        createTokens($section);
       } else if (action === 'edit'){
         $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", false);
@@ -888,7 +919,7 @@ var $body = $('body');
     //
     // radio buttons
     //
-    $('input[type=radio]').on('change', function(event) {
+    $('input[type="radio"]').on('change', function(event) {
       var $this = $(this);
       var radio_name = $this.attr('id');
 
@@ -906,6 +937,24 @@ var $body = $('body');
         }
       } else if (radio_name.search('fb--conf') === 0) {
         toggleConfiguration(radio_name);
+      }
+    });
+
+    //
+    // configuration fields
+    //
+    $('select,input[type="number"][name^="fb--conf"]').on('change', function(event) {
+      var $this = $(this);
+      var field = $this.attr('name').split('--')[2];
+      var value = '';
+      if ($this.attr('type') === 'number') {
+        value = $(this)[0].value;
+      } else {
+        value = $('option:selected', $this)[0].value;
+      }
+      changeConfiguration(field, value);
+      if (field === 'registration_type') {
+        location.reload();
       }
     });
 

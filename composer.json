@@ -2,8 +2,7 @@
     "name": "facebook-ctf",
     "description": "Facebook CTF platform",
     "require": {
-        "facebook/xhp-lib": "2.x",
-	"doctrine/orm": "*"
+        "facebook/xhp-lib": "2.x"
     },
     "autoload": {
         "classmap": ["game/", "common/"],

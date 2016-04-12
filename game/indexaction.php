@@ -73,8 +73,13 @@ function login_team($team_id, $password) {
         sess_set('admin', $team['admin']);
       }
       sess_set('IP', $_SERVER['REMOTE_ADDR']);
+    } 
+    if ($team['admin'] == 1) {
+      $redirect = 'admin';
+    } else {
+      $redirect = 'game';
     }
-    ok_response('Login succesful', 'game');
+    ok_response('Login succesful', $redirect);
   } else {
     error_response('Login failed', 'login');
     exit;

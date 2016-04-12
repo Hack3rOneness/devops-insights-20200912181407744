@@ -50,6 +50,7 @@ $filters = array(
     'category_id' => FILTER_VALIDATE_INT,
     'category'    => FILTER_SANITIZE_STRING,
     'country_id'  => FILTER_VALIDATE_INT,
+    'title'       => FILTER_UNSAFE_RAW,
     'description' => FILTER_UNSAFE_RAW,
     'question'    => FILTER_UNSAFE_RAW,
     'flag'        => FILTER_UNSAFE_RAW,
@@ -114,6 +115,7 @@ $actions = array(
   'change_configuration',
   'create_announcement',
   'delete_announcement',
+  'create_tokens',
   'end_game',
   'reset_game'
 );
@@ -138,6 +140,7 @@ switch ($request->action) {
     $bonus = $c->get('default_bonus');
     $bonus_dec = $c->get('default_bonusdec');
     $levels->create_quiz_level(
+      $request->parameters['title'],
       $request->parameters['question'],
       $request->parameters['answer'],
       $request->parameters['entity_id'],
@@ -152,6 +155,7 @@ switch ($request->action) {
   case 'update_quiz':
     $levels = new Levels();
     $levels->update_quiz_level(
+      $request->parameters['title'],
       $request->parameters['question'],
       $request->parameters['answer'],
       $request->parameters['entity_id'],
@@ -170,6 +174,7 @@ switch ($request->action) {
     $bonus = $c->get('default_bonus');
     $bonus_dec = $c->get('default_bonusdec');
     $levels->create_flag_level(
+      $request->parameters['title'],
       $request->parameters['description'],
       $request->parameters['flag'],
       $request->parameters['entity_id'],
@@ -185,6 +190,7 @@ switch ($request->action) {
   case 'update_flag':
     $levels = new Levels();
     $levels->update_flag_level(
+      $request->parameters['title'],
       $request->parameters['description'],
       $request->parameters['flag'],
       $request->parameters['entity_id'],
@@ -203,6 +209,7 @@ switch ($request->action) {
     $c = new Configuration();
     $bonus = $c->get('default_bonus');
     $levels->create_base_level(
+      $request->parameters['title'],
       $request->parameters['description'],
       $request->parameters['entity_id'],
       $request->parameters['category_id'],
@@ -216,6 +223,7 @@ switch ($request->action) {
   case 'update_base':
     $levels = new Levels();
     $levels->update_base_level(
+      $request->parameters['title'],
       $request->parameters['description'],
       $request->parameters['entity_id'],
       $request->parameters['category_id'],
@@ -443,6 +451,16 @@ switch ($request->action) {
     $control->delete_announcement(
       $request->parameters['announcement_id']
     );
+    ok_response('Success', 'admin');
+    break;
+  case 'create_tokens':
+    $control = new Control();
+    $control->create_tokens();
+    ok_response('Success', 'admin');
+    break;
+  case 'export_tokens':
+    $control = new Control();
+    $control->export_tokens();
     ok_response('Success', 'admin');
     break;
   case 'begin_game':

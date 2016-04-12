@@ -111,7 +111,7 @@ function registerNames() {
   });
   var emails = [];
   fields = $('.fb-form input[name^="registration_email_"]');
-  $.each(fields, function(index, value) {
+  $.each(fields, function(index, nameField) {
     emails.push(nameField.value);
   });
 
@@ -121,8 +121,8 @@ function registerNames() {
       teamname: name,
       password: password,
       logo: logo,
-      names: names,
-      emails: emails
+      names: JSON.stringify(names),
+      emails: JSON.stringify(emails)
     };
     console.log(register_data);
     //sendIndexRequest(register_data);

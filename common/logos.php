@@ -49,7 +49,7 @@ class Logos {
 
   // All the enabled logos.
   public function all_enabled_logos() {
-    $sql = 'SELECT * FROM logos WHERE enabled = 1';
+    $sql = 'SELECT * FROM logos WHERE enabled = 1 AND protected = 0';
     return $this->db->query($sql);
   }
 }

@@ -36,6 +36,7 @@ CREATE TABLE `levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) DEFAULT 0,
   `type` varchar(4) DEFAULT NULL,
+  `title` text DEFAULT NULL,
   `description` text DEFAULT NULL,
   `entity_id` int(11) DEFAULT NULL,
   `category_id` int(11) NOT NULL DEFAULT '1',
@@ -258,6 +259,7 @@ CREATE TABLE `registration_tokens` (
   `token` text DEFAULT NULL,
   `used` tinyint(1) DEFAULT 0,
   `team_id` int(11) DEFAULT NULL,
+  `created_ts` timestamp NULL DEFAULT NULL,
   `use_ts` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

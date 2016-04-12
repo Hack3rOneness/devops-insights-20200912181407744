@@ -31,11 +31,18 @@ class IndexController extends Controller {
           </div>
         </form>;
     } else {
+      $conf = new Configuration();
+      if ($conf->get('registration') === '1') {
+        $registration_button = <a style="margin-left: 1em;" href="/index.php?page=registration" class="fb-cta cta--yellow">Register Team</a>;
+      } else {
+        $registration_button = <a></a>;
+      }
       $play_nav =
         <form class="fb-form inner-container">
           <p>Get ready for the CTF to start and register your team now!</p>
           <div class="form-el--actions">
-            <a href="/index.php?page=registration" class="fb-cta cta--yellow">Register Team</a>
+            {$registration_button}
+            <a style="margin-left: 1em;" href="/index.php?page=login" class="fb-cta cta--yellow">Login</a>
           </div>
         </form>;
     }
@@ -445,6 +452,9 @@ class IndexController extends Controller {
     case 'game':
       game_page();
       break;
+    case 'admin':
+      admin_page();
+      break;
     default:
       return $this->renderMainContent();
       break;
@@ -497,6 +507,7 @@ $pages = array(
   'error',
   'mobile',
   'game',
+  'admin'
 );
 
 $request = new Request($filters, $actions, $pages);

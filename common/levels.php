@@ -21,6 +21,7 @@ class Levels {
   // Create a team and return the created level id.
   public function create_level(
     $type,
+    $title,
     $description,
     $entity_id,
     $category_id,
@@ -39,10 +40,11 @@ class Levels {
       $ent_id = $entity_id;
     }
     $sql = 'INSERT INTO levels '.
-      '(type, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
-      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
+      '(type, title, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
+      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
     $elements = array(
       $type,
+      $title,
       $description,
       $ent_id,
       $category_id,
@@ -65,6 +67,7 @@ class Levels {
 
   // Create a flag level.
   public function create_flag_level(
+    $title,
     $description,
     $flag,
     $entity_id,
@@ -77,6 +80,7 @@ class Levels {
   ) {
     return $this->create_level(
       'flag',
+      $title,
       $description,
       $entity_id,
       $category_id,
@@ -92,6 +96,7 @@ class Levels {
 
   // Update a flag level.
   public function update_flag_level(
+    $title,
     $description,
     $flag,
     $entity_id,
@@ -104,6 +109,7 @@ class Levels {
     $level_id
   ) {
     return $this->update_level(
+      $title,
       $description,
       $entity_id,
       $category_id,
@@ -120,6 +126,7 @@ class Levels {
 
   // Create a quiz level.
   public function create_quiz_level(
+    $title,
     $question,
     $answer,
     $entity_id,
@@ -133,6 +140,7 @@ class Levels {
     $category_id = $this->db->query($sql)[0]['id'];
     return $this->create_level(
       'quiz',
+      $title,
       $question,
       $entity_id,
       $category_id,
@@ -148,6 +156,7 @@ class Levels {
 
   // Update a quiz level.
   public function update_quiz_level(
+    $title,
     $question,
     $answer,
     $entity_id,
@@ -161,6 +170,7 @@ class Levels {
     $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
     $category_id = $this->db->query($sql)[0]['id'];
     return $this->update_level(
+      $title,
       $question,
       $entity_id,
       $category_id,
@@ -177,6 +187,7 @@ class Levels {
 
   // Create a base level.
   public function create_base_level(
+    $title,
     $description,
     $entity_id,
     $category_id,
@@ -187,6 +198,7 @@ class Levels {
   ) {
     return $this->create_level(
       'base',
+      $title,
       $description,
       $entity_id,
       $category_id,
@@ -202,6 +214,7 @@ class Levels {
 
   // Update a base level.
   public function update_base_level(
+    $title,
     $description,
     $entity_id,
     $category_id,
@@ -212,6 +225,7 @@ class Levels {
     $level_id
   ) {
     return $this->update_level(
+      $title,
       $description,
       $entity_id,
       $category_id,
@@ -228,6 +242,7 @@ class Levels {
 
   // Update level.
   public function update_level(
+    $title,
     $description,
     $entity_id,
     $category_id,
@@ -246,10 +261,11 @@ class Levels {
     } else {
       $ent_id = $entity_id;
     }
-    $sql = 'UPDATE levels SET description = ?, entity_id = ?, category_id = ?, points = ?, '.
+    $sql = 'UPDATE levels SET title = ?, description = ?, entity_id = ?, category_id = ?, points = ?, '.
       'bonus = ?, bonus_dec = ?, bonus_fix = ?, flag = ?, hint = ?, '.
       'penalty = ? WHERE id = ? LIMIT 1';
     $elements = array(
+      $title,
       $description,
       $ent_id,
       $category_id,
