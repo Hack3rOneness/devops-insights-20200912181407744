@@ -34,7 +34,7 @@ ignore = Name {.git,.vagrant,.DS_Store,.sources}
 prefer = $CODE_PATH
 repeat = 2
 terse = true
-dontchmod = true
+dontchmod = false
 perms = 0
 sshargs = -F $SSH_CONFIG
 "

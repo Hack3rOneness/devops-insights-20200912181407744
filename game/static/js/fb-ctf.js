@@ -613,7 +613,7 @@
         var country = $('[class~="land"]', this).attr('title');
 
         CURRENT_ZOOM = enableClickAndDrag.getZoom();
-        captureCountry( country );
+        captureCountry(country);
       });
 
       //
@@ -776,6 +776,7 @@
         FB_CTF.modal.loadPopup('country-capture', function(){
           var $container = $('.fb-modal-content'),
               level_id   = data ? data.level_id : 0,
+              title      = data ? data.title : '',
               intro      = data ? data.intro : '',
               hint       = data ? data.hint : '',
               hint_cost  = data ? data.hint_cost : -1,
@@ -788,6 +789,7 @@
               links      = data ? data.links : '';
 
           $('.country-name', $container).text(country);
+          $('.country-title', $container).text(title);
           $('input[name=level_id]', $container).attr('value',level_id);
           $('.capture-text', $container).text(intro);
           if( attachments instanceof Array){
@@ -947,9 +949,11 @@
             }),
                 points     = data ? data.points : '',
                 category   = data ? data.category : '',
-                type = data ? data.type : '';
+                title      = data ? data.title : '', 
+                type       = data ? data.type : '';
 
             $('.country-name', $container).text(country);
+            $('.country-title', $container).text(title);
             $('.points-number', $container).text(points);
             $('.country-type', $container).text(type);
             $('.country-category', $container).text(category);
@@ -2528,7 +2532,7 @@
           FB_CTF.modal.close();
           clearCommandPrompt();
 
-          FB_CTF.gameboard.captureCountry( country );
+          FB_CTF.gameboard.captureCountry(country);
 
           $('body').off('command-option-selected');
         });

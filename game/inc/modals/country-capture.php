@@ -1,7 +1,7 @@
 
 <div class="fb-modal-content">
   <div class="modal-title">
-    <h4>capture_<span class="country-name highlighted"></span></h4>
+    <h4>capture_<span class="country-name highlighted"></span> - <span class="country-title"></span></h4>
     <a href="#" class="js-close-modal"><svg class="icon icon--close"><use xlink:href="#icon--close"/></svg></a>
   </div>
 

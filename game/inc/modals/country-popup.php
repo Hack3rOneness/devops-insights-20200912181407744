@@ -1,6 +1,6 @@
 
 <div class="modal-title">
-  <h4><span class="country-name"></span></h4>
+  <h4><span class="country-name"></span> - <span class="country-title"></span></h4>
 </div>
 
 <div class="country-capture-stats fb-column-container">

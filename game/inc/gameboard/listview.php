@@ -24,7 +24,7 @@ class ListviewController {
       }
       $listview_table->appendChild(
         <tr data-country={$country['name']}>
-          <td style="width: 38%;">{$country['name']}</td>
+          <td style="width: 38%;">{$country['name']} ({$level['title']})</td>
           <td style="width: 10%;">{$level['points']}</td>
           <td style="width: 22%;">{$category['category']}</td>
           <td style="width: 30%;">{$span_status}</td>
