@@ -50,8 +50,8 @@ cd $UNISONDIR
 [[ -d "$UNISONDIR/.unison" ]] || mkdir "$UNISONDIR/.unison"
 echo "$PROFILE" > "$UNISONDIR/.unison/facebook-ctf.prf"
 
-echo "[+] Sync'ing project..."
-unison "facebook-ctf"
+echo "[+] Sync'ing project in the background..."
+unison "facebook-ctf" &
 
 echo "[+] Done"
 exit 0

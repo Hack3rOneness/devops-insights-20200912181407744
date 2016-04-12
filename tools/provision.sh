@@ -25,7 +25,7 @@ sudo rsync -a "$CODE_PATH/" "$CTF_PATH/"
 # This is because sync'ing files is done with unison
 if [[ "$MODE" == "dev" ]]; then
 	echo "[+] Setting permissions"
-	sudo chmod -R 777 "$CTF_PATH/*"
+	sudo chmod -R 777 "$CTF_PATH/"
 fi
 
 # There we go!
@@ -44,9 +44,7 @@ install_mysql "$P_ROOT"
 # Install MyCLI
 install_mycli
 
-# Install PHP and git
-package php5
-package php5-mysql
+# Install git
 package git
 
 # Install HHVM
@@ -56,8 +54,8 @@ install_hhvm "$CTF_PATH"
 install_composer "$CTF_PATH"
 
 # Make sure all apache is gone
-sudo service apache2 stop
-apt-get autoremove
+#sudo service apache2 stop
+#apt-get autoremove
 
 # Install nginx
 install_nginx "$CTF_PATH" "$MODE"
