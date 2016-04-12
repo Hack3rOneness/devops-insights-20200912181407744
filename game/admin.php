@@ -893,8 +893,8 @@ class AdminController extends Controller {
                     <input type="hidden" name="link_id" value={strval($link->getId())}/>
                     <div class="col el--block-label el--full-text">
                       <label>Link {$l_c}:</label>
-                        <input name="link" type="text" value={$link->getLink()} disabled={true}/>
-                      <a href={$link->getLink()} target="_blank">Link</>
+                      <input name="link" type="text" value={$link->getLink()} disabled={true}/>
+                      <a href={$link->getLink()} target="_blank">Link</a>
                     </div>
                   </form>
                 </div>
@@ -1435,7 +1435,7 @@ class AdminController extends Controller {
         $highlighted_action = 'enable_country';
         $highlighted_color = 'highlighted--green country-disabled';
       }
-      $current_status = strtoupper(split('_', $highlighted_action)[0]);
+      $current_status = strtoupper(explode('_', $highlighted_action)[0]);
 
       if (!$using_country) {
         $status_action =

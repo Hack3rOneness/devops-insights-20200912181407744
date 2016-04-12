@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#
+# Facebook CTF: Script to install unison 2.48.3
+# https://keylocation.sg/blog/vagrant-and-unison-without-a-plugin/
+#
+# Usage: ./unison.sh [path_to_ctf_code]
+#
+
+if [[ "$#" -ne 1 ]]; then
+	echo "[!] Need path to CTF folder"
+	exit 1
+fi
+
+CODE_PATH="$1"
+
+# Make sure the right version is installed
+if [[ "$(unison -version | awk '{print $3}')" != "2.48.3" ]]; then
+	echo "Sorry, you need unison 2.48.3"
+	exit 1
+fi
+
+# Generate ssh-config file from vagrant
+echo "[+] Generating SSH config"
+SSH_CONFIG="$CODE_PATH/.vagrant/ssh-config"
+vagrant ssh-config > "$SSH_CONFIG"
+
+# Create unison profile
+echo "[+] Creating unison profile"
+PROFILE="
+root = $CODE_PATH
+root = ssh://default//var/facebook-ctf/
+ignore = Name {.git,.vagrant,.DS_Store,.sources}
+
+prefer = $CODE_PATH
+repeat = 2
+terse = true
+dontchmod = true
+perms = 0
+sshargs = -F $SSH_CONFIG
+"
+
+# Write profile
+if [[ -z ${USERPROFILE+x} ]]; then
+  UNISONDIR=$HOME
+else
+  UNISONDIR=$USERPROFILE
+fi
+
+cd $UNISONDIR
+[[ -d "$UNISONDIR/.unison" ]] || mkdir "$UNISONDIR/.unison"
+echo "$PROFILE" > "$UNISONDIR/.unison/facebook-ctf.prf"
+
+echo "[+] Sync'ing project..."
+unison "facebook-ctf"
+
+echo "[+] Done"
+exit 0
+#kthxbai

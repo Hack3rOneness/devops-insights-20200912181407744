@@ -1,4 +1,4 @@
-<?hh // strict
+<?hh
 
 class DB {
   private string $settings_file = 'settings.ini';

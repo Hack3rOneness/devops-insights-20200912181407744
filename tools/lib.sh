@@ -16,6 +16,13 @@ function package() {
     fi
 }
 
+function install_unison() {
+    log "Installing Unison 2.48.3"
+    cd /
+    sudo curl -sL https://www.archlinux.org/packages/extra/x86_64/unison/download/ | tar Jx
+
+}
+
 function install_mycli() {
     log "Installing MyCLI"
 
