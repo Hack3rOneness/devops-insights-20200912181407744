@@ -36,7 +36,10 @@ set_motd "$CTF_PATH"
 
 # Off to a good start...
 sudo apt-get update
-sudo apt-get install emacs
+package emacs
+
+# osquery, of course!
+install_osquery
 
 # Install MySQL
 install_mysql "$P_ROOT"

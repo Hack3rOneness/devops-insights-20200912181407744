@@ -44,9 +44,8 @@ class Control {
     $query = array();
     $token_len = 15;
     $token_number = 50;
-    $arr_remove = array("=","+", "/");
     for ($i = 0; $i < $token_number; $i++) {
-      $token = str_replace($arr_remove, "",
+      $token = md5( 
         base64_encode(
           openssl_random_pseudo_bytes(
             $token_len,
