@@ -94,7 +94,7 @@ class Attachment extends Model {
 
     $attachments = array();
     foreach ($results as $row) {
-      $attachments[] = self::linkFromRow($row);
+      $attachments[] = self::attachmentFromRow($row);
     }
 
     return $attachments;
@@ -108,10 +108,10 @@ class Attachment extends Model {
     $results = $db->query($sql, $element);
 
     invariant(count($results) === 1, 'Expected exactly one result');
-    return self::linkFromRow(firstx($results));
+    return self::attachmentFromRow(firstx($results));
   }
 
-  private static function linkFromRow(array<string, string> $row): Attachment {
+  private static function attachmentFromRow(array<string, string> $row): Attachment {
     return new Attachment(
       intval(must_have_idx($row, 'id')),
       intval(must_have_idx($row, 'level_id')),
