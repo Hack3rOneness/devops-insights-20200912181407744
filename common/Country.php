@@ -77,12 +77,12 @@ class Country extends Model {
   public static function isEnabled(int $country_id): bool {
     $db = self::getDb();
 
-    $sql = 'SELECT enabled FROM countries WHERE id = ?';
+    $sql = 'SELECT enabled FROM countries WHERE id = ? LIMIT 1';
     $element = array($country_id);
     $results = $db->query($sql, $element);
     invariant(count($results) === 1, 'Expected exactly one result');
 
-    return intval(firstx($results)) === 1;
+    return (intval(firstx($results)) === 1);
   }
 
   // Set the used flag for a country
@@ -98,9 +98,12 @@ class Country extends Model {
   public static function isUsed(int $country_id): bool {
     $db = self::getDb();
 
-    $sql = 'SELECT used FROM countries WHERE id = ?';
+    $sql = 'SELECT used FROM countries WHERE id = ? LIMIT 1';
     $element = array($country_id);
-    return (bool)($db->query($sql, $element) == 1);
+    $results = $db->query($sql, $element);
+    invariant(count($results) === 1, 'Expected exactly one result');
+
+    return (intval(firstx($results)) === 1);
   }
 
   // Get all countries
@@ -132,6 +135,20 @@ class Country extends Model {
     } else {
       $sql = 'SELECT * FROM countries WHERE enabled = 1 ORDER BY name';
     }
+    $results = $db->query($sql);
+
+    $countries = array();
+    foreach ($results as $row) {
+      $countries[] = self::countryFromRow($row);
+    }
+
+    return $countries;
+  }
+
+  public static function allMapCountries(): array<Country> {
+    $db = self::getDb();
+    
+    $sql = 'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)';
     $results = $db->query($sql);
 
     $countries = array();

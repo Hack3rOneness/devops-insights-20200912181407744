@@ -9,7 +9,6 @@ class ActivityModuleController {
   public function render(): :xhp {
     $control = new Control();
     $levels = new Levels();
-    $countries = new Countries();
     $teams = new Teams();
 
     $my_team = $teams->get_team(sess_team());

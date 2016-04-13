@@ -44,7 +44,7 @@ function register_team($teamname, $password, $token, $logo, $register_names = fa
     if ($team_id) {
       // Store team players data, if enabled
       if ($register_names) {
-        for ($i=0; $i<sizeof($names); $i++) {
+        for ($i=0; $i<count($names); $i++) {
           $teams->add_team_data($names[$i], $emails[$i], $team_id);
         }
       }

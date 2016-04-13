@@ -3,7 +3,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 class WorldViewMapController {
-  private boolean $viewmode;
+  private bool $viewmode;
 
   public function __construct($viewmode) {
     $this->viewmode = $viewmode;
@@ -37,8 +37,8 @@ class WorldViewMapController {
 
   public function renderWorldMapView(): :xhp {
     $svg_countries = <g class="countries"></g>;
-    foreach (Country::allMapCountries(true) as $country) {
-      $path_class = ($country->getUsed() && $countries->is_active_level($country->getId()))
+    foreach (Country::allMapCountries() as $country) {
+      $path_class = ($country->getUsed() && Country::isActiveLevel($country->getId()))
         ? 'land active'
         : 'land';
 

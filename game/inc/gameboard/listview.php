@@ -22,7 +22,7 @@ class ListviewController {
         $span_status = <span class="fb-status status--open">Open</span>;
       }
       $listview_table->appendChild(
-        <tr data-country={$country['name']}>
+        <tr data-country={$country->getName()}>
           <td style="width: 38%;">{$country->getName()} ({$level['title']})</td>
           <td style="width: 10%;">{$level['points']}</td>
           <td style="width: 22%;">{$category['category']}</td>

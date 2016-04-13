@@ -1362,9 +1362,9 @@
       function refreshMapData(){
         var loadPath = 'data/map-data.php';
 
-        return $.get( loadPath, function(data, status, jqxhr){
+        return $.get(loadPath, function(data, status, jqxhr) {
           $.each(data, function(key, value){
-            if (value.status == 'active') {
+            if (value.status === 'active') {
               if (!$('#' + key).hasClass('active')) {
                 $('#' + key)[0].classList.add('active');
               }

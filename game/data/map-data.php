@@ -18,7 +18,7 @@ class MapDataController extends DataController {
       $active = ($country->getUsed() && Country::isActiveLevel($country->getId()))
               ? 'active'
               : '';
-      $country_level = Country::who_uses($country['id']);
+      $country_level = Country::whoUses($country->getId());
       if ($country_level) {
         if ($levels->previous_score($country_level['id'], $my_team)) {
           $captured_by = 'you';
@@ -40,7 +40,7 @@ class MapDataController extends DataController {
         'captured' => $captured_by,
         'datacaptured' => $data_captured
       );
-      $map_data->{$country['iso_code']} = $country_data;
+      $map_data->{$country->getIsoCode()} = $country_data;
     }
 
     $this->jsonSend($map_data);

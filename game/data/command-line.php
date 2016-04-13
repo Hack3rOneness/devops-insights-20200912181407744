@@ -9,7 +9,6 @@ class CommandsController extends DataController {
   public function generateData() {
     $teams = new Teams();
     $levels = new Levels();
-    $countries = new Countries();
 
     // Object to hold all the data.
     $commands_line_data = (object) array();
@@ -21,11 +20,11 @@ class CommandsController extends DataController {
     // List of active countries.
     $countries_results = array();
     $countries_key = "country_list";
-    foreach ($countries->all_enabled_countries() as $country) {
+    foreach (Country::allEnabledCountries(false) as $country) {
       if (
-        ($country['used'] == 1) && ($countries->is_active_level($country['id']))
+        ($country->getUsed()) && ($country::isActiveLevel(intval($country->getId())))
       ) {
-        array_push($countries_results, $country['name']);
+        array_push($countries_results, $country->getName());
       }
     }
 

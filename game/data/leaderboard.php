@@ -28,7 +28,7 @@ class LeaderboardDataController extends DataController {
 
     $teams_data = (object) array();
     $rank = 1;
-    $l_max = (sizeof($leaders) > 5) ? 5 : sizeof($leaders);
+    $l_max = (count($leaders) > 5) ? 5 : count($leaders);
     for($i = 0; $i<$l_max; $i++) {
       $team = $leaders[$i];
       $team_data = (object) array(

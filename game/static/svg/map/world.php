@@ -6,7 +6,6 @@ sess_start();
 sess_enforce_login();
 
 class WorldMapController {
-
   public function render(): :xhp {
     $worldMap = $this->renderWorldMap();
     return
@@ -23,48 +22,47 @@ class WorldMapController {
 
   public function renderWorldMap(): :xhp {
     $svg_countries = <g class="countries"></g>;
+    $levels = new Levels();
 
-  $levels = new Levels();
+    foreach (Country::allMapCountries() as $country) {
+      if (Configuration::get('gameboard')->getValue() === '1') {
+        $path_class = (($country->getUsed()) && (Country::isActiveLevel($country->getId())))
+          ? 'land active'
+          : 'land';
+        $map_indicator = 'map-indicator ';
+        $data_captured = null;
+        $country_level = Country::whoUses($country->getId());
 
-  foreach (Country::allMapCountries(true) as $country) {
-    if (Configuration::get('gameboard')->getValue() === '1') {
-      $path_class = ($country->getUsed() && $countries->is_active_level($country->getId()))
-        ? 'land active'
-        : 'land';
-      $map_indicator = 'map-indicator ';
-      $data_captured = null;
-      $country_level = Country::who_uses($country->getId());
-
-      if ($country_level) {
-        if ($levels->previous_score($country_level['id'], sess_team())) {
-          $map_indicator .= 'captured--you';
-          $data_captured = sess_teamname();
-        } else if ($levels->previous_score($country_level['id'], sess_team(), true)) {
-          $map_indicator .= 'captured--opponent';
-          $completed_by = $levels->completed_by($country_level['id'])[0];
-          $data_captured = $completed_by['name'];
+        if ($country_level) {
+          if ($levels->previous_score($country_level['id'], sess_team())) {
+            $map_indicator .= 'captured--you';
+            $data_captured = sess_teamname();
+          } else if ($levels->previous_score($country_level['id'], sess_team(), true)) {
+            $map_indicator .= 'captured--opponent';
+            $completed_by = $levels->completed_by($country_level['id'])[0];
+            $data_captured = $completed_by['name'];
+          }
         }
+      } else {
+        $path_class = 'land';
+        $map_indicator = 'map-indicator ';
+        $data_captured = null;
       }
-    } else {
-      $path_class = 'land';
-      $map_indicator = 'map-indicator ';
-      $data_captured = null;
+
+      $g =
+        <g>
+          <path id={$country->getIsoCode()} title={$country->getName()} class={$path_class} d={$country->getD()}></path>
+          <g transform={$country->getTransform()} class={$map_indicator}>
+            <path d="M0,9.1L4.8,0h0.1l4.8,9.1v0L0,9.1L0,9.1z"></path>
+          </g>
+        </g>;
+      if ($data_captured) {
+        $g->setAttribute('data-captured', $data_captured);
+      }
+      $svg_countries->appendChild($g);
     }
 
-    $g =
-      <g>
-        <path id={$country->getIsoCode()['iso_code']} title={$country->getName()} class={$path_class} d={$country->getD()}></path>
-        <g transform={$country->getTransform()} class={$map_indicator}>
-          <path d="M0,9.1L4.8,0h0.1l4.8,9.1v0L0,9.1L0,9.1z"></path>
-        </g>
-      </g>;
-    if ($data_captured) {
-      $g->setAttribute('data-captured', $data_captured);
-    }
-    $svg_countries->appendChild($g);
-  }
-
-  return $svg_countries;
+    return $svg_countries;
   }
 }
 

@@ -15,11 +15,11 @@ class AdminController extends Controller {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
     } else {
       $country = Country::get(intval($selected));
-      $select->appendChild(<option value={$country->getId()} selected={true}>{$country->getName()}</option>);
+      $select->appendChild(<option value={strval($country->getId())} selected={true}>{$country->getName()}</option>);
     }
 
     foreach (Country::allAvailableCountries(false) as $country) {
-      $select->appendChild(<option value={$country->getId()}>{$country->getName()}</option>);
+      $select->appendChild(<option value={strval($country->getId())}>{$country->getName()}</option>);
     }
 
     return $select;
@@ -1388,9 +1388,9 @@ class AdminController extends Controller {
     );
 
     foreach (Country::allCountries(false) as $country) {
-      $using_country = Country::who_uses($country['id']);
+      $using_country = Country::whoUses($country->getId());
       $current_use = ($using_country) ? 'Yes' : 'No';
-      if ($country['enabled'] === "1") {
+      if ($country->getEnabled()) {
         $highlighted_action = 'disable_country';
         $highlighted_color = 'highlighted--red country-enabled';
       } else {
@@ -1411,23 +1411,23 @@ class AdminController extends Controller {
       $adminsections->appendChild(
         <section class="admin-box">
           <form class="country_form">
-            <input type="hidden" name="country_id" value={$country['id']}/>
+            <input type="hidden" name="country_id" value={strval($country->getId())}/>
             <input type="hidden" name="status_action" value={$highlighted_action}/>
             <header class="countries-management-header">
-              <h6>ID{$country['id']}</h6>
+              <h6>ID{strval($country->getId())}</h6>
               {$status_action}
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-2-3">
                 <div class="selected-logo">
                   <label>Country: </label>
-                  <span class="logo-name">{$country['name']}</span>
+                  <span class="logo-name">{$country->getName()}</span>
                 </div>
               </div>
               <div class="col col-pad col-1-3">
                 <div class="selected-logo">
                   <label>ISO Code: </label>
-                  <span class="logo-name">{$country['iso_code']}</span>
+                  <span class="logo-name">{$country->getIsoCode()}</span>
                 </div>
                 <div class="selected-logo">
                   <label>In Use: </label>
@@ -1666,7 +1666,7 @@ class AdminController extends Controller {
         $highlighted_action = 'enable_logo';
         $highlighted_color = 'highlighted--green';
       }
-      $action_text = strtoupper(split('_', $highlighted_action)[0]);
+      $action_text = strtoupper(explode('_', $highlighted_action)[0]);
 
       if ($using_logo) {
         $use_select = <select></select>;
