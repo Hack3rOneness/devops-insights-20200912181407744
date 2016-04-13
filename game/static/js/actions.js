@@ -96,7 +96,10 @@ function registerTeam() {
   var name = verifyTeamName('register');
   var password = verifyTeamPassword();
   var logo = verifyTeamLogo();
-  var token = $('.fb-form input[name="token"]')[0].value;
+  var token = '';
+  if ($('.fb-form input[name="token"]').length > 0) {
+    token = $('.fb-form input[name="token"]')[0].value;
+  }
 
   if ((name) && (password) && (logo)) {
     var register_data = {
