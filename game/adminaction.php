@@ -315,18 +315,16 @@ switch ($request->action) {
     ok_response('Success', 'admin');
     break;
   case 'enable_logo':
-    $logos = new Logos();
-    $logos->toggle_status(
-      $request->parameters['logo_id'],
-      1
+    Logo::setEnabled(
+      intval($request->parameters['logo_id']),
+      true
     );
     ok_response('Success', 'admin');
     break;
   case 'disable_logo':
-    $logos = new Logos();
-    $logos->toggle_status(
-      $request->parameters['logo_id'],
-      0
+    Logo::setEnabled(
+      intval($request->parameters['logo_id']),
+      false
     );
     ok_response('Success', 'admin');
     break;

@@ -155,10 +155,9 @@ class IndexController extends Controller {
   }
 
   public function renderLogosSelection(): :xhp {
-    $logos = new Logos();
     $logos_list = <ul class="slides" />;
-    foreach ($logos->all_enabled_logos() as $logo) {
-      $xlink_href = '#icon--badge-'.$logo['name'];
+    foreach (Logo::allEnabledLogos() as $logo) {
+      $xlink_href = '#icon--badge-'.$logo->getName();
       $logos_list->appendChild(
         <li>
           <svg class="icon--badge">

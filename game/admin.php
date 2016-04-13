@@ -1654,12 +1654,11 @@ class AdminController extends Controller {
       <div class="admin-sections">
       </div>;
 
-    $logos = new Logos();
-    foreach ($logos->all_logos() as $logo) {
-      $xlink_href = '#icon--badge-'.$logo['name'];
-      $using_logo = $logos->who_uses($logo['name']);
+    foreach (Logo::allLogos() as $logo) {
+      $xlink_href = '#icon--badge-'.$logo->getName();
+      $using_logo = Logo::whoUses($logo->getName());
       $current_use = ($using_logo) ? 'Yes' : 'No';
-      if ($logo['enabled'] === "1") {
+      if ($logo->getEnabled()) {
         $highlighted_action = 'disable_logo';
         $highlighted_color = 'highlighted--red';
       } else {
@@ -1680,10 +1679,10 @@ class AdminController extends Controller {
       $adminsections->appendChild(
         <section class="admin-box">
           <form class="logo_form">
-            <input type="hidden" name="logo_id" value={$logo['id']}/>
+            <input type="hidden" name="logo_id" value={strval($logo->getId())}/>
             <input type="hidden" name="status_action" value={strtolower($action_text)}/>
             <header class="logo-management-header">
-              <h6>ID{$logo['id']}</h6>
+              <h6>ID{strval($logo->getId())}</h6>
               <a class={$highlighted_color} href="#" data-action={str_replace('_', '-', $highlighted_action)}>{$action_text}</a>
             </header>
             <div class="fb-column-container">
@@ -1698,7 +1697,7 @@ class AdminController extends Controller {
               <div class="col col-pad col-grow">
                 <div class="selected-logo">
                   <label>Logo Name: </label>
-                  <span class="logo-name">{$logo['name']}</span>
+                  <span class="logo-name">{$logo->getName()}</span>
                 </div>
                 <div class="selected-logo">
                   <label>In use: </label>

@@ -4,7 +4,6 @@ require_once('../vendor/autoload.php');
 
 function register_team($teamname, $password, $token, $logo, $register_names = false, $names, $emails) {
   $teams = new Teams();
-  $logos = new Logos();
   $control = new Control();
 
   // Check if registration is enabled
@@ -24,8 +23,8 @@ function register_team($teamname, $password, $token, $logo, $register_names = fa
 
   // Check logo
   $final_logo = $logo;
-  if (!$logos->check_exists($final_logo)) {
-    $final_logo = $logos->random_logo();
+  if (!Logo::checkExists($final_logo)) {
+    $final_logo = Logo::randomLogo();
   }
 
   // Check if team name is not empty or just spaces

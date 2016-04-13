@@ -7,9 +7,8 @@ class LogosController {
     $logos_div = <div class="fb-slider fb-container container--large"></div>;
     $logos_ul = <ul class="slides"></ul>;
 
-    $logos = new Logos();
-    foreach ($logos->all_enabled_logos() as $logo) {
-      $xlink_href = '#icon--badge-'.$logo['name'];
+    foreach (Logo::allEnabledLogos() as $logo) {
+      $xlink_href = '#icon--badge-'.$logo->getName();
       $logos_ul->appendChild(
         <li>
           <svg class="icon--badge">
