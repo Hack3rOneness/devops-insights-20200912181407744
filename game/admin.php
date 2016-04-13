@@ -9,18 +9,17 @@ sess_enforce_admin();
 class AdminController extends Controller {
 
   private function generateCountriesSelect(string $selected): :xhp {
-    $countries = new Countries();
     $select = <select name="entity_id" />;
 
     if ($selected === "0") {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
     } else {
-      $country = $countries->get_country($selected);
-      $select->appendChild(<option value={$country['id']} selected={true}>{$country['name']}</option>);
+      $country = Country::get(intval($selected));
+      $select->appendChild(<option value={$country->getId()} selected={true}>{$country->getName()}</option>);
     }
 
-    foreach ($countries->all_available_countries() as $country) {
-      $select->appendChild(<option value={$country['id']}>{$country['name']}</option>);
+    foreach (Country::allAvailableCountries(false) as $country) {
+      $select->appendChild(<option value={$country->getId()}>{$country->getName()}</option>);
     }
 
     return $select;
@@ -145,7 +144,7 @@ class AdminController extends Controller {
 
     if (Configuration::get('registration_type')->getValue() === '2') { // Registration is tokenized
       $registration_tokens = $this->renderConfigurationTokens();
-      $tabs_conf = 
+      $tabs_conf =
         <div class="radio-tabs">
           <input type="radio" value="reg_conf" name="fb--admin--tabs--conf" id="fb--admin--tabs--conf--conf" checked={true}/>
           <label for="fb--admin--tabs--conf--conf">Configuration</label>
@@ -1388,9 +1387,8 @@ class AdminController extends Controller {
       </section>
     );
 
-    $countries = new Countries();
-    foreach ($countries->all_countries() as $country) {
-      $using_country = $countries->who_uses($country['id']);
+    foreach (Country::allCountries(false) as $country) {
+      $using_country = Country::who_uses($country['id']);
       $current_use = ($using_country) ? 'Yes' : 'No';
       if ($country['enabled'] === "1") {
         $highlighted_action = 'disable_country';

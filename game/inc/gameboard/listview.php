@@ -11,11 +11,10 @@ class ListviewController {
     $listview_table = <table></table>;
 
     $levels = new Levels();
-    $countries = new Countries();
     $teams = new Teams();
 
     foreach ($levels->all_levels(1) as $level) {
-      $country = $countries->get_country($level['entity_id']);
+      $country = Country::get(intval($level['entity_id']));
       $category = $levels->get_category($level['category_id']);
       if ($levels->previous_score($level['id'], sess_team())) {
         $span_status = <span class="fb-status status--yours">Captured</span>;
@@ -24,7 +23,7 @@ class ListviewController {
       }
       $listview_table->appendChild(
         <tr data-country={$country['name']}>
-          <td style="width: 38%;">{$country['name']} ({$level['title']})</td>
+          <td style="width: 38%;">{$country->getName()} ({$level['title']})</td>
           <td style="width: 10%;">{$level['points']}</td>
           <td style="width: 22%;">{$category['category']}</td>
           <td style="width: 30%;">{$span_status}</td>

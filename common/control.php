@@ -87,15 +87,15 @@ class Control {
 
     // Take timestamp of start
     $start_ts = time();
-    $conf->change('start_ts', $start_ts);
+    Configuration::update('start_ts', strval($start_ts));
 
     // Calculate timestamp of the end
-    $duration = $conf->get('game_duration');
+    $duration = intval(Configuration::get('game_duration')->getValue());
     $end_ts = $start_ts + $duration;
-    $conf->change('end_ts', $end_ts);
+    Configuration::update('end_ts', strval($end_ts));
 
     // Kick off timer
-    $conf->change('timer', '1');
+    Configuration::update('timer', '1');
 
     // Reset and kick off progressive scoreboard
     $this->reset_progressive();

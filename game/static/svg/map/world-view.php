@@ -36,24 +36,23 @@ class WorldViewMapController {
   }
 
   public function renderWorldMapView(): :xhp {
-    $countries = new Countries();
     $svg_countries = <g class="countries"></g>;
-  foreach ($countries->all_map_countries(true) as $country) {
-    $path_class = (($country['used'] === '1') && ($countries->is_active_level($country['id'])))
-      ? 'land active'
-      : 'land';
+    foreach (Country::allMapCountries(true) as $country) {
+      $path_class = ($country->getUsed() && $countries->is_active_level($country->getId()))
+        ? 'land active'
+        : 'land';
 
-    $svg_countries->appendChild(
-      <g>
-        <path id={$country['iso_code']} title={$country['name']} class={$path_class} d={$country['d']}></path>
-        <g transform={$country['transform']} class="map-indicator">
-          <path d="M0,9.1L4.8,0h0.1l4.8,9.1v0L0,9.1L0,9.1z"></path>
+      $svg_countries->appendChild(
+        <g>
+          <path id={$country->getIsoCode()['iso_code']} title={$country->getName()} class={$path_class} d={$country->getD()}></path>
+          <g transform={$country->getTransform()} class="map-indicator">
+            <path d="M0,9.1L4.8,0h0.1l4.8,9.1v0L0,9.1L0,9.1z"></path>
           </g>
-          </g>
-          );
-  }
+        </g>
+      );
+    }
 
-  return $svg_countries;
+    return $svg_countries;
   }
 }
 

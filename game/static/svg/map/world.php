@@ -24,17 +24,16 @@ class WorldMapController {
   public function renderWorldMap(): :xhp {
     $svg_countries = <g class="countries"></g>;
 
-  $countries = new Countries();
   $levels = new Levels();
 
-  foreach ($countries->all_map_countries(true) as $country) {
+  foreach (Country::allMapCountries(true) as $country) {
     if (Configuration::get('gameboard')->getValue() === '1') {
-      $path_class = (($country['used'] === '1') && ($countries->is_active_level($country['id'])))
+      $path_class = ($country->getUsed() && $countries->is_active_level($country->getId()))
         ? 'land active'
         : 'land';
       $map_indicator = 'map-indicator ';
       $data_captured = null;
-      $country_level = $countries->who_uses($country['id']);
+      $country_level = Country::who_uses($country->getId());
 
       if ($country_level) {
         if ($levels->previous_score($country_level['id'], sess_team())) {
@@ -54,15 +53,15 @@ class WorldMapController {
 
     $g =
       <g>
-        <path id={$country['iso_code']} title={$country['name']} class={$path_class} d={$country['d']}></path>
-        <g transform={$country['transform']} class={$map_indicator}>
+        <path id={$country->getIsoCode()['iso_code']} title={$country->getName()} class={$path_class} d={$country->getD()}></path>
+        <g transform={$country->getTransform()} class={$map_indicator}>
           <path d="M0,9.1L4.8,0h0.1l4.8,9.1v0L0,9.1L0,9.1z"></path>
-          </g>
-          </g>;
-        if ($data_captured) {
-          $g->setAttribute('data-captured', $data_captured);
-        }
-        $svg_countries->appendChild($g);
+        </g>
+      </g>;
+    if ($data_captured) {
+      $g->setAttribute('data-captured', $data_captured);
+    }
+    $svg_countries->appendChild($g);
   }
 
   return $svg_countries;

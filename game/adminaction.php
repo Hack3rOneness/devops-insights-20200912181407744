@@ -331,18 +331,16 @@ switch ($request->action) {
     ok_response('Success', 'admin');
     break;
   case 'enable_country':
-    $countries = new Countries();
-    $countries->toggle_status(
+    Country::setStatus(
       $request->parameters['country_id'],
-      1
+      true,
     );
     ok_response('Success', 'admin');
     break;
   case 'disable_country':
-    $countries = new Countries();
-    $countries->toggle_status(
+    Country::setStatus(
       $request->parameters['country_id'],
-      0
+      false,
     );
     ok_response('Success', 'admin');
     break;

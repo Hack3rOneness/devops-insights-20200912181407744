@@ -8,9 +8,8 @@ sess_enforce_login();
 class CountryDataController extends DataController {
   public function generateData() {
     $levels = new Levels();
-    $countries = new Countries();
     $teams = new Teams();
-    
+
     $my_team = $teams->get_team(sess_team());
 
     $countries_data = (object) array();
@@ -22,7 +21,7 @@ class CountryDataController extends DataController {
     }
 
     foreach ($levels->all_levels(1) as $level) {
-      $country = $countries->get_country($level['entity_id']);
+      $country = Country::get(intval($level['entity_id']));
       if (!$country) {
         continue;
       }
@@ -86,7 +85,7 @@ class CountryDataController extends DataController {
         'attachments' => $attachments_list,
         'links'       => $links_list
       );
-      $countries_data->{$country['name']} = $country_data;
+      $countries_data->{$country->getName()} = $country_data;
     }
 
     $this->jsonSend($countries_data);

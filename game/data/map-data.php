@@ -8,18 +8,17 @@ sess_enforce_login();
 class MapDataController extends DataController {
   public function generateData() {
     $levels = new Levels();
-    $countries = new Countries();
 
     $map_data = (object) array();
 
     $my_team = sess_team();
     $my_name = sess_teamname();
 
-    foreach ($countries->all_enabled_countries(true) as $country) {
-      $active = (($country['used'] == 1) && ($countries->is_active_level($country['id'])))
+    foreach (Country::allEnabledCountries(true) as $country) {
+      $active = ($country->getUsed() && Country::isActiveLevel($country->getId()))
               ? 'active'
               : '';
-      $country_level = $countries->who_uses($country['id']);
+      $country_level = Country::who_uses($country['id']);
       if ($country_level) {
         if ($levels->previous_score($country_level['id'], $my_team)) {
           $captured_by = 'you';

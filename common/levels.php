@@ -33,9 +33,8 @@ class Levels {
     $hint,
     $penalty
   ) {
-    $countries = new Countries();
     if ($entity_id === 0) {
-      $ent_id = $countries->random_country();
+      $ent_id = Country::randomAvailableCountryId();
     } else {
       $ent_id = $entity_id;
     }
@@ -59,8 +58,7 @@ class Levels {
     $this->db->query($sql, $elements);
     $level_id = $this->db->query('SELECT LAST_INSERT_ID() AS id')[0]['id'];
 
-    // Toggle used entity
-    $countries->toggle_used($ent_id, 1);
+    Country::setUsed($ent_id, true);
 
     return $level_id;
   }
@@ -255,9 +253,8 @@ class Levels {
     $penalty,
     $level_id
   ) {
-    $countries = new Countries();
     if ($entity_id === 0) {
-      $ent_id = $countries->random_country();
+      $ent_id = Country::randomAvailableCountryId();
     } else {
       $ent_id = $entity_id;
     }
@@ -280,16 +277,14 @@ class Levels {
     );
     $this->db->query($sql, $elements);
 
-    // Adjust used entities
-    $countries->used_adjust();
+    Country::usedAdjust();
   }
 
   // Delete level.
   public function delete_level($level_id) {
     // Free country first.
     $level = $this->get_level($level_id);
-    $countries = new Countries();
-    $countries->toggle_used($level['entity_id'], 0);
+    Country::setUsed($level['entity_id'], false);
 
     $sql = 'DELETE FROM levels WHERE id = ? LIMIT 1';
     $elements = array($level_id);
