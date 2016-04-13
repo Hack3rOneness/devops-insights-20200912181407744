@@ -11,7 +11,7 @@ class LeaderboardDataController extends DataController {
     $leaderboard_data = (object) array();
     
     // If refresing is disabled, exit
-    if ($conf->get('teams') === '0') {
+    if ($conf->get('gameboard') === '0') {
       $this->jsonSend($leaderboard_data);
       exit;
     }

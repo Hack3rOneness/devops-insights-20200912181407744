@@ -308,7 +308,7 @@
 
           // Countries
           setInterval( function() {
-            if (FB_CTF.data.CONF.map === '1') {  
+            if (FB_CTF.data.CONF.gameboard === '1') {  
               // Map
               getCountryData();
               refreshMapData();
@@ -327,7 +327,7 @@
 
           // Teams
           setInterval( function() {
-            if (FB_CTF.data.CONF.teams === '1') {
+            if (FB_CTF.data.CONF.gameboard === '1') {
               // Teams
               loadTeamData();
               loadTeamsModule();
@@ -336,7 +336,7 @@
               clearTeams();
               clearLeaderboard();
             }
-          }, FB_CTF.data.CONF.refreshConf);
+          }, FB_CTF.data.CONF.refreshMap);
 
           // Commands
           setInterval( function() {

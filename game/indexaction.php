@@ -2,18 +2,25 @@
 
 require_once('../vendor/autoload.php');
 
-function register_names($teamname, $password, $logo, $names, $emails) {
-}
-
-function register_team($teamname, $password, $logo) {
+function register_team($teamname, $password, $token, $logo, $register_names = false, $names, $emails) {
   $teams = new Teams();
   $logos = new Logos();
   $conf = new Configuration();
+  $control = new Control();
 
   // Check if registration is enabled
   if ($conf->get('registration') === '0') {
     error_response('Registration failed', 'registration');
     exit;
+  }
+
+  // Check if tokenized registration is enabled
+  if ($conf->get('registration_type') === '2') {
+    // Check provided token
+    if (!$control->check_token($token)) {
+      error_response('Registration failed', 'registration');
+      exit;
+    }
   }
 
   // Check logo
@@ -35,12 +42,19 @@ function register_team($teamname, $password, $logo) {
   if (!$teams->team_exist($shortname)) {
     $password_hash = $teams->generate_hash($password);
     $team_id = $teams->create_team($shortname, $password_hash, $final_logo);
-      if ($team_id) {
-        if ($conf->get('registration_login') === '1') {
-          login_team($team_id, $password);
-        } else {
-          ok_response('Registration succesful', 'login');
+    if ($team_id) {
+      // Store team players data, if enabled
+      if ($register_names) {
+        for ($i=0; $i<sizeof($names); $i++) {
+          $teams->add_team_data($names[$i], $emails[$i], $team_id);
         }
+      }
+      // If registration is tokenized, use the token
+      if ($conf->get('registration_type') === '2') {
+        $control->use_token($token, $team_id);
+      }
+      // Login the team
+      login_team($team_id, $password);
     } else {
       error_response('Registration failed', 'registration');
       exit;
@@ -97,6 +111,12 @@ $filters = array(
         'regexp'      => '/^[\w-]+$/'
       ),
     ),
+    'token'        => array(
+      'filter'      => FILTER_VALIDATE_REGEXP,
+      'options'     => array(
+        'regexp'      => '/^[\w]+$/'
+      ),
+    ),
     'names'       => FILTER_UNSAFE_RAW,
     'emails'      => FILTER_UNSAFE_RAW,
     'action'      => array(
@@ -123,16 +143,25 @@ switch ($request->action) {
     register_team(
       $request->parameters['teamname'],
       $request->parameters['password'],
-      $request->parameters['logo']
+      $request->parameters['token'],
+      $request->parameters['logo'],
+      false,
+      array(),
+      array()
     );
     break;
   case 'register_names':
+    $names = json_decode($request->parameters['names']);
+    $emails = json_decode($request->parameters['emails']);
+
     register_team(
       $request->parameters['teamname'],
       $request->parameters['password'],
+      $request->parameters['token'],
       $request->parameters['logo'],
-      $request->parameters['names'],
-      $request->parameters['emails']
+      true,
+      $names,
+      $emails
     );
     break;
   case 'login_team':

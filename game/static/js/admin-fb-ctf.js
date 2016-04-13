@@ -393,6 +393,7 @@ var $body = $('body');
       action: 'create_tokens'
     };
     sendAdminRequest(create_data);
+    window.location.href = location.href;
   }
 
   // Delete announcement

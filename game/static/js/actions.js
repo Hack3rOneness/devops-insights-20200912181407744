@@ -1,14 +1,21 @@
 function teamNameFormError() {
   $('.el--text')[0].classList.add('form-error');
-  $('.fb-form input[name="teamname"').on('change', function() {
+  $('.fb-form input[name="teamname"]').on('change', function() {
     $('.el--text')[0].classList.remove('form-error');
   });
 }
 
 function teamPasswordFormError() {
   $('.el--text')[1].classList.add('form-error');
-  $('.fb-form input[name="password"').on('change', function() {
+  $('.fb-form input[name="password"]').on('change', function() {
     $('.el--text')[1].classList.remove('form-error');
+  });
+}
+
+function teamTokenFormError() {
+  $('.el--text')[2].classList.add('form-error');
+  $('.fb-form input[name="token"]').on('change', function() {
+    $('.el--text')[2].classList.remove('form-error');
   });
 }
 
@@ -80,6 +87,7 @@ function sendIndexRequest(request_data) {
       console.log('Failed');
       teamNameFormError();
       teamPasswordFormError();
+      teamTokenFormError();
     }
   });
 }
@@ -88,13 +96,15 @@ function registerTeam() {
   var name = verifyTeamName('register');
   var password = verifyTeamPassword();
   var logo = verifyTeamLogo();
+  var token = $('.fb-form input[name="token"]')[0].value;
 
   if ((name) && (password) && (logo)) {
     var register_data = {
       action: 'register_team',
       teamname: name,
       password: password,
-      logo: logo
+      logo: logo,
+      token: token
     };
     sendIndexRequest(register_data);
   }
@@ -104,6 +114,7 @@ function registerNames() {
   var name = verifyTeamName('register');
   var password = verifyTeamPassword();
   var logo = verifyTeamLogo();
+  var token = $('.fb-form input[name="token"]')[0].value;
   var fields = $('.fb-form input[name^="registration_name_"]');
   var names = [];
   $.each(fields, function(index, nameField) {
@@ -121,11 +132,11 @@ function registerNames() {
       teamname: name,
       password: password,
       logo: logo,
+      token: token,
       names: JSON.stringify(names),
       emails: JSON.stringify(emails)
     };
-    console.log(register_data);
-    //sendIndexRequest(register_data);
+    sendIndexRequest(register_data);
   }
 }
 

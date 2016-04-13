@@ -21,9 +21,8 @@ class ConfigurationController extends DataController {
     $c = new Configuration();
 
     $conf_data->{'currentTeam'} = sess_teamname();
-    $conf_data->{'teams'} = $c->get('teams');
+    $conf_data->{'gameboard'} = $c->get('gameboard');
     $conf_data->{'refreshTeams'} = $this->teams_cycle;
-    $conf_data->{'map'} = $c->get('map');
     $conf_data->{'refreshMap'} = $this->map_cycle;
     $conf_data->{'refreshConf'} = $this->conf_cycle;
     $conf_data->{'refreshCmd'} = $this->cmd_cycle;

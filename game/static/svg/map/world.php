@@ -29,7 +29,7 @@ class WorldMapController {
   $conf = new Configuration();
 
   foreach ($countries->all_map_countries(true) as $country) {
-    if ($conf->get('map') === '1') {
+    if ($conf->get('gameboard') === '1') {
       $path_class = (($country['used'] === '1') && ($countries->is_active_level($country['id'])))
         ? 'land active'
         : 'land';

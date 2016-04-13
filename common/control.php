@@ -20,6 +20,24 @@ class Control {
     return $this->db->query($sql);
   }
 
+  public function check_token($token) {
+    $sql = 'SELECT COUNT(*) FROM registration_tokens WHERE used = 0 AND token = ?';
+    $element = array($token);
+    return (bool)$this->db->query($sql, $element)[0]['COUNT(*)'];
+  }
+
+  public function use_token($token, $team_id) {
+    $sql = 'UPDATE registration_tokens SET used = 1, team_id = ?, use_ts = NOW() WHERE token = ? LIMIT 1';
+    $elements = array($team_id, $token);
+    $this->db->query($sql, $elements);
+  }
+
+  public function delete_token($token) {
+    $sql = 'DELETE from registration_tokens WHERE token = ? LIMIT 1';
+    $element = array($token);
+    $this->db->query($sql, $element);
+  }
+
   public function create_tokens() {
     $crypto_strong = True;
     $tokens = array();
@@ -43,6 +61,8 @@ class Control {
   }
 
   public function export_tokens() {
+    $sql = 'SELECT * FROM registration_tokens WHERE used = 0';
+    $tokens = $this->db->query($sql);
   }
 
   public function begin() {
@@ -125,13 +145,13 @@ class Control {
   public function progressive_scoreboard() {
     $conf = new Configuration();
     $take_scoreboard = (bool)$conf->get('game');
-    $cycle = (int)$conf->get('ranking_cycle');
+    $cycle = (int)$conf->get('progressive_cycle');
 
     while ($take_scoreboard) {
       $this->take_progressive();
       sleep($cycle);
       $take_scoreboard = (bool)$conf->get('game');
-      $cycle = (int)$conf->get('ranking_cycle');
+      $cycle = (int)$conf->get('progressive_cycle');
     }
   }
 

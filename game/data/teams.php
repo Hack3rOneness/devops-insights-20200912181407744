@@ -14,7 +14,7 @@ class TeamDataController extends DataController {
     $teams_data = (object) array();
 
     // If refresing is disabled, exit
-    if ($conf->get('teams') === '0') {
+    if ($conf->get('gameboard') === '0') {
       $this->jsonSend($teams_data);
       exit;
     }

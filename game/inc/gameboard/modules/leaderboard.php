@@ -15,7 +15,7 @@ class LeaderboardModuleController {
 
     // If refresing is enabled, do the needful
     $conf = new Configuration();
-    if ($conf->get('teams') === '1') {
+    if ($conf->get('gameboard') === '1') {
       $leaders = $teams->leaderboard();
       $rank = 1;
       $l_max = (sizeof($leaders) > 5) ? 5 : sizeof($leaders);

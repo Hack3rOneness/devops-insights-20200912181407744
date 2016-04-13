@@ -16,8 +16,8 @@ class CountryDataController extends DataController {
 
     $countries_data = (object) array();
 
-    // If refresing is disabled, exit
-    if ($conf->get('map') === '0') {
+    // If gameboard refresing is disabled, exit
+    if ($conf->get('gameboard') === '0') {
       $this->jsonSend($countries_data);
       exit;
     }

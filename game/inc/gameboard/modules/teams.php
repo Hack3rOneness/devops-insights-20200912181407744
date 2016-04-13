@@ -14,7 +14,7 @@ class TeamModuleController {
 
     $list = <ul class="grid-list"></ul>;
 
-    if ($conf->get('teams') === '1') {
+    if ($conf->get('gameboard') === '1') {
       foreach ($leaderboard as $team) {
         $iconbadge = '#icon--badge-' . $team['logo'];
         $list->appendChild(

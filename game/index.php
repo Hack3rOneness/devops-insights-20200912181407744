@@ -191,6 +191,16 @@ class IndexController extends Controller {
       );
     }
 
+    if ($conf->get('registration_type') === '2') {
+      $token_field = 
+        <div class="form-el el--text">
+          <label for="">Token</label>
+          <input autocomplete="off" name="token" type="text"/>
+        </div>;
+    } else {
+      $token_field = <div></div>;
+    }
+
     return
       <main role="main" class="fb-main page--team-registration full-height fb-scroll">
       <header class="fb-section-header fb-container">
@@ -215,6 +225,7 @@ class IndexController extends Controller {
               <label for="">Password</label>
               <input autocomplete="off" name="password" type="password"/>
             </div>
+            {$token_field}
           </fieldset>
           <div class="fb-choose-emblem">
             <h6>Choose an Emblem</h6>
@@ -229,6 +240,16 @@ class IndexController extends Controller {
   }
 
   public function renderRegistrationNoNames(): :xhp {
+    $conf = new Configuration();
+    if ($conf->get('registration_type') === '2') {
+      $token_field = 
+        <div class="form-el el--text">
+          <label for="">Token</label>
+          <input autocomplete="off" name="token" type="text"/>
+        </div>;
+    } else {
+      $token_field = <div></div>;
+    }
     return
       <main role="main" class="fb-main page--registration full-height fb-scroll">
         <header class="fb-section-header fb-container">
@@ -247,6 +268,7 @@ class IndexController extends Controller {
                 <label for="">Password</label>
                 <input autocomplete="off" name="password" type="password"/>
               </div>
+              {$token_field}
             </fieldset>
             <div class="fb-choose-emblem">
               <h6>Choose an Emblem</h6>

@@ -132,16 +132,10 @@ class AdminController extends Controller {
     $strong_passwords_off = ($conf->get('login_strong_passwords') === '0');
     $registration_names_on = ($conf->get('registration_names') === '1');
     $registration_names_off = ($conf->get('registration_names') === '0');
-    $registration_login_on = ($conf->get('registration_login') === '1');
-    $registration_login_off = ($conf->get('registration_login') === '0');
     $scoring_on = ($conf->get('scoring') === '1');
     $scoring_off = ($conf->get('scoring') === '0');
-    $game_on = ($conf->get('game') === '1');
-    $game_off = ($conf->get('game') === '0');
-    $teams_on = ($conf->get('teams') === '1');
-    $teams_off = ($conf->get('teams') === '0');
-    $map_on = ($conf->get('map') === '1');
-    $map_off = ($conf->get('map') === '0');
+    $gameboard_on = ($conf->get('gameboard') === '1');
+    $gameboard_off = ($conf->get('gameboard') === '0');
     $timer_on = ($conf->get('timer') === '1');
     $timer_off = ($conf->get('timer') === '0');
 
@@ -190,7 +184,7 @@ class AdminController extends Controller {
                 <div class="fb-column-container">
                   <div class="col col-pad col-1-4">
                     <div class="form-el el--block-label">
-                      <label>Registration Names</label>
+                      <label>Player Names</label>
                       <div class="admin-section-toggle radio-inline">
                         <input type="radio" name="fb--conf--registration_names" id="fb--conf--registration_names--on" checked={$registration_names_on}/>
                         <label for="fb--conf--registration_names--on">On</label>
@@ -209,17 +203,6 @@ class AdminController extends Controller {
                     <div class="form-el el--block-label">
                       <label>Registration Type</label>
                       {$this->registrationTypeSelect()}
-                    </div>
-                  </div>
-                  <div class="col col-pad col-4-4">
-                    <div class="form-el el--block-label">
-                      <label>Registration Login</label>
-                      <div class="admin-section-toggle radio-inline">
-                        <input type="radio" name="fb--conf--registration_login" id="fb--conf--registration_login--on" checked={$registration_login_on}/>
-                        <label for="fb--conf--registration_login--on">On</label>
-                        <input type="radio" name="fb--conf--registration_login" id="fb--conf--registration_login--off" checked={$registration_login_off}/>
-                        <label for="fb--conf--registration_login--off">Off</label>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -248,7 +231,7 @@ class AdminController extends Controller {
                   </div>
                   <div class="col col-pad col-2-2">
                     <div class="form-el el--block-label">
-                      <label>Select Team</label>
+                      <label>Team Selection</label>
                       <div class="admin-section-toggle radio-inline">
                         <input type="radio" name="fb--conf--login_select" id="fb--conf--login_select--on" checked={$login_select_on}/>
                         <label for="fb--conf--login_select--on">On</label>
@@ -262,12 +245,6 @@ class AdminController extends Controller {
               <section class="admin-box">
                 <header class="admin-box-header">
                   <h3>Game</h3>
-                  <div class="admin-section-toggle radio-inline">
-                    <input type="radio" name="fb--conf--game" id="fb--conf--game--on" checked={$game_on}/>
-                    <label for="fb--conf--game--on">On</label>
-                    <input type="radio" name="fb--conf--game" id="fb--conf--game--off" checked={$game_off}/>
-                    <label for="fb--conf--game--off">Off</label>
-                  </div>
                 </header>
                 <div class="fb-column-container">
                   <div class="col col-pad col-1-4">
@@ -281,18 +258,18 @@ class AdminController extends Controller {
                       </div>
                     </div>
                     <div class="form-el el--block-label">
-                      <label>Ranking Cycle (s)</label>
-                      <input type="number" value={$conf->get('ranking_cycle')} name="fb--conf--ranking_cycle"/>
+                      <label>Progressive Cycle (s)</label>
+                      <input type="number" value={$conf->get('progressive_cycle')} name="fb--conf--progressive_cycle"/>
                     </div>
                   </div>
                   <div class="col col-pad col-2-4">
                     <div class="form-el el--block-label">
-                      <label>Refresh Teams</label>
+                      <label>Refresh Gameboard</label>
                       <div class="admin-section-toggle radio-inline">
-                        <input type="radio" name="fb--conf--teams" id="fb--conf--teams--on" checked={$teams_on}/>
-                        <label for="fb--conf--teams--on">On</label>
-                        <input type="radio" name="fb--conf--teams" id="fb--conf--teams--off"checked={$teams_off}/>
-                        <label for="fb--conf--teams--off">Off</label>
+                        <input type="radio" name="fb--conf--gameboard" id="fb--conf--gameboard--on" checked={$gameboard_on}/>
+                        <label for="fb--conf--gameboard--on">On</label>
+                        <input type="radio" name="fb--conf--gameboard" id="fb--conf--gameboard--off"checked={$gameboard_off}/>
+                        <label for="fb--conf--gameboard--off">Off</label>
                       </div>
                     </div>
                     <div class="form-el el--block-label">
@@ -301,15 +278,6 @@ class AdminController extends Controller {
                     </div>
                   </div>
                   <div class="col col-pad col-3-4">
-                    <div class="form-el el--block-label">
-                      <label>Refresh Map</label>
-                      <div class="admin-section-toggle radio-inline">
-                        <input type="radio" name="fb--conf--map" id="fb--conf--map--on" checked={$map_on}/>
-                        <label for="fb--conf--map--on">On</label>
-                        <input type="radio" name="fb--conf--map" id="fb--conf--map--off" checked={$map_off}/>
-                        <label for="fb--conf--map--off">Off</label>
-                      </div>
-                    </div>
                     <div class="form-el el--block-label">
                       <label>Default Bonus Dec</label>
                       <input type="number" value={$conf->get('default_bonusdec')} name="fb--conf--default_bonusdec"/>

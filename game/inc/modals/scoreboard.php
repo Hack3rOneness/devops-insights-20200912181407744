@@ -11,7 +11,7 @@ class ScoreboardController {
 
     // If refresing is enabled, do the needful
     $conf = new Configuration();
-    if ($conf->get('teams') === '1') {
+    if ($conf->get('gameboard') === '1') {
       $teams = new Teams();
       $rank = 1;
       $leaderboard = $teams->leaderboard();
