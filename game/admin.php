@@ -63,8 +63,7 @@ class AdminController extends Controller {
   }
 
   private function registrationTypeSelect(): :xhp {
-    $conf = new Configuration();
-    $type = $conf->get('registration_type');
+    $type = Configuration::get('registration_type')->getValue();
     $select = <select name="fb--conf--registration_type"></select>;
     $select->appendChild(<option class="fb--conf--registration_type" value="1" selected={($type === '1')}>Open</option>);
     $select->appendChild(<option class="fb--conf--registration_type" value="2" selected={($type === '2')}>Tokenized</option>);
@@ -73,8 +72,7 @@ class AdminController extends Controller {
   }
 
   private function configurationDurationSelect(): :xhp {
-    $conf = new Configuration();
-    $duration = (int)$conf->get('game_duration');
+    $duration = intval(Configuration::get('game_duration')->getValue());
     $select = <select name="fb--conf--game_duration"></select>;
 
     for ($i=1; $i<=24; $i++) {
@@ -120,34 +118,32 @@ class AdminController extends Controller {
   }
 
   public function renderConfigurationContent(): :xhp {
-    $conf = new Configuration();
+    $registration_on = (Configuration::get('registration')->getValue() === '1');
+    $registration_off = (Configuration::get('registration')->getValue() === '0');
+    $login_on = (Configuration::get('login')->getValue() === '1');
+    $login_off = (Configuration::get('login')->getValue() === '0');
+    $login_select_on = (Configuration::get('login_select')->getValue() === '1');
+    $login_select_off = (Configuration::get('login_select')->getValue() === '0');
+    $strong_passwords_on = (Configuration::get('login_strongpasswords')->getValue() === '1');
+    $strong_passwords_off = (Configuration::get('login_strongpasswords')->getValue() === '0');
+    $registration_names_on = (Configuration::get('registration_names')->getValue() === '1');
+    $registration_names_off = (Configuration::get('registration_names')->getValue() === '0');
+    $scoring_on = (Configuration::get('scoring')->getValue() === '1');
+    $scoring_off = (Configuration::get('scoring')->getValue() === '0');
+    $gameboard_on = (Configuration::get('gameboard')->getValue() === '1');
+    $gameboard_off = (Configuration::get('gameboard')->getValue() === '0');
+    $timer_on = (Configuration::get('timer')->getValue() === '1');
+    $timer_off = (Configuration::get('timer')->getValue() === '0');
 
-    $registration_on = ($conf->get('registration') === '1');
-    $registration_off = ($conf->get('registration') === '0');
-    $login_on = ($conf->get('login') === '1');
-    $login_off = ($conf->get('login') === '0');
-    $login_select_on = ($conf->get('login_select') === '1');
-    $login_select_off = ($conf->get('login_select') === '0');
-    $strong_passwords_on = ($conf->get('login_strong_passwords') === '1');
-    $strong_passwords_off = ($conf->get('login_strong_passwords') === '0');
-    $registration_names_on = ($conf->get('registration_names') === '1');
-    $registration_names_off = ($conf->get('registration_names') === '0');
-    $scoring_on = ($conf->get('scoring') === '1');
-    $scoring_off = ($conf->get('scoring') === '0');
-    $gameboard_on = ($conf->get('gameboard') === '1');
-    $gameboard_off = ($conf->get('gameboard') === '0');
-    $timer_on = ($conf->get('timer') === '1');
-    $timer_off = ($conf->get('timer') === '0');
-
-    if ($conf->get('start_ts') === '0') {
+    if (Configuration::get('start_ts')->getValue() === '0') {
       $start_ts = 'Not started yet';
       $end_ts = 'Not started yet';
     } else {
-      $start_ts = date("H:i:s D m/d/Y", $conf->get('start_ts'));
-      $end_ts = date("H:i:s D m/d/Y", $conf->get('end_ts'));
+      $start_ts = date("H:i:s D m/d/Y", Configuration::get('start_ts')->getValue());
+      $end_ts = date("H:i:s D m/d/Y", Configuration::get('end_ts')->getValue());
     }
 
-    if ($conf->get('registration_type') === '2') { // Registration is tokenized
+    if (Configuration::get('registration_type')->getValue() === '2') { // Registration is tokenized
       $registration_tokens = $this->renderConfigurationTokens();
       $tabs_conf = 
         <div class="radio-tabs">
@@ -196,7 +192,7 @@ class AdminController extends Controller {
                   <div class="col col-pad col-2-4">
                     <div class="form-el el--block-label">
                       <label for="">Players Per Team</label>
-                      <input type="number" value={$conf->get('registration_players')} name="fb--conf--registration_players" max="12" min="1"/>
+                      <input type="number" value={Configuration::get('registration_players')->getValue()} name="fb--conf--registration_players" max="12" min="1"/>
                     </div>
                   </div>
                   <div class="col col-pad col-3-4">
@@ -259,7 +255,7 @@ class AdminController extends Controller {
                     </div>
                     <div class="form-el el--block-label">
                       <label>Progressive Cycle (s)</label>
-                      <input type="number" value={$conf->get('progressive_cycle')} name="fb--conf--progressive_cycle"/>
+                      <input type="number" value={Configuration::get('progressive_cycle')->getValue()} name="fb--conf--progressive_cycle"/>
                     </div>
                   </div>
                   <div class="col col-pad col-2-4">
@@ -274,13 +270,13 @@ class AdminController extends Controller {
                     </div>
                     <div class="form-el el--block-label">
                       <label>Default Bonus</label>
-                      <input type="number" value={$conf->get('default_bonus')} name="fb--conf--default_bonus"/>
+                      <input type="number" value={Configuration::get('default_bonus')->getValue()} name="fb--conf--default_bonus"/>
                     </div>
                   </div>
                   <div class="col col-pad col-3-4">
                     <div class="form-el el--block-label">
                       <label>Default Bonus Dec</label>
-                      <input type="number" value={$conf->get('default_bonusdec')} name="fb--conf--default_bonusdec"/>
+                      <input type="number" value={Configuration::get('default_bonusdec')->getValue()} name="fb--conf--default_bonusdec"/>
                     </div>
                   </div>
                   <div class="col col-pad col-4-4">
@@ -2200,8 +2196,7 @@ class AdminController extends Controller {
   }
 
   public function renderMainNav(): :xhp {
-    $c = new Configuration();
-    $game_status = (boolean) $c->get('game');
+    $game_status = (Configuration::get('game')->getValue() === '1');
     if ($game_status) {
       $game_action =
         <a href="#" class="fb-cta cta--red js-end-game">

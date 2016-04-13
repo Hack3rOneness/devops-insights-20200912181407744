@@ -10,6 +10,8 @@ class GameboardController extends Controller {
   public function renderMainContent(): :xhp {
     if (sess_admin()) {
       $admin_link = <li><a href="admin.php">Admin</a></li>;
+    } else {
+      $admin_link = null;
     }
     return
       <div id="fb-gameboard" class="fb-gameboard">

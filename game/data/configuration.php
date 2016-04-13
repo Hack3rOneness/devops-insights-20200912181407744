@@ -18,19 +18,19 @@ class ConfigurationController extends DataController {
   public function generateData() {
     $conf_data = (object) array();
 
-    $c = new Configuration();
+    $control = new Control();
 
     $conf_data->{'currentTeam'} = sess_teamname();
-    $conf_data->{'gameboard'} = $c->get('gameboard');
+    $conf_data->{'gameboard'} = Configuration::get('gameboard')->getValue();
     $conf_data->{'refreshTeams'} = $this->teams_cycle;
     $conf_data->{'refreshMap'} = $this->map_cycle;
     $conf_data->{'refreshConf'} = $this->conf_cycle;
     $conf_data->{'refreshCmd'} = $this->cmd_cycle;
-    $conf_data->{'progressiveCount'} = $c->progressive_count();
+    $conf_data->{'progressiveCount'} = $control->progressive_count();
 
     $this->jsonSend($conf_data);
   }
 }
 
-$conf = new ConfigurationController();
-$conf->generateData();
+$confController = new ConfigurationController();
+$confController->generateData();

@@ -31,8 +31,7 @@ class IndexController extends Controller {
           </div>
         </form>;
     } else {
-      $conf = new Configuration();
-      if ($conf->get('registration') === '1') {
+      if (Configuration::get('registration')->getValue() === '1') {
         $registration_button = <a style="margin-left: 1em;" href="/index.php?page=registration" class="fb-cta cta--yellow">Register Team</a>;
       } else {
         $registration_button = <a></a>;
@@ -46,8 +45,7 @@ class IndexController extends Controller {
           </div>
         </form>;
     }
-    $c = new Configuration();
-    $next_game = $c->get('next_game');
+    $next_game = Configuration::get('next_game')->getValue();
     if ($next_game === "0") {
       $next_game_text = "Soon";
     } else {
@@ -170,8 +168,7 @@ class IndexController extends Controller {
   }
 
   public function renderRegistrationNames(): :xhp {
-    $conf = new Configuration();
-    $players = intval($conf->get('registration_players'));
+    $players = intval(Configuration::get('registration_players')->getValue());
     $names_ul = <ul></ul>;
 
     for ($i=1; $i<=$players; $i++) {
@@ -191,7 +188,7 @@ class IndexController extends Controller {
       );
     }
 
-    if ($conf->get('registration_type') === '2') {
+    if (Configuration::get('registration_type')->getValue() === '2') {
       $token_field = 
         <div class="form-el el--text">
           <label for="">Token</label>
@@ -240,8 +237,7 @@ class IndexController extends Controller {
   }
 
   public function renderRegistrationNoNames(): :xhp {
-    $conf = new Configuration();
-    if ($conf->get('registration_type') === '2') {
+    if (Configuration::get('registration_type')->getValue() === '2') {
       $token_field = 
         <div class="form-el el--text">
           <label for="">Token</label>
@@ -283,9 +279,8 @@ class IndexController extends Controller {
   }
 
   public function renderRegistrationContent(): :xhp {
-    $conf = new Configuration();
-    if ($conf->get('registration') === '1') {
-      if ($conf->get('registration_names') === '1') {
+    if (Configuration::get('registration')->getValue() === '1') {
+      if (Configuration::get('registration_names')->getValue() === '1') {
         return $this->renderRegistrationNames();
       } else {
         return $this->renderRegistrationNoNames();
@@ -310,13 +305,12 @@ class IndexController extends Controller {
   }
 
   public function renderLoginContent(): :xhp {
-    $conf = new Configuration();
-    if ($conf->get('login') === '1') {
+    if (Configuration::get('login')->getValue() === '1') {
       $teams = new Teams();
 
       $login_team = <input autocomplete="off" name="team_name" type="text" maxlength={20}/>;
       $login_select = "off";
-      if ($conf->get('login_select') === '1') {
+      if (Configuration::get('login_select')->getValue() === '1') {
         $login_select = "on";
         $login_team = <select name="team_id" />;
         $login_team->appendChild(<option value="0">Select</option>);

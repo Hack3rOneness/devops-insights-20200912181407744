@@ -5,17 +5,16 @@ require_once('../vendor/autoload.php');
 function register_team($teamname, $password, $token, $logo, $register_names = false, $names, $emails) {
   $teams = new Teams();
   $logos = new Logos();
-  $conf = new Configuration();
   $control = new Control();
 
   // Check if registration is enabled
-  if ($conf->get('registration') === '0') {
+  if (Configuration::get('registration')->getValue() === '0') {
     error_response('Registration failed', 'registration');
     exit;
   }
 
   // Check if tokenized registration is enabled
-  if ($conf->get('registration_type') === '2') {
+  if (Configuration::get('registration_type')->getValue() === '2') {
     // Check provided token
     if (!$control->check_token($token)) {
       error_response('Registration failed', 'registration');
@@ -50,7 +49,7 @@ function register_team($teamname, $password, $token, $logo, $register_names = fa
         }
       }
       // If registration is tokenized, use the token
-      if ($conf->get('registration_type') === '2') {
+      if (Configuration::get('registration_type')->getValue() === '2') {
         $control->use_token($token, $team_id);
       }
       // Login the team
@@ -67,10 +66,9 @@ function register_team($teamname, $password, $token, $logo, $register_names = fa
 
 function login_team($team_id, $password) {
   $teams = new Teams();
-  $conf = new Configuration();
 
   // Check if login is enabled
-  if ($conf->get('login') === '0') {
+  if (Configuration::get('login')->getValue() === '0') {
     error_response('Login failed', 'login');
     exit;
   }
@@ -165,8 +163,7 @@ switch ($request->action) {
     );
     break;
   case 'login_team':
-    $conf = new Configuration();
-    if ($conf->get('login_select') === '1') {
+    if (Configuration::get('login_select')->getValue() === '1') {
       $team_id = $request->parameters['team_id'];
     } else {
       $teams = new Teams();

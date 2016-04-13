@@ -7,11 +7,10 @@ sess_enforce_login();
 
 class LeaderboardDataController extends DataController {
   public function generateData() {
-    $conf = new Configuration();
     $leaderboard_data = (object) array();
     
     // If refresing is disabled, exit
-    if ($conf->get('gameboard') === '0') {
+    if (Configuration::get('gameboard')->getValue() === '0') {
       $this->jsonSend($leaderboard_data);
       exit;
     }

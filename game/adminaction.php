@@ -136,9 +136,8 @@ switch ($request->action) {
     break;
   case 'create_quiz':
     $levels = new Levels();
-    $c = new Configuration();
-    $bonus = $c->get('default_bonus');
-    $bonus_dec = $c->get('default_bonusdec');
+    $bonus = Configuration::get('default_bonus')->getValue();
+    $bonus_dec = Configuration::get('default_bonusdec')->getValue();
     $levels->create_quiz_level(
       $request->parameters['title'],
       $request->parameters['question'],
@@ -170,9 +169,8 @@ switch ($request->action) {
     break;
   case 'create_flag':
     $levels = new Levels();
-    $c = new Configuration();
-    $bonus = $c->get('default_bonus');
-    $bonus_dec = $c->get('default_bonusdec');
+    $bonus = Configuration::get('default_bonus')->getValue();
+    $bonus_dec = Configuration::get('default_bonusdec')->getValue();
     $levels->create_flag_level(
       $request->parameters['title'],
       $request->parameters['description'],
@@ -206,8 +204,7 @@ switch ($request->action) {
     break;
   case 'create_base':
     $levels = new Levels();
-    $c = new Configuration();
-    $bonus = $c->get('default_bonus');
+    $bonus = Configuration::get('default_bonus')->getValue();
     $levels->create_base_level(
       $request->parameters['title'],
       $request->parameters['description'],
@@ -427,10 +424,9 @@ switch ($request->action) {
     ok_response('Deleted successfully', 'admin');
     break;
   case 'change_configuration':
-    $conf = new Configuration();
     $field = $request->parameters['field'];
-    if ($conf->valid_field($field)) {
-      $conf->change(
+    if (Configuration::validField($field)) {
+      Configuration::update(
         $field,
         $request->parameters['value']
       );

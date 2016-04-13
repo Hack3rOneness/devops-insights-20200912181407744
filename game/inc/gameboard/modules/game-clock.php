@@ -23,10 +23,9 @@ class ClockModuleController {
   }
 
   public function render(): :xhp {
-    $conf = new Configuration();
-    $timer = $conf->get('timer');
-    $start_ts = $conf->get('start_ts');
-    $end_ts = $conf->get('end_ts');
+    $timer = Configuration::get('timer')->getValue();
+    $start_ts = Configuration::get('start_ts')->getValue();
+    $end_ts = Configuration::get('end_ts')->getValue();
     if ($timer === '1') {
       $hours = '';
       $minutes = '';

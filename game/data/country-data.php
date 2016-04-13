@@ -10,14 +10,13 @@ class CountryDataController extends DataController {
     $levels = new Levels();
     $countries = new Countries();
     $teams = new Teams();
-    $conf = new Configuration();
-
+    
     $my_team = $teams->get_team(sess_team());
 
     $countries_data = (object) array();
 
     // If gameboard refresing is disabled, exit
-    if ($conf->get('gameboard') === '0') {
+    if (Configuration::get('gameboard')->getValue() === '0') {
       $this->jsonSend($countries_data);
       exit;
     }

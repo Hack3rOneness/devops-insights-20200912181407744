@@ -44,8 +44,7 @@ switch ($request->action) {
     game_page();
     break;
   case 'answer_level':
-    $conf = new Configuration();
-    if ($conf->get('scoring') === '1') {
+    if (Configuration::get('scoring')->getValue() === '1') {
       $levels = new Levels();
       // Check if answer is valid
       if ($levels->check_answer(

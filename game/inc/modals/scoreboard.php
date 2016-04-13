@@ -10,8 +10,7 @@ class ScoreboardController {
     $scoreboard_tbody = <tbody></tbody>;
 
     // If refresing is enabled, do the needful
-    $conf = new Configuration();
-    if ($conf->get('gameboard') === '1') {
+    if (Configuration::get('gameboard')->getValue() === '1') {
       $teams = new Teams();
       $rank = 1;
       $leaderboard = $teams->leaderboard();

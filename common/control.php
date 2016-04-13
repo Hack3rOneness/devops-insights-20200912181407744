@@ -70,8 +70,6 @@ class Control {
     $teams = new Teams();
     $teams->reset_points();
 
-    $conf = new Configuration();
-
     // Clear scores log
     $this->reset_scores();
 
@@ -82,10 +80,10 @@ class Control {
     $this->reset_failures();
 
     // Mark game as started
-    $conf->change('game', '1');
+    Configuration::update('game', '1');
 
     // Enable scoring
-    $conf->change('scoring', '1');
+    Configuration::update('scoring', '1');
 
     // Take timestamp of start
     $start_ts = time();
@@ -106,18 +104,17 @@ class Control {
 
   public function end() {
     // Mark game as finished and it stops progressive scoreboard
-    $conf = new Configuration();
-    $conf->change('game', '0');
+    Configuration::update('game', '0');
 
     // Disable scoring
-    $conf->change('scoring', '0');
+    Configuration::update('scoring', '0');
 
     // Put timestampts to zero
-    $conf->change('start_ts', '0');
-    $conf->change('end_ts', '0');
+    Configuration::update('start_ts', '0');
+    Configuration::update('end_ts', '0');
 
     // Stop timer
-    $conf->change('timer', '0');
+    Configuration::update('timer', '0');
   }
 
   public function new_announcement($announcement) {
@@ -143,16 +140,20 @@ class Control {
   }
 
   public function progressive_scoreboard() {
-    $conf = new Configuration();
-    $take_scoreboard = (bool)$conf->get('game');
-    $cycle = (int)$conf->get('progressive_cycle');
+    $take_scoreboard = (Configuration::get('game')->getValue() === '1');
+    $cycle = intval(Configuration::get('progressive_cycle')->getValue());
 
     while ($take_scoreboard) {
       $this->take_progressive();
       sleep($cycle);
-      $take_scoreboard = (bool)$conf->get('game');
-      $cycle = (int)$conf->get('progressive_cycle');
+      $take_scoreboard = (Configuration::get('game')->getValue() === '1');
+      $cycle = intval(Configuration::get('progressive_cycle')->getValue());
     }
+  }
+
+  public function progressive_count() {
+    $sql = 'SELECT COUNT(DISTINCT(iteration)) AS C FROM ranking_log';
+    return $this->db->query($sql)[0]['C'];
   }
 
   public function take_progressive() {

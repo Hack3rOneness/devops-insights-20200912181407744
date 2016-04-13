@@ -10,11 +10,10 @@ class TeamModuleController {
     $teams = new Teams();
     $leaderboard = $teams->leaderboard();
     $rank = 1;
-    $conf = new Configuration();
-
+    
     $list = <ul class="grid-list"></ul>;
 
-    if ($conf->get('gameboard') === '1') {
+    if (Configuration::get('gameboard')->getValue() === '1') {
       foreach ($leaderboard as $team) {
         $iconbadge = '#icon--badge-' . $team['logo'];
         $list->appendChild(
