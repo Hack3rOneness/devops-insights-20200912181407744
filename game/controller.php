@@ -26,6 +26,8 @@ abstract class Controller {
       <x:doctype>
       <html lang="en">
       <head>
+        <meta http-equiv="Cache-control" content="no-cache"/>
+        <meta http-equiv="Expires" content="-1"/>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>{$title}</title>

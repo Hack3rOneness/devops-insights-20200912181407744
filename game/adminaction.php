@@ -249,9 +249,8 @@ switch ($request->action) {
     break;
   case 'toggle_status_all':
     if ($request->parameters['all_type'] === 'team') {
-      $teams = new Teams();
-      $teams->toggle_status_all(
-        $request->parameters['status']
+      Team::setStatusAll(
+        (bool)intval($request->parameters['status'])
       );
       ok_response('Success', 'admin');
     } else {
@@ -264,9 +263,8 @@ switch ($request->action) {
     }
     break;
   case 'create_team':
-    $teams = new Teams();
-    $password_hash = $teams->generate_hash($request->parameters['password']);
-    $teams->create_team(
+    $password_hash = Team::generateHash($request->parameters['password']);
+    Team::createTeam(
       $request->parameters['name'],
       $password_hash,
       $request->parameters['logo']
@@ -274,43 +272,39 @@ switch ($request->action) {
     ok_response('Created succesfully', 'admin');
     break;
   case 'update_team':
-    $teams = new Teams();
-    $teams->update_team(
+    Team::updateTeam(
       $request->parameters['name'],
       $request->parameters['logo'],
       $request->parameters['points'],
-      $request->parameters['team_id']
+      intval($request->parameters['team_id'])
     );
     if (strlen($request->parameters['password']) > 0) {
-      $password_hash = $teams->generate_hash($request->parameters['password']);
-      $teams->update_team_password(
+      $password_hash = Team::generateHash($request->parameters['password']);
+      Team::updateTeamPassword(
         $password_hash,
-        $request->parameters['team_id']
+        intval($request->parameters['team_id'])
       );
     }
     ok_response('Updated succesfully', 'admin');
     break;
   case 'toggle_admin_team':
-    $teams = new Teams();
-    $teams->toggle_admin(
-      $request->parameters['team_id'],
-      $request->parameters['admin']
+    Team::setAdmin(
+      intval($request->parameters['team_id']),
+      (bool)intval($request->parameters['admin'])
     );
     ok_response('Success', 'admin');
     break;
   case 'toggle_status_team':
-    $teams = new Teams();
-    $teams->toggle_status(
-      $request->parameters['team_id'],
-      $request->parameters['status']
+    Team::setStatus(
+      intval($request->parameters['team_id']),
+      (bool)intval($request->parameters['status'])
     );
     ok_response('Success', 'admin');
     break;
   case 'toggle_visible_team':
-    $teams = new Teams();
-    $teams->toggle_visible(
-      $request->parameters['team_id'],
-      $request->parameters['visible']
+    Team::setVisible(
+      intval($request->parameters['team_id']),
+      (bool)intval($request->parameters['visible'])
     );
     ok_response('Success', 'admin');
     break;
@@ -343,9 +337,8 @@ switch ($request->action) {
     ok_response('Success', 'admin');
     break;
   case 'delete_team':
-    $teams = new Teams();
-    $teams->delete_team(
-      $request->parameters['team_id']
+    Team::deleteTeam(
+      intval($request->parameters['team_id'])
     );
     ok_response('Deleted successfully', 'admin');
     break;

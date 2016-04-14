@@ -7,9 +7,8 @@ sess_enforce_login();
 
 class TeamDataController extends DataController {
   public function generateData() {
-    $teams = new Teams();
     $rank = 1;
-    $leaderboard = $teams->leaderboard();
+    $leaderboard = Team::leaderboard();
     $teams_data = (object) array();
 
     // If refresing is disabled, exit
@@ -20,18 +19,18 @@ class TeamDataController extends DataController {
     
     foreach ($leaderboard as $team) {
       $team_data = (object) array(
-        'badge' => $team['logo'],
+        'badge' => $team->getLogo(),
         'team_members' => array(),
         'rank' => $rank,
         'points' => array(
-          'base' => (int)$teams->points_by_type($team['id'], 'base'),
-          'quiz' => (int)$teams->points_by_type($team['id'], 'quiz'),
-          'flag' => (int)$teams->points_by_type($team['id'], 'flag'),
-          'total' => (int)$team['points']
+          'base' => Team::pointsByType($team->getId(), 'base'),
+          'quiz' => Team::pointsByType($team->getId(), 'quiz'),
+          'flag' => Team::pointsByType($team->getId(), 'flag'),
+          'total' => $team->getPoints()
         )
       );
-      if ($team['name']) {
-        $teams_data->{$team['name']} = $team_data;
+      if ($team->getName()) {
+        $teams_data->{$team->getName()} = $team_data;
       }
       $rank++;
     }

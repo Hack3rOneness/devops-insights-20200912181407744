@@ -7,7 +7,6 @@ sess_enforce_login();
 
 class AnnouncementsDataController extends DataController {
   public function generateData() {
-    $teams = new Teams();
     $control = new Control();
     $data = array();
   

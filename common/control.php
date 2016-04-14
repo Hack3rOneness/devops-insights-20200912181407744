@@ -66,8 +66,7 @@ class Control {
 
   public function begin() {
     // Reset all points
-    $teams = new Teams();
-    $teams->reset_points();
+    Team::resetAllPoints();
 
     // Clear scores log
     $this->reset_scores();

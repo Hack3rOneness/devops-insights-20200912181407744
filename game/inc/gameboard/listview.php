@@ -11,7 +11,6 @@ class ListviewController {
     $listview_table = <table></table>;
 
     $levels = new Levels();
-    $teams = new Teams();
 
     foreach ($levels->all_levels(1) as $level) {
       $country = Country::get(intval($level['entity_id']));

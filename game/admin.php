@@ -1091,7 +1091,7 @@ class AdminController extends Controller {
               <div class="form-el">
                 <form class="attachment_form">
                   <input type="hidden" name="action" value="create_attachment"/>
-                  <input type="hidden" name="level_id" value={strval($base->getId())}/>
+                  <input type="hidden" name="level_id" value={$base['id']}/>
                   <div class="col el--block-label el--full-text">
                     <label>New Attachment:</label>
                     <input name="filename" type="text"/>
@@ -1514,26 +1514,25 @@ class AdminController extends Controller {
       </div>;
 
     $c = 1;
-    $teams = new Teams();
-    foreach ($teams->all_teams() as $team) {
-      $xlink_href = '#icon--badge-'.$team['logo'];
-      $team_protected = ($team['protected'] === '1');
-      $team_active_on = ($team['active'] === '1');
-      $team_active_off = ($team['active'] === '0');
-      $team_admin_on = ($team['admin'] === '1');
-      $team_admin_off = ($team['admin'] === '0');
-      $team_visible_on = ($team['visible'] === '1');
-      $team_visible_off = ($team['visible'] === '0');
+    foreach (Team::allTeams() as $team) {
+      $xlink_href = '#icon--badge-'.$team->getLogo();
+      $team_protected = $team->getProtected();
+      $team_active_on = $team->getActive();
+      $team_active_off = !$team->getActive();
+      $team_admin_on = $team->getAdmin();
+      $team_admin_off = !$team->getAdmin();
+      $team_visible_on = $team->getVisible();
+      $team_visible_off = !$team->getVisible();
 
-      $team_status_name = 'fb--teams--team-'.$team['id'].'-status';
-      $team_status_on_id = 'fb--teams--team-'.$team['id'].'-status--on';
-      $team_status_off_id = 'fb--teams--team-'.$team['id'].'-status--off';
-      $team_admin_name = 'fb--teams--team-'.$team['id'].'-admin';
-      $team_admin_on_id = 'fb--teams--team-'.$team['id'].'-admin--on';
-      $team_admin_off_id = 'fb--teams--team-'.$team['id'].'-admin--off';
-      $team_visible_name = 'fb--teams--team-'.$team['id'].'-visible';
-      $team_visible_on_id = 'fb--teams--team-'.$team['id'].'-visible--on';
-      $team_visible_off_id = 'fb--teams--team-'.$team['id'].'-visible--off';
+      $team_status_name = 'fb--teams--team-'.strval($team->getId()).'-status';
+      $team_status_on_id = 'fb--teams--team-'.strval($team->getId()).'-status--on';
+      $team_status_off_id = 'fb--teams--team-'.strval($team->getId()).'-status--off';
+      $team_admin_name = 'fb--teams--team-'.strval($team->getId()).'-admin';
+      $team_admin_on_id = 'fb--teams--team-'.strval($team->getId()).'-admin--on';
+      $team_admin_off_id = 'fb--teams--team-'.strval($team->getId()).'-admin--off';
+      $team_visible_name = 'fb--teams--team-'.strval($team->getId()).'-visible';
+      $team_visible_on_id = 'fb--teams--team-'.strval($team->getId()).'-visible--on';
+      $team_visible_off_id = 'fb--teams--team-'.strval($team->getId()).'-visible--off';
 
       if ($team_protected) {
         $toggle_status =
@@ -1567,8 +1566,8 @@ class AdminController extends Controller {
 
       $adminsections->appendChild(
         <section class="admin-box validate-form section-locked">
-          <form class="team_form" name={$team['id']}>
-            <input type="hidden" name="team_id" value={$team['id']}/>
+          <form class="team_form" name={strval($team->getId())}>
+            <input type="hidden" name="team_id" value={strval($team->getId())}/>
             <header class="admin-box-header">
               <h3>Team {$c}</h3>
               {$toggle_status}
@@ -1577,11 +1576,11 @@ class AdminController extends Controller {
               <div class="col col-pad col-1-3">
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label" for="">Team Name</label>
-                  <input name="team_name" type="text" value={$team['name']} disabled={true}/>
+                  <input name="team_name" type="text" value={$team->getName()} maxlength={20} disabled={true}/>
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label" for="">Score</label>
-                  <input name="points" type="text" value={$team['points']} disabled={true}/>
+                  <input name="points" type="text" value={strval($team->getPoints())} disabled={true}/>
                 </div>
               </div>
               <div class="col col-pad col-1-3">
@@ -1620,7 +1619,7 @@ class AdminController extends Controller {
                 <div class="col col-grow">
                   <div class="selected-logo">
                     <label>Selected Logo: </label>
-                    <span class="logo-name">{$team['logo']}</span>
+                    <span class="logo-name">{$team->getLogo()}</span>
                   </div>
                   <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
                 </div>
@@ -1656,8 +1655,8 @@ class AdminController extends Controller {
 
     foreach (Logo::allLogos() as $logo) {
       $xlink_href = '#icon--badge-'.$logo->getName();
-      $using_logo = Logo::whoUses($logo->getName());
-      $current_use = ($using_logo) ? 'Yes' : 'No';
+      $using_logo = Team::whoUses($logo->getName());
+      $current_use = (count($using_logo) > 0) ? 'Yes' : 'No';
       if ($logo->getEnabled()) {
         $highlighted_action = 'disable_logo';
         $highlighted_color = 'highlighted--red';
@@ -1670,7 +1669,7 @@ class AdminController extends Controller {
       if ($using_logo) {
         $use_select = <select></select>;
         foreach ($using_logo as $t) {
-          $use_select->appendChild(<option value="">{$t['name']}</option>);
+          $use_select->appendChild(<option value="">{$t->getName()}</option>);
         }
       } else {
         $use_select = <select><option value="0">None</option></select>;

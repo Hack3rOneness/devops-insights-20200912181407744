@@ -7,7 +7,6 @@ sess_enforce_login();
 
 class CommandsController extends DataController {
   public function generateData() {
-    $teams = new Teams();
     $levels = new Levels();
 
     // Object to hold all the data.
@@ -37,8 +36,8 @@ class CommandsController extends DataController {
     // List of active teams.
     $teams_results = array();
     $teams_key = "teams";
-    foreach ($teams->all_visible_teams() as $team) {
-      array_push($teams_results, $team['name']);
+    foreach (Team::allVisibleTeams() as $team) {
+      array_push($teams_results, $team->getName());
     }
 
     // List of level categories.

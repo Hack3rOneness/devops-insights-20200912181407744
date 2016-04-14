@@ -7,9 +7,8 @@ class LeaderboardModuleViewController {
     $leaderboard_ul = <ul></ul>;
 
     $rank = 1;
-    $teams = new Teams();
-    foreach ($teams->leaderboard() as $team) {
-      $xlink_href = '#icon--badge-'.$team['logo'];
+    foreach (Team::leaderboard() as $team) {
+      $xlink_href = '#icon--badge-'.$team->getLogo();
       $leaderboard_ul->appendChild(
         <li class="fb-user-card">
           <div class="user-avatar">
@@ -19,10 +18,10 @@ class LeaderboardModuleViewController {
             </svg>
           </div>
           <div class="player-info">
-            <h6>{$team['name']}</h6>
+            <h6>{$team->getName()}</h6>
             <span class="player-rank">Rank {$rank}</span>
             <br></br>
-            <span class="player-score">{$team['points']} pts</span>
+            <span class="player-score">{strval($team->getPoints())} pts</span>
           </div>
         </li>
       );

@@ -15,13 +15,12 @@ class LeaderboardDataController extends DataController {
       exit;
     }
 
-    $teams = new Teams();
-    $leaders = $teams->leaderboard();
-    $my_team = $teams->get_team(sess_team());
-    $my_rank = $teams->my_rank(sess_team());
+    $leaders = Team::leaderboard();
+    $my_team = Team::getTeam(intval(sess_team()));
+    $my_rank = Team::myRank(intval(sess_team()));
     $my_team_data = (object) array(
-      'badge' => $my_team['logo'],
-      'points' => (int)$my_team['points'],
+      'badge' => $my_team->getLogo(),
+      'points' => $my_team->getPoints(),
       'rank' => $my_rank
     );
     $leaderboard_data->{'my_team'} = $my_team_data;
@@ -32,12 +31,12 @@ class LeaderboardDataController extends DataController {
     for($i = 0; $i<$l_max; $i++) {
       $team = $leaders[$i];
       $team_data = (object) array(
-        'badge' => $team['logo'],
-        'points' => (int)$team['points'],
+        'badge' => $team->getLogo(),
+        'points' => $team->getPoints(),
         'rank' => $rank
       );
-      if ($team['name']) {
-        $teams_data->{$team['name']} = $team_data;
+      if ($team->getName()) {
+        $teams_data->{$team->getName()} = $team_data;
       }
       $rank++;
     }

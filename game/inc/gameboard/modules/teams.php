@@ -7,18 +7,17 @@ sess_enforce_login();
 
 class TeamModuleController {
   public function render(): :xhp {
-    $teams = new Teams();
-    $leaderboard = $teams->leaderboard();
+    $leaderboard = Team::leaderboard();
     $rank = 1;
     
     $list = <ul class="grid-list"></ul>;
 
     if (Configuration::get('gameboard')->getValue() === '1') {
-      foreach ($leaderboard as $team) {
-        $iconbadge = '#icon--badge-' . $team['logo'];
+      foreach ($leaderboard as $leader) {
+        $iconbadge = '#icon--badge-' . $leader->getLogo();
         $list->appendChild(
           <li>
-            <a href="#" data-team={$team['name']}>
+            <a href="#" data-team={$leader->getName()}>
               <svg class="icon--badge">
                 <use xlink:href={$iconbadge}/>
 

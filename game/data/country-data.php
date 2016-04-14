@@ -8,9 +8,8 @@ sess_enforce_login();
 class CountryDataController extends DataController {
   public function generateData() {
     $levels = new Levels();
-    $teams = new Teams();
-
-    $my_team = $teams->get_team(sess_team());
+    
+    $my_team = Team::getTeam(intval(sess_team()));
 
     $countries_data = (object) array();
 
@@ -29,12 +28,12 @@ class CountryDataController extends DataController {
       $category = $levels->get_category($level['category_id']);
       if ($level['hint']) {
         // There is hint, can this team afford it?
-        if ($level['penalty'] > $my_team['points']) { // Not enough points
+        if ($level['penalty'] > $my_team->getPoints()) { // Not enough points
           $hint_cost = -2;
           $hint = 'no';
         } else {
           // Has this team requested this hint before?
-          if ($levels->previous_hint($level['id'], $my_team['id'])) {
+          if ($levels->previous_hint($level['id'], $my_team->getId())) {
             $hint_cost = 0;
           } else {
             $hint_cost = $level['penalty'];

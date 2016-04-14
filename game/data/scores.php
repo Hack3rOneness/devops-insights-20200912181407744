@@ -7,13 +7,12 @@ sess_enforce_login();
 
 class ScoresDataController extends DataController {
   public function generateData() {
-    $teams = new Teams();
     $data = array();
   
-    foreach ($teams->leaderboard() as $team) {
+    foreach (Team::leaderboard() as $team) {
       $values = array();
       $i = 1;
-      foreach ($teams->progressive($team['name']) as $progress) {
+      foreach (Team::progressive($team->getName()) as $progress) {
         $score = (object) array(
           'time' => $i,
           'score' => $progress['points']
@@ -21,9 +20,9 @@ class ScoresDataController extends DataController {
         array_push($values, $score);
         $i++;
       }
-      $color = substr(md5($team['name']), 0, 6);
+      $color = substr(md5($team->getName()), 0, 6);
       $element = (object) array(
-        'team' => $team['name'],
+        'team' => $team->getName(),
         'color' => '#'.$color,
         'values' => $values
       );

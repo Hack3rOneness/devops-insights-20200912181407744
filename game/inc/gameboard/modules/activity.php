@@ -9,9 +9,6 @@ class ActivityModuleController {
   public function render(): :xhp {
     $control = new Control();
     $levels = new Levels();
-    $teams = new Teams();
-
-    $my_team = $teams->get_team(sess_team());
 
     $activity_ul = <ul class="activity-stream"></ul>;
 

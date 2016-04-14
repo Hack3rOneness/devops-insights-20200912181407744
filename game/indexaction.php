@@ -3,7 +3,6 @@
 require_once('../vendor/autoload.php');
 
 function register_team($teamname, $password, $token, $logo, $register_names = false, $names, $emails) {
-  $teams = new Teams();
   $control = new Control();
 
   // Check if registration is enabled
@@ -37,14 +36,14 @@ function register_team($teamname, $password, $token, $logo, $register_names = fa
   $shortname = substr($teamname, 0, 20);
 
   // Verify that this team name is not created yet
-  if (!$teams->team_exist($shortname)) {
-    $password_hash = $teams->generate_hash($password);
-    $team_id = $teams->create_team($shortname, $password_hash, $final_logo);
+  if (!Team::teamExist($shortname)) {
+    $password_hash = Team::generateHash($password);
+    $team_id = Team::createTeam($shortname, $password_hash, $final_logo);
     if ($team_id) {
       // Store team players data, if enabled
       if ($register_names) {
         for ($i=0; $i<count($names); $i++) {
-          $teams->add_team_data($names[$i], $emails[$i], $team_id);
+          Team::addTeamData($names[$i], $emails[$i], $team_id);
         }
       }
       // If registration is tokenized, use the token
@@ -64,28 +63,28 @@ function register_team($teamname, $password, $token, $logo, $register_names = fa
 }
 
 function login_team($team_id, $password) {
-  $teams = new Teams();
-
   // Check if login is enabled
   if (Configuration::get('login')->getValue() === '0') {
     error_response('Login failed', 'login');
     exit;
   }
-
+  
   // Verify credentials
-  $team = $teams->verify_credentials($team_id, $password);
+  $team = Team::verifyCredentials($team_id, $password);
+
   if ($team) {
+    error_log('3');
     sess_start();
     if (!sess_active()) {
-      sess_set('team_id', $team['id']);
-      sess_set('name', $team['name']);
+      sess_set('team_id', $team->getId());
+      sess_set('name', $team->getName());
       sess_set('csrf_token', base64_encode(openssl_random_pseudo_bytes(16)));
-      if ($team['admin'] == 1) {
-        sess_set('admin', $team['admin']);
+      if ($team->getAdmin()) {
+        sess_set('admin', intval($team->getAdmin()));
       }
       sess_set('IP', $_SERVER['REMOTE_ADDR']);
     } 
-    if ($team['admin'] == 1) {
+    if ($team->getAdmin()) {
       $redirect = 'admin';
     } else {
       $redirect = 'game';
@@ -165,11 +164,9 @@ switch ($request->action) {
     if (Configuration::get('login_select')->getValue() === '1') {
       $team_id = $request->parameters['team_id'];
     } else {
-      $teams = new Teams();
       $team_name = $request->parameters['teamname'];
-      if ($teams->team_exist($team_name)) {
-        $team_id = $teams->get_team_by_name($team_name)['id'];
-
+      if (Team::teamExist($team_name)) {
+        $team_id = Team::getTeamByName($team_name)->getId();
       } else {
         error_response('Login failed', 'login');
         exit;

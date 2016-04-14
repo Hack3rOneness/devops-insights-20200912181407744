@@ -312,17 +312,15 @@ class IndexController extends Controller {
 
   public function renderLoginContent(): :xhp {
     if (Configuration::get('login')->getValue() === '1') {
-      $teams = new Teams();
-
       $login_team = <input autocomplete="off" name="team_name" type="text" maxlength={20}/>;
       $login_select = "off";
       if (Configuration::get('login_select')->getValue() === '1') {
         $login_select = "on";
         $login_team = <select name="team_id" />;
         $login_team->appendChild(<option value="0">Select</option>);
-        foreach ($teams->all_active_teams() as $team) {
-          error_log('Getting ' . $team['name']);
-          $login_team->appendChild(<option value={$team['id']}>{$team['name']}</option>);
+        foreach (Team::allActiveTeams() as $team) {
+          error_log('Getting ' . $team->getName());
+          $login_team->appendChild(<option value={strval($team->getId())}>{$team->getName()}</option>);
         }
       }
 

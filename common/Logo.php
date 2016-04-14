@@ -66,19 +66,6 @@ class Logo extends Model {
     return firstx($results)['name'];
   }
 
-  // Retrieve how many teams are using one logo.
-  public static function whoUses(string $logo): mixed {
-    $db = self::getDb();
-
-    $sql = 'SELECT * FROM teams WHERE logo = ?';
-    $element = array($logo);
-    $who_uses = $db->query($sql, $element);
-    if ($who_uses) {
-      return $who_uses;
-    }
-    return $who_uses;
-  }
-
   // All the logos.
   public static function allLogos(): array<Logo> {
     $db = self::getDb();

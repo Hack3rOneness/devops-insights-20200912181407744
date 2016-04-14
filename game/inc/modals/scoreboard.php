@@ -11,24 +11,23 @@ class ScoreboardController {
 
     // If refresing is enabled, do the needful
     if (Configuration::get('gameboard')->getValue() === '1') {
-      $teams = new Teams();
       $rank = 1;
-      $leaderboard = $teams->leaderboard();
+      $leaderboard = Team::leaderboard();
 
       foreach ($leaderboard as $team) {
-        $team_id = 'fb-scoreboard--team-'.$team['id'];
+        $team_id = 'fb-scoreboard--team-'.strval($team->getId());
         $scoreboard_tbody->appendChild(
           <tr>
             <td style="width: 10%;" class="el--radio">
-              <input type="checkbox" name="fb-scoreboard-filter" id={$team_id} value={$team['name']} checked={true}/>
+              <input type="checkbox" name="fb-scoreboard-filter" id={$team_id} value={$team->getName()} checked={true}/>
               <label class="click-effect" for={$team_id}><span></span></label>
             </td>
             <td style="width: 10%;">{$rank}</td>
-            <td style="width: 40%;">{$team['name']}</td>
-            <td style="width: 10%;">{$teams->points_by_type($team['id'], 'quiz')}</td>
-            <td style="width: 10%;">{$teams->points_by_type($team['id'], 'flag')}</td>
-            <td style="width: 10%;">{$teams->points_by_type($team['id'], 'base')}</td>
-            <td style="width: 10%;">{$team['points']}</td>
+            <td style="width: 40%;">{$team->getName()}</td>
+            <td style="width: 10%;">{$teams->points_by_type($team->getId(), 'quiz')}</td>
+            <td style="width: 10%;">{$teams->points_by_type($team->getId(), 'flag')}</td>
+            <td style="width: 10%;">{$teams->points_by_type($team->getId(), 'base')}</td>
+            <td style="width: 10%;">{strval($team->getPoints())}</td>
           </tr>
         );
         $rank++;

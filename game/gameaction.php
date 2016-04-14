@@ -57,8 +57,7 @@ switch ($request->action) {
           sess_team()
         );
         // Update teams last score
-        $teams = new Teams();
-        $teams->last_score(sess_team());
+        Team::lastScore(intval(sess_team()));
         ok_response('Success', 'game');
       } else {
         $levels->log_failed_score(
