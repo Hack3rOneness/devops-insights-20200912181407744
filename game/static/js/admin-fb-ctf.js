@@ -387,6 +387,14 @@ var $body = $('body');
     window.location.href = location.href;
   }
 
+  // Create and download database backup 
+  function databaseBackup() {
+    var backup_data = {
+      action: 'backup_db'
+    };
+    sendAdminRequest(backup_data);
+  }
+
   // Create tokens
   function createTokens(section) {
     var create_data = {
@@ -854,6 +862,8 @@ var $body = $('body');
         createElement($section);
       } else if (action === 'create-announcement') {
         createAnnouncement($section);
+      } else if (action === 'backup-db') {
+        databaseBackup();
       } else if (action === 'create-tokens') {
         createTokens($section);
       } else if (action === 'edit'){

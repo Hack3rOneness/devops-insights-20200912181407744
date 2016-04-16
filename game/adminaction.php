@@ -117,7 +117,8 @@ $actions = array(
   'delete_announcement',
   'create_tokens',
   'end_game',
-  'reset_game'
+  'reset_game',
+  'backup_db'
 );
 $request = new Request($filters, $actions, array());
 $request->processRequest();
@@ -445,6 +446,11 @@ switch ($request->action) {
   case 'end_game':
     $control = new Control();
     $control->end();
+    ok_response('Success', 'admin');
+    break;
+  case 'backup_db':
+    $control = new Control();
+    $control->backup_db();
     ok_response('Success', 'admin');
     break;
   default:

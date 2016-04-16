@@ -117,7 +117,10 @@ function registerNames() {
   var name = verifyTeamName('register');
   var password = verifyTeamPassword();
   var logo = verifyTeamLogo();
-  var token = $('.fb-form input[name="token"]')[0].value;
+  var token = '';
+  if ($('.fb-form input[name="token"]').length > 0) {
+    token = $('.fb-form input[name="token"]')[0].value;
+  }
   var fields = $('.fb-form input[name^="registration_name_"]');
   var names = [];
   $.each(fields, function(index, nameField) {

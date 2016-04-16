@@ -401,43 +401,6 @@ class AdminController extends Controller {
   }
 
   public function renderControlsContent(): :xhp {
-    $control = new Control();
-    $announcements = $control->all_announcements();
-    $announcements_div = <div></div>;
-    if ($announcements) {
-      foreach ($announcements as $announcement) {
-        $announcements_div->appendChild(
-          <section class="admin-box">
-            <form class="announcements_form">
-              <input type="hidden" name="announcement_id" value={$announcement['id']}/>
-              <header class="countries-management-header">
-                <h6>{$announcement['ts']}</h6>
-                <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
-              </header>
-              <div class="fb-column-container">
-                <div class="col col-pad">
-                  <div class="selected-logo">
-                    <span class="logo-name">{$announcement['announcement']}</span>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </section>
-        );
-      }
-    } else {
-      $announcements_div->appendChild(
-        <section class="admin-box">
-          <div class="fb-column-container">
-            <div class="col col-pad">
-              <div class="selected-logo-text">
-                <span class="logo-name">No Announcements</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
     return
       <div>
         <header class="admin-page-header">
@@ -447,24 +410,32 @@ class AdminController extends Controller {
         <div class="admin-sections">
           <section class="admin-box">
             <header class="admin-box-header">
-              <h3>Announcements</h3>
+              <h3>General Control</h3>
             </header>
             <div class="fb-column-container">
-              <div class="col col-pad col-3-4">
-                <div class="form-el el--block-label el--full-text">
-                  <input type="text" name="new_announcement" placeholder="Write New Announcement here" value=""/>
-                </div>
-              </div>
               <div class="col col-pad col-1-4">
                 <div class="form-el el--block-label el--full-text">
                   <div class="admin-buttons">
-                    <button class="fb-cta cta--yellow" data-action="create-announcement">Create</button>
+                    <button class="fb-cta cta--yellow" data-action="backup-db">Back Up Database</button>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-          {$announcements_div}
+          <section class="admin-box">
+            <header class="admin-box-header">
+              <h3>Teams Control</h3>
+            </header>
+            <div class="fb-column-container">
+            </div>
+          </section>
+          <section class="admin-box">
+            <header class="admin-box-header">
+              <h3>Levels Control</h3>
+            </header>
+            <div class="fb-column-container">
+            </div>
+          </section>
         </div>
       </div>;
   }

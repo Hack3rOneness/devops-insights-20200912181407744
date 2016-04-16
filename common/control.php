@@ -118,6 +118,10 @@ class Control {
     Configuration::update('timer', '0');
   }
 
+  public function backup_db() {
+    
+  }
+
   public function new_announcement($announcement) {
     $sql = 'INSERT INTO announcements_log (ts, announcement) (SELECT NOW(), ?) LIMIT 1';
     $element = array($announcement);
