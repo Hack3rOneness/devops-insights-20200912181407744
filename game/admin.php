@@ -8,37 +8,36 @@ sess_enforce_admin();
 
 class AdminController extends Controller {
 
-  private function generateCountriesSelect(string $selected): :xhp {
+  private function generateCountriesSelect(int $selected): :xhp {
     $select = <select name="entity_id" />;
 
-    if ($selected === "0") {
+    if ($selected === 0) {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
     } else {
       $country = Country::get(intval($selected));
       $select->appendChild(<option value={strval($country->getId())} selected={true}>{$country->getName()}</option>);
     }
 
-    foreach (Country::allAvailableCountries(false) as $country) {
+    foreach (Country::allAvailableCountries() as $country) {
       $select->appendChild(<option value={strval($country->getId())}>{$country->getName()}</option>);
     }
 
     return $select;
   }
 
-  private function generateLevelCategoriesSelect(string $selected): :xhp {
-    $levels = new Levels();
-    $categories = $levels->all_categories();
+  private function generateLevelCategoriesSelect(int $selected): :xhp {
+    $categories = Category::allCategories();
     $select = <select name="category_id" />;
 
     foreach ($categories as $category) {
-      if ($category['category'] === 'Quiz') {
+      if ($category->getCategory() === 'Quiz') {
         continue;
       }
 
-      if ($category['id'] === $selected) {
-        $select->appendChild(<option value={$category['id']} selected={true}>{$category['category']}</option>);
+      if ($category->getId() === $selected) {
+        $select->appendChild(<option value={strval($category->getId())} selected={true}>{$category->getCategory()}</option>);
       } else {
-        $select->appendChild(<option value={$category['id']}>{$category['category']}</option>);
+        $select->appendChild(<option value={strval($category->getId())}>{$category->getCategory()}</option>);
       }
     }
 
@@ -46,16 +45,19 @@ class AdminController extends Controller {
   }
 
   private function generateFilterCategoriesSelect(): :xhp {
-    $levels = new Levels();
-    $categories = $levels->all_categories();
+    $categories = Category::allCategories();
     $select = <select name="category_filter" />;
 
     $select->appendChild(<option class="filter_option" value="all" selected={true}>All Categories</option>);
     foreach ($categories as $category) {
-      if ($category['category'] === 'Quiz') {
+      if ($category->getCategory() === 'Quiz') {
         continue;
       }
-      $select->appendChild(<option class="filter_option" value={$category['category']}>{$category['category']}</option>);
+      $select->appendChild(
+        <option class="filter_option" value={$category->getCategory()}>
+          {$category->getCategory()}
+        </option>
+      );
     }
 
     return $select;
@@ -488,7 +490,7 @@ class AdminController extends Controller {
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect("0")}
+                  {$this->generateCountriesSelect(0)}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
@@ -558,24 +560,23 @@ class AdminController extends Controller {
       </section>
     </div>;
 
-    $levels = new Levels();
-
     $c = 1;
-    foreach ($levels->all_quiz_levels() as $quiz) {
-      $quiz_active_on = ($quiz['active'] === '1');
-      $quiz_active_off = ($quiz['active'] === '0');
+    foreach (Level::allQuizLevels() as $quiz) {
+      error_log($quiz->getTitle());
+      $quiz_active_on = ($quiz->getActive());
+      $quiz_active_off = (!$quiz->getActive());
 
-      $quiz_status_name = 'fb--levels--level-'.$quiz['id'].'-status';
-      $quiz_status_on_id = 'fb--levels--level-'.$quiz['id'].'-status--on';
-      $quiz_status_off_id = 'fb--levels--level-'.$quiz['id'].'-status--off';
+      $quiz_status_name = 'fb--levels--level-'.strval($quiz->getId()).'-status';
+      $quiz_status_on_id = 'fb--levels--level-'.strval($quiz->getId()).'-status--on';
+      $quiz_status_off_id = 'fb--levels--level-'.strval($quiz->getId()).'-status--off';
 
-      $quiz_id = 'quiz_id'.$quiz['id'];
+      $quiz_id = 'quiz_id'.strval($quiz->getId());
 
       $adminsections->appendChild(
         <section class="admin-box section-locked">
           <form class="level_form quiz_form" name={$quiz_id}>
             <input type="hidden" name="level_type" value="quiz"/>
-            <input type="hidden" name="level_id" value={$quiz['id']}/>
+            <input type="hidden" name="level_id" value={strval($quiz->getId())}/>
             <header class="admin-box-header">
               <h3>Quiz Level {$c}</h3>
               <div class="admin-section-toggle radio-inline">
@@ -589,44 +590,44 @@ class AdminController extends Controller {
               <div class="col col-pad col-1-2">
                 <div class="form-el el--block-label el--full-text">
                   <label>Title</label>
-                  <input name="title" type="text" value={$quiz['title']} disabled={true}/>
+                  <input name="title" type="text" value={$quiz->getTitle()} disabled={true}/>
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label>Question</label>
-                  <textarea name="question" rows={6} disabled={true}>{$quiz['description']}</textarea>
+                  <textarea name="question" rows={6} disabled={true}>{$quiz->getDescription()}</textarea>
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect($quiz['entity_id'])}
+                  {$this->generateCountriesSelect($quiz->getEntityId())}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
                 <div class="form-el el--block-label el--full-text">
                   <label>Answer</label>
-                  <input name="answer" type="text" value={$quiz['flag']} disabled={true}/>
+                  <input name="answer" type="text" value={$quiz->getFlag()} disabled={true}/>
                 </div>
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>Points</label>
-                    <input name="points" type="text" value={$quiz['points']} disabled={true}/>
+                    <input name="points" type="text" value={strval($quiz->getPoints())} disabled={true}/>
                   </div>
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>Bonus</label>
-                    <input name="bonus" type="text" value={$quiz['bonus']} disabled={true}/>
+                    <input name="bonus" type="text" value={strval($quiz->getBonus())} disabled={true}/>
                   </div>
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>-Dec</label>
-                    <input name="bonus_dec" type="text" value={$quiz['bonus_dec']} disabled={true}/>
+                    <input name="bonus_dec" type="text" value={strval($quiz->getBonusDec())} disabled={true}/>
                   </div>
                 </div>
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-2-3 el--block-label el--full-text">
                     <label>Hint</label>
-                    <input name="hint" type="text" value={$quiz['hint']} disabled={true}/>
+                    <input name="hint" type="text" value={$quiz->getHint()} disabled={true}/>
                   </div>
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>Hint Penalty</label>
-                    <input name="penalty" type="text" value={$quiz['penalty']} disabled={true}/>
+                    <input name="penalty" type="text" value={strval($quiz->getPenalty())} disabled={true}/>
                   </div>
                 </div>
               </div>
@@ -679,11 +680,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect("0")}
+                    {$this->generateCountriesSelect(0)}
                   </div>
               <div class="col col-1-2 el--block-label el--full-text">
                 <label for="">Category</label>
-                {$this->generateLevelCategoriesSelect("0")}
+                {$this->generateLevelCategoriesSelect(0)}
               </div>
             </div>
           </div>
@@ -755,18 +756,16 @@ class AdminController extends Controller {
       </section>
     </div>;
 
-    $levels = new Levels();
-
     $c = 1;
-    foreach ($levels->all_flag_levels() as $flag) {
-      $flag_active_on = ($flag['active'] === '1');
-      $flag_active_off = ($flag['active'] === '0');
+    foreach (Level::allFlagLevels() as $flag) {
+      $flag_active_on = ($flag->getActive());
+      $flag_active_off = (!$flag->getActive());
 
-      $flag_status_name = 'fb--levels--level-'.$flag['id'].'-status';
-      $flag_status_on_id = 'fb--levels--level-'.$flag['id'].'-status--on';
-      $flag_status_off_id = 'fb--levels--level-'.$flag['id'].'-status--off';
+      $flag_status_name = 'fb--levels--level-'.strval($flag->getId()).'-status';
+      $flag_status_on_id = 'fb--levels--level-'.strval($flag->getId()).'-status--on';
+      $flag_status_off_id = 'fb--levels--level-'.strval($flag->getId()).'-status--off';
 
-      $flag_id = 'flag_id'.$flag['id'];
+      $flag_id = 'flag_id'.strval($flag->getId());
 
       $attachments_div =
         <div class="attachments">
@@ -775,7 +774,7 @@ class AdminController extends Controller {
               <div class="form-el">
                 <form class="attachment_form">
                   <input type="hidden" name="action" value="create_attachment"/>
-                  <input type="hidden" name="level_id" value={$flag['id']}/>
+                  <input type="hidden" name="level_id" value={strval($flag->getId())}/>
                   <div class="col el--block-label el--full-text">
                     <label>New Attachment:</label>
                     <input name="filename" type="text"/>
@@ -793,9 +792,9 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if (Attachment::hasAttachments(intval($flag['id']))) {
+      if (Attachment::hasAttachments($flag->getId())) {
         $a_c = 1;
-        foreach (Attachment::allAttachments(intval($flag['id'])) as $attachment) {
+        foreach (Attachment::allAttachments($flag->getId()) as $attachment) {
           $attachments_div->appendChild(
             <div class="existing-attachment fb-column-container">
               <div class="col col-pad col-2-3">
@@ -828,7 +827,7 @@ class AdminController extends Controller {
               <div class="form-el">
                 <form class="link_form">
                   <input type="hidden" name="action" value="create_link"/>
-                  <input type="hidden" name="level_id" value={$flag['id']}/>
+                  <input type="hidden" name="level_id" value={strval($flag->getId())}/>
                   <div class="col el--block-label el--full-text">
                     <label>New Link:</label>
                     <input name="link" type="text"/>
@@ -845,9 +844,9 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if (Link::hasLinks(intval($flag['id']))) {
+      if (Link::hasLinks($flag->getId())) {
         $l_c = 1;
-        foreach (Link::allLinks(intval($flag['id'])) as $link) {
+        foreach (Link::allLinks($flag->getId()) as $link) {
           $links_div->appendChild(
             <div class="existing-link fb-column-container">
               <div class="col col-pad col-2-3">
@@ -877,7 +876,7 @@ class AdminController extends Controller {
         <section class="admin-box section-locked">
           <form class="level_form flag_form" name={$flag_id}>
             <input type="hidden" name="level_type" value="flag"/>
-            <input type="hidden" name="level_id" value={$flag['id']}/>
+            <input type="hidden" name="level_id" value={strval($flag->getId())}/>
             <header class="admin-box-header">
               <h3>Flag Level {$c}</h3>
               <div class="admin-section-toggle radio-inline">
@@ -891,20 +890,20 @@ class AdminController extends Controller {
               <div class="col col-pad col-1-2">
                 <div class="form-el el--block-label el--full-text">
                   <label>Title</label>
-                  <input name="title" type="text" value={$flag['title']} disabled={true}/>
+                  <input name="title" type="text" value={$flag->getTitle()} disabled={true}/>
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label>Description</label>
-                  <textarea name="description" rows={6} disabled={true}>{$flag['description']}</textarea>
+                  <textarea name="description" rows={6} disabled={true}>{$flag->getDescription()}</textarea>
                 </div>
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect($flag['entity_id'])}
+                    {$this->generateCountriesSelect($flag->getEntityId())}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Categories</label>
-                    {$this->generateLevelCategoriesSelect($flag['category_id'])}
+                    {$this->generateLevelCategoriesSelect($flag->getCategoryId())}
                   </div>
                 </div>
               </div>
@@ -912,31 +911,31 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col el--block-label el--full-text">
                     <label>Flag</label>
-                    <input name="flag" type="text" value={$flag['flag']} disabled={true}/>
+                    <input name="flag" type="text" value={$flag->getFlag()} disabled={true}/>
                   </div>
                 </div>
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>Points</label>
-                    <input name="points" type="text" value={$flag['points']} disabled={true}/>
+                    <input name="points" type="text" value={strval($flag->getPoints())} disabled={true}/>
                   </div>
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>Bonus</label>
-                    <input name="bonus" type="text" value={$flag['bonus']} disabled={true}/>
+                    <input name="bonus" type="text" value={strval($flag->getBonus())} disabled={true}/>
                   </div>
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>-Dec</label>
-                    <input name="bonus_dec" type="text" value={$flag['bonus_dec']} disabled={true}/>
+                    <input name="bonus_dec" type="text" value={strval($flag->getBonusDec())} disabled={true}/>
                   </div>
                 </div>
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-2-3 el--block-label el--full-text">
                     <label>Hint</label>
-                    <input name="hint" type="text" value={$flag['hint']} disabled={true}/>
+                    <input name="hint" type="text" value={$flag->getHint()} disabled={true}/>
                   </div>
                   <div class="col col-1-3 el--block-label el--full-text">
                     <label>Hint Penalty</label>
-                    <input name="penalty" type="text" value={$flag['penalty']} disabled={true}/>
+                    <input name="penalty" type="text" value={strval($flag->getPenalty())} disabled={true}/>
                   </div>
                 </div>
               </div>
@@ -995,11 +994,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect("0")}
+                    {$this->generateCountriesSelect(0)}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Category</label>
-                    {$this->generateLevelCategoriesSelect("0")}
+                    {$this->generateLevelCategoriesSelect(0)}
                   </div>
                 </div>
               </div>
@@ -1071,18 +1070,16 @@ class AdminController extends Controller {
         </section>
       </div>;
 
-    $levels = new Levels();
-
     $c = 1;
-    foreach ($levels->all_base_levels() as $base) {
-      $base_active_on = ($base['active'] === '1');
-      $base_active_off = ($base['active'] === '0');
+    foreach (Level::allBaseLevels() as $base) {
+      $base_active_on = ($base->getActive());
+      $base_active_off = (!$base->getActive());
 
-      $base_status_name = 'fb--levels--level-'.$base['id'].'-status';
-      $base_status_on_id = 'fb--levels--level-'.$base['id'].'-status--on';
-      $base_status_off_id = 'fb--levels--level-'.$base['id'].'-status--off';
+      $base_status_name = 'fb--levels--level-'.strval($base->getId()).'-status';
+      $base_status_on_id = 'fb--levels--level-'.strval($base->getId()).'-status--on';
+      $base_status_off_id = 'fb--levels--level-'.strval($base->getId()).'-status--off';
 
-      $base_id = 'base_id'.$base['id'];
+      $base_id = 'base_id'.strval($base->getId());
 
       $attachments_div =
         <div class="attachments">
@@ -1091,7 +1088,7 @@ class AdminController extends Controller {
               <div class="form-el">
                 <form class="attachment_form">
                   <input type="hidden" name="action" value="create_attachment"/>
-                  <input type="hidden" name="level_id" value={$base['id']}/>
+                  <input type="hidden" name="level_id" value={strval($base->getId())}/>
                   <div class="col el--block-label el--full-text">
                     <label>New Attachment:</label>
                     <input name="filename" type="text"/>
@@ -1109,9 +1106,9 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if (Attachment::hasAttachments(intval($base['id']))) {
+      if (Attachment::hasAttachments($base->getId())) {
         $a_c = 1;
-        foreach (Attachment::allAttachments(intval($base['id'])) as $attachment) {
+        foreach (Attachment::allAttachments($base->getId()) as $attachment) {
           $attachments_div->appendChild(
             <div class="existing-attachment fb-column-container">
               <div class="col col-pad col-2-3">
@@ -1144,7 +1141,7 @@ class AdminController extends Controller {
               <div class="form-el">
                 <form class="link_form">
                   <input type="hidden" name="action" value="create_link"/>
-                  <input type="hidden" name="level_id" value={$base['id']}/>
+                  <input type="hidden" name="level_id" value={strval($base->getId())}/>
                   <div class="col el--block-label el--full-text">
                     <label>New Link:</label>
                     <input name="link" type="text"/>
@@ -1161,9 +1158,9 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if (Link::hasLinks(intval($base['id']))) {
+      if (Link::hasLinks($base->getId())) {
         $l_c = 1;
-        foreach (Link::allLinks(intval($base['id'])) as $link) {
+        foreach (Link::allLinks($base->getId()) as $link) {
           $links_div->appendChild(
             <div class="existing-link fb-column-container">
               <div class="col col-pad col-2-3">
@@ -1193,7 +1190,7 @@ class AdminController extends Controller {
         <section class="admin-box section-locked">
               <form class="level_form base_form" name={$base_id}>
                 <input type="hidden" name="level_type" value="base"/>
-                <input type="hidden" name="level_id" value={$base['id']}/>
+                <input type="hidden" name="level_id" value={strval($base->getId())}/>
                 <header class="admin-box-header">
                   <h3>Base Level {$c}</h3>
                   <div class="admin-section-toggle radio-inline">
@@ -1207,20 +1204,20 @@ class AdminController extends Controller {
                   <div class="col col-pad col-1-2">
                     <div class="form-el el--block-label el--full-text">
                       <label>Title</label>
-                      <input name="title" type="text" value={$base['title']} disabled={true}/>
+                      <input name="title" type="text" value={$base->getTitle()} disabled={true}/>
                     </div>
                     <div class="form-el el--block-label el--full-text">
                       <label>Description</label>
-                      <textarea name="description" rows={4} disabled={true}>{$base['description']}</textarea>
+                      <textarea name="description" rows={4} disabled={true}>{$base->getDescription()}</textarea>
                     </div>
                     <div class="form-el fb-column-container col-gutters">
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Country</label>
-                        {$this->generateCountriesSelect($base['entity_id'])}
+                        {$this->generateCountriesSelect($base->getEntityId())}
                       </div>
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Category</label>
-                        {$this->generateLevelCategoriesSelect($base['category_id'])}
+                        {$this->generateLevelCategoriesSelect($base->getCategoryId())}
                       </div>
                     </div>
                   </div>
@@ -1228,21 +1225,21 @@ class AdminController extends Controller {
                     <div class="form-el fb-column-container col-gutters">
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label>Points</label>
-                        <input name="points" type="text" value={$base['points']} disabled={true}/>
+                        <input name="points" type="text" value={strval($base->getPoints())} disabled={true}/>
                       </div>
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label>Bonus</label>
-                        <input name="bonus" type="text" value={$base['bonus']} disabled={true}/>
+                        <input name="bonus" type="text" value={strval($base->getBonus())} disabled={true}/>
                       </div>
                     </div>
                     <div class="form-el fb-column-container col-gutters">
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label>Hint</label>
-                        <input name="hint" type="text" value={$base['hint']} disabled={true}/>
+                        <input name="hint" type="text" value={$base->getHint()} disabled={true}/>
                       </div>
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label>Hint Penalty</label>
-                        <input name="penalty" type="text" value={$base['penalty']} disabled={true}/>
+                        <input name="penalty" type="text" value={strval($base->getPenalty())} disabled={true}/>
                       </div>
                     </div>
                   </div>
@@ -1309,11 +1306,10 @@ class AdminController extends Controller {
       </section>
     );
 
-    $levels = new Levels();
-    $categories = $levels->all_categories();
+    $categories = Category::allCategories();
 
     foreach ($categories as $category) {
-      if ($levels->is_category_used($category['id'])) {
+      if (Category::isUsed($category->getId())) {
         $delete_action = <a></a>;
       } else {
         $delete_action = <a class="highlighted--red" href="#" data-action="delete">DELETE</a>;
@@ -1321,16 +1317,16 @@ class AdminController extends Controller {
       $adminsections->appendChild(
         <section class="admin-box">
           <form class="categories_form">
-            <input type="hidden" name="category_id" value={$category['id']}/>
+            <input type="hidden" name="category_id" value={strval($category->getId())}/>
             <header class="countries-management-header">
-              <h6>ID{$category['id']}</h6>
+              <h6>ID{strval($category->getId())}</h6>
               {$delete_action}
             </header>
             <div class="fb-column-container">
               <div class="col col-pad">
                 <div class="selected-logo">
                   <label>Category: </label>
-                  <span class="logo-name">{$category['category']}</span>
+                  <span class="logo-name">{$category->getCategory()}</span>
                 </div>
               </div>
             </div>
@@ -1388,7 +1384,7 @@ class AdminController extends Controller {
     );
 
     foreach (Country::allCountries(false) as $country) {
-      $using_country = Country::whoUses($country->getId());
+      $using_country = Level::whoUses($country->getId());
       $current_use = ($using_country) ? 'Yes' : 'No';
       if ($country->getEnabled()) {
         $highlighted_action = 'disable_country';
@@ -1626,7 +1622,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink admin-buttons">
                   <a href="#" class="admin--edit" data-action="edit">EDIT</a>
                   {$delete_button}
-                  <button class="fb-cta cta--yellow js-confirm-save" data-action="save">Save</button>
+                  <button class="fb-cta cta--yellow js-confirm-save" data-action="save-no-validation">Save</button>
                 </div>
               </div>
             </div>
@@ -2027,7 +2023,7 @@ class AdminController extends Controller {
               <div class="fb-column-container">
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
-                    <svg class="icon icon--badge">
+                    <svg class="icon icon--mini">
                       <use xlink:href="#icon--badge-invader" />
 
                     </svg>
@@ -2066,7 +2062,7 @@ class AdminController extends Controller {
               <div class="fb-column-container">
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
-                    <svg class="icon icon--badge">
+                    <svg class="icon icon--mini">
                       <use xlink:href="#icon--badge-car" />
 
                     </svg>

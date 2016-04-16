@@ -22,8 +22,7 @@ class WorldMapController {
 
   public function renderWorldMap(): :xhp {
     $svg_countries = <g class="countries"></g>;
-    $levels = new Levels();
-
+    
     foreach (Country::allMapCountries() as $country) {
       if (Configuration::get('gameboard')->getValue() === '1') {
         $path_class = (($country->getUsed()) && (Country::isActiveLevel($country->getId())))
@@ -31,16 +30,19 @@ class WorldMapController {
           : 'land';
         $map_indicator = 'map-indicator ';
         $data_captured = null;
-        $country_level = Country::whoUses($country->getId());
+        $country_level = Level::whoUses($country->getId());
 
         if ($country_level) {
-          if ($levels->previous_score($country_level['id'], sess_team())) {
+          if (Level::previousScore($country_level->getId(), intval(sess_team()), false)) {
             $map_indicator .= 'captured--you';
             $data_captured = sess_teamname();
-          } else if ($levels->previous_score($country_level['id'], sess_team(), true)) {
+          } else if (Level::previousScore($country_level->getId(), intval(sess_team()), true)) {
             $map_indicator .= 'captured--opponent';
-            $completed_by = $levels->completed_by($country_level['id'])[0];
-            $data_captured = $completed_by['name'];
+            $completed_by = Team::completedLevel($country_level->getId());
+            $data_captured = '';
+            foreach ($completed_by as $c) {
+              $data_captured .= ' ' . $c->getName();
+            }
           }
         }
       } else {

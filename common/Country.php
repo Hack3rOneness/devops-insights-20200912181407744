@@ -50,20 +50,6 @@ class Country extends Model {
     $db->query($sql2);
   }
 
-  // TODO: Convert to hack strict when we have a Level object
-  // Retrieve how many levels are using one country
-  public static function whoUses(int $country_id): mixed {
-    $db = self::getDb();
-
-    $sql = 'SELECT * FROM levels WHERE entity_id = ? AND active = 1 LIMIT 1';
-    $element = array($country_id);
-    $who_uses = $db->query($sql, $element);
-    if ($who_uses) {
-      return $who_uses[0];
-    }
-    return $who_uses;
-  }
-
   // Enable or disable a country
   public static function setStatus(int $country_id, bool $status): void {
     $db = self::getDb();

@@ -151,13 +151,15 @@ class Team extends Model {
   }
 
   // Create a team and return the created team id.
-  public static function createTeam(string $name, string $password_hash, string $logo): int {
+  public static function create(string $name, string $password_hash, string $logo): int {
     $db = self::getDb();
 
+    // Create team
     $sql = 'INSERT INTO teams (name, password_hash, logo, created_ts) VALUES (?, ?, ?, NOW())';
     $elements = array($name, $password_hash, $logo);
     $db->query($sql, $elements);
 
+    // Return newly created team_id
     $sql = 'SELECT id FROM teams WHERE name = ? AND password_hash = ? AND logo = ? LIMIT 1';
     $elements = array($name, $password_hash, $logo);
     $result = $db->query($sql, $elements);
@@ -176,7 +178,7 @@ class Team extends Model {
   }
 
   // Update team.
-  public static function updateTeam(string $name, string $logo, int $points, int $team_id): void {
+  public static function update(string $name, string $logo, int $points, int $team_id): void {
     $db = self::getDb();
 
     $sql = 'UPDATE teams SET name = ?, logo = ? , points = ? WHERE id = ? LIMIT 1';
@@ -194,7 +196,7 @@ class Team extends Model {
   }
 
   // Delete team.
-  public static function deleteTeam(int $team_id): void {
+  public static function delete(int $team_id): void {
     $db = self::getDb();
 
     $sql = 'DELETE FROM teams WHERE id = ? AND protected = 0 LIMIT 1';
@@ -328,8 +330,8 @@ class Team extends Model {
     $db = self::getDb();
 
     $sql = 'SELECT * FROM teams WHERE id = ? LIMIT 1';
-    $elements = array($team_id);
-    $result = $db->query($sql, $elements);
+    $element = array($team_id);
+    $result = $db->query($sql, $element);
 
     invariant(count($result) === 1, 'Expected exactly one result');
     $team = self::teamFromRow(firstx($result));
@@ -403,6 +405,21 @@ class Team extends Model {
     $result = $db->query($sql);
     invariant(count($result) === 1, 'Expected exactly one result');
     return intval(firstx($result)['COUNT(*)']);
+  }
+
+  public static function completedLevel(int $level_id): array<Team> {
+    $db = self::getDb();
+
+    $sql = 'SELECT * FROM teams WHERE id IN (SELECT team_id FROM scores_log WHERE level_id = ? ORDER BY ts) AND visible = 1 AND active = 1';
+    $element = array($level_id);
+    $results = $db->query($sql, $element);
+
+    $teams = array();
+    foreach ($results as $row) {
+      $teams[] = self::teamFromRow($row);
+    }
+
+    return $teams;
   }
 
   // Get rank position for a team

@@ -135,115 +135,107 @@ switch ($request->action) {
     admin_page();
     break;
   case 'create_quiz':
-    $levels = new Levels();
     $bonus = Configuration::get('default_bonus')->getValue();
     $bonus_dec = Configuration::get('default_bonusdec')->getValue();
-    $levels->create_quiz_level(
+    Level::createQuiz(
       $request->parameters['title'],
       $request->parameters['question'],
       $request->parameters['answer'],
-      $request->parameters['entity_id'],
-      $request->parameters['points'],
-      $bonus,
-      $bonus_dec,
+      intval($request->parameters['entity_id']),
+      intval($request->parameters['points']),
+      intval($bonus),
+      intval($bonus_dec),
       $request->parameters['hint'],
-      $request->parameters['penalty']
+      intval($request->parameters['penalty'])
     );
     ok_response('Created succesfully', 'admin');
     break;
   case 'update_quiz':
-    $levels = new Levels();
-    $levels->update_quiz_level(
+    Level::updateQuiz(
       $request->parameters['title'],
       $request->parameters['question'],
       $request->parameters['answer'],
-      $request->parameters['entity_id'],
-      $request->parameters['points'],
-      $request->parameters['bonus'],
-      $request->parameters['bonus_dec'],
+      intval($request->parameters['entity_id']),
+      intval($request->parameters['points']),
+      intval($request->parameters['bonus']),
+      intval($request->parameters['bonus_dec']),
       $request->parameters['hint'],
-      $request->parameters['penalty'],
-      $request->parameters['level_id']
+      intval($request->parameters['penalty']),
+      intval($request->parameters['level_id'])
     );
     ok_response('Updated succesfully', 'admin');
     break;
   case 'create_flag':
-    $levels = new Levels();
     $bonus = Configuration::get('default_bonus')->getValue();
     $bonus_dec = Configuration::get('default_bonusdec')->getValue();
-    $levels->create_flag_level(
+    Level::createFlag(
       $request->parameters['title'],
       $request->parameters['description'],
       $request->parameters['flag'],
-      $request->parameters['entity_id'],
-      $request->parameters['category_id'],
-      $request->parameters['points'],
-      $bonus,
-      $bonus_dec,
+      intval($request->parameters['entity_id']),
+      intval($request->parameters['category_id']),
+      intval($request->parameters['points']),
+      intval($bonus),
+      intval($bonus_dec),
       $request->parameters['hint'],
-      $request->parameters['penalty']
+      intval($request->parameters['penalty'])
     );
     ok_response('Created succesfully', 'admin');
     break;
   case 'update_flag':
-    $levels = new Levels();
-    $levels->update_flag_level(
+    Level::updateFlag(
       $request->parameters['title'],
       $request->parameters['description'],
       $request->parameters['flag'],
-      $request->parameters['entity_id'],
-      $request->parameters['category_id'],
-      $request->parameters['points'],
-      $request->parameters['bonus'],
-      $request->parameters['bonus_dec'],
+      intval($request->parameters['entity_id']),
+      intval($request->parameters['category_id']),
+      intval($request->parameters['points']),
+      intval($request->parameters['bonus']),
+      intval($request->parameters['bonus_dec']),
       $request->parameters['hint'],
-      $request->parameters['penalty'],
-      $request->parameters['level_id']
+      intval($request->parameters['penalty']),
+      intval($request->parameters['level_id'])
     );
     ok_response('Updated succesfully', 'admin');
     break;
   case 'create_base':
-    $levels = new Levels();
     $bonus = Configuration::get('default_bonus')->getValue();
-    $levels->create_base_level(
+    Level::createBase(
       $request->parameters['title'],
       $request->parameters['description'],
-      $request->parameters['entity_id'],
-      $request->parameters['category_id'],
-      $request->parameters['points'],
-      $bonus,
+      intval($request->parameters['entity_id']),
+      intval($request->parameters['category_id']),
+      intval($request->parameters['points']),
+      intval($bonus),
       $request->parameters['hint'],
-      $request->parameters['penalty']
+      intval($request->parameters['penalty'])
     );
     ok_response('Created succesfully', 'admin');
     break;
   case 'update_base':
-    $levels = new Levels();
-    $levels->update_base_level(
+    Level::updateBase(
       $request->parameters['title'],
       $request->parameters['description'],
-      $request->parameters['entity_id'],
-      $request->parameters['category_id'],
-      $request->parameters['points'],
-      $request->parameters['bonus'],
+      intval($request->parameters['entity_id']),
+      intval($request->parameters['category_id']),
+      intval($request->parameters['points']),
+      intval($request->parameters['bonus']),
       $request->parameters['hint'],
-      $request->parameters['penalty'],
-      $request->parameters['level_id']
+      intval($request->parameters['penalty']),
+      intval($request->parameters['level_id'])
     );
     ok_response('Updated succesfully', 'admin');
     break;
   case 'delete_level':
-    $levels = new Levels();
-    $levels->delete_level(
-      $request->parameters['level_id']
+    Level::delete(
+      intval($request->parameters['level_id'])
     );
     ok_response('Deleted succesfully', 'admin');
     break;
   case 'toggle_status_level':
-    $levels = new Levels();
-    $levels->toggle_status(
-      $request->parameters['level_id'],
-      $request->parameters['status']
+    Level::setStatus(
+      intval($request->parameters['level_id']),
+      (bool)intval($request->parameters['status'])
     );
     ok_response('Success', 'admin');
     break;
@@ -254,9 +246,8 @@ switch ($request->action) {
       );
       ok_response('Success', 'admin');
     } else {
-      $levels = new Levels();
-      $levels->toggle_status_all(
-        $request->parameters['status'],
+      Level::setStatusAll(
+        (bool)intval($request->parameters['status']),
         $request->parameters['all_type']
       );
       ok_response('Success', 'admin');
@@ -264,7 +255,7 @@ switch ($request->action) {
     break;
   case 'create_team':
     $password_hash = Team::generateHash($request->parameters['password']);
-    Team::createTeam(
+    Team::create(
       $request->parameters['name'],
       $password_hash,
       $request->parameters['logo']
@@ -272,10 +263,10 @@ switch ($request->action) {
     ok_response('Created succesfully', 'admin');
     break;
   case 'update_team':
-    Team::updateTeam(
+    Team::update(
       $request->parameters['name'],
       $request->parameters['logo'],
-      $request->parameters['points'],
+      intval($request->parameters['points']),
       intval($request->parameters['team_id'])
     );
     if (strlen($request->parameters['password']) > 0) {
@@ -337,7 +328,7 @@ switch ($request->action) {
     ok_response('Success', 'admin');
     break;
   case 'delete_team':
-    Team::deleteTeam(
+    Team::delete(
       intval($request->parameters['team_id'])
     );
     ok_response('Deleted successfully', 'admin');
@@ -356,15 +347,13 @@ switch ($request->action) {
     ok_response('Deleted successfully', 'admin');
     break;
   case 'delete_category':
-    $levels = new Levels();
-    $levels->delete_category(
-      $request->parameters['category_id']
+    Category::delete(
+      intval($request->parameters['category_id'])
     );
     ok_response('Deleted successfully', 'admin');
     break;
   case 'create_category':
-    $levels = new Levels();
-    $levels->create_category(
+    Category::create(
       $request->parameters['category']
     );
     ok_response('Deleted successfully', 'admin');

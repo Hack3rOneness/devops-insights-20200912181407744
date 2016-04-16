@@ -45,24 +45,23 @@ switch ($request->action) {
     break;
   case 'answer_level':
     if (Configuration::get('scoring')->getValue() === '1') {
-      $levels = new Levels();
       // Check if answer is valid
-      if ($levels->check_answer(
-        $request->parameters['level_id'],
+      if (Level::checkAnswer(
+        intval($request->parameters['level_id']),
         $request->parameters['answer']
       )) {
         // Give points!
-        $levels->score_level(
-          $request->parameters['level_id'],
-          sess_team()
+        Level::scoreLevel(
+          intval($request->parameters['level_id']),
+          intval(sess_team())
         );
         // Update teams last score
         Team::lastScore(intval(sess_team()));
         ok_response('Success', 'game');
       } else {
-        $levels->log_failed_score(
-          $request->parameters['level_id'],
-          sess_team(),
+        Level::logFailedScore(
+          intval($request->parameters['level_id']),
+          intval(sess_team()),
           $request->parameters['answer']
         );
         error_response('Failed', 'game');
@@ -72,10 +71,9 @@ switch ($request->action) {
     }
     break;
   case 'get_hint':
-    $levels = new Levels();
-    $requested_hint = $levels->get_hint(
-      $request->parameters['level_id'],
-      sess_team()
+    $requested_hint = Level::getLevelHint(
+      intval($request->parameters['level_id']),
+      intval(sess_team())
     );
     if ($requested_hint) {
       hint_response($requested_hint, 'OK');

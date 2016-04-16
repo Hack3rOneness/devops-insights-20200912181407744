@@ -684,8 +684,7 @@ var $body = $('body');
       password: team_password,
       logo: team_logo
     };
-    if ((team_id) && (team_name) && (team_password) && (team_logo)) {
-      console.log(update_data);
+    if ((team_id) && (team_name) && (team_logo)) {
       sendAdminRequest(update_data);
     }
   }
@@ -1138,3 +1137,10 @@ var $body = $('body');
     init: init
   };
 })(); // admin
+
+// Capture enter key presses to avoid unexpected actions
+$(document).on('keypress', 'input', function(e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+  } 
+});

@@ -35,18 +35,18 @@ DROP TABLE IF EXISTS `levels`;
 CREATE TABLE `levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) DEFAULT 0,
-  `type` varchar(4) DEFAULT NULL,
-  `title` text DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `entity_id` int(11) DEFAULT NULL,
-  `category_id` int(11) NOT NULL DEFAULT '1',
-  `points` int(11) NOT NULL DEFAULT '0',
-  `bonus` int(11) NOT NULL DEFAULT '0',
-  `bonus_dec` int(11) NOT NULL DEFAULT '0',
-  `bonus_fix` int(11) NOT NULL DEFAULT '0',
+  `type` varchar(4) NOT NULL DEFAULT '',
+  `title` text NOT NULL DEFAULT '',
+  `description` text NOT NULL DEFAULT '',
+  `entity_id` int(11) NOT NULL DEFAULT 0,
+  `category_id` int(11) NOT NULL DEFAULT 1,
+  `points` int(11) NOT NULL DEFAULT 0,
+  `bonus` int(11) NOT NULL DEFAULT 0,
+  `bonus_dec` int(11) NOT NULL DEFAULT 0,
+  `bonus_fix` int(11) NOT NULL DEFAULT 0,
   `flag` text NOT NULL DEFAULT '',
   `hint` text NOT NULL DEFAULT '',
-  `penalty` int(11) NOT NULL DEFAULT '0',
+  `penalty` int(11) NOT NULL DEFAULT 0,
   `created_ts` timestamp NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -61,8 +61,8 @@ DROP TABLE IF EXISTS `categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category` text DEFAULT NULL,
-  `created_ts` timestamp NULL DEFAULT NULL,
+  `category` text NOT NULL DEFAULT '',
+  `created_ts` timestamp NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

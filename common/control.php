@@ -65,6 +65,9 @@ class Control {
   }
 
   public function begin() {
+    // Disable registration
+    Configuration::update('registration', '0');
+
     // Reset all points
     Team::resetAllPoints();
 
@@ -133,7 +136,7 @@ class Control {
   }
 
   public function all_activity() {
-    $sql = 'SELECT DATE_FORMAT(scores_log.ts, "%H:%i:%S") AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id ORDER BY time ASC';
+    $sql = 'SELECT DATE_FORMAT(scores_log.ts, "%H:%i:%S") AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time ASC';
     return $this->db->query($sql);
   }
 

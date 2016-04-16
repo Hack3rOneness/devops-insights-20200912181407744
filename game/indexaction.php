@@ -38,7 +38,7 @@ function register_team($teamname, $password, $token, $logo, $register_names = fa
   // Verify that this team name is not created yet
   if (!Team::teamExist($shortname)) {
     $password_hash = Team::generateHash($password);
-    $team_id = Team::createTeam($shortname, $password_hash, $final_logo);
+    $team_id = Team::create($shortname, $password_hash, $final_logo);
     if ($team_id) {
       // Store team players data, if enabled
       if ($register_names) {

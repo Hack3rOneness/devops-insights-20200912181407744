@@ -16,17 +16,19 @@ class ScoreboardController {
 
       foreach ($leaderboard as $team) {
         $team_id = 'fb-scoreboard--team-'.strval($team->getId());
+        $color = '#' . substr(md5($team->getName()), 0, 6) . ';';
+        $style = 'color: '.$color.'; background:' .$color. ';';
         $scoreboard_tbody->appendChild(
           <tr>
             <td style="width: 10%;" class="el--radio">
               <input type="checkbox" name="fb-scoreboard-filter" id={$team_id} value={$team->getName()} checked={true}/>
-              <label class="click-effect" for={$team_id}><span></span></label>
+              <label class="click-effect" for={$team_id}><span style={$style}>FU</span></label>
             </td>
             <td style="width: 10%;">{$rank}</td>
             <td style="width: 40%;">{$team->getName()}</td>
-            <td style="width: 10%;">{$teams->points_by_type($team->getId(), 'quiz')}</td>
-            <td style="width: 10%;">{$teams->points_by_type($team->getId(), 'flag')}</td>
-            <td style="width: 10%;">{$teams->points_by_type($team->getId(), 'base')}</td>
+            <td style="width: 10%;">{strval(Team::pointsByType($team->getId(), 'quiz'))}</td>
+            <td style="width: 10%;">{strval(Team::pointsByType($team->getId(), 'flag'))}</td>
+            <td style="width: 10%;">{strval(Team::pointsByType($team->getId(), 'base'))}</td>
             <td style="width: 10%;">{strval($team->getPoints())}</td>
           </tr>
         );
@@ -70,7 +72,7 @@ class ScoreboardController {
               <tr>
                 <th style="width: 10%;">filter_</th>
                 <th style="width: 10%;">rank_</th>
-                <th style="width: 50%;">team_name_</th>
+                <th style="width: 40%;">team_name_</th>
                 <th style="width: 10%;">quiz_pts_</th>
                 <th style="width: 10%;">flag_pts_</th>
                 <th style="width: 10%;">base_pts_</th>

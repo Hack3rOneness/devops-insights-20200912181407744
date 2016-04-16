@@ -7,8 +7,6 @@ sess_enforce_login();
 
 class CountryDataController extends DataController {
   public function generateData() {
-    $levels = new Levels();
-    
     $my_team = Team::getTeam(intval(sess_team()));
 
     $countries_data = (object) array();
@@ -19,26 +17,30 @@ class CountryDataController extends DataController {
       exit;
     }
 
-    foreach ($levels->all_levels(1) as $level) {
-      $country = Country::get(intval($level['entity_id']));
+    foreach (Level::allActiveLevels() as $level) {
+      $country = Country::get(intval($level->getEntityId()));
       if (!$country) {
         continue;
       }
 
-      $category = $levels->get_category($level['category_id']);
-      if ($level['hint']) {
+      $category = Category::getSingleCategory($level->getCategoryId());
+      if (count($level->getHint()) > 0) {
         // There is hint, can this team afford it?
-        if ($level['penalty'] > $my_team->getPoints()) { // Not enough points
+        if ($level->getPenalty() > $my_team->getPoints()) { // Not enough points
           $hint_cost = -2;
           $hint = 'no';
         } else {
-          // Has this team requested this hint before?
-          if ($levels->previous_hint($level['id'], $my_team->getId())) {
+          // Has this team requested this hint or scored this level before?
+          if (
+            (Level::previousHint($level->getId(), $my_team->getId(), false))
+              ||
+            (Level::previousScore($level->getId(), $my_team->getId(), false))
+          ) {
             $hint_cost = 0;
           } else {
-            $hint_cost = $level['penalty'];
+            $hint_cost = $level->getPenalty();
           }
-          $hint = ($hint_cost == 0) ? $level['hint'] : 'yes';
+          $hint = ($hint_cost === 0) ? $level->getHint() : 'yes';
         }
       } else { // No hints
         $hint_cost = -1;
@@ -47,36 +49,36 @@ class CountryDataController extends DataController {
 
       // All attachments for this level
       $attachments_list = array();
-      if (Attachment::hasAttachments(intval($level['id']))) {
-        foreach (Attachment::allAttachments(intval($level['id'])) as $attachment) {
+      if (Attachment::hasAttachments($level->getId())) {
+        foreach (Attachment::allAttachments($level->getId()) as $attachment) {
           array_push($attachments_list, $attachment->getFilename());
         }
       }
 
       // All links for this level
       $links_list = array();
-      if (Link::hasLinks(intval($level['id']))) {
-        foreach (Link::allLinks(intval($level['id'])) as $link) {
+      if (Link::hasLinks($level->getId())) {
+        foreach (Link::allLinks($level->getId()) as $link) {
           array_push($links_list, $link->getLink());
         }
       }
 
       // All teams that have completed this level
       $completed_by = array();
-      foreach ($levels->completed_by($level['id']) as $c) {
-        array_push($completed_by, $c['name']);
+      foreach (Team::completedLevel($level->getId()) as $c) {
+        array_push($completed_by, $c->getName());
       }
 
       // Who is the first owner of this level
       $owner = ($completed_by) ? $completed_by[0] : 'Uncaptured';
       $country_data = (object) array(
-        'level_id'    => $level['id'],
-        'title'       => $level['title'],
-        'intro'       => $level['description'],
-        'type'        => $level['type'],
-        'points'      => (int) $level['points'],
-        'bonus'       => (int) $level['bonus'],
-        'category'    => $category['category'],
+        'level_id'    => $level->getId(),
+        'title'       => $level->getTitle(),
+        'intro'       => $level->getDescription(),
+        'type'        => $level->getType(),
+        'points'      => $level->getPoints(),
+        'bonus'       => $level->getBonus(),
+        'category'    => $category->getCategory(),
         'owner'       => $owner,
         'completed'   => $completed_by,
         'hint'        => $hint,

@@ -8,8 +8,7 @@ sess_enforce_login();
 class ActivityModuleController {
   public function render(): :xhp {
     $control = new Control();
-    $levels = new Levels();
-
+    
     $activity_ul = <ul class="activity-stream"></ul>;
 
     foreach ($control->all_activity() as $score) {

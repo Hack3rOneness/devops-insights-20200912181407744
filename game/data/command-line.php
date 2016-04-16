@@ -7,8 +7,6 @@ sess_enforce_login();
 
 class CommandsController extends DataController {
   public function generateData() {
-    $levels = new Levels();
-
     // Object to hold all the data.
     $commands_line_data = (object) array();
 
@@ -43,8 +41,8 @@ class CommandsController extends DataController {
     // List of level categories.
     $categories_results = array();
     $categories_key = "categories";
-    foreach ($levels->all_categories() as $category) {
-      array_push($categories_results, $category['category']);
+    foreach (Category::allCategories() as $category) {
+      array_push($categories_results, $category->getCategory());
     }
     array_push($categories_results, "All");
 

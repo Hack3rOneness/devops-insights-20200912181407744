@@ -7,26 +7,29 @@ sess_enforce_login();
 
 class MapDataController extends DataController {
   public function generateData() {
-    $levels = new Levels();
-
     $map_data = (object) array();
 
-    $my_team = sess_team();
+    $my_team_id = intval(sess_team());
     $my_name = sess_teamname();
 
     foreach (Country::allEnabledCountries(true) as $country) {
       $active = ($country->getUsed() && Country::isActiveLevel($country->getId()))
               ? 'active'
               : '';
-      $country_level = Country::whoUses($country->getId());
+      $country_level = Level::whoUses($country->getId());
       if ($country_level) {
-        if ($levels->previous_score($country_level['id'], $my_team)) {
+        // If my team has scored
+        if (Level::previousScore($country_level->getId(), $my_team_id, false)) {
           $captured_by = 'you';
           $data_captured = $my_name;
-        } else if ($levels->previous_score($country_level['id'], $my_team, true)) {
+        // If any other team has scored
+        } else if (Level::previousScore($country_level->getId(), $my_team_id, true)) {
           $captured_by = 'opponent';
-          $completed_by = $levels->completed_by($country_level['id'])[0];
-          $data_captured = $completed_by['name'];
+          $completed_by = Team::completedLevel($country_level->getId());
+          $data_captured = '';
+          foreach ($completed_by as $c) {
+            $data_captured .= ' ' . $c->getName();
+          }
         } else {
           $captured_by = 'no';
           $data_captured = 'no';

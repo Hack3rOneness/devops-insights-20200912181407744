@@ -315,7 +315,7 @@
               // Announcements
               loadAnnouncementsModule();
               // Filter
-              loadFilterModule();
+              //loadFilterModule();
               // Activity
               loadActivityModule();
             } else {
@@ -2744,9 +2744,11 @@
             $tabContent = $tabs.next('.tab-content-container');
 
         if ($tabContent.length > 0) {
+          console.log('LOLOLO');
           $('input[type="radio"]', $tabs).on('change', function(event) {
             event.preventDefault();
             var tab = this.value;
+            console.log(tab);
 
             $('.radio-tab-content[data-tab="' + tab + '"]').onlySiblingWithClass('active');
           });

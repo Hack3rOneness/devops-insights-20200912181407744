@@ -1656,6 +1656,12 @@ select[data-dkcacheid] {
   width: 80px;
   height: 62px; }
 
+.icon--mini {
+  fill: none;
+  stroke: #21b4ba;
+  width: 45px;
+  height: auto; }
+
 .icon--arrow-up,
 .icon--arrow-down {
   fill: none;
