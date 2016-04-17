@@ -32,10 +32,14 @@ The target system needs to be Ubuntu 14.04. Clone the repository, for example in
 
 And be ready to provide the path for your SSL certificates csr and key files.
 
-# Mac OS X Vagrant setup
+# Mac OS X tools setup
+
+First you need to have brew installed: http://brew.sh/.
 
 ```
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install vagrant-manager
+brew install unison
+
 ```
