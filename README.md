@@ -19,6 +19,11 @@ It will be located on `PATH_TO_CTF_FOLDER/.vagrant/machines`.
 The provisioning script will install all necessary to your the platform locally, using self-signed certificates.
 The credentials will be `admin`/`password` and the machine will be available on `https://10.10.10.5 by default.
 
+If you want to ssh into the virtualbox, run:
+```
+vagrant ssh
+```
+
 If you are going to be developing outside of the Vagrant machine, you need to synchronize the files using unison (bi-directional rsync, over SSH).
 
 ```
