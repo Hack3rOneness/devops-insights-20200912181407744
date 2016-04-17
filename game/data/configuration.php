@@ -20,6 +20,7 @@ class ConfigurationController extends DataController {
 
     $control = new Control();
 
+    /* HH_FIXME[1002] */
     $conf_data->{'currentTeam'} = sess_teamname();
     $conf_data->{'gameboard'} = Configuration::get('gameboard')->getValue();
     $conf_data->{'refreshTeams'} = $this->teams_cycle;

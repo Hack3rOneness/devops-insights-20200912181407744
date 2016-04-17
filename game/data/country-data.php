@@ -86,6 +86,7 @@ class CountryDataController extends DataController {
         'attachments' => $attachments_list,
         'links'       => $links_list
       );
+      /* HH_FIXME[1002] */
       $countries_data->{$country->getName()} = $country_data;
     }
 

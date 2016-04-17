@@ -35,7 +35,7 @@ function register_team(
   }
 
   // Check if team name is not empty or just spaces
-  if ((!$teamname) || (trim($teamname) == "")) {
+  if ((!$teamname) || (trim($teamname) === '')) {
     error_response('Registration failed', 'registration');
     exit;
   }

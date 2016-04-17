@@ -46,6 +46,7 @@ class CommandsController extends DataController {
     }
     array_push($categories_results, "All");
 
+    /* HH_FIXME[1002] */
     $results_library->{$countries_key} = $countries_results;
     $results_library->{$modules_key} = $modules_results;
     $results_library->{$teams_key} = $teams_results;

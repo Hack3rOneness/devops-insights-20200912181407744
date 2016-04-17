@@ -8,7 +8,7 @@ sess_enforce_login();
 class LeaderboardDataController extends DataController {
   public function generateData() {
     $leaderboard_data = (object) array();
-    
+
     // If refresing is disabled, exit
     if (Configuration::get('gameboard')->getValue() === '0') {
       $this->jsonSend($leaderboard_data);
@@ -23,6 +23,7 @@ class LeaderboardDataController extends DataController {
       'points' => $my_team->getPoints(),
       'rank' => $my_rank
     );
+    /* HH_FIXME[1002] */
     $leaderboard_data->{'my_team'} = $my_team_data;
 
     $teams_data = (object) array();

@@ -30,6 +30,7 @@ class TeamDataController extends DataController {
         )
       );
       if ($team->getName()) {
+        /* HH_FIXME[1002] */
         $teams_data->{$team->getName()} = $team_data;
       }
       $rank++;

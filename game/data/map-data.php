@@ -43,6 +43,7 @@ class MapDataController extends DataController {
         'captured' => $captured_by,
         'datacaptured' => $data_captured
       );
+      /* HH_FIXME[1002] */
       $map_data->{$country->getIsoCode()} = $country_data;
     }
 
