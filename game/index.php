@@ -86,7 +86,7 @@ class IndexController extends Controller {
                 <h6>Cooperation</h6>
               </header>
               <div class="rule-main">
-                <p>No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it. 
+                <p>No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.
                 </p>
                 <p></p>
               </div>
@@ -97,7 +97,7 @@ class IndexController extends Controller {
                 <h6>Attacking Scoreboard</h6>
               </header>
               <div class="rule-main">
-                <p>No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately. 
+                <p>No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.
                 </p>
                 <p></p>
               </div>
@@ -108,7 +108,7 @@ class IndexController extends Controller {
                 <h6>Sabotage</h6>
               </header>
               <div class="rule-main">
-                <p>Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress. 
+                <p>Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.
                 </p>
                 <p></p>
               </div>
@@ -119,7 +119,7 @@ class IndexController extends Controller {
                 <h6>Bruteforcing</h6>
               </header>
               <div class="rule-main">
-                <p>No brute forcing of challenge flag/ keys against the scoring site. 
+                <p>No brute forcing of challenge flag/ keys against the scoring site.
                 </p>
                 <p></p>
               </div>
@@ -130,7 +130,7 @@ class IndexController extends Controller {
                 <h6>Denial Of Service</h6>
               </header>
               <div class="rule-main">
-                <p>DoSing the CTF platform or any of the challenges is forbidden. 
+                <p>DoSing the CTF platform or any of the challenges is forbidden.
                 </p>
                 <p></p>
               </div>
@@ -141,7 +141,7 @@ class IndexController extends Controller {
                 <h6>Disclaimer</h6>
               </header>
               <div class="rule-main">
-                <p>By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest. 
+                <p>By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.
                 </p>
               </div>
             </section>
@@ -161,7 +161,7 @@ class IndexController extends Controller {
       $logos_list->appendChild(
         <li>
           <svg class="icon--badge">
-            <use xlink:href={$xlink_href}/>
+            <use href={$xlink_href}/>
 
           </svg>
         </li>
@@ -195,7 +195,7 @@ class IndexController extends Controller {
     }
 
     if (Configuration::get('registration_type')->getValue() === '2') {
-      $token_field = 
+      $token_field =
         <div class="form-el el--text">
           <label for="">Token</label>
           <input autocomplete="off" name="token" type="text"/>
@@ -238,13 +238,13 @@ class IndexController extends Controller {
             <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerNames()">Sign Up</button></p>
           </div>
         </form>
-      </div>  
+      </div>
     </main>;
   }
 
   public function renderRegistrationNoNames(): :xhp {
     if (Configuration::get('registration_type')->getValue() === '2') {
-      $token_field = 
+      $token_field =
         <div class="form-el el--text">
           <label for="">Token</label>
           <input autocomplete="off" name="token" type="text"/>
@@ -397,7 +397,7 @@ class IndexController extends Controller {
         </main>
         <div class="row-fixed branding-el">
           <svg class="icon icon--social-facebook">
-            <use xlink:href="#icon--social-facebook"/>
+            <use href="#icon--social-facebook"/>
 
           </svg>
           <span class="has-icon"> Powered By Facebook</span>
@@ -434,7 +434,7 @@ class IndexController extends Controller {
             <div class="branding-rules">
               <span class="branding-el">
                 <svg class="icon icon--social-facebook">
-                  <use xlink:href="#icon--social-facebook"/>
+                  <use href="#icon--social-facebook"/>
 
                 </svg>
                 <span class="has-icon"> Powered By Facebook</span>

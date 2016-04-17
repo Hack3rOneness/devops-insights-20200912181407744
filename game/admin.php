@@ -1444,7 +1444,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
-                      <use xlink:href="#icon--badge-"/>
+                      <use href="#icon--badge-"/>
 
                     </svg>
                   </div>
@@ -1578,7 +1578,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
-                      <use xlink:href={$xlink_href} />
+                      <use href={$xlink_href} />
 
                     </svg>
                   </div>
@@ -1655,7 +1655,7 @@ class AdminController extends Controller {
               <div class="col col-pad col-shrink">
                 <div class="post-avatar has-avatar">
                   <svg class="icon icon--badge">
-                    <use xlink:href={$xlink_href}></use>
+                    <use href={$xlink_href}></use>
 
                   </svg>
                 </div>
@@ -1772,7 +1772,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
-                      <use xlink:href="#icon--badge-invader" />
+                      <use href="#icon--badge-invader" />
 
                     </svg>
                   </div>
@@ -1811,7 +1811,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
-                      <use xlink:href="#icon--badge-car" />
+                      <use href="#icon--badge-car" />
 
                     </svg>
                   </div>
@@ -1995,7 +1995,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--mini">
-                      <use xlink:href="#icon--badge-invader" />
+                      <use href="#icon--badge-invader" />
 
                     </svg>
                   </div>
@@ -2034,7 +2034,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--mini">
-                      <use xlink:href="#icon--badge-car" />
+                      <use href="#icon--badge-car" />
 
                     </svg>
                   </div>
@@ -2077,7 +2077,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
-                      <use xlink:href="#icon--badge-invader" />
+                      <use href="#icon--badge-invader" />
 
                     </svg>
                   </div>
@@ -2116,7 +2116,7 @@ class AdminController extends Controller {
                 <div class="col col-shrink col-pad">
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
-                      <use xlink:href="#icon--badge-car" />
+                      <use href="#icon--badge-car" />
 
                     </svg>
                   </div>
@@ -2200,7 +2200,7 @@ class AdminController extends Controller {
           <a></a>
           <span class="branding-el">
             <svg class="icon icon--social-facebook">
-              <use xlink:href="#icon--social-facebook" />
+              <use href="#icon--social-facebook" />
 
             </svg>
             <span class="has-icon"> Powered By Facebook</span></span>

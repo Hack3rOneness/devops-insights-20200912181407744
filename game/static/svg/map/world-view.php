@@ -16,7 +16,7 @@ class WorldViewMapController {
       $worldMap = $this->renderWorldMap();
     }
     return
-      <svg id="fb-gameboard-map" xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1008 651" preserveAspectRatio="xMidYMid meet">
+      <svg id="fb-gameboard-map" xmlns="http://www.w3.org/2000/svg" amcharts="http://amcharts.com/ammap" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1008 651" preserveAspectRatio="xMidYMid meet">
         <defs>
           <amcharts:ammap projection="mercator" leftLongitude="-169.6" topLatitude="83.68" rightLongitude="190.25" bottomLatitude="-55.55"></amcharts:ammap>
         </defs>

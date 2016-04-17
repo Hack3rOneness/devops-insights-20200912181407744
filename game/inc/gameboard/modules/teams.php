@@ -9,7 +9,7 @@ class TeamModuleController {
   public function render(): :xhp {
     $leaderboard = Team::leaderboard();
     $rank = 1;
-    
+
     $list = <ul class="grid-list"></ul>;
 
     if (Configuration::get('gameboard')->getValue() === '1') {
@@ -19,7 +19,7 @@ class TeamModuleController {
           <li>
             <a href="#" data-team={$leader->getName()}>
               <svg class="icon--badge">
-                <use xlink:href={$iconbadge}/>
+                <use href={$iconbadge}/>
 
               </svg>
             </a>
@@ -27,7 +27,7 @@ class TeamModuleController {
         );
       }
     }
-    
+
     return
       <div>
         <header class="module-header">

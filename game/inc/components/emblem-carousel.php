@@ -12,7 +12,7 @@ class LogosController {
       $logos_ul->appendChild(
         <li>
           <svg class="icon--badge">
-            <use xlink:href={$xlink_href}></use>
+            <use href={$xlink_href}></use>
           </svg>
         </li>
       );

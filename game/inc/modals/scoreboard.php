@@ -42,8 +42,8 @@ class ScoreboardController {
           <h4>scoreboard_</h4>
           <a href="#" class="js-close-modal">
             <svg class="icon icon--close">
-              <use xlink:href="#icon--close"/>
-              
+              <use href="#icon--close"/>
+
             </svg>
           </a>
         </div>

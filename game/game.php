@@ -34,7 +34,7 @@ class GameboardController extends Controller {
                 <div class="branding-rules">
                   <span class="branding-el">
                     <svg class="icon icon--social-facebook">
-                      <use xlink:href="#icon--social-facebook"/>
+                      <use href="#icon--social-facebook"/>
 
                     </svg>
                     <span class="has-icon"> Powered By Facebook</span>
@@ -53,16 +53,16 @@ class GameboardController extends Controller {
             <label for="fb--map-select--you" class="click-effect">
               <span class="your-name">
                 <svg class="icon icon--team-indicator your-team">
-                  <use xlink:href="#icon--team-indicator"/>
-                  
+                  <use href="#icon--team-indicator"/>
+
                 </svg>You</span>
             </label>
             <input type="radio" name="fb--map-select" id="fb--map-select--enemy" value="opponent-team"/>
             <label for="fb--map-select--enemy" class="click-effect">
               <span class="opponent-name">
                 <svg class="icon icon--team-indicator opponent-team">
-                  <use xlink:href="#icon--team-indicator"/>
-                
+                  <use href="#icon--team-indicator"/>
+
                 </svg>Others</span>
             </label>
             <input type="radio" name="fb--map-select" id="fb--map-select--all" value="all" />
