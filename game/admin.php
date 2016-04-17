@@ -1,4 +1,4 @@
-<?hh
+<?hh // strict
 
 require_once('../vendor/autoload.php');
 
@@ -7,6 +7,47 @@ sess_enforce_login();
 sess_enforce_admin();
 
 class AdminController extends Controller {
+  private function getFilters(): array<mixed> {
+    return array(
+      'GET' => array(
+        'page'        => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        ),
+        'action'      => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        )
+      )
+    );
+  }
+
+  private function getActions(): array<string> {
+    return array('none');
+  }
+
+  private function getPages(): array<string> {
+    array(
+      'main',
+      'configuration',
+      'controls',
+      'announcements',
+      'quiz',
+      'flags',
+      'bases',
+      'categories',
+      'countries',
+      'teams',
+      'logos',
+      'sessions',
+      'scoreboard',
+      'logs',
+    );
+  }
 
   private function generateCountriesSelect(int $selected): :xhp {
     $select = <select name="entity_id" />;
@@ -2277,40 +2318,7 @@ class AdminController extends Controller {
   }
 }
 
-$adminpage = new AdminController();
-$filters = array(
-  'GET' => array(
-    'page'        => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    ),
-    'action'      => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    )
-  )
-);
-$actions = array('none');
-$pages = array(
-  'main',
-  'configuration',
-  'controls',
-  'announcements',
-  'quiz',
-  'flags',
-  'bases',
-  'categories',
-  'countries',
-  'teams',
-  'logos',
-  'sessions',
-  'scoreboard',
-  'logs'
-);
-$request = new Request($filters, $actions, $pages);
-$request->processRequest();
-echo $adminpage->render('Facebook CTF | Admin', $request->page);
+// $adminpage = new AdminController();
+// $request = new Request($filters, $actions, $pages);
+// $request->processRequest();
+// echo $adminpage->render('Facebook CTF | Admin', $request->page);
