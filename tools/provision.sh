@@ -9,7 +9,7 @@ DB="facebook-ctf"
 U="ctf"
 P="ctf"
 P_ROOT="root"
-CTF_PATH="/var/facebook-ctf"
+CTF_PATH="/var/www/facebook-ctf"
 MODE=${1:-dev}
 CODE_PATH=${2:-/vagrant}
 
