@@ -2,10 +2,10 @@
 
 class Logo extends Model {
   private function __construct(
-    private int $id, 
+    private int $id,
     private int $used,
-    private int $enabled, 
-    private int $protected, 
+    private int $enabled,
+    private int $protected,
     private string $name,
     private string $logo
   ) {

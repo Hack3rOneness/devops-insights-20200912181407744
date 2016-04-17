@@ -448,36 +448,28 @@ class IndexController extends Controller {
 
   public function renderPage(string $page): :xhp {
     switch ($page) {
-      case 'main':
+    case 'main':
       return $this->renderMainContent();
-      break;
     case 'error':
       return $this->renderErrorPage();
-      break;
     case 'mobile':
       return $this->renderMobilePage();
-      break;
     case 'login':
       return $this->renderLoginContent();
-      break;
     case 'registration':
       return $this->renderRegistrationContent();
-      break;
     case 'rules':
       return $this->renderRulesContent();
-      break;
     case 'countdown':
       return $this->renderCountdownContent();
-      break;
     case 'game':
       game_page();
-      break;
+      return <div></div>;
     case 'admin':
       admin_page();
-      break;
+      return <div></div>;
     default:
       return $this->renderMainContent();
-      break;
     }
   }
 

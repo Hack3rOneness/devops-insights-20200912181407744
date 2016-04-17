@@ -2,7 +2,7 @@
 
 class Team extends Model {
   private function __construct(
-    private int $id, 
+    private int $id,
     private int $active,
     private int $admin,
     private int $protected,
@@ -83,7 +83,7 @@ class Team extends Model {
     $sql = 'SELECT * FROM teams WHERE logo = ?';
     $element = array($logo);
     $results = $db->query($sql, $element);
-    
+
     $teams = array();
     foreach ($results as $row) {
       $teams[] = self::teamFromRow($row);
@@ -91,7 +91,7 @@ class Team extends Model {
 
     return $teams;
   }
-  
+
   // Generate salted hash.
   public static function generateHash(string $password): string {
     $options = array(
@@ -335,7 +335,7 @@ class Team extends Model {
 
     invariant(count($result) === 1, 'Expected exactly one result');
     $team = self::teamFromRow(firstx($result));
-    
+
     return $team;
   }
 
@@ -349,7 +349,7 @@ class Team extends Model {
 
     invariant(count($result) === 1, 'Expected exactly one result');
     $team = self::teamFromRow(firstx($result));
-    
+
     return $team;
   }
 
@@ -362,7 +362,7 @@ class Team extends Model {
     $result = $db->query($sql, $elements);
 
     invariant(count($result) === 1, 'Expected exactly one result');
-    
+
     return intval(firstx($result)['points']);
   }
 
@@ -376,7 +376,7 @@ class Team extends Model {
 
     invariant(count($result) === 1, 'Expected exactly one result');
     $value = firstx($result);
-    
+
     return (intval($value['points']) === intval($value['sum']));
   }
 

@@ -8,7 +8,7 @@ sess_enforce_login();
 class ScoresDataController extends DataController {
   public function generateData() {
     $data = array();
-  
+
     foreach (Team::leaderboard() as $team) {
       $values = array();
       $i = 1;

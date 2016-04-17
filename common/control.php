@@ -45,7 +45,7 @@ class Control {
     $token_len = 15;
     $token_number = 50;
     for ($i = 0; $i < $token_number; $i++) {
-      $token = md5( 
+      $token = md5(
         base64_encode(
           openssl_random_pseudo_bytes(
             $token_len,
@@ -119,7 +119,7 @@ class Control {
   }
 
   public function backup_db() {
-    
+
   }
 
   public function new_announcement($announcement) {

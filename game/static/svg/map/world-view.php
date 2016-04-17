@@ -1,12 +1,9 @@
-<?hh //strict
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 class WorldViewMapController {
-  private bool $viewmode;
-
-  public function __construct($viewmode) {
-    $this->viewmode = $viewmode;
+  public function __construct(private bool $viewmode) {
   }
 
   public function render(): :xhp {
@@ -31,8 +28,7 @@ class WorldViewMapController {
 
   public function renderWorldMap(): :xhp {
     $svg_countries = <g class="countries"></g>;
-
-  return $svg_countries;
+    return $svg_countries;
   }
 
   public function renderWorldMapView(): :xhp {
@@ -44,7 +40,7 @@ class WorldViewMapController {
 
       $svg_countries->appendChild(
         <g>
-          <path id={$country->getIsoCode()['iso_code']} title={$country->getName()} class={$path_class} d={$country->getD()}></path>
+          <path id={$country->getIsoCode()} title={$country->getName()} class={$path_class} d={$country->getD()}></path>
           <g transform={$country->getTransform()} class="map-indicator">
             <path d="M0,9.1L4.8,0h0.1l4.8,9.1v0L0,9.1L0,9.1z"></path>
           </g>

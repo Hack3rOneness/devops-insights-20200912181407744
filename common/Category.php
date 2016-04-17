@@ -2,7 +2,7 @@
 
 class Category extends Model {
   private function __construct(
-    private int $id, 
+    private int $id,
     private string $category,
     private string $created_ts
   ) {
@@ -50,7 +50,7 @@ class Category extends Model {
     $sql = 'SELECT COUNT(*) FROM levels WHERE category_id = ?';
     $element = array($category_id);
     $result = $db->query($sql, $element);
-    
+
     if (count($result) > 0) {
       invariant(count($result) === 1, 'Expected exactly one result');
       return (intval(firstx($result)['COUNT(*)']) > 0);
@@ -105,7 +105,7 @@ class Category extends Model {
 
     invariant(count($result) === 1, 'Expected exactly one result');
     $category = self::categoryFromRow(firstx($result));
-    
+
     return $category;
   }
 }

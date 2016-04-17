@@ -2,7 +2,7 @@
 
 class Level extends Model {
   private function __construct(
-    private int $id, 
+    private int $id,
     private int $active,
     private string $type,
     private string $title,
@@ -92,10 +92,10 @@ class Level extends Model {
       intval(must_have_idx($row, 'points')),
       intval(must_have_idx($row, 'bonus')),
       intval(must_have_idx($row, 'bonus_dec')),
-      intval(must_have_idx($row, 'bonus_fix')), 
+      intval(must_have_idx($row, 'bonus_fix')),
       must_have_idx($row, 'flag'),
       must_have_idx($row, 'hint'),
-      intval(must_have_idx($row, 'penalty')), 
+      intval(must_have_idx($row, 'penalty')),
       must_have_idx($row, 'created_ts'),
     );
   }
@@ -123,7 +123,7 @@ class Level extends Model {
     $sql = 'SELECT COUNT(*) FROM levels WHERE id = ? AND active = 1 LIMIT 1';
     $element = array($level_id);
     $result = $db->query($sql, $element);
-    
+
     if (count($result) > 0) {
       invariant(count($result) === 1, 'Expected exactly one result');
       return (intval(firstx($result)['COUNT(*)']) > 0);
@@ -525,7 +525,7 @@ class Level extends Model {
 
     invariant(count($result) === 1, 'Expected exactly one result');
     $level = self::levelFromRow(firstx($result));
-    
+
     return $level;
   }
 
@@ -538,7 +538,7 @@ class Level extends Model {
         trim(
           self::getLevel($level_id)->getFlag()
         )
-      ) === 
+      ) ===
       strtoupper(
         trim($answer)
       )
@@ -590,7 +590,7 @@ class Level extends Model {
       : 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
     $elements = array($level_id, $team_id);
     $result = $db->query($sql, $elements);
-    
+
     if (count($result) > 0) {
       invariant(count($result) === 1, 'Expected exactly one result');
       return (intval(firstx($result)['COUNT(*)']) > 0);
@@ -656,8 +656,8 @@ class Level extends Model {
     // Check if team has already gotten this hint or if the team has scored this already
     // If so, hint is free
     if (
-      (self::previousHint($level_id, $team_id, false)) 
-        || 
+      (self::previousHint($level_id, $team_id, false))
+        ||
       (self::previousScore($level_id, $team_id, false))
     ) {
       $penalty = 0;

@@ -2,7 +2,15 @@
 
 require_once('../vendor/autoload.php');
 
-function register_team($teamname, $password, $token, $logo, $register_names = false, $names, $emails) {
+function register_team(
+  $teamname,
+  $password,
+  $token,
+  $logo,
+  $register_names,
+  $names,
+  $emails,
+) {
   $control = new Control();
 
   // Check if registration is enabled
@@ -68,7 +76,7 @@ function login_team($team_id, $password) {
     error_response('Login failed', 'login');
     exit;
   }
-  
+
   // Verify credentials
   $team = Team::verifyCredentials($team_id, $password);
 
@@ -83,7 +91,7 @@ function login_team($team_id, $password) {
         sess_set('admin', intval($team->getAdmin()));
       }
       sess_set('IP', $_SERVER['REMOTE_ADDR']);
-    } 
+    }
     if ($team->getAdmin()) {
       $redirect = 'admin';
     } else {

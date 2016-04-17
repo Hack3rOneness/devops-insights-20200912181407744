@@ -16,7 +16,7 @@ class TeamDataController extends DataController {
       $this->jsonSend($teams_data);
       exit;
     }
-    
+
     foreach ($leaderboard as $team) {
       $team_data = (object) array(
         'badge' => $team->getLogo(),
