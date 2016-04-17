@@ -28,7 +28,7 @@ vagrant ssh-config > "$SSH_CONFIG"
 echo "[+] Creating unison profile"
 PROFILE="
 root = $CODE_PATH
-root = ssh://default//var/facebook-ctf/
+root = ssh://default//var/www/facebook-ctf/
 ignore = Name {.git,.vagrant,.DS_Store,.sources}
 
 prefer = $CODE_PATH

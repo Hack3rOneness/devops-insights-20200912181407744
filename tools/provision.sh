@@ -9,7 +9,7 @@ DB="facebook-ctf"
 U="ctf"
 P="ctf"
 P_ROOT="root"
-CTF_PATH="/var/facebook-ctf"
+CTF_PATH="/var/www/facebook-ctf"
 MODE=${1:-dev}
 CODE_PATH=${2:-/vagrant}
 
@@ -17,7 +17,7 @@ CODE_PATH=${2:-/vagrant}
 echo "[+] Provisioning in $MODE mode"
 
 echo "[+] Creating code folder $CTF_PATH"
-[[ -d "$CTF_PATH" ]] || sudo mkdir "$CTF_PATH"
+[[ -d "$CTF_PATH" ]] || sudo mkdir -p "$CTF_PATH"
 
 echo "[+] Copying all CTF code to destination folder"
 sudo rsync -a "$CODE_PATH/" "$CTF_PATH/"
