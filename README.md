@@ -16,7 +16,7 @@ vagrant up
 
 This will create a local virtual machine with Ubuntu 14.04 using Vagrant and Virtual Box as engine.
 It will be located on `PATH_TO_CTF_FOLDER/.vagrant/machines`.
-The provisioning script will install all necessary to your the platform locally, using self-signed certificates.
+The provisioning script will install all necessary software to your the platform locally, using self-signed certificates.
 The credentials will be `admin`/`password` and the machine will be available on `https://10.10.10.5 by default.
 
 If you want to ssh into the virtualbox, run:
