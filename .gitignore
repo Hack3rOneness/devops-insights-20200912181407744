@@ -1,5 +1,5 @@
 # Composer libraries
-vendor
+/vendor
 
 # HHVM files
 www.pid
@@ -20,7 +20,7 @@ www.pid
 *.swp
 
 # Attachments directory
-game/data/attachments/*
-!game/data/attachments/index.php
-game/data/attachments/deleted/*
-!game/data/attachments/deleted/index.php
+src/data/attachments/*
+!src/data/attachments/index.php
+src/data/attachments/deleted/*
+!src/data/attachments/deleted/index.php

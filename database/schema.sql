@@ -219,10 +219,9 @@ CREATE TABLE `password_types` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `password_types` WRITE;
-INSERT INTO `password_types` (field, regex, description) VALUES("1", "/.*/", "Anything is valid, no policy enforced");
-INSERT INTO `password_types` (field, regex, description) VALUES("2", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[0-9]).*$/", "Minimum length of 8 chars, with numbers and letters. No caps");
-INSERT INTO `password_types` (field, regex, description) VALUES("3", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/", "Minimum length of 8 chars. Numbers, Lowercase and uppercase letters");
-INSERT INTO `password_types` (field, regex, description) VALUES("4", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/", "Minimum length of 8 chars. Numbers, Lowercase and uppercase letters and special characters");
+INSERT INTO `password_types` (field, regex, description) VALUES("1", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[0-9]).*$/", "Length > 8, [a-z] and [0-9]");
+INSERT INTO `password_types` (field, regex, description) VALUES("2", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/", "Length > 8, [a-z], [A-Z] and [0-9]");
+INSERT INTO `password_types` (field, regex, description) VALUES("3", "/.*^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/", "Length > 8, [a-z], [A-Z], [0-9] and Special chars");
 
 UNLOCK TABLES;
 
