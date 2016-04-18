@@ -19,7 +19,7 @@
   }
 
   _BUILDKIT.enableAdminActiveState = function(){
-    var page = window.location.search.split('=')[1];
+    var page = window.location.search.split('=')[2];
 
     $('#fb-admin-nav li').removeClass('active').filter(function(){
       var href = $('a', this).attr('href').replace('#', '');

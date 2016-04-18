@@ -27,7 +27,7 @@ class ConfigurationController extends DataController {
     $conf_data->{'refreshMap'} = $this->map_cycle;
     $conf_data->{'refreshConf'} = $this->conf_cycle;
     $conf_data->{'refreshCmd'} = $this->cmd_cycle;
-    $conf_data->{'progressiveCount'} = $control->progressive_count();
+    $conf_data->{'progressiveCount'} = Progressive::count();
 
     $this->jsonSend($conf_data);
   }

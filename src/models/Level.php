@@ -586,7 +586,7 @@ class Level extends Model {
     $db = self::getDb();
 
     $sql = ($any_team)
-      ? 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id != ?'
+      ? 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id IN (SELECT id FROM teams WHERE id != ? AND visible = 1)'
       : 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
     $elements = array($level_id, $team_id);
     $result = $db->query($sql, $elements);

@@ -99,8 +99,8 @@ class Control {
     Configuration::update('timer', '1');
 
     // Reset and kick off progressive scoreboard
-    $this->reset_progressive();
-    $this->progressive_scoreboard();
+    Progressive::reset();
+    Progressive::run();
   }
 
   public function end() {
@@ -142,33 +142,6 @@ class Control {
   public function all_activity() {
     $sql = 'SELECT DATE_FORMAT(scores_log.ts, "%H:%i:%S") AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time ASC';
     return $this->db->query($sql);
-  }
-
-  public function progressive_scoreboard() {
-    $take_scoreboard = (Configuration::get('game')->getValue() === '1');
-    $cycle = intval(Configuration::get('progressive_cycle')->getValue());
-
-    while ($take_scoreboard) {
-      $this->take_progressive();
-      sleep($cycle);
-      $take_scoreboard = (Configuration::get('game')->getValue() === '1');
-      $cycle = intval(Configuration::get('progressive_cycle')->getValue());
-    }
-  }
-
-  public function progressive_count() {
-    $sql = 'SELECT COUNT(DISTINCT(iteration)) AS C FROM ranking_log';
-    return $this->db->query($sql)[0]['C'];
-  }
-
-  public function take_progressive() {
-    $sql = 'INSERT INTO ranking_log (ts, team_name, points, iteration) (SELECT NOW(), name, points, (SELECT IFNULL(MAX(iteration)+1, 1) FROM ranking_log) FROM teams)';
-    $this->db->query($sql);
-  }
-
-  public function reset_progressive() {
-    $sql = 'DELETE FROM ranking_log WHERE id > 0';
-    $this->db->query($sql);
   }
 
   public function reset_scores() {

@@ -12,10 +12,10 @@ class ScoresDataController extends DataController {
     foreach (Team::leaderboard() as $team) {
       $values = array();
       $i = 1;
-      foreach (Team::progressive($team->getName()) as $progress) {
+      foreach (Progressive::progressiveScoreboard($team->getName()) as $progress) {
         $score = (object) array(
           'time' => $i,
-          'score' => $progress['points']
+          'score' => $progress->getPoints()
         );
         array_push($values, $score);
         $i++;

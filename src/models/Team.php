@@ -301,15 +301,6 @@ class Team extends Model {
     return $teams;
   }
 
-  // Progressive points.
-  public static function progressive(string $team_name): mixed {
-    $db = self::getDb();
-
-    $sql = 'SELECT * FROM ranking_log WHERE team_name = ? GROUP BY iteration ORDER BY points ASC';
-    $element = array($team_name);
-    return $db->query($sql, $element);
-  }
-
   // All teams.
   public static function allTeams(): array<Team> {
     $db = self::getDb();

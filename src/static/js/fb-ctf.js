@@ -1364,25 +1364,32 @@
 
         return $.get(loadPath, function(data, status, jqxhr) {
           $.each(data, function(key, value){
+            // First we clear all
+            $('#' + key)[0].classList.remove('active');
+            $('#' + key)[0].parentNode.removeAttribute('data-captured');
+            $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
+            $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
+            
+            // Active country
             if (value.status === 'active') {
               if (!$('#' + key).hasClass('active')) {
                 $('#' + key)[0].classList.add('active');
               }
-            } else {
+            } /*else { // Inactive country
               $('#' + key)[0].classList.remove('active');
               $('#' + key)[0].parentNode.removeAttribute('data-captured');
               $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
               $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
-            }
+            }*/
             if (value.captured == 'you') {
-              $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
+              //$('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
               $('#' + key)[0].parentNode.children[1].classList.add("captured--you");
-              $('#' + key)[0].parentNode.removeAttribute('data-captured');
+              //$('#' + key)[0].parentNode.removeAttribute('data-captured');
               $('#' + key)[0].parentNode.setAttribute('data-captured', value.datacaptured);
             } else if (value.captured == 'opponent') {
-              $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
+              //$('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
               $('#' + key)[0].parentNode.children[1].classList.add("captured--opponent");
-              $('#' + key)[0].parentNode.removeAttribute('data-captured');
+              //$('#' + key)[0].parentNode.removeAttribute('data-captured');
               $('#' + key)[0].parentNode.setAttribute('data-captured', value.datacaptured);
             }
           });
