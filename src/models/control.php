@@ -4,7 +4,7 @@ class Control {
   private $db;
 
   public function __construct() {
-    $this->db = DB::getInstance();
+    $this->db = Db::getInstance();
     if (!$this->db->isConnected()) {
       $this->db->connect();
     }

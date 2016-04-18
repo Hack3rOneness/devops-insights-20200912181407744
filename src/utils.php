@@ -41,11 +41,11 @@ function registration_page(): void {
 }
 
 function game_page(): void {
-  redirect('/game.php');
+  redirect('/index.php?p=game');
 }
 
 function admin_page(): void {
-  redirect('/admin.php');
+  redirect('/index.php?p=admin');
 }
 
 function start_page(): void {

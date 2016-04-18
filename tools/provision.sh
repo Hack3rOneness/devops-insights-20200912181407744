@@ -17,7 +17,7 @@ CODE_PATH=${2:-/vagrant}
 echo "[+] Provisioning in $MODE mode"
 
 echo "[+] Creating code folder $CTF_PATH"
-[[ -d "$CTF_PATH" ]] || sudo mkdir "$CTF_PATH"
+[[ -d "$CTF_PATH" ]] || sudo mkdir -p "$CTF_PATH"
 
 echo "[+] Copying all CTF code to destination folder"
 sudo rsync -a "$CODE_PATH/" "$CTF_PATH/"
@@ -71,8 +71,8 @@ log "Remember install the same version of unison (2.48.3) in your host machine"
 import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH" "$MODE"
 
 # Make attachments folder world writable
-sudo chmod 777 "$CTF_PATH/game/data/attachments"
-sudo chmod 777 "$CTF_PATH/game/data/attachments/deleted"
+sudo chmod 777 "$CTF_PATH/src/data/attachments"
+sudo chmod 777 "$CTF_PATH/src/data/attachments/deleted"
 
 log 'Facebook-CTF deployment is complete!'
 

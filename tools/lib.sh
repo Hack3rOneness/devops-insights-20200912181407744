@@ -20,7 +20,6 @@ function install_unison() {
   log "Installing Unison 2.48.3"
   cd /
   sudo curl -sL https://www.archlinux.org/packages/extra/x86_64/unison/download/ | tar Jx
-
 }
 
 function install_osquery() {
@@ -81,7 +80,7 @@ function install_nginx() {
     sudo cp "$__mycert" "$__cert"
     sudo cp "$__mykey" "$__key"
   fi
-  sudo cat "$__path/tools/nginx.conf" | sed "s|CTFPATH|$__path/game|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" > /etc/nginx/sites-available/fbctf.conf
+  sudo cat "$__path/tools/nginx.conf" | sed "s|CTFPATH|$__path/src|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" > /etc/nginx/sites-available/fbctf.conf
   sudo rm /etc/nginx/sites-enabled/default
   sudo ln -s /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
 
@@ -101,7 +100,7 @@ function install_nginx() {
     package hhvm
 
     log "Copying HHVM configuration"
-    sudo cat "$__path/tools/hhvm.conf" | sed "s|CTFPATH|$__path/game|g" > /etc/hhvm/server.ini
+    sudo cat "$__path/tools/hhvm.conf" | sed "s|CTFPATH|$__path/|g" > /etc/hhvm/server.ini
 
     log "HHVM as PHP systemwide"
     sudo /usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
@@ -149,7 +148,7 @@ function install_nginx() {
     mysql -u "$__user" --password="$__pwd" -e "FLUSH PRIVILEGES;"
 
     log "DB Connection file"
-    sudo cat "$__path/common/settings.ini.example" | sed "s/DATABASE/$__db/g" | sed "s/MYUSER/$__u/g" | sed "s/MYPWD/$__p/g" > "$__path/common/settings.ini"
+    sudo cat "$__path/tools/settings.ini.example" | sed "s/DATABASE/$__db/g" | sed "s/MYUSER/$__u/g" | sed "s/MYPWD/$__p/g" > "$__path/settings.ini"
 
     local PASSWORD
     log "Adding default admin user"

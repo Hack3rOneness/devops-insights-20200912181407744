@@ -1,4 +1,4 @@
-<?hh
+<?hh // strict
 
 abstract class :xhp:svg-element extends :xhp:html-element {
   // We override this function to support SVG attributes containing colons.
@@ -56,14 +56,14 @@ class :svg extends :xhp:svg-element {
   category %flow, %phrase;
 
   children (:use | :defs | :g)*;
-  protected $tagName = 'svg';
+  protected string $tagName = 'svg';
 }
 
 class :path extends :xhp:svg-element {
   attribute
     Stringish d;
 
-  protected $tagName = 'path';
+  protected string $tagName = 'path';
 }
 
 class :use extends :xhp:svg-element {
@@ -71,7 +71,7 @@ class :use extends :xhp:svg-element {
     // "xlink:" will be prepended before rendering
     Stringish href;
 
-  protected $tagName = 'use';
+  protected string $tagName = 'use';
 }
 
 class :defs extends :xhp:svg-element {
@@ -80,7 +80,7 @@ class :defs extends :xhp:svg-element {
     Stringish transform;
 
   children (:amcharts:ammap)*;
-  protected $tagName = 'defs';
+  protected string $tagName = 'defs';
 }
 
 class :amcharts:ammap extends :xhp:svg-element {
@@ -91,7 +91,7 @@ class :amcharts:ammap extends :xhp:svg-element {
     Stringish rightLongitude,
     Stringish bottomLatitude;
 
-  protected $tagName = 'amcharts:ammap';
+  protected string $tagName = 'amcharts:ammap';
 }
 
 class :g extends :xhp:svg-element {
@@ -101,5 +101,5 @@ class :g extends :xhp:svg-element {
     Stringish data-captured;
 
   children (:path | :g)*;
-  protected $tagName = 'g';
+  protected string $tagName = 'g';
 }
