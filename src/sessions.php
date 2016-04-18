@@ -45,7 +45,7 @@ function sess_close() {
 }
 
 function sess_read($session_id) {
-  $db = DB::getInstance();
+  $db = Db::getInstance();
   $sql = 'SELECT data FROM sessions WHERE cookie = ? LIMIT 1';
   $element = array($session_id);
   $data = $db->query($sql, $element);
@@ -60,7 +60,7 @@ function sess_read($session_id) {
 }
 
 function sess_write($session_id, $data) {
-  $db = DB::getInstance();
+  $db = Db::getInstance();
   $sql = 'UPDATE sessions SET last_access_ts = NOW(), data = ? WHERE cookie = ? LIMIT 1';
   $elements = array($data, $session_id);
   $db->query($sql, $elements);
@@ -68,7 +68,7 @@ function sess_write($session_id, $data) {
 }
 
 function sess_destroy($session_id) {
-  $db = DB::getInstance();
+  $db = Db::getInstance();
   $sql = 'DELETE FROM sessions WHERE cookie = ? LIMIT 1';
   $element = array($session_id);
   $db->query($sql, $element);
@@ -77,7 +77,7 @@ function sess_destroy($session_id) {
 
 function sess_gc($session_maxlifetime) {
   $gc_time = time() - $session_maxlifetime;
-  $db = DB::getInstance();
+  $db = Db::getInstance();
   $sql = 'DELETE FROM sessions WHERE UNIX_TIMESTAMP(last_access_ts) < ?';
   $element = array($gc_time);
   $db->query($sql, $element);
@@ -85,7 +85,7 @@ function sess_gc($session_maxlifetime) {
 }
 
 function sess_all() {
-  $db = DB::getInstance();
+  $db = Db::getInstance();
   $sql = 'SELECT * FROM sessions ORDER BY last_access_ts DESC';
   return $db->query($sql);
 }

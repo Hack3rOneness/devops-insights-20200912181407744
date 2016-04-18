@@ -1,14 +1,14 @@
-<?hh
+<?hh // strict
 
-class DB {
+class Db {
   // TODO: Make this configurable
   private string $settings_file = '../settings.ini';
   private ?array<string, string> $config = null;
-  private static ?DB $instance = null;
+  private static Db $instance = MUST_MODIFY;
   private ?PDO $dbh = null;
 
-  public static function getInstance(): DB {
-    if (!self::$instance) {
+  public static function getInstance(): Db {
+    if (self::$instance === MUST_MODIFY) {
       self::$instance = new self();
     }
     return self::$instance;
@@ -65,7 +65,7 @@ class DB {
     $stmt = $this->dbh->prepare($query);
     if ($elements !== null) {
       $i = 1;
-      foreach ($elements as &$element) {
+      foreach ($elements as $element) {
         $stmt->bindparam($i, $element);
         $i++;
       }
