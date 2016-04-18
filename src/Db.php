@@ -65,7 +65,8 @@ class Db {
     $stmt = $this->dbh->prepare($query);
     if ($elements !== null) {
       $i = 1;
-      foreach ($elements as $element) {
+      /* HH_IGNORE_ERROR[4154]: taking $element by reference is required here */
+      foreach ($elements as &$element) {
         $stmt->bindparam($i, $element);
         $i++;
       }
