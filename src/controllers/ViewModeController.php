@@ -42,13 +42,7 @@ class ViewModeController extends Controller {
             <div class="branding">
               <a href="/">
                 <div class="branding-rules">
-                  <span class="branding-el">
-                    <svg class="icon icon--social-facebook">
-                      <use href="#icon--social-facebook">
-                      </use>
-                    </svg>
-                    <span class="has-icon"> Powered By Facebook</span>
-                  </span>
+                  <fbbranding />
                 </div>
               </a>
             </div>
