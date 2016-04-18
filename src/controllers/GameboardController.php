@@ -63,13 +63,7 @@ class GameboardController extends Controller {
             <div class="branding">
               <a href="index.php?p=game">
                 <div class="branding-rules">
-                  <span class="branding-el">
-                    <svg class="icon icon--social-facebook">
-                      <use href="#icon--social-facebook"/>
-
-                    </svg>
-                    <span class="has-icon"> Powered By Facebook</span>
-                  </span>
+                  <fbbranding />
                 </div>
               </a>
             </div>

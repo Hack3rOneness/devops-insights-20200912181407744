@@ -433,12 +433,8 @@ class IndexController extends Controller {
             <p>Thank you.</p>
           </div>
         </main>
-        <div class="row-fixed branding-el">
-          <svg class="icon icon--social-facebook">
-            <use href="#icon--social-facebook"/>
-
-          </svg>
-          <span class="has-icon"> Powered By Facebook</span>
+        <div class="row-fixed">
+          <fbbranding />
         </div>
       </div>;
   }
@@ -470,13 +466,7 @@ class IndexController extends Controller {
         <div class="branding">
           <a href="/">
             <div class="branding-rules">
-              <span class="branding-el">
-                <svg class="icon icon--social-facebook">
-                  <use href="#icon--social-facebook"/>
-
-                </svg>
-                <span class="has-icon"> Powered By Facebook</span>
-              </span>
+              <fbbranding />
             </div>
           </a>
         </div>
