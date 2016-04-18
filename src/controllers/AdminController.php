@@ -2244,7 +2244,6 @@ class AdminController extends Controller {
           <span class="branding-el">
             <svg class="icon icon--social-facebook">
               <use href="#icon--social-facebook" />
-
             </svg>
             <span class="has-icon"> Powered By Facebook</span></span>
         </div>
