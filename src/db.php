@@ -1,7 +1,8 @@
 <?hh
 
 class DB {
-  private string $settings_file = 'settings.ini';
+  // TODO: Make this configurable
+  private string $settings_file = '../settings.ini';
   private ?array<string, string> $config = null;
   private static ?DB $instance = null;
   private ?PDO $dbh = null;

@@ -1,13 +1,15 @@
 <?hh // strict
 
-require_once('../vendor/autoload.php');
-
 sess_start();
 sess_enforce_login();
 sess_enforce_admin();
 
 class AdminController extends Controller {
-  private function getFilters(): array<mixed> {
+  protected function getTitle(): string {
+    return 'Facebook CTF | Admin';
+  }
+
+  protected function getFilters(): array<string, mixed> {
     return array(
       'GET' => array(
         'page'        => array(
@@ -26,12 +28,12 @@ class AdminController extends Controller {
     );
   }
 
-  private function getActions(): array<string> {
+  protected function getActions(): array<string> {
     return array('none');
   }
 
-  private function getPages(): array<string> {
-    array(
+  protected function getPages(): array<string> {
+    return array(
       'main',
       'configuration',
       'controls',
@@ -2219,24 +2221,24 @@ class AdminController extends Controller {
         </header>
         <nav class="admin-nav-links row-fluid">
           <ul>
-            <li><a href="/admin.php?page=configuration">Configuration</a></li>
-            <li><a href="/admin.php?page=controls">Controls</a></li>
-            <li><a href="/admin.php?page=announcements">Announcements</a></li>
-            <li><a href="/admin.php?page=quiz">Levels: Quiz</a></li>
-            <li><a href="/admin.php?page=flags">Levels: Flags</a></li>
-            <li><a href="/admin.php?page=bases">Levels: Bases</a></li>
-            <li><a href="/admin.php?page=categories">Levels: Categories</a></li>
-            <li><a href="/admin.php?page=countries">Levels: Countries</a></li>
-            <li><a href="/admin.php?page=teams">Teams</a></li>
-            <li><a href="/admin.php?page=logos">Teams: Logos</a></li>
-            <li><a href="/admin.php?page=sessions">Teams: Sessions</a></li>
-            <li><a href="/admin.php?page=scoreboard">Scoreboard</a></li>
-            <li><a href="/admin.php?page=logs">Logs</a></li>
+            <li><a href="/index.php?p=admin&page=configuration">Configuration</a></li>
+            <li><a href="/index.php?p=admin&page=controls">Controls</a></li>
+            <li><a href="/index.php?p=admin&page=announcements">Announcements</a></li>
+            <li><a href="/index.php?p=admin&page=quiz">Levels: Quiz</a></li>
+            <li><a href="/index.php?p=admin&page=flags">Levels: Flags</a></li>
+            <li><a href="/index.php?p=admin&page=bases">Levels: Bases</a></li>
+            <li><a href="/index.php?p=admin&page=categories">Levels: Categories</a></li>
+            <li><a href="/index.php?p=admin&page=countries">Levels: Countries</a></li>
+            <li><a href="/index.php?p=admin&page=teams">Teams</a></li>
+            <li><a href="/index.php?p=admin&page=logos">Teams: Logos</a></li>
+            <li><a href="/index.php?p=admin&page=sessions">Teams: Sessions</a></li>
+            <li><a href="/index.php?p=admin&page=scoreboard">Scoreboard</a></li>
+            <li><a href="/index.php?p=admin&page=logs">Logs</a></li>
           </ul>
           {$game_action}
         </nav>
         <div class="admin-nav--footer row-fixed">
-          <a href="/game.php">Gameboard</a>
+          <a href="/index.php?p=game">Gameboard</a>
           <a href="" class="js-prompt-logout">Logout</a>
           <a></a>
           <span class="branding-el">
@@ -2317,8 +2319,3 @@ class AdminController extends Controller {
       </body>;
   }
 }
-
-// $adminpage = new AdminController();
-// $request = new Request($filters, $actions, $pages);
-// $request->processRequest();
-// echo $adminpage->render('Facebook CTF | Admin', $request->page);

@@ -1,8 +1,38 @@
-<?hh //strict
-
-require_once('../vendor/autoload.php');
+<?hh // strict
 
 class ViewModeController extends Controller {
+  protected function getTitle(): string {
+    return 'Facebook CTF | View mode';
+  }
+
+  protected function getFilters(): array<string, mixed> {
+    return array(
+      'GET' => array(
+        'page'        => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        ),
+        'action'      => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        )
+      )
+    );
+  }
+
+  protected function getActions(): array<string> {
+    return array('none');
+  }
+
+  protected function getPages(): array<string> {
+    return array(
+      'main',
+    );
+  }
 
   public function renderMainContent(): :xhp {
     return
@@ -59,28 +89,3 @@ class ViewModeController extends Controller {
       </body>;
   }
 }
-
-$viewmode = new ViewModeController();
-$filters = array(
-  'GET' => array(
-    'page'        => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    ),
-    'action'      => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    )
-  )
-);
-$actions = array('none');
-$pages = array(
-  'main',
-);
-$request = new Request($filters, $actions, $pages);
-$request->processRequest();
-echo $viewmode->render('Facebook CTF | Gameboard', $request->page);

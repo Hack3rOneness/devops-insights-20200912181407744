@@ -1,8 +1,46 @@
-<?hh
-
-require_once('../vendor/autoload.php');
+<?hh // strict
 
 class IndexController extends Controller {
+  protected function getTitle(): string {
+    return 'Facebook CTF';
+  }
+
+  protected function getFilters(): array<string, mixed> {
+    return array(
+      'GET' => array(
+        'page'        => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        ),
+        'action'      => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        )
+      )
+    );
+  }
+
+  protected function getActions(): array<string> {
+    return array('none');
+  }
+
+  protected function getPages(): array<string> {
+    return array(
+      'main',
+      'countdown',
+      'rules',
+      'registration',
+      'login',
+      'error',
+      'mobile',
+      'game',
+      'admin'
+    );
+  }
 
   public function renderMainContent(): :xhp {
     return
@@ -27,7 +65,7 @@ class IndexController extends Controller {
         <form class="fb-form inner-container">
           <p>Get ready for the CTF to start and access the gameboard now!</p>
           <div class="form-el--actions">
-            <a href="/game.php" class="fb-cta cta--yellow">Gameboard</a>
+            <a href="/index.php?p=game" class="fb-cta cta--yellow">Gameboard</a>
           </div>
         </form>;
     } else {
@@ -307,7 +345,7 @@ class IndexController extends Controller {
             </div>
           </main>
         </div>;
-  }
+    }
   }
 
   public function renderLoginContent(): :xhp {
@@ -411,7 +449,7 @@ class IndexController extends Controller {
       $session_nav =
         <ul class="nav-right">
           <li></li>
-          <li><a href="/game.php" data-active="gameboard">Gameboard</a></li>
+          <li><a href="/index.php?p=game" data-active="gameboard">Gameboard</a></li>
           <li></li>
         </ul>;
     } else {
@@ -490,39 +528,3 @@ class IndexController extends Controller {
       </body>;
   }
 }
-
-$indexpage = new IndexController();
-$filters = array(
-  'GET' => array(
-    'page'        => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    ),
-    'action'      => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    )
-  )
-);
-
-$actions = array('none');
-$pages = array(
-  'main',
-  'countdown',
-  'rules',
-  'registration',
-  'login',
-  'error',
-  'mobile',
-  'game',
-  'admin'
-);
-
-$request = new Request($filters, $actions, $pages);
-$request->processRequest();
-
-echo $indexpage->render('Facebook CTF', $request->page);

@@ -1,15 +1,46 @@
-<?hh
-
-require_once('../vendor/autoload.php');
+<?hh // strict
 
 sess_start();
 sess_enforce_login();
 
 class GameboardController extends Controller {
+  protected function getTitle(): string {
+    return 'Facebook CTF | Gameboard';
+  }
+
+  protected function getFilters(): array<string, mixed> {
+    return array(
+      'GET' => array(
+        'page'        => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        ),
+        'action'      => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        )
+      )
+    );
+  }
+
+  protected function getActions(): array<string> {
+    return array('none');
+  }
+
+  protected function getPages(): array<string> {
+    return array(
+      'main',
+      'viewmode',
+    );
+  }
 
   public function renderMainContent(): :xhp {
     if (sess_admin()) {
-      $admin_link = <li><a href="admin.php">Admin</a></li>;
+      $admin_link = <li><a href="index.php?p=admin">Admin</a></li>;
     } else {
       $admin_link = null;
     }
@@ -21,7 +52,7 @@ class GameboardController extends Controller {
               <li>
                 <a>Navigation</a>
                 <ul class="subnav">
-                  <li><a href="/viewer-mode.php">View Mode</a></li>
+                  <li><a href="/index.php?p=view">View Mode</a></li>
                   <li><a href="#" class="fb-init-tutorial">Tutorial</a></li>
                   {$admin_link}
                   <li><a href="/index.php?page=rules" target="_blank">Rules</a></li>
@@ -30,7 +61,7 @@ class GameboardController extends Controller {
               </li>
             </ul>
             <div class="branding">
-              <a href="game.php">
+              <a href="index.php?p=game">
                 <div class="branding-rules">
                   <span class="branding-el">
                     <svg class="icon icon--social-facebook">
@@ -112,29 +143,3 @@ class GameboardController extends Controller {
       </body>;
   }
 }
-
-$gameboard = new GameboardController();
-$filters = array(
-  'GET' => array(
-    'page'        => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    ),
-    'action'      => array(
-      'filter'      => FILTER_VALIDATE_REGEXP,
-      'options'     => array(
-        'regexp'      => '/^[\w-]+$/'
-      ),
-    )
-  )
-);
-$actions = array('none');
-$pages = array(
-  'main',
-  'viewmode',
-);
-$request = new Request($filters, $actions, $pages);
-$request->processRequest();
-echo $gameboard->render('Facebook CTF | Gameboard', $request->page);
