@@ -96,6 +96,15 @@ function must_have_string<Tk as string, Tv>(
   return $result;
 }
 
+function must_have_int<Tk as string, Tv>(
+  ?KeyedContainer<Tk, Tv> $arr,
+  Tk $idx,
+): int {
+  $result = must_have_idx($arr, $idx);
+  invariant(is_int($result), "Expected $idx to be an int");
+  return $result;
+}
+
 function firstx<T>(Traversable<T> $t): T {
   foreach ($t as $v) {
     return $v;
