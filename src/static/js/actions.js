@@ -72,7 +72,7 @@ function loginError() {
 
 function sendIndexRequest(request_data) {
   $.post(
-    'index.php?page=index&ajax=true',
+    'index.php?p=index&ajax=true',
     request_data
   ).fail(function() {
     // TODO: Make this a modal
@@ -81,7 +81,7 @@ function sendIndexRequest(request_data) {
     var responseData = JSON.parse(data);
     if (responseData.result === 'OK') {
       console.log('OK:' + responseData.message);
-      goToPage(responseData.redirect); 
+      goToPage(responseData.redirect);
     } else {
       // TODO: Make this a modal
       console.log('Failed');
@@ -149,7 +149,7 @@ function registerNames() {
 function loginTeam() {
   var loginSelect = $('.fb-form input[name="login_select"]')[0].value;
   var team, password, teamParam;
-  
+
   if (loginSelect === 'on') {
     team = verifyTeamName('login');
     teamParam = 'team_id';
@@ -180,5 +180,5 @@ $(document).on('keypress', 'input', function(e) {
     if (e.target.form[0].value == 'login_team') {
       loginTeam();
     }
-  } 
+  }
 });

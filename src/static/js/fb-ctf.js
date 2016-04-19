@@ -279,7 +279,7 @@
 
         // Kick off all the timers to keep data refreshed, not on view mode
         if (!VIEW_ONLY) {
-          
+
           // Load initial configuration
           loadConfData();
 
@@ -308,7 +308,7 @@
 
           // Countries
           setInterval( function() {
-            if (FB_CTF.data.CONF.gameboard === '1') {  
+            if (FB_CTF.data.CONF.gameboard === '1') {
               // Map
               getCountryData();
               refreshMapData();
@@ -450,7 +450,7 @@
           } else {
             setWidgetStatus($(this).text(), 'close');
           }
-          
+
           $body.trigger('module-changestate');
         })
 
@@ -838,11 +838,11 @@
             } else {
               $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
             }
-              
+
             $('.js-trigger-hint', $container).on('click', function(event) {
               event.preventDefault();
-               
-		          $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled'); 
+
+		          $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
               var hint_level = $('input[name=level_id]', $container)[0].value;
               var csrf_token = $('input[name=csrf_token]')[0].value;
               var hint_data = {
@@ -852,7 +852,7 @@
               };
 
               $.post(
-                'index.php?page=game&ajax=true',
+                'index.php?p=game&ajax=true',
                 hint_data
               ).fail(function() {
               // TODO: Make this a modal
@@ -884,7 +884,7 @@
             };
 
             $.post(
-              'index.php?page=game&ajax=true',
+              'index.php?p=game&ajax=true',
               score_data
             ).fail(function() {
               // TODO: Make this a modal
@@ -916,7 +916,7 @@
               e.preventDefault();
               $('.js-trigger-score').click();
             }
-          });  
+          });
           $('.js-close-modal', $container).on('click', removeCaptured);
         });
       } // function launchCaptureModal();
@@ -935,13 +935,13 @@
             mouse_x    = event.pageX,
             mouse_y    = event.pageY;
 
-        if (! FB_CTF.data.COUNTRIES) {  
+        if (! FB_CTF.data.COUNTRIES) {
           return;
         }
-          
+
         var data = FB_CTF.data.COUNTRIES[country];
 
-        if (data) {       
+        if (data) {
           FB_CTF.modal.countryHoverPopup(function(){
             var $container = $('#fb-country-popup').css({
               left : mouse_x + 'px',
@@ -949,7 +949,7 @@
             }),
                 points     = data ? data.points : '',
                 category   = data ? data.category : '',
-                title      = data ? data.title : '', 
+                title      = data ? data.title : '',
                 type       = data ? data.type : '';
 
             $('.country-name', $container).text(country);
@@ -1124,7 +1124,7 @@
               loadInterval;
 
           loadInterval = setInterval(function(){
-            if ($currCell.length === 0) { 
+            if ($currCell.length === 0) {
               clearInterval(loadInterval);
             }
             $currCell.addClass('active');
@@ -1196,7 +1196,7 @@
       }
 
       /**
-       * load the svg map for gameboard. This inserts the svg into the 
+       * load the svg map for gameboard. This inserts the svg into the
        * page and then sets up some jquery object variables for use
        * elsewhere in this module.
        */
@@ -1216,7 +1216,7 @@
       }
 
       /**
-       * load the svg map for view-mode. This inserts the svg into the 
+       * load the svg map for view-mode. This inserts the svg into the
        * page and then sets up some jquery object variables for use
        * elsewhere in this module.
        */
@@ -1369,7 +1369,7 @@
             $('#' + key)[0].parentNode.removeAttribute('data-captured');
             $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
             $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
-            
+
             // Active country
             if (value.status === 'active') {
               if (!$('#' + key).hasClass('active')) {
@@ -2050,7 +2050,7 @@
             });
           });
           var maxYaxis = parseInt(maxScore) + 30;
-          
+
           var graphic  = d3.select( svgEl ),
               MARGIN   = {left: 60, right: 20, bottom:40},
               WIDTH    = $container.length > 0 ? $container.width() - MARGIN.left - MARGIN.right : 820 - MARGIN.left - MARGIN.right,
@@ -2255,7 +2255,7 @@
               if (selectedCmd) {
                 $promptInput.val(autocompleteCmd);
               }
-            }  
+            }
             if (selectedCmd) {
               chooseCommand(selectedCmd);
               $promptInput.trigger('blur');
@@ -2420,7 +2420,7 @@
       function checkSelectedVisible() {
         var $selected = $cmdResultsList.find('li.selected');
 
-        if ($selected.length === 0) { 
+        if ($selected.length === 0) {
           return;
         }
 
@@ -2450,7 +2450,7 @@
         var results     = cmdData.results,
             cmdFunction = cmdData.function;
 
-        if (results) { 
+        if (results) {
           if (typeof results === "string") {
             var list = FB_CTF.data.COMMAND.results_library[results];
 
@@ -2915,7 +2915,7 @@
           FB_CTF.init();
         }
       });
-     
+
    })(window.FB_CTF = window.FB_CTF || {}, jQuery);
 
 function activateTeams() {
@@ -2923,7 +2923,7 @@ function activateTeams() {
   $teamgrid.on('click', 'a', function(event) {
     event.preventDefault();
     var team = String($(this).data('team'));
-    
+
     if( team === undefined || team === ""){
       team = "Facebook CTF";
     }

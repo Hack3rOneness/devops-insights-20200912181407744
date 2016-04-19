@@ -33,13 +33,13 @@ function sendAdminRequest(request_data) {
   var csrf_token = $('input[name=csrf_token]')[0].value;
   request_data.csrf_token = csrf_token;
   $.post(
-    'index.php?page=admin&ajax=true',
+    'index.php?p=admin&ajax=true',
     request_data
   ).fail(function() {
     // TODO: Make this a modal
     console.log('ERROR');
   }).done(function(data) {
-    //console.log(data);
+    console.log(data);
     var responseData = JSON.parse(data);
     if (responseData.result == 'OK') {
       console.log('OK');
@@ -188,7 +188,7 @@ var $body = $('body');
 
     $addedAttachment.removeClass('completely-hidden');
     $addedAttachment.removeClass('new-attachment-hidden');
-    
+
     $("input[type=file]", $addedAttachment).change(function (e){
       var fileName = e.target.files[0].name;
       $("input[name=filename]", $addedAttachment)[0].value = fileName;
@@ -224,7 +224,7 @@ var $body = $('body');
     if (PLAYERS_PER_TEAM > 1) {
       var $playerList = $('.player-list'),
           $playerInfo = $('li', $playerList);
-      
+
       $('.admin-box-header h3', $sections).text("Team 1");
       $sections.addClass('team-registration');
 
@@ -253,7 +253,7 @@ var $body = $('body');
       formData.append('csrf_token', csrf_token);
 
       $.ajax({
-        url: 'index.php?page=admin&ajax=true',
+        url: 'index.php?p=admin&ajax=true',
         type: 'POST',
         data: formData,
         enctype: 'multipart/form-data',
@@ -270,7 +270,7 @@ var $body = $('body');
           // TODO: Make this a modal
           console.log('Failed');
         }
-      }); 
+      });
     }
   }
 
@@ -278,7 +278,7 @@ var $body = $('body');
   function createLink(section) {
     var level_id = $('.link_form input[name=level_id]', section)[0].value;
     var link = $('.link_form input[name=link]', section)[0].value;
-    var csrf_token = $('input[name=csrf_token]')[0].value; 
+    var csrf_token = $('input[name=csrf_token]')[0].value;
     var create_data = {
       action: 'create_link',
       link: link,
@@ -288,7 +288,7 @@ var $body = $('body');
 
     if ((level_id) && (link)) {
       $.post(
-        'index.php?page=admin&ajax=true',
+        'index.php?p=admin&ajax=true',
         create_data
       ).fail(function() {
         // TODO: Make this a modal
@@ -305,7 +305,7 @@ var $body = $('body');
           console.log('Failed');
           return false;
         }
-      }); 
+      });
     }
   }
 
@@ -341,7 +341,7 @@ var $body = $('body');
     if (elementSection === 'session_form') {
       deleteSession(section);
     } else if (elementSection === 'team_form') {
-      deleteTeam(section); 
+      deleteTeam(section);
     } else if (elementSection === 'level_form') {
       deleteLevel(section);
     } else if (elementSection === 'categories_form') {
@@ -387,7 +387,7 @@ var $body = $('body');
     window.location.href = location.href;
   }
 
-  // Create and download database backup 
+  // Create and download database backup
   function databaseBackup() {
     var backup_data = {
       action: 'backup_db'
@@ -556,7 +556,7 @@ var $body = $('body');
       case 'base':
         updateBaseLevel(section);
         break;
-    } 
+    }
   }
 
   // Update quiz level
@@ -914,7 +914,7 @@ var $body = $('body');
         var $containingDiv = $self.closest('.existing-link');
         $containingDiv.remove();
         deleteLink($containingDiv);
-      } 
+      }
 
       //
       // if there's a modal
@@ -1023,7 +1023,7 @@ var $body = $('body');
         var filter_string = 'off';
         if (filter === 'Enabled') {
           filter_string = 'on';
-        } 
+        }
         var targets = $('input[type="radio"][id*="status--'+ filter_string +'"]:checked[class!=filter_option]');
         targets.each(function(){
           var target = $(this).closest('section[id!=new-element]')[0];
@@ -1152,5 +1152,5 @@ var $body = $('body');
 $(document).on('keypress', 'input', function(e) {
   if (e.keyCode == 13) {
     e.preventDefault();
-  } 
+  }
 });
