@@ -1,12 +1,15 @@
-
 (function(_BUILDKIT, $, undefined){
 
   var $loadTarget,
       $body,
       FB_SECTION;
 
+  function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+  }
+
   _BUILDKIT.enableNavActiveState = function(){
-    var page = window.location.search.split('=')[1];
+    var page = getURLParameter('page');
 
     $('.fb-main-nav a').removeClass('active').filter(function(){
       var href = $(this).data('active');
@@ -19,7 +22,7 @@
   }
 
   _BUILDKIT.enableAdminActiveState = function(){
-    var page = window.location.search.split('=')[2];
+    var page = getURLParameter('page');
 
     $('#fb-admin-nav li').removeClass('active').filter(function(){
       var href = $('a', this).attr('href').replace('#', '');

@@ -144,7 +144,6 @@ class AdminAjaxController extends AjaxController {
     case 'create_quiz':
       $bonus = Configuration::get('default_bonus')->getValue();
       $bonus_dec = Configuration::get('default_bonusdec')->getValue();
-      error_log(gettype(must_have_idx($params, 'entity_id')));
       Level::createQuiz(
         must_have_string($params, 'title'),
         must_have_string($params, 'question'),
