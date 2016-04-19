@@ -29,7 +29,7 @@ echo "[+] Creating unison profile"
 PROFILE="
 root = $CODE_PATH
 root = ssh://default//var/www/facebook-ctf/
-ignore = Name {.git,.vagrant,.DS_Store,.sources}
+ignore = Name {.vagrant,.DS_Store,.sources}
 
 prefer = $CODE_PATH
 repeat = 2

@@ -1,10 +1,12 @@
 <?hh // strict
 
 class IndexController extends Controller {
+  <<__Override>>
   protected function getTitle(): string {
     return 'Facebook CTF';
   }
 
+  <<__Override>>
   protected function getFilters(): array<string, mixed> {
     return array(
       'GET' => array(
@@ -24,10 +26,7 @@ class IndexController extends Controller {
     );
   }
 
-  protected function getActions(): array<string> {
-    return array('none');
-  }
-
+  <<__Override>>
   protected function getPages(): array<string> {
     return array(
       'main',
@@ -501,6 +500,7 @@ class IndexController extends Controller {
     }
   }
 
+  <<__Override>>
   public function renderBody(string $page): :xhp {
     return
       <body data-section="pages">

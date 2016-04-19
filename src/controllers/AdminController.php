@@ -5,10 +5,12 @@ sess_enforce_login();
 sess_enforce_admin();
 
 class AdminController extends Controller {
+  <<__Override>>
   protected function getTitle(): string {
     return 'Facebook CTF | Admin';
   }
 
+  <<__Override>>
   protected function getFilters(): array<string, mixed> {
     return array(
       'GET' => array(
@@ -28,10 +30,7 @@ class AdminController extends Controller {
     );
   }
 
-  protected function getActions(): array<string> {
-    return array('none');
-  }
-
+  <<__Override>>
   protected function getPages(): array<string> {
     return array(
       'main',
@@ -2296,6 +2295,7 @@ class AdminController extends Controller {
     }
   }
 
+  <<__Override>>
   public function renderBody(string $page): :xhp {
     return
       <body data-section="admin">

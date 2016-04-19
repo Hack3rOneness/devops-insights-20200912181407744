@@ -3,10 +3,9 @@
 abstract class Controller {
   abstract protected function getTitle(): string;
   abstract protected function getFilters(): array<string, mixed>;
-  abstract protected function getActions(): array<string>;
   abstract protected function getPages(): array<string>;
 
-  abstract public function renderBody(string $page): :xhp;
+  abstract protected function renderBody(string $page): :xhp;
 
   public function render(): :xhp {
     $page = $this->processRequest();
@@ -27,32 +26,30 @@ abstract class Controller {
     </x:doctype>;
   }
 
-  public function processRequest(): string {
-    $inputMethods = array(
+  private function processRequest(): string {
+    $input_methods = array(
       'POST' => INPUT_POST,
       'GET' => INPUT_GET,
     );
-    $method = getSERVER()['REQUEST_METHOD'];
+    $method = getSERVER()->get('REQUEST_METHOD');
     invariant(is_string($method), 'REQUEST_METHOD must be a string');
-    $input_method = $inputMethods[$method];
 
-    $action = 'none';
+    $filter = idx($this->getFilters(), $method);
+    if ($filter === null) {
+      // Method not supported
+      return ''; // TODO
+    }
+
+    $input_method = must_have_idx($input_methods, $method);
     $page = 'main';
 
     $parameters = filter_input_array(
       $input_method,
-      $this->getFilters()[$method],
+      $filter,
     );
-    if ($parameters['action']) {
-      $action = $parameters['action'];
-    }
-    if ($parameters['page']) {
-      $page = $parameters['page'];
-    }
-    if (!in_array($action, $this->getActions())) {
-      $action = 'none';
-    }
-    if (!(in_array($page, $this->getPages()))) {
+
+    $page = idx($parameters, 'page', 'main');
+    if (!in_array($page, $this->getPages())) {
       $page = 'main';
     }
 

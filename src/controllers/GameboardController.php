@@ -4,10 +4,12 @@ sess_start();
 sess_enforce_login();
 
 class GameboardController extends Controller {
+  <<__Override>>
   protected function getTitle(): string {
     return 'Facebook CTF | Gameboard';
   }
 
+  <<__Override>>
   protected function getFilters(): array<string, mixed> {
     return array(
       'GET' => array(
@@ -27,10 +29,7 @@ class GameboardController extends Controller {
     );
   }
 
-  protected function getActions(): array<string> {
-    return array('none');
-  }
-
+  <<__Override>>
   protected function getPages(): array<string> {
     return array(
       'main',
@@ -122,6 +121,7 @@ class GameboardController extends Controller {
     }
   }
 
+  <<__Override>>
   public function renderBody(string $page): :xhp {
     return
       <body data-section="gameboard">

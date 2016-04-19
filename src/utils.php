@@ -52,29 +52,29 @@ function start_page(): void {
   redirect('/index.php');
 }
 
-function request_response(string $result, string $msg, string $redirect): void {
+function request_response(string $result, string $msg, string $redirect): string {
   $response_data = array(
     'result' => $result,
     'message' => $msg,
     'redirect' => $redirect,
   );
-  echo json_encode($response_data);
+  return json_encode($response_data);
 }
 
-function hint_response(string $msg, string $result): void {
+function hint_response(string $msg, string $result): string {
   $response_data = array(
     'hint' => $msg,
     'result' => $result,
   );
-  echo json_encode($response_data);
+  return json_encode($response_data);
 }
 
-function ok_response(string $msg, string $redirect): void {
-  request_response('OK', $msg, $redirect);
+function ok_response(string $msg, string $redirect): string {
+  return request_response('OK', $msg, $redirect);
 }
 
-function error_response(string $msg, string $redirect): void {
-  request_response('ERROR', $msg, $redirect);
+function error_response(string $msg, string $redirect): string {
+  return request_response('ERROR', $msg, $redirect);
 }
 
 function must_have_idx<Tk, Tv>(
