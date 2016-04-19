@@ -2044,8 +2044,8 @@
           var maxScore = 0;
           $.each(scores, function(){
             $.each(this.values, function(){
-              if (this.score > maxScore) {
-                maxScore = this.score;
+              if (parseInt(this.score) > parseInt(maxScore)) {
+                maxScore = parseInt(this.score);
               }
             });
           });
