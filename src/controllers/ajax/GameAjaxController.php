@@ -40,7 +40,7 @@ class GameAjaxController extends AjaxController {
   protected function handleAction(string $action, array<string, mixed> $params): string {
     if ($action !== 'none') {
       // CSRF check
-      if ($params['csrf_token'] !== sess_csrf_token()) {
+      if (idx($params, 'csrf_token') !== sess_csrf_token()) {
         error_page();
       }
     }
@@ -48,51 +48,48 @@ class GameAjaxController extends AjaxController {
     switch ($action) {
     case 'none':
       game_page();
-      break;
+      return ''; // TODO
     case 'answer_level':
       if (Configuration::get('scoring')->getValue() === '1') {
         // Check if answer is valid
         if (Level::checkAnswer(
-          intval($params['level_id']),
-          $params['answer']
+          intval(must_have_string($params, 'level_id')),
+          must_have_string($params, 'answer')
         )) {
           // Give points!
           Level::scoreLevel(
-            intval($params['level_id']),
+            intval(must_have_string($params, 'level_id')),
             intval(sess_team())
           );
           // Update teams last score
           Team::lastScore(intval(sess_team()));
-          ok_response('Success', 'game');
+          return ok_response('Success', 'game');
         } else {
           Level::logFailedScore(
-            intval($params['level_id']),
+            intval(must_have_string($params, 'level_id')),
             intval(sess_team()),
-            $params['answer']
+            must_have_string($params, 'answer')
           );
-          error_response('Failed', 'game');
+          return error_response('Failed', 'game');
         }
       } else {
-        error_response('Failed', 'game');
+        return error_response('Failed', 'game');
       }
-      break;
     case 'get_hint':
       $requested_hint = Level::getLevelHint(
-        intval($params['level_id']),
+        intval(must_have_string($params, 'level_id')),
         intval(sess_team())
       );
       if ($requested_hint) {
-        hint_response($requested_hint, 'OK');
+        return hint_response($requested_hint, 'OK');
       } else {
-        hint_response('', 'ERROR');
+        return hint_response('', 'ERROR');
       }
-      break;
     case 'open_level':
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     default:
       game_page();
-      break;
+      return ''; // TODO
     }
   }
 }
