@@ -78,7 +78,7 @@ class IndexAjaxController extends AjaxController {
     case 'login_team':
       $team_id = null;
       if (Configuration::get('login_select')->getValue() === '1') {
-        $team_id = intval(must_have_string($params, 'team_id'));
+        $team_id = must_have_int($params, 'team_id');
       } else {
         $team_name = must_have_string($params, 'teamname');
         if (Team::teamExist($team_name)) {

@@ -53,12 +53,12 @@ class GameAjaxController extends AjaxController {
       if (Configuration::get('scoring')->getValue() === '1') {
         // Check if answer is valid
         if (Level::checkAnswer(
-          intval(must_have_string($params, 'level_id')),
+          must_have_int($params, 'level_id'),
           must_have_string($params, 'answer')
         )) {
           // Give points!
           Level::scoreLevel(
-            intval(must_have_string($params, 'level_id')),
+            must_have_int($params, 'level_id'),
             intval(sess_team())
           );
           // Update teams last score
@@ -66,7 +66,7 @@ class GameAjaxController extends AjaxController {
           return ok_response('Success', 'game');
         } else {
           Level::logFailedScore(
-            intval(must_have_string($params, 'level_id')),
+            must_have_int($params, 'level_id'),
             intval(sess_team()),
             must_have_string($params, 'answer')
           );
@@ -77,7 +77,7 @@ class GameAjaxController extends AjaxController {
       }
     case 'get_hint':
       $requested_hint = Level::getLevelHint(
-        intval(must_have_string($params, 'level_id')),
+        must_have_int($params, 'level_id'),
         intval(sess_team())
       );
       if ($requested_hint) {

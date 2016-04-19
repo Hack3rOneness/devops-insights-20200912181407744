@@ -19,12 +19,6 @@ class GameboardController extends Controller {
             'regexp'      => '/^[\w-]+$/'
           ),
         ),
-        'action'      => array(
-          'filter'      => FILTER_VALIDATE_REGEXP,
-          'options'     => array(
-            'regexp'      => '/^[\w-]+$/'
-          ),
-        )
       )
     );
   }
