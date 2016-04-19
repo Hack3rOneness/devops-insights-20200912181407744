@@ -153,7 +153,7 @@ class AdminAjaxController extends AjaxController {
         intval($bonus),
         intval($bonus_dec),
         must_have_string($params, 'hint'),
-        must_have_int($params, 'penalty'),
+        intval(must_have_idx($params, 'penalty')),
       );
       return ok_response('Created succesfully', 'admin');
     case 'update_quiz':
@@ -166,7 +166,7 @@ class AdminAjaxController extends AjaxController {
         must_have_int($params, 'bonus'),
         must_have_int($params, 'bonus_dec'),
         must_have_string($params, 'hint'),
-        must_have_int($params, 'penalty'),
+        intval(must_have_idx(($params, 'penalty'))),
         must_have_int($params, 'level_id'),
       );
       return ok_response('Updated succesfully', 'admin');
