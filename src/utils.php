@@ -87,7 +87,7 @@ function must_have_idx<Tk, Tv>(
   return $result;
 }
 
-function must_have_string<Tk, Tv>(
+function must_have_string<Tk as string, Tv>(
   ?KeyedContainer<Tk, Tv> $arr,
   Tk $idx,
 ): string {
