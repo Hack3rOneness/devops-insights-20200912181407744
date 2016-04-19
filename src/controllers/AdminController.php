@@ -569,7 +569,6 @@ class AdminController extends Controller {
 
     $c = 1;
     foreach (Level::allQuizLevels() as $quiz) {
-      error_log($quiz->getTitle());
       $quiz_active_on = ($quiz->getActive());
       $quiz_active_off = (!$quiz->getActive());
 
