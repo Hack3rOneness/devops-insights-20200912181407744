@@ -108,17 +108,17 @@ class IndexAjaxController extends AjaxController {
     case 'login_team':
       $team_id = null;
       if (Configuration::get('login_select')->getValue() === '1') {
-        $team_id = must_have_idx($params, 'team_id');
+        $team_id = intval(must_have_idx($params, 'team_id'));
       } else {
         $team_name = must_have_idx($params, 'teamname');
         invariant(is_string($team_name), 'teamname should be a string');
         if (Team::teamExist($team_name)) {
           $team_id = Team::getTeamByName($team_name)->getId();
         } else {
-          error_response('Login failed', 'login');
+          return error_response('Login failed', 'login');
         }
       }
-      invariant(is_int($team_id), 'team_id should not an integer');
+      invariant(is_int($team_id), 'team_id should be an int');
 
       $password = must_have_idx($params, 'password');
       invariant(is_string($password), 'password should be a string');
