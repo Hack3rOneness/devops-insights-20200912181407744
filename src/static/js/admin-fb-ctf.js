@@ -33,7 +33,7 @@ function sendAdminRequest(request_data) {
   var csrf_token = $('input[name=csrf_token]')[0].value;
   request_data.csrf_token = csrf_token;
   $.post(
-    'adminaction.php',
+    'index.php?page=admin&ajax=true',
     request_data
   ).fail(function() {
     // TODO: Make this a modal
@@ -253,7 +253,7 @@ var $body = $('body');
       formData.append('csrf_token', csrf_token);
 
       $.ajax({
-        url: 'adminaction.php',
+        url: 'index.php?page=admin&ajax=true',
         type: 'POST',
         data: formData,
         enctype: 'multipart/form-data',
@@ -288,7 +288,7 @@ var $body = $('body');
 
     if ((level_id) && (link)) {
       $.post(
-        'adminaction.php',
+        'index.php?page=admin&ajax=true',
         create_data
       ).fail(function() {
         // TODO: Make this a modal

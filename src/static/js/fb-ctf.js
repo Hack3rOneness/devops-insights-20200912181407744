@@ -852,7 +852,7 @@
               };
 
               $.post(
-                'gameaction.php',
+                'index.php?page=game&ajax=true',
                 hint_data
               ).fail(function() {
               // TODO: Make this a modal
@@ -884,7 +884,7 @@
             };
 
             $.post(
-              'gameaction.php',
+              'index.php?page=game&ajax=true',
               score_data
             ).fail(function() {
               // TODO: Make this a modal

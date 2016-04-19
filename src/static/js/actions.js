@@ -72,7 +72,7 @@ function loginError() {
 
 function sendIndexRequest(request_data) {
   $.post(
-    'indexaction.php',
+    'index.php?page=index&ajax=true',
     request_data
   ).fail(function() {
     // TODO: Make this a modal
