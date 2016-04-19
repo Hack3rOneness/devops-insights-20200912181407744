@@ -47,48 +47,19 @@ class IndexAjaxController extends AjaxController {
     case 'none':
       start_page();
       return ''; // TODO
-      break;
     case 'register_team':
-      $teamname = must_have_idx($params, 'teamname');
-      $password = must_have_idx($params, 'password');
-      $token = must_have_idx($params, 'token');
-      $logo = must_have_idx($params, 'logo');
-      invariant(
-        is_string($teamname) &&
-        is_string($password) &&
-        is_string($token) &&
-        is_string($logo),
-        'all parameters should be strings',
-      );
       return $this->registerTeam(
-        $teamname,
-        $password,
-        $token,
-        $logo,
+        must_have_string($params, 'teamname'),
+        must_have_string($params, 'password'),
+        must_have_string($params, 'token'),
+        must_have_string($params, 'logo'),
         false,
         array(),
         array(),
       );
-      break;
     case 'register_names':
-      $names = must_have_idx($params, 'names');
-      $emails = must_have_idx($params, 'emails');
-      $teamname = must_have_idx($params, 'teamname');
-      $password = must_have_idx($params, 'password');
-      $token = must_have_idx($params, 'token');
-      $logo = must_have_idx($params, 'logo');
-      invariant(
-        is_string($names) &&
-        is_string($emails) &&
-        is_string($teamname) &&
-        is_string($password) &&
-        is_string($token) &&
-        is_string($logo),
-        'all parameters should be strings',
-      );
-
-      $names = json_decode($names);
-      $emails = json_decode($emails);
+      $names = json_decode(must_have_string($params, 'names'));
+      $emails = json_decode(must_have_string($params, 'emails'));
       invariant(
         is_array($names) &&
         is_array($emails),
@@ -96,22 +67,20 @@ class IndexAjaxController extends AjaxController {
       );
 
       return $this->registerTeam(
-        $teamname,
-        $password,
-        $token,
-        $logo,
+        must_have_string($params, 'teamname'),
+        must_have_string($params, 'password'),
+        must_have_string($params, 'token'),
+        must_have_string($params, 'logo'),
         true,
         $names,
         $emails,
       );
-      break;
     case 'login_team':
       $team_id = null;
       if (Configuration::get('login_select')->getValue() === '1') {
-        $team_id = intval(must_have_idx($params, 'team_id'));
+        $team_id = intval(must_have_string($params, 'team_id'));
       } else {
-        $team_name = must_have_idx($params, 'teamname');
-        invariant(is_string($team_name), 'teamname should be a string');
+        $team_name = must_have_string($params, 'teamname');
         if (Team::teamExist($team_name)) {
           $team_id = Team::getTeamByName($team_name)->getId();
         } else {
@@ -120,19 +89,16 @@ class IndexAjaxController extends AjaxController {
       }
       invariant(is_int($team_id), 'team_id should be an int');
 
-      $password = must_have_idx($params, 'password');
-      invariant(is_string($password), 'password should be a string');
+      $password = must_have_string($params, 'password');
 
       // If we are here, login!
       return $this->loginTeam(
         $team_id,
         $password,
       );
-      break;
     default:
       start_page();
       return ''; // TODO
-      break;
     }
   }
 
@@ -217,7 +183,7 @@ class IndexAjaxController extends AjaxController {
         if ($team->getAdmin()) {
           sess_set('admin', intval($team->getAdmin()));
         }
-        sess_set('IP', must_have_idx(getSERVER(), 'REMOTE_ADDR'));
+        sess_set('IP', must_have_string(getSERVER(), 'REMOTE_ADDR'));
       }
       if ($team->getAdmin()) {
         $redirect = 'admin';
