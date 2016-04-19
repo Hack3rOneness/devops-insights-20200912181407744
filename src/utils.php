@@ -87,6 +87,15 @@ function must_have_idx<Tk, Tv>(
   return $result;
 }
 
+function must_have_string<Tk, Tv>(
+  ?KeyedContainer<Tk, Tv> $arr,
+  Tk $idx,
+): string {
+  $result = must_have_idx($arr, $idx);
+  invariant(is_string($result), "Expected $idx to be a string");
+  return $result;
+}
+
 function firstx<T>(Traversable<T> $t): T {
   foreach ($t as $v) {
     return $v;

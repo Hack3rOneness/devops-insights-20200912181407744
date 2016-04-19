@@ -131,7 +131,7 @@ class AdminAjaxController extends AjaxController {
   protected function handleAction(string $action, array<string, mixed> $params): string {
     if ($action !== 'none') {
       // CSRF check
-      if ($params['csrf_token'] !== sess_csrf_token()) {
+      if (idx($params, 'csrf_token') !== sess_csrf_token()) {
         error_log('CSRF Token is invalid');
         error_page();
       }
@@ -140,329 +140,297 @@ class AdminAjaxController extends AjaxController {
     switch ($action) {
     case 'none':
       admin_page();
-      break;
+      return ''; // TODO
     case 'create_quiz':
       $bonus = Configuration::get('default_bonus')->getValue();
       $bonus_dec = Configuration::get('default_bonusdec')->getValue();
+
       Level::createQuiz(
-        $params['title'],
-        $params['question'],
-        $params['answer'],
-        intval($params['entity_id']),
-        intval($params['points']),
+        must_have_string($params, 'title'),
+        must_have_string($params, 'question'),
+        must_have_string($params, 'answer'),
+        intval(must_have_string($params, 'entity_id')),
+        intval(must_have_string($params, 'points')),
         intval($bonus),
         intval($bonus_dec),
-        $params['hint'],
-        intval($params['penalty'])
+        must_have_string($params, 'hint'),
+        intval(must_have_string($params, 'penalty')),
       );
-      ok_response('Created succesfully', 'admin');
-      break;
+      return ok_response('Created succesfully', 'admin');
     case 'update_quiz':
       Level::updateQuiz(
-        $params['title'],
-        $params['question'],
-        $params['answer'],
-        intval($params['entity_id']),
-        intval($params['points']),
-        intval($params['bonus']),
-        intval($params['bonus_dec']),
-        $params['hint'],
-        intval($params['penalty']),
-        intval($params['level_id'])
+        must_have_string($params, 'title'),
+        must_have_string($params, 'question'),
+        must_have_string($params, 'answer'),
+        intval(must_have_string($params, 'entity_id')),
+        intval(must_have_string($params, 'points')),
+        intval(must_have_string($params, 'bonus')),
+        intval(must_have_string($params, 'bonus_dec')),
+        must_have_string($params, 'hint'),
+        intval(must_have_string($params, 'penalty')),
+        intval(must_have_string($params, 'level_id'))
       );
-      ok_response('Updated succesfully', 'admin');
-      break;
+      return ok_response('Updated succesfully', 'admin');
     case 'create_flag':
       $bonus = Configuration::get('default_bonus')->getValue();
       $bonus_dec = Configuration::get('default_bonusdec')->getValue();
+
       Level::createFlag(
-        $params['title'],
-        $params['description'],
-        $params['flag'],
-        intval($params['entity_id']),
-        intval($params['category_id']),
-        intval($params['points']),
+        must_have_string($params, 'title'),
+        must_have_string($params, 'description'),
+        must_have_string($params, 'flag'),
+        intval(must_have_string($params, 'entity_id')),
+        intval(must_have_string($params, 'category_id')),
+        intval(must_have_string($params, 'points')),
         intval($bonus),
         intval($bonus_dec),
-        $params['hint'],
-        intval($params['penalty'])
+        must_have_string($params, 'hint'),
+        intval(must_have_string($params, 'penalty'))
       );
-      ok_response('Created succesfully', 'admin');
-      break;
+      return ok_response('Created succesfully', 'admin');
     case 'update_flag':
       Level::updateFlag(
-        $params['title'],
-        $params['description'],
-        $params['flag'],
-        intval($params['entity_id']),
-        intval($params['category_id']),
-        intval($params['points']),
-        intval($params['bonus']),
-        intval($params['bonus_dec']),
-        $params['hint'],
-        intval($params['penalty']),
-        intval($params['level_id'])
+        must_have_string($params, 'title'),
+        must_have_string($params, 'description'),
+        must_have_string($params, 'flag'),
+        intval(must_have_string($params, 'entity_id')),
+        intval(must_have_string($params, 'category_id')),
+        intval(must_have_string($params, 'points')),
+        intval(must_have_string($params, 'bonus')),
+        intval(must_have_string($params, 'bonus_dec')),
+        must_have_string($params, 'hint'),
+        intval(must_have_string($params, 'penalty')),
+        intval(must_have_string($params, 'level_id'))
       );
-      ok_response('Updated succesfully', 'admin');
-      break;
+      return ok_response('Updated succesfully', 'admin');
     case 'create_base':
       $bonus = Configuration::get('default_bonus')->getValue();
       Level::createBase(
-        $params['title'],
-        $params['description'],
-        intval($params['entity_id']),
-        intval($params['category_id']),
-        intval($params['points']),
+        must_have_string($params, 'title'),
+        must_have_string($params, 'description'),
+        intval(must_have_string($params, 'entity_id')),
+        intval(must_have_string($params, 'category_id')),
+        intval(must_have_string($params, 'points')),
         intval($bonus),
-        $params['hint'],
-        intval($params['penalty'])
+        must_have_string($params, 'hint'),
+        intval(must_have_string($params, 'penalty'))
       );
-      ok_response('Created succesfully', 'admin');
-      break;
+      return ok_response('Created succesfully', 'admin');
     case 'update_base':
       Level::updateBase(
-        $params['title'],
-        $params['description'],
-        intval($params['entity_id']),
-        intval($params['category_id']),
-        intval($params['points']),
-        intval($params['bonus']),
-        $params['hint'],
-        intval($params['penalty']),
-        intval($params['level_id'])
+        must_have_string($params, 'title'),
+        must_have_string($params, 'description'),
+        intval(must_have_string($params, 'entity_id')),
+        intval(must_have_string($params, 'category_id')),
+        intval(must_have_string($params, 'points')),
+        intval(must_have_string($params, 'bonus')),
+        must_have_string($params, 'hint'),
+        intval(must_have_string($params, 'penalty')),
+        intval(must_have_string($params, 'level_id'))
       );
-      ok_response('Updated succesfully', 'admin');
-      break;
+      return ok_response('Updated succesfully', 'admin');
     case 'delete_level':
       Level::delete(
-        intval($params['level_id'])
+        intval(must_have_string($params, 'level_id'))
       );
-      ok_response('Deleted succesfully', 'admin');
-      break;
+      return ok_response('Deleted succesfully', 'admin');
     case 'toggle_status_level':
       Level::setStatus(
-        intval($params['level_id']),
-        (bool)intval($params['status'])
+        intval(must_have_string($params, 'level_id')),
+        (bool)intval(must_have_string($params, 'status'))
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'toggle_status_all':
-      if ($params['all_type'] === 'team') {
+      if (must_have_string($params, 'all_type') === 'team') {
         Team::setStatusAll(
-          (bool)intval($params['status'])
+          (bool)intval(must_have_string($params, 'status'))
         );
-        ok_response('Success', 'admin');
+        return ok_response('Success', 'admin');
       } else {
         Level::setStatusAll(
-          (bool)intval($params['status']),
-          $params['all_type']
+          (bool)intval(must_have_string($params, 'status')),
+          must_have_string($params, 'all_type')
         );
-        ok_response('Success', 'admin');
+        return ok_response('Success', 'admin');
       }
-      break;
     case 'create_team':
-      $password_hash = Team::generateHash($params['password']);
+      $password_hash = Team::generateHash(must_have_string($params, 'password'));
       Team::create(
-        $params['name'],
+        must_have_string($params, 'name'),
         $password_hash,
-        $params['logo']
+        must_have_string($params, 'logo')
       );
-      ok_response('Created succesfully', 'admin');
-      break;
+      return ok_response('Created succesfully', 'admin');
     case 'update_team':
       Team::update(
-        $params['name'],
-        $params['logo'],
-        intval($params['points']),
-        intval($params['team_id'])
+        must_have_string($params, 'name'),
+        must_have_string($params, 'logo'),
+        intval(must_have_string($params, 'points')),
+        intval(must_have_string($params, 'team_id'))
       );
-      if (strlen($params['password']) > 0) {
-        $password_hash = Team::generateHash($params['password']);
+      if (strlen(must_have_string($params, 'password')) > 0) {
+        $password_hash = Team::generateHash(must_have_string($params, 'password'));
         Team::updateTeamPassword(
           $password_hash,
-          intval($params['team_id'])
+          intval(must_have_string($params, 'team_id'))
         );
       }
-      ok_response('Updated succesfully', 'admin');
-      break;
+      return ok_response('Updated succesfully', 'admin');
     case 'toggle_admin_team':
       Team::setAdmin(
-        intval($params['team_id']),
-        (bool)intval($params['admin'])
+        intval(must_have_string($params, 'team_id')),
+        (bool)intval(must_have_string($params, 'admin'))
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'toggle_status_team':
       Team::setStatus(
-        intval($params['team_id']),
-        (bool)intval($params['status'])
+        intval(must_have_string($params, 'team_id')),
+        (bool)intval(must_have_string($params, 'status'))
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'toggle_visible_team':
       Team::setVisible(
-        intval($params['team_id']),
-        (bool)intval($params['visible'])
+        intval(must_have_string($params, 'team_id')),
+        (bool)intval(must_have_string($params, 'visible'))
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'enable_logo':
       Logo::setEnabled(
-        intval($params['logo_id']),
+        intval(must_have_string($params, 'logo_id')),
         true
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'disable_logo':
       Logo::setEnabled(
-        intval($params['logo_id']),
+        intval(must_have_string($params, 'logo_id')),
         false
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'enable_country':
       Country::setStatus(
-        $params['country_id'],
+        intval(must_have_string($params, 'country_id')),
         true,
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'disable_country':
       Country::setStatus(
-        $params['country_id'],
+        intval(must_have_string($params, 'country_id')),
         false,
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'delete_team':
       Team::delete(
-        intval($params['team_id'])
+        intval(must_have_string($params, 'team_id'))
       );
-      ok_response('Deleted successfully', 'admin');
-      break;
+      return ok_response('Deleted successfully', 'admin');
     case 'update_session':
       sess_write(
-        $params['cookie'],
-        $params['data']
+        must_have_string($params, 'cookie'),
+        must_have_string($params, 'data')
       );
-      ok_response('Updated successfully', 'admin');
-      break;
+      return ok_response('Updated successfully', 'admin');
     case 'delete_session':
       sess_destroy(
-        $params['cookie']
+        must_have_string($params, 'cookie')
       );
-      ok_response('Deleted successfully', 'admin');
-      break;
+      return ok_response('Deleted successfully', 'admin');
     case 'delete_category':
       Category::delete(
-        intval($params['category_id'])
+        intval(must_have_string($params, 'category_id'))
       );
-      ok_response('Deleted successfully', 'admin');
-      break;
+      return ok_response('Deleted successfully', 'admin');
     case 'create_category':
       Category::create(
-        $params['category']
+        must_have_string($params, 'category')
       );
-      ok_response('Deleted successfully', 'admin');
-      break;
+      return ok_response('Deleted successfully', 'admin');
     case 'create_attachment':
       $result = Attachment::create(
         'attachment_file',
-        $params['filename'],
-        intval($params['level_id']),
+        must_have_string($params, 'filename'),
+        intval(must_have_string($params, 'level_id')),
       );
       if ($result) {
-        ok_response('Created successfully', 'admin');
+        return ok_response('Created successfully', 'admin');
+      } else {
+        return ''; // TODO
       }
-      break;
     case 'update_attachment':
       Attachment::update(
-        $params['filename'],
-        intval($params['level_id']),
+        intval(must_have_idx($params, 'attachment_id')),
+        intval(must_have_string($params, 'level_id')),
+        must_have_string($params, 'filename'),
       );
-      ok_response('Updated successfully', 'admin');
-      break;
+      return ok_response('Updated successfully', 'admin');
     case 'delete_attachment':
       Attachment::delete(
-        intval($params['attachment_id']),
+        intval(must_have_string($params, 'attachment_id')),
       );
-      ok_response('Deleted successfully', 'admin');
-      break;
+      return ok_response('Deleted successfully', 'admin');
     case 'create_link':
       Link::create(
-        $params['link'],
-        intval($params['level_id']),
+        must_have_string($params, 'link'),
+        intval(must_have_string($params, 'level_id')),
       );
-      ok_response('Created successfully', 'admin');
-      break;
+      return ok_response('Created successfully', 'admin');
     case 'update_link':
       Link::update(
-        $params['link'],
-        intval($params['level_id']),
-        intval($params['link_id']),
+        must_have_string($params, 'link'),
+        intval(must_have_string($params, 'level_id')),
+        intval(must_have_string($params, 'link_id')),
       );
-      ok_response('Updated succesfully', 'admin');
-      break;
+      return ok_response('Updated succesfully', 'admin');
     case 'delete_link':
       Link::delete(
-        intval($params['link_id']),
+        intval(must_have_string($params, 'link_id')),
       );
-      ok_response('Deleted successfully', 'admin');
-      break;
+      return ok_response('Deleted successfully', 'admin');
     case 'change_configuration':
-      $field = $params['field'];
+      $field = must_have_string($params, 'field');
       if (Configuration::validField($field)) {
         Configuration::update(
           $field,
-          $params['value']
+          must_have_string($params, 'value')
         );
-        ok_response('Success', 'admin');
+        return ok_response('Success', 'admin');
       } else {
-        error_response('Invalid configuration', 'admin');
+        return error_response('Invalid configuration', 'admin');
       }
-      break;
     case 'create_announcement':
       $control = new Control();
       $control->new_announcement(
-        $params['announcement']
+        must_have_string($params, 'announcement')
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'delete_announcement':
       $control = new Control();
       $control->delete_announcement(
-        $params['announcement_id']
+        must_have_string($params, 'announcement_id')
       );
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'create_tokens':
       $control = new Control();
       $control->create_tokens();
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'export_tokens':
       $control = new Control();
       $control->export_tokens();
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'begin_game':
       $control = new Control();
       $control->begin();
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'end_game':
       $control = new Control();
       $control->end();
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     case 'backup_db':
       $control = new Control();
       $control->backup_db();
-      ok_response('Success', 'admin');
-      break;
+      return ok_response('Success', 'admin');
     default:
       admin_page();
-      break;
+      return '';
     }
 
   }
