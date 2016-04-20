@@ -490,11 +490,9 @@ class IndexController extends Controller {
     case 'countdown':
       return $this->renderCountdownContent();
     case 'game':
-      game_page();
-      return <div></div>;
+      throw new GameRedirectException();
     case 'admin':
-      admin_page();
-      return <div></div>;
+      throw new AdminRedirectException();
     default:
       return $this->renderMainContent();
     }

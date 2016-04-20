@@ -27,31 +27,6 @@ function redirect(string $location): void {
   header('Location: '.$location);
 }
 
-function login_page(): void {
-  redirect('/index.php?page=login');
-}
-
-function error_page(): void {
-  redirect('/index.php?page=error');
-  die();
-}
-
-function registration_page(): void {
-  redirect('/index.php?page=registration');
-}
-
-function game_page(): void {
-  redirect('/index.php?p=game');
-}
-
-function admin_page(): void {
-  redirect('/index.php?p=admin');
-}
-
-function start_page(): void {
-  redirect('/index.php');
-}
-
 function request_response(string $result, string $msg, string $redirect): string {
   $response_data = array(
     'result' => $result,

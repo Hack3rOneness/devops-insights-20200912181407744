@@ -45,8 +45,7 @@ class IndexAjaxController extends AjaxController {
   protected function handleAction(string $action, array<string, mixed> $params): string {
     switch ($action) {
     case 'none':
-      start_page();
-      return ''; // TODO
+      throw new IndexRedirectException();
     case 'register_team':
       return $this->registerTeam(
         must_have_string($params, 'teamname'),
@@ -97,7 +96,7 @@ class IndexAjaxController extends AjaxController {
         $password,
       );
     default:
-      start_page();
+      throw new IndexRedirectException();
       return ''; // TODO
     }
   }

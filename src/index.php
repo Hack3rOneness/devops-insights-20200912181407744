@@ -2,4 +2,9 @@
 
 require_once('../vendor/autoload.php');
 
-echo Router::route();
+try {
+  echo Router::route();
+} catch (RedirectException $e) {
+  http_response_code($e->getStatusCode());
+  redirect($e->getPath());
+}

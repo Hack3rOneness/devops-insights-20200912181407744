@@ -13,7 +13,6 @@ class Router {
     } else {
       return strval(self::routeNormal($page));
     }
-    return ''; // TODO;
   }
 
   private static function routeAjax(string $page): string {
@@ -24,6 +23,8 @@ class Router {
       return (new AdminAjaxController())->handleRequest();
     case 'game':
       return (new GameAjaxController())->handleRequest();
+    default:
+      throw new NotFoundRedirectException();
     }
   }
 
@@ -38,7 +39,7 @@ class Router {
     case 'view':
       return (new ViewModeController())->render();
     default:
-      return <div></div>; // TODO: 404
+      throw new NotFoundRedirectException();
     }
   }
 }

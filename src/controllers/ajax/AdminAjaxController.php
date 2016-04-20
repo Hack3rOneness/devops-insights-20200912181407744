@@ -139,8 +139,7 @@ class AdminAjaxController extends AjaxController {
 
     switch ($action) {
     case 'none':
-      admin_page();
-      return ''; // TODO
+      throw new AdminRedirectException();
     case 'create_quiz':
       $bonus = Configuration::get('default_bonus')->getValue();
       $bonus_dec = Configuration::get('default_bonusdec')->getValue();
@@ -428,8 +427,7 @@ class AdminAjaxController extends AjaxController {
       $control->backup_db();
       return ok_response('Success', 'admin');
     default:
-      admin_page();
-      return '';
+      throw new AdminRedirectException();
     }
 
   }

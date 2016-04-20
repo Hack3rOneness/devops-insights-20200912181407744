@@ -41,7 +41,7 @@ class Db {
       );
     } catch (PDOException $e) {
       error_log("[ db.php ] - Connection error: ".$e->getMessage());
-      error_page();
+      throw new InternalErrorRedirectException();
     }
   }
 
@@ -76,7 +76,7 @@ class Db {
       $stmt->execute();
     } catch (PDOException $e) {
       error_log("[ db.php ] - Statement error: " . $stmt->errorInfo());
-      error_page();
+      throw new InternalErrorRedirectException();
     }
 
     $results = array();

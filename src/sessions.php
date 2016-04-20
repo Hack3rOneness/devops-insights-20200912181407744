@@ -97,8 +97,7 @@ function sess_set($name, $value) {
 function sess_logout() {
   session_destroy();
   unset($_SESSION['team_id']);
-  start_page();
-  exit();
+  throw new IndexRedirectException();
 }
 
 function sess_active() {
@@ -107,15 +106,13 @@ function sess_active() {
 
 function sess_enforce_login() {
   if (!isset($_SESSION['team_id'])) {
-    start_page();
-    exit();
+    throw new IndexRedirectException();
   }
 }
 
 function sess_enforce_admin() {
   if (!isset($_SESSION['admin'])) {
-    start_page();
-    exit();
+    throw new IndexRedirectException();
   }
 }
 
