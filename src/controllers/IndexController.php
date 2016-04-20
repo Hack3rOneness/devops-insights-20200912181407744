@@ -441,27 +441,30 @@ class IndexController extends Controller {
   public function renderMainNav(): :xhp {
     sess_start();
     if (sess_active()) {
-      $session_nav =
+      $right_nav =
         <ul class="nav-right">
+          <li><a href="/logout.php" data-active="gameboard">Logout</a></li>
           <li></li>
           <li><a href="/index.php?p=game" data-active="gameboard">Gameboard</a></li>
-          <li></li>
         </ul>;
     } else {
-      $session_nav =
+      $right_nav =
         <ul class="nav-right">
           <li><a href="/index.php?page=registration" data-active="registration">Registration</a></li>
           <li></li>
           <li><a href="/index.php?page=login" data-active="login">Login</a></li>
         </ul>;
     }
+    $left_nav =
+      <ul class="nav-left">
+        <li><a href="/index.php?page=countdown" data-active="countdown">Play CTF</a></li>
+        <li></li>
+        <li><a href="/index.php?page=rules" data-active="rules">Rules</a></li>
+      </ul>;
+
     return
       <nav class="fb-main-nav fb-navigation">
-        <ul class="nav-left">
-          <li><a href="/index.php?page=countdown" data-active="countdown">Play CTF</a></li>
-          <li></li>
-          <li><a href="/index.php?page=rules" data-active="rules">Rules</a></li>
-        </ul>
+        {$left_nav}
         <div class="branding">
           <a href="/">
             <div class="branding-rules">
@@ -469,7 +472,7 @@ class IndexController extends Controller {
             </div>
           </a>
         </div>
-        {$session_nav}
+        {$right_nav}
       </nav>;
   }
 
