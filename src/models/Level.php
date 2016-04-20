@@ -704,10 +704,18 @@ class Level extends Model {
     return $level->getHint();
   }
 
+  // Request all bases
+  public static function getBases(array <int, string> $bases): array <int, string> {
+    // Iterates and request all the bases endpoints for owner
+    // Return the response for each.
+  }
+
   // Bases processing and scoring.
   public static function baseScoring(): void {
     while (Configuration::get('game')->getValue() === '1') {
-      //self::take();
+      // Get all active base levels
+      // Retrieve current owners
+      // Give points
       sleep(intval(Configuration::get('bases_cycle')->getValue()));
     }
   }
