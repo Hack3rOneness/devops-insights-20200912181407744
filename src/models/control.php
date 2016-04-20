@@ -101,6 +101,9 @@ class Control {
     // Reset and kick off progressive scoreboard
     Progressive::reset();
     Progressive::run();
+
+    // Kick off scoring for bases
+    Level::baseScoring();
   }
 
   public function end() {

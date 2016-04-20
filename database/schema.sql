@@ -189,6 +189,7 @@ INSERT INTO `configuration` (field, value, description) VALUES("timer", "0", "(B
 INSERT INTO `configuration` (field, value, description) VALUES("scoring", "0", "(Boolean) Ability score levels");
 INSERT INTO `configuration` (field, value, description) VALUES("gameboard", "1", "(Boolean) Refresh all data in the gameboard");
 INSERT INTO `configuration` (field, value, description) VALUES("progressive_cycle", "300", "(Integer) Frequency to take progressive scoreboard in seconds");
+INSERT INTO `configuration` (field, value, description) VALUES("bases_cycle", "5", "(Integer) Frequency to score base levels in seconds");
 INSERT INTO `configuration` (field, value, description) VALUES("registration", "0", "(Boolean) Ability to register teams");
 INSERT INTO `configuration` (field, value, description) VALUES("registration_names", "0", "(Boolean) Registration will ask for names");
 INSERT INTO `configuration` (field, value, description) VALUES("registration_type", "1", "(Integer) Type of registration: 1 - Open; 2 - Tokenized;");
@@ -276,6 +277,23 @@ CREATE TABLE `scores_log` (
   `points` int(11) NOT NULL DEFAULT 0,
   `level_id` int(11) NOT NULL DEFAULT 0,
   `type` varchar(4) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bases_log`
+--
+
+DROP TABLE IF EXISTS `bases_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bases_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ts` timestamp NULL DEFAULT NULL,
+  `code` int(11) NOT NULL DEFAULT 0,
+  `response` text NOT NULL DEFAULT '',
+  `level_id` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

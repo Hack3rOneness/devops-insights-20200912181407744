@@ -599,7 +599,7 @@ class Level extends Model {
     }
   }
 
-  // Score level.
+  // Score level. Works for quiz and flags.
   public static function scoreLevel(int $level_id, int $team_id): bool {
     $db = self::getDb();
 
@@ -625,6 +625,30 @@ class Level extends Model {
     self::logValidScore($level_id, $team_id, $points, $level->getType());
 
     // kthxbai
+    return true;
+  }
+
+  // Score base.
+  public static function scoreBase(int $level_id, int $team_id): bool {
+    $db = self::getDb();
+
+    $level = self::getLevel($level_id);
+
+    // Calculate points to give
+    if (self::previousScore($level_id, $team_id, false)) {
+      $points = $level->getPoints() + $level->getBonus();
+    } else {
+      $points = $level->getPoints();
+    }
+
+    // Score!
+    $sql = 'UPDATE teams SET points = points + ?, last_score = NOW() WHERE id = ? LIMIT 1';
+    $elements = array($points, $team_id);
+    $db->query($sql, $elements);
+
+     // Log the score...
+    self::logValidScore($level_id, $team_id, $points, $level->getType());
+
     return true;
   }
 
@@ -678,5 +702,13 @@ class Level extends Model {
 
     // Hint!
     return $level->getHint();
+  }
+
+  // Bases processing and scoring.
+  public static function baseScoring(): void {
+    while (Configuration::get('game')->getValue() === '1') {
+      //self::take();
+      sleep(intval(Configuration::get('bases_cycle')->getValue()));
+    }
   }
 }

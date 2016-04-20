@@ -266,7 +266,6 @@ UPDATE `countries` SET enabled = 1 WHERE iso_code = "NI";
 UPDATE `countries` SET enabled = 1 WHERE iso_code = "NO";
 UPDATE `countries` SET enabled = 1 WHERE iso_code = "NZ";
 UPDATE `countries` SET enabled = 1 WHERE iso_code = "OM";
-UPDATE `countries` SET enabled = 1 WHERE iso_code = "PA";
 UPDATE `countries` SET enabled = 1 WHERE iso_code = "PE";
 UPDATE `countries` SET enabled = 1 WHERE iso_code = "PG";
 UPDATE `countries` SET enabled = 1 WHERE iso_code = "PH";

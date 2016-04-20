@@ -794,7 +794,7 @@
           $('.capture-text', $container).text(intro);
           if( attachments instanceof Array){
             $.each(attachments, function(){
-              var f = this.substr(this.lastIndexOf('/') +1 );
+              var f = this.substr(this.lastIndexOf('/') +1);
               var attachment = $('<a/>').attr('target', '_blank').attr('href', this).text('[ ' + f + ' ]');
               $('.capture-links', $container).append(attachment);
               $('.capture-links', $container).append($('<br/>'));
@@ -803,7 +803,14 @@
           if( links instanceof Array){
             var link_c = 1;
             $.each(links, function(){
-              var link = $('<a/>').attr('target', '_blank').attr('href', this).text('[ Link ' + link_c + ' ]');
+              var link;
+              if (this.startsWith('http')) {
+                link = $('<a/>').attr('target', '_blank').attr('href', this).text('[ Link ' + link_c + ' ]');
+              } else {
+                var ip = this.split(':')[0];
+                var port = this.split(':')[1];
+                link = $('<input/>').attr('type', 'text').attr('disabled', true).attr('value', 'nc ' + ip + ' ' + port);
+              }
               $('.capture-links', $container).append(link);
               $('.capture-links', $container).append($('<br/>'));
               link_c++;

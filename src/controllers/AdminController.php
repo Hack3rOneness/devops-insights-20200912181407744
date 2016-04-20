@@ -1011,11 +1011,11 @@ class AdminController extends Controller {
               <div class="col col-pad col-1-2">
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
-                    <label>Points</label>
+                    <label>Keep Points</label>
                     <input name="points" type="text"/>
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
-                    <label>Bonus</label>
+                    <label>Capture points</label>
                     <input name="bonus" type="text"/>
                   </div>
                 </div>
@@ -1167,6 +1167,11 @@ class AdminController extends Controller {
       if (Link::hasLinks($base->getId())) {
         $l_c = 1;
         foreach (Link::allLinks($base->getId()) as $link) {
+          if (filter_var($link->getLink(), FILTER_VALIDATE_URL)) {
+            $link_a = <a href={$link->getLink()} target="_blank">Link</a>;
+          } else {
+            $link_a = <a></a>;
+          }
           $links_div->appendChild(
             <div class="existing-link fb-column-container">
               <div class="col col-pad col-2-3">
@@ -1176,7 +1181,7 @@ class AdminController extends Controller {
                     <div class="col el--block-label el--full-text">
                       <label>Link {$l_c}:</label>
                         <input name="link" type="text" value={$link->getLink()} disabled={true}/>
-                        <a href={$link->getLink()} target="_blank">Link</a>
+                        {$link_a}
                     </div>
                   </form>
                 </div>
