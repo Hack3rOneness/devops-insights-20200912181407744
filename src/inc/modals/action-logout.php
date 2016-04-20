@@ -1,4 +1,3 @@
-
 <div class="fb-modal-content">
     <header class="modal-title">
         <h4>status_<span class="highlighted">Logout</span></h4>
@@ -10,7 +9,7 @@
 
         <div class="action-actionable">
             <a href="#" class="fb-cta cta--red js-close-modal">No</a>
-            <a href="logout.php" class="fb-cta cta--yellow">Yes</a>
+            <a href="index.php?p=logout" class="fb-cta cta--yellow">Yes</a>
         </div>
     </div>
 

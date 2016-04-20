@@ -38,6 +38,10 @@ class Router {
       return (new GameboardController())->render();
     case 'view':
       return (new ViewModeController())->render();
+    case 'logout':
+      // TODO: Make a confirmation modal?
+      sess_start();
+      sess_logout();
     default:
       throw new NotFoundRedirectException();
     }

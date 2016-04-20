@@ -443,7 +443,7 @@ class IndexController extends Controller {
     if (sess_active()) {
       $right_nav =
         <ul class="nav-right">
-          <li><a href="/logout.php" data-active="gameboard">Logout</a></li>
+          <li><a href="/index.php?p=logout" data-active="logout">Logout</a></li>
           <li></li>
           <li><a href="/index.php?p=game" data-active="gameboard">Gameboard</a></li>
         </ul>;
