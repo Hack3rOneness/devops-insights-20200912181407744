@@ -41,14 +41,13 @@ class GameAjaxController extends AjaxController {
     if ($action !== 'none') {
       // CSRF check
       if (idx($params, 'csrf_token') !== sess_csrf_token()) {
-        error_page();
+        return error_response('CSRF token is invalid', 'game');
       }
     }
 
     switch ($action) {
     case 'none':
-      game_page();
-      return ''; // TODO
+      return error_response('Invalid action', 'game');
     case 'answer_level':
       if (Configuration::get('scoring')->getValue() === '1') {
         // Check if answer is valid
@@ -88,8 +87,7 @@ class GameAjaxController extends AjaxController {
     case 'open_level':
       return ok_response('Success', 'admin');
     default:
-      game_page();
-      return ''; // TODO
+      return error_response('Invalid action', 'game');
     }
   }
 }

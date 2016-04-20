@@ -16,13 +16,12 @@ abstract class AjaxController {
       'POST' => INPUT_POST,
       'GET' => INPUT_GET,
     );
-    $method = getSERVER()->get('REQUEST_METHOD');
-    invariant(is_string($method), 'REQUEST_METHOD must be a string');
+    $method = must_have_string(getSERVER(), 'REQUEST_METHOD');
 
     $filter = idx($this->getFilters(), $method);
     if ($filter === null) {
       // Method not supported
-      return tuple('', array()); // TODO
+      return tuple('none', array());
     }
 
     $input_method = must_have_idx($input_methods, $method);

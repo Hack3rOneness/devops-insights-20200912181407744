@@ -132,14 +132,13 @@ class AdminAjaxController extends AjaxController {
     if ($action !== 'none') {
       // CSRF check
       if (idx($params, 'csrf_token') !== sess_csrf_token()) {
-        error_log('CSRF Token is invalid');
-        error_page();
+        return error_response('CSRF token is invalid', 'admin');
       }
     }
 
     switch ($action) {
     case 'none':
-      throw new AdminRedirectException();
+      return error_response('Invalid action', 'admin');
     case 'create_quiz':
       $bonus = Configuration::get('default_bonus')->getValue();
       $bonus_dec = Configuration::get('default_bonusdec')->getValue();
@@ -427,8 +426,7 @@ class AdminAjaxController extends AjaxController {
       $control->backup_db();
       return ok_response('Success', 'admin');
     default:
-      throw new AdminRedirectException();
+      return error_response('Invalid action', 'admin');
     }
-
   }
 }

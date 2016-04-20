@@ -45,7 +45,7 @@ class IndexAjaxController extends AjaxController {
   protected function handleAction(string $action, array<string, mixed> $params): string {
     switch ($action) {
     case 'none':
-      throw new IndexRedirectException();
+      return error_response('Invalid action', 'index');
     case 'register_team':
       return $this->registerTeam(
         must_have_string($params, 'teamname'),
@@ -96,8 +96,7 @@ class IndexAjaxController extends AjaxController {
         $password,
       );
     default:
-      throw new IndexRedirectException();
-      return ''; // TODO
+      return error_response('Invalid action', 'index');
     }
   }
 
