@@ -67,7 +67,7 @@ class Control {
   public function begin() {
     // Disable registration
     Configuration::update('registration', '0');
-
+    
     // Reset all points
     Team::resetAllPoints();
 
@@ -79,6 +79,9 @@ class Control {
 
     // Clear failures log
     $this->reset_failures();
+
+    // Clear bases log
+    $this->reset_bases();
 
     // Mark game as started
     Configuration::update('game', '1');
@@ -159,6 +162,11 @@ class Control {
 
   public function reset_failures() {
     $sql = 'DELETE FROM failures_log WHERE id > 0';
+    $this->db->query($sql);
+  }
+
+  public function reset_bases() {
+    $sql = 'DELETE FROM bases_log WHERE id > 0';
     $this->db->query($sql);
   }
 }

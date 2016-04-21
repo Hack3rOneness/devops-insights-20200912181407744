@@ -93,9 +93,7 @@ class Progressive extends Model {
 
   // Kick off the progressive scoreboard in the background.
   public static function run(): void {
-    while (self::getGameStatus()) {
-      self::take();
-      sleep(self::getCycle());
-    }
+    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.$_SERVER['DOCUMENT_ROOT'].'/scripts/progressive.php &';
+    shell_exec($cmd);
   }
 }

@@ -484,6 +484,21 @@ class Level extends Model {
     return $levels;
   }
 
+  // All levels by status.
+  public static function allActiveBases(): array<Level> {
+    $db = self::getDb();
+
+    $sql = 'SELECT * FROM levels WHERE active = 1 AND type = "base"';
+    $results = $db->query($sql);
+
+    $bases = array();
+    foreach ($results as $row) {
+      $bases[] = self::levelFromRow($row);
+    }
+
+    return $bases;
+  }
+
   // All levels by type.
   public static function allTypeLevels(string $type): array<Level> {
     $db = self::getDb();
@@ -563,6 +578,15 @@ class Level extends Model {
     $db->query($sql, $elements);
   }
 
+  // Log base request.
+  public static function logBaseEntry(int $level_id, int $code, string $response): void {
+    $db = self::getDb();
+
+    $sql = 'INSERT INTO bases_log (ts, level_id, code, response) VALUES (NOW(), ?, ?, ?)';
+    $elements = array($level_id, $code, $response);
+    $db->query($sql, $elements);
+  }
+
   // Log hint request hint.
   public static function logGetHint(int $level_id, int $team_id, int $penalty): void {
     $db = self::getDb();
@@ -636,9 +660,9 @@ class Level extends Model {
 
     // Calculate points to give
     if (self::previousScore($level_id, $team_id, false)) {
-      $points = $level->getPoints() + $level->getBonus();
-    } else {
       $points = $level->getPoints();
+    } else {
+      $points = $level->getPoints() + $level->getBonus();
     }
 
     // Score!
@@ -704,20 +728,57 @@ class Level extends Model {
     return $level->getHint();
   }
 
+  // Get the IP from a base level.
+  public static function getBaseIP(int $base_id): string {
+    $link = Link::allLinks($base_id)[0];
+    $ip = explode(':', $link->getLink())[0];
+    
+    return $ip;
+  }
+
   // Request all bases
-  public static function getBases(array <int, string> $bases): array<int, string> {
+  public static function getBasesResponses(array <int, string> $bases): array <int, string> {
     // Iterates and request all the bases endpoints for owner
-    // Return the response for each.
-    return array(); // TODO
+    $responses = array();
+    $curl_handlers = array();
+    $multi_handler = curl_multi_init();
+
+    // Create the list of request handlers
+    foreach ($bases as $base) {
+      $curl_handlers[$base['id']] = curl_init();
+      curl_setopt($curl_handlers[$base['id']], CURLOPT_URL, $base['url']);
+      curl_setopt($curl_handlers[$base['id']], CURLOPT_HEADER, 0);
+      curl_setopt($curl_handlers[$base['id']], CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($curl_handlers[$base['id']], CURLOPT_PORT, 12345);
+      curl_setopt($curl_handlers[$base['id']], CURLOPT_TIMEOUT, 3);
+      curl_multi_add_handle($multi_handler, $curl_handlers[$base['id']]);
+    }
+
+    // Run each request by executing all the handlers
+    $running = 0;
+    do {
+      curl_multi_exec($multi_handler, $running);
+    } while ($running > 0);
+
+    // Get responses and remove handlers
+    foreach($curl_handlers as $id => $c) {
+      $r = array(
+        'id' => intval($id),
+        'response' => curl_multi_getcontent($c)
+      );
+      curl_multi_remove_handle($multi_handler, $c);
+      array_push($responses, $r);
+    }
+ 
+    curl_multi_close($multi_handler);
+    
+    // Return the responses
+    return $responses;
   }
 
   // Bases processing and scoring.
   public static function baseScoring(): void {
-    while (Configuration::get('game')->getValue() === '1') {
-      // Get all active base levels
-      // Retrieve current owners
-      // Give points
-      sleep(intval(Configuration::get('bases_cycle')->getValue()));
-    }
+    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.$_SERVER['DOCUMENT_ROOT'].'/scripts/bases.php &';
+    shell_exec($cmd);
   }
 }
