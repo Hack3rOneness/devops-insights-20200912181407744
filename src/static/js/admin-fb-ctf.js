@@ -153,8 +153,13 @@ var $body = $('body');
     $('input[type="text"], input[type="password"]', $newSection).prop("disabled", false);
 
     $('.dk-select', $newSection).remove();
-
     $('select', $newSection).dropkick();
+    var select1 = $('[name=entity_id]', $newSection)[0];
+    var select2 = $('[name=category_id]', $newSection)[0];
+    if (select1 !== undefined && select2 !== undefined) {
+      Dropkick(select1).disable(false);
+      Dropkick(select2).disable(false);
+    }
 
     if (titleText.indexOf('team') > -1) {
       $title.text('Team ' + sectionIndex);
@@ -857,6 +862,8 @@ var $body = $('body');
         $section.addClass(lockClass);
         updateElement($section);
         $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", true);
+        Dropkick($('[name=entity_id]', $section)[0]).disable();
+        Dropkick($('[name=category_id]', $section)[0]).disable();
       } else if (action === 'add-new'){
         addNewSection($self);
       } else if (action === 'create') {
@@ -870,6 +877,8 @@ var $body = $('body');
       } else if (action === 'edit'){
         $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", false);
+        Dropkick($('[name=entity_id]', $section)[0]).disable(false);
+        Dropkick($('[name=category_id]', $section)[0]).disable(false);
       } else if (action === 'delete') {
         $section.remove();
         deleteElement($section);

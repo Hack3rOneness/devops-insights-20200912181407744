@@ -45,7 +45,7 @@ class AdminController extends Controller {
   }
 
   private function generateCountriesSelect(int $selected): :xhp {
-    $select = <select name="entity_id" />;
+    $select = <select name="entity_id" disabled={true}/>;
 
     if ($selected === 0) {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
@@ -63,7 +63,7 @@ class AdminController extends Controller {
 
   private function generateLevelCategoriesSelect(int $selected): :xhp {
     $categories = Category::allCategories();
-    $select = <select name="category_id" />;
+    $select = <select name="category_id" disabled={true}/>;
 
     foreach ($categories as $category) {
       if ($category->getCategory() === 'Quiz') {
