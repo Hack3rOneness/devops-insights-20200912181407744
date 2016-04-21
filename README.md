@@ -49,3 +49,12 @@ brew cask install vagrant-manager
 brew install unison
 
 ```
+
+# Troubleshooting
+
+### `vendor` folder wasn't created when running `./tools/provisioning.sh`
+
+That might be because locale is not set correctly. Try running the command below first:
+```
+export LC_ALL=C
+```
