@@ -182,7 +182,7 @@ class Level extends Model {
     $result = $db->query($sql, $element);
 
     invariant(count($result) === 1, 'Expected exactly one result');
-    return intval(firstx($result)['id']);
+    return intval(must_have_idx(firstx($result), 'id'));
   }
 
   // Create a flag level.
@@ -259,13 +259,13 @@ class Level extends Model {
     $db = self::getDb();
 
     $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
-    $category_id = $db->query($sql)[0]['id'];
+    $category_id = intval(must_have_idx(firstx($db->query($sql)), 'id'));
     return self::create(
       'quiz',
       $title,
       $question,
       $entity_id,
-      intval($category_id),
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -292,12 +292,12 @@ class Level extends Model {
     $db = self::getDb();
 
     $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
-    $category_id = $db->query($sql)[0]['id'];
+    $category_id = intval(must_have_idx(firstx($db->query($sql)), 'id'));
     self::update(
       $title,
       $question,
       $entity_id,
-      intval($category_id),
+      $category_id,
       $points,
       $bonus,
       $bonus_dec,
@@ -548,16 +548,9 @@ class Level extends Model {
   public static function checkAnswer(int $level_id, string $answer): bool {
     $db = self::getDb();
 
-    return (bool)(
-      strtoupper(
-        trim(
-          self::getLevel($level_id)->getFlag()
-        )
-      ) ===
-      strtoupper(
-        trim($answer)
-      )
-    );
+    return
+      strtoupper(trim(self::getLevel($level_id)->getFlag())) ===
+      strtoupper(trim($answer));
   }
 
   // Adjust bonus.
@@ -617,7 +610,7 @@ class Level extends Model {
 
     if (count($result) > 0) {
       invariant(count($result) === 1, 'Expected exactly one result');
-      return (intval(firstx($result)['COUNT(*)']) > 0);
+      return intval(firstx($result)['COUNT(*)']) > 0;
     } else {
       return false;
     }
@@ -648,7 +641,6 @@ class Level extends Model {
     // Log the score...
     self::logValidScore($level_id, $team_id, $points, $level->getType());
 
-    // kthxbai
     return true;
   }
 
@@ -688,7 +680,7 @@ class Level extends Model {
 
     if (count($result) > 0) {
       invariant(count($result) === 1, 'Expected exactly one result');
-      return (intval(firstx($result)['COUNT(*)']) > 0);
+      return intval(firstx($result)['COUNT(*)']) > 0;
     } else {
       return false;
     }
@@ -703,11 +695,8 @@ class Level extends Model {
 
     // Check if team has already gotten this hint or if the team has scored this already
     // If so, hint is free
-    if (
-      (self::previousHint($level_id, $team_id, false))
-        ||
-      (self::previousScore($level_id, $team_id, false))
-    ) {
+    if (self::previousHint($level_id, $team_id, false) ||
+        self::previousScore($level_id, $team_id, false)) {
       $penalty = 0;
     }
 
@@ -732,12 +721,12 @@ class Level extends Model {
   public static function getBaseIP(int $base_id): string {
     $link = Link::allLinks($base_id)[0];
     $ip = explode(':', $link->getLink())[0];
-    
+
     return $ip;
   }
 
   // Request all bases
-  public static function getBasesResponses(array <int, string> $bases): array <int, string> {
+  public static function getBasesResponses(array<int, string> $bases): array<int, string> {
     // Iterates and request all the bases endpoints for owner
     $responses = array();
     $curl_handlers = array();
@@ -771,9 +760,9 @@ class Level extends Model {
       curl_multi_remove_handle($multi_handler, $c);
       array_push($responses, $r);
     }
- 
+
     curl_multi_close($multi_handler);
-    
+
     // Return the responses
     return $responses;
   }
@@ -781,8 +770,8 @@ class Level extends Model {
   // Bases processing and scoring.
   public static function baseScoring(): void {
     $control = new Control();
-    $server = getSERVER();
-    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.strval($server['DOCUMENT_ROOT']).'/scripts/bases.php > /dev/null 2>&1 & echo $!';
+    $document_root = must_have_string(getSERVER(), 'DOCUMENT_ROOT');
+    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.$document_root.'/scripts/bases.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     $control->startScriptLog(intval($pid), $cmd);
   }
