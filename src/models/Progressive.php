@@ -31,7 +31,7 @@ class Progressive extends Model {
   }
 
   public static function getGameStatus(): bool {
-    return (Configuration::get('game')->getValue() === '1');
+    return Configuration::get('game')->getValue() === '1';
   }
 
   public static function getCycle(): int {
@@ -93,8 +93,8 @@ class Progressive extends Model {
 
   // Kick off the progressive scoreboard in the background.
   public static function run(): void {
-    $server = getSERVER();
-    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.strval($server['DOCUMENT_ROOT']).'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
+    $document_root = must_have_string(getSERVER(), 'DOCUMENT_ROOT');
+    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.$document_root.'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     $control = new Control();
     $control->startScriptLog(intval($pid), $cmd);
