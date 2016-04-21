@@ -38,6 +38,23 @@ class Control {
     $this->db->query($sql, $element);
   }
 
+  public function startScriptLog($pid, $name) {
+    $sql = 'INSERT INTO scripts (ts, pid, name, status) VALUES (NOW(), ?, ?, 1)';
+    $elements = array($pid, $name);
+    $this->db->query($sql, $elements);
+  }
+
+  public function stopScriptLog($pid) {
+    $sql = 'UPDATE scripts SET status = 0 WHERE pid = ? LIMIT 1';
+    $element = array($pid);
+    $this->db->query($sql, $element);
+  }
+
+  public function clearScriptLog() {
+    $sql = 'DELETE FROM scripts WHERE id > 0';
+    $this->db->query($sql);
+  }
+
   public function create_tokens() {
     $crypto_strong = True;
     $tokens = array();

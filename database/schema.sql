@@ -299,6 +299,23 @@ CREATE TABLE `bases_log` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `scripts`
+--
+
+DROP TABLE IF EXISTS `scripts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scripts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ts` timestamp NULL DEFAULT NULL,
+  `pid` int(11) NOT NULL DEFAULT 0,
+  `name` text NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `failures_log`
 --
 

@@ -745,13 +745,15 @@ class Level extends Model {
 
     // Create the list of request handlers
     foreach ($bases as $base) {
-      $curl_handlers[$base['id']] = curl_init();
-      curl_setopt($curl_handlers[$base['id']], CURLOPT_URL, $base['url']);
-      curl_setopt($curl_handlers[$base['id']], CURLOPT_HEADER, 0);
-      curl_setopt($curl_handlers[$base['id']], CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($curl_handlers[$base['id']], CURLOPT_PORT, 12345);
-      curl_setopt($curl_handlers[$base['id']], CURLOPT_TIMEOUT, 3);
-      curl_multi_add_handle($multi_handler, $curl_handlers[$base['id']]);
+      $base_id = intval(must_have_idx($base, 'id'));
+      $base_url = must_have_idx($base, 'url');
+      $curl_handlers[$base_id] = curl_init();
+      curl_setopt($curl_handlers[$base_id], CURLOPT_URL, $base_url);
+      curl_setopt($curl_handlers[$base_id], CURLOPT_HEADER, 0);
+      curl_setopt($curl_handlers[$base_id], CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($curl_handlers[$base_id], CURLOPT_PORT, 12345);
+      curl_setopt($curl_handlers[$base_id], CURLOPT_TIMEOUT, 3);
+      curl_multi_add_handle($multi_handler, $curl_handlers[$base_id]);
     }
 
     // Run each request by executing all the handlers
@@ -778,7 +780,17 @@ class Level extends Model {
 
   // Bases processing and scoring.
   public static function baseScoring(): void {
-    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.$_SERVER['DOCUMENT_ROOT'].'/scripts/bases.php &';
-    shell_exec($cmd);
+    $control = new Control();
+    $server = getSERVER();
+    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.strval($server['DOCUMENT_ROOT']).'/scripts/bases.php > /dev/null 2>&1 & echo $!';
+    $pid = shell_exec($cmd);
+    $control->startScriptLog(intval($pid), $cmd);
+  }
+
+  // Stop bases processing and scoring process.
+  public static function stopBaseScoring(): void {
+    //$cmd = '';
+    //$pid = shell_exec($cmd);
+    //$control->startScriptLog(intval($pid), $cmd);
   }
 }

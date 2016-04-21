@@ -93,7 +93,18 @@ class Progressive extends Model {
 
   // Kick off the progressive scoreboard in the background.
   public static function run(): void {
-    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.$_SERVER['DOCUMENT_ROOT'].'/scripts/progressive.php &';
-    shell_exec($cmd);
+    $server = getSERVER();
+    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.strval($server['DOCUMENT_ROOT']).'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
+    $pid = shell_exec($cmd);
+    $control = new Control();
+    $control->startScriptLog(intval($pid), $cmd);
+  }
+
+  // Stop the progressive scoreboard process in the background
+  public static function stop(): void {
+    //$cmd = 'kill -9 '.$pid;
+    //$pid = shell_exec($cmd);
+    //$control = new Control();
+    //$control->startScriptLog(intval($pid), $cmd);
   }
 }
