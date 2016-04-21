@@ -705,9 +705,10 @@ class Level extends Model {
   }
 
   // Request all bases
-  public static function getBases(array <int, string> $bases): array <int, string> {
+  public static function getBases(array <int, string> $bases): array<int, string> {
     // Iterates and request all the bases endpoints for owner
     // Return the response for each.
+    return array(); // TODO
   }
 
   // Bases processing and scoring.

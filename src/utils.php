@@ -86,3 +86,11 @@ function firstx<T>(Traversable<T> $t): T {
   }
   invariant_violation('Expected non-empty collection');
 }
+
+function starts_with(string $haystack, string $needle): bool {
+  return substr($haystack, 0, strlen($needle)) === $needle;
+}
+
+function ends_with(string $haystack, string $needle): bool {
+  return substr($haystack, -strlen($needle)) === $needle;
+}

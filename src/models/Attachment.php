@@ -34,15 +34,19 @@ class Attachment extends Model {
       $md5_str = md5_file($tmp_name);
 
       // Extract extension and name
-      $parts = pathinfo($filename);
+      $parts = explode('.', $filename, 2);
+      $local_filename .= firstx($parts).'_'.$md5_str;
+
+      $extension = idx($parts, 1);
+      if ($extension !== null) {
+        $local_filename .= '.'.$extension;
+      }
 
       // Avoid php shells
-      if ($parts['extension'] === 'php') {
-        $local_filename .= $parts['filename'] . '_' . $md5_str . '.' . $parts['extension'] . '.txt';
-      } else {
-        $local_filename .= $parts['filename'] . '_' . $md5_str . '.' . $parts['extension'];
+      if (ends_with($local_filename, '.php')) {
+        $local_filename .= 's'; // Make the extension 'phps'
       }
-      move_uploaded_file($tmp_name, strval($server['DOCUMENT_ROOT']) . $local_filename);
+      move_uploaded_file($tmp_name, must_have_string($server, 'DOCUMENT_ROOT') . $local_filename);
     } else {
       return false;
     }

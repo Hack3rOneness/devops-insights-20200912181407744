@@ -42,6 +42,7 @@ class Router {
       // TODO: Make a confirmation modal?
       sess_start();
       sess_logout();
+      invariant(false, 'should not reach here');
     default:
       throw new NotFoundRedirectException();
     }
