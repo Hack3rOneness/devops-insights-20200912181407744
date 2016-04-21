@@ -851,11 +851,12 @@ var $body = $('body');
         }
         if (valid) {
           $section.addClass(lockClass);
-          $('input[type="text"], input[type="password"]', $section).prop("disabled", true);
+          $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", true);
         }
       } else if (action === 'save-no-validation'){
         $section.addClass(lockClass);
         updateElement($section);
+        $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", true);
       } else if (action === 'add-new'){
         addNewSection($self);
       } else if (action === 'create') {
