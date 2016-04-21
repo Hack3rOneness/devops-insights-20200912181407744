@@ -900,7 +900,7 @@
               var responseData = JSON.parse(data);
               if (responseData.result === 'OK') {
                 console.log('OK');
-                $('input[name=answer]', $container).css("background-color","green");
+                $('input[name=answer]', $container).css("background-color","#1f7a1f");
                 $('.js-trigger-score', $container).text('YES!');
                 setTimeout(function(){
                   $('.js-close-modal', $container).click();
@@ -908,7 +908,7 @@
               } else {
               // TODO: Make this a modal
                 console.log('Failed');
-                $('input[name=answer]', $container).css("background-color","red");
+                $('input[name=answer]', $container).css("background-color","#800000");
                 $('.js-trigger-score', $container).text('NOPE :(');
                 setTimeout(function(){
                   $('.js-trigger-score', $container).text('SUBMIT');

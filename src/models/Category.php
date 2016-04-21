@@ -53,7 +53,7 @@ class Category extends Model {
 
     if (count($result) > 0) {
       invariant(count($result) === 1, 'Expected exactly one result');
-      return (intval(firstx($result)['COUNT(*)']) > 0);
+      return intval(firstx($result)['COUNT(*)']) > 0;
     } else {
       return false;
     }
