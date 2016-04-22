@@ -531,6 +531,7 @@ var $body = $('body');
     var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
     var category_id = $('.level_form select[name=category_id] option:selected', section)[0].value;
     var points = $('.level_form input[name=points]', section)[0].value;
+    var bonus = $('.level_form input[name=bonus]', section)[0].value;
     var hint = $('.level_form input[name=hint]', section)[0].value;
     var penalty = $('.level_form input[name=penalty]', section)[0].value;
     var create_data = {
@@ -540,10 +541,11 @@ var $body = $('body');
       entity_id: entity_id,
       category_id: category_id,
       points: points,
+      bonus: bonus,
       hint: hint,
       penalty: penalty
     };
-    if ((title) && (description) && (entity_id) && (points)) {
+    if ((title) && (description) && (entity_id) && (points) && (points)) {
       sendAdminRequest(create_data);
     }
   }
