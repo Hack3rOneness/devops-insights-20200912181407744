@@ -45,7 +45,7 @@ class AdminController extends Controller {
   }
 
   private function generateCountriesSelect(int $selected): :xhp {
-    $select = <select name="entity_id" disabled={true}/>;
+    $select = <select class="not_configuration" name="entity_id" />;
 
     if ($selected === 0) {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
@@ -63,7 +63,7 @@ class AdminController extends Controller {
 
   private function generateLevelCategoriesSelect(int $selected): :xhp {
     $categories = Category::allCategories();
-    $select = <select name="category_id" disabled={true}/>;
+    $select = <select class="not_configuration" name="category_id" />;
 
     foreach ($categories as $category) {
       if ($category->getCategory() === 'Quiz') {
@@ -82,7 +82,7 @@ class AdminController extends Controller {
 
   private function generateFilterCategoriesSelect(): :xhp {
     $categories = Category::allCategories();
-    $select = <select name="category_filter" />;
+    $select = <select class="not_configuration" name="category_filter" />;
 
     $select->appendChild(<option class="filter_option" value="all" selected={true}>All Categories</option>);
     foreach ($categories as $category) {
@@ -550,7 +550,7 @@ class AdminController extends Controller {
             <div class="col col-1-5 el--block-label el--full-text">
             </div>
             <div class="col col-1-5 el--block-label el--full-text">
-              <select name="status_filter">
+              <select class="not_configuration" name="status_filter">
                 <option class="filter_option" value="all">All Status</option>
                 <option class="filter_option" value="Enabled">Enabled</option>
                 <option class="filter_option" value="Disabled">Disabled</option>
@@ -749,7 +749,7 @@ class AdminController extends Controller {
             <div class="col col-1-5 el--block-label el--full-text">
             </div>
             <div class="col col-1-5 el--block-label el--full-text">
-              <select name="status_filter">
+              <select class="not_configuration" name="status_filter">
                 <option class="filter_option" value="all">All Status</option>
                 <option class="filter_option" value="Enabled">Enabled</option>
                 <option class="filter_option" value="Disabled">Disabled</option>
@@ -1063,7 +1063,7 @@ class AdminController extends Controller {
               <div class="col col-1-5 el--block-label el--full-text">
               </div>
               <div class="col col-1-5 el--block-label el--full-text">
-                <select name="status_filter">
+                <select class="not_configuration" name="status_filter">
                   <option class="filter_option" value="all">All Status</option>
                   <option class="filter_option" value="Enabled">Enabled</option>
                   <option class="filter_option" value="Disabled">Disabled</option>
@@ -1372,7 +1372,7 @@ class AdminController extends Controller {
             <div class="col col-1-5 el--block-label el--full-text">
             </div>
             <div class="col col-1-5 el--block-label el--full-text">
-              <select name="use_filter">
+              <select class="not_configuration" name="use_filter">
                 <option class="filter_option" value="all">All Countries</option>
                 <option class="filter_option" value="Yes">In Use</option>
                 <option class="filter_option" value="No">Not Used</option>
@@ -1381,7 +1381,7 @@ class AdminController extends Controller {
             <div class="col col-1-5 el--block-label el--full-text">
             </div>
             <div class="col col-1-5 el--block-label el--full-text">
-              <select name="country_status_filter">
+              <select class="not_configuration" name="country_status_filter">
                 <option class="filter_option" value="all">All Status</option>
                 <option class="filter_option" value="enabled">Enabled</option>
                 <option class="filter_option" value="disabled">Disabled</option>
@@ -1674,12 +1674,12 @@ class AdminController extends Controller {
       $action_text = strtoupper(explode('_', $highlighted_action)[0]);
 
       if ($using_logo) {
-        $use_select = <select></select>;
+        $use_select = <select class="not_configuration"></select>;
         foreach ($using_logo as $t) {
           $use_select->appendChild(<option value="">{$t->getName()}</option>);
         }
       } else {
-        $use_select = <select><option value="0">None</option></select>;
+        $use_select = <select class="not_configuration"><option value="0">None</option></select>;
       }
 
       $adminsections->appendChild(

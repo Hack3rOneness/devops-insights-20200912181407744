@@ -2758,7 +2758,6 @@
             $tabContent = $tabs.next('.tab-content-container');
 
         if ($tabContent.length > 0) {
-          console.log('LOLOLO');
           $('input[type="radio"]', $tabs).on('change', function(event) {
             event.preventDefault();
             var tab = this.value;

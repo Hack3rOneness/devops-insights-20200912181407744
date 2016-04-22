@@ -38,9 +38,9 @@ class Control {
     $this->db->query($sql, $element);
   }
 
-  public function startScriptLog($pid, $name) {
-    $sql = 'INSERT INTO scripts (ts, pid, name, status) VALUES (NOW(), ?, ?, 1)';
-    $elements = array($pid, $name);
+  public function startScriptLog($pid, $name, $cmd) {
+    $sql = 'INSERT INTO scripts (ts, pid, name, status) VALUES (NOW(), ?, ?, ?, 1)';
+    $elements = array($pid, $name, $cmd);
     $this->db->query($sql, $elements);
   }
 
@@ -50,8 +50,14 @@ class Control {
     $this->db->query($sql, $element);
   }
 
+  public function getScriptPid($name) {
+    $sql = 'SELECT pid FROM scripts WHERE name = ? AND status = 1 LIMIT 1';
+    $element = array($name);
+    return intval($this->db->query($sql, $element)[0]['pid']);
+  }
+
   public function clearScriptLog() {
-    $sql = 'DELETE FROM scripts WHERE id > 0';
+    $sql = 'DELETE FROM scripts WHERE id > 0 AND status = 0';
     $this->db->query($sql);
   }
 
@@ -139,6 +145,12 @@ class Control {
 
     // Stop timer
     Configuration::update('timer', '0');
+
+    // Stop bases scoring process
+    Level::stopBaseScoring();
+
+    // Stop progressive scoreboard process
+    Progressive::stop();
   }
 
   public function backup_db() {

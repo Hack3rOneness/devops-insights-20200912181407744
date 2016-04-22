@@ -972,9 +972,11 @@ var $body = $('body');
       } else {
         value = $('option:selected', $this)[0].value;
       }
-      changeConfiguration(field, value);
-      if (field === 'registration_type') {
-        location.reload();
+      if (!$(this).hasClass('not_configuration')) {
+        changeConfiguration(field, value);
+        if (field === 'registration_type') {
+          location.reload();
+        }
       }
     });
 

@@ -310,6 +310,7 @@ CREATE TABLE `scripts` (
   `ts` timestamp NULL DEFAULT NULL,
   `pid` int(11) NOT NULL DEFAULT 0,
   `name` text NOT NULL DEFAULT '',
+  `cmd` text NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

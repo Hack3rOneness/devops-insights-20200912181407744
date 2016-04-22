@@ -97,14 +97,19 @@ class Progressive extends Model {
     $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.$document_root.'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     $control = new Control();
-    $control->startScriptLog(intval($pid), $cmd);
+    $control->startScriptLog(intval($pid), 'progressive', $cmd);
   }
 
   // Stop the progressive scoreboard process in the background
   public static function stop(): void {
-    //$cmd = 'kill -9 '.$pid;
-    //$pid = shell_exec($cmd);
-    //$control = new Control();
-    //$control->startScriptLog(intval($pid), $cmd);
+    // Kill running process
+    $control = new Control();
+    $pid = $control->getScriptPid('progressive');
+    if ($pid > 0) {
+      $cmd = 'kill -9 '.strval($pid);
+      shell_exec($cmd);
+    }
+    // Mark process as stopped
+    $control->stopScriptLog($pid);
   }
 }
