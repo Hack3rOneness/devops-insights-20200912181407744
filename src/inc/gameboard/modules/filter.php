@@ -49,10 +49,10 @@ class FilterModuleController {
               </label>
             </div>
             <div class="tab-content-container module-scrollable">
-              <div class="radio-tab-content active" data-tab="category">
+              <div class="radio-tab-content active" data-tab="category" id="category-filter-content">
                 {$categories_ul}
               </div>
-              <div class="radio-tab-content" data-tab="status">
+              <div class="radio-tab-content" data-tab="status" id="status-filter-content">
                 <ul class="radio-list">
                   <li>
                     <input type="radio" name="fb--module--filter--status" value="all" id="fb--module--filter--status--all" checked={true}/>

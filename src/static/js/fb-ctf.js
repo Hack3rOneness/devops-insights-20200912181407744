@@ -312,7 +312,17 @@
           // Game clock
           setInterval( function() {
             loadClockModule();
+            setupInputListeners();
           }, 1000);
+
+        // This is a huge hack because
+        // the event listeners were being overriden for
+        // some unkown reason I didn't want to spend time
+        // figuring out
+          setInterval( function() {
+            setupInputListeners();
+          }, 1000);
+
 
           // Countries
           setInterval( function() {
@@ -498,115 +508,11 @@
           }
         });
 
-        /* --------------------------------------------
-         * --inputs
-         * -------------------------------------------- */
+      /* --------------------------------------------
+       * --inputs
+       * -------------------------------------------- */
 
-        //
-        // filter the map based on category
-        //
-        $('input[name="fb--module--filter--category"]').on('change', function(event) {
-          event.preventDefault();
-          var category = $(this).val();
-
-          $svgCountries.each(function(){
-            var countryGroup = d3.select(this);
-
-            countryGroup.classed("inactive", false);
-            countryGroup.classed("highlighted", false);
-
-            if( category !== "All" ){
-              if( countryGroup.attr('data-category') === category){
-                countryGroup.classed('highlighted', true);
-              } else {
-                countryGroup.classed('inactive', true);
-              }
-            }
-          });
-        });
-
-        //
-        // filter the map based on status
-        //
-        $('input[name="fb--module--filter--status"]').on('change', function(event) {
-          event.preventDefault();
-          var status = $(this).val();
-
-          $svgCountries.each(function(){
-            var countryGroup = d3.select(this);
-
-            countryGroup.classed("inactive", false);
-            countryGroup.classed("highlighted", false);
-
-            if( status !== "All" ){
-              if( countryGroup.attr('data-status') === status){
-                countryGroup.classed('highlighted', true);
-              } else {
-                countryGroup.classed('inactive', true);
-              }
-            }
-          });
-        });
-
-        //
-        // filter the filters
-        //
-        $('input[name="fb--module--filter"]').on('change', function(event) {
-          event.preventDefault();
-          var filter_type = $(this).val();
-          if (filter_type === 'category') {
-            $('.status-filter-content').removeClass('active');
-            $('.category-filter-content').addClass('active');
-          }
-          if (filter_type === 'status') {
-            $('.category-filter-content').removeClass('active');
-            $('.status-filter-content').addClass('active');
-          }
-        });
-
-        //
-        // filter the map based on captured
-        //
-        $('input[name="fb--map-select"]').on('change', function(event) {
-          event.preventDefault();
-          var select = $(this).val();
-
-          $svgCountries.each(function(){
-            var countryGroup = d3.select(this),
-            captureTeam  = countryGroup.attr('data-captured');
-
-            countryGroup.classed("inactive", false);
-            countryGroup.classed("highlighted", false);
-
-            if( select !== "all" ){
-              if( ( select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam ) ||
-                ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam ) ){
-                countryGroup.classed('highlighted', true);
-            } else {
-              countryGroup.classed('inactive', true);
-            }
-          }
-        });
-
-        $('tr', $listview).each(function(){
-          var $tr = $(this),
-              $self = $tr.removeClass('inactive highlighted'),
-              captureTeam = $self.data('captured');
-
-          if (select !== "all") {
-            if(
-              (select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
-              (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam) ||
-              (select === "give-help" && $('.status--give-help', $tr).length > 0) ||
-              (select === "need-help" && $('.status--incoming-help', $tr).length > 0)
-            ){
-              $self.addClass('highlighted');
-            } else {
-              $self.addClass('inactive');
-            }
-          }
-        });
-      });
+       setupInputListeners();
 
       /* --------------------------------------------
        * --country interaction
@@ -2980,5 +2886,103 @@ function activateTeams() {
         $('.points--total', $modal).text( teamData.points.total);
       });
 
+  });
+}
+
+function setupInputListeners(){
+  var $svgCountries = $('.countries > g', $('#fb-gameboard-map'));
+
+  function toggleCountryGroup(inputName, value) {
+    $svgCountries.each(function(){
+      var countryGroup = d3.select(this);
+      countryGroup.classed('highlighted', true);
+      countryGroup.classed('inactive', false);
+
+      if( value !== "all" ){
+        if( countryGroup.attr('data-' + inputName) === value){
+          countryGroup.classed('highlighted', true);
+          countryGroup.classed('inactive', false);
+        } else {
+          countryGroup.classed('highlighted', false);
+          countryGroup.classed('inactive', true);
+        }
+      }
+    });
+  }
+
+  //
+  // filter the map based on category
+  //
+  $('input[name=fb--module--filter--category]').click(function() {
+    toggleCountryGroup("category", $(this).val());
+  });
+
+  //
+  // filter the map based on status
+  //
+  $('input[name="fb--module--filter--status"]').click(function() {
+    toggleCountryGroup("status", $(this).val());
+  });
+
+  //
+  // filter the filters
+  //
+  $("input[name=fb--module--filter]").click(function() {
+    var filter_type = $(this).val();
+    if (filter_type === 'category') {
+      $('#status-filter-content').removeClass('active');
+      $('#category-filter-content').addClass('active');
+    }
+    if (filter_type === 'status') {
+      $('#category-filter-content').removeClass('active');
+      $('#status-filter-content').addClass('active');
+    }
+  });
+
+  //
+  // filter the map based on captured
+  //
+  $('input[name="fb--map-select"]').on('change', function(event) {
+    event.preventDefault();
+    var select = $(this).val();
+
+    $svgCountries.each(function(){
+      var countryGroup = d3.select(this),
+      captureTeam  = countryGroup.attr('data-captured');
+
+      countryGroup.classed("inactive", false);
+      countryGroup.classed("highlighted", false);
+
+      if( select !== "all" ){
+        if( ( select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam ) ||
+            ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam ) ){
+          countryGroup.classed('highlighted', true);
+        } else {
+          countryGroup.classed('inactive', true);
+        }
+      }
+    });
+
+
+    var $listview = $('.fb-listview');
+
+    $('tr', $listview).each(function(){
+      var $tr = $(this),
+        $self = $tr.removeClass('inactive highlighted'),
+        captureTeam = $self.data('captured');
+
+      if (select !== "all") {
+        if(
+            (select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
+            (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam) ||
+            (select === "give-help" && $('.status--give-help', $tr).length > 0) ||
+            (select === "need-help" && $('.status--incoming-help', $tr).length > 0)
+          ){
+          $self.addClass('highlighted');
+        } else {
+          $self.addClass('inactive');
+        }
+      }
+    });
   });
 }
