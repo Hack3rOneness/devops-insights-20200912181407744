@@ -105,6 +105,7 @@ class Control {
 
     // Clear bases log
     $this->reset_bases();
+    $this->clearScriptLog();
 
     // Mark game as started
     Configuration::update('game', '1');

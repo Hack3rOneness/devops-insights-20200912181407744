@@ -208,7 +208,7 @@ class AdminAjaxController extends AjaxController {
         must_have_int($params, 'entity_id'),
         must_have_int($params, 'category_id'),
         must_have_int($params, 'points'),
-        intval($bonus),
+        must_have_int($params, 'bonus'),
         must_have_string($params, 'hint'),
         intval(must_have_idx($params, 'penalty')),
       );
