@@ -39,7 +39,7 @@ class Control {
   }
 
   public function startScriptLog($pid, $name, $cmd) {
-    $sql = 'INSERT INTO scripts (ts, pid, name, status) VALUES (NOW(), ?, ?, ?, 1)';
+    $sql = 'INSERT INTO scripts (ts, pid, name, cmd, status) VALUES (NOW(), ?, ?, ?, 1)';
     $elements = array($pid, $name, $cmd);
     $this->db->query($sql, $elements);
   }
