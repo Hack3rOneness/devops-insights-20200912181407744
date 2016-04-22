@@ -1,1 +1,0 @@
-flag{yay!_your_first_bof}
