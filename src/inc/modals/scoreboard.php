@@ -7,23 +7,32 @@ sess_enforce_login();
 
 class ScoreboardController {
   public function generateIndicator(): :xhp {
-    $start_ts = Configuration::get('start_ts')->getValue();
-    $end_ts = Configuration::get('end_ts')->getValue();
-
-    $seconds = intval($end_ts) - intval($start_ts);
-    $s_each = intval($seconds/10);
-    $now = time();
-    $current_s = intval($now) - intval($start_ts);
-    $current = intval($current_s/$s_each);
     $indicator = <div class="indicator game-progress-indicator"></div>;
-    for ($i=0; $i<10; $i++) {
-      $indicator_classes = 'indicator-cell ';
-      if ($current >= $i) {
-        $indicator_classes .= 'active ';
+    if (Configuration::get('game')->getValue() === '1') {
+      $start_ts = Configuration::get('start_ts')->getValue();
+      $end_ts = Configuration::get('end_ts')->getValue();
+
+      $seconds = intval($end_ts) - intval($start_ts);
+      $s_each = intval($seconds/10);
+      $now = time();
+      $current_s = intval($now) - intval($start_ts);
+      $current = intval($current_s/$s_each);
+      
+      for ($i=0; $i<10; $i++) {
+        $indicator_classes = 'indicator-cell ';
+        if ($current >= $i) {
+          $indicator_classes .= 'active ';
+        }
+        $indicator->appendChild(
+          <span class={$indicator_classes}></span>
+        );
       }
-      $indicator->appendChild(
-        <span class={$indicator_classes}></span>
-      );
+    } else {
+      for ($i=0; $i<10; $i++) {
+        $indicator->appendChild(
+          <span class="indicator-cell"></span>
+        ); 
+      }
     }
     return $indicator;
   }

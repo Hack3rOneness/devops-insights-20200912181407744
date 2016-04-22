@@ -298,6 +298,9 @@
           });
           loadLeaderboardModule();
 
+          // Game clock
+          loadClockModule();
+
           // Load initial activity
           loadActivityModule();
 
@@ -305,6 +308,11 @@
           setInterval( function() {
             loadConfData();
           }, FB_CTF.data.CONF.refreshConf);
+
+          // Game clock
+          setInterval( function() {
+            loadClockModule();
+          }, 1000);
 
           // Countries
           setInterval( function() {
@@ -1293,6 +1301,16 @@
         var leaderboardSelector = 'aside[data-module="leaderboard"]';
 
         return loadModuleGeneric(leaderboardModulePath, leaderboardSelector);
+      }
+
+      /**
+       * load the clock module
+       */
+      function loadClockModule(){
+        var clockModulePath = 'inc/gameboard/modules/game-clock.php';
+        var clockSelector = 'aside[data-module="game-clock"]';
+
+        return loadModuleGeneric(clockModulePath, clockSelector);
       }
 
       /**

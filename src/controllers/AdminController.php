@@ -329,8 +329,8 @@ class AdminController extends Controller {
                   <div class="admin-section-toggle radio-inline">
                     <input type="radio" name="fb--conf--timer" id="fb--conf--timer--on" checked={$timer_on}/>
                     <label for="fb--conf--timer--on">On</label>
-                    <input type="radio" name="fb--conf--timer" id="fb--conf--timer--off"checked={$timer_off}/>
-                    <label for="fb--admin--timer--off">Off</label>
+                    <input type="radio" name="fb--conf--timer" id="fb--conf--timer--off" checked={$timer_off}/>
+                    <label for="fb--conf--timer--off">Off</label>
                   </div>
                 </header>
                 <div class="fb-column-container">
