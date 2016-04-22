@@ -11,7 +11,11 @@ class ClockModuleController {
     $s_each = intval($seconds/10);
     $now = time();
     $current_s = intval($now) - intval($start_ts);
-    $current = intval($current_s/$s_each);
+    if ($s_each === 0) {
+      $current = 0;
+    } else {
+      $current = intval($current_s/$s_each);
+    }
     $indicator = <div class="indicator game-progress-indicator"></div>;
     for ($i=0; $i<10; $i++) {
       $indicator_classes = 'indicator-cell ';
