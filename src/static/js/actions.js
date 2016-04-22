@@ -63,7 +63,7 @@ function verifyTeamLogo() {
 }
 
 function goToPage(page) {
-  window.location.href = '/index.php?page=' + page;
+  window.location.href = '/index.php?p=' + page;
 }
 
 function loginError() {

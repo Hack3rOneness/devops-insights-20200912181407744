@@ -50,7 +50,7 @@ class IndexAjaxController extends AjaxController {
       return $this->registerTeam(
         must_have_string($params, 'teamname'),
         must_have_string($params, 'password'),
-        must_have_string($params, 'token'),
+        strval(must_have_idx($params, 'token')),
         must_have_string($params, 'logo'),
         false,
         array(),
@@ -68,7 +68,7 @@ class IndexAjaxController extends AjaxController {
       return $this->registerTeam(
         must_have_string($params, 'teamname'),
         must_have_string($params, 'password'),
-        must_have_string($params, 'token'),
+        strval(must_have_idx($params, 'token')),
         must_have_string($params, 'logo'),
         true,
         $names,
@@ -103,7 +103,7 @@ class IndexAjaxController extends AjaxController {
   private function registerTeam(
     string $teamname,
     string $password,
-    string $token,
+    ?string $token,
     string $logo,
     bool $register_names,
     array<string> $names,

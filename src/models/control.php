@@ -76,7 +76,7 @@ class Control {
           )
         )
       );
-      $sql = 'INSERT INTO registration_tokens (token, created_ts) VALUES(?, NOW())';
+      $sql = 'INSERT INTO registration_tokens (token, created_ts) VALUES (?, NOW())';
       $element = array($token);
       $this->db->query($sql, $element);
     }
