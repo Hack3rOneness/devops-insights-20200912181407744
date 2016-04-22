@@ -18,6 +18,8 @@ www.pid
 *~
 \#*\#
 *.swp
+*.swn
+*.swo
 
 # Attachments directory
 src/data/attachments/*
