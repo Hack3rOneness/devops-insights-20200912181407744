@@ -106,7 +106,7 @@ class Progressive extends Model {
     $control = new Control();
     $pid = $control->getScriptPid('progressive');
     if ($pid > 0) {
-      exec('kill -9', escapeshellarg(strval($pid)));
+      exec('kill -9 '.escapeshellarg(strval($pid)));
     }
     // Mark process as stopped
     $control->stopScriptLog($pid);

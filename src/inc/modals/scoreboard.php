@@ -6,6 +6,28 @@ sess_start();
 sess_enforce_login();
 
 class ScoreboardController {
+  public function generateIndicator(): :xhp {
+    $start_ts = Configuration::get('start_ts')->getValue();
+    $end_ts = Configuration::get('end_ts')->getValue();
+
+    $seconds = intval($end_ts) - intval($start_ts);
+    $s_each = intval($seconds/10);
+    $now = time();
+    $current_s = intval($now) - intval($start_ts);
+    $current = intval($current_s/$s_each);
+    $indicator = <div class="indicator game-progress-indicator"></div>;
+    for ($i=0; $i<10; $i++) {
+      $indicator_classes = 'indicator-cell ';
+      if ($current >= $i) {
+        $indicator_classes .= 'active ';
+      }
+      $indicator->appendChild(
+        <span class={$indicator_classes}></span>
+      );
+    }
+    return $indicator;
+  }
+
   public function render(): :xhp {
     $scoreboard_tbody = <tbody></tbody>;
 
@@ -51,18 +73,7 @@ class ScoreboardController {
           <svg class="fb-graphic" data-file="data/scores.php" width="820" height={220}></svg>
         </div>
         <div class="game-progress fb-progress-bar fb-cf row-fixed">
-          <div class="indicator game-progress-indicator">
-            <span class="indicator-cell active"></span>
-            <span class="indicator-cell active"></span>
-            <span class="indicator-cell active"></span>
-            <span class="indicator-cell"></span>
-            <span class="indicator-cell"></span>
-            <span class="indicator-cell"></span>
-            <span class="indicator-cell"></span>
-            <span class="indicator-cell"></span>
-            <span class="indicator-cell"></span>
-            <span class="indicator-cell"></span>
-          </div>
+          {$this->generateIndicator()}
           <span class="label label--left">[Start]</span>
           <span class="label label--right">[End]</span>
         </div>

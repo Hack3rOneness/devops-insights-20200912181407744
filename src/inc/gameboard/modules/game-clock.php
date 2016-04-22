@@ -1,4 +1,4 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
@@ -6,20 +6,23 @@ sess_start();
 sess_enforce_login();
 
 class ClockModuleController {
-  private function generateIndicator($start_ts, $end_ts): :xhp {
-    return
-      <div class="indicator game-progress-indicator">
-        <span class="indicator-cell active"></span>
-        <span class="indicator-cell active"></span>
-        <span class="indicator-cell active current-spot"></span>
-        <span class="indicator-cell"></span>
-        <span class="indicator-cell"></span>
-        <span class="indicator-cell"></span>
-        <span class="indicator-cell"></span>
-        <span class="indicator-cell"></span>
-        <span class="indicator-cell"></span>
-        <span class="indicator-cell"></span>
-      </div>;
+  private function generateIndicator(string $start_ts, string $end_ts): :xhp {
+    $seconds = intval($end_ts) - intval($start_ts);
+    $s_each = intval($seconds/10);
+    $now = time();
+    $current_s = intval($now) - intval($start_ts);
+    $current = intval($current_s/$s_each);
+    $indicator = <div class="indicator game-progress-indicator"></div>;
+    for ($i=0; $i<10; $i++) {
+      $indicator_classes = 'indicator-cell ';
+      if ($current >= $i) {
+        $indicator_classes .= 'active ';
+      }
+      $indicator->appendChild(
+        <span class={$indicator_classes}></span>
+      );
+    }
+    return $indicator;
   }
 
   public function render(): :xhp {

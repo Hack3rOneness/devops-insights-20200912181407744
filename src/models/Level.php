@@ -782,7 +782,7 @@ class Level extends Model {
     $control = new Control();
     $pid = $control->getScriptPid('bases');
     if ($pid > 0) {
-      exec('kill -9', escapeshellarg(strval($pid)));
+      exec('kill -9 '.escapeshellarg(strval($pid)));
     }
     // Mark process as stopped
     $control->stopScriptLog($pid);
