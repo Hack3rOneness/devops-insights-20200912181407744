@@ -50,8 +50,13 @@ class GameAjaxController extends AjaxController {
       return error_response('Invalid action', 'game');
     case 'answer_level':
       if (Configuration::get('scoring')->getValue() === '1') {
+        // Check if level is not a base
+        if (Level::checkBase(
+          must_have_int($params, 'level_id')
+        )) {
+          return error_response('Failed', 'game');
         // Check if answer is valid
-        if (Level::checkAnswer(
+        } else if (Level::checkAnswer(
           must_have_int($params, 'level_id'),
           must_have_string($params, 'answer')
         )) {

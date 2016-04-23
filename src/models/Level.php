@@ -132,6 +132,22 @@ class Level extends Model {
     }
   }
 
+  // Check to see if the level is a base.
+  public static function checkBase(int $level_id): bool {
+    $db = self::getDb();
+
+    $sql = 'SELECT COUNT(*) FROM levels WHERE id = ? AND active = 1 AND type = "base" LIMIT 1';
+    $element = array($level_id);
+    $result = $db->query($sql, $element);
+
+    if (count($result) > 0) {
+      invariant(count($result) === 1, 'Expected exactly one result');
+      return (intval(firstx($result)['COUNT(*)']) > 0);
+    } else {
+      return false;
+    }
+  }
+
   // Create a team and return the created level id.
   public static function create(
     string $type,

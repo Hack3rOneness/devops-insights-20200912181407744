@@ -742,6 +742,9 @@
             });
           }
 
+          // Hide flag submission for bases
+          $('.answer_no_bases').addClass('completely-hidden');
+
           //
           // event listeners
           //

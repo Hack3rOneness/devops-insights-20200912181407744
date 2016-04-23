@@ -12,7 +12,7 @@
     <div class="capture-links"></div>
     </br>
     <fieldset class="form-set">
-      <div class="form-el el--text">
+      <div class="answer_no_bases form-el el--text">
         <input placeholder="Insert your answer" name="answer" type="text" autocomplete="off">
       </div>
     </fieldset>
@@ -28,7 +28,7 @@
         -->
         <a class="fb-cta cta--blue js-trigger-hint"><span>Request Hint</span></a>
       </div>
-      <div class="col col-1-2 actions--right">
+      <div class="answer_no_bases col col-1-2 actions--right">
         <a class="fb-cta cta--yellow js-trigger-score">Submit</a>
       </div>
     </div>
