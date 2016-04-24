@@ -34,20 +34,20 @@ DROP TABLE IF EXISTS `levels`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) DEFAULT 0,
-  `type` varchar(4) NOT NULL DEFAULT '',
-  `title` text NOT NULL DEFAULT '',
-  `description` text NOT NULL DEFAULT '',
-  `entity_id` int(11) NOT NULL DEFAULT 0,
-  `category_id` int(11) NOT NULL DEFAULT 1,
-  `points` int(11) NOT NULL DEFAULT 0,
-  `bonus` int(11) NOT NULL DEFAULT 0,
-  `bonus_dec` int(11) NOT NULL DEFAULT 0,
-  `bonus_fix` int(11) NOT NULL DEFAULT 0,
-  `flag` text NOT NULL DEFAULT '',
-  `hint` text NOT NULL DEFAULT '',
-  `penalty` int(11) NOT NULL DEFAULT 0,
-  `created_ts` timestamp NOT NULL DEFAULT 0,
+  `active` tinyint(1) NOT NULL,
+  `type` varchar(4) NOT NULL,
+  `title` text NOT NULL,
+  `description` text NOT NULL,
+  `entity_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `points` int(11) NOT NULL,
+  `bonus` int(11) NOT NULL,
+  `bonus_dec` int(11) NOT NULL,
+  `bonus_fix` int(11) NOT NULL,
+  `flag` text NOT NULL,
+  `hint` text NOT NULL,
+  `penalty` int(11) NOT NULL,
+  `created_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -61,8 +61,8 @@ DROP TABLE IF EXISTS `categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category` text NOT NULL DEFAULT '',
-  `created_ts` timestamp NOT NULL DEFAULT 0,
+  `category` text NOT NULL,
+  `created_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -81,10 +81,10 @@ DROP TABLE IF EXISTS `attachments`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `level_id` int(11) NOT NULL DEFAULT 0,
-  `filename` text NOT NULL DEFAULT '',
-  `type` text NOT NULL DEFAULT '',
-  `created_ts` timestamp NOT NULL DEFAULT 0,
+  `level_id` int(11) NOT NULL,
+  `filename` text NOT NULL,
+  `type` text NOT NULL,
+  `created_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -98,9 +98,9 @@ DROP TABLE IF EXISTS `links`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `level_id` int(11) NOT NULL DEFAULT 0,
-  `link` text NOT NULL DEFAULT '',
-  `created_ts` timestamp NOT NULL DEFAULT 0,
+  `level_id` int(11) NOT NULL,
+  `link` text NOT NULL,
+  `created_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -114,16 +114,16 @@ DROP TABLE IF EXISTS `teams`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) NOT NULL DEFAULT 1,
-  `name` text NOT NULL DEFAULT '',
-  `password_hash` text NOT NULL DEFAULT '',
-  `points` int(11) NOT NULL DEFAULT '0',
-  `last_score` timestamp NOT NULL DEFAULT 0,
-  `logo` text NOT NULL DEFAULT '',
-  `admin` tinyint(1) NOT NULL DEFAULT 0,
-  `protected` tinyint(1) NOT NULL DEFAULT 0,
-  `visible` tinyint(1) NOT NULL DEFAULT 1,
-  `created_ts` timestamp NOT NULL DEFAULT 0,
+  `active` tinyint(1) NOT NULL,
+  `name` text NOT NULL,
+  `password_hash` text NOT NULL,
+  `points` int(11) NOT NULL,
+  `last_score` timestamp NOT NULL,
+  `logo` text NOT NULL,
+  `admin` tinyint(1) NOT NULL,
+  `protected` tinyint(1) NOT NULL,
+  `visible` tinyint(1) NOT NULL,
+  `created_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -137,10 +137,10 @@ DROP TABLE IF EXISTS `teams_data`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teams_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `team_id` int(11) NOT NULL DEFAULT 0,
-  `name` text NOT NULL DEFAULT '',
-  `email` text NOT NULL DEFAULT '',
-  `created_ts` timestamp NOT NULL DEFAULT 0,
+  `team_id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `email` text NOT NULL,
+  `created_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -154,10 +154,10 @@ DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sessions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cookie` text NOT NULL DEFAULT '',
-  `data` text NOT NULL DEFAULT '',
-  `created_ts` timestamp NOT NULL DEFAULT 0,
-  `last_access_ts` timestamp NOT NULL DEFAULT 0,
+  `cookie` text NOT NULL,
+  `data` text NOT NULL,
+  `created_ts` timestamp NOT NULL,
+  `last_access_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -172,8 +172,8 @@ DROP TABLE IF EXISTS `configuration`;
 CREATE TABLE `configuration` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `field` varchar(100) NOT NULL,
-  `value` text NOT NULL DEFAULT '',
-  `description` text NOT NULL DEFAULT '',
+  `value` text NOT NULL,
+  `description` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `field` (`field`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -212,8 +212,8 @@ DROP TABLE IF EXISTS `password_types`;
 CREATE TABLE `password_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `field` varchar(100) NOT NULL,
-  `description` text NOT NULL DEFAULT '',
-  `regex` text NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `regex` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `field` (`field`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -235,12 +235,12 @@ DROP TABLE IF EXISTS `registration_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `registration_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `team_name` text NOT NULL DEFAULT '',
-  `team_email` text NOT NULL DEFAULT '',
-  `team_logo` text NOT NULL DEFAULT '',
-  `team_password` text NOT NULL DEFAULT '',
-  `team_token` text NOT NULL DEFAULT '',
-  `ts` timestamp NOT NULL DEFAULT 0,
+  `team_name` text NOT NULL,
+  `team_email` text NOT NULL,
+  `team_logo` text NOT NULL,
+  `team_password` text NOT NULL,
+  `team_token` text NOT NULL,
+  `ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -254,11 +254,11 @@ DROP TABLE IF EXISTS `registration_tokens`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `registration_tokens` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `token` text NOT NULL DEFAULT '',
-  `used` tinyint(1) NOT NULL DEFAULT 0,
-  `team_id` int(11) NOT NULL DEFAULT 0,
-  `created_ts` timestamp NOT NULL DEFAULT 0,
-  `use_ts` timestamp NOT NULL DEFAULT 0,
+  `token` text NOT NULL,
+  `used` tinyint(1) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `created_ts` timestamp NOT NULL,
+  `use_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -272,11 +272,11 @@ DROP TABLE IF EXISTS `scores_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `scores_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` timestamp NULL DEFAULT NULL,
-  `team_id` int(11) NOT NULL DEFAULT 0,
-  `points` int(11) NOT NULL DEFAULT 0,
-  `level_id` int(11) NOT NULL DEFAULT 0,
-  `type` varchar(4) NOT NULL DEFAULT '',
+  `ts` timestamp NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `points` int(11) NOT NULL,
+  `level_id` int(11) NOT NULL,
+  `type` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -290,10 +290,10 @@ DROP TABLE IF EXISTS `bases_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bases_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` timestamp NULL DEFAULT NULL,
-  `code` int(11) NOT NULL DEFAULT 0,
-  `response` text NOT NULL DEFAULT '',
-  `level_id` int(11) NOT NULL DEFAULT 0,
+  `ts` timestamp NULL,
+  `code` int(11) NOT NULL,
+  `response` text NOT NULL,
+  `level_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -307,11 +307,11 @@ DROP TABLE IF EXISTS `scripts`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `scripts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` timestamp NULL DEFAULT NULL,
-  `pid` int(11) NOT NULL DEFAULT 0,
-  `name` text NOT NULL DEFAULT '',
-  `cmd` text NOT NULL DEFAULT '',
-  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `ts` timestamp NULL,
+  `pid` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `cmd` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -325,10 +325,10 @@ DROP TABLE IF EXISTS `failures_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `failures_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` timestamp NOT NULL DEFAULT 0,
-  `team_id` int(11) NOT NULL DEFAULT 0,
-  `level_id` int(11) NOT NULL DEFAULT 0,
-  `flag` text NOT NULL DEFAULT '',
+  `ts` timestamp NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `level_id` int(11) NOT NULL,
+  `flag` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -343,9 +343,9 @@ DROP TABLE IF EXISTS `hints_log`;
 CREATE TABLE `hints_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `level_id` int(11) NOT NULL DEFAULT 0,
-  `team_id` int(11) NOT NULL DEFAULT 0,
-  `penalty` int(11) NOT NULL DEFAULT 0,
+  `level_id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `penalty` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -360,10 +360,10 @@ DROP TABLE IF EXISTS `progressive_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `progressive_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` timestamp NOT NULL DEFAULT 0,
-  `team_name` text NOT NULL DEFAULT '',
-  `points` int(11) NOT NULL DEFAULT 0,
-  `iteration` int(11) NOT NULL DEFAULT 0,
+  `ts` timestamp NOT NULL,
+  `team_name` text NOT NULL,
+  `points` int(11) NOT NULL,
+  `iteration` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -377,8 +377,8 @@ DROP TABLE IF EXISTS `announcements_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `announcements_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` timestamp NOT NULL DEFAULT 0,
-  `announcement` text NOT NULL DEFAULT '',
+  `ts` timestamp NOT NULL,
+  `announcement` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
