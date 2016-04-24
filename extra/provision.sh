@@ -24,12 +24,12 @@ sudo rsync -a "$CODE_PATH/" "$CTF_PATH/"
 
 # This is because sync'ing files is done with unison
 if [[ "$MODE" == "dev" ]]; then
-	echo "[+] Setting permissions"
-	sudo chmod -R 777 "$CTF_PATH/"
+    echo "[+] Setting permissions"
+    sudo chmod -R 777 "$CTF_PATH/"
 fi
 
 # There we go!
-source "$CTF_PATH/tools/lib.sh"
+source "$CTF_PATH/extra/lib.sh"
 
 # Ascii art is always appreciated
 set_motd "$CTF_PATH"
@@ -77,4 +77,3 @@ sudo chmod 777 "$CTF_PATH/src/data/attachments/deleted"
 log 'Facebook-CTF deployment is complete!'
 
 exit 0
-# kthxbai
