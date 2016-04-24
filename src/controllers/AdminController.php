@@ -2246,7 +2246,8 @@ class AdminController extends Controller {
   public function renderPage(string $page): :xhp {
     switch ($page) {
       case 'main':
-        return $this->renderMainContent();
+        // Render the configuration page by default
+        return $this->renderConfigurationContent();
         break;
       case 'configuration':
         return $this->renderConfigurationContent();
