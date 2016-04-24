@@ -402,7 +402,7 @@ class AdminAjaxController extends AjaxController {
     case 'delete_announcement':
       $control = new Control();
       $control->delete_announcement(
-        must_have_string($params, 'announcement_id'),
+        must_have_int($params, 'announcement_id'),
       );
       return ok_response('Success', 'admin');
     case 'create_tokens':
