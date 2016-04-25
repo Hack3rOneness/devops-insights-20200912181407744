@@ -7,10 +7,9 @@ sess_enforce_login();
 
 class AnnouncementsDataController extends DataController {
   public function generateData() {
-    $control = new Control();
     $data = array();
-  
-    foreach ($control->all_announcements() as $announcement) {
+
+    foreach (Control::allAnnouncements() as $announcement) {
       array_push($data, $announcement['announcement']);
     }
 

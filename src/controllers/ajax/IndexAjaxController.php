@@ -109,8 +109,6 @@ class IndexAjaxController extends AjaxController {
     array<string> $names,
     array<string> $emails,
   ): string {
-    $control = new Control();
-
     // Check if registration is enabled
     if (Configuration::get('registration')->getValue() === '0') {
       return error_response('Registration failed', 'registration');
@@ -119,7 +117,7 @@ class IndexAjaxController extends AjaxController {
     // Check if tokenized registration is enabled
     if (Configuration::get('registration_type')->getValue() === '2') {
       // Check provided token
-      if (!$control->check_token($token)) {
+      if ($token === null || !Control::checkToken($token)) {
         return error_response('Registration failed', 'registration');
       }
     }
@@ -151,7 +149,8 @@ class IndexAjaxController extends AjaxController {
         }
         // If registration is tokenized, use the token
         if (Configuration::get('registration_type')->getValue() === '2') {
-          $control->use_token($token, $team_id);
+          invariant($token !== null, 'token should not be null');
+          Control::useToken($token, $team_id);
         }
         // Login the team
         return $this->loginTeam($team_id, $password);

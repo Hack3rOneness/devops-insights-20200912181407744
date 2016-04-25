@@ -394,36 +394,29 @@ class AdminAjaxController extends AjaxController {
         return error_response('Invalid configuration', 'admin');
       }
     case 'create_announcement':
-      $control = new Control();
-      $control->new_announcement(
+      Control::newAnnouncement(
         must_have_string($params, 'announcement'),
       );
       return ok_response('Success', 'admin');
     case 'delete_announcement':
-      $control = new Control();
-      $control->delete_announcement(
+      Control::deleteAnnouncement(
         must_have_int($params, 'announcement_id'),
       );
       return ok_response('Success', 'admin');
     case 'create_tokens':
-      $control = new Control();
-      $control->create_tokens();
+      Control::createTokens();
       return ok_response('Success', 'admin');
     case 'export_tokens':
-      $control = new Control();
-      $control->export_tokens();
+      Control::exportTokens();
       return ok_response('Success', 'admin');
     case 'begin_game':
-      $control = new Control();
-      $control->begin();
+      Control::begin();
       return ok_response('Success', 'admin');
     case 'end_game':
-      $control = new Control();
-      $control->end();
+      Control::end();
       return ok_response('Success', 'admin');
     case 'backup_db':
-      $control = new Control();
-      $control->backup_db();
+      Control::backupDb();
       return ok_response('Success', 'admin');
     default:
       return error_response('Invalid action', 'admin');

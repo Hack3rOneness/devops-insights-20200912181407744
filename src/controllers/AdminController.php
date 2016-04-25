@@ -124,8 +124,7 @@ class AdminController extends Controller {
 
   public function renderConfigurationTokens(): :xhp {
     $tokens_table = <table></table>;
-    $control = new Control();
-    foreach($control->all_tokens() as $token) {
+    foreach(Control::allTokens() as $token) {
       $tokens_table->appendChild(
         <tr>
           <td>{$token['token']}</td>
@@ -368,8 +367,7 @@ class AdminController extends Controller {
   }
 
   public function renderAnnouncementsContent(): :xhp {
-    $control = new Control();
-    $announcements = $control->all_announcements();
+    $announcements = Control::allAnnouncements();
     $announcements_div = <div></div>;
     if ($announcements) {
       foreach ($announcements as $announcement) {

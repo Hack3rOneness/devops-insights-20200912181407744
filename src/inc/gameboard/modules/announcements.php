@@ -7,8 +7,7 @@ sess_enforce_login();
 
 class AnnouncementsModuleController {
   public function render(): :xhp {
-    $control = new Control();
-    $announcements = $control->all_announcements();
+    $announcements = Control::allAnnouncements();
     $announcements_ul = <ul class="activity-stream announcements-list"></ul>;
     if ($announcements) {
       foreach ($announcements as $announcement) {
@@ -19,7 +18,7 @@ class AnnouncementsModuleController {
         );
       }
     }
-    
+
     return
       <div>
         <header class="module-header">

@@ -7,11 +7,9 @@ sess_enforce_login();
 
 class ActivityModuleController {
   public function render(): :xhp {
-    $control = new Control();
-    
     $activity_ul = <ul class="activity-stream"></ul>;
 
-    foreach ($control->all_activity() as $score) {
+    foreach (Control::allActivity() as $score) {
       if ($score['team_id'] === sess_team()) {
         $class_li = 'your-team';
         $class_span = 'your-name';
@@ -25,7 +23,7 @@ class ActivityModuleController {
         </li>
       );
     }
-    
+
     return
       <div>
         <header class="module-header">

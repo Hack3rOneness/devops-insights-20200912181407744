@@ -785,22 +785,20 @@ class Level extends Model {
 
   // Bases processing and scoring.
   public static function baseScoring(): void {
-    $control = new Control();
     $document_root = must_have_string(getSERVER(), 'DOCUMENT_ROOT');
     $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.$document_root.'/scripts/bases.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
-    $control->startScriptLog(intval($pid), 'bases', $cmd);
+    Control::startScriptLog(intval($pid), 'bases', $cmd);
   }
 
   // Stop bases processing and scoring process.
   public static function stopBaseScoring(): void {
     // Kill running process
-    $control = new Control();
-    $pid = $control->getScriptPid('bases');
+    $pid = Control::getScriptPid('bases');
     if ($pid > 0) {
       exec('kill -9 '.escapeshellarg(strval($pid)));
     }
     // Mark process as stopped
-    $control->stopScriptLog($pid);
+    Control::stopScriptLog($pid);
   }
 }

@@ -1,67 +1,68 @@
 <?hh
 
-class Control {
-  private $db;
-
-  public function __construct() {
-    $this->db = Db::getInstance();
-    if (!$this->db->isConnected()) {
-      $this->db->connect();
-    }
-  }
-
-  public function all_tokens() {
+class Control extends Model {
+  public static function allTokens() {
+    $db = self::getDb();
     $sql = 'SELECT * FROM registration_tokens';
-    return $this->db->query($sql);
+    return $db->query($sql);
   }
 
-  public function all_available_tokens() {
+  public static function allAvailableTokens() {
+    $db = self::getDb();
     $sql = 'SELECT * FROM registration_tokens WHERE used = 0';
-    return $this->db->query($sql);
+    return $db->query($sql);
   }
 
-  public function check_token($token) {
+  public static function checkToken(string $token): bool {
+    $db = self::getDb();
     $sql = 'SELECT COUNT(*) FROM registration_tokens WHERE used = 0 AND token = ?';
     $element = array($token);
-    return (bool)$this->db->query($sql, $element)[0]['COUNT(*)'];
+    return intval(must_have_idx(firstx($db->query($sql, $element)), 'COUNT(*)')) > 0;
   }
 
-  public function use_token($token, $team_id) {
+  public static function useToken(string $token, int $team_id): void {
+    $db = self::getDb();
     $sql = 'UPDATE registration_tokens SET used = 1, team_id = ?, use_ts = NOW() WHERE token = ? LIMIT 1';
     $elements = array($team_id, $token);
-    $this->db->query($sql, $elements);
+    $db->query($sql, $elements);
   }
 
-  public function delete_token($token) {
+  public static function deleteToken(string $token): void {
+    $db = self::getDb();
     $sql = 'DELETE from registration_tokens WHERE token = ? LIMIT 1';
     $element = array($token);
-    $this->db->query($sql, $element);
+    $db->query($sql, $element);
   }
 
-  public function startScriptLog($pid, $name, $cmd) {
+  public static function startScriptLog(int $pid, string $name, string $cmd): void {
+    $db = self::getDb();
     $sql = 'INSERT INTO scripts (ts, pid, name, cmd, status) VALUES (NOW(), ?, ?, ?, 1)';
     $elements = array($pid, $name, $cmd);
-    $this->db->query($sql, $elements);
+    $db->query($sql, $elements);
   }
 
-  public function stopScriptLog($pid) {
+  public static function stopScriptLog(int $pid): void {
+    $db = self::getDb();
     $sql = 'UPDATE scripts SET status = 0 WHERE pid = ? LIMIT 1';
     $element = array($pid);
-    $this->db->query($sql, $element);
+    $db->query($sql, $element);
   }
 
-  public function getScriptPid($name) {
+  public static function getScriptPid(string $name): int {
+    $db = self::getDb();
     $sql = 'SELECT pid FROM scripts WHERE name = ? AND status = 1 LIMIT 1';
     $element = array($name);
-    return intval($this->db->query($sql, $element)[0]['pid']);
+    return intval(must_have_idx(firstx($db->query($sql, $element)), 'pid'));
   }
 
-  public function clearScriptLog() {
+  public static function clearScriptLog(): void {
+    $db = self::getDb();
     $sql = 'DELETE FROM scripts WHERE id > 0 AND status = 0';
-    $this->db->query($sql);
+    $db->query($sql);
   }
 
-  public function create_tokens() {
+  public static function createTokens(): void {
+    $db = self::getDb();
     $crypto_strong = True;
     $tokens = array();
     $query = array();
@@ -72,40 +73,43 @@ class Control {
         base64_encode(
           openssl_random_pseudo_bytes(
             $token_len,
-            $crypto_strong
+            $crypto_strong,
           )
         )
       );
       $sql = 'INSERT INTO registration_tokens (token, created_ts) VALUES (?, NOW())';
       $element = array($token);
-      $this->db->query($sql, $element);
+      $db->query($sql, $element);
     }
   }
 
-  public function export_tokens() {
+  public static function exportTokens(): void {
+    $db = self::getDb();
     $sql = 'SELECT * FROM registration_tokens WHERE used = 0';
-    $tokens = $this->db->query($sql);
+    $tokens = $db->query($sql);
+    // TODO
   }
 
-  public function begin() {
+  public static function begin(): void {
+    $db = self::getDb();
     // Disable registration
     Configuration::update('registration', '0');
-    
+
     // Reset all points
     Team::resetAllPoints();
 
     // Clear scores log
-    $this->reset_scores();
+    self::resetScores();
 
     // Clear hints log
-    $this->reset_hints();
+    self::resetHints();
 
     // Clear failures log
-    $this->reset_failures();
+    self::resetFailures();
 
     // Clear bases log
-    $this->reset_bases();
-    $this->clearScriptLog();
+    self::resetBases();
+    self::clearScriptLog();
 
     // Mark game as started
     Configuration::update('game', '1');
@@ -133,7 +137,7 @@ class Control {
     Level::baseScoring();
   }
 
-  public function end() {
+  public static function end(): void {
     // Mark game as finished and it stops progressive scoreboard
     Configuration::update('game', '0');
 
@@ -154,49 +158,57 @@ class Control {
     Progressive::stop();
   }
 
-  public function backup_db() {
-
+  public static function backupDb(): void {
+    // TODO
   }
 
-  public function new_announcement($announcement) {
+  public static function newAnnouncement(string $announcement): void {
+    $db = self::getDb();
     $sql = 'INSERT INTO announcements_log (ts, announcement) (SELECT NOW(), ?) LIMIT 1';
     $element = array($announcement);
-    $this->db->query($sql, $element);
+    $db->query($sql, $element);
   }
 
-  public function delete_announcement($announcement_id) {
+  public static function deleteAnnouncement(int $announcement_id): void {
+    $db = self::getDb();
     $sql = 'DELETE FROM announcements_log WHERE id = ? LIMIT 1';
     $element = array($announcement_id);
-    $this->db->query($sql, $element);
+    $db->query($sql, $element);
   }
 
-  public function all_announcements() {
+  public static function allAnnouncements() {
+    $db = self::getDb();
     $sql = 'SELECT * FROM announcements_log ORDER BY ts DESC';
-    return $this->db->query($sql);
+    return $db->query($sql);
   }
 
-  public function all_activity() {
+  public static function allActivity() {
+    $db = self::getDb();
     $sql = 'SELECT DATE_FORMAT(scores_log.ts, "%H:%i:%S") AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time ASC';
-    return $this->db->query($sql);
+    return $db->query($sql);
   }
 
-  public function reset_scores() {
+  public static function resetScores(): void {
+    $db = self::getDb();
     $sql = 'DELETE FROM scores_log WHERE id > 0';
-    $this->db->query($sql);
+    $db->query($sql);
   }
 
-  public function reset_hints() {
+  public static function resetHints(): void {
+    $db = self::getDb();
     $sql = 'DELETE FROM hints_log WHERE id > 0';
-    $this->db->query($sql);
+    $db->query($sql);
   }
 
-  public function reset_failures() {
+  public static function resetFailures(): void {
+    $db = self::getDb();
     $sql = 'DELETE FROM failures_log WHERE id > 0';
-    $this->db->query($sql);
+    $db->query($sql);
   }
 
-  public function reset_bases() {
+  public static function resetBases(): void {
+    $db = self::getDb();
     $sql = 'DELETE FROM bases_log WHERE id > 0';
-    $this->db->query($sql);
+    $db->query($sql);
   }
 }
