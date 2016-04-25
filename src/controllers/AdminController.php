@@ -311,6 +311,10 @@ class AdminController extends Controller {
                   </div>
                   <div class="col col-pad col-3-4">
                     <div class="form-el el--block-label">
+                      <label>Bases Cycle (s)</label>
+                      <input type="number" value={Configuration::get('bases_cycle')->getValue()} name="fb--conf--bases_cycle"/>
+                    </div>
+                    <div class="form-el el--block-label">
                       <label>Default Bonus Dec</label>
                       <input type="number" value={Configuration::get('default_bonusdec')->getValue()} name="fb--conf--default_bonusdec"/>
                     </div>
