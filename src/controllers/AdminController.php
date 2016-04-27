@@ -612,7 +612,8 @@ class AdminController extends Controller {
               <div class="col col-pad col-1-2">
                 <div class="form-el el--block-label el--full-text">
                   <label>Answer</label>
-                  <input name="answer" type="text" value={$quiz->getFlag()} disabled={true}/>
+                  <input name="answer" type="password" value={$quiz->getFlag()} disabled={true}/>
+                  <a href="" class="toggle_answer_visibility">Show Answer</a>
                 </div>
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-3 el--block-label el--full-text">
@@ -919,7 +920,8 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col el--block-label el--full-text">
                     <label>Flag</label>
-                    <input name="flag" type="text" value={$flag->getFlag()} disabled={true}/>
+                    <input name="flag" type="password" value={$flag->getFlag()} disabled={true}/>
+                    <a href="" class="toggle_answer_visibility">Show Answer</a>
                   </div>
                 </div>
                 <div class="form-el fb-column-container col-gutters">

@@ -59,8 +59,6 @@ var $body = $('body');
  */
  FB_CTF.admin = (function(){
 
-  var PLAYERS_PER_TEAM = 1;
-
   /**
    * check the admin forms for errors
    *
@@ -217,29 +215,6 @@ var $body = $('body');
     $addedLink.removeClass('new-link-hidden');
 
     $links.append($addedLink);
-  }
-
-  /**
-   * render the registration page, updating text and values
-   *  based on the number of players that have been set
-   */
-  function renderRegistrationPage(){
-    var $sections = $('#fb-main-content .admin-sections');
-
-    if (PLAYERS_PER_TEAM > 1) {
-      var $playerList = $('.player-list'),
-          $playerInfo = $('li', $playerList);
-
-      $('.admin-box-header h3', $sections).text("Team 1");
-      $sections.addClass('team-registration');
-
-      for (var i = 2; i <= PLAYERS_PER_TEAM; i++) {
-        var $newRow = $playerInfo.clone();
-        $('.player-list--label', $newRow).text("Player " + i + " Name");
-
-        $playerList.append( $newRow );
-      }
-    }
   }
 
   // Create new attachment
@@ -826,12 +801,6 @@ var $body = $('body');
    * init the admin stuff
    */
   function init() {
-    $body.off('content-loaded').on('content-loaded', function(event, data){
-      if( data && data.page && data.page === 'registration'){
-        renderRegistrationPage();
-      }
-    });
-
     //
     // actionable buttons
     //
@@ -1119,17 +1088,6 @@ var $body = $('body');
       });
     });
 
-
-    //
-    // change the players per team
-    //
-    $('#fb-admin--players-per-team').on('change', function(event) {
-      event.preventDefault();
-      var val = $(this).val();
-
-      PLAYERS_PER_TEAM = val;
-    });
-
     //
     // prompt begin game
     //
@@ -1152,6 +1110,20 @@ var $body = $('body');
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
       FB_CTF.modal.loadPopup('action-logout');
+    });
+
+    //
+    // show/hide answer
+    //
+    $('.toggle_answer_visibility').on('click', function(event) {
+      event.preventDefault();
+      if ($(this).prev('input').attr('type') === 'text') {
+        $(this).text('Hide Answer');
+        $(this).prev('input').attr('type', 'password');
+      } else if ($(this).prev('input').attr('type') === 'password') {
+        $(this).text('Show Answer');
+        $(this).prev('input').attr('type', 'text');
+      }
     });
 
   }
