@@ -51,13 +51,16 @@ class ClockModuleController {
     $init = intval($end_ts) - $now;
 
     if ($timer_conf === '1') {
-      $hours_int = (floor($init / 3600) >= 0) ? floor($init / 3600) : 0;
+      $num_hours = intval(floor($init / 3600));
+      $hours_int = ($num_hours >= 0) ? $num_hours : 0;
       $hours = sprintf("%02d", $hours_int);
 
-      $minutes_int = (floor(($init / 60) % 60) >= 0) ? floor(($init / 60) % 60) : 0;
+      $num_minutes = intval(floor(intval($init / 60)) % 60);
+      $minutes_int = ($num_minutes >= 0) ? $num_minutes : 0;
       $minutes = sprintf("%02d", $minutes_int);
 
-      $seconds_int = (intval($init % 60) >= 0) ? intval($init % 60) : 0;
+      $num_seconds = intval($init % 60);
+      $seconds_int = ($num_seconds >= 0) ? $num_seconds : 0;
       $seconds = sprintf("%02d", $seconds_int);
       
       $milli_int = rand(0, 99);

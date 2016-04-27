@@ -177,6 +177,15 @@ class Team extends Model {
     $db->query($sql, $elements);
   }
 
+  // Get a team data.
+  public static function getTeamData(int $team_id): mixed {
+    $db = self::getDb();
+
+    $sql = 'SELECT * FROM teams_data WHERE team_id = ?';
+    $element = array($team_id);
+    return $db->query($sql, $element);
+  }
+
   // Update team.
   public static function update(string $name, string $logo, int $points, int $team_id): void {
     $db = self::getDb();

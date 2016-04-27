@@ -1458,6 +1458,123 @@ class AdminController extends Controller {
       </div>;
   }
 
+  private function generateTeamNames(int $team_id): :xhp {
+    $names = <section class="admin-box"></section>;
+
+    $teams_data = Team::getTeamData($team_id);
+
+    if (count($teams_data) > 0) {
+      foreach ($teams_data as $data) {
+        $names->appendChild(
+          <div class="fb-column-container">
+            <div class="col col-pad col-2-3">
+              <div class="form-el el--block-label el--full-text">
+                <label class="admin-label" for="">Name</label>
+                <input name="name" type="text" value={$data['name']} disabled={true}/>
+              </div>
+            </div>
+            <div class="col col-pad col-2-3">
+              <div class="form-el el--block-label el--full-text">
+                <label class="admin-label" for="">Email</label>
+                <input name="email" type="text" value={$data['email']} disabled={true}/>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    } else {
+      $names->appendChild(
+        <div class="fb-column-container">
+          <div class="col col-pad">
+            No Team Names
+          </div>
+        </div>
+      );
+    }
+
+    return $names;
+  }
+
+  private function generateTeamScores(int $team_id): :xhp {
+    $scores = <div></div>;
+    $scores->appendChild(
+      <section class="admin-box">
+        <div class="logo-management-header">
+          <h6>Flag</h6>
+        </div>
+        <div class="fb-column-container">
+          <div class="col col-grow col-pad">
+            <dl>
+              <dt>Time:</dt>
+              <dd>02:59:09</dd>
+              <dt>Points:</dt>
+              <dd>345</dd>
+            </dl>
+          </div>
+          <div class="col col-grow col-pad">
+            <dl>
+              <dt>Country:</dt>
+              <dd>Algeria</dd>
+              <dt>Type:</dt>
+              <dd>Flag</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+    );
+
+    return $scores;
+  }
+
+  private function generateTeamFailures(int $team_id): :xhp {
+    return <div>Failures</div>;
+  }
+
+  private function generateTeamTabs(int $team_id): :xhp {
+    $team_tabs_team = 'fb--teams--tabs--team-team'.strval($team_id);
+    $team_tabs_names = 'fb--teams--tabs--names-team'.strval($team_id);
+    $team_tabs_scores = 'fb--teams--tabs--scores-team'.strval($team_id);
+    $team_tabs_failures = 'fb--teams--tabs--failures-team'.strval($team_id);
+    $team_tabs_name = 'fb--teams--tabs-team'.strval($team_id);
+    $tab_team = 'team'.strval($team_id);
+    $tab_names = 'names'.strval($team_id);
+    $tab_scores = 'scores'.strval($team_id);
+    $tab_failures = 'failures'.strval($team_id);
+
+    $team_tabs = <div class="radio-tabs"></div>;
+    $team_tabs->appendChild(
+      <input type="radio" value={$tab_team} name={$team_tabs_name} id={$team_tabs_team} checked={true}/>
+    );
+    $team_tabs->appendChild(
+      <label for={$team_tabs_team}>Team</label>
+    );
+
+    if (Configuration::get('registration_names')->getValue() === '1') {
+      $team_tabs->appendChild(
+        <input type="radio" value={$tab_names} name={$team_tabs_name} id={$team_tabs_names}/>
+      );
+      $team_tabs->appendChild(
+        <label for={$team_tabs_names}>Names</label>
+      );
+    }
+
+    $team_tabs->appendChild(
+      <input type="radio" value={$tab_scores} name={$team_tabs_name} id={$team_tabs_scores}/>
+    );
+    $team_tabs->appendChild(
+      <label for={$team_tabs_scores}>Scores</label>
+    );
+
+    $team_tabs->appendChild(
+      <input type="radio" value={$tab_failures} name={$team_tabs_name} id={$team_tabs_failures}/>
+    );
+    $team_tabs->appendChild(
+      <label for={$team_tabs_failures}>Failures</label>
+    );
+
+    return $team_tabs;
+  }
+
   public function renderTeamsContent(): :xhp {
     $adminsections =
       <div class="admin-sections">
@@ -1573,74 +1690,110 @@ class AdminController extends Controller {
         $delete_button = <button class="fb-cta cta--red" data-action="delete">Delete</button>;
       }
 
-      $adminsections->appendChild(
-        <section class="admin-box validate-form section-locked">
-          <form class="team_form" name={strval($team->getId())}>
-            <input type="hidden" name="team_id" value={strval($team->getId())}/>
-            <header class="admin-box-header">
-              <h3>Team {$c}</h3>
-              {$toggle_status}
-            </header>
-            <div class="fb-column-container">
-              <div class="col col-pad col-1-3">
-                <div class="form-el el--block-label el--full-text">
-                  <label class="admin-label" for="">Team Name</label>
-                  <input name="team_name" type="text" value={$team->getName()} maxlength={20} disabled={true}/>
-                </div>
-                <div class="form-el el--block-label el--full-text">
-                  <label class="admin-label" for="">Score</label>
-                  <input name="points" type="text" value={strval($team->getPoints())} disabled={true}/>
-                </div>
-              </div>
-              <div class="col col-pad col-1-3">
-                <div class="form-el el--block-label el--full-text">
-                  <label class="admin-label" for="">Change Password</label>
-                  <input name="password" type="password" disabled={true}/>
-                </div>
-              </div>
-              <div class="col col-pad col-1-3">
-                <div class="form-el el--block-label">
-                  <label class="admin-label" for="">Admin Level</label>
-                  {$toggle_admin}
-                </div>
-                <div class="form-el el--block-label">
-                  <label class="admin-label" for="">Visibility </label>
-                  <div class="admin-section-toggle radio-inline">
-                    <input type="radio" name={$team_visible_name} id={$team_visible_on_id} checked={$team_visible_on}/>
-                    <label for={$team_visible_on_id}>On</label>
-                    <input type="radio" name={$team_visible_name} id={$team_visible_off_id} checked={$team_visible_off}/>
-                    <label for={$team_visible_off_id}>Off</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="admin-row el--block-label">
-              <label>Team Logo</label>
-              <div class="fb-column-container">
-                <div class="col col-shrink">
-                  <div class="post-avatar has-avatar">
-                    <svg class="icon icon--badge">
-                      <use href={$xlink_href} />
+      $tab_team = 'team'.strval($team->getId());
+      $tab_names = 'names'.strval($team->getId());
+      $tab_scores = 'scores'.strval($team->getId());
+      $tab_failures = 'failures'.strval($team->getId());
 
-                    </svg>
+      $adminsections->appendChild(
+        <div>
+          {$this->generateTeamTabs($team->getId())}
+          <div class="tab-content-container">
+            <div class="radio-tab-content active" data-tab={$tab_team}>
+              <section class="admin-box validate-form section-locked">
+                <form class="team_form" name={strval($team->getId())}>
+                  <input type="hidden" name="team_id" value={strval($team->getId())}/>
+                  <header class="admin-box-header">
+                    <h3>Team {$c}</h3>
+                    {$toggle_status}
+                  </header>
+                  <div class="fb-column-container">
+                    <div class="col col-pad col-1-3">
+                      <div class="form-el el--block-label el--full-text">
+                        <label class="admin-label" for="">Team Name</label>
+                        <input name="team_name" type="text" value={$team->getName()} maxlength={20} disabled={true}/>
+                      </div>
+                      <div class="form-el el--block-label el--full-text">
+                        <label class="admin-label" for="">Score</label>
+                        <input name="points" type="text" value={strval($team->getPoints())} disabled={true}/>
+                      </div>
+                    </div>
+                    <div class="col col-pad col-1-3">
+                      <div class="form-el el--block-label el--full-text">
+                        <label class="admin-label" for="">Change Password</label>
+                        <input name="password" type="password" disabled={true}/>
+                      </div>
+                    </div>
+                    <div class="col col-pad col-1-3">
+                      <div class="form-el el--block-label">
+                        <label class="admin-label" for="">Admin Level</label>
+                        {$toggle_admin}
+                      </div>
+                      <div class="form-el el--block-label">
+                        <label class="admin-label" for="">Visibility </label>
+                        <div class="admin-section-toggle radio-inline">
+                          <input type="radio" name={$team_visible_name} id={$team_visible_on_id} checked={$team_visible_on}/>
+                          <label for={$team_visible_on_id}>On</label>
+                          <input type="radio" name={$team_visible_name} id={$team_visible_off_id} checked={$team_visible_off}/>
+                          <label for={$team_visible_off_id}>Off</label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col col-grow">
-                  <div class="selected-logo">
-                    <label>Selected Logo: </label>
-                    <span class="logo-name">{$team->getLogo()}</span>
+                  <div class="admin-row el--block-label">
+                    <label>Team Logo</label>
+                    <div class="fb-column-container">
+                      <div class="col col-shrink">
+                        <div class="post-avatar has-avatar">
+                          <svg class="icon icon--badge">
+                            <use href={$xlink_href} />
+
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="col col-grow">
+                        <div class="selected-logo">
+                          <label>Selected Logo: </label>
+                          <span class="logo-name">{$team->getLogo()}</span>
+                        </div>
+                        <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
+                      </div>
+                      <div class="col col-shrink admin-buttons">
+                        <a href="#" class="admin--edit" data-action="edit">EDIT</a>
+                        {$delete_button}
+                        <button class="fb-cta cta--yellow js-confirm-save" data-action="save-no-validation">Save</button>
+                      </div>
+                    </div>
                   </div>
-                  <a href="#" class="alt-link js-choose-logo">Select Logo ></a>
-                </div>
-                <div class="col col-shrink admin-buttons">
-                  <a href="#" class="admin--edit" data-action="edit">EDIT</a>
-                  {$delete_button}
-                  <button class="fb-cta cta--yellow js-confirm-save" data-action="save-no-validation">Save</button>
-                </div>
-              </div>
+                </form>
+              </section>
             </div>
-          </form>
-        </section>
+            <div class="radio-tab-content" data-tab={$tab_names}>
+              <section class="admin-box">
+                <header class="admin-box-header">
+                  <h3>Team {$c}</h3>
+                </header>
+                {$this->generateTeamNames($team->getId())}
+              </section>
+            </div>
+            <div class="radio-tab-content" data-tab={$tab_scores}>
+              <section class="admin-box">
+                <header class="admin-box-header">
+                  <h3>Team {$c}</h3>
+                </header>
+                {$this->generateTeamScores($team->getId())}
+              </section>
+            </div>
+            <div class="radio-tab-content" data-tab={$tab_failures}>
+              <section class="admin-box">
+                <header class="admin-box-header">
+                  <h3>Team {$c}</h3>
+                </header>
+                {$this->generateTeamFailures($team->getId())}
+              </section>
+            </div>
+          </div>
+        </div>
       );
       $c++;
     }

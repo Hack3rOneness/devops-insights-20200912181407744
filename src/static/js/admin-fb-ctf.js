@@ -417,7 +417,6 @@ var $body = $('body');
       announcement_id: announcement_id
     };
     if ((announcement_id)) {
-      console.log(delete_data);
       sendAdminRequest(delete_data);
     }
   }
@@ -812,7 +811,7 @@ var $body = $('body');
       action: 'delete_session',
       cookie: session_cookie
     };
-    console.log(delete_data);
+  
     if ((session_cookie)) {
       sendAdminRequest(delete_data);
     }
