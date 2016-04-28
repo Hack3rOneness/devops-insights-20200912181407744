@@ -351,7 +351,7 @@
             }
           }, FB_CTF.data.CONF.refreshMap);
 
-          // Forcefully refreshing all modules every 5 minutes
+          // Forcefully refreshing all modules every minute
           setInterval( function() {
             loadAnnouncementsModule();
             loadFilterModule();
@@ -359,7 +359,7 @@
             loadTeamsModule();
             loadLeaderboardModule();
             loadClockModule();
-          }, 300000);
+          }, 60000);
 
           // Commands
           setInterval( function() {

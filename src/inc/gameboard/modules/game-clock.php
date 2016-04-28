@@ -55,7 +55,7 @@ class ClockModuleController {
       $hours_int = ($num_hours >= 0) ? $num_hours : 0;
       $hours = sprintf("%02d", $hours_int);
 
-      $num_minutes = intval(floor(intval($init / 60)) % 60);
+      $num_minutes = intval(intval($init / 60) % 60);
       $minutes_int = ($num_minutes >= 0) ? $num_minutes : 0;
       $minutes = sprintf("%02d", $minutes_int);
 
@@ -63,7 +63,11 @@ class ClockModuleController {
       $seconds_int = ($num_seconds >= 0) ? $num_seconds : 0;
       $seconds = sprintf("%02d", $seconds_int);
       
-      $milli_int = rand(0, 99);
+      if ($init > 0) {
+        $milli_int = rand(0, 99);
+      } else {
+        $milli_int = 0;
+      }
       $milliseconds = sprintf("%02d", $milli_int);
     } else {
       $hours = '--';

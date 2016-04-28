@@ -124,11 +124,11 @@ class AdminController extends Controller {
 
   public function renderConfigurationTokens(): :xhp {
     $tokens_table = <table></table>;
-    foreach(Control::allTokens() as $token) {
+    foreach(Token::allTokens() as $token) {
       $tokens_table->appendChild(
         <tr>
-          <td>{$token['token']}</td>
-          <td>{$token['used']}</td>
+          <td>{$token->getToken()}</td>
+          <td>{strval($token->getUsed())}</td>
         </tr>
       );
     }
@@ -371,22 +371,22 @@ class AdminController extends Controller {
   }
 
   public function renderAnnouncementsContent(): :xhp {
-    $announcements = Control::allAnnouncements();
+    $announcements = Announcement::allAnnouncements();
     $announcements_div = <div></div>;
     if ($announcements) {
       foreach ($announcements as $announcement) {
         $announcements_div->appendChild(
           <section class="admin-box">
             <form class="announcements_form">
-              <input type="hidden" name="announcement_id" value={$announcement['id']}/>
+              <input type="hidden" name="announcement_id" value={strval($announcement->getId())}/>
               <header class="countries-management-header">
-                <h6>{$announcement['ts']}</h6>
+                <h6>{$announcement->getTs()}</h6>
                 <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
               </header>
               <div class="fb-column-container">
                 <div class="col col-pad">
                   <div class="selected-logo">
-                    <span class="logo-name">{$announcement['announcement']}</span>
+                    <span class="logo-name">{$announcement->getAnnouncement()}</span>
                   </div>
                 </div>
               </div>

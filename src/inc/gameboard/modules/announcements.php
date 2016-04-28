@@ -7,13 +7,13 @@ sess_enforce_login();
 
 class AnnouncementsModuleController {
   public function render(): :xhp {
-    $announcements = Control::allAnnouncements();
+    $announcements = Announcement::allAnnouncements();
     $announcements_ul = <ul class="activity-stream announcements-list"></ul>;
     if ($announcements) {
       foreach ($announcements as $announcement) {
         $announcements_ul->appendChild(
           <li>
-            <span class="announcement-highlight"></span>{$announcement['announcement']}
+            <span class="announcement-highlight"></span>{$announcement->getAnnouncement()}
           </li>
         );
       }

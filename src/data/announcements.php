@@ -9,8 +9,8 @@ class AnnouncementsDataController extends DataController {
   public function generateData() {
     $data = array();
 
-    foreach (Control::allAnnouncements() as $announcement) {
-      array_push($data, $announcement['announcement']);
+    foreach (Announcement::allAnnouncements() as $announcement) {
+      array_push($data, $announcement->getAnnouncement());
     }
 
     $this->jsonSend($data);

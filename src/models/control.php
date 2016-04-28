@@ -1,39 +1,7 @@
 <?hh
 
 class Control extends Model {
-  public static function allTokens() {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM registration_tokens';
-    return $db->query($sql);
-  }
-
-  public static function allAvailableTokens() {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM registration_tokens WHERE used = 0';
-    return $db->query($sql);
-  }
-
-  public static function checkToken(string $token): bool {
-    $db = self::getDb();
-    $sql = 'SELECT COUNT(*) FROM registration_tokens WHERE used = 0 AND token = ?';
-    $element = array($token);
-    return intval(must_have_idx(firstx($db->query($sql, $element)), 'COUNT(*)')) > 0;
-  }
-
-  public static function useToken(string $token, int $team_id): void {
-    $db = self::getDb();
-    $sql = 'UPDATE registration_tokens SET used = 1, team_id = ?, use_ts = NOW() WHERE token = ? LIMIT 1';
-    $elements = array($team_id, $token);
-    $db->query($sql, $elements);
-  }
-
-  public static function deleteToken(string $token): void {
-    $db = self::getDb();
-    $sql = 'DELETE from registration_tokens WHERE token = ? LIMIT 1';
-    $element = array($token);
-    $db->query($sql, $element);
-  }
-
+  
   public static function startScriptLog(int $pid, string $name, string $cmd): void {
     $db = self::getDb();
     $sql = 'INSERT INTO scripts (ts, pid, name, cmd, status) VALUES (NOW(), ?, ?, ?, 1)';
@@ -59,35 +27,6 @@ class Control extends Model {
     $db = self::getDb();
     $sql = 'DELETE FROM scripts WHERE id > 0 AND status = 0';
     $db->query($sql);
-  }
-
-  public static function createTokens(): void {
-    $db = self::getDb();
-    $crypto_strong = True;
-    $tokens = array();
-    $query = array();
-    $token_len = 15;
-    $token_number = 50;
-    for ($i = 0; $i < $token_number; $i++) {
-      $token = md5(
-        base64_encode(
-          openssl_random_pseudo_bytes(
-            $token_len,
-            $crypto_strong,
-          )
-        )
-      );
-      $sql = 'INSERT INTO registration_tokens (token, created_ts) VALUES (?, NOW())';
-      $element = array($token);
-      $db->query($sql, $element);
-    }
-  }
-
-  public static function exportTokens(): void {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM registration_tokens WHERE used = 0';
-    $tokens = $db->query($sql);
-    // TODO
   }
 
   public static function begin(): void {
@@ -160,26 +99,6 @@ class Control extends Model {
 
   public static function backupDb(): void {
     // TODO
-  }
-
-  public static function newAnnouncement(string $announcement): void {
-    $db = self::getDb();
-    $sql = 'INSERT INTO announcements_log (ts, announcement) (SELECT NOW(), ?) LIMIT 1';
-    $element = array($announcement);
-    $db->query($sql, $element);
-  }
-
-  public static function deleteAnnouncement(int $announcement_id): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM announcements_log WHERE id = ? LIMIT 1';
-    $element = array($announcement_id);
-    $db->query($sql, $element);
-  }
-
-  public static function allAnnouncements() {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM announcements_log ORDER BY ts DESC';
-    return $db->query($sql);
   }
 
   public static function allActivity() {
