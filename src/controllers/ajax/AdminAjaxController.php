@@ -407,7 +407,7 @@ class AdminAjaxController extends AjaxController {
       Token::create();
       return ok_response('Success', 'admin');
     case 'export_tokens':
-      Control::export();
+      Token::export();
       return ok_response('Success', 'admin');
     case 'begin_game':
       Control::begin();
