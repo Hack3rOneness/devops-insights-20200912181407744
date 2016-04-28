@@ -1,7 +1,7 @@
-<?hh
+<?hh // strict
 
 class Control extends Model {
-  
+
   public static function startScriptLog(int $pid, string $name, string $cmd): void {
     $db = self::getDb();
     $sql = 'INSERT INTO scripts (ts, pid, name, cmd, status) VALUES (NOW(), ?, ?, ?, 1)';
@@ -101,7 +101,11 @@ class Control extends Model {
     // TODO
   }
 
-  public static function allActivity() {
+  public static function export(): void {
+    // TODO
+  }
+
+  public static function allActivity(): array<array<string, string>> {
     $db = self::getDb();
     $sql = 'SELECT DATE_FORMAT(scores_log.ts, "%H:%i:%S") AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time ASC';
     return $db->query($sql);

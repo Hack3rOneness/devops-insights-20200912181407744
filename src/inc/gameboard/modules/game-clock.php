@@ -37,7 +37,7 @@ class ClockModuleController {
       for ($i=0; $i<10; $i++) {
         $indicator->appendChild(
           <span class="indicator-cell"></span>
-        ); 
+        );
       }
     }
     return $indicator;
@@ -62,7 +62,7 @@ class ClockModuleController {
       $num_seconds = intval($init % 60);
       $seconds_int = ($num_seconds >= 0) ? $num_seconds : 0;
       $seconds = sprintf("%02d", $seconds_int);
-      
+
       if ($init > 0) {
         $milli_int = rand(0, 99);
       } else {
