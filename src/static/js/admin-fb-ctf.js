@@ -1118,10 +1118,10 @@ var $body = $('body');
     $('.toggle_answer_visibility').on('click', function(event) {
       event.preventDefault();
       if ($(this).prev('input').attr('type') === 'text') {
-        $(this).text('Hide Answer');
+        $(this).text('Show Answer');
         $(this).prev('input').attr('type', 'password');
       } else if ($(this).prev('input').attr('type') === 'password') {
-        $(this).text('Show Answer');
+        $(this).text('Hide Answer');
         $(this).prev('input').attr('type', 'text');
       }
     });

@@ -309,21 +309,6 @@
             loadConfData();
           }, FB_CTF.data.CONF.refreshConf);
 
-          // Game clock
-          setInterval( function() {
-            loadClockModule();
-            setupInputListeners();
-          }, 1000);
-
-        // This is a huge hack because
-        // the event listeners were being overriden for
-        // some unkown reason I didn't want to spend time
-        // figuring out
-          setInterval( function() {
-            setupInputListeners();
-          }, 1000);
-
-
           // Countries
           setInterval( function() {
             if (FB_CTF.data.CONF.gameboard === '1') {
@@ -331,11 +316,17 @@
               getCountryData();
               refreshMapData();
               // Announcements
-              loadAnnouncementsModule();
+              if (getWidgetStatus('Announcements') === 'open') {
+                loadAnnouncementsModule();
+              }
               // Filter
-              //loadFilterModule();
+              if (getWidgetStatus('Filter') === 'open') {
+                loadFilterModule();
+              }
               // Activity
-              loadActivityModule();
+              if (getWidgetStatus('Activity') === 'open') {
+                loadActivityModule();
+              }
             } else {
               clearMapData();
               clearAnnouncements();
@@ -348,18 +339,33 @@
             if (FB_CTF.data.CONF.gameboard === '1') {
               // Teams
               loadTeamData();
-              loadTeamsModule();
-              loadLeaderboardModule();
+              if (getWidgetStatus('Teams') === 'open') {
+                loadTeamsModule();
+              }
+              if (getWidgetStatus('Leaderboard') === 'open') {
+                loadLeaderboardModule();
+              }
             } else {
               clearTeams();
               clearLeaderboard();
             }
           }, FB_CTF.data.CONF.refreshMap);
 
+          // Forcefully refreshing all modules every 5 minutes
+          setInterval( function() {
+            loadAnnouncementsModule();
+            loadFilterModule();
+            loadActivityModule();
+            loadTeamsModule();
+            loadLeaderboardModule();
+            loadClockModule();
+          }, 300000);
+
           // Commands
           setInterval( function() {
             FB_CTF.command_line.loadCommandsData();
           }, FB_CTF.data.CONF.refreshCmd);
+        } else {// VIEW MODE
         }
       });
     }
@@ -662,8 +668,6 @@
       function removeCaptured(event){
         if(event)
           event.preventDefault();
-
-        console.log(CURRENT_ZOOM);
 
         if(CURRENT_ZOOM < 1.1){
           enableClickAndDrag.zoomToPoint();
