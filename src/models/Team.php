@@ -178,7 +178,7 @@ class Team extends Model {
   }
 
   // Get a team data.
-  public static function getTeamData(int $team_id): mixed {
+  public static function getTeamData(int $team_id): array<array<string, string>> {
     $db = self::getDb();
 
     $sql = 'SELECT * FROM teams_data WHERE team_id = ?';
