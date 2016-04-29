@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS `teams`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
   `name` text NOT NULL,
   `password_hash` text NOT NULL,
   `points` int(11) NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `teams` (
   `logo` text NOT NULL,
   `admin` tinyint(1) NOT NULL,
   `protected` tinyint(1) NOT NULL,
-  `visible` tinyint(1) NOT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT 1,
   `created_ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
