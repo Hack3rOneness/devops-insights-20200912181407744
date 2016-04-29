@@ -44,7 +44,7 @@ class ViewModeController extends Controller {
         <div class="fb-map"></div>
         <div class="fb-module-container container--row">
           <aside data-name="Leaderboard" class="module--outer-left active" data-module="leaderboard-viewmode"></aside>
-          <aside data-name="Under Attack" class="module--inner-right active" data-module="under-attack"></aside>
+          <aside data-name="Activity" class="module--inner-right active" data-module="activity-viewmode"></aside>
           <aside data-name="Game Clock" class="module--outer-right active" data-module="game-clock"></aside>
         </div>
       </div>;

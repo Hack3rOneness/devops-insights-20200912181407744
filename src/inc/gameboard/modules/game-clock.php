@@ -3,7 +3,6 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 SessionUtils::sessionStart();
-SessionUtils::enforceLogin();
 
 class ClockModuleController {
   private function generateIndicator(string $start_ts, string $end_ts): :xhp {
