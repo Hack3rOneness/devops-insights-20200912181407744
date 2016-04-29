@@ -104,8 +104,7 @@ class SessionUtils {
   }
 
   public static function sessionAdmin(): bool {
-    $admin = must_have_string($_SESSION, 'admin');
-    return (bool)(intval($admin));
+    return array_key_exists('admin', $_SESSION);
   }
 
   public static function sessionTeam(): int {
