@@ -25,8 +25,8 @@ class Attachment extends Model {
     $type = '';
     $local_filename = self::attachmentsDir;
 
-    $files = getFILES();
-    $server = getSERVER();
+    $files = Utils::getFILES();
+    $server = Utils::getSERVER();
     // First we put the file in its place
     if ($files->contains($file_param)) {
       $tmp_name = $files[$file_param]['tmp_name'];
@@ -69,7 +69,7 @@ class Attachment extends Model {
   // Delete existing attachment.
   public static function delete(int $attachment_id): void {
     $db = self::getDb();
-    $server = getSERVER();
+    $server = Utils::getSERVER();
 
     // Copy file to deleted folder
     $filename = self::get($attachment_id)->getFilename();

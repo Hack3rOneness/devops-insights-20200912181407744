@@ -1,7 +1,7 @@
 <?hh // strict
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class GameboardController extends Controller {
   <<__Override>>
@@ -32,7 +32,7 @@ class GameboardController extends Controller {
   }
 
   public function renderMainContent(): :xhp {
-    if (sess_admin()) {
+    if (SessionUtils::sessionAdmin()) {
       $admin_link = <li><a href="index.php?p=admin">Admin</a></li>;
     } else {
       $admin_link = null;
@@ -119,7 +119,7 @@ class GameboardController extends Controller {
   public function renderBody(string $page): :xhp {
     return
       <body data-section="gameboard">
-        <input type="hidden" name="csrf_token" value={sess_csrf_token()}/>
+        <input type="hidden" name="csrf_token" value={SessionUtils::CSRFToken()}/>
         <div class="fb-sprite" id="fb-svg-sprite"></div>
         <div id="fb-main-content" class="fb-page">{$this->renderPage($page)}</div>
         <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>

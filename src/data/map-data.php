@@ -2,15 +2,15 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class MapDataController extends DataController {
   public function generateData() {
     $map_data = (object) array();
 
-    $my_team_id = intval(sess_team());
-    $my_name = sess_teamname();
+    $my_team_id = SessionUtils::sessionTeam();
+    $my_name = SessionUtils::sessionTeamName();
 
     foreach (Country::allEnabledCountries(true) as $country) {
       $active = ($country->getUsed() && Country::isActiveLevel($country->getId()))

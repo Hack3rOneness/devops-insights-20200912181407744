@@ -2,15 +2,15 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class ActivityModuleController {
   public function render(): :xhp {
     $activity_ul = <ul class="activity-stream"></ul>;
 
     foreach (Control::allActivity() as $score) {
-      if ($score['team_id'] === sess_team()) {
+      if ($score['team_id'] === SessionUtils::sessionTeam()) {
         $class_li = 'your-team';
         $class_span = 'your-name';
       } else {

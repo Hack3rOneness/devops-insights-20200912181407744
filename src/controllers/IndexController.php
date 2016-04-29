@@ -58,8 +58,8 @@ class IndexController extends Controller {
   }
 
   public function renderCountdownContent(): :xhp {
-    sess_start();
-    if (sess_active()) {
+    SessionUtils::sessionStart();
+    if (SessionUtils::sessionActive()) {
       $play_nav =
         <form class="fb-form inner-container">
           <p>Get ready for the CTF to start and access the gameboard now!</p>
@@ -439,8 +439,8 @@ class IndexController extends Controller {
   }
 
   public function renderMainNav(): :xhp {
-    sess_start();
-    if (sess_active()) {
+    SessionUtils::sessionStart();
+    if (SessionUtils::sessionActive()) {
       $right_nav =
         <ul class="nav-right">
           <li><a href="/index.php?p=logout" data-active="logout">Logout</a></li>

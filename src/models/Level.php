@@ -785,7 +785,7 @@ class Level extends Model {
 
   // Bases processing and scoring.
   public static function baseScoring(): void {
-    $document_root = must_have_string(getSERVER(), 'DOCUMENT_ROOT');
+    $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
     $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.$document_root.'/scripts/bases.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     Control::startScriptLog(intval($pid), 'bases', $cmd);

@@ -2,15 +2,15 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class LeaderboardModuleController {
   public function render(): :xhp {
     $leaderboard_ul = <ul></ul>;
 
-    $my_team = Team::getTeam(intval(sess_team()));
-    $my_rank = Team::myRank(intval(sess_team()));
+    $my_team = Team::getTeam(SessionUtils::sessionTeam());
+    $my_rank = Team::myRank(SessionUtils::sessionTeam());
 
     // If refresing is enabled, do the needful
     if (Configuration::get('gameboard')->getValue() === '1') {

@@ -2,8 +2,8 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class WorldMapController {
   public function render(): :xhp {
@@ -33,10 +33,10 @@ class WorldMapController {
         $country_level = Level::whoUses($country->getId());
 
         if ($country_level) {
-          if (Level::previousScore($country_level->getId(), intval(sess_team()), false)) {
+          if (Level::previousScore($country_level->getId(), SessionUtils::sessionTeam(), false)) {
             $map_indicator .= 'captured--you';
-            $data_captured = sess_teamname();
-          } else if (Level::previousScore($country_level->getId(), intval(sess_team()), true)) {
+            $data_captured = SessionUtils::sessionTeamName();
+          } else if (Level::previousScore($country_level->getId(), SessionUtils::sessionTeam(), true)) {
             $map_indicator .= 'captured--opponent';
             $completed_by = Team::completedLevel($country_level->getId());
             $data_captured = '';

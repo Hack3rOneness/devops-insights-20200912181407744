@@ -6,5 +6,5 @@ try {
   echo Router::route();
 } catch (RedirectException $e) {
   http_response_code($e->getStatusCode());
-  redirect($e->getPath());
+  Utils::redirect($e->getPath());
 }

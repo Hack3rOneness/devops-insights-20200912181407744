@@ -1,7 +1,7 @@
 <?hh
 
-sess_start();
-sess_enforce_admin();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class AdminAjaxController extends AjaxController {
   <<__Override>>
@@ -131,14 +131,14 @@ class AdminAjaxController extends AjaxController {
   protected function handleAction(string $action, array<string, mixed> $params): string {
     if ($action !== 'none') {
       // CSRF check
-      if (idx($params, 'csrf_token') !== sess_csrf_token()) {
-        return error_response('CSRF token is invalid', 'admin');
+      if (idx($params, 'csrf_token') !== SessionUtils::CSRFToken()) {
+        return Utils::error_response('CSRF token is invalid', 'admin');
       }
     }
 
     switch ($action) {
     case 'none':
-      return error_response('Invalid action', 'admin');
+      return Utils::error_response('Invalid action', 'admin');
     case 'create_quiz':
       $bonus = Configuration::get('default_bonus')->getValue();
       $bonus_dec = Configuration::get('default_bonusdec')->getValue();
@@ -153,7 +153,7 @@ class AdminAjaxController extends AjaxController {
         must_have_string($params, 'hint'),
         intval(must_have_idx($params, 'penalty')),
       );
-      return ok_response('Created succesfully', 'admin');
+      return Utils::ok_response('Created succesfully', 'admin');
     case 'update_quiz':
       Level::updateQuiz(
         must_have_string($params, 'title'),
@@ -167,7 +167,7 @@ class AdminAjaxController extends AjaxController {
         intval(must_have_idx($params, 'penalty')),
         must_have_int($params, 'level_id'),
       );
-      return ok_response('Updated succesfully', 'admin');
+      return Utils::ok_response('Updated succesfully', 'admin');
     case 'create_flag':
       $bonus = Configuration::get('default_bonus')->getValue();
       $bonus_dec = Configuration::get('default_bonusdec')->getValue();
@@ -184,7 +184,7 @@ class AdminAjaxController extends AjaxController {
         must_have_string($params, 'hint'),
         intval(must_have_idx($params, 'penalty')),
       );
-      return ok_response('Created succesfully', 'admin');
+      return Utils::ok_response('Created succesfully', 'admin');
     case 'update_flag':
       Level::updateFlag(
         must_have_string($params, 'title'),
@@ -199,7 +199,7 @@ class AdminAjaxController extends AjaxController {
         intval(must_have_idx($params, 'penalty')),
         must_have_int($params, 'level_id'),
       );
-      return ok_response('Updated succesfully', 'admin');
+      return Utils::ok_response('Updated succesfully', 'admin');
     case 'create_base':
       $bonus = Configuration::get('default_bonus')->getValue();
       Level::createBase(
@@ -212,7 +212,7 @@ class AdminAjaxController extends AjaxController {
         must_have_string($params, 'hint'),
         intval(must_have_idx($params, 'penalty')),
       );
-      return ok_response('Created succesfully', 'admin');
+      return Utils::ok_response('Created succesfully', 'admin');
     case 'update_base':
       Level::updateBase(
         must_have_string($params, 'title'),
@@ -225,30 +225,30 @@ class AdminAjaxController extends AjaxController {
         intval(must_have_idx($params, 'penalty')),
         must_have_int($params, 'level_id'),
       );
-      return ok_response('Updated succesfully', 'admin');
+      return Utils::ok_response('Updated succesfully', 'admin');
     case 'delete_level':
       Level::delete(
         must_have_int($params, 'level_id'),
       );
-      return ok_response('Deleted succesfully', 'admin');
+      return Utils::ok_response('Deleted succesfully', 'admin');
     case 'toggle_status_level':
       Level::setStatus(
         must_have_int($params, 'level_id'),
         must_have_int($params, 'status') === 1,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'toggle_status_all':
       if (must_have_string($params, 'all_type') === 'team') {
         Team::setStatusAll(
           must_have_int($params, 'status') === 1
         );
-        return ok_response('Success', 'admin');
+        return Utils::ok_response('Success', 'admin');
       } else {
         Level::setStatusAll(
           must_have_int($params, 'status') === 1,
           must_have_string($params, 'all_type'),
         );
-        return ok_response('Success', 'admin');
+        return Utils::ok_response('Success', 'admin');
       }
     case 'create_team':
       $password_hash = Team::generateHash(must_have_string($params, 'password'));
@@ -257,7 +257,7 @@ class AdminAjaxController extends AjaxController {
         $password_hash,
         must_have_string($params, 'logo'),
       );
-      return ok_response('Created succesfully', 'admin');
+      return Utils::ok_response('Created succesfully', 'admin');
     case 'update_team':
       Team::update(
         must_have_string($params, 'name'),
@@ -272,75 +272,75 @@ class AdminAjaxController extends AjaxController {
           must_have_int($params, 'team_id'),
         );
       }
-      return ok_response('Updated succesfully', 'admin');
+      return Utils::ok_response('Updated succesfully', 'admin');
     case 'toggle_admin_team':
       Team::setAdmin(
         must_have_int($params, 'team_id'),
         must_have_int($params, 'admin') === 1,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'toggle_status_team':
       Team::setStatus(
         must_have_int($params, 'team_id'),
         must_have_int($params, 'status') === 1,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'toggle_visible_team':
       Team::setVisible(
         must_have_int($params, 'team_id'),
         must_have_int($params, 'visible') === 1,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'enable_logo':
       Logo::setEnabled(
         must_have_int($params, 'logo_id'),
         true,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'disable_logo':
       Logo::setEnabled(
         must_have_int($params, 'logo_id'),
         false,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'enable_country':
       Country::setStatus(
         must_have_int($params, 'country_id'),
         true,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'disable_country':
       Country::setStatus(
         must_have_int($params, 'country_id'),
         false,
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'delete_team':
       Team::delete(
         must_have_int($params, 'team_id'),
       );
-      return ok_response('Deleted successfully', 'admin');
+      return Utils::ok_response('Deleted successfully', 'admin');
     case 'update_session':
-      sess_write(
+      Session::update(
         must_have_string($params, 'cookie'),
         must_have_string($params, 'data'),
       );
-      return ok_response('Updated successfully', 'admin');
+      return Utils::ok_response('Updated successfully', 'admin');
     case 'delete_session':
-      sess_destroy(
+      Session::delete(
         must_have_string($params, 'cookie'),
       );
-      return ok_response('Deleted successfully', 'admin');
+      return Utils::ok_response('Deleted successfully', 'admin');
     case 'delete_category':
       Category::delete(
         must_have_int($params, 'category_id'),
       );
-      return ok_response('Deleted successfully', 'admin');
+      return Utils::ok_response('Deleted successfully', 'admin');
     case 'create_category':
       Category::create(
         must_have_string($params, 'category'),
       );
-      return ok_response('Deleted successfully', 'admin');
+      return Utils::ok_response('Deleted successfully', 'admin');
     case 'create_attachment':
       $result = Attachment::create(
         'attachment_file',
@@ -348,7 +348,7 @@ class AdminAjaxController extends AjaxController {
         must_have_int($params, 'level_id'),
       );
       if ($result) {
-        return ok_response('Created successfully', 'admin');
+        return Utils::ok_response('Created successfully', 'admin');
       } else {
         return ''; // TODO
       }
@@ -358,30 +358,30 @@ class AdminAjaxController extends AjaxController {
         must_have_int($params, 'level_id'),
         must_have_string($params, 'filename'),
       );
-      return ok_response('Updated successfully', 'admin');
+      return Utils::ok_response('Updated successfully', 'admin');
     case 'delete_attachment':
       Attachment::delete(
         must_have_int($params, 'attachment_id'),
       );
-      return ok_response('Deleted successfully', 'admin');
+      return Utils::ok_response('Deleted successfully', 'admin');
     case 'create_link':
       Link::create(
         must_have_string($params, 'link'),
         must_have_int($params, 'level_id'),
       );
-      return ok_response('Created successfully', 'admin');
+      return Utils::ok_response('Created successfully', 'admin');
     case 'update_link':
       Link::update(
         must_have_string($params, 'link'),
         must_have_int($params, 'level_id'),
         must_have_int($params, 'link_id'),
       );
-      return ok_response('Updated succesfully', 'admin');
+      return Utils::ok_response('Updated succesfully', 'admin');
     case 'delete_link':
       Link::delete(
         must_have_int($params, 'link_id'),
       );
-      return ok_response('Deleted successfully', 'admin');
+      return Utils::ok_response('Deleted successfully', 'admin');
     case 'change_configuration':
       $field = must_have_string($params, 'field');
       if (Configuration::validField($field)) {
@@ -389,37 +389,37 @@ class AdminAjaxController extends AjaxController {
           $field,
           must_have_string($params, 'value'),
         );
-        return ok_response('Success', 'admin');
+        return Utils::ok_response('Success', 'admin');
       } else {
-        return error_response('Invalid configuration', 'admin');
+        return Utils::error_response('Invalid configuration', 'admin');
       }
     case 'create_announcement':
       Announcement::create(
         must_have_string($params, 'announcement'),
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'delete_announcement':
       Announcement::delete(
         must_have_int($params, 'announcement_id'),
       );
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'create_tokens':
       Token::create();
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'export_tokens':
-      Control::export();
-      return ok_response('Success', 'admin');
+      Token::export();
+      return Utils::ok_response('Success', 'admin');
     case 'begin_game':
       Control::begin();
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'end_game':
       Control::end();
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     case 'backup_db':
       Control::backupDb();
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     default:
-      return error_response('Invalid action', 'admin');
+      return Utils::error_response('Invalid action', 'admin');
     }
   }
 }

@@ -2,8 +2,8 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class ConfigurationController extends DataController {
   // Refresh rate for teams/leaderboard in milliseconds
@@ -21,7 +21,7 @@ class ConfigurationController extends DataController {
     $control = new Control();
 
     /* HH_FIXME[1002] */
-    $conf_data->{'currentTeam'} = sess_teamname();
+    $conf_data->{'currentTeam'} = SessionUtils::sessionTeamName();
     $conf_data->{'gameboard'} = Configuration::get('gameboard')->getValue();
     $conf_data->{'refreshTeams'} = $this->teams_cycle;
     $conf_data->{'refreshMap'} = $this->map_cycle;

@@ -2,8 +2,8 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class ListviewController {
   public function render(): :xhp {
@@ -13,7 +13,7 @@ class ListviewController {
     foreach (Level::allActiveLevels() as $level) {
       $country = Country::get(intval($level->getId()));
       $category = Category::getSingleCategory($level->getCategoryId());
-      if (Level::previousScore($level->getId(), intval(sess_team()), false)) {
+      if (Level::previousScore($level->getId(), SessionUtils::sessionTeam(), false)) {
         $span_status = <span class="fb-status status--yours">Captured</span>;
       } else {
         $span_status = <span class="fb-status status--open">Open</span>;

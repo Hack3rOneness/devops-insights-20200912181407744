@@ -2,12 +2,12 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class CountryDataController extends DataController {
   public function generateData() {
-    $my_team = Team::getTeam(intval(sess_team()));
+    $my_team = Team::getTeam(SessionUtils::sessionTeam());
 
     $countries_data = (object) array();
 

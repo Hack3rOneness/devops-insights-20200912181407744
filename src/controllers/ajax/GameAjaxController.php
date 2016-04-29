@@ -1,7 +1,7 @@
 <?hh
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class GameAjaxController extends AjaxController {
   <<__Override>>
@@ -40,21 +40,21 @@ class GameAjaxController extends AjaxController {
   protected function handleAction(string $action, array<string, mixed> $params): string {
     if ($action !== 'none') {
       // CSRF check
-      if (idx($params, 'csrf_token') !== sess_csrf_token()) {
-        return error_response('CSRF token is invalid', 'game');
+      if (idx($params, 'csrf_token') !== SessionUtils::CSRFToken()) {
+        return Utils::error_response('CSRF token is invalid', 'game');
       }
     }
 
     switch ($action) {
     case 'none':
-      return error_response('Invalid action', 'game');
+      return Utils::error_response('Invalid action', 'game');
     case 'answer_level':
       if (Configuration::get('scoring')->getValue() === '1') {
         // Check if level is not a base
         if (Level::checkBase(
           must_have_int($params, 'level_id')
         )) {
-          return error_response('Failed', 'game');
+          return Utils::error_response('Failed', 'game');
         // Check if answer is valid
         } else if (Level::checkAnswer(
           must_have_int($params, 'level_id'),
@@ -63,36 +63,36 @@ class GameAjaxController extends AjaxController {
           // Give points!
           Level::scoreLevel(
             must_have_int($params, 'level_id'),
-            intval(sess_team())
+            SessionUtils::sessionTeam()
           );
           // Update teams last score
-          Team::lastScore(intval(sess_team()));
-          return ok_response('Success', 'game');
+          Team::lastScore(SessionUtils::sessionTeam());
+          return Utils::ok_response('Success', 'game');
         } else {
           Level::logFailedScore(
             must_have_int($params, 'level_id'),
-            intval(sess_team()),
+            SessionUtils::sessionTeam(),
             must_have_string($params, 'answer')
           );
-          return error_response('Failed', 'game');
+          return Utils::error_response('Failed', 'game');
         }
       } else {
-        return error_response('Failed', 'game');
+        return Utils::error_response('Failed', 'game');
       }
     case 'get_hint':
       $requested_hint = Level::getLevelHint(
         must_have_int($params, 'level_id'),
-        intval(sess_team())
+        SessionUtils::sessionTeam()
       );
       if ($requested_hint) {
-        return hint_response($requested_hint, 'OK');
+        return Utils::hint_response($requested_hint, 'OK');
       } else {
-        return hint_response('', 'ERROR');
+        return Utils::hint_response('', 'ERROR');
       }
     case 'open_level':
-      return ok_response('Success', 'admin');
+      return Utils::ok_response('Success', 'admin');
     default:
-      return error_response('Invalid action', 'game');
+      return Utils::error_response('Invalid action', 'game');
     }
   }
 }

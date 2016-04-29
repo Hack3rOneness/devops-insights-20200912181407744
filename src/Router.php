@@ -2,11 +2,11 @@
 
 class Router {
   public static function route(): string {
-    $page = idx(getGET(), 'p');
+    $page = idx(Utils::getGET(), 'p');
     if (!is_string($page)) {
       $page = 'index';
     }
-    $ajax = getGET()->get('ajax') === 'true';
+    $ajax = Utils::getGET()->get('ajax') === 'true';
 
     if ($ajax) {
       return self::routeAjax($page);
@@ -40,8 +40,8 @@ class Router {
       return (new ViewModeController())->render();
     case 'logout':
       // TODO: Make a confirmation modal?
-      sess_start();
-      sess_logout();
+      SessionUtils::sessionStart();
+      SessionUtils::sessionLogout();
       invariant(false, 'should not reach here');
     default:
       throw new NotFoundRedirectException();

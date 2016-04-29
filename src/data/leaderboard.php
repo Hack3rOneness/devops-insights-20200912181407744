@@ -2,8 +2,8 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-sess_start();
-sess_enforce_login();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
 
 class LeaderboardDataController extends DataController {
   public function generateData() {
@@ -16,8 +16,8 @@ class LeaderboardDataController extends DataController {
     }
 
     $leaders = Team::leaderboard();
-    $my_team = Team::getTeam(intval(sess_team()));
-    $my_rank = Team::myRank(intval(sess_team()));
+    $my_team = Team::getTeam(SessionUtils::sessionTeam());
+    $my_rank = Team::myRank(SessionUtils::sessionTeam());
     $my_team_data = (object) array(
       'badge' => $my_team->getLogo(),
       'points' => $my_team->getPoints(),

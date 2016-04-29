@@ -1,8 +1,8 @@
 <?hh // strict
 
-sess_start();
-sess_enforce_login();
-sess_enforce_admin();
+SessionUtils::sessionStart();
+SessionUtils::enforceLogin();
+SessionUtils::enforceAdmin();
 
 class AdminController extends Controller {
   <<__Override>>
@@ -1895,33 +1895,33 @@ class AdminController extends Controller {
       </div>;
 
     $c = 1;
-    foreach (sess_all() as $session) {
-      $session_id = 'session_'.$session['id'];
+    foreach (Session::allSessions() as $session) {
+      $session_id = 'session_'.strval($session->getId());
       $adminsections->appendChild(
         <section class="admin-box section-locked">
           <form class="session_form" name={$session_id}>
-            <input type="hidden" name="session_id" value={$session['id']}/>
+            <input type="hidden" name="session_id" value={strval($session->getId())}/>
             <header class="admin-box-header">
-              <span class="session-name">Session {$c}: <span class="highlighted--blue">{$session['last_access_ts']}</span></span>
+              <span class="session-name">Session {$c}: <span class="highlighted--blue">{$session->getLastAccessTs()}</span></span>
             </header>
             <div class="fb-column-container">
               <div class="col col-1-2 col-pad">
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label">Cookie</label>
-                  <input name="cookie" type="text" value={$session['cookie']} disabled={true}/>
+                  <input name="cookie" type="text" value={$session->getCookie()} disabled={true}/>
                 </div>
               </div>
               <div class="col col-1-2 col-pad">
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label">Creation Time:</label>
-                  <span class="highlighted"><label class="admin-label">{$session['created_ts']}</label></span>
+                  <span class="highlighted"><label class="admin-label">{$session->getCreatedTs()}</label></span>
                 </div>
               </div>
             </div>
             <div class="admin-row">
               <div class="form-el el--block-label el--full-text">
                 <label class="admin-label">Data</label>
-                <input name="data" type="text" value={$session['data']} disabled={true}/>
+                <input name="data" type="text" value={$session->getData()} disabled={true}/>
               </div>
             </div>
             <div class="admin-buttons admin-row">
@@ -2455,7 +2455,7 @@ class AdminController extends Controller {
   public function renderBody(string $page): :xhp {
     return
       <body data-section="admin">
-        <input type="hidden" name="csrf_token" value={sess_csrf_token()}/>
+        <input type="hidden" name="csrf_token" value={SessionUtils::CSRFToken()}/>
         <div style="height: 0; width: 0; position: absolute; visibility: hidden" id="fb-svg-sprite"></div>
         <div class="fb-viewport admin-viewport">
           {$this->renderMainNav()}

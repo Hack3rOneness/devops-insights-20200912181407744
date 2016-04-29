@@ -31,7 +31,7 @@ abstract class Controller {
       'POST' => INPUT_POST,
       'GET' => INPUT_GET,
     );
-    $method = must_have_string(getSERVER(), 'REQUEST_METHOD');
+    $method = must_have_string(Utils::getSERVER(), 'REQUEST_METHOD');
 
     $filter = idx($this->getFilters(), $method);
     if ($filter === null) {

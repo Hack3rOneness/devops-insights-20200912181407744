@@ -45,7 +45,7 @@ class IndexAjaxController extends AjaxController {
   protected function handleAction(string $action, array<string, mixed> $params): string {
     switch ($action) {
     case 'none':
-      return error_response('Invalid action', 'index');
+      return Utils::error_response('Invalid action', 'index');
     case 'register_team':
       return $this->registerTeam(
         must_have_string($params, 'teamname'),
@@ -83,7 +83,7 @@ class IndexAjaxController extends AjaxController {
         if (Team::teamExist($team_name)) {
           $team_id = Team::getTeamByName($team_name)->getId();
         } else {
-          return error_response('Login failed', 'login');
+          return Utils::error_response('Login failed', 'login');
         }
       }
       invariant(is_int($team_id), 'team_id should be an int');
@@ -96,7 +96,7 @@ class IndexAjaxController extends AjaxController {
         $password,
       );
     default:
-      return error_response('Invalid action', 'index');
+      return Utils::error_response('Invalid action', 'index');
     }
   }
 
@@ -111,14 +111,14 @@ class IndexAjaxController extends AjaxController {
   ): string {
     // Check if registration is enabled
     if (Configuration::get('registration')->getValue() === '0') {
-      return error_response('Registration failed', 'registration');
+      return Utils::error_response('Registration failed', 'registration');
     }
 
     // Check if tokenized registration is enabled
     if (Configuration::get('registration_type')->getValue() === '2') {
       // Check provided token
       if ($token === null || !Token::check($token)) {
-        return error_response('Registration failed', 'registration');
+        return Utils::error_response('Registration failed', 'registration');
       }
     }
 
@@ -130,7 +130,7 @@ class IndexAjaxController extends AjaxController {
 
     // Check if team name is not empty or just spaces
     if (trim($teamname) === '') {
-      return error_response('Registration failed', 'registration');
+      return Utils::error_response('Registration failed', 'registration');
     }
 
     // Trim team name to 20 chars, to avoid breaking UI
@@ -155,41 +155,40 @@ class IndexAjaxController extends AjaxController {
         // Login the team
         return $this->loginTeam($team_id, $password);
       } else {
-        return error_response('Registration failed', 'registration');
+        return Utils::error_response('Registration failed', 'registration');
       }
     } else {
-      return error_response('Registration failed', 'registration');
+      return Utils::error_response('Registration failed', 'registration');
     }
   }
 
   private function loginTeam(int $team_id, string $password): string {
     // Check if login is enabled
     if (Configuration::get('login')->getValue() === '0') {
-      return error_response('Login failed', 'login');
+      return Utils::error_response('Login failed', 'login');
     }
 
     // Verify credentials
     $team = Team::verifyCredentials($team_id, $password);
 
     if ($team) {
-      sess_start();
-      if (!sess_active()) {
-        sess_set('team_id', $team->getId());
-        sess_set('name', $team->getName());
-        sess_set('csrf_token', base64_encode(openssl_random_pseudo_bytes(16)));
+      SessionUtils::sessionStart();
+      if (!SessionUtils::sessionActive()) {
+        SessionUtils::sessionSet('team_id', strval($team->getId()));
+        SessionUtils::sessionSet('name', $team->getName());
+        SessionUtils::sessionSet('csrf_token', base64_encode(openssl_random_pseudo_bytes(16)));
         if ($team->getAdmin()) {
-          sess_set('admin', intval($team->getAdmin()));
+          SessionUtils::sessionSet('admin', strval($team->getAdmin()));
         }
-        sess_set('IP', must_have_string(getSERVER(), 'REMOTE_ADDR'));
       }
       if ($team->getAdmin()) {
         $redirect = 'admin';
       } else {
         $redirect = 'game';
       }
-      return ok_response('Login succesful', $redirect);
+      return Utils::ok_response('Login succesful', $redirect);
     } else {
-      return error_response('Login failed', 'login');
+      return Utils::error_response('Login failed', 'login');
     }
   }
 }

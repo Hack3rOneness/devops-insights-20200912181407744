@@ -3,55 +3,6 @@
 /* HH_IGNORE_ERROR[2001] */
 const MUST_MODIFY = /* UNSAFE_EXPR */ "<<must-modify:\xEE\xFF\xFF>";
 
-function getGET(): Map<string, mixed> {
-  /* HH_IGNORE_ERROR[2050] */
-  return new Map($_GET);
-}
-
-function getPOST(): Map<string, mixed> {
-  /* HH_IGNORE_ERROR[2050] */
-  return new Map($_POST);
-}
-
-function getSERVER(): Map<string, mixed> {
-  /* HH_IGNORE_ERROR[2050] */
-  return new Map($_SERVER);
-}
-
-function getFILES(): Map<string, array<string, mixed>> {
-  /* HH_IGNORE_ERROR[2050] */
-  return new Map($_FILES);
-}
-
-function redirect(string $location): void {
-  header('Location: '.$location);
-}
-
-function request_response(string $result, string $msg, string $redirect): string {
-  $response_data = array(
-    'result' => $result,
-    'message' => $msg,
-    'redirect' => $redirect,
-  );
-  return json_encode($response_data);
-}
-
-function hint_response(string $msg, string $result): string {
-  $response_data = array(
-    'hint' => $msg,
-    'result' => $result,
-  );
-  return json_encode($response_data);
-}
-
-function ok_response(string $msg, string $redirect): string {
-  return request_response('OK', $msg, $redirect);
-}
-
-function error_response(string $msg, string $redirect): string {
-  return request_response('ERROR', $msg, $redirect);
-}
-
 function must_have_idx<Tk, Tv>(
   ?KeyedContainer<Tk, Tv> $arr,
   Tk $idx,
@@ -93,4 +44,59 @@ function starts_with(string $haystack, string $needle): bool {
 
 function ends_with(string $haystack, string $needle): bool {
   return substr($haystack, -strlen($needle)) === $needle;
+}
+
+class Utils {  
+  private function __construct() {}
+
+  private function __clone(): void {}
+
+  public static function getGET(): Map<string, mixed> {
+    /* HH_IGNORE_ERROR[2050] */
+    return new Map($_GET);
+  }
+
+  public static function getPOST(): Map<string, mixed> {
+    /* HH_IGNORE_ERROR[2050] */
+    return new Map($_POST);
+  }
+
+  public static function getSERVER(): Map<string, mixed> {
+    /* HH_IGNORE_ERROR[2050] */
+    return new Map($_SERVER);
+  }
+
+  public static function getFILES(): Map<string, array<string, mixed>> {
+    /* HH_IGNORE_ERROR[2050] */
+    return new Map($_FILES);
+  }
+
+  public static function redirect(string $location): void {
+    header('Location: '.$location);
+  }
+
+  public static function request_response(string $result, string $msg, string $redirect): string {
+    $response_data = array(
+      'result' => $result,
+      'message' => $msg,
+      'redirect' => $redirect,
+    );
+    return json_encode($response_data);
+  }
+
+  public static function hint_response(string $msg, string $result): string {
+    $response_data = array(
+      'hint' => $msg,
+      'result' => $result,
+    );
+    return json_encode($response_data);
+  }
+
+  public static function ok_response(string $msg, string $redirect): string {
+    return self::request_response('OK', $msg, $redirect);
+  }
+
+  public static function error_response(string $msg, string $redirect): string {
+    return self::request_response('ERROR', $msg, $redirect);
+  }
 }

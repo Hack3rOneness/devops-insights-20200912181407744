@@ -6,6 +6,6 @@
     },
     "autoload": {
         "classmap": ["src/"],
-        "files": ["src/utils.php", "src/sessions.php"]
+        "files": ["src/Utils.php"]
     }
 }
