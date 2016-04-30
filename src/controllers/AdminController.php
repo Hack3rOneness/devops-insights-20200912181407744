@@ -1498,38 +1498,89 @@ class AdminController extends Controller {
   }
 
   private function generateTeamScores(int $team_id): :xhp {
-    $scores = <div></div>;
-    $scores->appendChild(
-      <section class="admin-box">
-        <div class="logo-management-header">
-          <h6>Flag</h6>
-        </div>
+    $scores_div = <div></div>;
+    $scores = ScoreLog::allScoresByTeam($team_id);
+    if (count($scores) > 0) {
+      $scores_tbody = <tbody></tbody>;
+      foreach ($scores as $score) {
+        $level = Level::getLevel($score->getLevelId());
+        $country = Country::get($level->getEntityId());
+        $level_str = $country->getName() . ' - ' . $level->getTitle();
+        $scores_tbody->appendChild(
+          <tr>
+            <td style="width: 20%;">{time_ago($score->getTs())}</td>
+            <td style="width: 13%;">{$score->getType()}</td>
+            <td style="width: 7%;">{strval($score->getPoints())}</td>
+            <td style="width: 60%;">{$level_str}</td>
+          </tr>
+        );
+      }
+      $scores_div->appendChild(  
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">time_</th>
+              <th style="width: 13%;">type_</th>
+              <th style="width: 7%;">pts_</th>
+              <th style="width: 60%;">Level_</th>
+            </tr>
+          </thead>
+          {$scores_tbody}
+        </table>
+      );
+    } else {
+      $scores_div->appendChild(
         <div class="fb-column-container">
-          <div class="col col-grow col-pad">
-            <dl>
-              <dt>Time:</dt>
-              <dd>02:59:09</dd>
-              <dt>Points:</dt>
-              <dd>345</dd>
-            </dl>
-          </div>
-          <div class="col col-grow col-pad">
-            <dl>
-              <dt>Country:</dt>
-              <dd>Algeria</dd>
-              <dt>Type:</dt>
-              <dd>Flag</dd>
-            </dl>
+          <div class="col col-pad">
+            No Scores
           </div>
         </div>
-      </section>
-    );
+      );
+    }
 
-    return $scores;
+    return $scores_div;
   }
 
   private function generateTeamFailures(int $team_id): :xhp {
-    return <div>Failures</div>;
+    $failures_div = <div></div>;
+    $failures = FailureLog::allFailuresByTeam($team_id);
+    if (count($failures) > 0) {
+      $failures_tbody = <tbody></tbody>;
+      foreach ($failures as $failure) {
+        $level = Level::getLevel($failure->getLevelId());
+        $country = Country::get($level->getEntityId());
+        $level_str = $country->getName() . ' - ' . $level->getTitle();
+        $failures_tbody->appendChild(
+          <tr>
+            <td style="width: 20%;">{time_ago($failure->getTs())}</td>
+            <td style="width: 40%;">{$level_str}</td>
+            <td style="width: 40%;">{$failure->getFlag()}</td>
+          </tr>
+        );
+      }
+      $failures_div->appendChild(  
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">time_</th>
+              <th style="width: 40%;">Level_</th>
+              <th style="width: 40%;">Attempt_</th>
+            </tr>
+          </thead>
+          {$failures_tbody}
+        </table>
+      );
+    } else {
+      $failures_div->appendChild(
+        <div class="fb-column-container">
+          <div class="col col-pad">
+            No Failures
+          </div>
+        </div>
+      );
+    }
+
+    return $failures_div;
   }
 
   private function generateTeamTabs(int $team_id): :xhp {

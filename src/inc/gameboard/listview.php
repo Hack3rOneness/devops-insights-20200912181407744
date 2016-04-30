@@ -13,7 +13,7 @@ class ListviewController {
     foreach (Level::allActiveLevels() as $level) {
       $country = Country::get(intval($level->getId()));
       $category = Category::getSingleCategory($level->getCategoryId());
-      if (Level::previousScore($level->getId(), SessionUtils::sessionTeam(), false)) {
+      if (ScoreLog::previousScore($level->getId(), SessionUtils::sessionTeam(), false)) {
         $span_status = <span class="fb-status status--yours">Captured</span>;
       } else {
         $span_status = <span class="fb-status status--open">Open</span>;

@@ -33,10 +33,10 @@ class WorldMapController {
         $country_level = Level::whoUses($country->getId());
 
         if ($country_level) {
-          if (Level::previousScore($country_level->getId(), SessionUtils::sessionTeam(), false)) {
+          if (ScoreLog::previousScore($country_level->getId(), SessionUtils::sessionTeam(), false)) {
             $map_indicator .= 'captured--you';
             $data_captured = SessionUtils::sessionTeamName();
-          } else if (Level::previousScore($country_level->getId(), SessionUtils::sessionTeam(), true)) {
+          } else if (ScoreLog::previousScore($country_level->getId(), SessionUtils::sessionTeam(), true)) {
             $map_indicator .= 'captured--opponent';
             $completed_by = Team::completedLevel($country_level->getId());
             $data_captured = '';

@@ -69,7 +69,7 @@ class GameAjaxController extends AjaxController {
           Team::lastScore(SessionUtils::sessionTeam());
           return Utils::ok_response('Success', 'game');
         } else {
-          Level::logFailedScore(
+          FailureLog::logFailedScore(
             must_have_int($params, 'level_id'),
             SessionUtils::sessionTeam(),
             must_have_string($params, 'answer')

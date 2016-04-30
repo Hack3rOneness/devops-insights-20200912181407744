@@ -32,9 +32,9 @@ class CountryDataController extends DataController {
         } else {
           // Has this team requested this hint or scored this level before?
           if (
-            (Level::previousHint($level->getId(), $my_team->getId(), false))
+            (HintLog::previousHint($level->getId(), $my_team->getId(), false))
               ||
-            (Level::previousScore($level->getId(), $my_team->getId(), false))
+            (ScoreLog::previousScore($level->getId(), $my_team->getId(), false))
           ) {
             $hint_cost = 0;
           } else {

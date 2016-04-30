@@ -46,6 +46,33 @@ function ends_with(string $haystack, string $needle): bool {
   return substr($haystack, -strlen($needle)) === $needle;
 }
 
+function time_ago(string $ts): string {
+  $ts_epoc = strtotime($ts);
+  $elapsed = time() - $ts_epoc;
+
+  if ($elapsed < 1) {
+    return 'just now';
+  }
+
+  $w = array(24 * 60 * 60  =>  'd',
+                  60 * 60  =>  'hr',
+                       60  =>  'min',
+                        1  =>  'sec'
+  );
+  $w_s = array('d'    => 'd',
+               'hr'   => 'hrs',
+               'min' => 'mins',
+               'sec' => 'secs'
+  );
+  foreach ($w as $secs => $str) {
+    $d = $elapsed / $secs;
+    if ($d >= 1) {
+      $r = round($d);
+      return $r . ' ' . ($r > 1 ? $w_s[$str] : $str) . ' ago';
+    }
+  }
+}
+
 class Utils {  
   private function __construct() {}
 

@@ -2,14 +2,14 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
-class ActivityModuleController {
+class ActivityViewModeModuleController {
   public function render(): :xhp {
     $activity_ul = <ul class="activity-stream"></ul>;
 
     foreach (Control::allActivity() as $score) {
       $activity_ul->appendChild(
         <li class="opponent-team">
-          [ {$score['time']} ] <span class="opponent-name">{$score['team']}</span> captured {$score['country']}
+          [ {time_ago($score['time'])} ] <span class="opponent-name">{$score['team']}</span> captured {$score['country']}
         </li>
       );
     }
@@ -30,5 +30,5 @@ class ActivityModuleController {
   }
 }
 
-$activity_generated = new ActivityModuleController();
+$activity_generated = new ActivityViewModeModuleController();
 echo $activity_generated->render();

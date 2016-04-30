@@ -578,15 +578,6 @@ class Level extends Model {
     $db->query($sql, $element);
   }
 
-  // Log successful score.
-  public static function logValidScore(int $level_id, int $team_id, int $points, string $type): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO scores_log (ts, level_id, team_id, points, type) VALUES (NOW(), ?, ?, ?, ?)';
-    $elements = array($level_id, $team_id, $points, $type);
-    $db->query($sql, $elements);
-  }
-
   // Log base request.
   public static function logBaseEntry(int $level_id, int $code, string $response): void {
     $db = self::getDb();
@@ -596,48 +587,12 @@ class Level extends Model {
     $db->query($sql, $elements);
   }
 
-  // Log hint request hint.
-  public static function logGetHint(int $level_id, int $team_id, int $penalty): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO hints_log (ts, level_id, team_id, penalty) VALUES (NOW(), ?, ?, ?)';
-    $elements = array($level_id, $team_id, $penalty);
-    $db->query($sql, $elements);
-  }
-
-  // Log attempt on score.
-  public static function logFailedScore(int $level_id, int $team_id, string $flag): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO failures_log (ts, level_id, team_id, flag) VALUES(NOW(), ?, ?, ?)';
-    $elements = array($level_id, $team_id, $flag);
-    $db->query($sql, $elements);
-  }
-
-  // Check if there is a previous score.
-  public static function previousScore(int $level_id, int $team_id, bool $any_team): bool {
-    $db = self::getDb();
-
-    $sql = ($any_team)
-      ? 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id IN (SELECT id FROM teams WHERE id != ? AND visible = 1)'
-      : 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
-    $elements = array($level_id, $team_id);
-    $result = $db->query($sql, $elements);
-
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return intval(firstx($result)['COUNT(*)']) > 0;
-    } else {
-      return false;
-    }
-  }
-
   // Score level. Works for quiz and flags.
   public static function scoreLevel(int $level_id, int $team_id): bool {
     $db = self::getDb();
 
     // Check if team has already scored this level
-    if (self::previousScore($level_id, $team_id, false)) {
+    if (ScoreLog::previousScore($level_id, $team_id, false)) {
       return false;
     }
 
@@ -655,7 +610,7 @@ class Level extends Model {
     $db->query($sql, $elements);
 
     // Log the score...
-    self::logValidScore($level_id, $team_id, $points, $level->getType());
+    ScoreLog::logValidScore($level_id, $team_id, $points, $level->getType());
 
     return true;
   }
@@ -667,7 +622,7 @@ class Level extends Model {
     $level = self::getLevel($level_id);
 
     // Calculate points to give
-    if (self::previousScore($level_id, $team_id, false)) {
+    if (ScoreLog::previousScore($level_id, $team_id, false)) {
       $points = $level->getPoints();
     } else {
       $points = $level->getPoints() + $level->getBonus();
@@ -679,27 +634,9 @@ class Level extends Model {
     $db->query($sql, $elements);
 
      // Log the score...
-    self::logValidScore($level_id, $team_id, $points, $level->getType());
+    ScoreLog::logValidScore($level_id, $team_id, $points, $level->getType());
 
     return true;
-  }
-
-  // Check if there is a previous hint.
-  public static function previousHint(int $level_id, int $team_id, bool $any_team): bool {
-    $db = self::getDb();
-
-    $sql = ($any_team)
-      ? 'SELECT COUNT(*) FROM hints_log WHERE level_id = ? AND team_id != ?'
-      : 'SELECT COUNT(*) FROM hints_log WHERE level_id = ? AND team_id = ?';
-    $elements = array($level_id, $team_id);
-    $result = $db->query($sql, $elements);
-
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return intval(firstx($result)['COUNT(*)']) > 0;
-    } else {
-      return false;
-    }
   }
 
   // Get hint.
@@ -711,8 +648,8 @@ class Level extends Model {
 
     // Check if team has already gotten this hint or if the team has scored this already
     // If so, hint is free
-    if (self::previousHint($level_id, $team_id, false) ||
-        self::previousScore($level_id, $team_id, false)) {
+    if (HintLog::previousHint($level_id, $team_id, false) ||
+        ScoreLog::previousScore($level_id, $team_id, false)) {
       $penalty = 0;
     }
 
@@ -727,7 +664,7 @@ class Level extends Model {
     $db->query($sql, $elements);
 
     // Log the hint
-    self::logGetHint($level_id, $team_id, $penalty);
+    HintLog::logGetHint($level_id, $team_id, $penalty);
 
     // Hint!
     return $level->getHint();

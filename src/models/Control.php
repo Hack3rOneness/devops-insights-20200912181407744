@@ -38,13 +38,13 @@ class Control extends Model {
     Team::resetAllPoints();
 
     // Clear scores log
-    self::resetScores();
+    ScoreLog::resetScores();
 
     // Clear hints log
-    self::resetHints();
+    HintLog::resetHints();
 
     // Clear failures log
-    self::resetFailures();
+    FailureLog::resetFailures();
 
     // Clear bases log
     self::resetBases();
@@ -103,26 +103,8 @@ class Control extends Model {
 
   public static function allActivity(): array<array<string, string>> {
     $db = self::getDb();
-    $sql = 'SELECT DATE_FORMAT(scores_log.ts, "%H:%i:%S") AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time DESC';
+    $sql = 'SELECT scores_log.ts AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time DESC LIMIT 50';
     return $db->query($sql);
-  }
-
-  public static function resetScores(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM scores_log WHERE id > 0';
-    $db->query($sql);
-  }
-
-  public static function resetHints(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM hints_log WHERE id > 0';
-    $db->query($sql);
-  }
-
-  public static function resetFailures(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM failures_log WHERE id > 0';
-    $db->query($sql);
   }
 
   public static function resetBases(): void {

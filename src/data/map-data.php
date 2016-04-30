@@ -19,11 +19,11 @@ class MapDataController extends DataController {
       $country_level = Level::whoUses($country->getId());
       if ($country_level) {
         // If my team has scored
-        if (Level::previousScore($country_level->getId(), $my_team_id, false)) {
+        if (ScoreLog::previousScore($country_level->getId(), $my_team_id, false)) {
           $captured_by = 'you';
           $data_captured = $my_name;
         // If any other team has scored
-        } else if (Level::previousScore($country_level->getId(), $my_team_id, true)) {
+        } else if (ScoreLog::previousScore($country_level->getId(), $my_team_id, true)) {
           $captured_by = 'opponent';
           $completed_by = Team::completedLevel($country_level->getId());
           $data_captured = '';

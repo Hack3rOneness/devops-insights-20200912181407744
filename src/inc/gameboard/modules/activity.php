@@ -10,7 +10,7 @@ class ActivityModuleController {
     $activity_ul = <ul class="activity-stream"></ul>;
 
     foreach (Control::allActivity() as $score) {
-      if ($score['team_id'] === SessionUtils::sessionTeam()) {
+      if (intval($score['team_id']) === SessionUtils::sessionTeam()) {
         $class_li = 'your-team';
         $class_span = 'your-name';
       } else {
@@ -19,7 +19,7 @@ class ActivityModuleController {
       }
       $activity_ul->appendChild(
         <li class={$class_li}>
-          [ {$score['time']} ] <span class={$class_span}>{$score['team']}</span> captured {$score['country']}
+          [ {time_ago($score['time'])} ] <span class={$class_span}>{$score['team']}</span> captured {$score['country']}
         </li>
       );
     }
