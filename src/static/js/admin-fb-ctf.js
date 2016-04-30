@@ -705,11 +705,11 @@ var $body = $('body');
     if ((action_type)) {
       sendAdminRequest(toggle_data);
       if (action_value) {
-        $('input[type=radio][id*=on]').prop('checked', true);
-        $('input[type=radio][id*=off]').prop('checked', false);
+        $('input[type=radio][id*=status--on]').prop('checked', true);
+        $('input[type=radio][id*=status--off]').prop('checked', false);
       } else {
-        $('input[type=radio][id*=on]').prop('checked', false);
-        $('input[type=radio][id*=off]').prop('checked', true);
+        $('input[type=radio][id*=status--on]').prop('checked', false);
+        $('input[type=radio][id*=status--off]').prop('checked', true);
       }
     }
   }

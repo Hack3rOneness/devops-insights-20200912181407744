@@ -1631,10 +1631,10 @@ class AdminController extends Controller {
             <h3>All Teams</h3>
             <form class="all_team_form">
               <div class="admin-section-toggle radio-inline col">
-                <input type="radio" name="fb--admin--all_team" id="fb--admin--all_team--on"/>
-                <label for="fb--admin--all_team--on">On</label>
-                <input type="radio" name="fb--admin--all_team" id="fb--admin--all_team--off"/>
-                <label for="fb--admin--all_team--off">Off</label>
+                <input type="radio" name="fb--teams--all_team" id="fb--teams--all_team--on"/>
+                <label for="fb--teams--all_team--on">On</label>
+                <input type="radio" name="fb--teams--all_team" id="fb--teams--all_team--off"/>
+                <label for="fb--teams--all_team--off">Off</label>
               </div>
             </form>
           </header>
