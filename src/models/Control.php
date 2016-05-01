@@ -98,7 +98,13 @@ class Control extends Model {
   }
 
   public static function backupDb(): void {
-    // TODO
+    $db = self::getDb();
+    $filename = 'facebook-ctf-backup-'.date("d-m-Y").'.sql.gz';
+    header('Content-Type: application/x-gzip');
+    header('Content-Disposition: attachment; filename="'.$filename.'"');
+    $cmd = $db->getBackupCmd().' | gzip --best';
+    error_log($cmd);
+    passthru($cmd);
   }
 
   public static function allActivity(): array<array<string, string>> {

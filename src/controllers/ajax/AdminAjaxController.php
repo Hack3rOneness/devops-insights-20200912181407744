@@ -79,6 +79,15 @@ class AdminAjaxController extends AjaxController {
             'regexp'      => '/^[\w-]+$/'
           ),
         )
+      ),
+      'GET' => array(
+        'action'      => array(
+          'filter'      => FILTER_VALIDATE_REGEXP,
+          'options'     => array(
+            'regexp'      => '/^[\w-]+$/'
+          ),
+        ),
+        'csrf_token'  => FILTER_UNSAFE_RAW
       )
     );
   }

@@ -6,7 +6,7 @@ function beginGame() {
       action: 'begin_game'
     };
   sendAdminRequest(begin_data);
-  window.location.href = location.href;
+  window.location.reload(true);
 }
 
 /**
@@ -17,7 +17,7 @@ function endGame() {
       action: 'end_game'
     };
   sendAdminRequest(end_data);
-  window.location.href = location.href;
+  window.location.reload(true);
 }
 
 /**
@@ -351,7 +351,7 @@ var $body = $('body');
     } else if (elementSection === 'categories_form') {
       createCategory(section);
     }
-    window.location.href = location.href;
+    window.location.reload(true);
   }
 
   // Create announcement
@@ -364,15 +364,15 @@ var $body = $('body');
     if ((announcement)) {
       sendAdminRequest(create_data);
     }
-    window.location.href = location.href;
+    window.location.reload(true);
   }
 
   // Create and download database backup
   function databaseBackup() {
-    var backup_data = {
-      action: 'backup_db'
-    };
-    sendAdminRequest(backup_data);
+    var csrf_token = $('input[name=csrf_token]')[0].value;
+    var action = 'backup_db';
+    var url = 'index.php?p=admin&ajax=true&action='+ action + '&csrf_token=' + csrf_token;
+    window.location.href = url;
   }
 
   // Create tokens
@@ -381,7 +381,7 @@ var $body = $('body');
       action: 'create_tokens'
     };
     sendAdminRequest(create_data);
-    window.location.href = location.href;
+    window.location.reload(true);
   }
 
   // Delete announcement
@@ -762,7 +762,7 @@ var $body = $('body');
     if ((logo_id) && (action_value)) {
       sendAdminRequest(toggle_data);
     }
-    window.location.href = location.href;
+    window.location.reload(true);
   }
 
   function toggleCountry(section) {
@@ -776,7 +776,7 @@ var $body = $('body');
     if (country_id && action_value) {
       sendAdminRequest(toggle_data);
     }
-    window.location.href = location.href;
+    window.location.reload(true);
   }
 
   // Delete session

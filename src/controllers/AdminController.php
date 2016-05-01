@@ -125,10 +125,16 @@ class AdminController extends Controller {
   public function renderConfigurationTokens(): :xhp {
     $tokens_table = <table></table>;
     foreach(Token::allTokens() as $token) {
+      if ($token->getUsed()) {
+        $team = Team::getTeam($token->getTeamId());
+        $token_status = <span class="highlighted--red">Used by {$team->getName()}</span>;
+      } else {
+        $token_status = <span class="highlighted--green">Available</span>;
+      }
       $tokens_table->appendChild(
         <tr>
           <td>{$token->getToken()}</td>
-          <td>{strval($token->getUsed())}</td>
+          <td>{$token_status}</td>
         </tr>
       );
     }
@@ -145,7 +151,8 @@ class AdminController extends Controller {
             </div>
             <div class="admin-buttons admin-row">
               <div class="button-right">
-                <button class="fb-cta cta--yellow" data-action="create-tokens">Create More Tokens</button>
+                <button class="fb-cta cta--yellow" data-action="create-tokens">Create More</button>
+                <button class="fb-cta cta--yellow" data-action="export-tokens">Export Available</button>
               </div>
             </div>
           </section>

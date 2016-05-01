@@ -20,6 +20,14 @@ class Db {
 
   private function __clone(): void {}
 
+  public function getBackupCmd(): string {
+    $usr = must_have_idx($this->config, 'DB_USERNAME');
+    $pwd = must_have_idx($this->config, 'DB_PASSWORD');
+    $db = must_have_idx($this->config, 'DB_NAME');
+    $backup_cmd = 'mysqldump --add-drop-database -u '.escapeshellarg($usr).' --password='.escapeshellarg($pwd).' '.escapeshellarg($db);
+    return $backup_cmd;
+  }
+
   public function connect(): void {
     $host = must_have_idx($this->config, 'DB_HOST');
     $port = must_have_idx($this->config, 'DB_PORT');
