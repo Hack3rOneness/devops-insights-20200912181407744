@@ -41,6 +41,9 @@ package emacs
 # osquery, of course!
 install_osquery
 
+# Install htop
+package htop
+
 # Install MySQL
 install_mysql "$P_ROOT"
 

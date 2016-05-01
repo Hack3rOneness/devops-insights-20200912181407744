@@ -5,8 +5,7 @@ function beginGame() {
   var begin_data = {
       action: 'begin_game'
     };
-  sendAdminRequest(begin_data);
-  window.location.reload(true);
+  sendAdminRequest(begin_data, true);
 }
 
 /**
@@ -16,8 +15,7 @@ function endGame() {
   var end_data = {
       action: 'end_game'
     };
-  sendAdminRequest(end_data);
-  window.location.reload(true);
+  sendAdminRequest(end_data, true);
 }
 
 /**
@@ -29,7 +27,7 @@ function endGame() {
  * @return Boolean
  *   - whether or not the request was succesful
  */
-function sendAdminRequest(request_data) {
+function sendAdminRequest(request_data, refresh_page) {
   var csrf_token = $('input[name=csrf_token]')[0].value;
   request_data.csrf_token = csrf_token;
   $.post(
@@ -43,6 +41,9 @@ function sendAdminRequest(request_data) {
     var responseData = JSON.parse(data);
     if (responseData.result == 'OK') {
       console.log('OK');
+      if (refresh_page) {
+        window.location.reload(true);
+      }
       return true;
     } else {
       // TODO: Make this a modal
@@ -298,7 +299,7 @@ var $body = $('body');
     };
 
     if ((link_id)) {
-      sendAdminRequest(delete_data);
+      sendAdminRequest(delete_data, false);
     }
   }
 
@@ -311,7 +312,7 @@ var $body = $('body');
     };
 
     if ((attachment_id)) {
-      sendAdminRequest(delete_data);
+      sendAdminRequest(delete_data, false);
     }
   }
 
@@ -351,7 +352,6 @@ var $body = $('body');
     } else if (elementSection === 'categories_form') {
       createCategory(section);
     }
-    window.location.reload(true);
   }
 
   // Create announcement
@@ -362,9 +362,8 @@ var $body = $('body');
       announcement: announcement
     };
     if ((announcement)) {
-      sendAdminRequest(create_data);
+      sendAdminRequest(create_data, true);
     }
-    window.location.reload(true);
   }
 
   // Create and download database backup
@@ -380,8 +379,7 @@ var $body = $('body');
     var create_data = {
       action: 'create_tokens'
     };
-    sendAdminRequest(create_data);
-    window.location.reload(true);
+    sendAdminRequest(create_data, true);
   }
 
   // Delete announcement
@@ -392,7 +390,7 @@ var $body = $('body');
       announcement_id: announcement_id
     };
     if ((announcement_id)) {
-      sendAdminRequest(delete_data);
+      sendAdminRequest(delete_data, false);
     }
   }
 
@@ -404,7 +402,7 @@ var $body = $('body');
       level_id: level_id
     };
     if ((level_id)) {
-      sendAdminRequest(delete_data);
+      sendAdminRequest(delete_data, false);
     }
   }
 
@@ -416,7 +414,7 @@ var $body = $('body');
       category: category
     };
     if ((category)) {
-      sendAdminRequest(create_data);
+      sendAdminRequest(create_data, true);
     }
   }
 
@@ -428,7 +426,7 @@ var $body = $('body');
       category_id: category_id
     };
     if ((category_id)) {
-      sendAdminRequest(delete_data);
+      sendAdminRequest(delete_data, false);
     }
   }
 
@@ -468,7 +466,7 @@ var $body = $('body');
       penalty: penalty
     };
     if ((title) && (question) && (answer) && (entity_id) && (points)) {
-      sendAdminRequest(create_data);
+      sendAdminRequest(create_data, true);
     }
   }
 
@@ -494,7 +492,7 @@ var $body = $('body');
       penalty: penalty
     };
     if ((title) && (description) && (flag) && (entity_id) && (points)) {
-      sendAdminRequest(create_data);
+      sendAdminRequest(create_data, true);
     }
   }
 
@@ -520,7 +518,7 @@ var $body = $('body');
       penalty: penalty
     };
     if ((title) && (description) && (entity_id) && (points) && (points)) {
-      sendAdminRequest(create_data);
+      sendAdminRequest(create_data, true);
     }
   }
 
@@ -566,7 +564,7 @@ var $body = $('body');
       level_id: level_id
     };
     if ((title) && (question) && (answer) && (entity_id) && (points)) {
-      sendAdminRequest(update_data);
+      sendAdminRequest(update_data, false);
     }
   }
 
@@ -598,7 +596,7 @@ var $body = $('body');
       level_id: level_id
     };
     if ((title) && (description) && (flag) && (entity_id) && (points)) {
-      sendAdminRequest(update_data);
+      sendAdminRequest(update_data, false);
     }
   }
 
@@ -626,7 +624,7 @@ var $body = $('body');
       level_id: level_id
     };
     if ((title) && (description) && (entity_id) && (points)) {
-      sendAdminRequest(update_data);
+      sendAdminRequest(update_data, false);
     }
   }
 
@@ -638,7 +636,7 @@ var $body = $('body');
       team_id: team_id
     };
     if ((team_id)) {
-      sendAdminRequest(delete_data);
+      sendAdminRequest(delete_data, false);
     }
   }
 
@@ -654,7 +652,7 @@ var $body = $('body');
       logo: team_logo
     };
     if ((team_name) && (team_password) && (team_logo)) {
-      sendAdminRequest(create_data);
+      sendAdminRequest(create_data, true);
     }
   }
 
@@ -674,7 +672,7 @@ var $body = $('body');
       logo: team_logo
     };
     if ((team_id) && (team_name) && (team_logo)) {
-      sendAdminRequest(update_data);
+      sendAdminRequest(update_data, false);
     }
   }
 
@@ -689,7 +687,7 @@ var $body = $('body');
       [radio_action]: action_value
     };
     if ((team_id) && (radio_action)) {
-      sendAdminRequest(toggle_data);
+      sendAdminRequest(toggle_data, false);
     }
   }
 
@@ -703,7 +701,7 @@ var $body = $('body');
       status: action_value
     };
     if ((action_type)) {
-      sendAdminRequest(toggle_data);
+      sendAdminRequest(toggle_data, false);
       if (action_value) {
         $('input[type=radio][id*=status--on]').prop('checked', true);
         $('input[type=radio][id*=status--off]').prop('checked', false);
@@ -725,7 +723,7 @@ var $body = $('body');
       [radio_action]: action_value
     };
     if ((level_id) && (radio_action)) {
-      sendAdminRequest(toggle_data);
+      sendAdminRequest(toggle_data, false);
     }
   }
 
@@ -738,7 +736,7 @@ var $body = $('body');
       value: action_value
     };
     if ((radio_action)) {
-      sendAdminRequest(toggle_data);
+      sendAdminRequest(toggle_data, false);
     }
   }
 
@@ -748,7 +746,7 @@ var $body = $('body');
       field: field,
       value: value
     };
-    sendAdminRequest(conf_data);
+    sendAdminRequest(conf_data, false);
   }
 
   function toggleLogo(section) {
@@ -760,9 +758,8 @@ var $body = $('body');
       logo_id: logo_id
     };
     if ((logo_id) && (action_value)) {
-      sendAdminRequest(toggle_data);
+      sendAdminRequest(toggle_data, true);
     }
-    window.location.reload(true);
   }
 
   function toggleCountry(section) {
@@ -774,9 +771,8 @@ var $body = $('body');
       country_id: country_id
     };
     if (country_id && action_value) {
-      sendAdminRequest(toggle_data);
+      sendAdminRequest(toggle_data, true);
     }
-    window.location.reload(true);
   }
 
   // Delete session
@@ -788,7 +784,7 @@ var $body = $('body');
     };
   
     if ((session_cookie)) {
-      sendAdminRequest(delete_data);
+      sendAdminRequest(delete_data, true);
     }
   }
 

@@ -1963,16 +1963,26 @@ class AdminController extends Controller {
               <span class="session-name">Session {$c}: <span class="highlighted--blue">{$session->getLastAccessTs()}</span></span>
             </header>
             <div class="fb-column-container">
-              <div class="col col-1-2 col-pad">
+              <div class="col col-1-3 col-pad">
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label">Cookie</label>
                   <input name="cookie" type="text" value={$session->getCookie()} disabled={true}/>
                 </div>
               </div>
-              <div class="col col-1-2 col-pad">
+              <div class="col col-1-3 col-pad">
                 <div class="form-el el--block-label el--full-text">
                   <label class="admin-label">Creation Time:</label>
-                  <span class="highlighted"><label class="admin-label">{$session->getCreatedTs()}</label></span>
+                  <span class="highlighted">
+                    <label class="admin-label">{time_ago($session->getCreatedTs())}</label>
+                  </span>
+                </div>
+              </div>
+              <div class="col col-1-3 col-pad">
+                <div class="form-el el--block-label el--full-text">
+                  <label class="admin-label">Last Access:</label>
+                  <span class="highlighted">
+                    <label class="admin-label">{time_ago($session->getLastAccessTs())}</label>
+                  </span>
                 </div>
               </div>
             </div>

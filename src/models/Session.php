@@ -30,6 +30,18 @@ class Session extends Model {
     return $this->last_access_ts;
   }
 
+  public function getTeamId(): int {
+    // TODO: sessions do not serialize with standard php serialization
+    $sess_data = unserialize($this->data);
+    return intval($sess_data->team_id);
+  }
+
+  public function getTeamName(): string {
+    // TODO: sessions do not serialize with standard php serialization
+    $sess_data = unserialize($this->data);
+    return $sess_data->name;
+  }
+
   private static function sessionFromRow(array<string, string> $row): Session {
     return new Session(
       intval(must_have_idx($row, 'id')),
@@ -89,10 +101,14 @@ class Session extends Model {
   // Does cleanup of cookies.
   public static function cleanup(int $maxlifetime): void {
     $db = self::getDb();
+    // Clean up expired sessions
     $gc_time = time() - $maxlifetime;
     $sql = 'DELETE FROM sessions WHERE UNIX_TIMESTAMP(last_access_ts) < ?';
     $element = array($gc_time);
     $db->query($sql, $element);
+    // Clean up empty sessions
+    $sql = 'DELETE FROM sessions WHERE data = ""';
+    $db->query($sql);
   }
 
   // All the sessions

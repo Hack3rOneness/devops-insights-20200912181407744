@@ -177,6 +177,7 @@ class IndexAjaxController extends AjaxController {
         SessionUtils::sessionSet('team_id', strval($team->getId()));
         SessionUtils::sessionSet('name', $team->getName());
         SessionUtils::sessionSet('csrf_token', base64_encode(openssl_random_pseudo_bytes(16)));
+        SessionUtils::sessionSet('IP', must_have_string(Utils::getSERVER(), 'REMOTE_ADDR'));
         if ($team->getAdmin()) {
           SessionUtils::sessionSet('admin', strval($team->getAdmin()));
         }

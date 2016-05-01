@@ -83,7 +83,6 @@ class SessionUtils {
   public static function sessionLogout(): void {
     session_destroy();
 
-    //unset(must_have_string(Utils::getSESSION(), 'team_id'));
     throw new IndexRedirectException();
   }
 
