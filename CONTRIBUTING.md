@@ -1,4 +1,4 @@
-All facebook-ctf development occurs in feature branches and all contributions occur via GitHub Pull Requests. All code must be reviewed, even if it's written by members of the core team, so following the code review process is critical to successful fbctf development.
+All fbctf development occurs in feature branches and all contributions occur via GitHub Pull Requests. All code must be reviewed, even if it's written by members of the core team, so following the code review process is critical to successful fbctf development.
 
 ## Contributor License Agreement ("CLA")
 
@@ -9,35 +9,35 @@ Complete your CLA here: <https://code.facebook.com/cla>
 
 ## Git workflow
 
-Please do all of your development in a feature branch, on your own fork of facebook-ctf. You should clone facebook-ctf normally, like this:
+Please do all of your development in a feature branch, on your own fork of fbctf. You should clone fbctf normally, like this:
 
 ```
-git clone git@github.com:facebook/facebook-ctf.git
+git clone git@github.com:facebook/fbctf.git
 ```
 
 Then, your "remote" should be set up as follows:
 
 ```
-$ cd facebook-ctf
+$ cd fbctf
 $ git remote -v
-origin  git@github.com:facebook/facebook-ctf.git (fetch)
-origin  git@gitHub.com:facebook/facebook-ctf.git (push)
+origin  git@github.com:facebook/fbctf.git (fetch)
+origin  git@gitHub.com:facebook/fbctf.git (push)
 ```
 
-Now, use the GitHub UI to fork facebook-ctf to your personal GitHub organization. Then, add the remote URL of your fork to git's local remotes:
+Now, use the GitHub UI to fork fbctf to your personal GitHub organization. Then, add the remote URL of your fork to git's local remotes:
 
 ```
-$ git remote add javuto git@github.com:javuto/facebook-ctf.git
+$ git remote add javuto git@github.com:javuto/fbctf.git
 ```
 
 Now, your "remote" should be set up as follows:
 
 ```
 $ git remote -v
-javuto git@github.com:javuto/facebook-ctf.git (fetch)
-javuto git@github.com:javuto/facebook-ctf.git (push)
-origin  git@github.com:facebook/facebook-ctf.git (fetch)
-origin  git@gitHub.com:facebook/facebook-ctf.git (push)
+javuto git@github.com:javuto/fbctf.git (fetch)
+javuto git@github.com:javuto/fbctf.git (push)
+origin  git@github.com:facebook/fbctf.git (fetch)
+origin  git@gitHub.com:facebook/fbctf.git (push)
 ```
 
 When you're ready to start working on a new feature, create a new branch:
@@ -54,7 +54,7 @@ $ git commit -m "my kickass feature!"
 $ git push -u javuto my-new-feature
 ```
 
-Visit https://github.com/facebook/facebook-ctf and use the web UI to create a Pull Request. Once your pull request has gone through sufficient review and iteration, please squash all of your commits into one commit.
+Visit https://github.com/facebook/fbctf and use the web UI to create a Pull Request. Once your pull request has gone through sufficient review and iteration, please squash all of your commits into one commit.
 
 ## Pull Request workflow
 
@@ -148,7 +148,7 @@ Once you submit your pull request, link the GitHub issue which your Pull Request
 
 ### Adding the appropriate labels
 
-To facilitate development, facebook-ctf developers adhere to a particular label workflow. The core development team will assign labels as appropriate.
+To facilitate development, fbctf developers adhere to a particular label workflow. The core development team will assign labels as appropriate.
 
 #### "ready for review" vs "in progress"
 
