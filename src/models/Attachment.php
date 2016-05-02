@@ -20,8 +20,12 @@ class Attachment extends Model {
   }
 
   // Create attachment for a given level.
-  public static function create(string $file_param, string $filename, int $level_id): bool {
-    $db = self::getDb();
+  public static async function genCreate(
+    string $file_param,
+    string $filename,
+    int $level_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
     $type = '';
     $local_filename = self::attachmentsDir;
 
@@ -52,27 +56,35 @@ class Attachment extends Model {
     }
 
     // Then database shenanigans
-    $sql = 'INSERT INTO attachments (filename, type, level_id, created_ts) VALUES (?, ?, ?, NOW())';
-    $elements = array($local_filename, $type, $level_id);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'INSERT INTO attachments (filename, type, level_id, created_ts) VALUES (%s, %s, %d, NOW())',
+      $local_filename,
+      (string)$type,
+      $level_id,
+    );
+
     return true;
   }
 
   // Modify existing attachment.
-  public static function update(int $id, int $level_id, string $filename): void {
-    $db = self::getDb();
-    $sql = 'UPDATE attachments SET filename = ?, level_id = ? WHERE id = ? LIMIT 1';
-    $elements = array($filename, $level_id, $id);
-    $db->query($sql, $elements);
+  public static async function genUpdate(int $id, int $level_id, string $filename): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE attachments SET filename = %s, level_id = %d WHERE id = %d LIMIT 1',
+      $filename,
+      $level_id,
+      $id,
+    );
   }
 
   // Delete existing attachment.
-  public static function delete(int $attachment_id): void {
-    $db = self::getDb();
+  public static async function genDelete(int $attachment_id): Awaitable<void> {
+    $db = await self::genDb();
     $server = Utils::getSERVER();
 
     // Copy file to deleted folder
-    $filename = self::get($attachment_id)->getFilename();
+    $attachment = await self::gen($attachment_id);
+    $filename = $attachment->getFilename();
     $parts = pathinfo($filename);
     error_log('Copying from ' . $filename . ' to ' . $parts['dirname'] . '/deleted/' . $parts['basename']);
     $root = strval($server['DOCUMENT_ROOT']);
@@ -84,20 +96,24 @@ class Attachment extends Model {
     unlink($origin);
 
     // Delete from table.
-    $sql = 'DELETE FROM attachments WHERE id = ? LIMIT 1';
-    $element = array($attachment_id);
-    $db->query($sql, $element);
+    await $db->queryf(
+      'DELETE FROM attachments WHERE id = %d LIMIT 1',
+      $attachment_id,
+    );
   }
 
   // Get all attachments for a given level.
-  public static function allAttachments(int $level_id): array<Attachment> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM attachments WHERE level_id = ?';
-    $element = array($level_id);
-    $results = $db->query($sql, $element);
+  public static async function genAllAttachments(
+    int $level_id,
+  ): Awaitable<array<Attachment>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM attachments WHERE level_id = %d',
+      $level_id,
+    );
 
     $attachments = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $attachments[] = self::attachmentFromRow($row);
     }
 
@@ -105,33 +121,36 @@ class Attachment extends Model {
   }
 
   // Get a single attachment.
-  public static function get(int $attachment_id): Attachment {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM attachments WHERE id = ? LIMIT 1';
-    $element = array($attachment_id);
-    $results = $db->query($sql, $element);
+  public static async function gen(
+    int $attachment_id,
+  ): Awaitable<Attachment> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM attachments WHERE id = %d LIMIT 1',
+      $attachment_id,
+    );
 
-    invariant(count($results) === 1, 'Expected exactly one result');
-    return self::attachmentFromRow(firstx($results));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return self::attachmentFromRow($result->mapRows()[0]);
   }
 
-  private static function attachmentFromRow(array<string, string> $row): Attachment {
+  // Check if a level has attachments.
+  public static async function genHasAttachments(int $level_id): Awaitable<bool> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM attachments WHERE level_id = %d',
+      $level_id,
+    );
+
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0;
+  }
+
+  private static function attachmentFromRow(Map<string, string> $row): Attachment {
     return new Attachment(
       intval(must_have_idx($row, 'id')),
       intval(must_have_idx($row, 'level_id')),
       must_have_idx($row, 'filename'),
     );
-  }
-
-  // Check if a level has attachments.
-  public static function hasAttachments(int $level_id): bool {
-    $db = self::getDb();
-    $sql = 'SELECT COUNT(*) FROM attachments WHERE level_id = ?';
-    $element = array($level_id);
-
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
-
-    return intval(firstx($results)['COUNT(*)']) > 0;
   }
 }

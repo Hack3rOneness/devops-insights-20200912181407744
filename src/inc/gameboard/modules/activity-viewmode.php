@@ -1,12 +1,13 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 class ActivityViewModeModuleController {
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $activity_ul = <ul class="activity-stream"></ul>;
 
-    foreach (Control::allActivity() as $score) {
+    $all_activity = await Control::genAllActivity();
+    foreach ($all_activity as $score) {
       $activity_ul->appendChild(
         <li class="opponent-team">
           [ {time_ago($score['time'])} ] <span class="opponent-name">{$score['team']}</span> captured {$score['country']}
@@ -30,5 +31,6 @@ class ActivityViewModeModuleController {
   }
 }
 
+/* HH_IGNORE_ERROR[1002] */
 $activity_generated = new ActivityViewModeModuleController();
-echo $activity_generated->render();
+echo \HH\Asio\join($activity_generated->genRender());

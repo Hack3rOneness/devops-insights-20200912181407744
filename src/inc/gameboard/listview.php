@@ -1,19 +1,22 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class ListviewController {
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $listview_div = <div class="listview-container"></div>;
     $listview_table = <table></table>;
 
-    foreach (Level::allActiveLevels() as $level) {
-      $country = Country::get(intval($level->getId()));
-      $category = Category::getSingleCategory($level->getCategoryId());
-      if (ScoreLog::previousScore($level->getId(), SessionUtils::sessionTeam(), false)) {
+    $active_levels = await Level::genAllActiveLevels();
+    foreach ($active_levels as $level) {
+      $country = await Country::gen(intval($level->getId()));
+      $category = await Category::genSingleCategory($level->getCategoryId());
+      $previous_score = await ScoreLog::genPreviousScore($level->getId(), SessionUtils::sessionTeam(), false);
+      if ($previous_score) {
         $span_status = <span class="fb-status status--yours">Captured</span>;
       } else {
         $span_status = <span class="fb-status status--open">Open</span>;
@@ -34,4 +37,4 @@ class ListviewController {
 }
 
 $listview_generated = new ListviewController();
-echo $listview_generated->render();
+echo \HH\Asio\join($listview_generated->genRender());

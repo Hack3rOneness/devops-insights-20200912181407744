@@ -36,6 +36,7 @@ set_motd "$CTF_PATH"
 
 # Off to a good start...
 sudo apt-get update
+package language-pack-en
 package emacs
 
 # osquery, of course!

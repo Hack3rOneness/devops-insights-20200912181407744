@@ -1,18 +1,21 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class ScoresDataController extends DataController {
-  public function generateData() {
+  public async function genGenerateData(): Awaitable<void> {
     $data = array();
 
-    foreach (Team::leaderboard() as $team) {
+    $leaderboard = await Team::genLeaderboard();
+    foreach ($leaderboard as $team) {
       $values = array();
       $i = 1;
-      foreach (Progressive::progressiveScoreboard($team->getName()) as $progress) {
+      $progressive_scoreboard = await Progressive::genProgressiveScoreboard($team->getName());
+      foreach ($progressive_scoreboard as $progress) {
         $score = (object) array(
           'time' => $i,
           'score' => $progress->getPoints()
@@ -34,4 +37,4 @@ class ScoresDataController extends DataController {
 }
 
 $scoresData = new ScoresDataController();
-$scoresData->generateData();
+\HH\Asio\join($scoresData->genGenerateData());

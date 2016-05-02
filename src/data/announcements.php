@@ -1,15 +1,17 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class AnnouncementsDataController extends DataController {
-  public function generateData() {
+  public async function genGenerateData(): Awaitable<void> {
     $data = array();
 
-    foreach (Announcement::allAnnouncements() as $announcement) {
+    $all_announcements = await Announcement::genAllAnnouncements();
+    foreach ($all_announcements as $announcement) {
       array_push($data, $announcement->getAnnouncement());
     }
 
@@ -18,4 +20,4 @@ class AnnouncementsDataController extends DataController {
 }
 
 $announcementsData = new AnnouncementsDataController();
-$announcementsData->generateData();
+\HH\Asio\join($announcementsData->genGenerateData());

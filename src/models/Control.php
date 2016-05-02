@@ -2,120 +2,136 @@
 
 class Control extends Model {
 
-  public static function startScriptLog(int $pid, string $name, string $cmd): void {
-    $db = self::getDb();
-    $sql = 'INSERT INTO scripts (ts, pid, name, cmd, status) VALUES (NOW(), ?, ?, ?, 1)';
-    $elements = array($pid, $name, $cmd);
-    $db->query($sql, $elements);
+  public static async function genStartScriptLog(
+    int $pid,
+    string $name,
+    string $cmd,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO scripts (ts, pid, name, cmd, status) VALUES (NOW(), %d, %s, %s, 1)',
+      $pid,
+      $name,
+      $cmd,
+    );
   }
 
-  public static function stopScriptLog(int $pid): void {
-    $db = self::getDb();
-    $sql = 'UPDATE scripts SET status = 0 WHERE pid = ? LIMIT 1';
-    $element = array($pid);
-    $db->query($sql, $element);
+  public static async function genStopScriptLog(
+    int $pid,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE scripts SET status = 0 WHERE pid = %d LIMIT 1',
+      $pid,
+    );
   }
 
-  public static function getScriptPid(string $name): int {
-    $db = self::getDb();
-    $sql = 'SELECT pid FROM scripts WHERE name = ? AND status = 1 LIMIT 1';
-    $element = array($name);
-    return intval(must_have_idx(firstx($db->query($sql, $element)), 'pid'));
+  public static async function genScriptPid(
+    string $name,
+  ): Awaitable<int> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT pid FROM scripts WHERE name = %s AND status = 1 LIMIT 1',
+      $name,
+    );
+    return intval(must_have_idx($result->mapRows()[0], 'pid'));
   }
 
-  public static function clearScriptLog(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM scripts WHERE id > 0 AND status = 0';
-    $db->query($sql);
+  public static async function genClearScriptLog(): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM scripts WHERE id > 0 AND status = 0',
+    );
   }
 
-  public static function begin(): void {
-    $db = self::getDb();
+  public static async function genBegin(): Awaitable<void> {
     // Disable registration
-    Configuration::update('registration', '0');
+    await Configuration::genUpdate('registration', '0');
 
     // Reset all points
-    Team::resetAllPoints();
+    await Team::genResetAllPoints();
 
     // Clear scores log
-    ScoreLog::resetScores();
+    await ScoreLog::genResetScores();
 
     // Clear hints log
-    HintLog::resetHints();
+    await HintLog::genResetHints();
 
     // Clear failures log
-    FailureLog::resetFailures();
+    await FailureLog::genResetFailures();
 
     // Clear bases log
-    self::resetBases();
-    self::clearScriptLog();
+    await self::genResetBases();
+    await self::genClearScriptLog();
 
     // Mark game as started
-    Configuration::update('game', '1');
+    await Configuration::genUpdate('game', '1');
 
     // Enable scoring
-    Configuration::update('scoring', '1');
+    await Configuration::genUpdate('scoring', '1');
 
     // Take timestamp of start
     $start_ts = time();
-    Configuration::update('start_ts', strval($start_ts));
+    await Configuration::genUpdate('start_ts', strval($start_ts));
 
     // Calculate timestamp of the end
-    $duration = intval(Configuration::get('game_duration')->getValue());
+    $config = await Configuration::gen('game_duration');
+    $duration = intval($config->getValue());
     $end_ts = $start_ts + $duration;
-    Configuration::update('end_ts', strval($end_ts));
+    await Configuration::genUpdate('end_ts', strval($end_ts));
 
     // Kick off timer
-    Configuration::update('timer', '1');
+    await Configuration::genUpdate('timer', '1');
 
     // Reset and kick off progressive scoreboard
-    Progressive::reset();
-    Progressive::run();
+    await Progressive::genReset();
+    await Progressive::genRun();
 
     // Kick off scoring for bases
-    Level::baseScoring();
+    await Level::genBaseScoring();
   }
 
-  public static function end(): void {
+  public static async function genEnd(): Awaitable<void> {
     // Mark game as finished and it stops progressive scoreboard
-    Configuration::update('game', '0');
+    await Configuration::genUpdate('game', '0');
 
     // Disable scoring
-    Configuration::update('scoring', '0');
+    await Configuration::genUpdate('scoring', '0');
 
     // Put timestampts to zero
-    Configuration::update('start_ts', '0');
-    Configuration::update('end_ts', '0');
+    await Configuration::genUpdate('start_ts', '0');
+    await Configuration::genUpdate('end_ts', '0');
 
     // Stop timer
-    Configuration::update('timer', '0');
+    await Configuration::genUpdate('timer', '0');
 
     // Stop bases scoring process
-    Level::stopBaseScoring();
+    await Level::genStopBaseScoring();
 
     // Stop progressive scoreboard process
-    Progressive::stop();
+    await Progressive::genStop();
   }
 
   public static function backupDb(): void {
-    $db = self::getDb();
     $filename = 'facebook-ctf-backup-'.date("d-m-Y").'.sql.gz';
     header('Content-Type: application/x-gzip');
     header('Content-Disposition: attachment; filename="'.$filename.'"');
-    $cmd = $db->getBackupCmd().' | gzip --best';
+    $cmd = Db::getInstance()->getBackupCmd().' | gzip --best';
     error_log($cmd);
     passthru($cmd);
   }
 
-  public static function allActivity(): array<array<string, string>> {
-    $db = self::getDb();
-    $sql = 'SELECT scores_log.ts AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time DESC LIMIT 50';
-    return $db->query($sql);
+  public static async function genAllActivity(
+  ): Awaitable<Vector<Map<string, string>>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT scores_log.ts AS time, teams.name AS team, countries.name AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time DESC LIMIT 50',
+    );
+    return $result->mapRows();
   }
 
-  public static function resetBases(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM bases_log WHERE id > 0';
-    $db->query($sql);
+  public static async function genResetBases(): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf('DELETE FROM bases_log WHERE id > 0');
   }
 }

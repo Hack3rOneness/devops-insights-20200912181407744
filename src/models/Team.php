@@ -60,7 +60,7 @@ class Team extends Model {
     return $this->created_ts;
   }
 
-  private static function teamFromRow(array<string, string> $row): Team {
+  private static function teamFromRow(Map<string, string> $row): Team {
     return new Team(
       intval(must_have_idx($row, 'id')),
       intval(must_have_idx($row, 'active')),
@@ -77,18 +77,19 @@ class Team extends Model {
   }
 
   // Retrieve how many teams are using one logo.
-  public static function whoUses(string $logo): array<Team> {
-    $db = self::getDb();
-
-    $sql = 'SELECT * FROM teams WHERE logo = ?';
-    $element = array($logo);
-    $results = $db->query($sql, $element);
+  public static async function genWhoUses(
+    string $logo,
+  ): Awaitable<array<Team>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE logo = %s',
+      $logo,
+    );
 
     $teams = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $teams[] = self::teamFromRow($row);
     }
-
     return $teams;
   }
 
@@ -109,21 +110,24 @@ class Team extends Model {
   }
 
   // Verify if login is valid.
-  public static function verifyCredentials(int $team_id, string $password): ?Team {
-    $db = self::getDb();
+  public static async function genVerifyCredentials(
+    int $team_id,
+    string $password,
+  ): Awaitable<?Team> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE id = %d AND (active = 1 OR admin = 1) LIMIT 1',
+      $team_id,
+    );
 
-    $sql = 'SELECT * FROM teams WHERE id = ? AND (active = 1 OR admin = 1) LIMIT 1';
-    $element = array($team_id);
-    $results = $db->query($sql, $element);
-
-    if (count($results) > 0) {
-      invariant(count($results) === 1, 'Expected exactly one result');
-      $team = self::teamFromRow(firstx($results));
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      $team = self::teamFromRow($result->mapRows()[0]);
 
       if (password_verify($password, $team->getPasswordHash())) {
         if (self::regenerateHash($team->getPasswordHash())) {
           $new_hash = self::generateHash($password);
-          self::updateTeamPassword($new_hash, $team->getId());
+          await self::genUpdateTeamPassword($new_hash, $team->getId());
         }
         return $team;
       } else {
@@ -135,145 +139,199 @@ class Team extends Model {
   }
 
   // Check to see if the team is active.
-  public static function checkTeamStatus(int $team_id): bool {
-    $db = self::getDb();
+  public static async function genCheckTeamStatus(
+    int $team_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM teams WHERE id = %d AND active = 1 LIMIT 1',
+      $team_id,
+    );
 
-    $sql = 'SELECT COUNT(*) FROM teams WHERE id = ? AND active = 1 LIMIT 1';
-    $element = array($team_id);
-    $results = $db->query($sql, $element);
-
-    if (count($results) > 0) {
-      invariant(count($results) === 1, 'Expected exactly one result');
-      return (intval(firstx($results)['COUNT(*)']) > 0);
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return (intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0);
     } else {
       return false;
     }
   }
 
   // Create a team and return the created team id.
-  public static function create(string $name, string $password_hash, string $logo): int {
-    $db = self::getDb();
+  public static async function genCreate(
+    string $name,
+    string $password_hash,
+    string $logo,
+  ): Awaitable<int> {
+    $db = await self::genDb();
 
     // Create team
-    $sql = 'INSERT INTO teams (name, password_hash, logo, created_ts) VALUES (?, ?, ?, NOW())';
-    $elements = array($name, $password_hash, $logo);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'INSERT INTO teams (name, password_hash, logo, created_ts) VALUES (%s, %s, %s, NOW())',
+      $name,
+      $password_hash,
+      $logo,
+    );
 
     // Return newly created team_id
-    $sql = 'SELECT id FROM teams WHERE name = ? AND password_hash = ? AND logo = ? LIMIT 1';
-    $elements = array($name, $password_hash, $logo);
-    $result = $db->query($sql, $elements);
+    $result = await $db->queryf(
+      'SELECT id FROM teams WHERE name = %s AND password_hash = %s AND logo = %s LIMIT 1',
+      $name,
+      $password_hash,
+      $logo,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    return intval(firstx($result)['id']);
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['id']);
   }
 
   // Add data to a team.
-  public static function addTeamData(string $name, string $email, int $team_id): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO teams_data (name, email, team_id, created_ts) VALUES (?, ?, ?, NOW())';
-    $elements = array($name, $email, $team_id);
-    $db->query($sql, $elements);
+  public static async function genAddTeamData(
+    string $name,
+    string $email,
+    int $team_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO teams_data (name, email, team_id, created_ts) VALUES (%s, %s, %d, NOW())',
+      $name,
+      $email,
+      $team_id,
+    );
   }
 
   // Get a team data.
-  public static function getTeamData(int $team_id): array<array<string, string>> {
-    $db = self::getDb();
-
-    $sql = 'SELECT * FROM teams_data WHERE team_id = ?';
-    $element = array($team_id);
-    return $db->query($sql, $element);
+  public static async function genTeamData(
+    int $team_id,
+  ): Awaitable<Vector<Map<string, string>>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM teams_data WHERE team_id = %d',
+      $team_id,
+    );
+    return $result->mapRows();
   }
 
   // Update team.
-  public static function update(string $name, string $logo, int $points, int $team_id): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET name = ?, logo = ? , points = ? WHERE id = ? LIMIT 1';
-    $elements = array($name, $logo, $points, $team_id);
-    $db->query($sql, $elements);
+  public static async function genUpdate(
+    string $name,
+    string $logo,
+    int $points,
+    int $team_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET name = %s, logo = %s , points = %d WHERE id = %d LIMIT 1',
+      $name,
+      $logo,
+      $points,
+      $team_id,
+    );
   }
 
   // Update team password.
-  public static function updateTeamPassword(string $password_hash, int $team_id): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET password_hash = ? WHERE id = ? LIMIT 1';
-    $elements = array($password_hash, $team_id);
-    $db->query($sql, $elements);
+  public static async function genUpdateTeamPassword(
+    string $password_hash,
+    int $team_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET password_hash = %s WHERE id = %d LIMIT 1',
+      $password_hash,
+      $team_id,
+    );
   }
 
   // Delete team.
-  public static function delete(int $team_id): void {
-    $db = self::getDb();
-
-    $sql = 'DELETE FROM teams WHERE id = ? AND protected = 0 LIMIT 1';
-    $element = array($team_id);
-    $db->query($sql, $element);
+  public static async function genDelete(
+    int $team_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM teams WHERE id = %d AND protected = 0 LIMIT 1',
+      $team_id,
+    );
   }
 
   // Enable or disable teams by passing 1 or 0.
-  public static function setStatus(int $team_id, bool $status): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET active = ? WHERE id = ? LIMIT 1';
-    $elements = array($status ? 1 : 0, $team_id);
-    $db->query($sql, $elements);
+  public static async function genSetStatus(
+    int $team_id,
+    bool $status,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET active = %d WHERE id = %d LIMIT 1',
+      $status ? 1 : 0,
+      $team_id,
+    );
   }
 
   // Enable or disable all teams by passing 1 or 0.
-  public static function setStatusAll(bool $status): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET active = ? WHERE id > 0 AND protected = 0';
-    $element = array($status ? 1 : 0);
-    $db->query($sql, $element);
+  public static async function genSetStatusAll(
+    bool $status,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET active = %d WHERE id > 0 AND protected = 0',
+      $status ? 1 : 0,
+    );
   }
 
   // Sets toggles team admin status.
-  public static function setAdmin(int $team_id, bool $admin): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET admin = ? WHERE id = ? AND protected = 0 LIMIT 1';
-    $elements = array($admin ? 1 : 0, $team_id);
-    $db->query($sql, $elements);
+  public static async function genSetAdmin(
+    int $team_id,
+    bool $admin,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET admin = %d WHERE id = %d AND protected = 0 LIMIT 1',
+      $admin ? 1 : 0,
+      $team_id,
+    );
   }
 
   // Enable or disable team visibility by passing 1 or 0.
-  public static function setVisible(int $team_id, bool $visible): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET visible = ? WHERE id = ? LIMIT 1';
-    $elements = array($visible ? 1 : 0, $team_id);
-    $db->query($sql, $elements);
+  public static async function genSetVisible(
+    int $team_id,
+    bool $visible,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET visible = %d WHERE id = %d LIMIT 1',
+      $visible ? 1 : 0,
+      $team_id,
+    );
   }
 
   // Check if a team name is already created.
-  public static function teamExist(string $team_name): bool {
-    $db = self::getDb();
+  public static async function genTeamExist(
+    string $team_name,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT COUNT(*) FROM teams WHERE name = ?';
-    $element = array($team_name);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM teams WHERE name = %s',
+      $team_name,
+    );
 
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return (intval(firstx($result)['COUNT(*)']) > 0);
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return (intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0);
     } else {
       return false;
     }
   }
 
   // All active teams.
-  public static function allActiveTeams(): array<Team> {
-    $db = self::getDb();
+  public static async function genAllActiveTeams(
+  ): Awaitable<array<Team>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM teams WHERE active = 1 ORDER BY id';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE active = 1 ORDER BY id',
+    );
 
     $teams = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $teams[] = self::teamFromRow($row);
     }
 
@@ -281,14 +339,16 @@ class Team extends Model {
   }
 
   // All visible teams.
-  public static function allVisibleTeams(): array<Team> {
-    $db = self::getDb();
+  public static async function genAllVisibleTeams(
+  ): Awaitable<array<Team>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM teams WHERE visible = 1 AND active = 1 ORDER BY id';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE visible = 1 AND active = 1 ORDER BY id',
+    );
 
     $teams = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $teams[] = self::teamFromRow($row);
     }
 
@@ -296,14 +356,16 @@ class Team extends Model {
   }
 
   // Leaderboard order.
-  public static function leaderboard(): array<Team> {
-    $db = self::getDb();
+  public static async function genLeaderboard(
+  ): Awaitable<array<Team>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM teams WHERE active = 1 AND visible = 1 ORDER BY points DESC, last_score ASC';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE active = 1 AND visible = 1 ORDER BY points DESC, last_score ASC',
+    );
 
     $teams = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $teams[] = self::teamFromRow($row);
     }
 
@@ -311,14 +373,16 @@ class Team extends Model {
   }
 
   // All teams.
-  public static function allTeams(): array<Team> {
-    $db = self::getDb();
+  public static async function genAllTeams(
+  ): Awaitable<array<Team>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM teams ORDER BY points DESC';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM teams ORDER BY points DESC',
+    );
 
     $teams = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $teams[] = self::teamFromRow($row);
     }
 
@@ -326,96 +390,118 @@ class Team extends Model {
   }
 
   // Get a single team.
-  public static function getTeam(int $team_id): Team {
-    $db = self::getDb();
+  public static async function genTeam(
+    int $team_id,
+  ): Awaitable<Team> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM teams WHERE id = ? LIMIT 1';
-    $element = array($team_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE id = %d LIMIT 1',
+      $team_id,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    $team = self::teamFromRow(firstx($result));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    $team = self::teamFromRow($result->mapRows()[0]);
 
     return $team;
   }
 
   // Get a single team, by name.
-  public static function getTeamByName(string $team_name): Team {
-    $db = self::getDb();
+  public static async function genTeamByName(
+    string $team_name,
+  ): Awaitable<Team> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM teams WHERE name = ? LIMIT 1';
-    $elements = array($team_name);
-    $result = $db->query($sql, $elements);
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE name = %s LIMIT 1',
+      $team_name,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    $team = self::teamFromRow(firstx($result));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    $team = self::teamFromRow($result->mapRows()[0]);
 
     return $team;
   }
 
   // Get points by type.
-  public static function pointsByType(int $team_id, string $type): int {
-    $db = self::getDb();
+  public static async function genPointsByType(
+    int $team_id,
+    string $type,
+  ): Awaitable<int> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT IFNULL(SUM(points), 0) AS points FROM scores_log WHERE type = ? AND team_id = ?';
-    $elements = array($type, $team_id);
-    $result = $db->query($sql, $elements);
+    $result = await $db->queryf(
+      'SELECT IFNULL(SUM(points), 0) AS points FROM scores_log WHERE type = %s AND team_id = %d',
+      $type,
+      $team_id,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-
-    return intval(firstx($result)['points']);
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval(idx($result->mapRows()[0], 'points'));
   }
 
   // Get healthy status for points.
-  public static function getPointsHealth(int $team_id): bool {
-    $db = self::getDb();
+  public static async function genPointsHealth(
+    int $team_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT IFNULL(t.points, 0) AS points, IFNULL(SUM(s.points), 0) AS sum FROM teams AS t, scores_log AS s WHERE t.id = ? AND s.team_id = ?';
-    $elements = array($team_id, $team_id);
-    $result = $db->query($sql, $elements);
+    $result = await $db->queryf(
+      'SELECT IFNULL(t.points, 0) AS points, IFNULL(SUM(s.points), 0) AS sum FROM teams AS t, scores_log AS s WHERE t.id = %d AND s.team_id = %d',
+      $team_id,
+      $team_id,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    $value = firstx($result);
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    $value = $result->mapRows()[0];
 
     return (intval($value['points']) === intval($value['sum']));
   }
 
   // Update the last_score field.
-  public static function lastScore(int $team_id): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET last_score = NOW() WHERE id = ? LIMIT 1';
-    $elements = array($team_id);
-    $db->query($sql, $elements);
+  public static async function genLastScore(
+    int $team_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET last_score = NOW() WHERE id = %d LIMIT 1',
+      $team_id,
+    );
   }
 
   // Set all points to zero for all teams.
-  public static function resetAllPoints(): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE teams SET points = 0 WHERE id > 0';
-    $db->query($sql);
+  public static async function genResetAllPoints(): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE teams SET points = 0 WHERE id > 0',
+    );
   }
 
   // Teams total number.
-  public static function teamsCount(): int {
-    $db = self::getDb();
+  public static async function genTeamsCount(
+  ): Awaitable<int> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT COUNT(*) AS count FROM teams';
-    $result = $db->query($sql);
-    invariant(count($result) === 1, 'Expected exactly one result');
-    return intval(firstx($result)['COUNT(*)']);
+    $result = await $db->queryf(
+      'SELECT COUNT(*) AS count FROM teams',
+    );
+
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval(idx($result->mapRows()[0], 'COUNT(*)'));
   }
 
-  public static function completedLevel(int $level_id): array<Team> {
-    $db = self::getDb();
+  public static async function genCompletedLevel(
+    int $level_id,
+  ): Awaitable<array<Team>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM teams WHERE id IN (SELECT team_id FROM scores_log WHERE level_id = ? ORDER BY ts) AND visible = 1 AND active = 1';
-    $element = array($level_id);
-    $results = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT * FROM teams WHERE id IN (SELECT team_id FROM scores_log WHERE level_id = %d ORDER BY ts) AND visible = 1 AND active = 1',
+      $level_id,
+    );
 
     $teams = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $teams[] = self::teamFromRow($row);
     }
 
@@ -423,9 +509,12 @@ class Team extends Model {
   }
 
   // Get rank position for a team
-  public static function myRank(int $team_id): int {
+  public static async function genMyRank(
+    int $team_id,
+  ): Awaitable<int> {
     $rank = 1;
-    foreach (self::leaderboard() as $team) {
+    $leaderboard = await self::genLeaderboard();
+    foreach ($leaderboard as $team) {
       if ($team_id === $team->getId()) {
         return $rank;
       }

@@ -1,5 +1,6 @@
 <?hh // strict
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
@@ -116,7 +117,7 @@ class GameboardController extends Controller {
   }
 
   <<__Override>>
-  public function renderBody(string $page): :xhp {
+  public async function genRenderBody(string $page): Awaitable<:xhp> {
     return
       <body data-section="gameboard">
         <input type="hidden" name="csrf_token" value={SessionUtils::CSRFToken()}/>

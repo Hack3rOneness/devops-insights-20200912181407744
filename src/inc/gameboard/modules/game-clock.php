@@ -2,10 +2,11 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 
 class ClockModuleController {
-  private function generateIndicator(string $start_ts, string $end_ts): :xhp {
+  private async function genGenerateIndicator(string $start_ts, string $end_ts): Awaitable<:xhp> {
     $seconds = intval($end_ts) - intval($start_ts);
     $s_each = intval($seconds/10);
     $now = time();
@@ -16,7 +17,8 @@ class ClockModuleController {
       $current = intval($current_s/$s_each);
     }
     $indicator = <div class="indicator game-progress-indicator"></div>;
-    if (Configuration::get('game')->getValue() === '1') {
+    $game = await Configuration::gen('game');
+    if ($game->getValue() === '1') {
       $seconds = intval($end_ts) - intval($start_ts);
       $s_each = intval($seconds/10);
       $now = time();
@@ -42,14 +44,18 @@ class ClockModuleController {
     return $indicator;
   }
 
-  public function render(): :xhp {
-    $timer_conf = Configuration::get('timer')->getValue();
-    $start_ts = Configuration::get('start_ts')->getValue();
-    $end_ts = Configuration::get('end_ts')->getValue();
+  public async function genRender(): Awaitable<:xhp> {
+    $timer  = await Configuration::gen('timer');
+    $start_ts = await Configuration::gen('start_ts');
+    $end_ts = await Configuration::gen('end_ts');
+    $timer = $timer->getValue();
+    $start_ts = $start_ts->getValue();
+    $end_ts = $end_ts->getValue();
+
     $now = time();
     $init = intval($end_ts) - $now;
 
-    if ($timer_conf === '1') {
+    if ($timer === '1') {
       $num_hours = intval(floor($init / 3600));
       $hours_int = ($num_hours >= 0) ? $num_hours : 0;
       $hours = sprintf("%02d", $hours_int);
@@ -74,6 +80,8 @@ class ClockModuleController {
       $seconds = '--';
       $milliseconds = '--';
     }
+
+    $indicator = await $this->genGenerateIndicator($start_ts, $end_ts);
     return
       <div>
         <header class="module-header">
@@ -86,7 +94,7 @@ class ClockModuleController {
           <div class="game-progress fb-progress-bar">
             <span class="label label--left">[Start]</span>
             <span class="label label--right">[End]</span>
-            {$this->generateIndicator($start_ts, $end_ts)}
+            {$indicator}
           </div>
         </div>
       </div>;
@@ -94,4 +102,4 @@ class ClockModuleController {
 }
 
 $clock_generated = new ClockModuleController();
-echo $clock_generated->render();
+echo \HH\Asio\join($clock_generated->genRender());

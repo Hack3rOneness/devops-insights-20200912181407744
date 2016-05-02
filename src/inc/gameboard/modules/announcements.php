@@ -1,13 +1,14 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class AnnouncementsModuleController {
-  public function render(): :xhp {
-    $announcements = Announcement::allAnnouncements();
+  public async function genRender(): Awaitable<:xhp> {
+    $announcements = await Announcement::genAllAnnouncements();
     $announcements_ul = <ul class="activity-stream announcements-list"></ul>;
     if ($announcements) {
       foreach ($announcements as $announcement) {
@@ -38,4 +39,4 @@ class AnnouncementsModuleController {
 }
 
 $announcements_generated = new AnnouncementsModuleController();
-echo $announcements_generated->render();
+echo \HH\Asio\join($announcements_generated->genRender());

@@ -1,12 +1,13 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class FilterModuleController {
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $categories_ul = <ul class="radio-list"></ul>;
     $categories_ul->appendChild(
       <li>
@@ -17,7 +18,7 @@ class FilterModuleController {
       </li>
     );
 
-    $categories = Category::allCategories();
+    $categories = await Category::genAllCategories();
 
     foreach ($categories as $category) {
       $category_id = 'fb--module--filter--category--'.strtolower($category->getCategory());
@@ -82,4 +83,4 @@ class FilterModuleController {
 }
 
 $filter_generated = new FilterModuleController();
-echo $filter_generated->render();
+echo \HH\Asio\join($filter_generated->genRender());

@@ -62,7 +62,7 @@ class ViewModeController extends Controller {
   }
 
   <<__Override>>
-  public function renderBody(string $page): :xhp {
+  public async function genRenderBody(string $page): Awaitable<:xhp> {
     return
       <body data-section="viewer-mode">
         <div class="fb-sprite" id="fb-svg-sprite"></div>

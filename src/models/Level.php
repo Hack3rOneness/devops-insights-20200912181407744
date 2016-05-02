@@ -80,7 +80,7 @@ class Level extends Model {
     return $this->created_ts;
   }
 
-  private static function levelFromRow(array<string, string> $row): Level {
+  private static function levelFromRow(Map<string, string> $row): Level {
     return new Level(
       intval(must_have_idx($row, 'id')),
       intval(must_have_idx($row, 'active')),
@@ -101,55 +101,64 @@ class Level extends Model {
   }
 
   // Retrieve the level that is using one country
-  public static function whoUses(int $country_id): ?Level {
-    $db = self::getDb();
+  public static async function genWhoUses(
+    int $country_id,
+  ): Awaitable<?Level> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM levels WHERE entity_id = ? AND active = 1 LIMIT 1';
-    $element = array($country_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT * FROM levels WHERE entity_id = %d AND active = 1 LIMIT 1',
+      $country_id,
+    );
 
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return self::levelFromRow(firstx($result));
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return self::levelFromRow($result->mapRows()[0]);
     } else {
       return null;
     }
   }
 
   // Check to see if the level is active.
-  public static function checkStatus(int $level_id): bool {
-    $db = self::getDb();
+  public static async function genCheckStatus(
+    int $level_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT COUNT(*) FROM levels WHERE id = ? AND active = 1 LIMIT 1';
-    $element = array($level_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM levels WHERE id = %d AND active = 1 LIMIT 1',
+      $level_id,
+    );
 
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return (intval(firstx($result)['COUNT(*)']) > 0);
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return (intval($result->mapRows()[0]['COUNT(*)']) > 0);
     } else {
       return false;
     }
   }
 
   // Check to see if the level is a base.
-  public static function checkBase(int $level_id): bool {
-    $db = self::getDb();
+  public static async function genCheckBase(
+    int $level_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT COUNT(*) FROM levels WHERE id = ? AND active = 1 AND type = "base" LIMIT 1';
-    $element = array($level_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM levels WHERE id = %d AND active = 1 AND type = "base" LIMIT 1',
+      $level_id,
+    );
 
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return (intval(firstx($result)['COUNT(*)']) > 0);
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return (intval($result->mapRows()[0]['COUNT(*)']) > 0);
     } else {
       return false;
     }
   }
 
   // Create a team and return the created level id.
-  public static function create(
+  public static async function genCreate(
     string $type,
     string $title,
     string $description,
@@ -161,19 +170,19 @@ class Level extends Model {
     int $bonus_fix,
     string $flag,
     string $hint,
-    int $penalty
-  ): int {
-    $db = self::getDb();
+    int $penalty,
+  ): Awaitable<int> {
+    $db = await self::genDb();
 
     if ($entity_id === 0) {
-      $ent_id = Country::randomAvailableCountryId();
+      $ent_id = await Country::genRandomAvailableCountryId();
     } else {
       $ent_id = $entity_id;
     }
-    $sql = 'INSERT INTO levels '.
+    await $db->queryf(
+      'INSERT INTO levels '.
       '(type, title, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
-      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());';
-    $elements = array(
+      'VALUES (%s, %s, %s, %d, %d, %d, %d, %d, %d, %s, %s, %d, NOW());',
       $type,
       $title,
       $description,
@@ -185,24 +194,28 @@ class Level extends Model {
       $bonus_fix,
       $flag,
       $hint,
-      $penalty
+      $penalty,
     );
-    $db->query($sql, $elements);
 
     // Mark entity as used
-    Country::setUsed($ent_id, true);
+    await Country::genSetUsed($ent_id, true);
 
     // Return the newly created level_id
-    $sql = 'SELECT id FROM levels WHERE title = ? AND description = ? AND entity_id = ? AND flag = ? AND category_id = ? LIMIT 1';
-    $element = array($title, $description, $ent_id, $flag, $category_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT id FROM levels WHERE title = %s AND description = %s AND entity_id = %d AND flag = %s AND category_id = %d LIMIT 1',
+      $title,
+      $description,
+      $ent_id,
+      $flag,
+      $category_id,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    return intval(must_have_idx(firstx($result), 'id'));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval(must_have_idx($result->mapRows()[0], 'id'));
   }
 
   // Create a flag level.
-  public static function createFlag(
+  public static async function genCreateFlag(
     string $title,
     string $description,
     string $flag,
@@ -213,8 +226,8 @@ class Level extends Model {
     int $bonus_dec,
     string $hint,
     int $penalty
-  ): int {
-    return self::create(
+  ): Awaitable<int> {
+    return await self::genCreate(
       'flag',
       $title,
       $description,
@@ -231,7 +244,7 @@ class Level extends Model {
   }
 
   // Update a flag level.
-  public static function updateFlag(
+  public static async function genUpdateFlag(
     string $title,
     string $description,
     string $flag,
@@ -243,8 +256,8 @@ class Level extends Model {
     string $hint,
     int $penalty,
     int $level_id
-  ): void {
-    self::update(
+  ): Awaitable<void> {
+    await self::genUpdate(
       $title,
       $description,
       $entity_id,
@@ -261,7 +274,7 @@ class Level extends Model {
   }
 
   // Create a quiz level.
-  public static function createQuiz(
+  public static async function genCreateQuiz(
     string $title,
     string $question,
     string $answer,
@@ -271,12 +284,15 @@ class Level extends Model {
     int $bonus_dec,
     string $hint,
     int $penalty
-  ): int {
-    $db = self::getDb();
+  ): Awaitable<int> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
-    $category_id = intval(must_have_idx(firstx($db->query($sql)), 'id'));
-    return self::create(
+    $result = await $db->queryf(
+      'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1',
+    );
+
+    $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
+    return await self::genCreate(
       'quiz',
       $title,
       $question,
@@ -293,7 +309,7 @@ class Level extends Model {
   }
 
   // Update a quiz level.
-  public static function updateQuiz(
+  public static async function genUpdateQuiz(
     string $title,
     string $question,
     string $answer,
@@ -304,12 +320,15 @@ class Level extends Model {
     string $hint,
     int $penalty,
     int $level_id
-  ): void {
-    $db = self::getDb();
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1';
-    $category_id = intval(must_have_idx(firstx($db->query($sql)), 'id'));
-    self::update(
+    $result = await $db->queryf(
+      'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1',
+    );
+
+    $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
+    await self::genUpdate(
       $title,
       $question,
       $entity_id,
@@ -326,7 +345,7 @@ class Level extends Model {
   }
 
   // Create a base level.
-  public static function createBase(
+  public static async function genCreateBase(
     string $title,
     string $description,
     int $entity_id,
@@ -335,8 +354,8 @@ class Level extends Model {
     int $bonus,
     string $hint,
     int $penalty
-  ): int {
-    return self::create(
+  ): Awaitable<int> {
+    return await self::genCreate(
       'base',
       $title,
       $description,
@@ -353,7 +372,7 @@ class Level extends Model {
   }
 
   // Update a base level.
-  public static function updateBase(
+  public static async function genUpdateBase(
     string $title,
     string $description,
     int $entity_id,
@@ -363,8 +382,8 @@ class Level extends Model {
     string $hint,
     int $penalty,
     int $level_id
-  ): void {
-    self::update(
+  ): Awaitable<void> {
+    await self::genUpdate(
       $title,
       $description,
       $entity_id,
@@ -381,7 +400,7 @@ class Level extends Model {
   }
 
   // Update level.
-  public static function update(
+  public static async function genUpdate(
     string $title,
     string $description,
     int $entity_id,
@@ -394,18 +413,19 @@ class Level extends Model {
     string $hint,
     int $penalty,
     int $level_id
-  ): void {
-    $db = self::getDb();
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
     if ($entity_id === 0) {
-      $ent_id = Country::randomAvailableCountryId();
+      $ent_id = await Country::genRandomAvailableCountryId();
     } else {
       $ent_id = $entity_id;
     }
-    $sql = 'UPDATE levels SET title = ?, description = ?, entity_id = ?, category_id = ?, points = ?, '.
-      'bonus = ?, bonus_dec = ?, bonus_fix = ?, flag = ?, hint = ?, '.
-      'penalty = ? WHERE id = ? LIMIT 1';
-    $elements = array(
+
+    await $db->queryf(
+      'UPDATE levels SET title = %s, description = %s, entity_id = %d, category_id = %d, points = %d, '.
+      'bonus = %d, bonus_dec = %d, bonus_fix = %d, flag = %s, hint = %s, '.
+      'penalty = %d WHERE id = %d LIMIT 1',
       $title,
       $description,
       $ent_id,
@@ -417,68 +437,89 @@ class Level extends Model {
       $flag,
       $hint,
       $penalty,
-      $level_id
+      $level_id,
     );
-    $db->query($sql, $elements);
 
     // Make sure entities are consistent
-    Country::usedAdjust();
+    await Country::genUsedAdjust();
   }
 
   // Delete level.
-  public static function delete(int $level_id): void {
-    $db = self::getDb();
+  public static async function genDelete(
+    int $level_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
     // Free country first.
-    $level = Level::getLevel($level_id);
-    Country::setUsed($level->getEntityId(), false);
+    $level = await self::genLevel($level_id);
+    await Country::genSetUsed($level->getEntityId(), false);
 
-    $sql = 'DELETE FROM levels WHERE id = ? LIMIT 1';
-    $elements = array($level_id);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'DELETE FROM levels WHERE id = %d LIMIT 1',
+      $level_id,
+    );
   }
 
   // Enable or disable level by passing 1 or 0.
-  public static function setStatus(int $level_id, bool $active): void {
-    $db = self::getDb();
+  public static async function genSetStatus(
+    int $level_id,
+    bool $active,
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
-    $sql = 'UPDATE levels SET active = ? WHERE id = ? LIMIT 1';
-    $elements = array($active, $level_id);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'UPDATE levels SET active = %d WHERE id = %d LIMIT 1',
+      (int)$active,
+      $level_id,
+    );
   }
 
   // Enable or disable levels by type.
-  public static function setStatusType(bool $active, string $type): void {
-    $db = self::getDb();
+  public static async function genSetStatusType(
+    bool $active,
+    string $type,
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
-    $sql = 'UPDATE levels SET active = ? WHERE type = ?';
-    $elements = array($active, $type);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'UPDATE levels SET active = %d WHERE type = %s',
+      (int)$active,
+      $type,
+    );
   }
 
   // Enable or disable all levels.
-  public static function setStatusAll(bool $active, string $type): void {
-    $db = self::getDb();
+  public static async function genSetStatusAll(
+    bool $active,
+    string $type,
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
     if ($type === 'all') {
-      $sql = 'UPDATE levels SET active = ? WHERE id > 0';
-      $elements = array($active);
+      await $db->queryf(
+        'UPDATE levels SET active = %d WHERE id > 0',
+        (int)$active,
+      );
     } else {
-      $sql = 'UPDATE levels SET active = ? WHERE type = ?';
-      $elements = array($active, $type);
+      await $db->queryf(
+        'UPDATE levels SET active = %d WHERE type = %s',
+        (int)$active,
+        $type,
+      );
     }
-    $db->query($sql, $elements);
   }
 
   // All levels.
-  public static function allLevels(): array<Level> {
-    $db = self::getDb();
+  public static async function genAllLevels(
+  ): Awaitable<array<Level>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM levels';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM levels',
+    );
 
     $levels = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $levels[] = self::levelFromRow($row);
     }
 
@@ -486,14 +527,16 @@ class Level extends Model {
   }
 
   // All levels by status.
-  public static function allActiveLevels(): array<Level> {
-    $db = self::getDb();
+  public static async function genAllActiveLevels(
+  ): Awaitable<array<Level>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM levels WHERE active = 1';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM levels WHERE active = 1',
+    );
 
     $levels = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $levels[] = self::levelFromRow($row);
     }
 
@@ -501,14 +544,16 @@ class Level extends Model {
   }
 
   // All levels by status.
-  public static function allActiveBases(): array<Level> {
-    $db = self::getDb();
+  public static async function genAllActiveBases(
+  ): Awaitable<array<Level>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM levels WHERE active = 1 AND type = "base"';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM levels WHERE active = 1 AND type = "base"',
+    );
 
     $bases = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $bases[] = self::levelFromRow($row);
     }
 
@@ -516,15 +561,18 @@ class Level extends Model {
   }
 
   // All levels by type.
-  public static function allTypeLevels(string $type): array<Level> {
-    $db = self::getDb();
+  public static async function genAllTypeLevels(
+    string $type,
+  ): Awaitable<array<Level>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM levels WHERE type = ? ORDER BY active DESC';
-    $element = array($type);
-    $results = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT * FROM levels WHERE type = %s ORDER BY active DESC',
+      $type,
+    );
 
     $levels = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $levels[] = self::levelFromRow($row);
     }
 
@@ -532,154 +580,192 @@ class Level extends Model {
   }
 
   // All quiz levels.
-  public static function allQuizLevels(): array<Level> {
-    return self::allTypeLevels('quiz');
+  public static async function genAllQuizLevels(): Awaitable<array<Level>> {
+    return await self::genAllTypeLevels('quiz');
   }
 
   // All base levels.
-  public static function allBaseLevels(): array<Level> {
-    return self::allTypeLevels('base');
+  public static async function genAllBaseLevels(): Awaitable<array<Level>> {
+    return await self::genAllTypeLevels('base');
   }
 
   // All flag levels.
-  public static function allFlagLevels(): array<Level> {
-    return self::allTypeLevels('flag');
+  public static async function genAllFlagLevels(): Awaitable<array<Level>> {
+    return await self::genAllTypeLevels('flag');
   }
 
   // Get a single level.
-  public static function getLevel(int $level_id): Level {
-    $db = self::getDb();
+  public static async function genLevel(
+    int $level_id,
+  ): Awaitable<Level> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM levels WHERE id = ? LIMIT 1';
-    $element = array($level_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT * FROM levels WHERE id = %d LIMIT 1',
+      $level_id,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    $level = self::levelFromRow(firstx($result));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    $level = self::levelFromRow($result->mapRows()[0]);
 
     return $level;
   }
 
   // Check if flag is correct.
-  public static function checkAnswer(int $level_id, string $answer): bool {
-    $db = self::getDb();
-
+  public static async function genCheckAnswer(
+    int $level_id,
+    string $answer,
+  ): Awaitable<bool> {
+    $level = await self::genLevel($level_id);
     return
-      strtoupper(trim(self::getLevel($level_id)->getFlag())) ===
-      strtoupper(trim($answer));
+      strtoupper(trim($level->getFlag())) === strtoupper(trim($answer));
   }
 
   // Adjust bonus.
-  public static function adjustBonus(int $level_id): void {
-    $db = self::getDb();
+  public static async function genAdjustBonus(
+    int $level_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
-    $sql = 'UPDATE levels SET bonus = GREATEST(bonus - bonus_dec, 0) WHERE id = ? LIMIT 1';
-    $element = array($level_id);
-    $db->query($sql, $element);
+    await $db->queryf(
+      'UPDATE levels SET bonus = GREATEST(bonus - bonus_dec, 0) WHERE id = %d LIMIT 1',
+      $level_id,
+    );
   }
 
   // Log base request.
-  public static function logBaseEntry(int $level_id, int $code, string $response): void {
-    $db = self::getDb();
+  public static async function genLogBaseEntry(
+    int $level_id,
+    int $code,
+    string $response,
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
-    $sql = 'INSERT INTO bases_log (ts, level_id, code, response) VALUES (NOW(), ?, ?, ?)';
-    $elements = array($level_id, $code, $response);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'INSERT INTO bases_log (ts, level_id, code, response) VALUES (NOW(), %d, %d, %s)',
+      $level_id,
+      $code,
+      $response,
+    );
   }
 
   // Score level. Works for quiz and flags.
-  public static function scoreLevel(int $level_id, int $team_id): bool {
-    $db = self::getDb();
+  public static async function genScoreLevel(
+    int $level_id,
+    int $team_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
     // Check if team has already scored this level
-    if (ScoreLog::previousScore($level_id, $team_id, false)) {
+    $previous_score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
+    if ($previous_score) {
       return false;
     }
 
-    $level = self::getLevel($level_id);
+    $level = await self::genLevel($level_id);
 
     // Calculate points to give
     $points = $level->getPoints() + $level->getBonus();
 
     // Adjust bonus
-    self::adjustBonus($level_id);
+    await self::genAdjustBonus($level_id);
 
     // Score!
-    $sql = 'UPDATE teams SET points = points + ?, last_score = NOW() WHERE id = ? LIMIT 1';
-    $elements = array($points, $team_id);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
+      $points,
+      $team_id,
+    );
 
     // Log the score...
-    ScoreLog::logValidScore($level_id, $team_id, $points, $level->getType());
+    await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
 
     return true;
   }
 
   // Score base.
-  public static function scoreBase(int $level_id, int $team_id): bool {
-    $db = self::getDb();
+  public static async function genScoreBase(
+    int $level_id,
+    int $team_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $level = self::getLevel($level_id);
+    $level = await self::genLevel($level_id);
 
     // Calculate points to give
-    if (ScoreLog::previousScore($level_id, $team_id, false)) {
+    $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
+    if ($score) {
       $points = $level->getPoints();
     } else {
       $points = $level->getPoints() + $level->getBonus();
     }
 
     // Score!
-    $sql = 'UPDATE teams SET points = points + ?, last_score = NOW() WHERE id = ? LIMIT 1';
-    $elements = array($points, $team_id);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
+      $points,
+      $team_id,
+    );
 
      // Log the score...
-    ScoreLog::logValidScore($level_id, $team_id, $points, $level->getType());
+    await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
 
     return true;
   }
 
   // Get hint.
-  public static function getLevelHint(int $level_id, int $team_id): ?string {
-    $db = self::getDb();
+  public static async function genLevelHint(
+    int $level_id,
+    int $team_id,
+  ): Awaitable<?string> {
+    $db = await self::genDb();
 
-    $level = self::getLevel($level_id);
+    $level = await self::genLevel($level_id);
     $penalty = $level->getPenalty();
 
     // Check if team has already gotten this hint or if the team has scored this already
     // If so, hint is free
-    if (HintLog::previousHint($level_id, $team_id, false) ||
-        ScoreLog::previousScore($level_id, $team_id, false)) {
+    $hint = await HintLog::genPreviousHint($level_id, $team_id, false);
+    $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
+    if ($hint || $score) {
       $penalty = 0;
     }
 
     // Make sure team has enough points to pay
-    if (Team::getTeam($team_id)->getPoints() < $penalty) {
+    $team = await Team::genTeam($team_id);
+    if ($team->getPoints() < $penalty) {
       return null;
     }
 
     // Adjust points
-    $sql = 'UPDATE teams SET points = points - ? WHERE id = ? LIMIT 1';
-    $elements = array($penalty, $team_id);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'UPDATE teams SET points = points - %d WHERE id = %d LIMIT 1',
+      $penalty,
+      $team_id,
+    );
 
     // Log the hint
-    HintLog::logGetHint($level_id, $team_id, $penalty);
+    await HintLog::genLogGetHint($level_id, $team_id, $penalty);
 
     // Hint!
     return $level->getHint();
   }
 
   // Get the IP from a base level.
-  public static function getBaseIP(int $base_id): string {
-    $link = Link::allLinks($base_id)[0];
+  public static async function genBaseIP(
+    int $base_id,
+  ): Awaitable<string> {
+    $links = await Link::genAllLinks($base_id);
+    $link = $links[0];
     $ip = explode(':', $link->getLink())[0];
 
     return $ip;
   }
 
   // Request all bases
-  public static function getBasesResponses(array<int, string> $bases): array<int, string> {
+  public static function getBasesResponses(
+    array<int, array<string, mixed>> $bases,
+  ): array<int, string> {
     // Iterates and request all the bases endpoints for owner
     $responses = array();
     $curl_handlers = array();
@@ -721,21 +807,23 @@ class Level extends Model {
   }
 
   // Bases processing and scoring.
-  public static function baseScoring(): void {
+  public static async function genBaseScoring(
+  ): Awaitable<void> {
     $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
     $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.escapeshellarg($document_root).'/scripts/bases.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
-    Control::startScriptLog(intval($pid), 'bases', $cmd);
+    await Control::genStartScriptLog(intval($pid), 'bases', $cmd);
   }
 
   // Stop bases processing and scoring process.
-  public static function stopBaseScoring(): void {
+  public static async function genStopBaseScoring(
+  ): Awaitable<void> {
     // Kill running process
-    $pid = Control::getScriptPid('bases');
+    $pid = await Control::genScriptPid('bases');
     if ($pid > 0) {
       exec('kill -9 '.escapeshellarg(strval($pid)));
     }
     // Mark process as stopped
-    Control::stopScriptLog($pid);
+    await Control::genStopScriptLog($pid);
   }
 }

@@ -30,15 +30,19 @@ class Progressive extends Model {
     return $this->iteration;
   }
 
-  public static function getGameStatus(): bool {
-    return Configuration::get('game')->getValue() === '1';
+  public static async function genGameStatus(
+  ): Awaitable<bool> {
+    $config = await Configuration::gen('game');
+    return $config->getValue() === '1';
   }
 
-  public static function getCycle(): int {
-    return intval(Configuration::get('progressive_cycle')->getValue());
+  public static async function genCycle(
+  ): Awaitable<int> {
+    $config = await Configuration::gen('progressive_cycle');
+    return intval($config->getValue());
   }
 
-  private static function progressiveFromRow(array<string, string> $row): Progressive {
+  private static function progressiveFromRow(Map<string, string> $row): Progressive {
     return new Progressive(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'ts'),
@@ -49,15 +53,18 @@ class Progressive extends Model {
   }
 
   // Progressive points.
-  public static function progressiveScoreboard(string $team_name): array<Progressive> {
-    $db = self::getDb();
+  public static async function genProgressiveScoreboard(
+    string $team_name,
+  ): Awaitable<array<Progressive>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM progressive_log WHERE team_name = ? GROUP BY iteration ORDER BY points ASC';
-    $element = array($team_name);
-    $results = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT * FROM progressive_log WHERE team_name = %s GROUP BY iteration ORDER BY points ASC',
+      $team_name,
+    );
 
     $progressive = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $progressive[] = self::progressiveFromRow($row);
     }
 
@@ -65,48 +72,49 @@ class Progressive extends Model {
   }
 
   // Count how many iterations of the progressive scoreboard we have.
-  public static function count(): int {
-    $db = self::getDb();
+  public static async function genCount(): Awaitable<int> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT COUNT(DISTINCT(iteration)) AS C FROM progressive_log';
-    $results = $db->query($sql);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    $result = await $db->queryf(
+      'SELECT COUNT(DISTINCT(iteration)) AS C FROM progressive_log',
+    );
 
-    return intval(firstx($results)['C']);
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['C']);
   }
 
   // Acquire the data for one iteration of the progressive scoreboard.
-  public static function take(): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO progressive_log (ts, team_name, points, iteration) (SELECT NOW(), name, points, (SELECT IFNULL(MAX(iteration)+1, 1) FROM progressive_log) FROM teams)';
-    $db->query($sql);
+  public static async function genTake(): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO progressive_log (ts, team_name, points, iteration) (SELECT NOW(), name, points, (SELECT IFNULL(MAX(iteration)+1, 1) FROM progressive_log) FROM teams)',
+    );
   }
 
   // Reset the progressive scoreboard.
-  public static function reset(): void {
-    $db = self::getDb();
-
-    $sql = 'DELETE FROM progressive_log WHERE id > 0';
-    $db->query($sql);
+  public static async function genReset(): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM progressive_log WHERE id > 0',
+    );
   }
 
   // Kick off the progressive scoreboard in the background.
-  public static function run(): void {
+  public static async function genRun(): Awaitable<void> {
     $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
     $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.$document_root.'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
-    Control::startScriptLog(intval($pid), 'progressive', $cmd);
+    await Control::genStartScriptLog(intval($pid), 'progressive', $cmd);
   }
 
   // Stop the progressive scoreboard process in the background
-  public static function stop(): void {
+  public static async function genStop(): Awaitable<void> {
     // Kill running process
-    $pid = Control::getScriptPid('progressive');
+    $pid = await Control::genScriptPid('progressive');
     if ($pid > 0) {
       exec('kill -9 '.escapeshellarg(strval($pid)));
     }
     // Mark process as stopped
-    Control::stopScriptLog($pid);
+    await Control::genStopScriptLog($pid);
   }
 }

@@ -1,16 +1,20 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class ScoreboardController {
-  public function generateIndicator(): :xhp {
+  public async function genGenerateIndicator(): Awaitable<:xhp> {
     $indicator = <div class="indicator game-progress-indicator"></div>;
-    if (Configuration::get('game')->getValue() === '1') {
-      $start_ts = Configuration::get('start_ts')->getValue();
-      $end_ts = Configuration::get('end_ts')->getValue();
+    $game = await Configuration::gen('game');
+    if ($game->getValue() === '1') {
+      $start_ts = await Configuration::gen('start_ts');
+      $end_ts = await Configuration::gen('end_ts');
+      $start_ts = $start_ts->getValue();
+      $end_ts = $end_ts->getValue();
 
       $seconds = intval($end_ts) - intval($start_ts);
       $s_each = intval($seconds/10);
@@ -37,18 +41,22 @@ class ScoreboardController {
     return $indicator;
   }
 
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $scoreboard_tbody = <tbody></tbody>;
 
     // If refresing is enabled, do the needful
-    if (Configuration::get('gameboard')->getValue() === '1') {
+    $gameboard = await Configuration::gen('gameboard');
+    if ($gameboard->getValue() === '1') {
       $rank = 1;
-      $leaderboard = Team::leaderboard();
+      $leaderboard = await Team::genLeaderboard();
 
       foreach ($leaderboard as $team) {
         $team_id = 'fb-scoreboard--team-'.strval($team->getId());
         $color = '#' . substr(md5($team->getName()), 0, 6) . ';';
         $style = 'color: '.$color.'; background:' .$color. ';';
+        $quiz = await Team::genPointsByType($team->getId(), 'quiz');
+        $flag = await Team::genPointsByType($team->getId(), 'flag');
+        $base = await Team::genPointsByType($team->getId(), 'base');
         $scoreboard_tbody->appendChild(
           <tr>
             <td style="width: 10%;" class="el--radio">
@@ -57,9 +65,9 @@ class ScoreboardController {
             </td>
             <td style="width: 10%;">{$rank}</td>
             <td style="width: 40%;">{$team->getName()}</td>
-            <td style="width: 10%;">{strval(Team::pointsByType($team->getId(), 'quiz'))}</td>
-            <td style="width: 10%;">{strval(Team::pointsByType($team->getId(), 'flag'))}</td>
-            <td style="width: 10%;">{strval(Team::pointsByType($team->getId(), 'base'))}</td>
+            <td style="width: 10%;">{strval($quiz)}</td>
+            <td style="width: 10%;">{strval($flag)}</td>
+            <td style="width: 10%;">{strval($base)}</td>
             <td style="width: 10%;">{strval($team->getPoints())}</td>
           </tr>
         );
@@ -67,6 +75,7 @@ class ScoreboardController {
       }
     }
 
+    $indicator = await $this->genGenerateIndicator();
     return
       <div class="fb-modal-content fb-row-container">
         <div class="modal-title row-fixed">
@@ -82,7 +91,7 @@ class ScoreboardController {
           <svg class="fb-graphic" data-file="data/scores.php" width="820" height={220}></svg>
         </div>
         <div class="game-progress fb-progress-bar fb-cf row-fixed">
-          {$this->generateIndicator()}
+          {$indicator}
           <span class="label label--left">[Start]</span>
           <span class="label label--right">[End]</span>
         </div>
@@ -111,4 +120,4 @@ class ScoreboardController {
 }
 
 $scoreboard_generated = new ScoreboardController();
-echo $scoreboard_generated->render();
+echo \HH\Asio\join($scoreboard_generated->genRender());
