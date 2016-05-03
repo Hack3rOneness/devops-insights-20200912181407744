@@ -21,60 +21,80 @@ class Configuration extends Model {
   }
 
   // Create configuration entry.
-  public static function create(string $field, string $value, string $description): void {
-    $db = self::getDb();
-    $sql = 'INSERT INTO configuration (field, value, description) VALUES(?, ?, ?) LIMIT 1';
-    $elements = array($field, $value, $description);
-    $db->query($sql, $elements);
+  public static async function genCreate(
+    string $field,
+    string $value,
+    string $description,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO configuration (field, value, description) VALUES(%s, %s, %s) LIMIT 1',
+      $field,
+      $value,
+      $description,
+    );
   }
 
   // Get configuration entry.
-  public static function get(string $field): Configuration {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM configuration WHERE field = ? LIMIT 1';
-    $element = array($field);
+  public static async function gen(
+    string $field,
+  ): Awaitable<Configuration> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM configuration WHERE field = %s LIMIT 1',
+      $field,
+    );
 
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    invariant($result->numRows() === 1, 'Expected exactly one result');
 
-    return self::configurationFromRow(firstx($results));
+    return self::configurationFromRow($result->mapRows()[0]);
   }
 
   // Change configuration field.
-  public static function update(string $field, string $value): void {
-    $db = self::getDb();
-    $sql = 'UPDATE configuration SET value = ? WHERE field = ? LIMIT 1';
-    $elements = array($value, $field);
-    $db->query($sql, $elements);
+  public static async function genUpdate(
+    string $field,
+    string $value,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE configuration SET value = %s WHERE field = %s LIMIT 1',
+      $value,
+      $field,
+    );
   }
 
   // Check if field is valid.
-  public static function validField(string $field): bool {
-    $db = self::getDb();
-    $sql = 'SELECT COUNT(*) FROM configuration WHERE field = ?';
-    $element = array($field);
+  public static async function genValidField(
+    string $field,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM configuration WHERE field = %s',
+      $field,
+    );
 
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    invariant($result->numRows() === 1, 'Expected exactly one result');
 
-    return intval(firstx($results)['COUNT(*)']) > 0;
+    return intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0;
   }
 
   // All the configuration.
-  public static function allConfiguration(): array<Configuration> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM configuration';
-    $results = $db->query($sql);
+  public static async function genAllConfiguration(
+  ): Awaitable<array<Configuration>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM configuration',
+    );
 
     $configuration = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $configuration[] = self::configurationFromRow($row);
     }
 
     return $configuration;
   }
 
-  private static function configurationFromRow(array<string, string> $row): Configuration {
+  private static function configurationFromRow(Map<string, string> $row): Configuration {
     return new Configuration(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'field'),

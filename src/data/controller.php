@@ -1,10 +1,10 @@
-<?hh
+<?hh // strict
 
 abstract class DataController {
 
-  abstract public function generateData();
+  abstract public function genGenerateData(): Awaitable<void>;
 
-  public function jsonSend($data) {
+  public function jsonSend(mixed $data): void {
     header('Content-Type: application/json');
     print json_encode($data, JSON_PRETTY_PRINT);
   }

@@ -1,29 +1,31 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class LeaderboardDataController extends DataController {
-  public function generateData() {
+  public async function genGenerateData(): Awaitable<void> {
     $leaderboard_data = (object) array();
 
     // If refresing is disabled, exit
-    if (Configuration::get('gameboard')->getValue() === '0') {
+    $gameboard = await Configuration::gen('gameboard');
+    if ($gameboard->getValue() === '0') {
       $this->jsonSend($leaderboard_data);
-      exit;
+      exit(1);
     }
 
-    $leaders = Team::leaderboard();
-    $my_team = Team::getTeam(SessionUtils::sessionTeam());
-    $my_rank = Team::myRank(SessionUtils::sessionTeam());
+    $leaders = await Team::genLeaderboard();
+    $my_team = await Team::genTeam(SessionUtils::sessionTeam());
+    $my_rank = await Team::genMyRank(SessionUtils::sessionTeam());
     $my_team_data = (object) array(
       'badge' => $my_team->getLogo(),
       'points' => $my_team->getPoints(),
       'rank' => $my_rank
     );
-    /* HH_FIXME[1002] */
+    /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
     $leaderboard_data->{'my_team'} = $my_team_data;
 
     $teams_data = (object) array();
@@ -48,4 +50,4 @@ class LeaderboardDataController extends DataController {
 }
 
 $leaderboardData = new LeaderboardDataController();
-$leaderboardData->generateData();
+\HH\Asio\join($leaderboardData->genGenerateData());

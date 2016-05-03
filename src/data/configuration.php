@@ -1,7 +1,8 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
@@ -15,23 +16,25 @@ class ConfigurationController extends DataController {
   // Refresh rate for commands in milliseconds
   private string $cmd_cycle = "10000";
 
-  public function generateData() {
+  public async function genGenerateData(): Awaitable<void> {
     $conf_data = (object) array();
 
     $control = new Control();
 
-    /* HH_FIXME[1002] */
+    $gameboard = await Configuration::gen('gameboard');
+
+    /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
     $conf_data->{'currentTeam'} = SessionUtils::sessionTeamName();
-    $conf_data->{'gameboard'} = Configuration::get('gameboard')->getValue();
+    $conf_data->{'gameboard'} = $gameboard->getValue();
     $conf_data->{'refreshTeams'} = $this->teams_cycle;
     $conf_data->{'refreshMap'} = $this->map_cycle;
     $conf_data->{'refreshConf'} = $this->conf_cycle;
     $conf_data->{'refreshCmd'} = $this->cmd_cycle;
-    $conf_data->{'progressiveCount'} = Progressive::count();
+    $conf_data->{'progressiveCount'} = await Progressive::genCount();
 
     $this->jsonSend($conf_data);
   }
 }
 
 $confController = new ConfigurationController();
-$confController->generateData();
+\HH\Asio\join($confController->genGenerateData());

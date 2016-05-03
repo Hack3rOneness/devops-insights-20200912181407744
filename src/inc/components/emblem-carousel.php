@@ -1,13 +1,14 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 class LogosController {
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $logos_div = <div class="fb-slider fb-container container--large"></div>;
     $logos_ul = <ul class="slides"></ul>;
 
-    foreach (Logo::allEnabledLogos() as $logo) {
+    $logos = await Logo::genAllEnabledLogos();
+    foreach ($logos as $logo) {
       $xlink_href = '#icon--badge-'.$logo->getName();
       $logos_ul->appendChild(
         <li>
@@ -23,5 +24,6 @@ class LogosController {
   }
 }
 
+/* HH_IGNORE_ERROR[1002] */
 $logos_generated = new LogosController();
-echo $logos_generated->render();
+echo \HH\Asio\join($logos_generated->genRender());

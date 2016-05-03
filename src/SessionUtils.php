@@ -49,8 +49,9 @@ class SessionUtils {
   }
 
   public function read(string $cookie): string {
-    if (Session::sessionExist($cookie)) {
-      $session = Session::get($cookie);
+    $session_exists = \HH\Asio\join(Session::genSessionExist($cookie));
+    if ($session_exists) {
+      $session = \HH\Asio\join(Session::gen($cookie));
       return $session->getData();
     } else {
       return '';
@@ -58,25 +59,27 @@ class SessionUtils {
   }
 
   public function write(string $cookie, string $data): bool {
-    if (Session::sessionExist($cookie)) {
-      Session::update($cookie, $data);
+    $session_exists = \HH\Asio\join(Session::genSessionExist($cookie));
+    if ($session_exists) {
+      \HH\Asio\join(Session::genUpdate($cookie, $data));
     } else {
-      Session::create($cookie, $data);
+      \HH\Asio\join(Session::genCreate($cookie, $data));
     }
     return true;
   }
 
   public function destroy(string $cookie): bool {
-    Session::delete($cookie);
+    \HH\Asio\join(Session::genDelete($cookie));
     return true;
   }
 
   public function gc(int $maxlifetime): bool {
-    Session::cleanup($maxlifetime);
+    \HH\Asio\join(Session::genCleanup($maxlifetime));
     return true;
   }
 
   public static function sessionSet(string $name, string $value): void {
+    /* HH_IGNORE_ERROR[2050] */
     $_SESSION[$name] = $value;
   }
 
@@ -87,34 +90,40 @@ class SessionUtils {
   }
 
   public static function sessionActive(): bool {
+    /* HH_IGNORE_ERROR[2050] */
     return (bool)(array_key_exists('team_id', $_SESSION));
   }
 
   public static function enforceLogin(): void {
-    if (!array_key_exists('team_id', $_SESSION)) {
+    if (!self::sessionActive()) {
       throw new IndexRedirectException();
     }
   }
 
   public static function enforceAdmin(): void {
+    /* HH_IGNORE_ERROR[2050] */
     if (!array_key_exists('admin', $_SESSION)) {
       throw new IndexRedirectException();
     }
   }
 
   public static function sessionAdmin(): bool {
+    /* HH_IGNORE_ERROR[2050] */
     return array_key_exists('admin', $_SESSION);
   }
 
   public static function sessionTeam(): int {
+    /* HH_IGNORE_ERROR[2050] */
     return intval(must_have_string($_SESSION, 'team_id'));
   }
 
   public static function sessionTeamName(): string {
+    /* HH_IGNORE_ERROR[2050] */
     return must_have_string($_SESSION, 'name');
   }
 
   public static function CSRFToken(): string {
+    /* HH_IGNORE_ERROR[2050] */
     return must_have_string($_SESSION, 'csrf_token');
   }
 }

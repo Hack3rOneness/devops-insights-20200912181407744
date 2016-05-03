@@ -1,11 +1,11 @@
 <?hh // strict
 
 class Db {
-  // TODO: Make this configurable
   private string $settings_file = '../settings.ini';
   private ?array<string, string> $config = null;
   private static Db $instance = MUST_MODIFY;
-  private ?PDO $dbh = null;
+  private AsyncMysqlConnectionPool $pool = MUST_MODIFY;
+  private ?AsyncMysqlConnection $conn = null;
 
   public static function getInstance(): Db {
     if (self::$instance === MUST_MODIFY) {
@@ -16,6 +16,7 @@ class Db {
 
   private function __construct() {
     $this->config = parse_ini_file($this->settings_file);
+    $this->pool = new AsyncMysqlConnectionPool(array());
   }
 
   private function __clone(): void {}
@@ -28,69 +29,35 @@ class Db {
     return $backup_cmd;
   }
 
-  public function connect(): void {
+  public async function genConnection(): Awaitable<AsyncMysqlConnection> {
+    if (!$this->isConnected()) {
+      await $this->genConnect();
+    }
+    invariant($this->conn !== null, 'Connection cant be null.');
+    return $this->conn;
+  }
+
+  public function disconnect(): void {
+    $this->conn = null;
+  }
+
+  public function isConnected(): bool {
+    return $this->conn !== null;
+  }
+
+  private async function genConnect(): Awaitable<void> {
     $host = must_have_idx($this->config, 'DB_HOST');
     $port = must_have_idx($this->config, 'DB_PORT');
     $db_name = must_have_idx($this->config, 'DB_NAME');
     $username = must_have_idx($this->config, 'DB_USERNAME');
     $password = must_have_idx($this->config, 'DB_PASSWORD');
 
-    $conn_str = sprintf(
-      'mysql:host=%s;port=%s;dbname=%s',
+    $this->conn = await $this->pool->connect(
       $host,
-      $port,
+      (int)$port,
       $db_name,
+      $username,
+      $password,
     );
-    try {
-      $this->dbh = new PDO(
-        $conn_str,
-        $username,
-        $password,
-      );
-    } catch (PDOException $e) {
-      error_log("[ db.php ] - Connection error: ".$e->getMessage());
-      throw new InternalErrorRedirectException();
-    }
-  }
-
-  public function disconnect(): void {
-    $this->dbh = null;
-  }
-
-  public function isConnected(): bool {
-    return $this->dbh !== null;
-  }
-
-  public function query(
-    string $query,
-    ?array<mixed> $elements = null
-  ): array<array<string, string>> {
-    if (!$this->isConnected()) {
-      $this->connect();
-    }
-
-    invariant($this->dbh !== null, 'Database handle should not be null');
-    $stmt = $this->dbh->prepare($query);
-    if ($elements !== null) {
-      $i = 1;
-      /* HH_IGNORE_ERROR[4154]: taking $element by reference is required here */
-      foreach ($elements as &$element) {
-        $stmt->bindparam($i, $element);
-        $i++;
-      }
-    }
-
-    try {
-      $stmt->execute();
-    } catch (PDOException $e) {
-      error_log("[ db.php ] - Statement error: " . $stmt->errorInfo());
-      throw new InternalErrorRedirectException();
-    }
-
-    $results = array();
-    while ($row = $stmt->fetch()) {
-      $results[] = $row;
-    }
-    return $results;
   }
 }

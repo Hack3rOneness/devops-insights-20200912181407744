@@ -30,7 +30,7 @@ class FailureLog extends Model {
     return $this->flag;
   }
 
-  private static function failurelogFromRow(array<string, string> $row): FailureLog {
+  private static function failurelogFromRow(Map<string, string> $row): FailureLog {
     return new FailureLog(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'ts'),
@@ -41,29 +41,39 @@ class FailureLog extends Model {
   }
 
   // Log attempt on score.
-  public static function logFailedScore(int $level_id, int $team_id, string $flag): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO failures_log (ts, level_id, team_id, flag) VALUES(NOW(), ?, ?, ?)';
-    $elements = array($level_id, $team_id, $flag);
-    $db->query($sql, $elements);
+  public static async function genLogFailedScore(
+    int $level_id,
+    int $team_id,
+    string $flag,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO failures_log (ts, level_id, team_id, flag) VALUES(NOW(), %d, %d, %s)',
+      $level_id,
+      $team_id,
+      $flag,
+    );
   }
 
   // Reset all failures.
-  public static function resetFailures(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM failures_log WHERE id > 0';
-    $db->query($sql);
+  public static async function genResetFailures(
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM failures_log WHERE id > 0',
+    );
   }
 
   // Get all scores.
-  public static function allFailures(): array<FailureLog> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM failures_log ORDER BY ts DESC';
-    $results = $db->query($sql);
+  public static async function genAllFailures(
+  ): Awaitable<array<FailureLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM failures_log ORDER BY ts DESC',
+    );
 
     $failures = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $failures[] = self::failurelogFromRow($row);
     }
 
@@ -71,14 +81,17 @@ class FailureLog extends Model {
   }
 
   // Get all scores by team.
-  public static function allFailuresByTeam(int $team_id): array<FailureLog> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM failures_log WHERE team_id = ? ORDER BY ts DESC';
-    $element = array($team_id);
-    $results = $db->query($sql, $element);
+  public static async function genAllFailuresByTeam(
+    int $team_id,
+  ): Awaitable<array<FailureLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM failures_log WHERE team_id = %d ORDER BY ts DESC',
+      $team_id,
+    );
 
     $failures = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $failures[] = self::failurelogFromRow($row);
     }
 

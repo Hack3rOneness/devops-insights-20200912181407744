@@ -4,11 +4,14 @@ abstract class AjaxController {
   abstract protected function getFilters(): array<string, mixed>;
   abstract protected function getActions(): array<string>;
 
-  abstract protected function handleAction(string $action, array<string, mixed> $params): string;
+  abstract protected function genHandleAction(
+    string $action,
+    array<string, mixed> $params,
+  ): Awaitable<string>;
 
-  public function handleRequest(): string {
+  public async function genHandleRequest(): Awaitable<string> {
     list($action, $params) = $this->processRequest();
-    return $this->handleAction($action, $params);
+    return await $this->genHandleAction($action, $params);
   }
 
   private function processRequest(): (string, array<string, mixed>) {

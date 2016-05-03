@@ -36,8 +36,10 @@ class Logo extends Model {
   }
 
   // Check to see if the logo exists.
-  public static function checkExists(string $logo): bool {
-    $all_logos = self::allEnabledLogos();
+  public static async function genCheckExists(
+    string $logo,
+  ): Awaitable<bool> {
+    $all_logos = await self::genAllEnabledLogos();
     foreach ($all_logos as $l) {
       if ($logo === $l->getName()) {
         return true;
@@ -47,34 +49,43 @@ class Logo extends Model {
   }
 
   // Enable or disable logo by passing 1 or 0.
-  public static function setEnabled(int $logo_id, bool $enabled): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE logos SET enabled = ? WHERE id = ? LIMIT 1';
-    $elements = array($enabled, $logo_id);
-    $db->query($sql, $elements);
+  public static async function genSetEnabled(
+    int $logo_id,
+    bool $enabled,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE logos SET enabled = %d WHERE id = %d LIMIT 1',
+      (int)$enabled,
+      $logo_id,
+    );
   }
 
   // Retrieve a random logo from the table.
-  public static function randomLogo(): string {
-    $db = self::getDb();
+  public static async function genRandomLogo(
+  ): Awaitable<string> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT name FROM logos WHERE enabled = 1 ORDER BY RAND() LIMIT 1';
-    $results = $db->query($sql);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    $result = await $db->queryf(
+      'SELECT name FROM logos WHERE enabled = 1 ORDER BY RAND() LIMIT 1',
+    );
 
-    return firstx($results)['name'];
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+
+    return $result->mapRows()[0]['name'];
   }
 
   // All the logos.
-  public static function allLogos(): array<Logo> {
-    $db = self::getDb();
+  public static async function genAllLogos(
+  ): Awaitable<array<Logo>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM logos';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM logos',
+    );
 
     $logos = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $logos[] = self::logoFromRow($row);
     }
 
@@ -82,21 +93,23 @@ class Logo extends Model {
   }
 
   // All the enabled logos.
-  public static function allEnabledLogos(): array<Logo> {
-    $db = self::getDb();
+  public static async function genAllEnabledLogos(
+  ): Awaitable<array<Logo>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM logos WHERE enabled = 1 AND protected = 0';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM logos WHERE enabled = 1 AND protected = 0',
+    );
 
     $logos = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $logos[] = self::logoFromRow($row);
     }
 
     return $logos;
   }
 
-  private static function logoFromRow(array<string, string> $row): Logo {
+  private static function logoFromRow(Map<string, string> $row): Logo {
     return new Logo(
       intval(must_have_idx($row, 'id')),
       intval(must_have_idx($row, 'used')),

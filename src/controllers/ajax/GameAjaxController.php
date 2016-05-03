@@ -1,5 +1,6 @@
-<?hh
+<?hh // strict
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
@@ -37,7 +38,10 @@ class GameAjaxController extends AjaxController {
   }
 
   <<__Override>>
-  protected function handleAction(string $action, array<string, mixed> $params): string {
+  protected async function genHandleAction(
+    string $action,
+    array<string, mixed> $params,
+  ): Awaitable<string> {
     if ($action !== 'none') {
       // CSRF check
       if (idx($params, 'csrf_token') !== SessionUtils::CSRFToken()) {
@@ -49,27 +53,28 @@ class GameAjaxController extends AjaxController {
     case 'none':
       return Utils::error_response('Invalid action', 'game');
     case 'answer_level':
-      if (Configuration::get('scoring')->getValue() === '1') {
+      $scoring = await Configuration::gen('scoring');
+      if ($scoring->getValue() === '1') {
+        $check_base = await Level::genCheckBase(must_have_int($params, 'level_id'));
+        $check_answer = await Level::genCheckAnswer(
+          must_have_int($params, 'level_id'),
+          must_have_string($params, 'answer'),
+        );
         // Check if level is not a base
-        if (Level::checkBase(
-          must_have_int($params, 'level_id')
-        )) {
+        if ($check_base) {
           return Utils::error_response('Failed', 'game');
         // Check if answer is valid
-        } else if (Level::checkAnswer(
-          must_have_int($params, 'level_id'),
-          must_have_string($params, 'answer')
-        )) {
+        } else if ($check_answer) {
           // Give points!
-          Level::scoreLevel(
+          await Level::genScoreLevel(
             must_have_int($params, 'level_id'),
             SessionUtils::sessionTeam()
           );
           // Update teams last score
-          Team::lastScore(SessionUtils::sessionTeam());
+          await Team::genLastScore(SessionUtils::sessionTeam());
           return Utils::ok_response('Success', 'game');
         } else {
-          FailureLog::logFailedScore(
+          await FailureLog::genLogFailedScore(
             must_have_int($params, 'level_id'),
             SessionUtils::sessionTeam(),
             must_have_string($params, 'answer')
@@ -80,11 +85,11 @@ class GameAjaxController extends AjaxController {
         return Utils::error_response('Failed', 'game');
       }
     case 'get_hint':
-      $requested_hint = Level::getLevelHint(
+      $requested_hint = await Level::genLevelHint(
         must_have_int($params, 'level_id'),
-        SessionUtils::sessionTeam()
+        SessionUtils::sessionTeam(),
       );
-      if ($requested_hint) {
+      if ($requested_hint !== null) {
         return Utils::hint_response($requested_hint, 'OK');
       } else {
         return Utils::hint_response('', 'ERROR');

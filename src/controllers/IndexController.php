@@ -57,7 +57,7 @@ class IndexController extends Controller {
       </div>;
   }
 
-  public function renderCountdownContent(): :xhp {
+  public async function genRenderCountdownContent(): Awaitable<:xhp> {
     SessionUtils::sessionStart();
     if (SessionUtils::sessionActive()) {
       $play_nav =
@@ -68,7 +68,8 @@ class IndexController extends Controller {
           </div>
         </form>;
     } else {
-      if (Configuration::get('registration')->getValue() === '1') {
+      $registration = await Configuration::gen('registration'); 
+      if ($registration->getValue() === '1') {
         $registration_button = <a style="margin-left: 1em;" href="/index.php?page=registration" class="fb-cta cta--yellow">Register Team</a>;
       } else {
         $registration_button = <a></a>;
@@ -82,7 +83,8 @@ class IndexController extends Controller {
           </div>
         </form>;
     }
-    $next_game = Configuration::get('next_game')->getValue();
+    $next_game = await Configuration::gen('next_game');
+    $next_game = $next_game->getValue();
     if ($next_game === "0") {
       $next_game_text = "Soon";
     } else {
@@ -191,9 +193,10 @@ class IndexController extends Controller {
       </div>;
   }
 
-  public function renderLogosSelection(): :xhp {
+  public async function genRenderLogosSelection(): Awaitable<:xhp> {
     $logos_list = <ul class="slides" />;
-    foreach (Logo::allEnabledLogos() as $logo) {
+    $all_enabled_logos = await Logo::genAllEnabledLogos();
+    foreach ($all_enabled_logos as $logo) {
       $xlink_href = '#icon--badge-'.$logo->getName();
       $logos_list->appendChild(
         <li>
@@ -210,8 +213,9 @@ class IndexController extends Controller {
       </div>;
   }
 
-  public function renderRegistrationNames(): :xhp {
-    $players = intval(Configuration::get('registration_players')->getValue());
+  public async function genRenderRegistrationNames(): Awaitable<:xhp> {
+    $registration_players = await Configuration::gen('registration_players');
+    $players = intval($registration_players->getValue());
     $names_ul = <ul></ul>;
 
     for ($i=1; $i<=$players; $i++) {
@@ -231,7 +235,8 @@ class IndexController extends Controller {
       );
     }
 
-    if (Configuration::get('registration_type')->getValue() === '2') {
+    $registration_type = await Configuration::gen('registration_type');
+    if ($registration_type->getValue() === '2') {
       $token_field =
         <div class="form-el el--text">
           <label for="">Token</label>
@@ -241,6 +246,7 @@ class IndexController extends Controller {
       $token_field = <div></div>;
     }
 
+    $logos_section = await $this->genRenderLogosSelection();
     return
       <main role="main" class="fb-main page--team-registration full-height fb-scroll">
       <header class="fb-section-header fb-container">
@@ -269,7 +275,7 @@ class IndexController extends Controller {
           </fieldset>
           <div class="fb-choose-emblem">
             <h6>Choose an Emblem</h6>
-            <div class="emblem-carousel">{$this->renderLogosSelection()}</div>
+            <div class="emblem-carousel">{$logos_section}</div>
           </div>
           <div class="form-el--actions fb-container container--small">
             <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerNames()">Sign Up</button></p>
@@ -279,8 +285,9 @@ class IndexController extends Controller {
     </main>;
   }
 
-  public function renderRegistrationNoNames(): :xhp {
-    if (Configuration::get('registration_type')->getValue() === '2') {
+  public async function genRenderRegistrationNoNames(): Awaitable<:xhp> {
+    $registration_type = await Configuration::gen('registration_type');
+    if ($registration_type->getValue() === '2') {
       $token_field =
         <div class="form-el el--text">
           <label for="">Token</label>
@@ -289,6 +296,8 @@ class IndexController extends Controller {
     } else {
       $token_field = <div></div>;
     }
+
+    $logos_section = await $this->genRenderLogosSelection();
     return
       <main role="main" class="fb-main page--registration full-height fb-scroll">
         <header class="fb-section-header fb-container">
@@ -311,7 +320,7 @@ class IndexController extends Controller {
             </fieldset>
             <div class="fb-choose-emblem">
               <h6>Choose an Emblem</h6>
-              <div class="emblem-carousel">{$this->renderLogosSelection()}</div>
+              <div class="emblem-carousel">{$logos_section}</div>
             </div>
             <div class="form-el--actions fb-container container--small">
               <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerTeam()">Sign Up</button></p>
@@ -321,12 +330,14 @@ class IndexController extends Controller {
       </main>;
   }
 
-  public function renderRegistrationContent(): :xhp {
-    if (Configuration::get('registration')->getValue() === '1') {
-      if (Configuration::get('registration_names')->getValue() === '1') {
-        return $this->renderRegistrationNames();
+  public async function genRenderRegistrationContent(): Awaitable<:xhp> {
+    $registration = await Configuration::gen('registration');
+    $registration_names = await Configuration::gen('registration_names');
+    if ($registration->getValue() === '1') {
+      if ($registration_names->getValue() === '1') {
+        return await $this->genRenderRegistrationNames();
       } else {
-        return $this->renderRegistrationNoNames();
+        return await $this->genRenderRegistrationNoNames();
       }
     } else {
       return
@@ -347,15 +358,18 @@ class IndexController extends Controller {
     }
   }
 
-  public function renderLoginContent(): :xhp {
-    if (Configuration::get('login')->getValue() === '1') {
+  public async function genRenderLoginContent(): Awaitable<:xhp> {
+    $login = await Configuration::gen('login');
+    if ($login->getValue() === '1') {
       $login_team = <input autocomplete="off" name="team_name" type="text" maxlength={20}/>;
       $login_select = "off";
-      if (Configuration::get('login_select')->getValue() === '1') {
+      $login_select_config = await Configuration::gen('login_select');
+      if ($login_select_config->getValue() === '1') {
         $login_select = "on";
         $login_team = <select name="team_id" />;
         $login_team->appendChild(<option value="0">Select</option>);
-        foreach (Team::allActiveTeams() as $team) {
+        $all_active_teams = await Team::genAllActiveTeams();
+        foreach ($all_active_teams as $team) {
           error_log('Getting ' . $team->getName());
           $login_team->appendChild(<option value={strval($team->getId())}>{$team->getName()}</option>);
         }
@@ -476,7 +490,7 @@ class IndexController extends Controller {
       </nav>;
   }
 
-  public function renderPage(string $page): :xhp {
+  public async function genRenderPage(string $page): Awaitable<:xhp> {
     switch ($page) {
     case 'main':
       return $this->renderMainContent();
@@ -485,13 +499,13 @@ class IndexController extends Controller {
     case 'mobile':
       return $this->renderMobilePage();
     case 'login':
-      return $this->renderLoginContent();
+      return await $this->genRenderLoginContent();
     case 'registration':
-      return $this->renderRegistrationContent();
+      return await $this->genRenderRegistrationContent();
     case 'rules':
       return $this->renderRulesContent();
     case 'countdown':
-      return $this->renderCountdownContent();
+      return await $this->genRenderCountdownContent();
     case 'game':
       throw new GameRedirectException();
     case 'admin':
@@ -502,13 +516,14 @@ class IndexController extends Controller {
   }
 
   <<__Override>>
-  public function renderBody(string $page): :xhp {
+  public async function genRenderBody(string $page): Awaitable<:xhp> {
+    $rendered_page = await $this->genRenderPage($page);
     return
       <body data-section="pages">
         <div class="fb-sprite" id="fb-svg-sprite"></div>
         <div class="fb-viewport">
           <div id="fb-main-nav">{$this->renderMainNav()}</div>
-          <div id="fb-main-content" class="fb-page">{$this->renderPage($page)}</div>
+          <div id="fb-main-content" class="fb-page">{$rendered_page}</div>
         </div>
         <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="static/js/vendor/d3.min.js"></script>

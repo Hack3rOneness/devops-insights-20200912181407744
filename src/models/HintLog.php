@@ -30,7 +30,7 @@ class HintLog extends Model {
     return $this->penalty;
   }
 
-  private static function hintlogFromRow(array<string, string> $row): HintLog {
+  private static function hintlogFromRow(Map<string, string> $row): HintLog {
     return new HintLog(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'ts'),
@@ -41,46 +41,68 @@ class HintLog extends Model {
   }
 
   // Log hint request hint.
-  public static function logGetHint(int $level_id, int $team_id, int $penalty): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO hints_log (ts, level_id, team_id, penalty) VALUES (NOW(), ?, ?, ?)';
-    $elements = array($level_id, $team_id, $penalty);
-    $db->query($sql, $elements);
+  public static async function genLogGetHint(
+    int $level_id,
+    int $team_id,
+    int $penalty,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO hints_log (ts, level_id, team_id, penalty) VALUES (NOW(), %d, %d, %d)',
+      $level_id,
+      $team_id,
+      $penalty,
+    );
   }
 
-  public static function resetHints(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM hints_log WHERE id > 0';
-    $db->query($sql);
+  public static async function genResetHints(
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM hints_log WHERE id > 0',
+    );
   }
 
   // Check if there is a previous hint.
-  public static function previousHint(int $level_id, int $team_id, bool $any_team): bool {
-    $db = self::getDb();
+  public static async function genPreviousHint(
+    int $level_id,
+    int $team_id,
+    bool $any_team,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = ($any_team)
-      ? 'SELECT COUNT(*) FROM hints_log WHERE level_id = ? AND team_id != ?'
-      : 'SELECT COUNT(*) FROM hints_log WHERE level_id = ? AND team_id = ?';
-    $elements = array($level_id, $team_id);
-    $result = $db->query($sql, $elements);
+    if ($any_team) {
+      $result = await $db->queryf(
+        'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id != %d',
+        $level_id,
+        $team_id,
+      );
+    } else {
+      $result = await $db->queryf(
+        'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id = %d',
+        $level_id,
+        $team_id,
+      );
+    }
 
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return intval(firstx($result)['COUNT(*)']) > 0;
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return intval($result->mapRows()[0]['COUNT(*)']) > 0;
     } else {
       return false;
     }
   }
 
   // Get all scores.
-  public static function allHints(): array<HintLog> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM hints_log ORDER BY ts DESC';
-    $results = $db->query($sql);
+  public static async function genAllHints(
+  ): Awaitable<array<HintLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM hints_log ORDER BY ts DESC',
+    );
 
     $hints = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $hints[] = self::hintlogFromRow($row);
     }
 
@@ -88,14 +110,17 @@ class HintLog extends Model {
   }
 
   // Get all scores by team.
-  public static function allHintsByTeam(int $team_id): array<HintLog> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM hints_log WHERE team_id = ? ORDER BY ts DESC';
-    $element = array($team_id);
-    $results = $db->query($sql, $element);
+  public static async function genAllHintsByTeam(
+    int $team_id,
+  ): Awaitable<array<HintLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM hints_log WHERE team_id = %d ORDER BY ts DESC',
+      $team_id,
+    );
 
     $hints = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $hints[] = self::hintlogFromRow($row);
     }
 

@@ -1,20 +1,22 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class LeaderboardModuleController {
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $leaderboard_ul = <ul></ul>;
 
-    $my_team = Team::getTeam(SessionUtils::sessionTeam());
-    $my_rank = Team::myRank(SessionUtils::sessionTeam());
+    $my_team = await Team::genTeam(SessionUtils::sessionTeam());
+    $my_rank = await Team::genMyRank(SessionUtils::sessionTeam());
 
     // If refresing is enabled, do the needful
-    if (Configuration::get('gameboard')->getValue() === '1') {
-      $leaders = Team::leaderboard();
+    $gameboard = await Configuration::gen('gameboard');
+    if ($gameboard->getValue() === '1') {
+      $leaders = await Team::genLeaderboard();
       $rank = 1;
       $l_max = (count($leaders) > 5) ? 5 : count($leaders);
       for($i = 0; $i<$l_max; $i++) {
@@ -63,4 +65,4 @@ class LeaderboardModuleController {
 }
 
 $leaderboard_generated = new LeaderboardModuleController();
-echo $leaderboard_generated->render();
+echo \HH\Asio\join($leaderboard_generated->genRender());

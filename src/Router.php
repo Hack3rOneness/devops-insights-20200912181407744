@@ -1,7 +1,7 @@
 <?hh // strict
 
 class Router {
-  public static function route(): string {
+  public static async function genRoute(): Awaitable<string> {
     $page = idx(Utils::getGET(), 'p');
     if (!is_string($page)) {
       $page = 'index';
@@ -9,35 +9,38 @@ class Router {
     $ajax = Utils::getGET()->get('ajax') === 'true';
 
     if ($ajax) {
-      return self::routeAjax($page);
+      return await self::genRouteAjax($page);
     } else {
-      return strval(self::routeNormal($page));
+      $response = await self::genRouteNormal($page);
+      return strval($response);
     }
   }
 
-  private static function routeAjax(string $page): string {
+  private static async function genRouteAjax(
+    string $page,
+  ): Awaitable<string> {
     switch ($page) {
     case 'index':
-      return (new IndexAjaxController())->handleRequest();
+      return await (new IndexAjaxController())->genHandleRequest();
     case 'admin':
-      return (new AdminAjaxController())->handleRequest();
+      return await (new AdminAjaxController())->genHandleRequest();
     case 'game':
-      return (new GameAjaxController())->handleRequest();
+      return await (new GameAjaxController())->genHandleRequest();
     default:
       throw new NotFoundRedirectException();
     }
   }
 
-  private static function routeNormal(string $page): :xhp {
+  private static async function genRouteNormal(string $page): Awaitable<:xhp> {
     switch ($page) {
     case 'admin':
-      return (new AdminController())->render();
+      return await (new AdminController())->genRender();
     case 'index':
-      return (new IndexController())->render();
+      return await (new IndexController())->genRender();
     case 'game':
-      return (new GameboardController())->render();
+      return await (new GameboardController())->genRender();
     case 'view':
-      return (new ViewModeController())->render();
+      return await (new ViewModeController())->genRender();
     case 'logout':
       // TODO: Make a confirmation modal?
       SessionUtils::sessionStart();

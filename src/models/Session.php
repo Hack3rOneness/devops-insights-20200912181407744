@@ -42,7 +42,7 @@ class Session extends Model {
     return $sess_data->name;
   }
 
-  private static function sessionFromRow(array<string, string> $row): Session {
+  private static function sessionFromRow(Map<string, string> $row): Session {
     return new Session(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'cookie'),
@@ -53,72 +53,96 @@ class Session extends Model {
   }
 
   // Create new session.
-  public static function create(string $cookie, string $data): void {
-    $db = self::getDb();
-    $sql = 'INSERT INTO sessions (cookie, data, created_ts, last_access_ts) VALUES (?, ?, NOW(), NOW())';
-    $elements = array($cookie, $data);
-    $db->query($sql, $elements);
+  public static async function genCreate(
+    string $cookie,
+    string $data,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO sessions (cookie, data, created_ts, last_access_ts) VALUES (%s, %s, NOW(), NOW())',
+      $cookie,
+      $data,
+    );
   }
 
   // Retrieve the session by cookie.
-  public static function get(string $cookie): Session {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM sessions WHERE cookie = ? LIMIT 1';
-    $element = array($cookie);
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+  public static async function gen(
+    string $cookie,
+  ): Awaitable<Session> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM sessions WHERE cookie = %s LIMIT 1',
+      $cookie,
+    );
 
-    return self::sessionFromRow(firstx($results));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+
+    return self::sessionFromRow($result->mapRows()[0]);
   }
 
   // Checks if session exists by cookie.
-  public static function sessionExist(string $cookie): bool {
-    $db = self::getDb();
-    $sql = 'SELECT COUNT(*) FROM sessions WHERE cookie = ?';
-    $element = array($cookie);
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+  public static async function genSessionExist(
+    string $cookie,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM sessions WHERE cookie = %s',
+      $cookie,
+    );
+    invariant($result->numRows() === 1, 'Expected exactly one result');
 
-    return intval(firstx($results)['COUNT(*)']) > 0;
+    return intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0;
   }
 
   // Update the session for a given cookie.
-  public static function update(string $cookie, string $data): void {
-    $db = self::getDb();
-    $sql = 'UPDATE sessions SET last_access_ts = NOW(), data = ? WHERE cookie = ? LIMIT 1';
-    $elements = array($data, $cookie);
-    $db->query($sql, $elements);
+  public static async function genUpdate(
+    string $cookie,
+    string $data,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE sessions SET last_access_ts = NOW(), data = %s WHERE cookie = %s LIMIT 1',
+      $data,
+      $cookie,
+    );
   }
 
   // Delete the session for a given cookie.
-  public static function delete(string $cookie): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM sessions WHERE cookie = ? LIMIT 1';
-    $element = array($cookie);
-    $db->query($sql, $element);
+  public static async function genDelete(
+    string $cookie,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM sessions WHERE cookie = %s LIMIT 1',
+      $cookie,
+    );
   }
 
   // Does cleanup of cookies.
-  public static function cleanup(int $maxlifetime): void {
-    $db = self::getDb();
+  public static async function genCleanup(
+    int $maxlifetime,
+  ): Awaitable<void> {
+    $db = await self::genDb();
     // Clean up expired sessions
-    $gc_time = time() - $maxlifetime;
-    $sql = 'DELETE FROM sessions WHERE UNIX_TIMESTAMP(last_access_ts) < ?';
-    $element = array($gc_time);
-    $db->query($sql, $element);
+    await $db->queryf(
+      'DELETE FROM sessions WHERE UNIX_TIMESTAMP(last_access_ts) < %d',
+      time() - $maxlifetime,
+    );
     // Clean up empty sessions
-    $sql = 'DELETE FROM sessions WHERE data = ""';
-    $db->query($sql);
+    await $db->queryf(
+      'DELETE FROM sessions WHERE data = ""',
+    );
   }
 
   // All the sessions
-  public static function allSessions(): array<Session> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM sessions ORDER BY last_access_ts DESC';
-    $results = $db->query($sql);
+  public static async function genAllSessions(): Awaitable<array<Session>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM sessions ORDER BY last_access_ts DESC',
+    );
 
     $sessions = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $sessions[] = self::sessionFromRow($row);
     }
 
