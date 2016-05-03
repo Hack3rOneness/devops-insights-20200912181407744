@@ -54,6 +54,14 @@ The target system needs to be Ubuntu 14.04. Clone the repository, for example in
 
 And be ready to provide the path for your SSL certificates csr and key files.
 
+## Testing
+
+To run our test suite:
+
+```
+hhvm vendor/phpunit/phpunit/phpunit tests/ExampleTest.php
+```
+
 ## Troubleshooting
 
 ### `vendor` folder wasn't created when running `./extra/provisioning.sh`

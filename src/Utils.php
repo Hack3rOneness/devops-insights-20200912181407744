@@ -71,6 +71,7 @@ function time_ago(string $ts): string {
       return $r . ' ' . ($r > 1 ? $w_s[$str] : $str) . ' ago';
     }
   }
+  return '';
 }
 
 class Utils {  

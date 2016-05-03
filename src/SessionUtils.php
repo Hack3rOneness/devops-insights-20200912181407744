@@ -77,6 +77,7 @@ class SessionUtils {
   }
 
   public static function sessionSet(string $name, string $value): void {
+    /* HH_IGNORE_ERROR[2050] */
     $_SESSION[$name] = $value;
   }
 
@@ -87,34 +88,41 @@ class SessionUtils {
   }
 
   public static function sessionActive(): bool {
+    /* HH_IGNORE_ERROR[2050] */
     return (bool)(array_key_exists('team_id', $_SESSION));
   }
 
   public static function enforceLogin(): void {
+    /* HH_IGNORE_ERROR[2050] */
     if (!array_key_exists('team_id', $_SESSION)) {
       throw new IndexRedirectException();
     }
   }
 
   public static function enforceAdmin(): void {
+    /* HH_IGNORE_ERROR[2050] */
     if (!array_key_exists('admin', $_SESSION)) {
       throw new IndexRedirectException();
     }
   }
 
   public static function sessionAdmin(): bool {
+    /* HH_IGNORE_ERROR[2050] */
     return array_key_exists('admin', $_SESSION);
   }
 
   public static function sessionTeam(): int {
+    /* HH_IGNORE_ERROR[2050] */
     return intval(must_have_string($_SESSION, 'team_id'));
   }
 
   public static function sessionTeamName(): string {
+    /* HH_IGNORE_ERROR[2050] */
     return must_have_string($_SESSION, 'name');
   }
 
   public static function CSRFToken(): string {
+    /* HH_IGNORE_ERROR[2050] */
     return must_have_string($_SESSION, 'csrf_token');
   }
 }

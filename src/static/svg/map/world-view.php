@@ -52,5 +52,6 @@ class WorldViewMapController {
   }
 }
 
+/* HH_IGNORE_ERROR[1002] */
 $viewmodepage = new WorldViewMapController(true);
 echo $viewmodepage->render();

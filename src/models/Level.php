@@ -679,7 +679,9 @@ class Level extends Model {
   }
 
   // Request all bases
-  public static function getBasesResponses(array<int, string> $bases): array<int, string> {
+  public static function getBasesResponses(
+    array<int, array<string, mixed>> $bases,
+  ): array<int, string> {
     // Iterates and request all the bases endpoints for owner
     $responses = array();
     $curl_handlers = array();

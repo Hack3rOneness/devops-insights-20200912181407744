@@ -1,5 +1,6 @@
 <?hh // strict
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
