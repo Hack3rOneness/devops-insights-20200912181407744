@@ -62,14 +62,15 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` text NOT NULL,
+  `protected` tinyint(1) NOT NULL,
   `created_ts` timestamp NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `categories` WRITE;
-INSERT INTO `categories` (category, created_ts) VALUES("None", NOW());
-INSERT INTO `categories` (category, created_ts) VALUES("Quiz", NOW());
+INSERT INTO `categories` (category, created_ts, protected) VALUES("None", NOW(), 1);
+INSERT INTO `categories` (category, created_ts, protected) VALUES("Quiz", NOW(), 1);
 UNLOCK TABLES;
 
 --

@@ -4,6 +4,7 @@ class Category extends Model {
   private function __construct(
     private int $id,
     private string $category,
+    private int $protected,
     private string $created_ts
   ) {
   }
@@ -16,6 +17,10 @@ class Category extends Model {
     return $this->category;
   }
 
+  public function getProtected(): bool {
+    return $this->protected === 1;
+  }
+
   public function getCreatedTs(): string {
     return $this->created_ts;
   }
@@ -24,6 +29,7 @@ class Category extends Model {
     return new Category(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'category'),
+      intval(must_have_idx($row, 'protected')),
       must_have_idx($row, 'created_ts'),
     );
   }
@@ -70,7 +76,7 @@ class Category extends Model {
     $db = await self::genDb();
 
     await $db->queryf(
-      'DELETE FROM categories WHERE id = %d AND id NOT IN (SELECT category_id FROM levels) LIMIT 1',
+      'DELETE FROM categories WHERE id = %d AND id NOT IN (SELECT category_id FROM levels) AND protected = 0 LIMIT 1',
       $category_id,
     );
   }

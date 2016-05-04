@@ -1389,7 +1389,6 @@ class AdminController extends Controller {
           </div>
           <div class="admin-buttons admin-row">
             <div class="button-right">
-              <a href="#" class="admin--edit" data-action="edit">EDIT</a>
               <button class="fb-cta cta--red" data-action="delete">Delete</button>
               <button class="fb-cta cta--yellow" data-action="create">Create</button>
             </div>
@@ -1402,10 +1401,16 @@ class AdminController extends Controller {
 
     foreach ($categories as $category) {
       $is_used = await Category::genIsUsed($category->getId());;
-      if ($is_used) {
+      if ($is_used || $category->getProtected()) {
         $delete_action = <a></a>;
+        $category_name = <span class="logo-name">{$category->getCategory()}</span>;
       } else {
         $delete_action = <a class="highlighted--red" href="#" data-action="delete">DELETE</a>;
+        $category_name = 
+          <div>
+            <input name="category" type="text" value={$category->getCategory()}/>
+            <a class="highlighted--yellow" href="#" data-action="save-category">Save</a>
+          </div>;
       }
       $adminsections->appendChild(
         <section class="admin-box">
@@ -1419,7 +1424,7 @@ class AdminController extends Controller {
               <div class="col col-pad">
                 <div class="selected-logo">
                   <label>Category: </label>
-                  <span class="logo-name">{$category->getCategory()}</span>
+                  {$category_name}
                 </div>
               </div>
             </div>

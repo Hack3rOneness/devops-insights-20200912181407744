@@ -117,6 +117,7 @@ class AdminAjaxController extends AjaxController {
       'enable_country',
       'disable_country',
       'create_category',
+      'update_category',
       'delete_category',
       'enable_logo',
       'disable_logo',
@@ -360,7 +361,13 @@ class AdminAjaxController extends AjaxController {
       await Category::genCreate(
         must_have_string($params, 'category'),
       );
-      return Utils::ok_response('Deleted successfully', 'admin');
+      return Utils::ok_response('Created successfully', 'admin');
+    case 'update_category':
+      await Category::genUpdate(
+        must_have_string($params, 'category'),
+        must_have_int($params, 'category_id'),
+      );
+      return Utils::ok_response('Updated successfully', 'admin');
     case 'create_attachment':
       $result = await Attachment::genCreate(
         'attachment_file',
