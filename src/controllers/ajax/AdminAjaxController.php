@@ -331,6 +331,11 @@ class AdminAjaxController extends AjaxController {
       );
       return Utils::ok_response('Success', 'admin');
     case 'delete_team':
+      // Delete team sessions
+      await Session::genDeleteByTeam(
+        must_have_int($params, 'team_id')
+      );
+      // Delete team
       await Team::genDelete(
         must_have_int($params, 'team_id'),
       );

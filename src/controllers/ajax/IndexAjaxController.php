@@ -188,6 +188,7 @@ class IndexAjaxController extends AjaxController {
 
     if ($team) {
       SessionUtils::sessionStart();
+      SessionUtils::sessionRefresh();
       if (!SessionUtils::sessionActive()) {
         SessionUtils::sessionSet('team_id', strval($team->getId()));
         SessionUtils::sessionSet('name', $team->getName());

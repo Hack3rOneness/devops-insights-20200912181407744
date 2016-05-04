@@ -5,6 +5,7 @@ class Session extends Model {
     private int $id,
     private string $cookie,
     private string $data,
+    private int $team_id,
     private string $created_ts,
     private string $last_access_ts
   ) {
@@ -22,6 +23,10 @@ class Session extends Model {
     return $this->data;
   }
 
+  public function getTeamId(): int {
+    return $this->team_id;
+  }
+
   public function getCreatedTs(): string {
     return $this->created_ts;
   }
@@ -30,16 +35,23 @@ class Session extends Model {
     return $this->last_access_ts;
   }
 
-  public function getTeamId(): int {
-    // TODO: sessions do not serialize with standard php serialization
-    $sess_data = unserialize($this->data);
-    return intval($sess_data->team_id);
+  private static function decodeTeamId(string $data): int {
+    // This is a bit janky
+    $delim1 = explode('team_id|', $data)[1];
+    $serialized = explode('name|', $delim1)[0];
+    $unserialized = strval(unserialize($serialized));
+    
+    return intval($unserialized);
   }
 
-  public function getTeamName(): string {
-    // TODO: sessions do not serialize with standard php serialization
-    $sess_data = unserialize($this->data);
-    return $sess_data->name;
+  public static async function genSetTeamId(string $cookie, string $data): Awaitable<void> {
+    $team_id = self::decodeTeamId($data);
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE sessions SET team_id = %d WHERE cookie = %s LIMIT 1',
+      $team_id,
+      $cookie,
+    );  
   }
 
   private static function sessionFromRow(Map<string, string> $row): Session {
@@ -47,6 +59,7 @@ class Session extends Model {
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'cookie'),
       must_have_idx($row, 'data'),
+      intval(must_have_idx($row, 'team_id')),
       must_have_idx($row, 'created_ts'),
       must_have_idx($row, 'last_access_ts'),
     );
@@ -118,6 +131,15 @@ class Session extends Model {
     );
   }
 
+  // Delete the session for a given a team id.
+  public static async function genDeleteByTeam(int $team_id): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM sessions WHERE team_id = %d LIMIT 1',
+      $team_id,
+    );
+  }
+
   // Does cleanup of cookies.
   public static async function genCleanup(
     int $maxlifetime,
@@ -130,7 +152,9 @@ class Session extends Model {
     );
     // Clean up empty sessions
     await $db->queryf(
-      'DELETE FROM sessions WHERE data = ""',
+      'DELETE FROM sessions WHERE IFNULL(data, %s) = %s',
+      '',
+      '',
     );
   }
 

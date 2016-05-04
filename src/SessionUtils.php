@@ -12,6 +12,7 @@ class SessionUtils {
   private function __clone(): void {}
 
   public static function sessionStart(): void {
+    \HH\Asio\join(Session::genCleanup(self::$s_lifetime));
     session_set_save_handler(
       array(__CLASS__, 'open'),
       array(__CLASS__, 'close'),
@@ -40,6 +41,10 @@ class SessionUtils {
     );
   }
 
+  public static function sessionRefresh(): void {
+    session_regenerate_id(true);
+  }
+
   public function open(string $path, string $name): bool {
     return true;
   }
@@ -62,6 +67,9 @@ class SessionUtils {
     $session_exists = \HH\Asio\join(Session::genSessionExist($cookie));
     if ($session_exists) {
       \HH\Asio\join(Session::genUpdate($cookie, $data));
+      if (strpos($data, 'team_id') !== false) {
+        \HH\Asio\join(Session::genSetTeamId($cookie, $data));
+      }
     } else {
       \HH\Asio\join(Session::genCreate($cookie, $data));
     }
@@ -84,6 +92,16 @@ class SessionUtils {
   }
 
   public static function sessionLogout(): void {
+    $params = session_get_cookie_params();
+    setcookie(
+      session_name(), 
+      '', 
+      time() - 42000,
+      $params["path"], 
+      $params["domain"],
+      $params["secure"], 
+      $params["httponly"]
+    );
     session_destroy();
 
     throw new IndexRedirectException();

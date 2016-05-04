@@ -416,7 +416,7 @@ class AdminController extends Controller {
             <form class="announcements_form">
               <input type="hidden" name="announcement_id" value={strval($announcement->getId())}/>
               <header class="countries-management-header">
-                <h6>{$announcement->getTs()}</h6>
+                <h6>{time_ago($announcement->getTs())}</h6>
                 <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
               </header>
               <div class="fb-column-container">
@@ -484,13 +484,27 @@ class AdminController extends Controller {
         <div class="admin-sections">
           <section class="admin-box">
             <header class="admin-box-header">
-              <h3>General Control</h3>
+              <h3>General</h3>
             </header>
             <div class="fb-column-container">
-              <div class="col col-pad col-1-4">
+              <div class="col col-pad col-1-3">
                 <div class="form-el el--block-label el--full-text">
                   <div class="admin-buttons">
                     <button class="fb-cta cta--yellow" data-action="backup-db">Back Up Database</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button class="fb-cta cta--yellow" data-action="export-game">Export Game</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button class="fb-cta cta--yellow" data-action="import-game">Import Game</button>
                   </div>
                 </div>
               </div>
@@ -498,14 +512,14 @@ class AdminController extends Controller {
           </section>
           <section class="admin-box">
             <header class="admin-box-header">
-              <h3>Teams Control</h3>
+              <h3>Teams</h3>
             </header>
             <div class="fb-column-container">
             </div>
           </section>
           <section class="admin-box">
             <header class="admin-box-header">
-              <h3>Levels Control</h3>
+              <h3>Levels</h3>
             </header>
             <div class="fb-column-container">
             </div>
@@ -2024,12 +2038,13 @@ class AdminController extends Controller {
     $all_sessions = await Session::genAllSessions();
     foreach ($all_sessions as $session) {
       $session_id = 'session_'.strval($session->getId());
+      $team = await Team::genTeam($session->getTeamId());
       $adminsections->appendChild(
         <section class="admin-box section-locked">
           <form class="session_form" name={$session_id}>
             <input type="hidden" name="session_id" value={strval($session->getId())}/>
             <header class="admin-box-header">
-              <span class="session-name">Session {$c}: <span class="highlighted--blue">{$session->getLastAccessTs()}</span></span>
+              <span class="session-name">Session {$c}: <span class="highlighted--blue">{$team->getName()}</span></span>
             </header>
             <div class="fb-column-container">
               <div class="col col-1-3 col-pad">
