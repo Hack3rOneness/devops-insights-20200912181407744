@@ -1,10 +1,17 @@
+// @flow
+
+var FB_CTF = require('./fb-ctf');
+var Dropkick = require('dropkickjs');
+var $ = require('jquery');
+var jQuery = $;
+
 /**
  * finishes the currently running game
  */
 function beginGame() {
   var begin_data = {
-      action: 'begin_game'
-    };
+    action: 'begin_game'
+  };
   sendAdminRequest(begin_data, true);
 }
 
@@ -13,8 +20,8 @@ function beginGame() {
  */
 function endGame() {
   var end_data = {
-      action: 'end_game'
-    };
+    action: 'end_game'
+  };
   sendAdminRequest(end_data, true);
 }
 
@@ -27,8 +34,9 @@ function endGame() {
  * @return Boolean
  *   - whether or not the request was succesful
  */
-function sendAdminRequest(request_data, refresh_page) {
+function sendAdminRequest(request_data: any, refresh_page) {
   var csrf_token = $('input[name=csrf_token]')[0].value;
+
   request_data.csrf_token = csrf_token;
   $.post(
     'index.php?p=admin&ajax=true',
@@ -58,8 +66,7 @@ var $body = $('body');
 /**
  * --admin
  */
- FB_CTF.admin = (function(){
-
+var admin = (function(){
   /**
    * check the admin forms for errors
    *
@@ -72,7 +79,7 @@ var $body = $('body');
    */
   function validateAdminForm($clicked) {
     var valid         = true,
-        $validateForm = $clicked.closest('.validate-form')
+        $validateForm = $clicked.closest('.validate-form'),
         $required     = $('.form-el--required', $validateForm),
         errorClass    = 'form-error';
 
@@ -83,28 +90,28 @@ var $body = $('body');
     $('.error-msg', $validateForm).remove();
 
     $required.removeClass(errorClass).each(function(){
-    var $self       = $(this),
-        $requiredEl = $('input[type="text"], input[type="password"]', $self ),
-        $logoName   = $('.logo-name', $self);
+      var $self       = $(this),
+          $requiredEl = $('input[type="text"], input[type="password"]', $self ),
+          $logoName   = $('.logo-name', $self);
 
-        //
-        // all the conditions that would make this element
-        //  trigger an error
-        //
-        if(
-          ( $requiredEl.val() === '' ) ||
+      //
+      // all the conditions that would make this element
+      //  trigger an error
+      //
+      if(
+        ( $requiredEl.val() === '' ) ||
           ( $logoName.length > 0 && $logoName.text() === '' )
-        ) {
-          $self.addClass( errorClass );
-          valid = false;
+      ) {
+        $self.addClass( errorClass );
+        valid = false;
 
-          if($('.error-msg', $validateForm).length === 0){
-            $('.admin-box-header h3', $validateForm).after('<span class="error-msg">Please fix the errors in red</span>');
-          }
-
-          return;
+        if($('.error-msg', $validateForm).length === 0){
+          $('.admin-box-header h3', $validateForm).after('<span class="error-msg">Please fix the errors in red</span>');
         }
-      });
+
+        return;
+      }
+    });
 
     return valid;
   }
@@ -125,12 +132,14 @@ var $body = $('body');
         //  being added
         sectionIndex      = $lastSection.index();
 
-        //
-        // update some stuff in the cloned section
-        //
+    //
+    // update some stuff in the cloned section
+    //
     var $title        = $('.admin-box-header h3', $newSection),
         titleText     = $title.text().toLowerCase(),
         switchName    = $('input[type="radio"]', $newSection).first().attr('name');
+
+    var newSwitchName;
 
     if (switchName) {
       newSwitchName = switchName.substr( 0, switchName.lastIndexOf("--")) + "--" + sectionIndex;
@@ -375,7 +384,7 @@ var $body = $('body');
   }
 
   // Create tokens
-  function createTokens(section) {
+  function createTokens() {
     var create_data = {
       action: 'create_tokens'
     };
@@ -434,15 +443,15 @@ var $body = $('body');
   function createLevel(section) {
     var level_type = $('.level_form input[name=level_type]', section)[0].value;
     switch (level_type) {
-      case 'quiz':
-        createQuizLevel(section);
-        break;
-      case 'flag':
-        createFlagLevel(section);
-        break;
-      case 'base':
-        createBaseLevel(section);
-        break;
+    case 'quiz':
+      createQuizLevel(section);
+      break;
+    case 'flag':
+      createFlagLevel(section);
+      break;
+    case 'base':
+      createBaseLevel(section);
+      break;
     }
   }
 
@@ -526,15 +535,15 @@ var $body = $('body');
   function updateLevel(section) {
     var level_type = $('.level_form input[name=level_type]', section)[0].value;
     switch (level_type) {
-      case 'quiz':
-        updateQuizLevel(section);
-        break;
-      case 'flag':
-        updateFlagLevel(section);
-        break;
-      case 'base':
-        updateBaseLevel(section);
-        break;
+    case 'quiz':
+      updateQuizLevel(section);
+      break;
+    case 'flag':
+      updateFlagLevel(section);
+      break;
+    case 'base':
+      updateBaseLevel(section);
+      break;
     }
   }
 
@@ -750,7 +759,7 @@ var $body = $('body');
   }
 
   function toggleLogo(section) {
-  // Toggle logo status
+    // Toggle logo status
     var logo_id = $('.logo_form input[name=logo_id]', section)[0].value;
     var action_value = $('.logo_form input[name=status_action]', section)[0].value;
     var toggle_data = {
@@ -763,7 +772,7 @@ var $body = $('body');
   }
 
   function toggleCountry(section) {
-  // Toggle country status
+    // Toggle country status
     var country_id = $('.country_form input[name=country_id]', section)[0].value;
     var action_value = $('.country_form input[name=status_action]', section)[0].value;
     var toggle_data = {
@@ -782,7 +791,7 @@ var $body = $('body');
       action: 'delete_session',
       cookie: session_cookie
     };
-  
+
     if ((session_cookie)) {
       sendAdminRequest(delete_data, true);
     }
@@ -809,6 +818,7 @@ var $body = $('body');
           lockClass    = 'section-locked',
           sectionTitle = $self.closest('#fb-main-content').find('.admin-page-header h3').text().replace(' ', '_');
 
+      var $containingDiv;
       //
       // route the actions
       //
@@ -850,12 +860,12 @@ var $body = $('body');
         deleteElement($section);
         // rename the section boxes
         /*$('.admin-box').each(function(i, el){
-          var $titleObj  = $('.admin-box-header h3', el),
-               title     = $titleObj.text(),
-               newTitle  = title.substring( 0, title.lastIndexOf(" ") + 1 ) + (i + 1);
+         var $titleObj  = $('.admin-box-header h3', el),
+         title     = $titleObj.text(),
+         newTitle  = title.substring( 0, title.lastIndexOf(" ") + 1 ) + (i + 1);
 
-          $titleObj.text(newTitle);
-        });*/
+         $titleObj.text(newTitle);
+         });*/
       } else if (action === 'disable-logo') {
         toggleLogo($section);
       } else if (action === 'enable-logo') {
@@ -867,27 +877,27 @@ var $body = $('body');
       } else if (action === 'add-attachment') {
         addNewAttachment($section);
       } else if (action === 'create-attachment') {
-        var $containingDiv = $self.closest('.new-attachment');
+        $containingDiv = $self.closest('.new-attachment');
         createAttachment($containingDiv);
       } else if (action === 'delete-new-attachment') {
-        var $containingDiv = $self.closest('.new-attachment');
+        $containingDiv = $self.closest('.new-attachment');
         $containingDiv.remove();
         deleteAttachment($containingDiv);
       } else if (action === 'delete-attachment') {
-        var $containingDiv = $self.closest('.existing-attachment');
+        $containingDiv = $self.closest('.existing-attachment');
         $containingDiv.remove();
         deleteAttachment($containingDiv);
       } else if (action === 'add-link') {
         addNewLink($section);
       } else if (action === 'create-link') {
-        var $containingDiv = $self.closest('.new-link');
+        $containingDiv = $self.closest('.new-link');
         createLink($containingDiv);
       } else if (action === 'delete-new-link') {
-        var $containingDiv = $self.closest('.new-link');
+        $containingDiv = $self.closest('.new-link');
         $containingDiv.remove();
         deleteLink($containingDiv);
       } else if (action === 'delete-link') {
-        var $containingDiv = $self.closest('.existing-link');
+        $containingDiv = $self.closest('.existing-link');
         $containingDiv.remove();
         deleteLink($containingDiv);
       }
@@ -905,7 +915,7 @@ var $body = $('body');
     //
     // radio buttons
     //
-    $('input[type="radio"]').on('change', function(event) {
+    $('input[type="radio"]').on('change', function() {
       var $this = $(this);
       var radio_name = $this.attr('id');
 
@@ -929,7 +939,7 @@ var $body = $('body');
     //
     // configuration fields
     //
-    $('select,input[type="number"][name^="fb--conf"]').on('change', function(event) {
+    $('select,input[type="number"][name^="fb--conf"]').on('change', function() {
       var $this = $(this);
       var field = $this.attr('name').split('--')[2];
       var value = '';
@@ -949,7 +959,7 @@ var $body = $('body');
     //
     // modal actionable
     //
-    $body.on('click', '.js-confirm-save', function(event) {
+    $body.on('click', '.js-confirm-save', function() {
       var $status = $('.admin-section--status .highlighted');
       $status.text('Saved');
 
@@ -963,7 +973,7 @@ var $body = $('body');
     //
     // category filter select (flags, bases)
     //
-    $('select[name="category_filter"]').on('change', function(event) {
+    $('select[name="category_filter"]').on('change', function() {
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
@@ -987,7 +997,7 @@ var $body = $('body');
     //
     // status filter select (quiz, flags, bases)
     //
-    $('select[name="status_filter"]').on('change', function(event) {
+    $('select[name="status_filter"]').on('change', function() {
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
@@ -1013,7 +1023,7 @@ var $body = $('body');
     //
     // use filter select (countries)
     //
-    $('select[name="use_filter"]').on('change', function(event) {
+    $('select[name="use_filter"]').on('change', function() {
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
@@ -1037,7 +1047,7 @@ var $body = $('body');
     //
     // status filter select (countries)
     //
-    $('select[name="country_status_filter"]').on('change', function(event) {
+    $('select[name="country_status_filter"]').on('change', function() {
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
@@ -1063,7 +1073,7 @@ var $body = $('body');
       event.preventDefault();
 
       var $self      = $(this),
-          $container = $self.closest('.fb-column-container');;
+          $container = $self.closest('.fb-column-container');
 
       FB_CTF.modal.loadPopup('choose-logo', function(){
         var $modal = $('#fb-modal');
@@ -1089,7 +1099,9 @@ var $body = $('body');
     //
     $('.js-begin-game').on('click', function(event) {
       event.preventDefault();
-      FB_CTF.modal.loadPopup('action-begin-game');
+      FB_CTF.modal.loadPopup('action-begin-game', function() {
+        $('#begin_game').click(beginGame);
+      });
     });
 
     //
@@ -1097,7 +1109,9 @@ var $body = $('body');
     //
     $('.js-end-game').on('click', function(event) {
       event.preventDefault();
-      FB_CTF.modal.loadPopup('action-end-game');
+      FB_CTF.modal.loadPopup('action-end-game', function() {
+        $('#end_game').click(endGame);
+      });
     });
 
     //
@@ -1130,8 +1144,11 @@ var $body = $('body');
 })(); // admin
 
 // Capture enter key presses to avoid unexpected actions
-$(document).on('keypress', 'input', function(e) {
-  if (e.keyCode == 13) {
-    e.preventDefault();
-  }
-});
+// TODO: Add back later
+// $(document).on('keypress', 'input', function(e) {
+//   if (e.keyCode == 13) {
+//     e.preventDefault();
+//   }
+// });
+
+module.exports = admin;

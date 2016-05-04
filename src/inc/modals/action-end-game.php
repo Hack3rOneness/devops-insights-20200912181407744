@@ -10,7 +10,7 @@
     <p>Are you sure you want to finish the current game?</p>
     <div class="action-actionable">
       <a href="#" class="fb-cta cta--red js-close-modal">No</a>
-      <a href="#" class="fb-cta cta--yellow" onclick="endGame()">Yes</a>
+      <a href="#" id="end_game" class="fb-cta cta--yellow">Yes</a>
     </div>
   </div>
 </div>

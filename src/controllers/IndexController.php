@@ -68,7 +68,7 @@ class IndexController extends Controller {
           </div>
         </form>;
     } else {
-      $registration = await Configuration::gen('registration'); 
+      $registration = await Configuration::gen('registration');
       if ($registration->getValue() === '1') {
         $registration_button = <a style="margin-left: 1em;" href="/index.php?page=registration" class="fb-cta cta--yellow">Register Team</a>;
       } else {
@@ -278,7 +278,7 @@ class IndexController extends Controller {
             <div class="emblem-carousel">{$logos_section}</div>
           </div>
           <div class="form-el--actions fb-container container--small">
-            <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerNames()">Sign Up</button></p>
+            <p><button id="register_button" class="fb-cta cta--yellow" type="button">Sign Up</button></p>
           </div>
         </form>
       </div>
@@ -323,7 +323,7 @@ class IndexController extends Controller {
               <div class="emblem-carousel">{$logos_section}</div>
             </div>
             <div class="form-el--actions fb-container container--small">
-              <p><button id="register_button" class="fb-cta cta--yellow" type="button" onclick="registerTeam()">Sign Up</button></p>
+              <p><button id="register_button" class="fb-cta cta--yellow" type="button">Sign Up</button></p>
             </div>
           </form>
         </div>
@@ -396,7 +396,7 @@ class IndexController extends Controller {
                 </div>
               </fieldset>
               <div class="form-el--actions">
-                <button id="login_button" class="fb-cta cta--yellow" type="button" onclick="loginTeam()">Login</button>
+                <button id="login_button" class="fb-cta cta--yellow" type="button">Login</button>
               </div>
               <div class="form-el--footer">
                 <a href="/index.php?page=registration">Sign Up</a>
@@ -525,12 +525,7 @@ class IndexController extends Controller {
           <div id="fb-main-nav">{$this->renderMainNav()}</div>
           <div id="fb-main-content" class="fb-page">{$rendered_page}</div>
         </div>
-        <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="static/js/vendor/d3.min.js"></script>
-        <script type="text/javascript" src="static/js/plugins.js"></script>
-        <script type="text/javascript" src="static/js/_buildkit.js"></script>
-        <script type="text/javascript" src="static/js/fb-ctf.js"></script>
-        <script type="text/javascript" src="static/js/actions.js"></script>
+        <script type="text/javascript" src="static/dist/js/app.js"></script>
       </body>;
   }
 }

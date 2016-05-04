@@ -60,6 +60,10 @@ install_hhvm "$CTF_PATH"
 # Install Composer
 install_composer "$CTF_PATH"
 
+# Install NPM and grunt
+package npm
+npm install -g grunt
+
 # Make sure all apache is gone
 #sudo service apache2 stop
 #apt-get autoremove

@@ -946,7 +946,7 @@ class AdminController extends Controller {
 
       $countries_select = await $this->genGenerateCountriesSelect($flag->getEntityId());
       $level_categories_select = await $this->genGenerateLevelCategoriesSelect($flag->getCategoryId());
-      
+
       $adminsections->appendChild(
         <section class="admin-box section-locked">
           <form class="level_form flag_form" name={$flag_id}>
@@ -1601,7 +1601,7 @@ class AdminController extends Controller {
           </tr>
         );
       }
-      $scores_div->appendChild(  
+      $scores_div->appendChild(
         <table>
           <thead>
             <tr>
@@ -1644,7 +1644,7 @@ class AdminController extends Controller {
           </tr>
         );
       }
-      $failures_div->appendChild(  
+      $failures_div->appendChild(
         <table>
           <thead>
             <tr>
@@ -2621,12 +2621,7 @@ class AdminController extends Controller {
           {$rendered_main_nav}
           <div id="fb-main-content" class="fb-page fb-admin-main">{$rendered_page}</div>
         </div>
-        <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="static/js/vendor/d3.min.js"></script>
-        <script type="text/javascript" src="static/js/plugins.js"></script>
-        <script type="text/javascript" src="static/js/fb-ctf.js"></script>
-        <script type="text/javascript" src="static/js/admin-fb-ctf.js"></script>
-        <script type="text/javascript" src="static/js/_buildkit.js"></script>
+        <script type="text/javascript" src="static/dist/js/app.js"></script>
       </body>;
   }
 }

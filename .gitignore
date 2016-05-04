@@ -1,6 +1,9 @@
 # Composer libraries
 /vendor
 
+# NPM modules
+/node_modules
+
 # HHVM files
 www.pid
 
