@@ -94,12 +94,12 @@ class SessionUtils {
   public static function sessionLogout(): void {
     $params = session_get_cookie_params();
     setcookie(
-      session_name(), 
-      '', 
+      session_name(),
+      '',
       time() - 42000,
-      $params["path"], 
+      $params["path"],
       $params["domain"],
-      $params["secure"], 
+      $params["secure"],
       $params["httponly"]
     );
     session_destroy();
@@ -113,6 +113,7 @@ class SessionUtils {
   }
 
   public static function enforceLogin(): void {
+    /* HH_IGNORE_ERROR[2050] */
     if (!self::sessionActive()) {
       throw new IndexRedirectException();
     }
