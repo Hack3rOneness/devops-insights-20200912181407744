@@ -1,41 +1,42 @@
-<?hh
+<?hh // strict 
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class CountryDataController extends DataController {
-  public function generateData() {
-    $my_team = Team::getTeam(SessionUtils::sessionTeam());
+  public async function genGenerateData(): Awaitable<void> {
+    $my_team = await Team::genTeam(SessionUtils::sessionTeam());
 
     $countries_data = (object) array();
 
     // If gameboard refresing is disabled, exit
-    if (Configuration::get('gameboard')->getValue() === '0') {
+    $gameboard = await Configuration::gen('gameboard');
+    if ($gameboard->getValue() === '0') {
       $this->jsonSend($countries_data);
-      exit;
+      exit(1);
     }
 
-    foreach (Level::allActiveLevels() as $level) {
-      $country = Country::get(intval($level->getEntityId()));
+    $all_active_levels = await Level::genAllActiveLevels();
+    foreach ($all_active_levels as $level) {
+      $country = await Country::gen(intval($level->getEntityId()));
       if (!$country) {
         continue;
       }
 
-      $category = Category::getSingleCategory($level->getCategoryId());
+      $category = await Category::genSingleCategory($level->getCategoryId());
       if (count($level->getHint()) > 0) {
         // There is hint, can this team afford it?
         if ($level->getPenalty() > $my_team->getPoints()) { // Not enough points
           $hint_cost = -2;
           $hint = 'no';
         } else {
+          $hint = await HintLog::genPreviousHint($level->getId(), $my_team->getId(), false);
+          $score = await ScoreLog::genPreviousScore($level->getId(), $my_team->getId(), false);
           // Has this team requested this hint or scored this level before?
-          if (
-            (HintLog::previousHint($level->getId(), $my_team->getId(), false))
-              ||
-            (ScoreLog::previousScore($level->getId(), $my_team->getId(), false))
-          ) {
+          if ($hint || $score) {
             $hint_cost = 0;
           } else {
             $hint_cost = $level->getPenalty();
@@ -49,23 +50,28 @@ class CountryDataController extends DataController {
 
       // All attachments for this level
       $attachments_list = array();
-      if (Attachment::hasAttachments($level->getId())) {
-        foreach (Attachment::allAttachments($level->getId()) as $attachment) {
+      $has_attachments = await Attachment::genHasAttachments($level->getId());
+      if ($has_attachments) {
+        $all_attachments = await Attachment::genAllAttachments($level->getId());
+        foreach ($all_attachments as $attachment) {
           array_push($attachments_list, $attachment->getFilename());
         }
       }
 
       // All links for this level
       $links_list = array();
-      if (Link::hasLinks($level->getId())) {
-        foreach (Link::allLinks($level->getId()) as $link) {
+      $has_links = await Link::genHasLinks($level->getId());
+      if ($has_links) {
+        $all_links = await Link::genAllLinks($level->getId());
+        foreach ($all_links as $link) {
           array_push($links_list, $link->getLink());
         }
       }
 
       // All teams that have completed this level
       $completed_by = array();
-      foreach (Team::completedLevel($level->getId()) as $c) {
+      $completed_level = await Team::genCompletedLevel($level->getId());
+      foreach ($completed_level as $c) {
         array_push($completed_by, $c->getName());
       }
 
@@ -86,7 +92,7 @@ class CountryDataController extends DataController {
         'attachments' => $attachments_list,
         'links'       => $links_list
       );
-      /* HH_FIXME[1002] */
+      /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
       $countries_data->{$country->getName()} = $country_data;
     }
 
@@ -95,4 +101,4 @@ class CountryDataController extends DataController {
 }
 
 $countryData = new CountryDataController();
-$countryData->generateData();
+\HH\Asio\join($countryData->genGenerateData());

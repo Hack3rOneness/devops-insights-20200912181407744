@@ -45,25 +45,30 @@ class AdminController extends Controller {
     );
   }
 
-  private function generateCountriesSelect(int $selected): :xhp {
+  private async function genGenerateCountriesSelect(
+    int $selected,
+  ): Awaitable<:xhp> {
     $select = <select class="not_configuration" name="entity_id" />;
 
     if ($selected === 0) {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
     } else {
-      $country = Country::get(intval($selected));
+      $country = await Country::gen(intval($selected));
       $select->appendChild(<option value={strval($country->getId())} selected={true}>{$country->getName()}</option>);
     }
 
-    foreach (Country::allAvailableCountries() as $country) {
+    $countries = await Country::genAllAvailableCountries();
+    foreach ($countries as $country) {
       $select->appendChild(<option value={strval($country->getId())}>{$country->getName()}</option>);
     }
 
     return $select;
   }
 
-  private function generateLevelCategoriesSelect(int $selected): :xhp {
-    $categories = Category::allCategories();
+  private async function genGenerateLevelCategoriesSelect(
+    int $selected,
+  ): Awaitable<:xhp> {
+    $categories = await Category::genAllCategories();
     $select = <select class="not_configuration" name="category_id" />;
 
     foreach ($categories as $category) {
@@ -81,8 +86,8 @@ class AdminController extends Controller {
     return $select;
   }
 
-  private function generateFilterCategoriesSelect(): :xhp {
-    $categories = Category::allCategories();
+  private async function genGenerateFilterCategoriesSelect(): Awaitable<:xhp> {
+    $categories = await Category::genAllCategories();
     $select = <select class="not_configuration" name="category_filter" />;
 
     $select->appendChild(<option class="filter_option" value="all" selected={true}>All Categories</option>);
@@ -100,8 +105,9 @@ class AdminController extends Controller {
     return $select;
   }
 
-  private function registrationTypeSelect(): :xhp {
-    $type = Configuration::get('registration_type')->getValue();
+  private async function genRegistrationTypeSelect(): Awaitable<:xhp> {
+    $config = await Configuration::gen('registration_type');
+    $type = $config->getValue();
     $select = <select name="fb--conf--registration_type"></select>;
     $select->appendChild(<option class="fb--conf--registration_type" value="1" selected={($type === '1')}>Open</option>);
     $select->appendChild(<option class="fb--conf--registration_type" value="2" selected={($type === '2')}>Tokenized</option>);
@@ -109,8 +115,9 @@ class AdminController extends Controller {
     return $select;
   }
 
-  private function configurationDurationSelect(): :xhp {
-    $duration = intval(Configuration::get('game_duration')->getValue());
+  private async function genConfigurationDurationSelect(): Awaitable<:xhp> {
+    $config = await Configuration::gen('game_duration');
+    $duration = intval($config->getValue());
     $select = <select name="fb--conf--game_duration"></select>;
 
     for ($i=1; $i<=24; $i++) {
@@ -123,11 +130,12 @@ class AdminController extends Controller {
     return $select;
   }
 
-  public function renderConfigurationTokens(): :xhp {
+  public async function genRenderConfigurationTokens(): Awaitable<:xhp> {
     $tokens_table = <table></table>;
-    foreach(Token::allTokens() as $token) {
+    $tokens = await Token::genAllTokens();
+    foreach($tokens as $token) {
       if ($token->getUsed()) {
-        $team = Team::getTeam($token->getTeamId());
+        $team = await Team::genTeam($token->getTeamId());
         $token_status = <span class="highlighted--red">Used by {$team->getName()}</span>;
       } else {
         $token_status = <span class="highlighted--green">Available</span>;
@@ -161,34 +169,51 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderConfigurationContent(): :xhp {
-    $registration_on = (Configuration::get('registration')->getValue() === '1');
-    $registration_off = (Configuration::get('registration')->getValue() === '0');
-    $login_on = (Configuration::get('login')->getValue() === '1');
-    $login_off = (Configuration::get('login')->getValue() === '0');
-    $login_select_on = (Configuration::get('login_select')->getValue() === '1');
-    $login_select_off = (Configuration::get('login_select')->getValue() === '0');
-    $strong_passwords_on = (Configuration::get('login_strongpasswords')->getValue() === '1');
-    $strong_passwords_off = (Configuration::get('login_strongpasswords')->getValue() === '0');
-    $registration_names_on = (Configuration::get('registration_names')->getValue() === '1');
-    $registration_names_off = (Configuration::get('registration_names')->getValue() === '0');
-    $scoring_on = (Configuration::get('scoring')->getValue() === '1');
-    $scoring_off = (Configuration::get('scoring')->getValue() === '0');
-    $gameboard_on = (Configuration::get('gameboard')->getValue() === '1');
-    $gameboard_off = (Configuration::get('gameboard')->getValue() === '0');
-    $timer_on = (Configuration::get('timer')->getValue() === '1');
-    $timer_off = (Configuration::get('timer')->getValue() === '0');
+  public async function genRenderConfigurationContent(): Awaitable<:xhp> {
+    $registration = await Configuration::gen('registration');
+    $registration_players = await Configuration::gen('registration_players');
+    $login = await Configuration::gen('login');
+    $login_select = await Configuration::gen('login_select');
+    $login_strongpasswords = await Configuration::gen('login_strongpasswords');
+    $registration_names = await Configuration::gen('registration_names');
+    $scoring = await Configuration::gen('scoring');
+    $gameboard = await Configuration::gen('gameboard');
+    $timer = await Configuration::gen('timer');
+    $progressive_cycle = await Configuration::gen('progressive_cycle');
+    $default_bonus = await Configuration::gen('default_bonus');
+    $default_bonusdec = await Configuration::gen('default_bonusdec');
+    $bases_cycle = await Configuration::gen('bases_cycle');
+    $start_ts = await Configuration::gen('start_ts');
+    $end_ts = await Configuration::gen('end_ts');
 
-    if (Configuration::get('start_ts')->getValue() === '0') {
+    $registration_on = $registration->getValue() === '1';
+    $registration_off = $registration->getValue() === '0';
+    $login_on = $login->getValue() === '1';
+    $login_off = $login->getValue() === '0';
+    $login_select_on = $login_select->getValue() === '1';
+    $login_select_off = $login_select->getValue() === '0';
+    $strong_passwords_on = $login_strongpasswords->getValue() === '1';
+    $strong_passwords_off = $login_strongpasswords->getValue() === '0';
+    $registration_names_on = $registration_names->getValue() === '1';
+    $registration_names_off = $registration_names->getValue() === '0';
+    $scoring_on = $scoring->getValue() === '1';
+    $scoring_off = $scoring->getValue() === '0';
+    $gameboard_on = $gameboard->getValue() === '1';
+    $gameboard_off = $gameboard->getValue() === '0';
+    $timer_on = $timer->getValue() === '1';
+    $timer_off = $timer->getValue() === '0';
+
+    if ($start_ts->getValue() === '0') {
       $start_ts = 'Not started yet';
       $end_ts = 'Not started yet';
     } else {
-      $start_ts = date("H:i:s D m/d/Y", Configuration::get('start_ts')->getValue());
-      $end_ts = date("H:i:s D m/d/Y", Configuration::get('end_ts')->getValue());
+      $start_ts = date("H:i:s D m/d/Y", $start_ts->getValue());
+      $end_ts = date("H:i:s D m/d/Y", $end_ts->getValue());
     }
 
-    if (Configuration::get('registration_type')->getValue() === '2') { // Registration is tokenized
-      $registration_tokens = $this->renderConfigurationTokens();
+    $registration_type = await Configuration::gen('registration_type');
+    if ($registration_type->getValue() === '2') { // Registration is tokenized
+      $registration_tokens = await $this->genRenderConfigurationTokens();
       $tabs_conf =
         <div class="radio-tabs">
           <input type="radio" value="reg_conf" name="fb--admin--tabs--conf" id="fb--admin--tabs--conf--conf" checked={true}/>
@@ -200,6 +225,9 @@ class AdminController extends Controller {
       $tabs_conf = <div class="radio-tabs"></div>;
       $registration_tokens = <div></div>;
     }
+
+    $registration_type_select = await $this->genRegistrationTypeSelect();
+    $configuration_duration_select = await $this->genConfigurationDurationSelect();
 
     return
       <div>
@@ -236,13 +264,13 @@ class AdminController extends Controller {
                   <div class="col col-pad col-2-4">
                     <div class="form-el el--block-label">
                       <label for="">Players Per Team</label>
-                      <input type="number" value={Configuration::get('registration_players')->getValue()} name="fb--conf--registration_players" max="12" min="1"/>
+                      <input type="number" value={$registration_players->getValue()} name="fb--conf--registration_players" max="12" min="1"/>
                     </div>
                   </div>
                   <div class="col col-pad col-3-4">
                     <div class="form-el el--block-label">
                       <label>Registration Type</label>
-                      {$this->registrationTypeSelect()}
+                      {$registration_type_select}
                     </div>
                   </div>
                 </div>
@@ -299,7 +327,7 @@ class AdminController extends Controller {
                     </div>
                     <div class="form-el el--block-label">
                       <label>Progressive Cycle (s)</label>
-                      <input type="number" value={Configuration::get('progressive_cycle')->getValue()} name="fb--conf--progressive_cycle"/>
+                      <input type="number" value={$progressive_cycle->getValue()} name="fb--conf--progressive_cycle"/>
                     </div>
                   </div>
                   <div class="col col-pad col-2-4">
@@ -314,17 +342,17 @@ class AdminController extends Controller {
                     </div>
                     <div class="form-el el--block-label">
                       <label>Default Bonus</label>
-                      <input type="number" value={Configuration::get('default_bonus')->getValue()} name="fb--conf--default_bonus"/>
+                      <input type="number" value={$default_bonus->getValue()} name="fb--conf--default_bonus"/>
                     </div>
                   </div>
                   <div class="col col-pad col-3-4">
                     <div class="form-el el--block-label">
                       <label>Bases Cycle (s)</label>
-                      <input type="number" value={Configuration::get('bases_cycle')->getValue()} name="fb--conf--bases_cycle"/>
+                      <input type="number" value={$bases_cycle->getValue()} name="fb--conf--bases_cycle"/>
                     </div>
                     <div class="form-el el--block-label">
                       <label>Default Bonus Dec</label>
-                      <input type="number" value={Configuration::get('default_bonusdec')->getValue()} name="fb--conf--default_bonusdec"/>
+                      <input type="number" value={$default_bonusdec->getValue()} name="fb--conf--default_bonusdec"/>
                     </div>
                   </div>
                   <div class="col col-pad col-4-4">
@@ -354,7 +382,7 @@ class AdminController extends Controller {
                   <div class="col col-pad col-2-4">
                     <div class="form-el el--block-label el--full-text">
                       <label for="">Game Duration</label>
-                      {$this->configurationDurationSelect()}
+                      {$configuration_duration_select}
                     </div>
                   </div>
                   <div class="col col-pad col-2-4">
@@ -378,8 +406,8 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderAnnouncementsContent(): :xhp {
-    $announcements = Announcement::allAnnouncements();
+  public async function genRenderAnnouncementsContent(): Awaitable<:xhp> {
+    $announcements = await Announcement::genAllAnnouncements();
     $announcements_div = <div></div>;
     if ($announcements) {
       foreach ($announcements as $announcement) {
@@ -388,7 +416,7 @@ class AdminController extends Controller {
             <form class="announcements_form">
               <input type="hidden" name="announcement_id" value={strval($announcement->getId())}/>
               <header class="countries-management-header">
-                <h6>{$announcement->getTs()}</h6>
+                <h6>{time_ago($announcement->getTs())}</h6>
                 <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
               </header>
               <div class="fb-column-container">
@@ -456,13 +484,27 @@ class AdminController extends Controller {
         <div class="admin-sections">
           <section class="admin-box">
             <header class="admin-box-header">
-              <h3>General Control</h3>
+              <h3>General</h3>
             </header>
             <div class="fb-column-container">
-              <div class="col col-pad col-1-4">
+              <div class="col col-pad col-1-3">
                 <div class="form-el el--block-label el--full-text">
                   <div class="admin-buttons">
                     <button class="fb-cta cta--yellow" data-action="backup-db">Back Up Database</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button class="fb-cta cta--yellow" data-action="export-game">Export Game</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button class="fb-cta cta--yellow" data-action="import-game">Import Game</button>
                   </div>
                 </div>
               </div>
@@ -470,14 +512,14 @@ class AdminController extends Controller {
           </section>
           <section class="admin-box">
             <header class="admin-box-header">
-              <h3>Teams Control</h3>
+              <h3>Teams</h3>
             </header>
             <div class="fb-column-container">
             </div>
           </section>
           <section class="admin-box">
             <header class="admin-box-header">
-              <h3>Levels Control</h3>
+              <h3>Levels</h3>
             </header>
             <div class="fb-column-container">
             </div>
@@ -486,7 +528,8 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderQuizContent(): :xhp {
+  public async function genRenderQuizContent(): Awaitable<:xhp> {
+    $countries_select = await $this->genGenerateCountriesSelect(0);
     $adminsections =
       <div class="admin-sections">
         <section id="new-element" class="admin-box completely-hidden">
@@ -507,7 +550,7 @@ class AdminController extends Controller {
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect(0)}
+                  {$countries_select}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
@@ -578,7 +621,8 @@ class AdminController extends Controller {
     </div>;
 
     $c = 1;
-    foreach (Level::allQuizLevels() as $quiz) {
+    $quizes = await Level::genAllQuizLevels();
+    foreach ($quizes as $quiz) {
       $quiz_active_on = ($quiz->getActive());
       $quiz_active_off = (!$quiz->getActive());
 
@@ -587,6 +631,8 @@ class AdminController extends Controller {
       $quiz_status_off_id = 'fb--levels--level-'.strval($quiz->getId()).'-status--off';
 
       $quiz_id = 'quiz_id'.strval($quiz->getId());
+
+      $countries_select = await $this->genGenerateCountriesSelect($quiz->getEntityId());
 
       $adminsections->appendChild(
         <section class="admin-box section-locked">
@@ -614,7 +660,7 @@ class AdminController extends Controller {
                 </div>
                 <div class="form-el el--block-label el--full-text">
                   <label for="">Country</label>
-                  {$this->generateCountriesSelect($quiz->getEntityId())}
+                  {$countries_select}
                 </div>
               </div>
               <div class="col col-pad col-1-2">
@@ -675,7 +721,11 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderFlagsContent(): :xhp {
+  public async function genRenderFlagsContent(): Awaitable<:xhp> {
+    $countries_select = await $this->genGenerateCountriesSelect(0);
+    $level_categories_select = await $this->genGenerateLevelCategoriesSelect(0);
+    $filter_categories_select = await $this->genGenerateFilterCategoriesSelect();
+
     $adminsections =
       <div class="admin-sections">
         <section id="new-element" class="admin-box completely-hidden">
@@ -697,11 +747,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect(0)}
+                    {$countries_select}
                   </div>
               <div class="col col-1-2 el--block-label el--full-text">
                 <label for="">Category</label>
-                {$this->generateLevelCategoriesSelect(0)}
+                {$level_categories_select}
               </div>
             </div>
           </div>
@@ -755,7 +805,7 @@ class AdminController extends Controller {
             <div class="col col-1-5 el--block-label el--full-text">
             </div>
             <div class="col col-1-5 el--block-label el--full-text">
-              {$this->generateFilterCategoriesSelect()}
+              {$filter_categories_select}
             </div>
             <div class="col col-1-5 el--block-label el--full-text">
             </div>
@@ -774,7 +824,8 @@ class AdminController extends Controller {
     </div>;
 
     $c = 1;
-    foreach (Level::allFlagLevels() as $flag) {
+    $flags = await Level::genAllFlagLevels();
+    foreach ($flags as $flag) {
       $flag_active_on = ($flag->getActive());
       $flag_active_off = (!$flag->getActive());
 
@@ -809,9 +860,11 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if (Attachment::hasAttachments($flag->getId())) {
+      $attachments = await Attachment::genHasAttachments($flag->getId());
+      if ($attachments) {
         $a_c = 1;
-        foreach (Attachment::allAttachments($flag->getId()) as $attachment) {
+        $all_attachments = await Attachment::genAllAttachments($flag->getId());
+        foreach ($all_attachments as $attachment) {
           $attachments_div->appendChild(
             <div class="existing-attachment fb-column-container">
               <div class="col col-pad col-2-3">
@@ -861,9 +914,11 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if (Link::hasLinks($flag->getId())) {
+      $links = await Link::genHasLinks($flag->getId());
+      if ($links) {
         $l_c = 1;
-        foreach (Link::allLinks($flag->getId()) as $link) {
+        $all_links = await Link::genAllLinks($flag->getId());
+        foreach ($all_links as $link) {
           $links_div->appendChild(
             <div class="existing-link fb-column-container">
               <div class="col col-pad col-2-3">
@@ -889,6 +944,9 @@ class AdminController extends Controller {
         }
       }
 
+      $countries_select = await $this->genGenerateCountriesSelect($flag->getEntityId());
+      $level_categories_select = await $this->genGenerateLevelCategoriesSelect($flag->getCategoryId());
+      
       $adminsections->appendChild(
         <section class="admin-box section-locked">
           <form class="level_form flag_form" name={$flag_id}>
@@ -916,11 +974,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect($flag->getEntityId())}
+                    {$countries_select}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Categories</label>
-                    {$this->generateLevelCategoriesSelect($flag->getCategoryId())}
+                    {$level_categories_select}
                   </div>
                 </div>
               </div>
@@ -990,7 +1048,11 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderBasesContent(): :xhp {
+  public async function genRenderBasesContent(): Awaitable<:xhp> {
+    $countries_select = await $this->genGenerateCountriesSelect(0);
+    $level_categories_select = await $this->genGenerateLevelCategoriesSelect(0);
+    $filter_categories_select = await $this->genGenerateFilterCategoriesSelect();
+
     $adminsections =
       <div class="admin-sections">
         <section id="new-element" class="admin-box completely-hidden">
@@ -1012,11 +1074,11 @@ class AdminController extends Controller {
                 <div class="form-el fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
-                    {$this->generateCountriesSelect(0)}
+                    {$countries_select}
                   </div>
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Category</label>
-                    {$this->generateLevelCategoriesSelect(0)}
+                    {$level_categories_select}
                   </div>
                 </div>
               </div>
@@ -1070,7 +1132,7 @@ class AdminController extends Controller {
               <div class="col col-1-5 el--block-label el--full-text">
               </div>
               <div class="col col-1-5 el--block-label el--full-text">
-                {$this->generateFilterCategoriesSelect()}
+                {$filter_categories_select}
               </div>
               <div class="col col-1-5 el--block-label el--full-text">
               </div>
@@ -1089,7 +1151,8 @@ class AdminController extends Controller {
       </div>;
 
     $c = 1;
-    foreach (Level::allBaseLevels() as $base) {
+    $all_base_levels = await Level::genAllBaseLevels();
+    foreach ($all_base_levels as $base) {
       $base_active_on = ($base->getActive());
       $base_active_off = (!$base->getActive());
 
@@ -1123,10 +1186,11 @@ class AdminController extends Controller {
             </div>
           </div>
         </div>;
-
-      if (Attachment::hasAttachments($base->getId())) {
+      $has_attachments = await Attachment::genHasAttachments($base->getId());
+      if ($has_attachments) {
         $a_c = 1;
-        foreach (Attachment::allAttachments($base->getId()) as $attachment) {
+        $all_attachments = await Attachment::genAllAttachments($base->getId());
+        foreach ($all_attachments as $attachment) {
           $attachments_div->appendChild(
             <div class="existing-attachment fb-column-container">
               <div class="col col-pad col-2-3">
@@ -1176,9 +1240,11 @@ class AdminController extends Controller {
           </div>
         </div>;
 
-      if (Link::hasLinks($base->getId())) {
+      $has_links = await Link::genHasLinks($base->getId());
+      if ($has_links) {
         $l_c = 1;
-        foreach (Link::allLinks($base->getId()) as $link) {
+        $all_links = await Link::genAllLinks($base->getId());
+        foreach ($all_links as $link) {
           if (filter_var($link->getLink(), FILTER_VALIDATE_URL)) {
             $link_a = <a href={$link->getLink()} target="_blank">Link</a>;
           } else {
@@ -1209,6 +1275,9 @@ class AdminController extends Controller {
         $l_c++;
       }
 
+      $countries_select = await $this->genGenerateCountriesSelect($base->getEntityId());
+      $level_categories_select = await $this->genGenerateLevelCategoriesSelect($base->getCategoryId());
+
       $adminsections->appendChild(
         <section class="admin-box section-locked">
               <form class="level_form base_form" name={$base_id}>
@@ -1236,11 +1305,11 @@ class AdminController extends Controller {
                     <div class="form-el fb-column-container col-gutters">
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Country</label>
-                        {$this->generateCountriesSelect($base->getEntityId())}
+                        {$countries_select}
                       </div>
                       <div class="col col-1-2 el--block-label el--full-text">
                         <label for="">Category</label>
-                        {$this->generateLevelCategoriesSelect($base->getCategoryId())}
+                        {$level_categories_select}
                       </div>
                     </div>
                   </div>
@@ -1299,7 +1368,7 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderCategoriesContent(): :xhp {
+  public async function genRenderCategoriesContent(): Awaitable<:xhp> {
     $adminsections =
       <div class="admin-sections">
       </div>;
@@ -1329,10 +1398,11 @@ class AdminController extends Controller {
       </section>
     );
 
-    $categories = Category::allCategories();
+    $categories = await Category::genAllCategories();
 
     foreach ($categories as $category) {
-      if (Category::isUsed($category->getId())) {
+      $is_used = await Category::genIsUsed($category->getId());;
+      if ($is_used) {
         $delete_action = <a></a>;
       } else {
         $delete_action = <a class="highlighted--red" href="#" data-action="delete">DELETE</a>;
@@ -1371,7 +1441,7 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderCountriesContent(): :xhp {
+  public async function genRenderCountriesContent(): Awaitable<:xhp> {
     $adminsections =
       <div class="admin-sections">
       </div>;
@@ -1406,8 +1476,9 @@ class AdminController extends Controller {
       </section>
     );
 
-    foreach (Country::allCountries(false) as $country) {
-      $using_country = Level::whoUses($country->getId());
+    $all_countries = await Country::genAllCountries(false);
+    foreach ($all_countries as $country) {
+      $using_country = await Level::genWhoUses($country->getId());
       $current_use = ($using_country) ? 'Yes' : 'No';
       if ($country->getEnabled()) {
         $highlighted_action = 'disable_country';
@@ -1468,10 +1539,10 @@ class AdminController extends Controller {
       </div>;
   }
 
-  private function generateTeamNames(int $team_id): :xhp {
+  private async function genGenerateTeamNames(int $team_id): Awaitable<:xhp> {
     $names = <section class="admin-box"></section>;
 
-    $teams_data = Team::getTeamData($team_id);
+    $teams_data = await Team::genTeamData($team_id);
 
     if (count($teams_data) > 0) {
       foreach ($teams_data as $data) {
@@ -1505,14 +1576,16 @@ class AdminController extends Controller {
     return $names;
   }
 
-  private function generateTeamScores(int $team_id): :xhp {
+  private async function genGenerateTeamScores(
+    int $team_id,
+  ): Awaitable<:xhp> {
     $scores_div = <div></div>;
-    $scores = ScoreLog::allScoresByTeam($team_id);
+    $scores = await ScoreLog::genAllScoresByTeam($team_id);
     if (count($scores) > 0) {
       $scores_tbody = <tbody></tbody>;
       foreach ($scores as $score) {
-        $level = Level::getLevel($score->getLevelId());
-        $country = Country::get($level->getEntityId());
+        $level = await Level::genLevel($score->getLevelId());
+        $country = await Country::gen($level->getEntityId());
         $level_str = $country->getName() . ' - ' . $level->getTitle();
         $scores_tbody->appendChild(
           <tr>
@@ -1549,14 +1622,14 @@ class AdminController extends Controller {
     return $scores_div;
   }
 
-  private function generateTeamFailures(int $team_id): :xhp {
+  private async function genGenerateTeamFailures(int $team_id): Awaitable<:xhp> {
     $failures_div = <div></div>;
-    $failures = FailureLog::allFailuresByTeam($team_id);
+    $failures = await FailureLog::genAllFailuresByTeam($team_id);
     if (count($failures) > 0) {
       $failures_tbody = <tbody></tbody>;
       foreach ($failures as $failure) {
-        $level = Level::getLevel($failure->getLevelId());
-        $country = Country::get($level->getEntityId());
+        $level = await Level::genLevel($failure->getLevelId());
+        $country = await Country::gen($level->getEntityId());
         $level_str = $country->getName() . ' - ' . $level->getTitle();
         $failures_tbody->appendChild(
           <tr>
@@ -1591,7 +1664,7 @@ class AdminController extends Controller {
     return $failures_div;
   }
 
-  private function generateTeamTabs(int $team_id): :xhp {
+  private async function genGenerateTeamTabs(int $team_id): Awaitable<:xhp> {
     $team_tabs_team = 'fb--teams--tabs--team-team'.strval($team_id);
     $team_tabs_names = 'fb--teams--tabs--names-team'.strval($team_id);
     $team_tabs_scores = 'fb--teams--tabs--scores-team'.strval($team_id);
@@ -1610,7 +1683,8 @@ class AdminController extends Controller {
       <label for={$team_tabs_team}>Team</label>
     );
 
-    if (Configuration::get('registration_names')->getValue() === '1') {
+    $registration_names = await Configuration::gen('registration_names');
+    if ($registration_names->getValue() === '1') {
       $team_tabs->appendChild(
         <input type="radio" value={$tab_names} name={$team_tabs_name} id={$team_tabs_names}/>
       );
@@ -1636,7 +1710,7 @@ class AdminController extends Controller {
     return $team_tabs;
   }
 
-  public function renderTeamsContent(): :xhp {
+  public async function genRenderTeamsContent(): Awaitable<:xhp> {
     $adminsections =
       <div class="admin-sections">
         <section class="admin-box validate-form section-locked completely-hidden">
@@ -1701,7 +1775,8 @@ class AdminController extends Controller {
       </div>;
 
     $c = 1;
-    foreach (Team::allTeams() as $team) {
+    $all_teams = await Team::genAllTeams();
+    foreach ($all_teams as $team) {
       $xlink_href = '#icon--badge-'.$team->getLogo();
       $team_protected = $team->getProtected();
       $team_active_on = $team->getActive();
@@ -1756,9 +1831,14 @@ class AdminController extends Controller {
       $tab_scores = 'scores'.strval($team->getId());
       $tab_failures = 'failures'.strval($team->getId());
 
+      $team_tabs = await $this->genGenerateTeamTabs($team->getId());
+      $team_names = await $this->genGenerateTeamNames($team->getId());
+      $team_scores = await $this->genGenerateTeamScores($team->getId());
+      $team_failures = await $this->genGenerateTeamFailures($team->getId());
+
       $adminsections->appendChild(
         <div>
-          {$this->generateTeamTabs($team->getId())}
+          {$team_tabs}
           <div class="tab-content-container">
             <div class="radio-tab-content active" data-tab={$tab_team}>
               <section class="admin-box validate-form section-locked">
@@ -1834,7 +1914,7 @@ class AdminController extends Controller {
                 <header class="admin-box-header">
                   <h3>Team {$c}</h3>
                 </header>
-                {$this->generateTeamNames($team->getId())}
+                {$team_names}
               </section>
             </div>
             <div class="radio-tab-content" data-tab={$tab_scores}>
@@ -1842,7 +1922,7 @@ class AdminController extends Controller {
                 <header class="admin-box-header">
                   <h3>Team {$c}</h3>
                 </header>
-                {$this->generateTeamScores($team->getId())}
+                {$team_scores}
               </section>
             </div>
             <div class="radio-tab-content" data-tab={$tab_failures}>
@@ -1850,7 +1930,7 @@ class AdminController extends Controller {
                 <header class="admin-box-header">
                   <h3>Team {$c}</h3>
                 </header>
-                {$this->generateTeamFailures($team->getId())}
+                {$team_failures}
               </section>
             </div>
           </div>
@@ -1871,14 +1951,15 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderLogosContent(): :xhp {
+  public async function genRenderLogosContent(): Awaitable<:xhp> {
     $adminsections =
       <div class="admin-sections">
       </div>;
 
-    foreach (Logo::allLogos() as $logo) {
+    $all_logos = await Logo::genAllLogos();
+    foreach ($all_logos as $logo) {
       $xlink_href = '#icon--badge-'.$logo->getName();
-      $using_logo = Team::whoUses($logo->getName());
+      $using_logo = await Team::genWhoUses($logo->getName());
       $current_use = (count($using_logo) > 0) ? 'Yes' : 'No';
       if ($logo->getEnabled()) {
         $highlighted_action = 'disable_logo';
@@ -1948,20 +2029,22 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderSessionsContent(): :xhp {
+  public async function genRenderSessionsContent(): Awaitable<:xhp> {
     $adminsections =
       <div class="admin-sections">
       </div>;
 
     $c = 1;
-    foreach (Session::allSessions() as $session) {
+    $all_sessions = await Session::genAllSessions();
+    foreach ($all_sessions as $session) {
       $session_id = 'session_'.strval($session->getId());
+      $team = await Team::genTeam($session->getTeamId());
       $adminsections->appendChild(
         <section class="admin-box section-locked">
           <form class="session_form" name={$session_id}>
             <input type="hidden" name="session_id" value={strval($session->getId())}/>
             <header class="admin-box-header">
-              <span class="session-name">Session {$c}: <span class="highlighted--blue">{$session->getLastAccessTs()}</span></span>
+              <span class="session-name">Session {$c}: <span class="highlighted--blue">{$team->getName()}</span></span>
             </header>
             <div class="fb-column-container">
               <div class="col col-1-3 col-pad">
@@ -2424,8 +2507,9 @@ class AdminController extends Controller {
       <h1>ADMIN</h1>;
   }
 
-  public function renderMainNav(): :xhp {
-    $game_status = (Configuration::get('game')->getValue() === '1');
+  public async function genRenderMainNav(): Awaitable<:xhp> {
+    $game = await Configuration::gen('game');
+    $game_status = $game->getValue() === '1';
     if ($game_status) {
       $game_action =
         <a href="#" class="fb-cta cta--red js-end-game">
@@ -2469,44 +2553,44 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderPage(string $page): :xhp {
+  public async function genRenderPage(string $page): Awaitable<:xhp> {
     switch ($page) {
       case 'main':
         // Render the configuration page by default
-        return $this->renderConfigurationContent();
+        return await $this->genRenderConfigurationContent();
         break;
       case 'configuration':
-        return $this->renderConfigurationContent();
+        return await $this->genRenderConfigurationContent();
         break;
       case 'controls':
         return $this->renderControlsContent();
         break;
       case 'announcements':
-        return $this->renderAnnouncementsContent();
+        return await $this->genRenderAnnouncementsContent();
         break;
       case 'quiz':
-        return $this->renderQuizContent();
+        return await $this->genRenderQuizContent();
         break;
       case 'flags':
-        return $this->renderFlagsContent();
+        return await $this->genRenderFlagsContent();
         break;
       case 'bases':
-        return $this->renderBasesContent();
+        return await $this->genRenderBasesContent();
         break;
       case 'categories':
-        return $this->renderCategoriesContent();
+        return await $this->genRenderCategoriesContent();
         break;
       case 'countries':
-        return $this->renderCountriesContent();
+        return await $this->genRenderCountriesContent();
         break;
       case 'teams':
-        return $this->renderTeamsContent();
+        return await $this->genRenderTeamsContent();
         break;
       case 'logos':
-        return $this->renderLogosContent();
+        return await $this->genRenderLogosContent();
         break;
       case 'sessions':
-        return $this->renderSessionsContent();
+        return await $this->genRenderSessionsContent();
         break;
       case 'scoreboard':
         return $this->renderScoreboardContent();
@@ -2521,14 +2605,16 @@ class AdminController extends Controller {
   }
 
   <<__Override>>
-  public function renderBody(string $page): :xhp {
+  public async function genRenderBody(string $page): Awaitable<:xhp> {
+    $rendered_page = await $this->genRenderPage($page);
+    $rendered_main_nav = await $this->genRenderMainNav();
     return
       <body data-section="admin">
         <input type="hidden" name="csrf_token" value={SessionUtils::CSRFToken()}/>
         <div style="height: 0; width: 0; position: absolute; visibility: hidden" id="fb-svg-sprite"></div>
         <div class="fb-viewport admin-viewport">
-          {$this->renderMainNav()}
-          <div id="fb-main-content" class="fb-page fb-admin-main">{$this->renderPage($page)}</div>
+          {$rendered_main_nav}
+          <div id="fb-main-content" class="fb-page fb-admin-main">{$rendered_page}</div>
         </div>
         <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="static/js/vendor/d3.min.js"></script>

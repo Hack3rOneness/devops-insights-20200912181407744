@@ -1,31 +1,37 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class MapDataController extends DataController {
-  public function generateData() {
+  public async function genGenerateData(): Awaitable<void> {
     $map_data = (object) array();
 
     $my_team_id = SessionUtils::sessionTeam();
     $my_name = SessionUtils::sessionTeamName();
 
-    foreach (Country::allEnabledCountries(true) as $country) {
-      $active = ($country->getUsed() && Country::isActiveLevel($country->getId()))
+    $enabled_countries = await Country::genAllEnabledCountries(true);
+    foreach ($enabled_countries as $country) {
+      $is_active_level = await Country::genIsActiveLevel($country->getId());
+      $active = ($country->getUsed() && $is_active_level)
               ? 'active'
               : '';
-      $country_level = Level::whoUses($country->getId());
+      $country_level = await Level::genWhoUses($country->getId());
       if ($country_level) {
+        $my_previous_score = await ScoreLog::genPreviousScore($country_level->getId(), $my_team_id, false);
+        $other_previous_score = await ScoreLog::genPreviousScore($country_level->getId(), $my_team_id, true);
+
         // If my team has scored
-        if (ScoreLog::previousScore($country_level->getId(), $my_team_id, false)) {
+        if ($my_previous_score) {
           $captured_by = 'you';
           $data_captured = $my_name;
         // If any other team has scored
-        } else if (ScoreLog::previousScore($country_level->getId(), $my_team_id, true)) {
+        } else if ($other_previous_score) {
           $captured_by = 'opponent';
-          $completed_by = Team::completedLevel($country_level->getId());
+          $completed_by = await Team::genCompletedLevel($country_level->getId());
           $data_captured = '';
           foreach ($completed_by as $c) {
             $data_captured .= ' ' . $c->getName();
@@ -43,7 +49,7 @@ class MapDataController extends DataController {
         'captured' => $captured_by,
         'datacaptured' => $data_captured
       );
-      /* HH_FIXME[1002] */
+      /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
       $map_data->{$country->getIsoCode()} = $country_data;
     }
 
@@ -52,4 +58,4 @@ class MapDataController extends DataController {
 }
 
 $map = new MapDataController();
-$map->generateData();
+\HH\Asio\join($map->genGenerateData());

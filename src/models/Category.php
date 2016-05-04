@@ -20,7 +20,7 @@ class Category extends Model {
     return $this->created_ts;
   }
 
-  private static function categoryFromRow(array<string, string> $row): Category {
+  private static function categoryFromRow(Map<string, string> $row): Category {
     return new Category(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'category'),
@@ -29,14 +29,15 @@ class Category extends Model {
   }
 
   // All categories.
-  public static function allCategories(): array<Category> {
-    $db = self::getDb();
+  public static async function genAllCategories(): Awaitable<array<Category>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM categories';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM categories',
+    );
 
     $categories = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $categories[] = self::categoryFromRow($row);
     }
 
@@ -44,67 +45,84 @@ class Category extends Model {
   }
 
   // Check if category is used.
-  public static function isUsed(int $category_id): bool {
-    $db = self::getDb();
+  public static async function genIsUsed(
+    int $category_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT COUNT(*) FROM levels WHERE category_id = ?';
-    $element = array($category_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM levels WHERE category_id = %d',
+      $category_id,
+    );
 
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return intval(firstx($result)['COUNT(*)']) > 0;
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return intval($result->mapRows()[0]['COUNT(*)']) > 0;
     } else {
       return false;
     }
   }
 
   // Delete category.
-  public static function delete(int $category_id): void {
-    $db = self::getDb();
+  public static async function genDelete(
+    int $category_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
 
-    $sql = 'DELETE FROM categories WHERE id = ? AND id NOT IN (SELECT category_id FROM levels) LIMIT 1';
-    $elements = array($category_id);
-    $db->query($sql, $elements);
+    await $db->queryf(
+      'DELETE FROM categories WHERE id = %d AND id NOT IN (SELECT category_id FROM levels) LIMIT 1',
+      $category_id,
+    );
   }
 
   // Create category.
-  public static function create(string $category): int {
-    $db = self::getDb();
+  public static async function genCreate(
+    string $category,
+  ): Awaitable<int> {
+    $db = await self::genDb();
 
     // Create category
-    $sql = 'INSERT INTO categories (category, created_ts) VALUES (?, NOW())';
-    $element = array($category);
-    $db->query($sql, $element);
+    await $db->queryf(
+      'INSERT INTO categories (category, created_ts) VALUES (%s, NOW())',
+      $category,
+    );
 
     // Return newly created category_id
-    $sql = 'SELECT id FROM categories WHERE category = ? LIMIT 1';
-    $element = array($category);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT id FROM categories WHERE category = %s LIMIT 1',
+      $category,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    return intval(firstx($result)['id']);
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['id']);
   }
 
   // Update category.
-  public static function update(string $category, int $category_id): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE categories SET category = ? WHERE id = ? LIMIT 1';
-    $elements = array($category, $category_id);
-    $db->query($sql, $elements);
+  public static async function genUpdate(
+    string $category,
+    int $category_id,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE categories SET category = %s WHERE id = %d LIMIT 1',
+      $category,
+      $category_id,
+    );
   }
 
   // Get category.
-  public static function getSingleCategory(int $category_id): Category {
-    $db = self::getDb();
+  public static async function genSingleCategory(
+    int $category_id,
+  ): Awaitable<Category> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM categories WHERE id = ? LIMIT 1';
-    $element = array($category_id);
-    $result = $db->query($sql, $element);
+    $result = await $db->queryf(
+      'SELECT * FROM categories WHERE id = %d LIMIT 1',
+      $category_id,
+    );
 
-    invariant(count($result) === 1, 'Expected exactly one result');
-    $category = self::categoryFromRow(firstx($result));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    $category = self::categoryFromRow($result->mapRows()[0]);
 
     return $category;
   }

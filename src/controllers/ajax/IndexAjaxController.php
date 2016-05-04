@@ -42,12 +42,15 @@ class IndexAjaxController extends AjaxController {
   }
 
   <<__Override>>
-  protected function handleAction(string $action, array<string, mixed> $params): string {
+  protected async function genHandleAction(
+    string $action,
+    array<string, mixed> $params,
+  ): Awaitable<string> {
     switch ($action) {
     case 'none':
       return Utils::error_response('Invalid action', 'index');
     case 'register_team':
-      return $this->registerTeam(
+      return await $this->genRegisterTeam(
         must_have_string($params, 'teamname'),
         must_have_string($params, 'password'),
         strval(must_have_idx($params, 'token')),
@@ -65,7 +68,7 @@ class IndexAjaxController extends AjaxController {
         'names and emails should be arrays',
       );
 
-      return $this->registerTeam(
+      return await $this->genRegisterTeam(
         must_have_string($params, 'teamname'),
         must_have_string($params, 'password'),
         strval(must_have_idx($params, 'token')),
@@ -76,12 +79,15 @@ class IndexAjaxController extends AjaxController {
       );
     case 'login_team':
       $team_id = null;
-      if (Configuration::get('login_select')->getValue() === '1') {
+      $login_select = await Configuration::gen('login_select');
+      if ($login_select->getValue() === '1') {
         $team_id = must_have_int($params, 'team_id');
       } else {
         $team_name = must_have_string($params, 'teamname');
-        if (Team::teamExist($team_name)) {
-          $team_id = Team::getTeamByName($team_name)->getId();
+        $team_exists = await Team::genTeamExist($team_name);
+        if ($team_exists) {
+          $team = await Team::genTeamByName($team_name);
+          $team_id = $team->getId();
         } else {
           return Utils::error_response('Login failed', 'login');
         }
@@ -91,7 +97,7 @@ class IndexAjaxController extends AjaxController {
       $password = must_have_string($params, 'password');
 
       // If we are here, login!
-      return $this->loginTeam(
+      return await $this->genLoginTeam(
         $team_id,
         $password,
       );
@@ -100,7 +106,7 @@ class IndexAjaxController extends AjaxController {
     }
   }
 
-  private function registerTeam(
+  private async function genRegisterTeam(
     string $teamname,
     string $password,
     ?string $token,
@@ -108,24 +114,28 @@ class IndexAjaxController extends AjaxController {
     bool $register_names,
     array<string> $names,
     array<string> $emails,
-  ): string {
+  ): Awaitable<string> {
     // Check if registration is enabled
-    if (Configuration::get('registration')->getValue() === '0') {
+    $registration = await Configuration::gen('registration');
+    if ($registration->getValue() === '0') {
       return Utils::error_response('Registration failed', 'registration');
     }
 
     // Check if tokenized registration is enabled
-    if (Configuration::get('registration_type')->getValue() === '2') {
+    $registration_type = await Configuration::gen('registration_type');
+    if ($registration_type->getValue() === '2') {
+      $token_check = await Token::genCheck((string)$token);
       // Check provided token
-      if ($token === null || !Token::check($token)) {
+      if ($token === null || !$token_check) {
         return Utils::error_response('Registration failed', 'registration');
       }
     }
 
     // Check logo
     $final_logo = $logo;
-    if (!Logo::checkExists($final_logo)) {
-      $final_logo = Logo::randomLogo();
+    $check_exists = await Logo::genCheckExists($final_logo);
+    if (!$check_exists) {
+      $final_logo = await Logo::genRandomLogo();
     }
 
     // Check if team name is not empty or just spaces
@@ -137,23 +147,24 @@ class IndexAjaxController extends AjaxController {
     $shortname = substr($teamname, 0, 20);
 
     // Verify that this team name is not created yet
-    if (!Team::teamExist($shortname)) {
+    $team_exists = await Team::genTeamExist($shortname);
+    if (!$team_exists) {
       $password_hash = Team::generateHash($password);
-      $team_id = Team::create($shortname, $password_hash, $final_logo);
+      $team_id = await Team::genCreate($shortname, $password_hash, $final_logo);
       if ($team_id) {
         // Store team players data, if enabled
         if ($register_names) {
           for ($i=0; $i<count($names); $i++) {
-            Team::addTeamData($names[$i], $emails[$i], $team_id);
+            await Team::genAddTeamData($names[$i], $emails[$i], $team_id);
           }
         }
         // If registration is tokenized, use the token
-        if (Configuration::get('registration_type')->getValue() === '2') {
+        if ($registration_type->getValue() === '2') {
           invariant($token !== null, 'token should not be null');
-          Token::use($token, $team_id);
+          await Token::genUse($token, $team_id);
         }
         // Login the team
-        return $this->loginTeam($team_id, $password);
+        return await $this->genLoginTeam($team_id, $password);
       } else {
         return Utils::error_response('Registration failed', 'registration');
       }
@@ -162,17 +173,22 @@ class IndexAjaxController extends AjaxController {
     }
   }
 
-  private function loginTeam(int $team_id, string $password): string {
+  private async function genLoginTeam(
+    int $team_id,
+    string $password,
+  ): Awaitable<string> {
     // Check if login is enabled
-    if (Configuration::get('login')->getValue() === '0') {
+    $login = await Configuration::gen('login');
+    if ($login->getValue() === '0') {
       return Utils::error_response('Login failed', 'login');
     }
 
     // Verify credentials
-    $team = Team::verifyCredentials($team_id, $password);
+    $team = await Team::genVerifyCredentials($team_id, $password);
 
     if ($team) {
       SessionUtils::sessionStart();
+      SessionUtils::sessionRefresh();
       if (!SessionUtils::sessionActive()) {
         SessionUtils::sessionSet('team_id', strval($team->getId()));
         SessionUtils::sessionSet('name', $team->getName());

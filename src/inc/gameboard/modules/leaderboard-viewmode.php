@@ -1,13 +1,14 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
 class LeaderboardModuleViewController {
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $leaderboard_ul = <ul></ul>;
 
     $rank = 1;
-    foreach (Team::leaderboard() as $team) {
+    $leaderboard = await Team::genLeaderboard();
+    foreach ($leaderboard as $team) {
       $xlink_href = '#icon--badge-'.$team->getLogo();
       $leaderboard_ul->appendChild(
         <li class="fb-user-card">
@@ -40,5 +41,6 @@ class LeaderboardModuleViewController {
   }
 }
 
+/* HH_IGNORE_ERROR[1002] */
 $leaderboard_generated = new LeaderboardModuleViewController();
-echo $leaderboard_generated->render();
+echo \HH\Asio\join($leaderboard_generated->genRender());

@@ -74,7 +74,7 @@ function time_ago(string $ts): string {
   return '';
 }
 
-class Utils {  
+class Utils {
   private function __construct() {}
 
   private function __clone(): void {}

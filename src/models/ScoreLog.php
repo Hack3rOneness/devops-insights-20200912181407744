@@ -35,7 +35,7 @@ class ScoreLog extends Model {
     return $this->type;
   }
 
-  private static function scorelogFromRow(array<string, string> $row): ScoreLog {
+  private static function scorelogFromRow(Map<string, string> $row): ScoreLog {
     return new ScoreLog(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'ts'),
@@ -47,13 +47,15 @@ class ScoreLog extends Model {
   }
 
   // Get all scores.
-  public static function allScores(): array<ScoreLog> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM scores_log ORDER BY ts DESC';
-    $results = $db->query($sql);
+  public static async function genAllScores(
+  ): Awaitable<array<ScoreLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM scores_log ORDER BY ts DESC',
+    );
 
     $scores = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $scores[] = self::scorelogFromRow($row);
     }
 
@@ -61,37 +63,55 @@ class ScoreLog extends Model {
   }
 
   // Reset all scores.
-  public static function resetScores(): void {
-    $db = self::getDb();
-    $sql = 'DELETE FROM scores_log WHERE id > 0';
-    $db->query($sql);
+  public static async function genResetScores(): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'DELETE FROM scores_log WHERE id > 0',
+    );
   }
 
   // Check if there is a previous score.
-  public static function previousScore(int $level_id, int $team_id, bool $any_team): bool {
-    $db = self::getDb();
-    $sql = ($any_team)
-      ? 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id IN (SELECT id FROM teams WHERE id != ? AND visible = 1)'
-      : 'SELECT COUNT(*) FROM scores_log WHERE level_id = ? AND team_id = ?';
-    $elements = array($level_id, $team_id);
-    $result = $db->query($sql, $elements);
-    if (count($result) > 0) {
-      invariant(count($result) === 1, 'Expected exactly one result');
-      return intval(firstx($result)['COUNT(*)']) > 0;
+  public static async function genPreviousScore(
+    int $level_id,
+    int $team_id,
+    bool $any_team,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
+
+    if ($any_team) {
+      $result = await $db->queryf(
+        'SELECT COUNT(*) FROM scores_log WHERE level_id = %d AND team_id IN (SELECT id FROM teams WHERE id != %d AND visible = 1)',
+        $level_id,
+        $team_id,
+      );
+    } else { 
+      $result = await $db->queryf(
+        'SELECT COUNT(*) FROM scores_log WHERE level_id = %d AND team_id = %d',
+        $level_id,
+        $team_id,
+      );
+    }
+
+    if ($result->numRows() > 0) {
+      invariant($result->numRows() === 1, 'Expected exactly one result');
+      return intval($result->mapRows()[0]['COUNT(*)']) > 0;
     } else {
       return false;
     }
   }
 
   // Get all scores by team.
-  public static function allScoresByTeam(int $team_id): array<ScoreLog> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM scores_log WHERE team_id = ? ORDER BY ts DESC';
-    $element = array($team_id);
-    $results = $db->query($sql, $element);
+  public static async function genAllScoresByTeam(
+    int $team_id,
+  ): Awaitable<array<ScoreLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM scores_log WHERE team_id = %d ORDER BY ts DESC',
+      $team_id,
+    );
 
     $scores = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $scores[] = self::scorelogFromRow($row);
     }
 
@@ -99,14 +119,17 @@ class ScoreLog extends Model {
   }
 
   // Get all scores by type.
-  public static function allScoresByType(string $type): array<ScoreLog> {
-    $db = self::getDb();
-    $sql = 'SELECT * FROM scores_log WHERE type = ? ORDER BY ts DESC';
-    $element = array($type);
-    $results = $db->query($sql, $element);
+  public static async function genAllScoresByType(
+    string $type,
+  ): Awaitable<array<ScoreLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM scores_log WHERE type = %s ORDER BY ts DESC',
+      $type,
+    );
 
     $scores = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $scores[] = self::scorelogFromRow($row);
     }
 
@@ -114,11 +137,19 @@ class ScoreLog extends Model {
   }
 
   // Log successful score.
-  public static function logValidScore(int $level_id, int $team_id, int $points, string $type): void {
-    $db = self::getDb();
-
-    $sql = 'INSERT INTO scores_log (ts, level_id, team_id, points, type) VALUES (NOW(), ?, ?, ?, ?)';
-    $elements = array($level_id, $team_id, $points, $type);
-    $db->query($sql, $elements);
+  public static async function genLogValidScore(
+    int $level_id,
+    int $team_id,
+    int $points,
+    string $type,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'INSERT INTO scores_log (ts, level_id, team_id, points, type) VALUES (NOW(), %d, %d, %d, %s)',
+      $level_id,
+      $team_id,
+      $points,
+      $type,
+    );
   }
 }

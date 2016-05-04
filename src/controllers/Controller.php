@@ -5,10 +5,11 @@ abstract class Controller {
   abstract protected function getFilters(): array<string, mixed>;
   abstract protected function getPages(): array<string>;
 
-  abstract protected function renderBody(string $page): :xhp;
+  abstract protected function genRenderBody(string $page): Awaitable<:xhp>;
 
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $page = $this->processRequest();
+    $body = await $this->genRenderBody($page);
     return
       <x:doctype>
       <html lang="en">
@@ -21,7 +22,7 @@ abstract class Controller {
         <link rel="icon" type="image/png" href="static/img/favicon.png"/>
         <link rel="stylesheet" href="static/css/fb-ctf.css"/>
       </head>
-      {$this->renderBody($page)}
+        {$body}
       </html>
     </x:doctype>;
   }

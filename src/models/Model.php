@@ -3,13 +3,10 @@
 abstract class Model {
   protected static Db $db = MUST_MODIFY;
 
-  protected static function getDb(): Db {
+  protected static async function genDb(): Awaitable<AsyncMysqlConnection> {
     if (self::$db === MUST_MODIFY) {
       self::$db = Db::getInstance();
     }
-    if (!self::$db->isConnected()) {
-      self::$db->connect();
-    }
-    return self::$db;
+    return await self::$db->genConnection();
   }
 }

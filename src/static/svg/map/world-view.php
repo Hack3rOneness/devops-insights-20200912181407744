@@ -6,9 +6,9 @@ class WorldViewMapController {
   public function __construct(private bool $viewmode) {
   }
 
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     if ($this->viewmode) {
-      $worldMap = $this->renderWorldMapView();
+      $worldMap = await $this->genRenderWorldMapView();
     } else {
       $worldMap = $this->renderWorldMap();
     }
@@ -31,10 +31,12 @@ class WorldViewMapController {
     return $svg_countries;
   }
 
-  public function renderWorldMapView(): :xhp {
+  public async function genRenderWorldMapView(): Awaitable<:xhp> {
     $svg_countries = <g class="countries"></g>;
-    foreach (Country::allMapCountries() as $country) {
-      $path_class = ($country->getUsed() && Country::isActiveLevel($country->getId()))
+    $all_map_countries = await Country::genAllMapCountries();
+    foreach ($all_map_countries as $country) {
+      $is_active_level = await Country::genIsActiveLevel($country->getId());
+      $path_class = ($country->getUsed() && $is_active_level)
         ? 'land active'
         : 'land';
 
@@ -54,4 +56,4 @@ class WorldViewMapController {
 
 /* HH_IGNORE_ERROR[1002] */
 $viewmodepage = new WorldViewMapController(true);
-echo $viewmodepage->render();
+echo \HH\Asio\join($viewmodepage->genRender());

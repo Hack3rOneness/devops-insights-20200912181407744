@@ -12,6 +12,7 @@ class SessionUtils {
   private function __clone(): void {}
 
   public static function sessionStart(): void {
+    \HH\Asio\join(Session::genCleanup(self::$s_lifetime));
     session_set_save_handler(
       array(__CLASS__, 'open'),
       array(__CLASS__, 'close'),
@@ -40,6 +41,10 @@ class SessionUtils {
     );
   }
 
+  public static function sessionRefresh(): void {
+    session_regenerate_id(true);
+  }
+
   public function open(string $path, string $name): bool {
     return true;
   }
@@ -49,8 +54,9 @@ class SessionUtils {
   }
 
   public function read(string $cookie): string {
-    if (Session::sessionExist($cookie)) {
-      $session = Session::get($cookie);
+    $session_exists = \HH\Asio\join(Session::genSessionExist($cookie));
+    if ($session_exists) {
+      $session = \HH\Asio\join(Session::gen($cookie));
       return $session->getData();
     } else {
       return '';
@@ -58,21 +64,25 @@ class SessionUtils {
   }
 
   public function write(string $cookie, string $data): bool {
-    if (Session::sessionExist($cookie)) {
-      Session::update($cookie, $data);
+    $session_exists = \HH\Asio\join(Session::genSessionExist($cookie));
+    if ($session_exists) {
+      \HH\Asio\join(Session::genUpdate($cookie, $data));
+      if (strpos($data, 'team_id') !== false) {
+        \HH\Asio\join(Session::genSetTeamId($cookie, $data));
+      }
     } else {
-      Session::create($cookie, $data);
+      \HH\Asio\join(Session::genCreate($cookie, $data));
     }
     return true;
   }
 
   public function destroy(string $cookie): bool {
-    Session::delete($cookie);
+    \HH\Asio\join(Session::genDelete($cookie));
     return true;
   }
 
   public function gc(int $maxlifetime): bool {
-    Session::cleanup($maxlifetime);
+    \HH\Asio\join(Session::genCleanup($maxlifetime));
     return true;
   }
 
@@ -82,6 +92,16 @@ class SessionUtils {
   }
 
   public static function sessionLogout(): void {
+    $params = session_get_cookie_params();
+    setcookie(
+      session_name(),
+      '',
+      time() - 42000,
+      $params["path"],
+      $params["domain"],
+      $params["secure"],
+      $params["httponly"]
+    );
     session_destroy();
 
     throw new IndexRedirectException();
@@ -94,7 +114,7 @@ class SessionUtils {
 
   public static function enforceLogin(): void {
     /* HH_IGNORE_ERROR[2050] */
-    if (!array_key_exists('team_id', $_SESSION)) {
+    if (!self::sessionActive()) {
       throw new IndexRedirectException();
     }
   }

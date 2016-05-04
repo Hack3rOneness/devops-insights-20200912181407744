@@ -1,13 +1,14 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class WorldMapController {
-  public function render(): :xhp {
-    $worldMap = $this->renderWorldMap();
+  public async function genRender(): Awaitable<:xhp> {
+    $worldMap = await $this->genRenderWorldMap();
     return
       <svg id="fb-gameboard-map" xmlns="http://www.w3.org/2000/svg" amcharts="http://amcharts.com/ammap" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1008 651" preserveAspectRatio="xMidYMid meet">
         <defs>
@@ -20,25 +21,38 @@ class WorldMapController {
       </svg>;
   }
 
-  public function renderWorldMap(): :xhp {
+  public async function genRenderWorldMap(): Awaitable<:xhp> {
     $svg_countries = <g class="countries"></g>;
 
-    foreach (Country::allMapCountries() as $country) {
-      if (Configuration::get('gameboard')->getValue() === '1') {
-        $path_class = (($country->getUsed()) && (Country::isActiveLevel($country->getId())))
+    $all_map_countries = await Country::genAllMapCountries();
+    foreach ($all_map_countries as $country) {
+      $gameboard = await Configuration::gen('gameboard');
+      if ($gameboard->getValue() === '1') {
+        $is_active_level = await Country::genIsActiveLevel($country->getId());
+        $path_class = ($country->getUsed() && $is_active_level)
           ? 'land active'
           : 'land';
         $map_indicator = 'map-indicator ';
         $data_captured = null;
-        $country_level = Level::whoUses($country->getId());
+        $country_level = await Level::genWhoUses($country->getId());
 
         if ($country_level) {
-          if (ScoreLog::previousScore($country_level->getId(), SessionUtils::sessionTeam(), false)) {
+          $my_previous_score = await ScoreLog::genPreviousScore(
+            $country_level->getId(),
+            SessionUtils::sessionTeam(),
+            false,
+          );
+          $other_previous_score = await ScoreLog::genPreviousScore(
+            $country_level->getId(),
+            SessionUtils::sessionTeam(),
+            true,
+          );
+          if ($my_previous_score) {
             $map_indicator .= 'captured--you';
             $data_captured = SessionUtils::sessionTeamName();
-          } else if (ScoreLog::previousScore($country_level->getId(), SessionUtils::sessionTeam(), true)) {
+          } else if ($other_previous_score) {
             $map_indicator .= 'captured--opponent';
-            $completed_by = Team::completedLevel($country_level->getId());
+            $completed_by = await Team::genCompletedLevel($country_level->getId());
             $data_captured = '';
             foreach ($completed_by as $c) {
               $data_captured .= ' ' . $c->getName();
@@ -69,4 +83,4 @@ class WorldMapController {
 }
 
 $map = new WorldMapController();
-echo $map->render();
+echo \HH\Asio\join($map->genRender());

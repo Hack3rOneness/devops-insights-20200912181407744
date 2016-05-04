@@ -41,70 +41,87 @@ class Country extends Model {
   }
 
   // Make sure all the countries used field is good
-  public static function usedAdjust(): void {
-    $db = self::getDb();
-
-    $sql1 = 'UPDATE countries SET used = 1 WHERE id IN (SELECT entity_id FROM levels)';
-    $sql2 = 'UPDATE countries SET used = 0 WHERE id NOT IN (SELECT entity_id FROM levels)';
-    $db->query($sql1);
-    $db->query($sql2);
+  public static async function genUsedAdjust(
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE countries SET used = 1 WHERE id IN (SELECT entity_id FROM levels)',
+    );
+    await $db->queryf(
+      'UPDATE countries SET used = 0 WHERE id NOT IN (SELECT entity_id FROM levels)',
+    );
   }
 
   // Enable or disable a country
-  public static function setStatus(int $country_id, bool $status): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE countries SET enabled = ? WHERE id = ?';
-    $elements = array($status ? 1 : 0, $country_id);
-    $db->query($sql, $elements);
+  public static async function genSetStatus(
+    int $country_id,
+    bool $status,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE countries SET enabled = %d WHERE id = %d',
+      $status ? 1 : 0,
+      $country_id,
+    );
   }
 
   // Check if a country is enabled
-  public static function isEnabled(int $country_id): bool {
-    $db = self::getDb();
+  public static async function genIsEnabled(
+    int $country_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT enabled FROM countries WHERE id = ? LIMIT 1';
-    $element = array($country_id);
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    $result = await $db->queryf(
+      'SELECT enabled FROM countries WHERE id = %d LIMIT 1',
+      $country_id,
+    );
 
-    return (intval(firstx($results)) === 1);
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return (intval($result->mapRows()[0]) === 1);
   }
 
   // Set the used flag for a country
-  public static function setUsed(int $country_id, bool $status): void {
-    $db = self::getDb();
-
-    $sql = 'UPDATE countries SET used = ? WHERE id = ? LIMIT 1';
-    $elements = array($status ? 1 : 0, $country_id);
-    $db->query($sql, $elements);
+  public static async function genSetUsed(
+    int $country_id,
+    bool $status,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE countries SET used = %d WHERE id = %d LIMIT 1',
+      $status ? 1 : 0,
+      $country_id,
+    );
   }
 
   // Check if a country is used
-  public static function isUsed(int $country_id): bool {
-    $db = self::getDb();
+  public static async function genIsUsed(
+    int $country_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT used FROM countries WHERE id = ? LIMIT 1';
-    $element = array($country_id);
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    $result = await $db->queryf(
+      'SELECT used FROM countries WHERE id = %d LIMIT 1',
+      $country_id,
+    );
 
-    return (intval(firstx($results)) === 1);
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]) === 1;
   }
 
   // Get all countries
-  public static function allCountries(bool $map): array<Country> {
-    $db = self::getDb();
+  public static async function genAllCountries(
+    bool $map,
+  ): Awaitable<array<Country>> {
+    $db = await self::genDb();
 
     if ($map) {
-      $sql = 'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)';
+      $result = await $db->queryf('SELECT * FROM countries ORDER BY CHAR_LENGTH(d)');
     } else {
-      $sql = 'SELECT * FROM countries ORDER BY name';
+      $result = await $db->queryf('SELECT * FROM countries ORDER BY name');
     }
-    $results = $db->query($sql);
 
     $countries = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $countries[] = self::countryFromRow($row);
     }
 
@@ -113,32 +130,35 @@ class Country extends Model {
 
   // All enabled countries. The weird sorting is because SVG lack of z-index
   // and things looking like shit in the map. See issue #20.
-  public static function allEnabledCountries(bool $map): array<Country> {
-    $db = self::getDb();
+  public static async function genAllEnabledCountries(
+    bool $map,
+  ): Awaitable<array<Country>> {
+    $db = await self::genDb();
 
     if ($map) {
-      $sql = 'SELECT * FROM countries WHERE enabled = 1 ORDER BY CHAR_LENGTH(d)';
+      $result = await $db->queryf('SELECT * FROM countries WHERE enabled = 1 ORDER BY CHAR_LENGTH(d)');
     } else {
-      $sql = 'SELECT * FROM countries WHERE enabled = 1 ORDER BY name';
+      $result = await $db->queryf('SELECT * FROM countries WHERE enabled = 1 ORDER BY name');
     }
-    $results = $db->query($sql);
 
     $countries = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $countries[] = self::countryFromRow($row);
     }
 
     return $countries;
   }
 
-  public static function allMapCountries(): array<Country> {
-    $db = self::getDb();
+  public static async function genAllMapCountries(
+  ): Awaitable<array<Country>> {
+    $db = await self::genDb();
     
-    $sql = 'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)',
+    );
 
     $countries = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $countries[] = self::countryFromRow($row);
     }
 
@@ -146,14 +166,16 @@ class Country extends Model {
   }
 
   // All enabled and unused countries
-  public static function allAvailableCountries(): array<Country> {
-    $db = self::getDb();
+  public static async function genAllAvailableCountries(
+  ): Awaitable<array<Country>> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM countries WHERE enabled = 1 AND used = 0 ORDER BY name';
-    $results = $db->query($sql);
+    $result = await $db->queryf(
+      'SELECT * FROM countries WHERE enabled = 1 AND used = 0 ORDER BY name',
+    );
 
     $countries = array();
-    foreach ($results as $row) {
+    foreach ($result->mapRows() as $row) {
       $countries[] = self::countryFromRow($row);
     }
 
@@ -161,30 +183,49 @@ class Country extends Model {
   }
 
   // Check if country is in an active level
-  public static function isActiveLevel(int $country_id): bool {
-    $db = self::getDb();
+  public static async function genIsActiveLevel(
+    int $country_id,
+  ): Awaitable<bool> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT COUNT(*) FROM levels WHERE entity_id = ? AND active = 1';
-    $element = array($country_id);
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    $result = await $db->queryf(
+      'SELECT COUNT(*) FROM levels WHERE entity_id = %d AND active = 1',
+      $country_id,
+    );
 
-    return intval(firstx($results)['COUNT(*)']) > 0;
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['COUNT(*)']) > 0;
   }
 
   // Get a country by id
-  public static function get(int $country_id): Country {
-    $db = self::getDb();
+  public static async function gen(
+    int $country_id,
+  ): Awaitable<Country> {
+    $db = await self::genDb();
 
-    $sql = 'SELECT * FROM countries WHERE id = ? LIMIT 1';
-    $element = array($country_id);
-    $results = $db->query($sql, $element);
-    invariant(count($results) === 1, 'Expected exactly one result');
+    $result = await $db->queryf(
+      'SELECT * FROM countries WHERE id = %d LIMIT 1',
+      $country_id,
+    );
 
-    return self::countryFromRow(firstx($results));
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return self::countryFromRow($result->mapRows()[0]);
   }
 
-  private static function countryFromRow(array<string, string> $row): Country {
+  // Get a random enabled, unused country ID
+  public static async function genRandomAvailableCountryId(
+  ): Awaitable<int> {
+    $db = await self::genDb();
+
+    $result = await $db->queryf(
+      'SELECT id FROM countries WHERE enabled = 1 AND used = 0 ORDER BY RAND() LIMIT 1',
+    );
+
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['id']);
+  }
+
+  private static function countryFromRow(Map<string, string> $row): Country {
     return new Country(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'iso_code'),
@@ -194,16 +235,5 @@ class Country extends Model {
       must_have_idx($row, 'd'),
       must_have_idx($row, 'transform'),
     );
-  }
-
-  // Get a random enabled, unused country ID
-  public static function randomAvailableCountryId(): int {
-    $db = self::getDb();
-
-    $sql = 'SELECT id FROM countries WHERE enabled = 1 AND used = 0 ORDER BY RAND() LIMIT 1';
-    $results = $db->query($sql);
-    invariant(count($results) === 1, 'Expected exactly one result');
-
-    return intval(firstx($results)['id']);
   }
 }

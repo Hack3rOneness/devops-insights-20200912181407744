@@ -1,18 +1,20 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class TeamModuleController {
-  public function render(): :xhp {
-    $leaderboard = Team::leaderboard();
+  public async function genRender(): Awaitable<:xhp> {
+    $leaderboard = await Team::genLeaderboard();
     $rank = 1;
 
     $list = <ul class="grid-list"></ul>;
 
-    if (Configuration::get('gameboard')->getValue() === '1') {
+    $gameboard = await Configuration::gen('gameboard');
+    if ($gameboard->getValue() === '1') {
       foreach ($leaderboard as $leader) {
         $iconbadge = '#icon--badge-' . $leader->getLogo();
         $list->appendChild(
@@ -54,4 +56,4 @@ class TeamModuleController {
 }
 
 $teams_generated = new TeamModuleController();
-echo $teams_generated->render();
+echo \HH\Asio\join($teams_generated->genRender());

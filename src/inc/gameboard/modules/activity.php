@@ -1,15 +1,17 @@
-<?hh
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
+/* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 class ActivityModuleController {
-  public function render(): :xhp {
+  public async function genRender(): Awaitable<:xhp> {
     $activity_ul = <ul class="activity-stream"></ul>;
 
-    foreach (Control::allActivity() as $score) {
+    $all_activity = await Control::genAllActivity();
+    foreach ($all_activity as $score) {
       if (intval($score['team_id']) === SessionUtils::sessionTeam()) {
         $class_li = 'your-team';
         $class_span = 'your-name';
@@ -41,4 +43,4 @@ class ActivityModuleController {
 }
 
 $activity_generated = new ActivityModuleController();
-echo $activity_generated->render();
+echo \HH\Asio\join($activity_generated->genRender());
