@@ -1,5 +1,5 @@
 function formatNumber(value) {
-  return ((parseInt(value) > 9) ? value : '0'+value)
+  return ((parseInt(value) > 9) ? value : '0'+value);
 }
 
 function noClock() {
@@ -97,6 +97,6 @@ var clockRunning = function() {
   } else {
     clearInterval(clockRunning);
   }
-}
+};
 
 setInterval(clockRunning, 10);
