@@ -39,15 +39,22 @@ class Configuration extends Model {
   public static async function gen(
     string $field,
   ): Awaitable<Configuration> {
-    $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM configuration WHERE field = %s LIMIT 1',
-      $field,
-    );
-
-    invariant($result->numRows() === 1, 'Expected exactly one result');
-
-    return self::configurationFromRow($result->mapRows()[0]);
+    $mc = self::getMc();
+    $key = 'configuration:' . $field;
+    $mc_result = await \HH\Asio\wrap($mc->get($key));
+    if ($mc_result->isSucceeded()) {
+      $result = json_decode($mc_result->getResult(), true);
+    } else {
+      $db = await self::genDb();
+      $db_result = await $db->queryf(
+        'SELECT * FROM configuration WHERE field = %s LIMIT 1',
+        $field,
+      );
+      invariant($db_result->numRows() === 1, 'Expected exactly one result');
+      $result = firstx($db_result->mapRows())->toArray();
+      await $mc->set($key, json_encode($result));
+    }
+    return self::configurationFromRow($result);
   }
 
   // Change configuration field.
@@ -61,6 +68,8 @@ class Configuration extends Model {
       $value,
       $field,
     );
+
+    await self::getMc()->del('configuration:' . $field);
   }
 
   // Check if field is valid.
@@ -75,7 +84,7 @@ class Configuration extends Model {
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
 
-    return intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0;
+    return intval(idx(firstx($result->mapRows()), 'COUNT(*)')) > 0;
   }
 
   // All the configuration.
@@ -88,13 +97,13 @@ class Configuration extends Model {
 
     $configuration = array();
     foreach ($result->mapRows() as $row) {
-      $configuration[] = self::configurationFromRow($row);
+      $configuration[] = self::configurationFromRow($row->toArray());
     }
 
     return $configuration;
   }
 
-  private static function configurationFromRow(Map<string, string> $row): Configuration {
+  private static function configurationFromRow(array<string, string> $row): Configuration {
     return new Configuration(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'field'),

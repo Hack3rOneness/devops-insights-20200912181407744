@@ -51,6 +51,9 @@ install_mysql "$P_ROOT"
 # Install MyCLI
 install_mycli
 
+# Install memcached
+package memcached
+
 # Install git
 package git
 
