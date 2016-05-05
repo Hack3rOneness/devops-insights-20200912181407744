@@ -439,6 +439,20 @@ var admin = (function(){
     }
   }
 
+  // Update category
+  function updateCategory(section) {
+    var category_id = $('.categories_form input[name=category_id]', section)[0].value;
+    var category = $('.categories_form input[name=category]', section)[0].value;
+    var update_data = {
+      action: 'update_category',
+      category_id: category_id,
+      category: category
+    };
+    if ((category_id)) {
+      sendAdminRequest(update_data, false);
+    }
+  }
+
   // Create generic level
   function createLevel(section) {
     var level_type = $('.level_form input[name=level_type]', section)[0].value;
@@ -842,6 +856,8 @@ var admin = (function(){
         Dropkick($('[name=category_id]', $section)[0]).disable();
       } else if (action === 'add-new'){
         addNewSection($self);
+      } else if (action === 'save-category'){
+        updateCategory($section);
       } else if (action === 'create') {
         createElement($section);
       } else if (action === 'create-announcement') {
