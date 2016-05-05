@@ -181,7 +181,7 @@ function setupInputListeners() {
 (function(FB_CTF) {
   var $body;
 
-  // colors
+
   var COLOR_TEAL_BLUE = "#5cf0f6";
 
   // checks

@@ -1,6 +1,11 @@
 var $ = require('jquery');
 
 module.exports = {
+  getURLParameter: function(name) {
+    // eslint-disable-next-line no-sparse-arrays
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+  },
+
   /**
    * load a component into a target on the site
    *

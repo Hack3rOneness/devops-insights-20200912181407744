@@ -1,14 +1,16 @@
+var Utils = require('./utils');
+
 var jQuery = require('jquery');
 var $ = jQuery;
+
+// typed.js uses the jQuery from the window
 window.jQuery = jQuery;
-require('typed.js'); // TODO: Can we remove this?
+require('typed.js');
+
 var FB_CTF = require('./fb-ctf');
 FB_CTF.admin = require('./admin-fb-ctf');
 
-
-/**
- * add the transitionend event to a global var
- */
+// Add the transitionend event to a global var
 (function(window) {
   var transitions = {
     'transition': 'transitionend',
@@ -26,10 +28,9 @@ FB_CTF.admin = require('./admin-fb-ctf');
   }
 })(window);
 
-
 /**
  * jQuery plugin for adding a class to an element and ensuring that
- *  it is the only sibling with the passed class
+ * it is the only sibling with the passed class
  */
 !(function($) {
   $.fn.onlySiblingWithClass = function(className) {
@@ -58,11 +59,8 @@ FB_CTF.admin = require('./admin-fb-ctf');
         typeWords: false
       }, passed_options);
 
-      //
-      // if the typeWords option is set, then we want to type
-      //  fast. So, we have to separate the text by CHUNKS of
-      //  characters rather than just characters.
-      //
+      // If the typeWords option is set, then we want to type fast. So, we have
+      // to separate the text by CHUNKS of characters rather than just characters.
       if (options.typeWords) {
         var lines = text.split('<br>'),
             lineIndex = 0;
@@ -71,9 +69,7 @@ FB_CTF.admin = require('./admin-fb-ctf');
           return;
         }
 
-        /**
-         * render a line of text
-         */
+        // render a line of text
         function renderLine(chunk) {
           if (lineIndex > lines.length) {
             options.callback();
@@ -103,14 +99,9 @@ FB_CTF.admin = require('./admin-fb-ctf');
         }
 
         renderLine(lines[lineIndex]);
-
-
       }
-      //
-      // if the typedWords option is not enabled, then just use
-      //  the typed plugin
-      //
       else {
+        // If the typedWords option is not enabled, then just usethe typed plugin
         $(this).typed(options);
       }
 
@@ -118,64 +109,50 @@ FB_CTF.admin = require('./admin-fb-ctf');
   };
 })(jQuery);
 
-(function(_BUILDKIT, $, undefined) {
-  var FB_CTF = window.FB_CTF;
-  var $body,
-      FB_SECTION;
+function enableNavActiveState() {
+  var page = Utils.getURLParameter('page');
 
-  function getURLParameter(name) {
-    // eslint-disable-next-line no-sparse-arrays
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+  $('.fb-main-nav a').removeClass('active').filter(function() {
+    var href = $(this).data('active');
+
+    if (href === undefined || !href.indexOf || page === '') {
+      return false;
+    }
+    return href.indexOf(page) > -1;
+  }).addClass('active');
+};
+
+function enableAdminActiveState() {
+  var page = getURLParameter('page');
+
+  $('#fb-admin-nav li').removeClass('active').filter(function() {
+    var href = $('a', this).attr('href').replace('#', '');
+
+    if (href === undefined || !href.indexOf || page === '') {
+      return false;
+    }
+    return href.indexOf(page) > -1;
+  }).addClass('active');
+};
+
+$(document).ready(function() {
+  if (window.innerWidth < 960) {
+    window.location = '/index.php?page=mobile';
   }
 
-  _BUILDKIT.enableNavActiveState = function() {
-    var page = getURLParameter('page');
+  FB_CTF.init();
 
-    $('.fb-main-nav a').removeClass('active').filter(function() {
-      var href = $(this).data('active');
+  var section = $('body').data('section');
+  if (section === 'pages') {
+    enableNavActiveState();
+  } else if (section === 'gameboard' || section === 'viewer-mode') {
+    FB_CTF.gameboard.init();
+  } else if (section === 'admin') {
+    FB_CTF.admin.init();
+    enableAdminActiveState();
+  }
 
-      if (href === undefined || !href.indexOf || page === '') {
-        return false;
-      }
-      return href.indexOf(page) > -1;
-    }).addClass('active');
-  };
-
-  _BUILDKIT.enableAdminActiveState = function() {
-    var page = getURLParameter('page');
-
-    $('#fb-admin-nav li').removeClass('active').filter(function() {
-      var href = $('a', this).attr('href').replace('#', '');
-
-      if (href === undefined || !href.indexOf || page === '') {
-        return false;
-      }
-      return href.indexOf(page) > -1;
-    }).addClass('active');
-  };
-
-  $(document).ready(function() {
-    $body = $('body');
-    FB_SECTION = $body.data('section');
-
-    if (window.innerWidth < 960) {
-      window.location = '/index.php?page=mobile';
-    }
-
-    FB_CTF.init();
-
-    if (FB_SECTION === 'pages') {
-      _BUILDKIT.enableNavActiveState();
-    } else if (FB_SECTION === 'gameboard' || FB_SECTION === 'viewer-mode') {
-      FB_CTF.gameboard.init();
-    } else if (FB_SECTION === 'admin') {
-      FB_CTF.admin.init();
-      _BUILDKIT.enableAdminActiveState();
-    }
-
-    $('body').trigger('content-loaded', {
-      page: FB_SECTION
-    });
+  $('body').trigger('content-loaded', {
+    page: section
   });
-
-})(window._BUILDKIT = window._BUILDKIT || {}, $);
+});
