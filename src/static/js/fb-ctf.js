@@ -6,6 +6,7 @@ var Widget = require('./widget');
 var Utils = require('./utils');
 var Modal = require('./modal');
 var Slider = require('./slider');
+var Clock = require('./clock');
 var Graphics = require('./graphics');
 require('flexslider');
 require('hoverintent-jqplugin')($);
@@ -1765,6 +1766,8 @@ function setupInputListeners() {
       // init the jquery object variables
       $gameboard = $('#fb-gameboard');
 
+      setInterval(Clock.clockRunning, 10);
+
       VIEW_ONLY = $body.data('section') === 'viewer-mode';
 
       if (GAMEBOARD_LOADED === false) {
@@ -2363,7 +2366,7 @@ function setupInputListeners() {
       Slider.init();
 
       // load the grpahics
-      Graphics.init(null); // TODO
+      Graphics.init(FB_CTF.data);
     }).trigger('content-loaded');
 
     /* --------------------------------------------

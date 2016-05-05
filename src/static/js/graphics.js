@@ -4,10 +4,12 @@ var d3 = require('d3');
 var COLOR_LIGHT_BLUE = "#cff8fa";
 
 module.exports = (function() {
+  var data;
   /**
    * set up event listeners
    */
-  function init(progressiveCount) {
+  function init(data) {
+    this.data = data;
     $('.fb-graphic').each(function() {
       var $graphic = $(this),
           datafile = $graphic.data('file');
@@ -16,7 +18,7 @@ module.exports = (function() {
         return;
       }
       $graphic.addClass('initialized');
-      build(this, datafile, progressiveCount);
+      build(this, datafile);
     });
     //
     // scoreboard filter
@@ -42,13 +44,13 @@ module.exports = (function() {
    * @param datafile (string)
    *   - the file to load, which contains the data
    */
-  function build(svgEl, datafile, progressiveCount) {
+  function build(svgEl, datafile) {
     if (datafile === undefined) {
       return;
     }
     var $container = $(svgEl).closest('.scoreboard-graphic-container');
 
-    $.get(datafile, function(data) {
+    $.get(datafile, function() {
       var scores = data;
       var maxScore = 0;
       $.each(scores, function() {
@@ -70,7 +72,7 @@ module.exports = (function() {
           HEIGHT = 220 - MARGIN.bottom,
 
           X_START = 1,
-          X_LENGTH = 10, // TODO: Used to be progressiveCount
+          X_LENGTH = this.data.CONF.progressiveCount,
           xRange = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
           /*yRange   = d3.scale.linear().range([HEIGHT, 0]).domain([d3.min(minMaxArray, function (d) {
            return d.score;
