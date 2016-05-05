@@ -13,26 +13,14 @@ module.exports = function(grunt) {
         src: ['src/static/js/**/*.js']
       }
     },
-    flow: {
-      watch: {
-        src: 'src/static/js/**/*.js',
-        options: {
-          server: true
-        }
+    run: {
+      flow: {
+        cmd: 'flow',
+        args: [
+          'src'
+        ]
       }
     },
-    // babel: {
-    //   options: {
-    //     presets: [
-    //       "es2015",
-    //       "react"
-    //     ]
-    //   },
-    //   dist: {
-    //     src: 'src/static/js/app.js',
-    //     dest: 'src/static/build/app-babel.js'
-    //   }
-    // },
     browserify: {
       options: {
         browserifyOptions: {
@@ -72,18 +60,16 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-env');
   grunt.loadNpmTasks('grunt-eslint');
-  //grunt.loadNpmTasks('grunt-flow-type-check');
-  grunt.loadNpmTasks('grunt-flow');
   grunt.loadNpmTasks('grunt-force-task');
+  grunt.loadNpmTasks('grunt-run');
 
-  grunt.registerTask('default', ['force:eslint', 'flow', 'browserify', 'copy:browserify']);
-  grunt.registerTask('release', ['env:release', 'eslint', 'flow', 'browserify', 'uglify']);
+  grunt.registerTask('check', ['force:eslint', 'run:flow']);
+  grunt.registerTask('default', ['check', 'browserify', 'copy:browserify']);
+  grunt.registerTask('release', ['env:release', 'eslint', 'run:flow', 'browserify', 'uglify']);
 };

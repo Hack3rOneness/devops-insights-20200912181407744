@@ -60,11 +60,13 @@ install_hhvm "$CTF_PATH"
 # Install Composer
 install_composer "$CTF_PATH"
 composer.phar install
+sudo chown -R vagrant:vagrant "$CTF_PATH/vendor"
 
 # Install NPM and grunt
 package npm
 package nodejs-legacy
 npm install -g grunt
+npm install -g flow-bin
 npm install
 
 # Run grunt to generate JS files

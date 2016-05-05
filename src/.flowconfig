@@ -1,0 +1,9 @@
+[include]
+../node_modules/d3
+../node_modules/jquery
+../node_modules/typed.js
+../node_modules/dropkickjs
+../node_modules/hoverintent-jqplugin
+../node_modules/flexslider
+
+
