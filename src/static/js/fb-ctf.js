@@ -1,5 +1,4 @@
 // @flow
-
 var d3 = require('d3');
 var $ = require('jquery');
 require('flexslider');
@@ -10,14 +9,14 @@ require('hoverintent-jqplugin')($);
 function setWidgetStatus(widgetName, widgetValue) {
   var d = new Date();
   // Expiration is 24 hours
-  d.setTime(d.getTime() + (24*60*60*1000));
+  d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
   var expires = "expires=" + d.toUTCString();
   document.cookie = widgetName + "=" + widgetValue + "; " + expires;
 }
 
 function setAllWidgetStatus(widgetValue) {
   var widgets = ['Leaderboard', 'Announcements', 'Activity', 'Teams', 'Filter', 'Game Clock'];
-  for (var i=0; i<widgets.length; i++) {
+  for (var i = 0; i < widgets.length; i++) {
     setWidgetStatus(widgets[i], widgetValue);
   }
 }
@@ -29,16 +28,16 @@ function isWidgetSet(widgetName) {
 function getWidgetStatus(widgetName) {
   var name = widgetName + "=";
   var ca = document.cookie.split(';');
-  for(var i=0; i<ca.length; i++) {
+  for (var i = 0; i < ca.length; i++) {
     var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1);
+    while (c.charAt(0) == ' ') c = c.substring(1);
     if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
   }
   return '';
 }
 
 function rememberWidgets(widgets) {
-  for (var i=0; i<widgets.length; i++) {
+  for (var i = 0; i < widgets.length; i++) {
     if (isWidgetSet(widgets[i])) {
       if (getWidgetStatus(widgets[i]) === 'open') {
         $('aside[data-name="' + widgets[i] + '"]').addClass('active');
@@ -115,7 +114,7 @@ function verifyTeamLogo() {
   try {
     var teamLogo = $('.fb-slider .active .icon--badge use').attr('xlink:href').replace('#icon--badge-', '');
     return teamLogo;
-  } catch(err) {
+  } catch (err) {
     teamLogoFormError();
     return false;
   }
@@ -244,18 +243,17 @@ $(document).on('keypress', 'input', function(e) {
 
 // fb-ctf.js
 
-(function(FB_CTF, $, undefined){
+(function(FB_CTF, $, undefined) {
   var $body;
 
   // colors
   var COLOR_LIGHT_BLUE = "#cff8fa",
-      COLOR_TEAL_BLUE  = "#5cf0f6",
-      COLOR_MAIN_BLUE  = "#13242b";
+      COLOR_TEAL_BLUE = "#5cf0f6";
 
   // checks
-  var ua     = navigator.userAgent.toLowerCase(),
+  var ua = navigator.userAgent.toLowerCase(),
       is_firefox = ua.indexOf('firefox') > -1,
-      is_ie      = ua.indexOf('msie') > -1;
+      is_ie = ua.indexOf('msie') > -1;
 
   FB_CTF.debug = true;
   FB_CTF.data = {};
@@ -294,13 +292,13 @@ $(document).on('keypress', 'input', function(e) {
    * handles all the loading of the modules and the map, as well as
    *  all map-related event listeners and animations
    */
-  FB_CTF.gameboard = (function(){
+  FB_CTF.gameboard = (function() {
 
     var GAMEBOARD_LOADED = false,
-        LOADING_CLASS    = 'loading',
-        LIST_VIEW        = false,
-        VIEW_ONLY        = false,
-        CURRENT_ZOOM     = 1,
+        LOADING_CLASS = 'loading',
+        LIST_VIEW = false,
+        VIEW_ONLY = false,
+        CURRENT_ZOOM = 1,
         $gameboard,
         $listview,
         $mapSvg,
@@ -311,7 +309,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * enable click and drag capabilities on the map
      */
-    var enableClickAndDrag = (function(){
+    var enableClickAndDrag = (function() {
       var $window = $(window);
 
       var zoom = d3.behavior.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
@@ -319,35 +317,33 @@ $(document).on('keypress', 'input', function(e) {
       var svgMap,
           container;
 
-      function init(){
+      function init() {
         svgMap = d3.select('#fb-gameboard-map').call(zoom);
         container = svgMap.select(".view-controller").call(zoom);
 
-        $window.on('keyup', function(event){
-          var key     = event.which,
-              ww      = $window.width(),
-              wh      = $window.height(),
-              zoomin  = is_firefox ? 61 : 187,
+        $window.on('keyup', function(event) {
+          var key = event.which,
+              zoomin = is_firefox ? 61 : 187,
               zoomout = is_firefox ? 173 : 189;
 
           // the plus (zoom in) or the minus
-          if( key === zoomin || key === zoomout){
+          if (key === zoomin || key === zoomout) {
             var multiplier = key === zoomin ? 1 : -1;
 
             svgMap.call(zoom.event); // https://github.com/mbostock/d3/issues/2387
 
             // Record the coordinates (in data space) of the center (in screen space).
-            var center0      = [ 504 , 325],
-                translate0   = zoom.translate(),
+            var center0 = [504, 325],
+                translate0 = zoom.translate(),
                 coordinates0 = coordinates(center0),
-                newScale     = zoom.scale() * Math.pow(2, multiplier);
+                newScale = zoom.scale() * Math.pow(2, multiplier);
 
-            if(newScale > 10){
-              zoom.scale( 10 );
-            } else if(newScale < 1){
-              zoom.scale( 1 );
+            if (newScale > 10) {
+              zoom.scale(10);
+            } else if (newScale < 1) {
+              zoom.scale(1);
             } else {
-              zoom.scale( newScale );
+              zoom.scale(newScale);
             }
 
             // Translate back to the center.
@@ -372,23 +368,23 @@ $(document).on('keypress', 'input', function(e) {
        * @param newScale (number) // default = 1
        *   - the zoom level
        */
-      function zoomToPoint(latFocus, lngFocus, newScale){
+      function zoomToPoint(latFocus, lngFocus, newScale) {
         svgMap.call(zoom.event); // https://github.com/mbostock/d3/issues/2387
 
         // default parameters
-        if( latFocus === undefined )
+        if (latFocus === undefined)
           latFocus = 0;
 
-        if( lngFocus === undefined )
+        if (lngFocus === undefined)
           lngFocus = 0;
 
-        if( newScale === undefined )
+        if (newScale === undefined)
           newScale = 1;
 
         var latModifier = -1 * (1 + (latFocus - 620) / 504);
         var lngModifier = VIEW_ONLY ? -1 * (1 + (lngFocus - 400) / 400) : -1 * (1 + (lngFocus - 325) / 325);
 
-        zoom.scale( newScale );
+        zoom.scale(newScale);
         zoom.translate([latFocus * latModifier, lngFocus * lngModifier]);
 
         svgMap.transition().duration(400).call(zoom.event);
@@ -398,14 +394,13 @@ $(document).on('keypress', 'input', function(e) {
       /**
        * function to call when the svg is zoomed
        */
-      function zoomed( scale ){
-        var zoomScale      = scale ? scale : d3.event.scale,
-            xyOffset       = zoomScale,
-            translateVal   = scale ? "0,0" : d3.event.translate,
+      function zoomed(scale) {
+        var zoomScale = scale ? scale : d3.event.scale,
+            translateVal = scale ? "0,0" : d3.event.translate,
             indicatorRatio = 1 / zoomScale,
             transformRatio = 5.6 - (5.6 * indicatorRatio),
-            panX           = translateVal[0],
-            panY           = translateVal[1];
+            panX = translateVal[0],
+            panY = translateVal[1];
 
         FB_CTF.modal.closeHoverPopup();
 
@@ -415,8 +410,8 @@ $(document).on('keypress', 'input', function(e) {
           'transform': 'translate(' + transformRatio + 'px,' + transformRatio + 'px) scale(' + indicatorRatio + ')'
         });
 
-        $('.countries .land', $mapSvg).each(function(){
-          var $self    = $(this),
+        $('.countries .land', $mapSvg).each(function() {
+          var $self = $(this),
               modifier = $self.attr('class').indexOf('active') > -1 ? 1 : 1.5;
 
           $(this).css({
@@ -429,7 +424,8 @@ $(document).on('keypress', 'input', function(e) {
        * get svg coordinates
        */
       function coordinates(point) {
-        var scale = zoom.scale(), translate = zoom.translate();
+        var scale = zoom.scale(),
+            translate = zoom.translate();
         return [(point[0] - translate[0]) / scale, (point[1] - translate[1]) / scale];
       }
 
@@ -437,23 +433,24 @@ $(document).on('keypress', 'input', function(e) {
        * get a point
        */
       function point(coordinates) {
-        var scale = zoom.scale(), translate = zoom.translate();
+        var scale = zoom.scale(),
+            translate = zoom.translate();
         return [coordinates[0] * scale + translate[0], coordinates[1] * scale + translate[1]];
       }
 
       /**
        * get the zoom
        */
-      function getZoom(){
+      function getZoom() {
         return zoom.scale();
       }
 
       return {
-        init        : init,
-        zoom        : zoom,
-        getZoom     : getZoom,
-        zoomToPoint : zoomToPoint,
-        zoomed      : zoomed
+        init: init,
+        zoom: zoom,
+        getZoom: getZoom,
+        zoomToPoint: zoomToPoint,
+        zoomed: zoomed
       };
     })(); // enableClickAndDrag
 
@@ -466,18 +463,18 @@ $(document).on('keypress', 'input', function(e) {
      * build the gameboard, and display the loading screen while
      *  it's being built
      */
-    function build(){
+    function build() {
       var countryDataLoaded = getCountryData();
 
       //
       // add the modules and the map
       //
-      var modulesLoaded  = loadModules(),
+      var modulesLoaded = loadModules(),
           mapLoaded,
           confDataLoaded = loadConfData(),
           listViewLoaded = loadListView(),
           teamDataLoaded = loadTeamData(),
-          loadingLoaded  = loadIn();
+          loadingLoaded = loadIn();
 
       if (VIEW_ONLY) {
         mapLoaded = loadMapView();
@@ -485,12 +482,12 @@ $(document).on('keypress', 'input', function(e) {
         mapLoaded = loadMap();
       }
 
-      $.when( mapLoaded, countryDataLoaded).done(function(){
+      $.when(mapLoaded, countryDataLoaded).done(function() {
         renderCountryData();
       });
 
       // do stuff when the map and modules are loaded
-      $.when(modulesLoaded, mapLoaded, confDataLoaded, listViewLoaded, teamDataLoaded, loadingLoaded).done(function(){
+      $.when(modulesLoaded, mapLoaded, confDataLoaded, listViewLoaded, teamDataLoaded, loadingLoaded).done(function() {
         console.log("modules, map, conf data, list view, team data, and loading screen are loaded");
 
         // trigger an event for the gameboard loaded, so
@@ -512,7 +509,7 @@ $(document).on('keypress', 'input', function(e) {
         //
         // initialize the tutorial, if the query string is present
         //
-        if( getUrlParameter('tutorial') === 'false' || VIEW_ONLY || FB_CTF.debug ){
+        if (getUrlParameter('tutorial') === 'false' || VIEW_ONLY || FB_CTF.debug) {
           loadOut();
         } else {
           initTutorial();
@@ -534,7 +531,7 @@ $(document).on('keypress', 'input', function(e) {
           // Load initial teams related modules and data
           loadTeamData();
           var loaded = loadTeamsModule();
-          $.when(loaded).done(function(){
+          $.when(loaded).done(function() {
             activateTeams();
           });
           loadLeaderboardModule();
@@ -546,12 +543,12 @@ $(document).on('keypress', 'input', function(e) {
           loadActivityModule();
 
           // Configuration reloader
-          setInterval( function() {
+          setInterval(function() {
             loadConfData();
           }, FB_CTF.data.CONF.refreshConf);
 
           // Countries
-          setInterval( function() {
+          setInterval(function() {
             if (FB_CTF.data.CONF.gameboard === '1') {
               // Map
               getCountryData();
@@ -576,7 +573,7 @@ $(document).on('keypress', 'input', function(e) {
           }, FB_CTF.data.CONF.refreshMap);
 
           // Teams
-          setInterval( function() {
+          setInterval(function() {
             if (FB_CTF.data.CONF.gameboard === '1') {
               // Teams
               loadTeamData();
@@ -593,7 +590,7 @@ $(document).on('keypress', 'input', function(e) {
           }, FB_CTF.data.CONF.refreshMap);
 
           // Forcefully refreshing all modules every minute
-          setInterval( function() {
+          setInterval(function() {
             loadAnnouncementsModule();
             loadFilterModule();
             loadActivityModule();
@@ -603,10 +600,10 @@ $(document).on('keypress', 'input', function(e) {
           }, 60000);
 
           // Commands
-          setInterval( function() {
+          setInterval(function() {
             FB_CTF.command_line.loadCommandsData();
           }, FB_CTF.data.CONF.refreshCmd);
-        } else {// VIEW MODE
+        } else { // VIEW MODE
         }
       });
     }
@@ -616,22 +613,22 @@ $(document).on('keypress', 'input', function(e) {
      * -------------------------------------------- */
 
 
-    function clearTeams(){
+    function clearTeams() {
       var $teamgrid = $('aside[data-module="teams"] .grid-list');
       $('li', $teamgrid).remove();
     }
 
-    function clearLeaderboard(){
+    function clearLeaderboard() {
       var $leaderboard = $('aside[data-module="leaderboard"] .leaderboard-info');
       $('li', $leaderboard).remove();
     }
 
-    function clearAnnouncements(){
+    function clearAnnouncements() {
       var $announcements = $('aside[data-module="announcements"] .announcements-list');
       $('li', $announcements).remove();
     }
 
-    function clearActivity(){
+    function clearActivity() {
       var $announcements = $('aside[data-module="activity"] .activity-stream');
       $('li', $announcements).remove();
     }
@@ -643,8 +640,8 @@ $(document).on('keypress', 'input', function(e) {
      * @param capturedBy (string)
      *   - the capturing team
      */
-    function getCapturedByMarkup( capturedBy ){
-      if( capturedBy === undefined ){
+    function getCapturedByMarkup(capturedBy) {
+      if (capturedBy === undefined) {
         return "Uncaptured";
       }
 
@@ -657,33 +654,33 @@ $(document).on('keypress', 'input', function(e) {
      * automatically scroll through the content on the sidebar
      *  modules. This happens in the "view only" mode
      */
-    function autoScrollModules(){
+    function autoScrollModules() {
       var $modules = $('aside[data-module="under-attack"], aside[data-module="leaderboard-viewmode"]');
 
-      $modules.each(function(){
-        var $scrollable    = $('.module-scrollable', this),
-            scrollHeight   = $scrollable.children('ul').height() - $scrollable.height(),
-            scrollTime     = scrollHeight / 0.05,
+      $modules.each(function() {
+        var $scrollable = $('.module-scrollable', this),
+            scrollHeight = $scrollable.children('ul').height() - $scrollable.height(),
+            scrollTime = scrollHeight / 0.05,
             scrollInterval;
 
         $scrollable.on('mouseover', function(event) {
           event.preventDefault();
-          clearInterval( scrollInterval );
+          clearInterval(scrollInterval);
         });
         $scrollable.on('mouseout', startScroll);
 
         /**
          * start the scrolling interval
          */
-        function startScroll(){
-          scrollInterval = setInterval( function(){
+        function startScroll() {
+          scrollInterval = setInterval(function() {
             var st = $scrollable.scrollTop(),
                 scrollLeft = $('ul', $scrollable).height() - $scrollable.height();
 
-            if( st >= scrollLeft ){
+            if (st >= scrollLeft) {
               $scrollable.scrollTop(0);
             } else {
-              $scrollable.scrollTop( st + 1 );
+              $scrollable.scrollTop(st + 1);
             }
           }, 20);
         }
@@ -695,9 +692,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * the event listeners for the game
      */
-    function gameEventListeners(){
-      var $svgCountries = $('.countries > g', $mapSvg);
-
+    function gameEventListeners() {
       /* --------------------------------------------
        * --modules
        * -------------------------------------------- */
@@ -705,7 +700,7 @@ $(document).on('keypress', 'input', function(e) {
       //
       // open the module
       //
-      $( 'aside[data-module]' ).on('click', '.module-header', function(event) {
+      $('aside[data-module]').on('click', '.module-header', function(event) {
         event.preventDefault();
         $(this).closest('aside').toggleClass('active');
 
@@ -723,32 +718,32 @@ $(document).on('keypress', 'input', function(e) {
       // check to see if a module has changed its state - it it
       //  has, check the listview to rearrange it
       //
-      $body.on('module-changestate', function(){
+      $body.on('module-changestate', function() {
         var rightModules = false,
             bottomModules = false,
             margin = '25%',
             $listviewContainer = $('.listview-container', $listview);
 
-        $( 'aside[data-module].active' ).each(function(){
+        $('aside[data-module].active').each(function() {
           var $container = $(this).closest('.fb-module-container');
 
-          if ($container.hasClass('column-right')){
+          if ($container.hasClass('column-right')) {
             rightModules = true;
 
-            if($container.width() > 350){
+            if ($container.width() > 350) {
               margin = '390px';
             }
-          } else if ($container.hasClass('container--row')){
+          } else if ($container.hasClass('container--row')) {
             bottomModules = true;
           }
         });
 
-        if(rightModules){
+        if (rightModules) {
           $listviewContainer.css('right', margin);
         } else {
           $listviewContainer.css('right', '10px');
         }
-        if(bottomModules){
+        if (bottomModules) {
           $listviewContainer.css('bottom', '34vh');
         } else {
           $listviewContainer.css('bottom', '100px');
@@ -768,7 +763,7 @@ $(document).on('keypress', 'input', function(e) {
       //
       // on country click, open the "capture country" modal
       //
-      $map.on('click', '.country-hover g', function( event ){
+      $map.on('click', '.country-hover g', function(event) {
         event.preventDefault();
 
         var country = $('[class~="land"]', this).attr('title');
@@ -781,9 +776,9 @@ $(document).on('keypress', 'input', function(e) {
       // hover on a country
       //
       $map.hoverIntent({
-        over     : countryHover,
-        out      : function(){},
-        selector : '.countries > g'
+        over: countryHover,
+        out: function() {},
+        selector: '.countries > g'
       });
 
       $countryHover.on('mouseleave', function(event) {
@@ -810,48 +805,48 @@ $(document).on('keypress', 'input', function(e) {
      *      to capture the given country
      */
     function captureCountry(country, capturingTeam) {
-      var $selectCountry    = $('.countries .land[title="' + country + '"]', $mapSvg),
-          capturedBy        = getCapturedByMarkup( $selectCountry.closest('g').data('captured') ),
-          showAnimation     = !( is_ie || LIST_VIEW ),
+      var $selectCountry = $('.countries .land[title="' + country + '"]', $mapSvg),
+          capturedBy = getCapturedByMarkup($selectCountry.closest('g').data('captured')),
+          showAnimation = !(is_ie || LIST_VIEW),
           animationDuration = !showAnimation ? 0 : 600;
 
       // make sure there's a country node
-      if($selectCountry.length === 0){
-        console.error( country + ' is not a valid country' );
+      if ($selectCountry.length === 0) {
+        console.error(country + ' is not a valid country');
         return;
       }
 
-      if( $countryHover.has('g').length === 0 ){
-        var $hoveredCountry = $( '.countries .land[title="' + country + '"]', $mapSvg ).closest('g').clone();
-        $countryHover.data( $hoveredCountry.data() );
-        $countryHover.empty().append( $hoveredCountry );
+      if ($countryHover.has('g').length === 0) {
+        var $hoveredCountry = $('.countries .land[title="' + country + '"]', $mapSvg).closest('g').clone();
+        $countryHover.data($hoveredCountry.data());
+        $countryHover.empty().append($hoveredCountry);
       }
 
       // close the hover popup
       FB_CTF.modal.closeHoverPopup();
 
       // if there's no data, don't continue
-      if (! FB_CTF.data.COUNTRIES) {
+      if (!FB_CTF.data.COUNTRIES) {
         return;
       }
 
       // if the country is not active, don't continue
-      if (! FB_CTF.data.COUNTRIES[country]) {
+      if (!FB_CTF.data.COUNTRIES[country]) {
         return;
       }
 
       // engage the crosshairs animation
-      if( showAnimation ){
+      if (showAnimation) {
         engageCrosshairs();
       }
 
-      if( VIEW_ONLY ){
-        setTimeout(function(){
-          captureViewOnly( country, capturedBy, capturingTeam );
+      if (VIEW_ONLY) {
+        setTimeout(function() {
+          captureViewOnly(country, capturedBy, capturingTeam);
         }, animationDuration);
       } else {
-        setTimeout( function(){
-          launchCaptureModal( country, capturedBy );
+        setTimeout(function() {
+          launchCaptureModal(country, capturedBy);
         }, animationDuration);
       }
     } // function countryClick();
@@ -869,16 +864,16 @@ $(document).on('keypress', 'input', function(e) {
      *   - an optional parameter for the team that is attempting
      *      to capture the given country
      */
-    function captureViewOnly( country, capturedBy, capturingTeam ){
-      if( capturingTeam === undefined ){
+    function captureViewOnly(country, capturedBy, capturingTeam) {
+      if (capturingTeam === undefined) {
         capturingTeam = FB_CTF.data.CONF.currentTeam;
       }
 
-      FB_CTF.modal.viewmodePopup( function(){
+      FB_CTF.modal.viewmodePopup(function() {
         var $container = $('#fb-country-popup'),
-            positionX  = $('.longitude-focus').position().left + 60,
-            positionY  = $('.latitude-focus').position().top - $container.height() - 60,
-            points     = FB_CTF.data.COUNTRIES && FB_CTF.data.COUNTRIES[country] ? FB_CTF.data.COUNTRIES[country].points : 0;
+            positionX = $('.longitude-focus').position().left + 60,
+            positionY = $('.latitude-focus').position().top - $container.height() - 60,
+            points = FB_CTF.data.COUNTRIES && FB_CTF.data.COUNTRIES[country] ? FB_CTF.data.COUNTRIES[country].points : 0;
 
         $('.capturing-team-name', $container).text(capturingTeam);
         $('.points-value', $container).text('+ ' + points + ' Pts');
@@ -886,11 +881,11 @@ $(document).on('keypress', 'input', function(e) {
         $('.country-name', $container).text(country);
 
         $container.css({
-          left : positionX + 'px',
-          top  : positionY + 'px'
+          left: positionX + 'px',
+          top: positionY + 'px'
         });
 
-        setTimeout(function(){
+        setTimeout(function() {
           removeCaptured();
           FB_CTF.modal.closeHoverPopup();
 
@@ -906,15 +901,15 @@ $(document).on('keypress', 'input', function(e) {
      *   - if this is called from an event listener, it comes with
      *      an event object
      */
-    function removeCaptured(event){
-      if(event)
+    function removeCaptured(event) {
+      if (event)
         event.preventDefault();
 
-      if(CURRENT_ZOOM < 1.1){
+      if (CURRENT_ZOOM < 1.1) {
         enableClickAndDrag.zoomToPoint();
       }
 
-      $('[class~="country-clicked"]', $mapSvg).fadeOut(function(){
+      $('[class~="country-clicked"]', $mapSvg).fadeOut(function() {
         $(this).remove();
       });
       $countryHover.empty();
@@ -929,39 +924,39 @@ $(document).on('keypress', 'input', function(e) {
      * @param capturedBy (string)
      *   - the user or team who has captured this country
      */
-    function launchCaptureModal( country, capturedBy ){
+    function launchCaptureModal(country, capturedBy) {
       var data = FB_CTF.data.COUNTRIES[country];
 
-      FB_CTF.modal.loadPopup('country-capture', function(){
+      FB_CTF.modal.loadPopup('country-capture', function() {
         var $container = $('.fb-modal-content'),
-            level_id   = data ? data.level_id : 0,
-            title      = data ? data.title : '',
-            intro      = data ? data.intro : '',
-            hint       = data ? data.hint : '',
-            hint_cost  = data ? data.hint_cost : -1,
-            points     = data ? data.points : '',
-            category   = data ? data.category : '',
-            type       = data ? data.type : '',
-            completed  = data ? data.completed : '',
-            owner      = data ? data.owner : '',
-            attachments= data ? data.attachments : '',
-            links      = data ? data.links : '';
+            level_id = data ? data.level_id : 0,
+            title = data ? data.title : '',
+            intro = data ? data.intro : '',
+            hint = data ? data.hint : '',
+            hint_cost = data ? data.hint_cost : -1,
+            points = data ? data.points : '',
+            category = data ? data.category : '',
+            type = data ? data.type : '',
+            completed = data ? data.completed : '',
+            owner = data ? data.owner : '',
+            attachments = data ? data.attachments : '',
+            links = data ? data.links : '';
 
         $('.country-name', $container).text(country);
         $('.country-title', $container).text(title);
-        $('input[name=level_id]', $container).attr('value',level_id);
+        $('input[name=level_id]', $container).attr('value', level_id);
         $('.capture-text', $container).text(intro);
-        if( attachments instanceof Array){
-          $.each(attachments, function(){
-            var f = this.substr(this.lastIndexOf('/') +1);
+        if (attachments instanceof Array) {
+          $.each(attachments, function() {
+            var f = this.substr(this.lastIndexOf('/') + 1);
             var attachment = $('<a/>').attr('target', '_blank').attr('href', this).text('[ ' + f + ' ]');
             $('.capture-links', $container).append(attachment);
             $('.capture-links', $container).append($('<br/>'));
           });
         }
-        if( links instanceof Array){
+        if (links instanceof Array) {
           var link_c = 1;
-          $.each(links, function(){
+          $.each(links, function() {
             var link;
             if (this.startsWith('http')) {
               link = $('<a/>').attr('target', '_blank').attr('href', this).text('[ Link ' + link_c + ' ]');
@@ -980,8 +975,8 @@ $(document).on('keypress', 'input', function(e) {
         $('.country-category', $container).text(category);
         $('.country-owner', $container).text(owner);
 
-        if( completed instanceof Array){
-          $.each(completed, function(){
+        if (completed instanceof Array) {
+          $.each(completed, function() {
             var li = $('<li/>').text(this);
             $('.completed-list', $container).append(li);
           });
@@ -1032,7 +1027,7 @@ $(document).on('keypress', 'input', function(e) {
               var responseData = JSON.parse(data);
               if (responseData.result === 'OK') {
                 console.log('OK');
-		console.log('Hint: ' + responseData.hint);
+                console.log('Hint: ' + responseData.hint);
                 $('.capture-hint div', $container).text(responseData.hint);
               } else {
                 console.log('Failed');
@@ -1064,20 +1059,20 @@ $(document).on('keypress', 'input', function(e) {
             var responseData = JSON.parse(data);
             if (responseData.result === 'OK') {
               console.log('OK');
-              $('input[name=answer]', $container).css("background-color","#1f7a1f");
+              $('input[name=answer]', $container).css("background-color", "#1f7a1f");
               $('.js-trigger-score', $container).text('YES!');
-              setTimeout(function(){
+              setTimeout(function() {
                 $('.js-close-modal', $container).click();
               }, 2000);
             } else {
               // TODO: Make this a modal
               console.log('Failed');
-              $('input[name=answer]', $container).css("background-color","#800000");
+              $('input[name=answer]', $container).css("background-color", "#800000");
               $('.js-trigger-score', $container).text('NOPE :(');
-              setTimeout(function(){
+              setTimeout(function() {
                 $('.js-trigger-score', $container).text('SUBMIT');
                 $('input[name=answer]')[0].value = '';
-                $('input[name=answer]', $container).css("background-color","");
+                $('input[name=answer]', $container).css("background-color", "");
               }, 2000);
             }
           });
@@ -1096,32 +1091,31 @@ $(document).on('keypress', 'input', function(e) {
      * on hover of a country in the svg
      */
     function countryHover(event) {
-      if(event) {
+      if (event) {
         event.preventDefault();
       }
 
-      var $self  = $(this),
-          country    = $('[class~="land"]', $self).attr('title'),
-          capturedBy = getCapturedByMarkup( $self.data('captured') ),
-          mouse_x    = event.pageX,
-          mouse_y    = event.pageY;
+      var $self = $(this),
+          country = $('[class~="land"]', $self).attr('title'),
+          mouse_x = event.pageX,
+          mouse_y = event.pageY;
 
-      if (! FB_CTF.data.COUNTRIES) {
+      if (!FB_CTF.data.COUNTRIES) {
         return;
       }
 
       var data = FB_CTF.data.COUNTRIES[country];
 
       if (data) {
-        FB_CTF.modal.countryHoverPopup(function(){
+        FB_CTF.modal.countryHoverPopup(function() {
           var $container = $('#fb-country-popup').css({
-            left : mouse_x + 'px',
-            top  : mouse_y + 'px'
+            left: mouse_x + 'px',
+            top: mouse_y + 'px'
           }),
-              points     = data ? data.points : '',
-              category   = data ? data.category : '',
-              title      = data ? data.title : '',
-              type       = data ? data.type : '';
+              points = data ? data.points : '',
+              category = data ? data.category : '',
+              title = data ? data.title : '',
+              type = data ? data.type : '';
 
           $('.country-name', $container).text(country);
           $('.country-title', $container).text(title);
@@ -1130,10 +1124,10 @@ $(document).on('keypress', 'input', function(e) {
           $('.country-category', $container).text(category);
         });
       } else {
-        FB_CTF.modal.countryInactiveHoverPopup(function(){
+        FB_CTF.modal.countryInactiveHoverPopup(function() {
           var $container = $('#fb-country-popup').css({
-            left : mouse_x + 'px',
-            top  : mouse_y + 'px'
+            left: mouse_x + 'px',
+            top: mouse_y + 'px'
           });
 
           $('.country-name', $container).text(country);
@@ -1144,7 +1138,7 @@ $(document).on('keypress', 'input', function(e) {
       //  see the outline
       //
       var clone = $self.clone();
-      $countryHover.data( $self.data() ).empty().append(clone);
+      $countryHover.data($self.data()).empty().append(clone);
 
     } // function countryHover();
 
@@ -1153,49 +1147,48 @@ $(document).on('keypress', 'input', function(e) {
      * the crosshairs interstitial animation that takes place
      *  before the "capture_country" modal appears
      */
-    function engageCrosshairs(){
-      var svgMap           = d3.select('#fb-gameboard-map'),
-          hoveredCountry   = svgMap.select('.country-hover .land'),
-          indicator        = svgMap.select('.country-hover .map-indicator');
+    function engageCrosshairs() {
+      var svgMap = d3.select('#fb-gameboard-map'),
+          hoveredCountry = svgMap.select('.country-hover .land'),
+          indicator = svgMap.select('.country-hover .map-indicator');
 
       //
       // make sure the indicator exists. The double [0] checks
       //  the d3 syntax.
       //
-      if( ! indicator[0][0] ){
+      if (!indicator[0][0]) {
         return;
       }
 
-      var indicatorStyle   = indicator.attr('transform'),
+      var indicatorStyle = indicator.attr('transform'),
           // the view controller
-          viewController   = svgMap.select('.view-controller'),
-          country_clicked  = viewController.append('g').attr('class', 'country-clicked'),
+          viewController = svgMap.select('.view-controller'),
+          country_clicked = viewController.append('g').attr('class', 'country-clicked'),
           $country_clicked = $('[class~="country-clicked"]', $mapSvg),
 
           // setting the explicit height and width of the indictator
           //  seem to be the most effecttive way to position the
           //  crosshair stuff. The sizes are based on the size of the
           //  indicator when the svg is it's natural size
-          indicatorWidth   = indicatorStyle.indexOf('scale(') > -1 ? 5.82 : 9.7,
-          indicatorHeight  = indicatorStyle.indexOf('scale(') > -1 ? 5.46 : 9.1,
+          indicatorWidth = indicatorStyle.indexOf('scale(') > -1 ? 5.82 : 9.7,
+          indicatorHeight = indicatorStyle.indexOf('scale(') > -1 ? 5.46 : 9.1,
 
-          translateString  = indicatorStyle.replace(' scale(0.6)', '').substring( indicatorStyle.lastIndexOf("translate(") + 10, indicatorStyle.lastIndexOf(")") ),
-          translateArray   = translateString.replace( new RegExp('px','g'), '').replace(' ', ',').split(","),
+          translateString = indicatorStyle.replace(' scale(0.6)', '').substring(indicatorStyle.lastIndexOf("translate(") + 10, indicatorStyle.lastIndexOf(")")),
+          translateArray = translateString.replace(new RegExp('px', 'g'), '').replace(' ', ',').split(","),
 
-          latFocus         = parseFloat(translateArray[0]) + (indicatorWidth / 2),
-          lngFocus         = parseFloat(translateArray[1]) + (indicatorHeight / 2) + 2,
-          mapHeight        = $mapSvg.height(),
-          mapWidth         = $mapSvg.width(),
-          zoom             = enableClickAndDrag.getZoom();
+          latFocus = parseFloat(translateArray[0]) + (indicatorWidth / 2),
+          lngFocus = parseFloat(translateArray[1]) + (indicatorHeight / 2) + 2,
+          mapHeight = $mapSvg.height(),
+          mapWidth = $mapSvg.width(),
+          zoom = enableClickAndDrag.getZoom();
 
       zoom = zoom < 2 ? 2 : zoom;
 
-      var zoomRatio        = 1/zoom,
-          focusAdjusted    = 10 * zoomRatio,
-          latLngAdjusted   = 1 / (5.6 * zoomRatio),
-          xRatio           = (1 / zoomRatio) / 10;
+      var zoomRatio = 1 / zoom,
+          focusAdjusted = 10 * zoomRatio,
+          xRatio = (1 / zoomRatio) / 10;
 
-      enableClickAndDrag.zoomToPoint( latFocus, lngFocus, 2 );
+      enableClickAndDrag.zoomToPoint(latFocus, lngFocus, 2);
 
       // add a slightly transparent background to overlay
       //  the rest of the map
@@ -1224,8 +1217,8 @@ $(document).on('keypress', 'input', function(e) {
             .attr('stroke', COLOR_TEAL_BLUE)
             .attr('stroke-width', zoomRatio)
             .attr('style', 'transform:' + latLines_translate + ';-webkit-transform:' + latLines_translate + ';-moz-transform:' + latLines_translate + ';');
-      latLines.append('path').attr('d', "M0,0L" + (latFocus - focusAdjusted) + ",0" );
-      latLines.append('path').attr('d', "M" + (latFocus + focusAdjusted) + ",0L" + mapWidth + ",0" );
+      latLines.append('path').attr('d', "M0,0L" + (latFocus - focusAdjusted) + ",0");
+      latLines.append('path').attr('d', "M" + (latFocus + focusAdjusted) + ",0L" + mapWidth + ",0");
       // y
       var lngLines_translate = 'translate(' + (latFocus + xRatio - 100) + 'px,-' + xRatio + 'px)';
       var lngLines = country_clicked.append('g')
@@ -1233,8 +1226,8 @@ $(document).on('keypress', 'input', function(e) {
             .attr('stroke', COLOR_TEAL_BLUE)
             .attr('stroke-width', zoomRatio)
             .attr('style', 'transform:' + lngLines_translate + ';-webkit-transform:' + lngLines_translate + ';-moz-transform:' + lngLines_translate + ';');
-      lngLines.append('path').attr('d', "M0,0L0," + (lngFocus - focusAdjusted) );
-      lngLines.append('path').attr('d', "M0," + (lngFocus + focusAdjusted) + "L0," + mapHeight );
+      lngLines.append('path').attr('d', "M0,0L0," + (lngFocus - focusAdjusted));
+      lngLines.append('path').attr('d', "M0," + (lngFocus + focusAdjusted) + "L0," + mapHeight);
       // circles
       crosshairs.append('circle')
         .attr('cx', 0).attr('cy', 0).attr('r', 30)
@@ -1250,7 +1243,7 @@ $(document).on('keypress', 'input', function(e) {
         .attr('stroke-width', 2)
         .attr('stroke', COLOR_TEAL_BLUE);
 
-      setTimeout(function(){
+      setTimeout(function() {
         var latLines_active = 'translate(' + xRatio + 'px,' + (lngFocus - xRatio) + 'px)';
         latLines.attr('style', 'transform:' + latLines_active + ';-webkit-transform:' + latLines_active + ';-moz-transform:' + latLines_active + ';');
 
@@ -1278,38 +1271,38 @@ $(document).on('keypress', 'input', function(e) {
      * @return Deferred
      *   - indicate that this jqxhr request is all done
      */
-    function loadIn(){
-      var df            = $.Deferred(),
-          $loadModal    = $('#gameboard-loading'),
-          loadPath      = 'inc/gameboard/loading.php';
+    function loadIn() {
+      var df = $.Deferred(),
+          $loadModal = $('#gameboard-loading'),
+          loadPath = 'inc/gameboard/loading.php';
 
-      if($loadModal.length === 0){
-        $loadModal = $('<div id="gameboard-loading" class="fb-loading" />').appendTo( $gameboard );
+      if ($loadModal.length === 0) {
+        $loadModal = $('<div id="gameboard-loading" class="fb-loading" />').appendTo($gameboard);
       }
 
       FB_CTF.loadComponent($loadModal, loadPath, function() {
-        $gameboard.addClass( LOADING_CLASS);
+        $gameboard.addClass(LOADING_CLASS);
 
         var $loadingCells = $('.gameboard-loading .indicator-cell'),
-            $currCell     = $loadingCells.eq(0),
+            $currCell = $loadingCells.eq(0),
             loadInterval;
 
-        loadInterval = setInterval(function(){
+        loadInterval = setInterval(function() {
           if ($currCell.length === 0) {
             clearInterval(loadInterval);
           }
           $currCell.addClass('active');
           $currCell = $currCell.next();
-        }, 450 );
+        }, 450);
 
         if (!FB_CTF.debug) {
           $('.boot-sequence').fb_typed({
-            typeSpeed  : 1,
-            humanize   : false,
-            showCursor : false,
-            typeWords  : true,
-            callback   : function() {
-              setTimeout(function(){
+            typeSpeed: 1,
+            humanize: false,
+            showCursor: false,
+            typeWords: true,
+            callback: function() {
+              setTimeout(function() {
                 df.resolve();
               }, 400);
             }
@@ -1335,19 +1328,19 @@ $(document).on('keypress', 'input', function(e) {
      * @return Promise
      *   - when all the modules are loaded, return a promise
      */
-    function loadModules(){
-      var $modules      = $('aside[data-module]', $gameboard),
-          df            = $.Deferred(),
+    function loadModules() {
+      var $modules = $('aside[data-module]', $gameboard),
+          df = $.Deferred(),
           deferredArray = [];
 
-      $modules.each(function(){
-        var $self      = $(this),
-            module     = $self.data('module'),
+      $modules.each(function() {
+        var $self = $(this),
+            module = $self.data('module'),
             modulePath = 'inc/gameboard/modules/' + module + '.php';
 
-        var get = $.get( modulePath, function( data, status, jqxhr){
+        var get = $.get(modulePath, function(data) {
           $self.html(data);
-        }).error(function(){
+        }).error(function() {
           console.error("There was a problem retrieving the module.");
           console.log(modulePath);
           console.error("/error");
@@ -1356,7 +1349,7 @@ $(document).on('keypress', 'input', function(e) {
         deferredArray.push(get);
       });
 
-      $.when.apply($, deferredArray).done(function(){
+      $.when.apply($, deferredArray).done(function() {
         if (VIEW_ONLY) {
           autoScrollModules();
         }
@@ -1371,16 +1364,16 @@ $(document).on('keypress', 'input', function(e) {
      * page and then sets up some jquery object variables for use
      * elsewhere in this module.
      */
-    function loadMap(){
+    function loadMap() {
       var mapPath = 'static/svg/map/world.php';
 
-      return $.get( mapPath, function(data, status, jqxhr){
+      return $.get(mapPath, function(data) {
         $map = $('.fb-map');
         $map.html(data);
         $mapSvg = $('#fb-gameboard-map');
         $countryHover = $('[class~="country-hover"]', $mapSvg);
         enableClickAndDrag.init();
-      }, 'html').error(function(){
+      }, 'html').error(function() {
         console.error("There was a problem loading the svg map");
         console.error("/error");
       });
@@ -1391,17 +1384,17 @@ $(document).on('keypress', 'input', function(e) {
      * page and then sets up some jquery object variables for use
      * elsewhere in this module.
      */
-    function loadMapView(){
+    function loadMapView() {
       var mapPath = 'static/svg/map/world-view.php';
 
-      return $.get( mapPath, function(data, status, jqxhr){
+      return $.get(mapPath, function(data) {
         console.log("map loaded");
         $map = $('.fb-map');
         $map.html(data);
         $mapSvg = $('#fb-gameboard-map');
         $countryHover = $('[class~="country-hover"]', $mapSvg);
         enableClickAndDrag.init();
-      }, 'html').error(function(){
+      }, 'html').error(function() {
         console.error("There was a problem loading the svg map");
         console.error("/error");
       });
@@ -1410,14 +1403,14 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the list view for the game
      */
-    function loadListView(){
+    function loadListView() {
       var listViewPath = 'inc/gameboard/listview.php';
 
-      return $.get(listViewPath, function(data, status, jqxhr) {
+      return $.get(listViewPath, function(data) {
         $listview = $('.fb-listview');
         $listview.html(data);
         listviewEventListeners($listview);
-      }, 'html').error(function(){
+      }, 'html').error(function() {
         console.error("There was a problem loading the List View");
         console.error("/error");
       });
@@ -1426,13 +1419,13 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load module generic
      */
-    function loadModuleGeneric(loadPath, targetSelector){
-      $.get(loadPath, function( data, status, jqxhr){
+    function loadModuleGeneric(loadPath, targetSelector) {
+      $.get(loadPath, function(data) {
         var $target = $(targetSelector);
         $target.html(data);
         var df = $.Deferred();
         return df.resolve();
-      }).error(function(){
+      }).error(function() {
         console.error("There was a problem retrieving the module.");
         console.log(loadPath);
         console.error("/error");
@@ -1442,7 +1435,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the teams module
      */
-    function loadTeamsModule(){
+    function loadTeamsModule() {
       var teamsModulePath = 'inc/gameboard/modules/teams.php';
       var teamsTargetSelector = 'aside[data-module="teams"]';
 
@@ -1452,7 +1445,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the leaderboard module
      */
-    function loadLeaderboardModule(){
+    function loadLeaderboardModule() {
       var leaderboardModulePath = 'inc/gameboard/modules/leaderboard.php';
       var leaderboardSelector = 'aside[data-module="leaderboard"]';
 
@@ -1462,7 +1455,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the clock module
      */
-    function loadClockModule(){
+    function loadClockModule() {
       var clockModulePath = 'inc/gameboard/modules/game-clock.php';
       var clockSelector = 'aside[data-module="game-clock"]';
 
@@ -1472,14 +1465,14 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the team data
      */
-    function loadTeamData(){
+    function loadTeamData() {
       var loadPath = 'data/teams.php';
 
-      return $.get(loadPath, function(data, status, jqxhr) {
+      return $.get(loadPath, function(data) {
         FB_CTF.data.TEAMS = data;
         var df = $.Deferred();
         return df.resolve(FB_CTF.data.TEAMS);
-      }, 'json').error( function( jqhxr, status, error){
+      }, 'json').error(function(jqhxr, status, error) {
         console.error("There was a problem retrieving the team data.");
         console.log(loadPath);
         console.log(status);
@@ -1491,7 +1484,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the announcements module
      */
-    function loadAnnouncementsModule(){
+    function loadAnnouncementsModule() {
       var announcementsModulePath = 'inc/gameboard/modules/announcements.php';
       var announcementsTargetSelector = 'aside[data-module="announcements"]';
 
@@ -1501,7 +1494,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the filter module
      */
-    function loadFilterModule(){
+    function loadFilterModule() {
       var filterModulePath = 'inc/gameboard/modules/filter.php';
       var filterTargetSelector = 'aside[data-module="filter"]';
 
@@ -1511,7 +1504,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the activity module
      */
-    function loadActivityModule(){
+    function loadActivityModule() {
       var activityModulePath = 'inc/gameboard/modules/activity.php';
       var activityTargetSelector = 'aside[data-module="activity"]';
 
@@ -1521,14 +1514,14 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the configuration data
      */
-    function loadConfData(){
+    function loadConfData() {
       var loadPath = 'data/configuration.php';
 
-      return $.get( loadPath, function(data, status, jqxhr){
+      return $.get(loadPath, function(data) {
         FB_CTF.data.CONF = data;
         var df = $.Deferred();
         return df.resolve(FB_CTF.data.CONF);
-      }, 'json').error( function( jqhxr, status, error){
+      }, 'json').error(function(jqhxr, status, error) {
         console.error("There was a problem retrieving the conf data.");
         console.log(loadPath);
         console.log(status);
@@ -1540,11 +1533,11 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * refresh the map data
      */
-    function refreshMapData(){
+    function refreshMapData() {
       var loadPath = 'data/map-data.php';
 
-      return $.get(loadPath, function(data, status, jqxhr) {
-        $.each(data, function(key, value){
+      return $.get(loadPath, function(data) {
+        $.each(data, function(key, value) {
           // First we clear all
           $('#' + key)[0].classList.remove('active');
           $('#' + key)[0].parentNode.removeAttribute('data-captured');
@@ -1556,12 +1549,13 @@ $(document).on('keypress', 'input', function(e) {
             if (!$('#' + key).hasClass('active')) {
               $('#' + key)[0].classList.add('active');
             }
-          } /*else { // Inactive country
-             $('#' + key)[0].classList.remove('active');
-             $('#' + key)[0].parentNode.removeAttribute('data-captured');
-             $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
-             $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
-             }*/
+          }
+          /*else { // Inactive country
+           $('#' + key)[0].classList.remove('active');
+           $('#' + key)[0].parentNode.removeAttribute('data-captured');
+           $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
+           $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
+           }*/
           if (value.captured == 'you') {
             //$('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
             $('#' + key)[0].parentNode.children[1].classList.add("captured--you");
@@ -1574,7 +1568,7 @@ $(document).on('keypress', 'input', function(e) {
             $('#' + key)[0].parentNode.setAttribute('data-captured', value.datacaptured);
           }
         });
-      }, 'json').error( function( jqhxr, status, error){
+      }, 'json').error(function(jqhxr, status, error) {
         console.error("There was a problem retrieving the map data.");
         console.log(loadPath);
         console.log(status);
@@ -1586,17 +1580,17 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * clear the map data
      */
-    function clearMapData(){
+    function clearMapData() {
       var loadPath = 'data/map-data.php';
 
-      return $.get( loadPath, function(data, status, jqxhr){
-        $.each(data, function(key, value){
+      return $.get(loadPath, function(data) {
+        $.each(data, function(key, value) {
           $('#' + key)[0].classList.remove('active');
           $('#' + key)[0].parentNode.removeAttribute('data-captured');
           $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
           $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
         });
-      }, 'json').error( function( jqhxr, status, error){
+      }, 'json').error(function(jqhxr, status, error) {
         console.error("There was a problem retrieving the map data.");
         console.log(loadPath);
         console.log(status);
@@ -1613,14 +1607,14 @@ $(document).on('keypress', 'input', function(e) {
      * @return Deferred
      *   - indicate that this jqxhr request is all done
      */
-    function getCountryData(){
+    function getCountryData() {
       var loadPath = 'data/country-data.php';
 
-      return $.get( loadPath, function(data, status, jqxhr){
+      return $.get(loadPath, function(data) {
         FB_CTF.data.COUNTRIES = data;
         var df = $.Deferred();
         return df.resolve(FB_CTF.data.COUNTRIES);
-      }, 'json').error(function(jqxhr, status, error){
+      }, 'json').error(function(jqxhr, status, error) {
         console.error("There was a problem retrieving the game data.");
         console.log(loadPath);
         console.log(status);
@@ -1633,16 +1627,16 @@ $(document).on('keypress', 'input', function(e) {
      * since a lot of the data is in an external file, go through
      *  that data and markup the svg so we can use in
      */
-    function renderCountryData(){
+    function renderCountryData() {
       if (!FB_CTF.data.COUNTRIES) {
         return;
       }
 
-      $('.countries .land', $mapSvg).each(function(){
+      $('.countries .land', $mapSvg).each(function() {
         var $countryPath = $(this),
-            $group       = $countryPath.closest('g'),
-            country      = $countryPath.attr('title'),
-            data         = FB_CTF.data.COUNTRIES[country];
+            $group = $countryPath.closest('g'),
+            country = $countryPath.attr('title'),
+            data = FB_CTF.data.COUNTRIES[country];
 
         if (data) {
           // add the category
@@ -1662,32 +1656,32 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * toggle the list view on/off
      */
-    function toggleListView( enabled ){
+    function toggleListView(enabled) {
       var activeClass = 'listview-enabled',
-          toggle      = enabled === undefined ? ! LIST_VIEW : enabled ? true : false,
+          toggle = enabled === undefined ? !LIST_VIEW : enabled ? true : false,
 
           // the containers (for moving the modules around)
-          $containerLeft  = $('.fb-module-container.container--column.column-left'),
+          $containerLeft = $('.fb-module-container.container--column.column-left'),
           $containerRight = $('.fb-module-container.container--column.column-right'),
-          $containerRow   = $('.fb-module-container.container--row'),
+          $containerRow = $('.fb-module-container.container--row'),
 
           // the modules
-          $module_activity    = $('aside[data-module="activity"]'),
+          $module_activity = $('aside[data-module="activity"]'),
           $module_leaderboard = $('aside[data-module="leaderboard"]'),
-          $module_domination  = $('aside[data-module="world-domination"]');
+          $module_domination = $('aside[data-module="world-domination"]');
 
-      if( toggle ){
-        $gameboard.addClass( activeClass );
+      if (toggle) {
+        $gameboard.addClass(activeClass);
         LIST_VIEW = true;
-        $module_activity.prependTo( $containerRow ).addClass('module--outer-left');
-        $module_domination.appendTo( $containerLeft );
-        $module_leaderboard.prependTo( $containerRight );
+        $module_activity.prependTo($containerRow).addClass('module--outer-left');
+        $module_domination.appendTo($containerLeft);
+        $module_leaderboard.prependTo($containerRight);
       } else {
-        $gameboard.removeClass( activeClass );
+        $gameboard.removeClass(activeClass);
         LIST_VIEW = false;
-        $module_leaderboard.appendTo( $containerLeft );
-        $module_activity.appendTo( $containerLeft ).removeClass('module--outer-left');
-        $module_domination.prependTo( $containerRow );
+        $module_leaderboard.appendTo($containerLeft);
+        $module_activity.appendTo($containerLeft).removeClass('module--outer-left');
+        $module_domination.prependTo($containerRow);
       }
     }
 
@@ -1697,14 +1691,14 @@ $(document).on('keypress', 'input', function(e) {
      * @param $listview (jquery object)
      *   - the listview
      */
-    function listviewEventListeners( $listview ){
+    function listviewEventListeners($listview) {
       //
       // click on the row, engage the "capture_country"
       //  modal, except for in a couple situations
       //
       $('tr', $listview).on('click', function(event) {
         event.preventDefault();
-        var $tr     = $(this).closest('tr'),
+        var $tr = $(this).closest('tr'),
             country = $tr.data('country');
 
         //
@@ -1712,8 +1706,8 @@ $(document).on('keypress', 'input', function(e) {
         //   - the country is not using help
         //   - the country is NOT captured
         //
-        if (! $tr.hasClass('help-enabled') && $tr.data('captured') === undefined) {
-          captureCountry( country );
+        if (!$tr.hasClass('help-enabled') && $tr.data('captured') === undefined) {
+          captureCountry(country);
         }
       });
 
@@ -1725,7 +1719,7 @@ $(document).on('keypress', 'input', function(e) {
         event.stopPropagation();
         var country = $(this).closest('tr').data('country');
 
-        FB_CTF.modal.loadPopup('country-help', function(){
+        FB_CTF.modal.loadPopup('country-help', function() {
           $('#fb-modal .add-new-help-chat').data('country', country);
           $('#fb-modal .country-name').text(country);
         });
@@ -1738,7 +1732,7 @@ $(document).on('keypress', 'input', function(e) {
         event.preventDefault();
         event.stopPropagation();
         var country = $(this).closest('tr').data('country');
-        FB_CTF.modal.loadPopup('country-help-opponent', function(){
+        FB_CTF.modal.loadPopup('country-help-opponent', function() {
           $('#fb-modal .add-new-help-chat').data('country', country);
         });
       });
@@ -1761,8 +1755,8 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * init the tutorial modals
      */
-    function initTutorial(event){
-      if(event) {
+    function initTutorial(event) {
+      if (event) {
         event.preventDefault();
       }
 
@@ -1770,7 +1764,7 @@ $(document).on('keypress', 'input', function(e) {
           tutorialSteps = 8,
           currStepIndex = 1;
 
-      FB_CTF.modal.load('tutorial--' + firstTutorial, function(){
+      FB_CTF.modal.load('tutorial--' + firstTutorial, function() {
         // we're done loading stuff, so remove the laoding class
         loadOut();
         buildTutorial();
@@ -1781,7 +1775,7 @@ $(document).on('keypress', 'input', function(e) {
           event.preventDefault();
           var next = $(this).data('nextTutorial');
 
-          if(next){
+          if (next) {
             var loadPath = 'inc/modals/tutorial--' + next + '.php';
             currStepIndex++;
             FB_CTF.loadComponent('#fb-modal', loadPath, buildTutorial);
@@ -1794,17 +1788,17 @@ $(document).on('keypress', 'input', function(e) {
       /**
        * things to do after the tutorial step gets loaded
        */
-      function buildTutorial(){
-        var $tutorial    = $('.fb-tutorial'),
+      function buildTutorial() {
+        var $tutorial = $('.fb-tutorial'),
             $progressBar = $('.tutorial-progress', $tutorial),
-            currStep     = $tutorial.data('tutorialStep');
+            currStep = $tutorial.data('tutorialStep');
 
         // build the tutorial progress bar
         for (var i = 0; i < tutorialSteps; i++) {
           var markup = i < currStepIndex ? '<li class="step-filled" />' : '<li />';
-          $progressBar.append( markup );
+          $progressBar.append(markup);
         }
-        $body.removeClass(function(){
+        $body.removeClass(function() {
           var stepName = $(this).data('tutorial');
           return 'tutorial-step--' + stepName;
         }).data('tutorial', currStep).addClass('tutorial-active tutorial-step--' + currStep);
@@ -1818,8 +1812,8 @@ $(document).on('keypress', 'input', function(e) {
      *   - if this function is called from an event listener,
      *      prevent the default action
      */
-    function closeTutorial(event){
-      if(event) {
+    function closeTutorial(event) {
+      if (event) {
         event.preventDefault();
       }
 
@@ -1834,7 +1828,7 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * init the gameboard
      */
-    function init(){
+    function init() {
       // init the jquery object variables
       $gameboard = $('#fb-gameboard');
 
@@ -1849,22 +1843,22 @@ $(document).on('keypress', 'input', function(e) {
      * utility function to check if the game is currently in
      *  view-only mode
      */
-    function isViewMode(){
+    function isViewMode() {
       return VIEW_ONLY;
     }
 
-    return{
-      init               : init,
-      data               : getCountryData,
-      captureCountry     : captureCountry,
-      initTutorial       : initTutorial,
-      toggleListView     : toggleListView,
+    return {
+      init: init,
+      data: getCountryData,
+      captureCountry: captureCountry,
+      initTutorial: initTutorial,
+      toggleListView: toggleListView,
       // clos the tutorial
-      closeTutorial      : closeTutorial,
+      closeTutorial: closeTutorial,
       // enable the zoomable stuff from console
-      enableClickAndDrag : enableClickAndDrag,
+      enableClickAndDrag: enableClickAndDrag,
       // check to see if we're in view mode (for external use)
-      isViewMode         : isViewMode
+      isViewMode: isViewMode
     };
   })(); // gameboard
 
@@ -1875,12 +1869,12 @@ $(document).on('keypress', 'input', function(e) {
   /**
    * --modal
    */
-  FB_CTF.modal = (function(){
-    var LOAD_EXT        = '.php',
-        ACTIVE_CLASS    = 'visible',
-        POPUP_CLASSES   = 'fb-modal-wrapper modal--popup',
+  FB_CTF.modal = (function() {
+    var LOAD_EXT = '.php',
+        ACTIVE_CLASS = 'visible',
+        POPUP_CLASSES = 'fb-modal-wrapper modal--popup',
         DEFAULT_CLASSES = 'fb-modal-wrapper modal--default',
-        MODAL_DIR       = 'inc/modals/',
+        MODAL_DIR = 'inc/modals/',
         $modalContainer,
         $modal,
         $countryHover;
@@ -1889,7 +1883,7 @@ $(document).on('keypress', 'input', function(e) {
      * initialize the modal, including grabbing the modal div and
      *  setting up event listeners
      */
-    function init(){
+    function init() {
       $modal = $('#fb-modal');
       $modalContainer = $('#fb-main-content');
       $countryHover = $('#fb-country-popup');
@@ -1906,7 +1900,7 @@ $(document).on('keypress', 'input', function(e) {
         // if we're launching the login modal, add the active
         //  class to the nav item
         //
-        if(modal === 'login'){
+        if (modal === 'login') {
           $('.fb-main-nav a').removeClass('active');
           $(this).addClass('active');
         }
@@ -1926,12 +1920,12 @@ $(document).on('keypress', 'input', function(e) {
      *   - if this function call comes from an event listener,
      *      prevent the default action
      */
-    function close( event ){
-      if(event) {
+    function close(event) {
+      if (event) {
         event.preventDefault();
       }
 
-      $('div[id^="fb-modal"]').removeClass( ACTIVE_CLASS );
+      $('div[id^="fb-modal"]').removeClass(ACTIVE_CLASS);
 
       //
       // @NOTICE
@@ -1951,8 +1945,8 @@ $(document).on('keypress', 'input', function(e) {
      *   - if this function call comes from an event listener,
      *      prevent the default action
      */
-    function closeHoverPopup( event ){
-      if(event) {
+    function closeHoverPopup(event) {
+      if (event) {
         event.preventDefault();
       }
 
@@ -1971,12 +1965,12 @@ $(document).on('keypress', 'input', function(e) {
      * @param cb (function)
      *   - the callback
      */
-    function openAndLoad( $modal, loadPath, cb){
-      FB_CTF.loadComponent( $modal, loadPath, function(){
-        if( typeof cb === 'function' ){
+    function openAndLoad($modal, loadPath, cb) {
+      FB_CTF.loadComponent($modal, loadPath, function() {
+        if (typeof cb === 'function') {
           cb();
         }
-        $modal.addClass( ACTIVE_CLASS );
+        $modal.addClass(ACTIVE_CLASS);
       });
     }
 
@@ -1997,10 +1991,11 @@ $(document).on('keypress', 'input', function(e) {
      * @param cb (function)
      *   - a callback function for after the modal content loads
      */
-    function loadPopup(modalName, cb){
+    function loadPopup(modalName, cb) {
       _load(modalName, POPUP_CLASSES, MODAL_DIR, cb);
     }
-    function load(modalName, cb){
+
+    function load(modalName, cb) {
       _load(modalName, DEFAULT_CLASSES, MODAL_DIR, cb);
     }
 
@@ -2022,13 +2017,13 @@ $(document).on('keypress', 'input', function(e) {
      *   - a callback function for after the modal content loads
      *
      */
-    function _load(modalName, modalClasses, loadDir, cb){
+    function _load(modalName, modalClasses, loadDir, cb) {
       var loadPath = loadDir + modalName + LOAD_EXT;
       closeHoverPopup();
       modalClasses += ' modal--' + modalName;
 
-      if( $modal.length === 0 ){
-        $modal = $('<div id="fb-modal" class="' + modalClasses + '" />').appendTo( $modalContainer );
+      if ($modal.length === 0) {
+        $modal = $('<div id="fb-modal" class="' + modalClasses + '" />').appendTo($modalContainer);
       } else {
         $modal.removeAttr('class').addClass(modalClasses);
       }
@@ -2048,13 +2043,13 @@ $(document).on('keypress', 'input', function(e) {
      * @param cb (function)
      *   - callback funtion for after the persistent modal is loaded
      */
-    function loadPersistent(modalName, cb){
+    function loadPersistent(modalName, cb) {
       var loadPath = MODAL_DIR + modalName + LOAD_EXT,
-          modalId  = 'fb-modal-persistent--' + modalName,
-          $modal   = $(modalId);
+          modalId = 'fb-modal-persistent--' + modalName,
+          $modal = $(modalId);
 
       if ($modal.length === 0) {
-        $modal = $('<div id="' + modalId + '" class="' + POPUP_CLASSES + '" />').appendTo( $modalContainer );
+        $modal = $('<div id="' + modalId + '" class="' + POPUP_CLASSES + '" />').appendTo($modalContainer);
       }
       FB_CTF.loadComponent($modal, loadPath, cb);
     }
@@ -2065,9 +2060,9 @@ $(document).on('keypress', 'input', function(e) {
      * @param modalName (string)
      *   - the name of the modal to open
      */
-    function openPersistent(modalName){
+    function openPersistent(modalName) {
       var modalId = '#fb-modal-persistent--' + modalName;
-      $(modalId).addClass( ACTIVE_CLASS );
+      $(modalId).addClass(ACTIVE_CLASS);
     }
 
     /**
@@ -2076,10 +2071,10 @@ $(document).on('keypress', 'input', function(e) {
      * @param cb (function)
      *   - a callback to render the country data in the popup
      */
-    function countryHoverPopup(cb){
+    function countryHoverPopup(cb) {
       var loadPath = 'inc/modals/country-popup.php';
       if ($countryHover.length === 0) {
-        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo( $modalContainer );
+        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo($modalContainer);
       }
       openAndLoad($countryHover, loadPath, cb);
     }
@@ -2090,10 +2085,10 @@ $(document).on('keypress', 'input', function(e) {
      * @param cb (function)
      *   - a callback to render the country data in the popup
      */
-    function countryInactiveHoverPopup(cb){
+    function countryInactiveHoverPopup(cb) {
       var loadPath = 'inc/modals/country-inactive-popup.php';
       if ($countryHover.length === 0) {
-        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo( $modalContainer );
+        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo($modalContainer);
       }
       openAndLoad($countryHover, loadPath, cb);
     }
@@ -2104,35 +2099,35 @@ $(document).on('keypress', 'input', function(e) {
      * @param cb (function)
      *   - a callback to render the country data in the popup
      */
-    function viewmodePopup( cb ){
+    function viewmodePopup(cb) {
       var loadPath = 'inc/modals/country-popup--viewmode.php';
       if ($countryHover.length === 0) {
-        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--view-only" />').appendTo( $modalContainer );
+        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--view-only" />').appendTo($modalContainer);
       }
 
       openAndLoad($countryHover, loadPath, cb);
     }
 
     return {
-      init              : init,
+      init: init,
       // loads the basic modal
-      load              : load,
+      load: load,
       // loads a persistent modal
-      loadPersistent    : loadPersistent,
+      loadPersistent: loadPersistent,
       // open a persistent modal
-      openPersistent    : openPersistent,
+      openPersistent: openPersistent,
       // load a popup modal
-      loadPopup         : loadPopup,
+      loadPopup: loadPopup,
       // load and show the popup modal for a country hover
-      countryHoverPopup : countryHoverPopup,
+      countryHoverPopup: countryHoverPopup,
       // load and show the popup modal for an inactive country hover
-      countryInactiveHoverPopup : countryInactiveHoverPopup,
+      countryInactiveHoverPopup: countryInactiveHoverPopup,
       // load and show the view only country info
-      viewmodePopup     : viewmodePopup,
+      viewmodePopup: viewmodePopup,
       // close the popup modal for a country hover
-      closeHoverPopup   : closeHoverPopup,
+      closeHoverPopup: closeHoverPopup,
       // close the regular modal
-      close             : close
+      close: close
     };
   })(); // modal
 
@@ -2143,7 +2138,7 @@ $(document).on('keypress', 'input', function(e) {
   /**
    * --slider
    */
-  FB_CTF.slider = (function(){
+  FB_CTF.slider = (function() {
     var selector = '.fb-slider';
 
     /**
@@ -2153,21 +2148,21 @@ $(document).on('keypress', 'input', function(e) {
      *   - an optional callback function to run after
      *      the slider loads
      */
-    function init( cb ){
-      var itemWidth = $(selector).closest('#fb-modal').length > 0 ? 90 : 120 ;
+    function init(cb) {
+      var itemWidth = $(selector).closest('#fb-modal').length > 0 ? 90 : 120;
 
       $(selector).flexslider({
-        namespace  : "fb-slider-",
-        animation  : "slide",
-        selector   : ".slides > li",
-        slideshow  : false,
-        minItems   : 2,
-        itemWidth  : itemWidth,
-        maxItems   : 7,
-        move       : 1,
-        controlNav : false,
-        start      : function(){
-          if( typeof cb === 'function' ){
+        namespace: "fb-slider-",
+        animation: "slide",
+        selector: ".slides > li",
+        slideshow: false,
+        minItems: 2,
+        itemWidth: itemWidth,
+        maxItems: 7,
+        move: 1,
+        controlNav: false,
+        start: function() {
+          if (typeof cb === 'function') {
             cb();
           }
         }
@@ -2175,7 +2170,7 @@ $(document).on('keypress', 'input', function(e) {
     }
 
     return {
-      init : init
+      init: init
     };
   })(); // slider
 
@@ -2187,13 +2182,13 @@ $(document).on('keypress', 'input', function(e) {
    * --graphics
    * build graphics (like the scorecard) using d3
    */
-  FB_CTF.graphics = (function(){
+  FB_CTF.graphics = (function() {
 
     /**
      * set up event listeners
      */
-    function init(){
-      $('.fb-graphic').each(function(){
+    function init() {
+      $('.fb-graphic').each(function() {
         var $graphic = $(this),
             datafile = $graphic.data('file');
 
@@ -2210,7 +2205,7 @@ $(document).on('keypress', 'input', function(e) {
         event.preventDefault();
         var team = $(this).val(),
             $teamLine = $('.scoreboard-graphic-container .team-score-line[data-team="' + team + '"]');
-        if(this.checked){
+        if (this.checked) {
           $teamLine.show();
         } else {
           $teamLine.hide();
@@ -2227,17 +2222,17 @@ $(document).on('keypress', 'input', function(e) {
      * @param datafile (string)
      *   - the file to load, which contains the data
      */
-    function build( svgEl, datafile ){
+    function build(svgEl, datafile) {
       if (datafile === undefined) {
         return;
       }
       var $container = $(svgEl).closest('.scoreboard-graphic-container');
 
-      $.get( datafile , function(data, status, jqxhr){
+      $.get(datafile, function(data, status, jqxhr) {
         var scores = data;
         var maxScore = 0;
-        $.each(scores, function(){
-          $.each(this.values, function(){
+        $.each(scores, function() {
+          $.each(this.values, function() {
             if (parseInt(this.score) > maxScore) {
               maxScore = parseInt(this.score);
             }
@@ -2245,20 +2240,24 @@ $(document).on('keypress', 'input', function(e) {
         });
         var maxYaxis = maxScore + 30;
 
-        var graphic  = d3.select( svgEl ),
-            MARGIN   = {left: 60, right: 20, bottom:40},
-            WIDTH    = $container.length > 0 ? $container.width() - MARGIN.left - MARGIN.right : 820 - MARGIN.left - MARGIN.right,
-            HEIGHT   = 220 - MARGIN.bottom,
+        var graphic = d3.select(svgEl),
+            MARGIN = {
+              left: 60,
+              right: 20,
+              bottom: 40
+            },
+            WIDTH = $container.length > 0 ? $container.width() - MARGIN.left - MARGIN.right : 820 - MARGIN.left - MARGIN.right,
+            HEIGHT = 220 - MARGIN.bottom,
 
-            X_START  = 1,
+            X_START = 1,
             X_LENGTH = FB_CTF.data.CONF.progressiveCount,
-            xRange   = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
+            xRange = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
             /*yRange   = d3.scale.linear().range([HEIGHT, 0]).domain([d3.min(minMaxArray, function (d) {
              return d.score;
              }), d3.max(minMaxArray, function (d) {
              return d.score + 30;
              }) ]),*/
-            yRange   = d3.scale.linear().range([HEIGHT, 0]).domain([0, maxYaxis]),
+            yRange = d3.scale.linear().range([HEIGHT, 0]).domain([0, maxYaxis]),
 
             xAxis = d3.svg.axis().tickFormat("").scale(xRange).ticks(X_LENGTH),
 
@@ -2284,7 +2283,7 @@ $(document).on('keypress', 'input', function(e) {
         graphic.append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", 0)
-          .attr("x",0 - (HEIGHT / 2))
+          .attr("x", 0 - (HEIGHT / 2))
           .attr("dy", "1em")
           .attr("stroke", "#fff")
           .style("text-anchor", "middle")
@@ -2317,7 +2316,7 @@ $(document).on('keypress', 'input', function(e) {
           .attr('fill', 'black')
           .attr('stroke-width', 2);
 
-        scores.forEach(function(d, i){
+        scores.forEach(function(d, i) {
           graphic.append('svg:path')
             .attr('d', lineFunc(d.values))
             .attr('class', 'team-score-line')
@@ -2333,17 +2332,17 @@ $(document).on('keypress', 'input', function(e) {
           .attr('x', MARGIN.left)
           .attr('fill', 'none')
           .attr('pointer-events', 'all')
-          .on('mouseout', function(){
+          .on('mouseout', function() {
             d3.select(".mouseline").attr("opacity", "0");
           })
-          .on('mouseover', function(){
+          .on('mouseover', function() {
             d3.select(".mouseline").attr("opacity", "1");
           })
           .on('mousemove', function() {
             var xCoor = d3.mouse(this)[0];
             d3.select('.mouseline').attr('transform', 'translate(' + xCoor + ',0)');
           });
-      }, 'json').error(function(jqxhr, status, error){
+      }, 'json').error(function(jqxhr, status, error) {
         console.error("There was a problem retrieving the game scores.");
         console.log(status);
         console.log(error);
@@ -2351,8 +2350,8 @@ $(document).on('keypress', 'input', function(e) {
       });
     }
     return {
-      init  : init,
-      build : build
+      init: init,
+      build: build
     };
   })(); // graphics
 
@@ -2363,8 +2362,8 @@ $(document).on('keypress', 'input', function(e) {
   /**
    * --command line
    */
-  FB_CTF.command_line = (function(){
-    var loadPath  = 'data/command-line.php',
+  FB_CTF.command_line = (function() {
+    var loadPath = 'data/command-line.php',
         modalName = 'command-line',
         $cmdPromptList,
         $cmdResultsList;
@@ -2372,14 +2371,14 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * load the commands data
      */
-    function loadCommandsData(){
+    function loadCommandsData() {
       var loadPath = 'data/command-line.php';
 
-      return $.get(loadPath, function(data, status, jqxhr) {
+      return $.get(loadPath, function(data) {
         FB_CTF.data.COMMAND = data;
         var df = $.Deferred();
         return df.resolve(FB_CTF.data.COMMAND);
-      }, 'json').error( function( jqhxr, status, error){
+      }, 'json').error(function(jqhxr, status, error) {
         console.error("There was a problem retrieving the commands data.");
         console.log(loadPath);
         console.log(status);
@@ -2393,21 +2392,21 @@ $(document).on('keypress', 'input', function(e) {
      *  - the keyup on the window to trigger the command line
      *  - the keyup on the input prompt
      */
-    function eventListeners(){
-      var $promptInput        = $('#command-prompt--input'),
+    function eventListeners() {
+      var $promptInput = $('#command-prompt--input'),
           $filterResultsInput = $('#command-prompt--filter-results'),
           // since the modal is fading in, we need to delay the
           //  focus so that it actually focuses when the modal
           //  appears
-          animDelay           = 400,
-          numCommands         = $('li', $cmdPromptList).length;
+          animDelay = 400,
+          numCommands = $('li', $cmdPromptList).length;
       //
       // get the command line up
       //
       $(window).on('keyup', function(event) {
         var key = event.which;
         // if the forward slash has been pressed
-        if( key === 191){
+        if (key === 191) {
           // No command line if typing happens in a input text
           if (event.target instanceof HTMLInputElement) {
             return false;
@@ -2416,16 +2415,16 @@ $(document).on('keypress', 'input', function(e) {
 
           FB_CTF.modal.close();
           FB_CTF.modal.closeHoverPopup();
-          FB_CTF.modal.openPersistent( modalName );
-          if( $('li', $cmdPromptList).length % 2 === 0){
+          FB_CTF.modal.openPersistent(modalName);
+          if ($('li', $cmdPromptList).length % 2 === 0) {
             $cmdPromptList.addClass('offset');
           }
-          setTimeout(function(){
+          setTimeout(function() {
             $promptInput.focus();
           }, animDelay);
         }
         // esc closes the command prompt
-        else if (key === 27){
+        else if (key === 27) {
           clearCommandPrompt();
           FB_CTF.gameboard.closeTutorial();
           $('.js-close-modal').trigger('click');
@@ -2439,9 +2438,9 @@ $(document).on('keypress', 'input', function(e) {
       $promptInput.on('keyup', function(event) {
         event.preventDefault();
 
-        var $self         = $(this),
-            key           = event.which,
-            cmd           = $self.val(),
+        var $self = $(this),
+            key = event.which,
+            cmd = $self.val(),
             $autocomplete = $self.siblings('.autocomplete');
 
         var $active;
@@ -2449,7 +2448,7 @@ $(document).on('keypress', 'input', function(e) {
         // if the "enter" key has been pressed
         if (key === 13) {
           var autocompleteCmd = $autocomplete.text(),
-              selectedCmd     = FB_CTF.data.COMMAND.commands[cmd];
+              selectedCmd = FB_CTF.data.COMMAND.commands[cmd];
 
           if (selectedCmd === undefined) {
             selectedCmd = FB_CTF.data.COMMAND.commands[autocompleteCmd];
@@ -2466,41 +2465,41 @@ $(document).on('keypress', 'input', function(e) {
           }
         }
         // up arrow goes up in results box
-        else if (key === 38){
+        else if (key === 38) {
           $active = $cmdPromptList.find('li.selected');
 
-          if($active.prevAll(':not(.hidden)').length > 0){
+          if ($active.prevAll(':not(.hidden)').length > 0) {
             $active = $active.removeClass('selected').prevAll(':not(.hidden)').eq(0).addClass('selected');
           }
 
-          $promptInput.val( $active.text() );
+          $promptInput.val($active.text());
           $autocomplete.empty();
           checkSelectedVisible();
         }
         // down arrow goes down in results box
-        else if(key === 40 ){
+        else if (key === 40) {
           $active = $cmdPromptList.find('li.selected');
 
-          if($active.nextAll(':not(.hidden)').length > 0){
+          if ($active.nextAll(':not(.hidden)').length > 0) {
             $active = $active.removeClass('selected').nextAll(':not(.hidden)').eq(0).addClass('selected');
           }
 
-          if( $active.length === 0 ){
+          if ($active.length === 0) {
             $active = $cmdPromptList.find('li:not(.hidden)').eq(0).addClass('selected');
           }
 
-          $promptInput.val( $active.text() );
+          $promptInput.val($active.text());
           $autocomplete.empty();
           checkSelectedVisible();
         }
         // the user is actually typing
         else {
-          $('li', $cmdPromptList).removeClass('hidden selected').filter(function(){
+          $('li', $cmdPromptList).removeClass('hidden selected').filter(function() {
             var text = $(this).text();
             return text.indexOf(cmd) !== 0;
           }).addClass('hidden');
 
-          if( cmd !== "" ){
+          if (cmd !== "") {
             var first = $cmdPromptList.find('li:not(.hidden)').eq(0).text();
             $autocomplete.text(first);
           } else {
@@ -2513,70 +2512,70 @@ $(document).on('keypress', 'input', function(e) {
       //
       // filter the results from the selected command
       //
-      $filterResultsInput.on('keyup', function( event ){
+      $filterResultsInput.on('keyup', function(event) {
         event.preventDefault();
-        var $self         = $(this),
-            key           = event.which,
-            search        = $self.val(),
+        var $self = $(this),
+            key = event.which,
+            search = $self.val(),
             $autocomplete = $self.siblings('.autocomplete'),
-            $selected     = $cmdResultsList.find('li.selected');
+            $selected = $cmdResultsList.find('li.selected');
 
         var $active;
 
-        if( key === 13 ){
+        if (key === 13) {
           $('body').trigger('command-option-selected', {
-            selected : $selected.text()
+            selected: $selected.text()
           });
         }
         // up arrow goes up in results box
-        else if (key === 38){
+        else if (key === 38) {
           $active = $cmdResultsList.find('li.selected');
 
-          if($active.prevAll(':not(.hidden)').length > 0){
+          if ($active.prevAll(':not(.hidden)').length > 0) {
             $active = $active.removeClass('selected').prevAll(':not(.hidden)').eq(0).addClass('selected');
           }
 
-          $filterResultsInput.val( $active.text() );
+          $filterResultsInput.val($active.text());
           $autocomplete.empty();
           checkSelectedVisible();
         }
         // down arrow goes down in results box
-        else if(key === 40 ){
+        else if (key === 40) {
           $active = $cmdResultsList.find('li.selected');
 
-          if($active.nextAll(':not(.hidden)').length > 0){
+          if ($active.nextAll(':not(.hidden)').length > 0) {
             $active = $active.removeClass('selected').nextAll(':not(.hidden)').eq(0).addClass('selected');
           }
 
-          if( $active.length === 0 ){
+          if ($active.length === 0) {
             $active = $cmdResultsList.find('li:not(.hidden)').eq(0).addClass('selected');
           }
 
-          $filterResultsInput.val( $active.text() );
+          $filterResultsInput.val($active.text());
           $autocomplete.empty();
           checkSelectedVisible();
         }
         // else if the use is actually typing
         else {
-          $selected = $cmdResultsList.find('li').removeClass('hidden selected').filter(function(){
+          $selected = $cmdResultsList.find('li').removeClass('hidden selected').filter(function() {
             var val = $(this).text().toLowerCase();
             return val.indexOf(search.toLowerCase()) !== 0;
           }).addClass('hidden');
 
-          if($selected.hasClass('hidden')){
+          if ($selected.hasClass('hidden')) {
             $selected.removeClass('selected');
 
-            if( $selected.nextAll(':not(.hidden)').length > 0){
+            if ($selected.nextAll(':not(.hidden)').length > 0) {
               $selected.nextAll(':not(.hidden)').eq(0).addClass('selected');
-            } else if( $selected.prevAll(':not(.hidden)').length > 0){
+            } else if ($selected.prevAll(':not(.hidden)').length > 0) {
               $selected.prevAll(':not(.hidden)').eq(0).addClass('selected');
             }
           }
 
-          if( search !== "" ){
+          if (search !== "") {
             var first = $cmdResultsList.find('li:not(.hidden)').eq(0).text();
 
-            if( search.charAt(0) === search.charAt(0).toLowerCase() ){
+            if (search.charAt(0) === search.charAt(0).toLowerCase()) {
               first = first.toLowerCase();
             }
 
@@ -2585,7 +2584,7 @@ $(document).on('keypress', 'input', function(e) {
             $autocomplete.empty();
           }
 
-          if($selected.length === 0){
+          if ($selected.length === 0) {
             $cmdResultsList.find('li').eq(0).addClass('selected');
           }
         }
@@ -2596,7 +2595,7 @@ $(document).on('keypress', 'input', function(e) {
      * clear all the command prompt stuff
      */
     function clearCommandPrompt() {
-      var $promptInput        = $('#command-prompt--input'),
+      var $promptInput = $('#command-prompt--input'),
           $filterResultsInput = $('#command-prompt--filter-results');
       $('.fb-command-line .autocomplete').empty();
       $promptInput.val('');
@@ -2628,16 +2627,16 @@ $(document).on('keypress', 'input', function(e) {
       }
 
       var resultsListScroll = $cmdResultsList.scrollTop(),
-          resultListHeight  = $cmdResultsList.height(),
-          selectedPos       = $selected.position();
+          resultListHeight = $cmdResultsList.height(),
+          selectedPos = $selected.position();
 
       if (selectedPos.top > resultListHeight) {
         $cmdResultsList.animate({
-          scrollTop : (resultsListScroll + selectedPos.top) + 'px'
+          scrollTop: (resultsListScroll + selectedPos.top) + 'px'
         });
       } else if (selectedPos.top < 0) {
         $cmdResultsList.animate({
-          scrollTop : (resultsListScroll + selectedPos.top) + 'px'
+          scrollTop: (resultsListScroll + selectedPos.top) + 'px'
         });
       }
     }
@@ -2649,8 +2648,8 @@ $(document).on('keypress', 'input', function(e) {
      * @param cmdData (object)
      *   - an object with data for the selected command
      */
-    function chooseCommand( cmdData ){
-      var results     = cmdData.results,
+    function chooseCommand(cmdData) {
+      var results = cmdData.results,
           cmdFunction = cmdData.function;
 
       if (results) {
@@ -2658,14 +2657,14 @@ $(document).on('keypress', 'input', function(e) {
           var list = FB_CTF.data.COMMAND.results_library[results];
 
           if (list) {
-            $.each( list, function(index, listItem){
+            $.each(list, function(index, listItem) {
               var li = $('<li/>').text(listItem);
               $cmdResultsList.append(li);
               //$cmdResultsList.append('<li>' + listItem + '</li>');
             });
           }
         } else {
-          $.each(results, function(index, listItem){
+          $.each(results, function(index, listItem) {
             var li = $('<li/>').text(listItem);
             $cmdResultsList.append(li);
             //$cmdResultsList.append('<li>' + listItem + '</li>');
@@ -2676,7 +2675,7 @@ $(document).on('keypress', 'input', function(e) {
 
       if (cmdFunction) {
         var funcName = cmdFunction.name,
-            param    = cmdFunction.param;
+            param = cmdFunction.param;
 
         switch (funcName) {
         case 'change-radio':
@@ -2716,9 +2715,9 @@ $(document).on('keypress', 'input', function(e) {
      * @param inputName (string)
      *   - the input name we're looking to change
      */
-    function cmd_changeRadio( inputName ){
-      $('body').on('command-option-selected', function(event, data){
-        if(inputName === 'fb--module--filter--category'){
+    function cmd_changeRadio(inputName) {
+      $('body').on('command-option-selected', function(event, data) {
+        if (inputName === 'fb--module--filter--category') {
           $('aside[data-module="filter"]').addClass('active');
           $body.trigger('module-changestate');
         }
@@ -2736,8 +2735,8 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * capture a country
      */
-    function cmd_captureCountry(){
-      $('body').on('command-option-selected', function(event, data){
+    function cmd_captureCountry() {
+      $('body').on('command-option-selected', function(event, data) {
         var country = data.selected;
         FB_CTF.modal.close();
         clearCommandPrompt();
@@ -2751,22 +2750,22 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * show team's info
      */
-    function cmd_showTeam(){
-      $('body').on('command-option-selected', function(event, data){
+    function cmd_showTeam() {
+      $('body').on('command-option-selected', function(event, data) {
         var team = data.selected;
         FB_CTF.modal.close();
         clearCommandPrompt();
 
         var teamData = FB_CTF.data.TEAMS[team];
 
-        if( teamData === undefined){
+        if (teamData === undefined) {
           console.error("Invalid team name in markup");
           return;
         }
 
-        FB_CTF.modal.loadPopup( 'team', function(){
-          var $modal       = $('#fb-modal'),
-              rank         = teamData.rank + "",
+        FB_CTF.modal.loadPopup('team', function() {
+          var $modal = $('#fb-modal'),
+              rank = teamData.rank + "",
               $teamMembers = $('.team-members', $modal);
 
           // team name
@@ -2774,19 +2773,19 @@ $(document).on('keypress', 'input', function(e) {
           // team badge
           $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
           // team members
-          $.each( teamData.team_members, function(){
+          $.each(teamData.team_members, function() {
             $teamMembers.append('<li>' + this + '</li>');
           });
           // rank
-          if( rank.length === 1 ){
+          if (rank.length === 1) {
             rank = "0" + rank;
           }
-          $('.points-number', $modal).text( rank );
+          $('.points-number', $modal).text(rank);
           // team points
-          $('.points--base', $modal).text( teamData.points.base);
-          $('.points--quiz', $modal).text( teamData.points.quiz);
-          $('.points--flag', $modal).text( teamData.points.flag);
-          $('.points--total', $modal).text( teamData.points.total);
+          $('.points--base', $modal).text(teamData.points.base);
+          $('.points--quiz', $modal).text(teamData.points.quiz);
+          $('.points--flag', $modal).text(teamData.points.flag);
+          $('.points--total', $modal).text(teamData.points.total);
         });
         $('body').off('command-option-selected');
       });
@@ -2796,10 +2795,10 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * close a module
      */
-    function cmd_closeModule(){
-      $('body').on('command-option-selected', function(event, data){
+    function cmd_closeModule() {
+      $('body').on('command-option-selected', function(event, data) {
         var module = data.selected;
-        if( module === "All" ){
+        if (module === "All") {
           $('aside').removeClass('active');
           setAllWidgetStatus('close');
         } else {
@@ -2818,11 +2817,11 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * open a module
      */
-    function cmd_openModule(){
-      $('body').on('command-option-selected', function(event, data){
+    function cmd_openModule() {
+      $('body').on('command-option-selected', function(event, data) {
         var module = data.selected;
 
-        if( module === "All" ){
+        if (module === "All") {
           $('aside').addClass('active');
           setAllWidgetStatus('open');
         } else {
@@ -2841,11 +2840,11 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * toggle the list view
      */
-    function cmd_toggleListView(){
-      $('body').on('command-option-selected', function(event, data){
+    function cmd_toggleListView() {
+      $('body').on('command-option-selected', function(event, data) {
         var enable = data.selected === "On" ? true : false;
 
-        FB_CTF.gameboard.toggleListView( enable );
+        FB_CTF.gameboard.toggleListView(enable);
 
         FB_CTF.modal.close();
         clearCommandPrompt();
@@ -2861,21 +2860,21 @@ $(document).on('keypress', 'input', function(e) {
     /**
      * init the command line functionality
      */
-    function init(){
-      FB_CTF.modal.loadPersistent(modalName, function(){
-        $.get(loadPath , function(data, status, jqxhr){
+    function init() {
+      FB_CTF.modal.loadPersistent(modalName, function() {
+        $.get(loadPath, function(data) {
           $cmdPromptList = $('.fb-command-line .command-list ul');
           $cmdResultsList = $('.fb-command-line .command-results ul');
 
           FB_CTF.data.COMMAND = data;
 
           if (FB_CTF.data.COMMAND && FB_CTF.data.COMMAND.commands) {
-            $.each(FB_CTF.data.COMMAND.commands, function(command, cmdData){
+            $.each(FB_CTF.data.COMMAND.commands, function(command, cmdData) {
               $cmdPromptList.append('<li>' + command + '</li>');
             });
             eventListeners();
           }
-        }, 'json').error(function(){
+        }, 'json').error(function() {
           console.error("There was a problem retrieving the commands.");
           console.error("/error");
         });
@@ -2894,7 +2893,7 @@ $(document).on('keypress', 'input', function(e) {
   /* --------------------------------------------
    * --public
    * -------------------------------------------- */
-  FB_CTF.init = function(){
+  FB_CTF.init = function() {
     //
     // set up global variables
     //
@@ -2923,7 +2922,7 @@ $(document).on('keypress', 'input', function(e) {
     //  content should trigger this event when the content is
     //  done loading
     //
-    $body.on('content-loaded', function(event) {
+    $body.on('content-loaded', function() {
       // load the sliders
       FB_CTF.slider.init();
 
@@ -2955,8 +2954,8 @@ $(document).on('keypress', 'input', function(e) {
     //
     // radio tabs
     //
-    $('.radio-tabs').each(function(){
-      var $tabs       = $(this),
+    $('.radio-tabs').each(function() {
+      var $tabs = $(this),
           $tabContent = $tabs.next('.tab-content-container');
 
       if ($tabContent.length > 0) {
@@ -2976,27 +2975,27 @@ $(document).on('keypress', 'input', function(e) {
     var filteredCategories = [];
     $('.trending-list input[type="checkbox"]').on('change', function(event) {
       event.preventDefault();
-      var $posts    = $('.post-list--main .fb-post:not(.pinned-post)').removeClass('hidden'),
+      var $posts = $('.post-list--main .fb-post:not(.pinned-post)').removeClass('hidden'),
           isChecked = this.checked,
-          category  = $(this).val();
+          category = $(this).val();
 
-      if ( isChecked) {
+      if (isChecked) {
         filteredCategories.push(category);
       } else {
         var index = filteredCategories.indexOf(category);
         filteredCategories.splice(index, 1);
       }
 
-      if(filteredCategories.length === 0){
+      if (filteredCategories.length === 0) {
         return;
       }
 
-      $posts.filter(function(){
+      $posts.filter(function() {
         var categories = $(this).data('categories'),
-            hasCat     = true;
+            hasCat = true;
 
-        $.each( filteredCategories, function(i, cat){
-          if ( categories.indexOf(cat) > -1) {
+        $.each(filteredCategories, function(i, cat) {
+          if (categories.indexOf(cat) > -1) {
             hasCat = false;
             return;
           }
@@ -3016,10 +3015,10 @@ $(document).on('keypress', 'input', function(e) {
     //
     // click events
     //
-    $body.on('click', '.click-effect', function(){
+    $body.on('click', '.click-effect', function() {
       var $self = $(this).addClass('clicked');
 
-      $self.find('span').on('animationend', function(){
+      $self.find('span').on('animationend', function() {
         $self.removeClass('clicked');
         $self.off('animationend');
       });
@@ -3038,10 +3037,10 @@ $(document).on('keypress', 'input', function(e) {
     //
     $('.post-readmore').on('click', function(event) {
       event.preventDefault();
-      var $self    = $(this),
+      var $self = $(this),
           $content = $self.closest('.post-content').toggleClass('show-full');
 
-      if ( $content.hasClass('show-full')) {
+      if ($content.hasClass('show-full')) {
         $self.text('Close Post');
       } else {
         $self.text('Read More');
@@ -3054,10 +3053,10 @@ $(document).on('keypress', 'input', function(e) {
     $('.rules--table-of-contents li a').on('click', function(event) {
       event.preventDefault();
 
-      var $rules         = $('.fb-rules section'),
-          index          = $(this).parent().index(),
-          offset         = $('.page--rules .fb-section-header').innerHeight(),
-          $selectedRule  = $rules.eq(index),
+      var $rules = $('.fb-rules section'),
+          index = $(this).parent().index(),
+          offset = $('.page--rules .fb-section-header').innerHeight(),
+          $selectedRule = $rules.eq(index),
           rulesScrollTop = $selectedRule.position().top + offset;
 
       $('.page--rules').animate({
@@ -3086,11 +3085,11 @@ $(document).on('keypress', 'input', function(e) {
    * @param cb (function)
    *   - callback function for when the load is successful
    */
-  FB_CTF.loadComponent = function(target, component, cb){
+  FB_CTF.loadComponent = function(target, component, cb) {
     var $target = typeof target === 'object' ? target : $(target);
 
-    $target.load( component, function(response, status, jqxhr){
-      if(status === "error"){
+    $target.load(component, function() {
+      if (status === "error") {
         console.error("There was a problem loading the component:");
         console.log("target: " + target);
         console.log("component: " + component);
@@ -3100,9 +3099,11 @@ $(document).on('keypress', 'input', function(e) {
         // fire the "content-loaded" event to initialize any
         //  dynamic content that is in the loaded content
         //
-        $('body').trigger('content-loaded', {component: component});
+        $('body').trigger('content-loaded', {
+          component: component
+        });
 
-        if( typeof cb === 'function'){
+        if (typeof cb === 'function') {
           cb();
         }
       }
@@ -3127,7 +3128,7 @@ function activateTeams() {
     event.preventDefault();
     var team = String($(this).data('team'));
 
-    if( team === undefined || team === ""){
+    if (team === undefined || team === "") {
       team = "Facebook CTF";
     }
     var teamData = FB_CTF.data.TEAMS[team];
@@ -3135,45 +3136,45 @@ function activateTeams() {
       console.error("Invalid team name in markup");
       return;
     }
-    FB_CTF.modal.loadPopup( 'team', function(){
-      var $modal       = $('#fb-modal'),
-          rank         = teamData.rank + "",
+    FB_CTF.modal.loadPopup('team', function() {
+      var $modal = $('#fb-modal'),
+          rank = teamData.rank + "",
           $teamMembers = $('.team-members', $modal);
       // team name
       $('.team-name', $modal).text(team);
       // team badge
       $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
       // team members
-      $.each( teamData.team_members, function(){
+      $.each(teamData.team_members, function() {
         $teamMembers.append('<li>' + this + '</li>');
       });
       // rank
-      if( rank.length === 1 ){
+      if (rank.length === 1) {
         rank = "0" + rank;
       }
-      $('.points-number', $modal).text( rank );
+      $('.points-number', $modal).text(rank);
       // team points
-      $('.points--base', $modal).text( teamData.points.base);
-      $('.points--quiz', $modal).text( teamData.points.quiz);
-      $('.points--flag', $modal).text( teamData.points.flag);
-      $('.points--total', $modal).text( teamData.points.total);
+      $('.points--base', $modal).text(teamData.points.base);
+      $('.points--quiz', $modal).text(teamData.points.quiz);
+      $('.points--flag', $modal).text(teamData.points.flag);
+      $('.points--total', $modal).text(teamData.points.total);
     });
 
   });
 }
 
-function setupInputListeners(){
+function setupInputListeners() {
   var FB_CTF = window.FB_CTF;
   var $svgCountries = $('.countries > g', $('#fb-gameboard-map'));
 
   function toggleCountryGroup(inputName, value) {
-    $svgCountries.each(function(){
+    $svgCountries.each(function() {
       var countryGroup = d3.select(this);
       countryGroup.classed('highlighted', true);
       countryGroup.classed('inactive', false);
 
-      if( value !== "all" ){
-        if( countryGroup.attr('data-' + inputName) === value){
+      if (value !== "all") {
+        if (countryGroup.attr('data-' + inputName) === value) {
           countryGroup.classed('highlighted', true);
           countryGroup.classed('inactive', false);
         } else {
@@ -3220,38 +3221,38 @@ function setupInputListeners(){
     event.preventDefault();
     var select = $(this).val();
 
-    $svgCountries.each(function(){
+    $svgCountries.each(function() {
       var countryGroup = d3.select(this),
-          captureTeam  = countryGroup.attr('data-captured');
+          captureTeam = countryGroup.attr('data-captured');
 
       countryGroup.classed("inactive", false);
       countryGroup.classed("highlighted", false);
 
-      if( select !== "all" ){
-        if( ( select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam ) ||
-            ( select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam ) ){
-              countryGroup.classed('highlighted', true);
-            } else {
-              countryGroup.classed('inactive', true);
-            }
+      if (select !== "all") {
+        if ((select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
+            (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam)) {
+          countryGroup.classed('highlighted', true);
+        } else {
+          countryGroup.classed('inactive', true);
+        }
       }
     });
 
 
     var $listview = $('.fb-listview');
 
-    $('tr', $listview).each(function(){
+    $('tr', $listview).each(function() {
       var $tr = $(this),
           $self = $tr.removeClass('inactive highlighted'),
           captureTeam = $self.data('captured');
 
       if (select !== "all") {
-        if(
+        if (
           (select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
             (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam) ||
             (select === "give-help" && $('.status--give-help', $tr).length > 0) ||
             (select === "need-help" && $('.status--incoming-help', $tr).length > 0)
-        ){
+        ) {
           $self.addClass('highlighted');
         } else {
           $self.addClass('inactive');

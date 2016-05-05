@@ -1,9 +1,7 @@
 // @flow
-
 var FB_CTF = require('./fb-ctf');
 var Dropkick = require('dropkickjs');
 var $ = require('jquery');
-var jQuery = $;
 
 /**
  * finishes the currently running game
@@ -66,7 +64,7 @@ var $body = $('body');
 /**
  * --admin
  */
-var admin = (function(){
+var admin = (function() {
   /**
    * check the admin forms for errors
    *
@@ -78,34 +76,34 @@ var admin = (function(){
    *   - whether or not the form is valud
    */
   function validateAdminForm($clicked) {
-    var valid         = true,
+    var valid = true,
         $validateForm = $clicked.closest('.validate-form'),
-        $required     = $('.form-el--required', $validateForm),
-        errorClass    = 'form-error';
+        $required = $('.form-el--required', $validateForm),
+        errorClass = 'form-error';
 
-    if( $validateForm.length === 0 ){
+    if ($validateForm.length === 0) {
       $validateForm = $clicked.closest('.fb-admin-main');
     }
 
     $('.error-msg', $validateForm).remove();
 
-    $required.removeClass(errorClass).each(function(){
-      var $self       = $(this),
-          $requiredEl = $('input[type="text"], input[type="password"]', $self ),
-          $logoName   = $('.logo-name', $self);
+    $required.removeClass(errorClass).each(function() {
+      var $self = $(this),
+          $requiredEl = $('input[type="text"], input[type="password"]', $self),
+          $logoName = $('.logo-name', $self);
 
       //
       // all the conditions that would make this element
       //  trigger an error
       //
-      if(
-        ( $requiredEl.val() === '' ) ||
-          ( $logoName.length > 0 && $logoName.text() === '' )
+      if (
+        ($requiredEl.val() === '') ||
+          ($logoName.length > 0 && $logoName.text() === '')
       ) {
-        $self.addClass( errorClass );
+        $self.addClass(errorClass);
         valid = false;
 
-        if($('.error-msg', $validateForm).length === 0){
+        if ($('.error-msg', $validateForm).length === 0) {
           $('.admin-box-header h3', $validateForm).after('<span class="error-msg">Please fix the errors in red</span>');
         }
 
@@ -122,27 +120,27 @@ var admin = (function(){
    * @param $clicked (jquery object)
    *   - the clicked button
    */
-  function addNewSection( $clicked ){
+  function addNewSection($clicked) {
     var $sectionContainer = $clicked.closest('.admin-buttons').siblings('.admin-sections'),
-        $lastSection      = $('.admin-box', $sectionContainer).last(),
-        $firstSection      = $('.admin-box', $sectionContainer).first(),
-        $newSection       = $firstSection.clone(),
+        $lastSection = $('.admin-box', $sectionContainer).last(),
+        $firstSection = $('.admin-box', $sectionContainer).first(),
+        $newSection = $firstSection.clone(),
 
         // +1 for the 0-based index, +1 for the new section
         //  being added
-        sectionIndex      = $lastSection.index();
+        sectionIndex = $lastSection.index();
 
     //
     // update some stuff in the cloned section
     //
-    var $title        = $('.admin-box-header h3', $newSection),
-        titleText     = $title.text().toLowerCase(),
-        switchName    = $('input[type="radio"]', $newSection).first().attr('name');
+    var $title = $('.admin-box-header h3', $newSection),
+        titleText = $title.text().toLowerCase(),
+        switchName = $('input[type="radio"]', $newSection).first().attr('name');
 
     var newSwitchName;
 
     if (switchName) {
-      newSwitchName = switchName.substr( 0, switchName.lastIndexOf("--")) + "--" + sectionIndex;
+      newSwitchName = switchName.substr(0, switchName.lastIndexOf("--")) + "--" + sectionIndex;
 
       $('#' + switchName + '--on', $newSection).attr('id', newSwitchName + "--on");
       $('label[for="' + switchName + '--on"]', $newSection).attr('for', newSwitchName + "--on");
@@ -171,13 +169,13 @@ var admin = (function(){
 
     if (titleText.indexOf('team') > -1) {
       $title.text('Team ' + sectionIndex);
-    } else if( titleText.indexOf('quiz level') > -1){
+    } else if (titleText.indexOf('quiz level') > -1) {
       $title.text('Quiz Level ' + sectionIndex);
-    } else if( titleText.indexOf('base level') > -1){
+    } else if (titleText.indexOf('base level') > -1) {
       $title.text('Base Level ' + sectionIndex);
-    } else if( titleText.indexOf('flag level') > -1){
+    } else if (titleText.indexOf('flag level') > -1) {
       $title.text('Flag Level ' + sectionIndex);
-    } else if( titleText.indexOf('player') > -1){
+    } else if (titleText.indexOf('player') > -1) {
       $title.text('Player ' + sectionIndex);
     }
 
@@ -194,15 +192,15 @@ var admin = (function(){
    * @param $clicked (jquery object)
    *   - the clicked button
    */
-  function addNewAttachment( $clicked ){
-    var $attachments      = $('.attachments', $clicked),
-        $newAttachment    = $('.new-attachment-hidden', $clicked),
-        $addedAttachment  = $newAttachment.clone();
+  function addNewAttachment($clicked) {
+    var $attachments = $('.attachments', $clicked),
+        $newAttachment = $('.new-attachment-hidden', $clicked),
+        $addedAttachment = $newAttachment.clone();
 
     $addedAttachment.removeClass('completely-hidden');
     $addedAttachment.removeClass('new-attachment-hidden');
 
-    $("input[type=file]", $addedAttachment).change(function (e){
+    $("input[type=file]", $addedAttachment).change(function(e) {
       var fileName = e.target.files[0].name;
       $("input[name=filename]", $addedAttachment)[0].value = fileName;
     });
@@ -216,10 +214,10 @@ var admin = (function(){
    * @param $clicked (jquery object)
    *   - the clicked button
    */
-  function addNewLink( $clicked ){
-    var $links      = $('.links', $clicked),
-        $newLink    = $('.new-link-hidden', $clicked),
-        $addedLink  = $newLink.clone();
+  function addNewLink($clicked) {
+    var $links = $('.links', $clicked),
+        $newLink = $('.new-link-hidden', $clicked),
+        $addedLink = $newLink.clone();
 
     $addedLink.removeClass('completely-hidden');
     $addedLink.removeClass('new-link-hidden');
@@ -379,7 +377,7 @@ var admin = (function(){
   function databaseBackup() {
     var csrf_token = $('input[name=csrf_token]')[0].value;
     var action = 'backup_db';
-    var url = 'index.php?p=admin&ajax=true&action='+ action + '&csrf_token=' + csrf_token;
+    var url = 'index.php?p=admin&ajax=true&action=' + action + '&csrf_token=' + csrf_token;
     window.location.href = url;
   }
 
@@ -825,11 +823,11 @@ var admin = (function(){
     //
     $('.fb-admin-main').off('click').on('click', '[data-action]', function(event) {
       event.preventDefault();
-      var $self        = $(this),
-          $section     = $self.closest('.admin-box'),
-          action       = $self.data('action'),
-          actionModal  = $self.data('actionModal'),
-          lockClass    = 'section-locked',
+      var $self = $(this),
+          $section = $self.closest('.admin-box'),
+          action = $self.data('action'),
+          actionModal = $self.data('actionModal'),
+          lockClass = 'section-locked',
           sectionTitle = $self.closest('#fb-main-content').find('.admin-page-header h3').text().replace(' ', '_');
 
       var $containingDiv;
@@ -839,7 +837,7 @@ var admin = (function(){
       if (action === 'save') {
         var valid = validateAdminForm($self);
 
-        if (actionModal && valid === false){
+        if (actionModal && valid === false) {
           actionModal = 'error';
         } else {
           updateElement($section);
@@ -848,15 +846,15 @@ var admin = (function(){
           $section.addClass(lockClass);
           $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", true);
         }
-      } else if (action === 'save-no-validation'){
+      } else if (action === 'save-no-validation') {
         $section.addClass(lockClass);
         updateElement($section);
         $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", true);
         Dropkick($('[name=entity_id]', $section)[0]).disable();
         Dropkick($('[name=category_id]', $section)[0]).disable();
-      } else if (action === 'add-new'){
+      } else if (action === 'add-new') {
         addNewSection($self);
-      } else if (action === 'save-category'){
+      } else if (action === 'save-category') {
         updateCategory($section);
       } else if (action === 'create') {
         createElement($section);
@@ -866,7 +864,7 @@ var admin = (function(){
         databaseBackup();
       } else if (action === 'create-tokens') {
         createTokens($section);
-      } else if (action === 'edit'){
+      } else if (action === 'edit') {
         $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop("disabled", false);
         Dropkick($('[name=entity_id]', $section)[0]).disable(false);
@@ -921,8 +919,8 @@ var admin = (function(){
       //
       // if there's a modal
       //
-      if( actionModal ){
-        FB_CTF.modal.loadPopup( 'action-' + actionModal , function(){
+      if (actionModal) {
+        FB_CTF.modal.loadPopup('action-' + actionModal, function() {
           $('#fb-modal .admin-section-name').text(sectionTitle);
         });
       }
@@ -979,8 +977,8 @@ var admin = (function(){
       var $status = $('.admin-section--status .highlighted');
       $status.text('Saved');
 
-      setTimeout(function(){
-        $status.fadeOut(function(){
+      setTimeout(function() {
+        $status.fadeOut(function() {
           $status.text('').removeAttr('style');
         });
       }, 5000);
@@ -993,16 +991,16 @@ var admin = (function(){
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           //console.log(this);
           $(this).removeClass("completely-hidden");
         });
       } else {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           $(this).addClass("completely-hidden");
         });
         var targets = $('option:contains("' + filter + '"):selected[class!=filter_option]');
-        targets.each(function(){
+        targets.each(function() {
           var target = $(this).closest('section[id!=new-element]')[0];
           $(target).removeClass("completely-hidden");
           //console.log($(this).closest('section[id!=new-element]')[0]);
@@ -1017,19 +1015,19 @@ var admin = (function(){
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           $(this).removeClass("completely-hidden");
         });
       } else {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           $(this).addClass("completely-hidden");
         });
         var filter_string = 'off';
         if (filter === 'Enabled') {
           filter_string = 'on';
         }
-        var targets = $('input[type="radio"][id*="status--'+ filter_string +'"]:checked[class!=filter_option]');
-        targets.each(function(){
+        var targets = $('input[type="radio"][id*="status--' + filter_string + '"]:checked[class!=filter_option]');
+        targets.each(function() {
           var target = $(this).closest('section[id!=new-element]')[0];
           $(target).removeClass("completely-hidden");
         });
@@ -1043,15 +1041,15 @@ var admin = (function(){
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           $(this).removeClass("completely-hidden");
         });
       } else {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           $(this).addClass("completely-hidden");
         });
         var targets = $('.country-use');
-        targets.each(function(){
+        targets.each(function() {
           if ($(this).text() === filter) {
             var target = $(this).closest('section[id!=new-element]')[0];
             $(target).removeClass("completely-hidden");
@@ -1067,15 +1065,15 @@ var admin = (function(){
       var $this = $(this);
       var filter = $('option:selected', $this)[0].value;
       if (filter === 'all') {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           $(this).removeClass("completely-hidden");
         });
       } else {
-        $('section[id!=new-element]').each(function(){
+        $('section[id!=new-element]').each(function() {
           $(this).addClass("completely-hidden");
         });
-        var targets = $('.country-'+filter);
-        targets.each(function(){
+        var targets = $('.country-' + filter);
+        targets.each(function() {
           var target = $(this).closest('section[id!=new-element]')[0];
           $(target).removeClass("completely-hidden");
         });
@@ -1088,20 +1086,20 @@ var admin = (function(){
     $body.on('click', '.js-choose-logo', function(event) {
       event.preventDefault();
 
-      var $self      = $(this),
+      var $self = $(this),
           $container = $self.closest('.fb-column-container');
 
-      FB_CTF.modal.loadPopup('choose-logo', function(){
+      FB_CTF.modal.loadPopup('choose-logo', function() {
         var $modal = $('#fb-modal');
 
-        FB_CTF.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.php', function(){
+        FB_CTF.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.php', function() {
           FB_CTF.slider.init();
         });
 
         $('.js-store-logo', $modal).on('click', function(event) {
           event.preventDefault();
-          var $active  = $('.slides li.active', $modal),
-              logo     = $active.html(),
+          var $active = $('.slides li.active', $modal),
+              logo = $active.html(),
               logoName = $('use', $active).attr('xlink:href').replace('#icon--badge-', '');
 
           $('.post-avatar', $container).addClass('has-avatar').html(logo);
