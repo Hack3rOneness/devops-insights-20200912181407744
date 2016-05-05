@@ -1,231 +1,25 @@
 // @flow
 var d3 = require('d3');
 var $ = require('jquery');
+var Index = require('./index');
+var Widget = require('./widget');
+var Utils = require('./utils');
+var Modal = require('./modal');
+var Slider = require('./slider');
+var Graphics = require('./graphics');
 require('flexslider');
 require('hoverintent-jqplugin')($);
 
-// gameboard.js
+var widgetsList = [
+  'Leaderboard',
+  'Announcements',
+  'Activity',
+  'Teams',
+  'Filter',
+  'Game Clock'
+];
 
-function setWidgetStatus(widgetName, widgetValue) {
-  var d = new Date();
-  // Expiration is 24 hours
-  d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
-  var expires = "expires=" + d.toUTCString();
-  document.cookie = widgetName + "=" + widgetValue + "; " + expires;
-}
-
-function setAllWidgetStatus(widgetValue) {
-  var widgets = ['Leaderboard', 'Announcements', 'Activity', 'Teams', 'Filter', 'Game Clock'];
-  for (var i = 0; i < widgets.length; i++) {
-    setWidgetStatus(widgets[i], widgetValue);
-  }
-}
-
-function isWidgetSet(widgetName) {
-  return (document.cookie.search(widgetName) >= 0);
-}
-
-function getWidgetStatus(widgetName) {
-  var name = widgetName + "=";
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1);
-    if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
-  }
-  return '';
-}
-
-function rememberWidgets(widgets) {
-  for (var i = 0; i < widgets.length; i++) {
-    if (isWidgetSet(widgets[i])) {
-      if (getWidgetStatus(widgets[i]) === 'open') {
-        $('aside[data-name="' + widgets[i] + '"]').addClass('active');
-      } else {
-        $('aside[data-name="' + widgets[i] + '"]').removeClass('active');
-      }
-    } else {
-      setWidgetStatus(widgets[i], 'close');
-    }
-  }
-}
-
-var widgetsList = ['Leaderboard', 'Announcements', 'Activity', 'Teams', 'Filter', 'Game Clock'];
-
-rememberWidgets(widgetsList);
-
-// actions.js
-
-function teamNameFormError() {
-  $('.el--text')[0].classList.add('form-error');
-  $('.fb-form input[name="teamname"]').on('change', function() {
-    $('.el--text')[0].classList.remove('form-error');
-  });
-}
-
-function teamPasswordFormError() {
-  $('.el--text')[1].classList.add('form-error');
-  $('.fb-form input[name="password"]').on('change', function() {
-    $('.el--text')[1].classList.remove('form-error');
-  });
-}
-
-function teamTokenFormError() {
-  $('.el--text')[2].classList.add('form-error');
-  $('.fb-form input[name="token"]').on('change', function() {
-    $('.el--text')[2].classList.remove('form-error');
-  });
-}
-
-function teamLogoFormError() {
-  $('.fb-choose-emblem')[0].style.color = 'red';
-  $('.fb-choose-emblem').on('click', function() {
-    $('.fb-choose-emblem')[0].style.color = '';
-  });
-}
-
-function verifyTeamName(context) {
-  if (context === 'register') {
-    var teamName = String($('.fb-form input[name="teamname"]')[0].value);
-    if (teamName.length === 0) {
-      teamNameFormError();
-      return false;
-    } else {
-      return teamName;
-    }
-  }
-  if (context === 'login') {
-    var teamId = $(".fb-form select option:selected")[0].value;
-    return teamId;
-  }
-}
-
-function verifyTeamPassword() {
-  var teamPassword = $('.fb-form input[name="password"]')[0].value;
-  if (teamPassword.length === 0) {
-    teamPasswordFormError();
-    return false;
-  } else {
-    return teamPassword;
-  }
-}
-
-function verifyTeamLogo() {
-  try {
-    var teamLogo = $('.fb-slider .active .icon--badge use').attr('xlink:href').replace('#icon--badge-', '');
-    return teamLogo;
-  } catch (err) {
-    teamLogoFormError();
-    return false;
-  }
-}
-
-function goToPage(page) {
-  window.location.href = '/index.php?p=' + page;
-}
-
-function loginError() {
-  $('.fb-form')[0].classList.add('form-error');
-}
-
-function sendIndexRequest(request_data) {
-  $.post(
-    'index.php?p=index&ajax=true',
-    request_data
-  ).fail(function() {
-    // TODO: Make this a modal
-    console.log('ERROR');
-  }).done(function(data) {
-    var responseData = JSON.parse(data);
-    if (responseData.result === 'OK') {
-      console.log('OK:' + responseData.message);
-      goToPage(responseData.redirect);
-    } else {
-      // TODO: Make this a modal
-      console.log('Failed');
-      teamNameFormError();
-      teamPasswordFormError();
-      teamTokenFormError();
-    }
-  });
-}
-
-function registerTeam() {
-  var name = verifyTeamName('register');
-  var password = verifyTeamPassword();
-  var logo = verifyTeamLogo();
-  var token = '';
-  if ($('.fb-form input[name="token"]').length > 0) {
-    token = $('.fb-form input[name="token"]')[0].value;
-  }
-
-  if ((name) && (password) && (logo)) {
-    var register_data = {
-      action: 'register_team',
-      teamname: name,
-      password: password,
-      logo: logo,
-      token: token
-    };
-    sendIndexRequest(register_data);
-  }
-}
-
-function registerNames() {
-  var name = verifyTeamName('register');
-  var password = verifyTeamPassword();
-  var logo = verifyTeamLogo();
-  var token = '';
-  if ($('.fb-form input[name="token"]').length > 0) {
-    token = $('.fb-form input[name="token"]')[0].value;
-  }
-  var fields = $('.fb-form input[name^="registration_name_"]');
-  var names = [];
-  $.each(fields, function(index, nameField) {
-    names.push(nameField.value);
-  });
-  var emails = [];
-  fields = $('.fb-form input[name^="registration_email_"]');
-  $.each(fields, function(index, nameField) {
-    emails.push(nameField.value);
-  });
-
-  if ((name) && (password) && (logo)) {
-    var register_data = {
-      action: 'register_names',
-      teamname: name,
-      password: password,
-      logo: logo,
-      token: token,
-      names: JSON.stringify(names),
-      emails: JSON.stringify(emails)
-    };
-    sendIndexRequest(register_data);
-  }
-}
-
-function loginTeam() {
-  var loginSelect = $('.fb-form input[name="login_select"]')[0].value;
-  var team, password, teamParam;
-
-  if (loginSelect === 'on') {
-    team = verifyTeamName('login');
-    teamParam = 'team_id';
-  } else {
-    team = $('.fb-form input[name="team_name"]')[0].value;
-    teamParam = 'teamname';
-  }
-  password = verifyTeamPassword();
-
-  if ((team) && (password)) {
-    var login_data = {
-      action: 'login_team',
-      [teamParam]: team,
-      password: password
-    };
-    sendIndexRequest(login_data);
-  }
-}
+Widget.rememberWidgets(widgetsList);
 
 // Capture enter key presses on login and registration forms
 $(document).on('keypress', 'input', function(e) {
@@ -233,22 +27,161 @@ $(document).on('keypress', 'input', function(e) {
     e.preventDefault();
     var form_action = $('input[name=action]', e.target.form)[0].value;
     if (form_action == 'register_team') {
-      registerTeam();
+      Index.registerTeam();
     }
     if (e.target.form[0].value == 'login_team') {
-      loginTeam();
+      Index.loginTeam();
     }
   }
 });
 
+function activateTeams() {
+  var FB_CTF = window.FB_CTF;
+  var $teamgrid = $('aside[data-module="teams"]');
+  $teamgrid.on('click', 'a', function(event) {
+    event.preventDefault();
+    var team = String($(this).data('team'));
+
+    if (team === undefined || team === "") {
+      team = "Facebook CTF";
+    }
+    var teamData = FB_CTF.data.TEAMS[team];
+    if (teamData === undefined) {
+      console.error("Invalid team name in markup");
+      return;
+    }
+    Modal.loadPopup('team', function() {
+      var $modal = $('#fb-modal'),
+          rank = teamData.rank + "",
+          $teamMembers = $('.team-members', $modal);
+      // team name
+      $('.team-name', $modal).text(team);
+      // team badge
+      $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
+      // team members
+      $.each(teamData.team_members, function() {
+        $teamMembers.append('<li>' + this + '</li>');
+      });
+      // rank
+      if (rank.length === 1) {
+        rank = "0" + rank;
+      }
+      $('.points-number', $modal).text(rank);
+      // team points
+      $('.points--base', $modal).text(teamData.points.base);
+      $('.points--quiz', $modal).text(teamData.points.quiz);
+      $('.points--flag', $modal).text(teamData.points.flag);
+      $('.points--total', $modal).text(teamData.points.total);
+    });
+
+  });
+}
+
+function setupInputListeners() {
+  var FB_CTF = window.FB_CTF;
+  var $svgCountries = $('.countries > g', $('#fb-gameboard-map'));
+
+  function toggleCountryGroup(inputName, value) {
+    $svgCountries.each(function() {
+      var countryGroup = d3.select(this);
+      countryGroup.classed('highlighted', true);
+      countryGroup.classed('inactive', false);
+
+      if (value !== "all") {
+        if (countryGroup.attr('data-' + inputName) === value) {
+          countryGroup.classed('highlighted', true);
+          countryGroup.classed('inactive', false);
+        } else {
+          countryGroup.classed('highlighted', false);
+          countryGroup.classed('inactive', true);
+        }
+      }
+    });
+  }
+
+  //
+  // filter the map based on category
+  //
+  $('input[name=fb--module--filter--category]').click(function() {
+    toggleCountryGroup("category", $(this).val());
+  });
+
+  //
+  // filter the map based on status
+  //
+  $('input[name="fb--module--filter--status"]').click(function() {
+    toggleCountryGroup("status", $(this).val());
+  });
+
+  //
+  // filter the filters
+  //
+  $("input[name=fb--module--filter]").click(function() {
+    var filter_type = $(this).val();
+    if (filter_type === 'category') {
+      $('#status-filter-content').removeClass('active');
+      $('#category-filter-content').addClass('active');
+    }
+    if (filter_type === 'status') {
+      $('#category-filter-content').removeClass('active');
+      $('#status-filter-content').addClass('active');
+    }
+  });
+
+  //
+  // filter the map based on captured
+  //
+  $('input[name="fb--map-select"]').on('change', function(event) {
+    event.preventDefault();
+    var select = $(this).val();
+
+    $svgCountries.each(function() {
+      var countryGroup = d3.select(this),
+          captureTeam = countryGroup.attr('data-captured');
+
+      countryGroup.classed("inactive", false);
+      countryGroup.classed("highlighted", false);
+
+      if (select !== "all") {
+        if ((select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
+            (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam)) {
+          countryGroup.classed('highlighted', true);
+        } else {
+          countryGroup.classed('inactive', true);
+        }
+      }
+    });
+
+    var $listview = $('.fb-listview');
+
+    $('tr', $listview).each(function() {
+      var $tr = $(this),
+          $self = $tr.removeClass('inactive highlighted'),
+          captureTeam = $self.data('captured');
+
+      if (select !== "all") {
+        if (
+          (select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
+            (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam) ||
+            (select === "give-help" && $('.status--give-help', $tr).length > 0) ||
+            (select === "need-help" && $('.status--incoming-help', $tr).length > 0)
+        ) {
+          $self.addClass('highlighted');
+        } else {
+          $self.addClass('inactive');
+        }
+      }
+    });
+  });
+}
+
 // fb-ctf.js
 
-(function(FB_CTF, $, undefined) {
+(function(FB_CTF) {
   var $body;
 
   // colors
-  var COLOR_LIGHT_BLUE = "#cff8fa",
-      COLOR_TEAL_BLUE = "#5cf0f6";
+  var COLOR_TEAL_BLUE = "#5cf0f6";
 
   // checks
   var ua = navigator.userAgent.toLowerCase(),
@@ -402,7 +335,7 @@ $(document).on('keypress', 'input', function(e) {
             panX = translateVal[0],
             panY = translateVal[1];
 
-        FB_CTF.modal.closeHoverPopup();
+        Modal.closeHoverPopup();
 
         container.attr("style", "transform: translate(" + panX + "px," + panY + "px) scale(" + zoomScale + ")");
 
@@ -554,15 +487,15 @@ $(document).on('keypress', 'input', function(e) {
               getCountryData();
               refreshMapData();
               // Announcements
-              if (getWidgetStatus('Announcements') === 'open') {
+              if (Widget.getWidgetStatus('Announcements') === 'open') {
                 loadAnnouncementsModule();
               }
               // Filter
-              if (getWidgetStatus('Filter') === 'open') {
+              if (Widget.getWidgetStatus('Filter') === 'open') {
                 loadFilterModule();
               }
               // Activity
-              if (getWidgetStatus('Activity') === 'open') {
+              if (Widget.getWidgetStatus('Activity') === 'open') {
                 loadActivityModule();
               }
             } else {
@@ -577,10 +510,10 @@ $(document).on('keypress', 'input', function(e) {
             if (FB_CTF.data.CONF.gameboard === '1') {
               // Teams
               loadTeamData();
-              if (getWidgetStatus('Teams') === 'open') {
+              if (Widget.getWidgetStatus('Teams') === 'open') {
                 loadTeamsModule();
               }
-              if (getWidgetStatus('Leaderboard') === 'open') {
+              if (Widget.getWidgetStatus('Leaderboard') === 'open') {
                 loadLeaderboardModule();
               }
             } else {
@@ -706,9 +639,9 @@ $(document).on('keypress', 'input', function(e) {
 
         // Remember status of module
         if ($(this).closest('aside').hasClass('active')) {
-          setWidgetStatus($(this).text(), 'open');
+          Widget.setWidgetStatus($(this).text(), 'open');
         } else {
-          setWidgetStatus($(this).text(), 'close');
+          Widget.setWidgetStatus($(this).text(), 'close');
         }
 
         $body.trigger('module-changestate');
@@ -783,7 +716,7 @@ $(document).on('keypress', 'input', function(e) {
 
       $countryHover.on('mouseleave', function(event) {
         event.preventDefault();
-        FB_CTF.modal.closeHoverPopup();
+        Modal.closeHoverPopup();
         $countryHover.empty();
       });
     } // function gameEventListeners()
@@ -823,7 +756,7 @@ $(document).on('keypress', 'input', function(e) {
       }
 
       // close the hover popup
-      FB_CTF.modal.closeHoverPopup();
+      Modal.closeHoverPopup();
 
       // if there's no data, don't continue
       if (!FB_CTF.data.COUNTRIES) {
@@ -869,7 +802,7 @@ $(document).on('keypress', 'input', function(e) {
         capturingTeam = FB_CTF.data.CONF.currentTeam;
       }
 
-      FB_CTF.modal.viewmodePopup(function() {
+      Modal.viewmodePopup(function() {
         var $container = $('#fb-country-popup'),
             positionX = $('.longitude-focus').position().left + 60,
             positionY = $('.latitude-focus').position().top - $container.height() - 60,
@@ -887,7 +820,7 @@ $(document).on('keypress', 'input', function(e) {
 
         setTimeout(function() {
           removeCaptured();
-          FB_CTF.modal.closeHoverPopup();
+          Modal.closeHoverPopup();
 
           enableClickAndDrag.zoomToPoint();
         }, 5000);
@@ -927,7 +860,7 @@ $(document).on('keypress', 'input', function(e) {
     function launchCaptureModal(country, capturedBy) {
       var data = FB_CTF.data.COUNTRIES[country];
 
-      FB_CTF.modal.loadPopup('country-capture', function() {
+      Modal.loadPopup('country-capture', function() {
         var $container = $('.fb-modal-content'),
             level_id = data ? data.level_id : 0,
             title = data ? data.title : '',
@@ -1107,7 +1040,7 @@ $(document).on('keypress', 'input', function(e) {
       var data = FB_CTF.data.COUNTRIES[country];
 
       if (data) {
-        FB_CTF.modal.countryHoverPopup(function() {
+        Modal.countryHoverPopup(function() {
           var $container = $('#fb-country-popup').css({
             left: mouse_x + 'px',
             top: mouse_y + 'px'
@@ -1124,7 +1057,7 @@ $(document).on('keypress', 'input', function(e) {
           $('.country-category', $container).text(category);
         });
       } else {
-        FB_CTF.modal.countryInactiveHoverPopup(function() {
+        Modal.countryInactiveHoverPopup(function() {
           var $container = $('#fb-country-popup').css({
             left: mouse_x + 'px',
             top: mouse_y + 'px'
@@ -1280,7 +1213,7 @@ $(document).on('keypress', 'input', function(e) {
         $loadModal = $('<div id="gameboard-loading" class="fb-loading" />').appendTo($gameboard);
       }
 
-      FB_CTF.loadComponent($loadModal, loadPath, function() {
+      Utils.loadComponent($loadModal, loadPath, function() {
         $gameboard.addClass(LOADING_CLASS);
 
         var $loadingCells = $('.gameboard-loading .indicator-cell'),
@@ -1719,7 +1652,7 @@ $(document).on('keypress', 'input', function(e) {
         event.stopPropagation();
         var country = $(this).closest('tr').data('country');
 
-        FB_CTF.modal.loadPopup('country-help', function() {
+        Modal.loadPopup('country-help', function() {
           $('#fb-modal .add-new-help-chat').data('country', country);
           $('#fb-modal .country-name').text(country);
         });
@@ -1732,7 +1665,7 @@ $(document).on('keypress', 'input', function(e) {
         event.preventDefault();
         event.stopPropagation();
         var country = $(this).closest('tr').data('country');
-        FB_CTF.modal.loadPopup('country-help-opponent', function() {
+        Modal.loadPopup('country-help-opponent', function() {
           $('#fb-modal .add-new-help-chat').data('country', country);
         });
       });
@@ -1764,7 +1697,7 @@ $(document).on('keypress', 'input', function(e) {
           tutorialSteps = 8,
           currStepIndex = 1;
 
-      FB_CTF.modal.load('tutorial--' + firstTutorial, function() {
+      Modal.load('tutorial--' + firstTutorial, function() {
         // we're done loading stuff, so remove the laoding class
         loadOut();
         buildTutorial();
@@ -1778,7 +1711,7 @@ $(document).on('keypress', 'input', function(e) {
           if (next) {
             var loadPath = 'inc/modals/tutorial--' + next + '.php';
             currStepIndex++;
-            FB_CTF.loadComponent('#fb-modal', loadPath, buildTutorial);
+            Utils.loadComponent('#fb-modal', loadPath, buildTutorial);
           } else {
             closeTutorial();
           }
@@ -1818,7 +1751,7 @@ $(document).on('keypress', 'input', function(e) {
       }
 
       $body.removeAttr('class').removeData('tutorial');
-      FB_CTF.modal.close();
+      Modal.close();
     }
 
     /* --------------------------------------------
@@ -1863,499 +1796,6 @@ $(document).on('keypress', 'input', function(e) {
   })(); // gameboard
 
   // END GAMEBOARD
-
-  // START MODAL
-
-  /**
-   * --modal
-   */
-  FB_CTF.modal = (function() {
-    var LOAD_EXT = '.php',
-        ACTIVE_CLASS = 'visible',
-        POPUP_CLASSES = 'fb-modal-wrapper modal--popup',
-        DEFAULT_CLASSES = 'fb-modal-wrapper modal--default',
-        MODAL_DIR = 'inc/modals/',
-        $modalContainer,
-        $modal,
-        $countryHover;
-
-    /**
-     * initialize the modal, including grabbing the modal div and
-     *  setting up event listeners
-     */
-    function init() {
-      $modal = $('#fb-modal');
-      $modalContainer = $('#fb-main-content');
-      $countryHover = $('#fb-country-popup');
-
-      //
-      // trigger the launch of a modal
-      //
-      $body.on('click', '.js-launch-modal', function(event) {
-        event.preventDefault();
-        var modal = $(this).data('modal'),
-            cb;
-
-        //
-        // if we're launching the login modal, add the active
-        //  class to the nav item
-        //
-        if (modal === 'login') {
-          $('.fb-main-nav a').removeClass('active');
-          $(this).addClass('active');
-        }
-        load(modal, cb);
-      });
-
-      //
-      // close the modal
-      //
-      $body.on('click', '.js-close-modal', close);
-    }
-
-    /**
-     * close the modal
-     *
-     * @param event (object)
-     *   - if this function call comes from an event listener,
-     *      prevent the default action
-     */
-    function close(event) {
-      if (event) {
-        event.preventDefault();
-      }
-
-      $('div[id^="fb-modal"]').removeClass(ACTIVE_CLASS);
-
-      //
-      // @NOTICE
-      // this is here to re-enable the active state on the nav
-      //  in case it was altered when the modal was launched.
-      //
-      // TODO:
-      //if (_BUILDKIT !== undefined) {
-      //  _BUILDKIT.enableNavActiveState();
-      //}
-    }
-
-    /**
-     * close the poup
-     *
-     * @param event (object)
-     *   - if this function call comes from an event listener,
-     *      prevent the default action
-     */
-    function closeHoverPopup(event) {
-      if (event) {
-        event.preventDefault();
-      }
-
-      $countryHover.removeClass(ACTIVE_CLASS);
-    }
-
-    /**
-     * call FB_CTF.loadComponent for the modal content
-     *
-     * @param $modal (jquery object)
-     *   - the modal jquery object to load the content into
-     *
-     * @param loadPath (string)
-     *   - the path to the modal file
-     *
-     * @param cb (function)
-     *   - the callback
-     */
-    function openAndLoad($modal, loadPath, cb) {
-      FB_CTF.loadComponent($modal, loadPath, function() {
-        if (typeof cb === 'function') {
-          cb();
-        }
-        $modal.addClass(ACTIVE_CLASS);
-      });
-    }
-
-    /* --------------------------------------------
-     * --the modal rendering
-     * -------------------------------------------- */
-
-    /**
-     * there are two types of modals - default and popup. The
-     *  default modal takes up a full page, while the poup modal
-     *  creates a popup box for content. Both of these wrapper
-     *  functions take the same parameters.
-     *
-     * @param modalName (string)
-     *   - the filename of the modal content you're looking to
-     *      load up, without the trailing .html
-     *
-     * @param cb (function)
-     *   - a callback function for after the modal content loads
-     */
-    function loadPopup(modalName, cb) {
-      _load(modalName, POPUP_CLASSES, MODAL_DIR, cb);
-    }
-
-    function load(modalName, cb) {
-      _load(modalName, DEFAULT_CLASSES, MODAL_DIR, cb);
-    }
-
-    /**
-     * load and create
-     *
-     * @param modalName (string)
-     *   - the filename of the modal content you're looking to
-     *      load up
-     *
-     * @param modalClasses (string)
-     *   - the classes for the modal
-     *
-     * @param loadDir (string)
-     *   - the location in the filesystem where we're looking for
-     *      the file
-     *
-     * @param cb (function)
-     *   - a callback function for after the modal content loads
-     *
-     */
-    function _load(modalName, modalClasses, loadDir, cb) {
-      var loadPath = loadDir + modalName + LOAD_EXT;
-      closeHoverPopup();
-      modalClasses += ' modal--' + modalName;
-
-      if ($modal.length === 0) {
-        $modal = $('<div id="fb-modal" class="' + modalClasses + '" />').appendTo($modalContainer);
-      } else {
-        $modal.removeAttr('class').addClass(modalClasses);
-      }
-
-      openAndLoad($modal, loadPath, cb);
-    }
-
-    /**
-     * create a persistent modal. This is used to build a modal
-     *  that is very specific, and should be loaded as quickly
-     *  as possible after initially loaded, like the command line
-     *  modal.
-     *
-     * @param modalName (string)
-     *   - the name of the module being loaded
-     *
-     * @param cb (function)
-     *   - callback funtion for after the persistent modal is loaded
-     */
-    function loadPersistent(modalName, cb) {
-      var loadPath = MODAL_DIR + modalName + LOAD_EXT,
-          modalId = 'fb-modal-persistent--' + modalName,
-          $modal = $(modalId);
-
-      if ($modal.length === 0) {
-        $modal = $('<div id="' + modalId + '" class="' + POPUP_CLASSES + '" />').appendTo($modalContainer);
-      }
-      FB_CTF.loadComponent($modal, loadPath, cb);
-    }
-
-    /**
-     * open the persistent modal
-     *
-     * @param modalName (string)
-     *   - the name of the modal to open
-     */
-    function openPersistent(modalName) {
-      var modalId = '#fb-modal-persistent--' + modalName;
-      $(modalId).addClass(ACTIVE_CLASS);
-    }
-
-    /**
-     * a specific function for rendering the country hover popup
-     *
-     * @param cb (function)
-     *   - a callback to render the country data in the popup
-     */
-    function countryHoverPopup(cb) {
-      var loadPath = 'inc/modals/country-popup.php';
-      if ($countryHover.length === 0) {
-        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo($modalContainer);
-      }
-      openAndLoad($countryHover, loadPath, cb);
-    }
-
-    /**
-     * a specific function for rendering a inactive country hover popup
-     *
-     * @param cb (function)
-     *   - a callback to render the country data in the popup
-     */
-    function countryInactiveHoverPopup(cb) {
-      var loadPath = 'inc/modals/country-inactive-popup.php';
-      if ($countryHover.length === 0) {
-        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo($modalContainer);
-      }
-      openAndLoad($countryHover, loadPath, cb);
-    }
-
-    /**
-     * the code for the popup in the view-only mode
-     *
-     * @param cb (function)
-     *   - a callback to render the country data in the popup
-     */
-    function viewmodePopup(cb) {
-      var loadPath = 'inc/modals/country-popup--viewmode.php';
-      if ($countryHover.length === 0) {
-        $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--view-only" />').appendTo($modalContainer);
-      }
-
-      openAndLoad($countryHover, loadPath, cb);
-    }
-
-    return {
-      init: init,
-      // loads the basic modal
-      load: load,
-      // loads a persistent modal
-      loadPersistent: loadPersistent,
-      // open a persistent modal
-      openPersistent: openPersistent,
-      // load a popup modal
-      loadPopup: loadPopup,
-      // load and show the popup modal for a country hover
-      countryHoverPopup: countryHoverPopup,
-      // load and show the popup modal for an inactive country hover
-      countryInactiveHoverPopup: countryInactiveHoverPopup,
-      // load and show the view only country info
-      viewmodePopup: viewmodePopup,
-      // close the popup modal for a country hover
-      closeHoverPopup: closeHoverPopup,
-      // close the regular modal
-      close: close
-    };
-  })(); // modal
-
-  // END MODAL
-
-  // START SLIDER
-
-  /**
-   * --slider
-   */
-  FB_CTF.slider = (function() {
-    var selector = '.fb-slider';
-
-    /**
-     * init the slider
-     *
-     * @param cb (function)
-     *   - an optional callback function to run after
-     *      the slider loads
-     */
-    function init(cb) {
-      var itemWidth = $(selector).closest('#fb-modal').length > 0 ? 90 : 120;
-
-      $(selector).flexslider({
-        namespace: "fb-slider-",
-        animation: "slide",
-        selector: ".slides > li",
-        slideshow: false,
-        minItems: 2,
-        itemWidth: itemWidth,
-        maxItems: 7,
-        move: 1,
-        controlNav: false,
-        start: function() {
-          if (typeof cb === 'function') {
-            cb();
-          }
-        }
-      });
-    }
-
-    return {
-      init: init
-    };
-  })(); // slider
-
-  // END SLIDER
-
-  // START GRAPHICS
-
-  /**
-   * --graphics
-   * build graphics (like the scorecard) using d3
-   */
-  FB_CTF.graphics = (function() {
-
-    /**
-     * set up event listeners
-     */
-    function init() {
-      $('.fb-graphic').each(function() {
-        var $graphic = $(this),
-            datafile = $graphic.data('file');
-
-        if ($graphic.hasClass('initialized')) {
-          return;
-        }
-        $graphic.addClass('initialized');
-        build(this, datafile);
-      });
-      //
-      // scoreboard filter
-      //
-      $('input[name="fb-scoreboard-filter"]').on('change', function(event) {
-        event.preventDefault();
-        var team = $(this).val(),
-            $teamLine = $('.scoreboard-graphic-container .team-score-line[data-team="' + team + '"]');
-        if (this.checked) {
-          $teamLine.show();
-        } else {
-          $teamLine.hide();
-        }
-      });
-    }
-
-    /**
-     * build the graph
-     *
-     * @param svgEl (object)
-     *   - the svg element to attach the graphic to
-     *
-     * @param datafile (string)
-     *   - the file to load, which contains the data
-     */
-    function build(svgEl, datafile) {
-      if (datafile === undefined) {
-        return;
-      }
-      var $container = $(svgEl).closest('.scoreboard-graphic-container');
-
-      $.get(datafile, function(data, status, jqxhr) {
-        var scores = data;
-        var maxScore = 0;
-        $.each(scores, function() {
-          $.each(this.values, function() {
-            if (parseInt(this.score) > maxScore) {
-              maxScore = parseInt(this.score);
-            }
-          });
-        });
-        var maxYaxis = maxScore + 30;
-
-        var graphic = d3.select(svgEl),
-            MARGIN = {
-              left: 60,
-              right: 20,
-              bottom: 40
-            },
-            WIDTH = $container.length > 0 ? $container.width() - MARGIN.left - MARGIN.right : 820 - MARGIN.left - MARGIN.right,
-            HEIGHT = 220 - MARGIN.bottom,
-
-            X_START = 1,
-            X_LENGTH = FB_CTF.data.CONF.progressiveCount,
-            xRange = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
-            /*yRange   = d3.scale.linear().range([HEIGHT, 0]).domain([d3.min(minMaxArray, function (d) {
-             return d.score;
-             }), d3.max(minMaxArray, function (d) {
-             return d.score + 30;
-             }) ]),*/
-            yRange = d3.scale.linear().range([HEIGHT, 0]).domain([0, maxYaxis]),
-
-            xAxis = d3.svg.axis().tickFormat("").scale(xRange).ticks(X_LENGTH),
-
-            yAxis = d3.svg.axis().scale(yRange).ticks(6).orient("left");
-
-        graphic.append("svg:g").attr("class", "x axis").attr("transform", "translate(" + MARGIN.left + "," + HEIGHT + ")").call(xAxis)
-          .selectAll('line').attr('transform', 'translate(0, -6)');
-
-        // Add the text label for the X axis
-        graphic.append("text")
-          .attr("transform", "rotate(0)")
-          .attr("y", HEIGHT + MARGIN.right)
-          .attr("x", (WIDTH + MARGIN.left / 2))
-          .attr("dy", "1em")
-          .attr("stroke", "#fff")
-          .style("text-anchor", "middle")
-          .text("Time");
-
-        graphic.append("svg:g").attr("class", "y axis").attr("transform", "translate(" + MARGIN.left + ",0)").call(yAxis)
-          .selectAll('line').attr('transform', 'translate(6,0)');
-
-        // Add the text label for the Y axis
-        graphic.append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 0)
-          .attr("x", 0 - (HEIGHT / 2))
-          .attr("dy", "1em")
-          .attr("stroke", "#fff")
-          .style("text-anchor", "middle")
-          .text("Score");
-
-        var lineFunc = d3.svg.line().x(function(d) {
-          return xRange(d.time) + MARGIN.left;
-        }).y(function(d) {
-          return yRange(d.score);
-        }).interpolate('linear');
-
-        graphic.append('svg:rect')
-          .attr('width', WIDTH)
-          .attr('height', HEIGHT)
-          .attr('x', MARGIN.left)
-          .attr('fill', '#142e35');
-
-        var graphLine = graphic.append('svg:g').attr('class', 'mouseline').attr('opacity', "0");
-
-        graphLine.append('svg:path')
-          .attr('stroke', COLOR_LIGHT_BLUE)
-          .attr('stroke-width', 2)
-          .attr('d', "M0,0L0," + HEIGHT);
-
-        graphLine.append('circle')
-          .attr('cx', 0)
-          .attr('cy', 5)
-          .attr('r', 5)
-          .attr('stroke', COLOR_LIGHT_BLUE)
-          .attr('fill', 'black')
-          .attr('stroke-width', 2);
-
-        scores.forEach(function(d, i) {
-          graphic.append('svg:path')
-            .attr('d', lineFunc(d.values))
-            .attr('class', 'team-score-line')
-            .attr('stroke', d.color)
-            .attr('data-team', d.team)
-            .attr('stroke-width', 2)
-            .attr('fill', 'none');
-        });
-
-        graphic.append('svg:rect')
-          .attr('width', WIDTH)
-          .attr('height', HEIGHT)
-          .attr('x', MARGIN.left)
-          .attr('fill', 'none')
-          .attr('pointer-events', 'all')
-          .on('mouseout', function() {
-            d3.select(".mouseline").attr("opacity", "0");
-          })
-          .on('mouseover', function() {
-            d3.select(".mouseline").attr("opacity", "1");
-          })
-          .on('mousemove', function() {
-            var xCoor = d3.mouse(this)[0];
-            d3.select('.mouseline').attr('transform', 'translate(' + xCoor + ',0)');
-          });
-      }, 'json').error(function(jqxhr, status, error) {
-        console.error("There was a problem retrieving the game scores.");
-        console.log(status);
-        console.log(error);
-        console.error("/error");
-      });
-    }
-    return {
-      init: init,
-      build: build
-    };
-  })(); // graphics
-
-  // END GRAPHICS
 
   // START COMMAND_LINE
 
@@ -2413,9 +1853,9 @@ $(document).on('keypress', 'input', function(e) {
           }
           event.preventDefault();
 
-          FB_CTF.modal.close();
-          FB_CTF.modal.closeHoverPopup();
-          FB_CTF.modal.openPersistent(modalName);
+          Modal.close();
+          Modal.closeHoverPopup();
+          Modal.openPersistent(modalName);
           if ($('li', $cmdPromptList).length % 2 === 0) {
             $cmdPromptList.addClass('offset');
           }
@@ -2725,7 +2165,7 @@ $(document).on('keypress', 'input', function(e) {
         $('input[name="' + inputName + '"]').prop('checked', false);
         $('input[name="' + inputName + '"][value="' + data.selected + '"]').trigger('change').prop('checked', true);
 
-        FB_CTF.modal.close();
+        Modal.close();
         clearCommandPrompt();
 
         $('body').off('command-option-selected');
@@ -2738,7 +2178,7 @@ $(document).on('keypress', 'input', function(e) {
     function cmd_captureCountry() {
       $('body').on('command-option-selected', function(event, data) {
         var country = data.selected;
-        FB_CTF.modal.close();
+        Modal.close();
         clearCommandPrompt();
 
         FB_CTF.gameboard.captureCountry(country);
@@ -2753,7 +2193,7 @@ $(document).on('keypress', 'input', function(e) {
     function cmd_showTeam() {
       $('body').on('command-option-selected', function(event, data) {
         var team = data.selected;
-        FB_CTF.modal.close();
+        Modal.close();
         clearCommandPrompt();
 
         var teamData = FB_CTF.data.TEAMS[team];
@@ -2763,7 +2203,7 @@ $(document).on('keypress', 'input', function(e) {
           return;
         }
 
-        FB_CTF.modal.loadPopup('team', function() {
+        Modal.loadPopup('team', function() {
           var $modal = $('#fb-modal'),
               rank = teamData.rank + "",
               $teamMembers = $('.team-members', $modal);
@@ -2791,7 +2231,6 @@ $(document).on('keypress', 'input', function(e) {
       });
     }
 
-
     /**
      * close a module
      */
@@ -2800,14 +2239,14 @@ $(document).on('keypress', 'input', function(e) {
         var module = data.selected;
         if (module === "All") {
           $('aside').removeClass('active');
-          setAllWidgetStatus('close');
+          Widget.setAllWidgetStatus('close');
         } else {
           $('aside[data-name="' + module + '"]').removeClass('active');
-          setWidgetStatus(module, 'close');
+          Widget.setWidgetStatus(module, 'close');
         }
         $body.trigger('module-changestate');
 
-        FB_CTF.modal.close();
+        Modal.close();
         clearCommandPrompt();
 
         $('body').off('command-option-selected');
@@ -2823,14 +2262,14 @@ $(document).on('keypress', 'input', function(e) {
 
         if (module === "All") {
           $('aside').addClass('active');
-          setAllWidgetStatus('open');
+          Widget.setAllWidgetStatus('open');
         } else {
           $('aside[data-name="' + module + '"]').addClass('active');
-          setWidgetStatus(module, 'open');
+          Widget.setWidgetStatus(module, 'open');
         }
         $body.trigger('module-changestate');
 
-        FB_CTF.modal.close();
+        Modal.close();
         clearCommandPrompt();
 
         $('body').off('command-option-selected');
@@ -2846,7 +2285,7 @@ $(document).on('keypress', 'input', function(e) {
 
         FB_CTF.gameboard.toggleListView(enable);
 
-        FB_CTF.modal.close();
+        Modal.close();
         clearCommandPrompt();
 
         $('body').off('command-option-selected');
@@ -2861,7 +2300,7 @@ $(document).on('keypress', 'input', function(e) {
      * init the command line functionality
      */
     function init() {
-      FB_CTF.modal.loadPersistent(modalName, function() {
+      Modal.loadPersistent(modalName, function() {
         $.get(loadPath, function(data) {
           $cmdPromptList = $('.fb-command-line .command-list ul');
           $cmdResultsList = $('.fb-command-line .command-results ul');
@@ -2894,14 +2333,11 @@ $(document).on('keypress', 'input', function(e) {
    * --public
    * -------------------------------------------- */
   FB_CTF.init = function() {
-    //
-    // set up global variables
-    //
     $body = $('body');
 
-    $('#login_button').click(loginTeam);
-    $('#register_names > #register_button').click(registerNames);
-    $('#register_team > #register_button').click(registerTeam);
+    $('#login_button').click(Index.loginTeam);
+    $('#register_names > #register_button').click(Index.registerNames);
+    $('#register_team > #register_button').click(Index.registerTeam);
 
     //
     // load the svg sprite. This is in the FB_CTF namespace
@@ -2910,10 +2346,10 @@ $(document).on('keypress', 'input', function(e) {
     //  solution. This can be removed if the sprite is included
     //  via some server-side solution.
     //
-    FB_CTF.loadComponent('#fb-svg-sprite', 'static/svg/icons/build/icons.svg');
+    Utils.loadComponent('#fb-svg-sprite', 'static/svg/icons/build/icons.svg');
 
     // load the modal
-    FB_CTF.modal.init();
+    Modal.init();
 
     //
     // any modules that does stuff based on loaded content (for
@@ -2924,10 +2360,10 @@ $(document).on('keypress', 'input', function(e) {
     //
     $body.on('content-loaded', function() {
       // load the sliders
-      FB_CTF.slider.init();
+      Slider.init();
 
       // load the grpahics
-      FB_CTF.graphics.init();
+      Graphics.init(null); // TODO
     }).trigger('content-loaded');
 
     /* --------------------------------------------
@@ -3029,7 +2465,7 @@ $(document).on('keypress', 'input', function(e) {
     //
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
-      FB_CTF.modal.loadPopup('action-logout');
+      Modal.loadPopup('action-logout');
     });
 
     //
@@ -3074,190 +2510,11 @@ $(document).on('keypress', 'input', function(e) {
   }; // FB_CTF.init()
 
   /**
-   * load a component into a target on the site
-   *
-   * @param target (string)
-   *   - selector to select where to load the content
-   *
-   * @param component (string)
-   *   - the name of the component to load
-   *
-   * @param cb (function)
-   *   - callback function for when the load is successful
-   */
-  FB_CTF.loadComponent = function(target, component, cb) {
-    var $target = typeof target === 'object' ? target : $(target);
-
-    $target.load(component, function() {
-      if (status === "error") {
-        console.error("There was a problem loading the component:");
-        console.log("target: " + target);
-        console.log("component: " + component);
-        console.error("/end error");
-      } else {
-        //
-        // fire the "content-loaded" event to initialize any
-        //  dynamic content that is in the loaded content
-        //
-        $('body').trigger('content-loaded', {
-          component: component
-        });
-
-        if (typeof cb === 'function') {
-          cb();
-        }
-      }
-    });
-  };
-
-  /**
    * set up stuff on document ready
    */
   $(document).ready(function() {
     // TODO: FB_CTF.init();
   });
-
-})(window.FB_CTF = window.FB_CTF || {}, $);
+})(window.FB_CTF = {});
 
 module.exports = window.FB_CTF;
-
-function activateTeams() {
-  var FB_CTF = window.FB_CTF;
-  var $teamgrid = $('aside[data-module="teams"]');
-  $teamgrid.on('click', 'a', function(event) {
-    event.preventDefault();
-    var team = String($(this).data('team'));
-
-    if (team === undefined || team === "") {
-      team = "Facebook CTF";
-    }
-    var teamData = FB_CTF.data.TEAMS[team];
-    if (teamData === undefined) {
-      console.error("Invalid team name in markup");
-      return;
-    }
-    FB_CTF.modal.loadPopup('team', function() {
-      var $modal = $('#fb-modal'),
-          rank = teamData.rank + "",
-          $teamMembers = $('.team-members', $modal);
-      // team name
-      $('.team-name', $modal).text(team);
-      // team badge
-      $('.icon--badge use', $modal).attr('xlink:href', "#icon--badge-" + teamData.badge);
-      // team members
-      $.each(teamData.team_members, function() {
-        $teamMembers.append('<li>' + this + '</li>');
-      });
-      // rank
-      if (rank.length === 1) {
-        rank = "0" + rank;
-      }
-      $('.points-number', $modal).text(rank);
-      // team points
-      $('.points--base', $modal).text(teamData.points.base);
-      $('.points--quiz', $modal).text(teamData.points.quiz);
-      $('.points--flag', $modal).text(teamData.points.flag);
-      $('.points--total', $modal).text(teamData.points.total);
-    });
-
-  });
-}
-
-function setupInputListeners() {
-  var FB_CTF = window.FB_CTF;
-  var $svgCountries = $('.countries > g', $('#fb-gameboard-map'));
-
-  function toggleCountryGroup(inputName, value) {
-    $svgCountries.each(function() {
-      var countryGroup = d3.select(this);
-      countryGroup.classed('highlighted', true);
-      countryGroup.classed('inactive', false);
-
-      if (value !== "all") {
-        if (countryGroup.attr('data-' + inputName) === value) {
-          countryGroup.classed('highlighted', true);
-          countryGroup.classed('inactive', false);
-        } else {
-          countryGroup.classed('highlighted', false);
-          countryGroup.classed('inactive', true);
-        }
-      }
-    });
-  }
-
-  //
-  // filter the map based on category
-  //
-  $('input[name=fb--module--filter--category]').click(function() {
-    toggleCountryGroup("category", $(this).val());
-  });
-
-  //
-  // filter the map based on status
-  //
-  $('input[name="fb--module--filter--status"]').click(function() {
-    toggleCountryGroup("status", $(this).val());
-  });
-
-  //
-  // filter the filters
-  //
-  $("input[name=fb--module--filter]").click(function() {
-    var filter_type = $(this).val();
-    if (filter_type === 'category') {
-      $('#status-filter-content').removeClass('active');
-      $('#category-filter-content').addClass('active');
-    }
-    if (filter_type === 'status') {
-      $('#category-filter-content').removeClass('active');
-      $('#status-filter-content').addClass('active');
-    }
-  });
-
-  //
-  // filter the map based on captured
-  //
-  $('input[name="fb--map-select"]').on('change', function(event) {
-    event.preventDefault();
-    var select = $(this).val();
-
-    $svgCountries.each(function() {
-      var countryGroup = d3.select(this),
-          captureTeam = countryGroup.attr('data-captured');
-
-      countryGroup.classed("inactive", false);
-      countryGroup.classed("highlighted", false);
-
-      if (select !== "all") {
-        if ((select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
-            (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam)) {
-          countryGroup.classed('highlighted', true);
-        } else {
-          countryGroup.classed('inactive', true);
-        }
-      }
-    });
-
-
-    var $listview = $('.fb-listview');
-
-    $('tr', $listview).each(function() {
-      var $tr = $(this),
-          $self = $tr.removeClass('inactive highlighted'),
-          captureTeam = $self.data('captured');
-
-      if (select !== "all") {
-        if (
-          (select === "your-team" && captureTeam === FB_CTF.data.CONF.currentTeam) ||
-            (select === "opponent-team" && captureTeam && captureTeam !== FB_CTF.data.CONF.currentTeam) ||
-            (select === "give-help" && $('.status--give-help', $tr).length > 0) ||
-            (select === "need-help" && $('.status--incoming-help', $tr).length > 0)
-        ) {
-          $self.addClass('highlighted');
-        } else {
-          $self.addClass('inactive');
-        }
-      }
-    });
-  });
-}

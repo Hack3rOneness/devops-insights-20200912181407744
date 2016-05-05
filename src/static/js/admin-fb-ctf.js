@@ -1,5 +1,7 @@
 // @flow
-var FB_CTF = require('./fb-ctf');
+var Slider = require('./slider');
+var Utils = require('./utils');
+var Modal = require('./modal');
 var Dropkick = require('dropkickjs');
 var $ = require('jquery');
 
@@ -183,7 +185,7 @@ var admin = (function() {
 
     $sectionContainer.append($newSection);
 
-    FB_CTF.slider.init();
+    Slider.init();
   }
 
   /**
@@ -920,7 +922,7 @@ var admin = (function() {
       // if there's a modal
       //
       if (actionModal) {
-        FB_CTF.modal.loadPopup('action-' + actionModal, function() {
+        Modal.loadPopup('action-' + actionModal, function() {
           $('#fb-modal .admin-section-name').text(sectionTitle);
         });
       }
@@ -1089,11 +1091,11 @@ var admin = (function() {
       var $self = $(this),
           $container = $self.closest('.fb-column-container');
 
-      FB_CTF.modal.loadPopup('choose-logo', function() {
+      Modal.loadPopup('choose-logo', function() {
         var $modal = $('#fb-modal');
 
-        FB_CTF.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.php', function() {
-          FB_CTF.slider.init();
+        Utils.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.php', function() {
+          Slider.init();
         });
 
         $('.js-store-logo', $modal).on('click', function(event) {
@@ -1113,7 +1115,7 @@ var admin = (function() {
     //
     $('.js-begin-game').on('click', function(event) {
       event.preventDefault();
-      FB_CTF.modal.loadPopup('action-begin-game', function() {
+      Modal.loadPopup('action-begin-game', function() {
         $('#begin_game').click(beginGame);
       });
     });
@@ -1123,7 +1125,7 @@ var admin = (function() {
     //
     $('.js-end-game').on('click', function(event) {
       event.preventDefault();
-      FB_CTF.modal.loadPopup('action-end-game', function() {
+      Modal.loadPopup('action-end-game', function() {
         $('#end_game').click(endGame);
       });
     });
@@ -1133,7 +1135,7 @@ var admin = (function() {
     //
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
-      FB_CTF.modal.loadPopup('action-logout');
+      Modal.loadPopup('action-logout');
     });
 
     //
