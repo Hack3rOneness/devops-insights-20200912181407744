@@ -62,7 +62,12 @@ install_composer "$CTF_PATH"
 
 # Install NPM and grunt
 package npm
+package nodejs-legacy
 npm install -g grunt
+npm install
+
+# Run grunt to generate JS files
+grunt
 
 # Make sure all apache is gone
 #sudo service apache2 stop
