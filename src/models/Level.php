@@ -145,8 +145,9 @@ class Level extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT COUNT(*) FROM levels WHERE id = %d AND active = 1 AND type = "base" LIMIT 1',
+      'SELECT COUNT(*) FROM levels WHERE id = %d AND active = 1 AND type = %s LIMIT 1',
       $level_id,
+      'base',
     );
 
     if ($result->numRows() > 0) {
@@ -182,7 +183,7 @@ class Level extends Model {
     await $db->queryf(
       'INSERT INTO levels '.
       '(type, title, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
-      'VALUES (%s, %s, %s, %d, %d, %d, %d, %d, %d, %s, %s, %d, NOW());',
+      'VALUES (%s, %s, %s, %d, %d, %d, %d, %d, %d, %s, %s, %d, NOW())',
       $type,
       $title,
       $description,
@@ -288,7 +289,8 @@ class Level extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1',
+      'SELECT id FROM categories WHERE category = %s LIMIT 1',
+      'Quiz'
     );
 
     $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
@@ -324,7 +326,8 @@ class Level extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT id FROM categories WHERE category = "Quiz" LIMIT 1',
+      'SELECT id FROM categories WHERE category = %s LIMIT 1',
+      'Quiz'
     );
 
     $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
@@ -549,7 +552,8 @@ class Level extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT * FROM levels WHERE active = 1 AND type = "base"',
+      'SELECT * FROM levels WHERE active = 1 AND type = %s',
+      'base'
     );
 
     $bases = array();
