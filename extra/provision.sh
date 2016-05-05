@@ -20,7 +20,7 @@ echo "[+] Creating code folder $CTF_PATH"
 [[ -d "$CTF_PATH" ]] || sudo mkdir -p "$CTF_PATH"
 
 echo "[+] Copying all CTF code to destination folder"
-sudo rsync -a "$CODE_PATH/" "$CTF_PATH/"
+sudo rsync -a --exclude node_modules --exclude vendor "$CODE_PATH/" "$CTF_PATH/"
 
 # This is because sync'ing files is done with unison
 if [[ "$MODE" == "dev" ]]; then
@@ -59,6 +59,7 @@ install_hhvm "$CTF_PATH"
 
 # Install Composer
 install_composer "$CTF_PATH"
+composer.phar install
 
 # Install NPM and grunt
 package npm
@@ -68,10 +69,6 @@ npm install
 
 # Run grunt to generate JS files
 grunt
-
-# Make sure all apache is gone
-#sudo service apache2 stop
-#apt-get autoremove
 
 # Install nginx
 install_nginx "$CTF_PATH" "$MODE"
