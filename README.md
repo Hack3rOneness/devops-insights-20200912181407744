@@ -48,9 +48,9 @@ Be ready to provide the path for your SSL certificates csr and key files.
 
 ## Development
 
-    `git clone https://github.com/Facebook/FBCTF
-     cd facebook-ctf
-    vagrant up`
+    git clone https://github.com/Facebook/FBCTF
+    cd facebook-ctf
+    vagrant up
 
 
 
@@ -73,12 +73,7 @@ If you run into any blockers, please submit and issue on the GitHub repo.
 
 You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! 
 
-## Who wrote it? 
-
-FBCTF was created by Facebook’s Information Security team at its headquarters in Menlo Park, CA. 
-
 ## Have more questions? 
-
 
 Check out the wiki pages attached to this repo. 
 
