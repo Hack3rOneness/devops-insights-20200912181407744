@@ -126,11 +126,15 @@ module.exports = (function() {
    *   - a callback function for after the modal content loads
    */
   function loadPopup(modalName, cb) {
-    _load(modalName, POPUP_CLASSES, MODAL_DIR, cb);
+    _load(modalName, POPUP_CLASSES, MODAL_DIR, LOAD_EXT, cb);
   }
 
   function load(modalName, cb) {
-    _load(modalName, DEFAULT_CLASSES, MODAL_DIR, cb);
+    _load(modalName, DEFAULT_CLASSES, MODAL_DIR, LOAD_EXT, cb);
+  }
+
+  function loadPopupController(modalName, cb) {
+    _load(modalName, POPUP_CLASSES, '', '', cb);
   }
 
   /**
@@ -151,8 +155,8 @@ module.exports = (function() {
    *   - a callback function for after the modal content loads
    *
    */
-  function _load(modalName, modalClasses, loadDir, cb) {
-    var loadPath = loadDir + modalName + LOAD_EXT;
+  function _load(modalName, modalClasses, loadDir, loadExt, cb) {
+    var loadPath = loadDir + modalName + loadExt;
     closeHoverPopup();
     modalClasses += ' modal--' + modalName;
 
@@ -252,6 +256,7 @@ module.exports = (function() {
     openPersistent: openPersistent,
     // load a popup modal
     loadPopup: loadPopup,
+    loadPopupController: loadPopupController,
     // load and show the popup modal for a country hover
     countryHoverPopup: countryHoverPopup,
     // load and show the popup modal for an inactive country hover

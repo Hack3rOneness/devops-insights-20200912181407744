@@ -2414,7 +2414,7 @@ function setupInputListeners() {
     // prompt logout
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopup('action-logout');
+      Modal.loadPopupController('index.php?p=action&modal=logout');
     });
 
     // read more posts

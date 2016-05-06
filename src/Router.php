@@ -7,12 +7,28 @@ class Router {
       $page = 'index';
     }
     $ajax = Utils::getGET()->get('ajax') === 'true';
+    $modal = Utils::getGET()->get('modal');
 
     if ($ajax) {
       return await self::genRouteAjax($page);
+    } else if ($modal !== null) {
+      $xhp = await self::genRouteModel($page, strval($modal));
+      return strval($xhp);
     } else {
       $response = await self::genRouteNormal($page);
       return strval($response);
+    }
+  }
+
+  private static async function genRouteModel(
+    string $page,
+    string $modal,
+  ): Awaitable<:xhp> {
+    switch ($page) {
+      case 'action':
+        return await (new ActionModalController())->genRender($modal);
+      default:
+        throw new NotFoundRedirectException();
     }
   }
 
@@ -20,34 +36,34 @@ class Router {
     string $page,
   ): Awaitable<string> {
     switch ($page) {
-    case 'index':
-      return await (new IndexAjaxController())->genHandleRequest();
-    case 'admin':
-      return await (new AdminAjaxController())->genHandleRequest();
-    case 'game':
-      return await (new GameAjaxController())->genHandleRequest();
-    default:
-      throw new NotFoundRedirectException();
+      case 'index':
+        return await (new IndexAjaxController())->genHandleRequest();
+      case 'admin':
+        return await (new AdminAjaxController())->genHandleRequest();
+      case 'game':
+        return await (new GameAjaxController())->genHandleRequest();
+      default:
+        throw new NotFoundRedirectException();
     }
   }
 
   private static async function genRouteNormal(string $page): Awaitable<:xhp> {
     switch ($page) {
-    case 'admin':
-      return await (new AdminController())->genRender();
-    case 'index':
-      return await (new IndexController())->genRender();
-    case 'game':
-      return await (new GameboardController())->genRender();
-    case 'view':
-      return await (new ViewModeController())->genRender();
-    case 'logout':
-      // TODO: Make a confirmation modal?
-      SessionUtils::sessionStart();
-      SessionUtils::sessionLogout();
-      invariant(false, 'should not reach here');
-    default:
-      throw new NotFoundRedirectException();
+      case 'admin':
+        return await (new AdminController())->genRender();
+      case 'index':
+        return await (new IndexController())->genRender();
+      case 'game':
+        return await (new GameboardController())->genRender();
+      case 'view':
+        return await (new ViewModeController())->genRender();
+      case 'logout':
+        // TODO: Make a confirmation modal?
+        SessionUtils::sessionStart();
+        SessionUtils::sessionLogout();
+        invariant(false, 'should not reach here');
+      default:
+        throw new NotFoundRedirectException();
     }
   }
 }

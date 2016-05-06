@@ -7,6 +7,7 @@ async function genInit(): Awaitable<void> {
     $response = await Router::genRoute();
     echo $response;
   } catch (RedirectException $e) {
+    error_log($e->getTraceAsString());
     http_response_code($e->getStatusCode());
     Utils::redirect($e->getPath());
   }

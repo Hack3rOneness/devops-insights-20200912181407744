@@ -904,7 +904,7 @@ module.exports = {
       }
 
       if (actionModal) {
-        Modal.loadPopup('action-' + actionModal, function() {
+        Modal.loadPopupController('index.php?p=action&model=' + actionModal, function() {
           $('#fb-modal .admin-section-name').text(sectionTitle);
         });
       }
@@ -1101,7 +1101,7 @@ module.exports = {
     // prompt begin game
     $('.js-begin-game').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopup('action-begin-game', function() {
+      Modal.loadPopupController('index.php?p=action&modal=begin_game', function() {
         $('#begin_game').click(beginGame);
       });
     });
@@ -1109,7 +1109,7 @@ module.exports = {
     // prompt end game
     $('.js-end-game').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopup('action-end-game', function() {
+      Modal.loadPopupController('index.php?p=action&modal=end_game', function() {
         $('#end_game').click(endGame);
       });
     });
@@ -1117,7 +1117,7 @@ module.exports = {
     // prompt logout
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopup('action-logout');
+      Modal.loadPopupController('index.php?p=action&modal=logout');
     });
 
     // show/hide answer
