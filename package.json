@@ -24,6 +24,7 @@
     "flexslider": "^2.6.0",
     "hoverintent-jqplugin": "^0.2.1",
     "jquery": "^2.2.3",
+    "keycode": "^2.1.1",
     "typed.js": "^1.1.1"
   }
 }

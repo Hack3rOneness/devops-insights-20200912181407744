@@ -1,6 +1,5 @@
 // @flow
-var d3 = require('d3');
-var $ = require('jquery');
+
 var Index = require('./index');
 var Widget = require('./widget');
 var Utils = require('./utils');
@@ -8,8 +7,10 @@ var Modal = require('./modal');
 var Slider = require('./slider');
 var Clock = require('./clock');
 var Graphics = require('./graphics');
-require('flexslider');
-require('hoverintent-jqplugin')($);
+
+var d3 = require('d3');
+var $ = require('jquery');
+var Keycode = require('keycode');
 
 var widgetsList = [
   'Leaderboard',
@@ -1848,8 +1849,7 @@ function setupInputListeners() {
       //
       $(window).on('keyup', function(event) {
         var key = event.which;
-        // if the forward slash has been pressed
-        if (key === 191) {
+        if (key === Keycode.codes['/']) {
           // No command line if typing happens in a input text
           if (event.target instanceof HTMLInputElement) {
             return false;
@@ -1867,7 +1867,7 @@ function setupInputListeners() {
           }, animDelay);
         }
         // esc closes the command prompt
-        else if (key === 27) {
+        else if (key === Keycode.codes['esc']) {
           clearCommandPrompt();
           FB_CTF.gameboard.closeTutorial();
           $('.js-close-modal').trigger('click');
@@ -1889,7 +1889,7 @@ function setupInputListeners() {
         var $active;
 
         // if the "enter" key has been pressed
-        if (key === 13) {
+        if (key === Keycode.codes['enter']) {
           var autocompleteCmd = $autocomplete.text(),
               selectedCmd = FB_CTF.data.COMMAND.commands[cmd];
 
@@ -1908,7 +1908,7 @@ function setupInputListeners() {
           }
         }
         // up arrow goes up in results box
-        else if (key === 38) {
+        else if (key === Keycode.codes['up']) {
           $active = $cmdPromptList.find('li.selected');
 
           if ($active.prevAll(':not(.hidden)').length > 0) {
@@ -1920,7 +1920,7 @@ function setupInputListeners() {
           checkSelectedVisible();
         }
         // down arrow goes down in results box
-        else if (key === 40) {
+        else if (key === Keycode.codes['down']) {
           $active = $cmdPromptList.find('li.selected');
 
           if ($active.nextAll(':not(.hidden)').length > 0) {
@@ -1952,9 +1952,7 @@ function setupInputListeners() {
         }
       }); // $promptInput.on('keyup')
 
-      //
       // filter the results from the selected command
-      //
       $filterResultsInput.on('keyup', function(event) {
         event.preventDefault();
         var $self = $(this),
@@ -1965,13 +1963,13 @@ function setupInputListeners() {
 
         var $active;
 
-        if (key === 13) {
+        if (key === Keycode.codes['enter']) {
           $('body').trigger('command-option-selected', {
             selected: $selected.text()
           });
         }
         // up arrow goes up in results box
-        else if (key === 38) {
+        else if (key === Keycode.codes['up']) {
           $active = $cmdResultsList.find('li.selected');
 
           if ($active.prevAll(':not(.hidden)').length > 0) {
@@ -1983,7 +1981,7 @@ function setupInputListeners() {
           checkSelectedVisible();
         }
         // down arrow goes down in results box
-        else if (key === 40) {
+        else if (key === Keycodes.codes['down']) {
           $active = $cmdResultsList.find('li.selected');
 
           if ($active.nextAll(':not(.hidden)').length > 0) {
@@ -1998,7 +1996,7 @@ function setupInputListeners() {
           $autocomplete.empty();
           checkSelectedVisible();
         }
-        // else if the use is actually typing
+        // else if the user is actually typing
         else {
           $selected = $cmdResultsList.find('li').removeClass('hidden selected').filter(function() {
             var val = $(this).text().toLowerCase();
@@ -2034,9 +2032,7 @@ function setupInputListeners() {
       });
     } // event listeners
 
-    /**
-     * clear all the command prompt stuff
-     */
+    // clear all the command prompt stuff
     function clearCommandPrompt() {
       var $promptInput = $('#command-prompt--input'),
           $filterResultsInput = $('#command-prompt--filter-results');
@@ -2047,9 +2043,7 @@ function setupInputListeners() {
       $cmdPromptList.find('li').removeClass('hidden selected');
     }
 
-    /**
-     * clear all the commands
-     */
+    // clear all the commands
     function clearCommands() {
       var $commandlist = $('.command-list');
       $('li', $commandlist).remove();
@@ -2058,10 +2052,7 @@ function setupInputListeners() {
       $('li', $commandresults).remove();
     }
 
-    /**
-     * check to see if the selected option is visible in
-     *  the container
-     */
+    // check to see if the selected option is visible in the container
     function checkSelectedVisible() {
       var $selected = $cmdResultsList.find('li.selected');
 
@@ -2175,9 +2166,7 @@ function setupInputListeners() {
       });
     }
 
-    /**
-     * capture a country
-     */
+    // capture a country
     function cmd_captureCountry() {
       $('body').on('command-option-selected', function(event, data) {
         var country = data.selected;
@@ -2190,9 +2179,7 @@ function setupInputListeners() {
       });
     }
 
-    /**
-     * show team's info
-     */
+    // show team's info
     function cmd_showTeam() {
       $('body').on('command-option-selected', function(event, data) {
         var team = data.selected;
@@ -2234,9 +2221,7 @@ function setupInputListeners() {
       });
     }
 
-    /**
-     * close a module
-     */
+    // close a module
     function cmd_closeModule() {
       $('body').on('command-option-selected', function(event, data) {
         var module = data.selected;
@@ -2256,9 +2241,7 @@ function setupInputListeners() {
       });
     }
 
-    /**
-     * open a module
-     */
+    // open a module
     function cmd_openModule() {
       $('body').on('command-option-selected', function(event, data) {
         var module = data.selected;
@@ -2279,9 +2262,7 @@ function setupInputListeners() {
       });
     }
 
-    /**
-     * toggle the list view
-     */
+    // toggle the list view
     function cmd_toggleListView() {
       $('body').on('command-option-selected', function(event, data) {
         var enable = data.selected === "On" ? true : false;
@@ -2295,13 +2276,7 @@ function setupInputListeners() {
       });
     }
 
-    /* --------------------------------------------
-     * --init
-     * -------------------------------------------- */
-
-    /**
-     * init the command line functionality
-     */
+    // init the command line functionality
     function init() {
       Modal.loadPersistent(modalName, function() {
         $.get(loadPath, function(data) {
@@ -2328,13 +2303,10 @@ function setupInputListeners() {
       loadCommandsData: loadCommandsData,
       clearCommands: clearCommands
     };
-  })(); // command line
+  })();
 
   // END COMMAND_LINE
 
-  /* --------------------------------------------
-   * --public
-   * -------------------------------------------- */
   FB_CTF.init = function() {
     $body = $('body');
 
@@ -2342,25 +2314,21 @@ function setupInputListeners() {
     $('#register_names > #register_button').click(Index.registerNames);
     $('#register_team > #register_button').click(Index.registerTeam);
 
-    //
     // load the svg sprite. This is in the FB_CTF namespace
     //  rather than the buildkit as this is the recommended
     //  method of loading the sprite through a purely front-end
     //  solution. This can be removed if the sprite is included
     //  via some server-side solution.
-    //
     Utils.loadComponent('#fb-svg-sprite', 'static/svg/icons/build/icons.svg');
 
     // load the modal
     Modal.init();
 
-    //
     // any modules that does stuff based on loaded content (for
     //  example, modals or svg grahics) should get fired when the
     //  "content-loaded" event gets fired. The modules that load
     //  content should trigger this event when the content is
     //  done loading
-    //
     $body.on('content-loaded', function() {
       // load the sliders
       Slider.init();
@@ -2369,30 +2337,16 @@ function setupInputListeners() {
       Graphics.init(FB_CTF.data);
     }).trigger('content-loaded');
 
-    /* --------------------------------------------
-     * --more generic stuff
-     * -------------------------------------------- */
-
-    //
     // computer typed text effect
-    //
     $(".typed-text").fb_typed({
       typeSpeed: 2,
       showCursor: false
     });
 
-    //
     // dropkick - for select form elements
-    //
     $('select').dropkick();
 
-    /* --------------------------------------------
-     * --global event listeners
-     * -------------------------------------------- */
-
-    //
     // radio tabs
-    //
     $('.radio-tabs').each(function() {
       var $tabs = $(this),
           $tabContent = $tabs.next('.tab-content-container');
@@ -2408,9 +2362,7 @@ function setupInputListeners() {
       }
     });
 
-    //
     // trending list filtering
-    //
     var filteredCategories = [];
     $('.trending-list input[type="checkbox"]').on('change', function(event) {
       event.preventDefault();
@@ -2443,17 +2395,13 @@ function setupInputListeners() {
       }).addClass('hidden');
     });
 
-    //
     // init the tutorial
-    //
     $('.fb-init-tutorial').on('click', function(event) {
       event.preventDefault();
       FB_CTF.gameboard.initTutorial();
     });
 
-    //
     // click events
-    //
     $body.on('click', '.click-effect', function() {
       var $self = $(this).addClass('clicked');
 
@@ -2463,17 +2411,13 @@ function setupInputListeners() {
       });
     });
 
-    //
     // prompt logout
-    //
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
       Modal.loadPopup('action-logout');
     });
 
-    //
     // read more posts
-    //
     $('.post-readmore').on('click', function(event) {
       event.preventDefault();
       var $self = $(this),
@@ -2486,9 +2430,7 @@ function setupInputListeners() {
       }
     });
 
-    //
     // rules table of contents
-    //
     $('.rules--table-of-contents li a').on('click', function(event) {
       event.preventDefault();
 
@@ -2503,21 +2445,12 @@ function setupInputListeners() {
       });
     });
 
-    //
     // choose a logo
-    //
     $body.on('click', '.emblem-carousel .slides li', function(event) {
       event.preventDefault();
       $(this).onlySiblingWithClass('active');
     });
   }; // FB_CTF.init()
-
-  /**
-   * set up stuff on document ready
-   */
-  $(document).ready(function() {
-    // TODO: FB_CTF.init();
-  });
 })(window.FB_CTF = {});
 
 module.exports = window.FB_CTF;

@@ -28,10 +28,8 @@ module.exports = {
         console.log("component: " + component);
         console.error("/end error");
       } else {
-        //
-        // fire the "content-loaded" event to initialize any
-        //  dynamic content that is in the loaded content
-        //
+        // Fire the "content-loaded" event to initialize any dynamic content
+        // that is in the loaded content
         $('body').trigger('content-loaded', {
           component: component
         });

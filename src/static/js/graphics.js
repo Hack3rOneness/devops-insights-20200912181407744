@@ -5,9 +5,8 @@ var COLOR_LIGHT_BLUE = "#cff8fa";
 
 module.exports = (function() {
   var data;
-  /**
-   * set up event listeners
-   */
+
+  // Set up event listeners
   function init(data) {
     this.data = data;
     $('.fb-graphic').each(function() {
@@ -20,9 +19,8 @@ module.exports = (function() {
       $graphic.addClass('initialized');
       build(this, datafile);
     });
-    //
-    // scoreboard filter
-    //
+
+    // Scoreboard filter
     $('input[name="fb-scoreboard-filter"]').on('change', function(event) {
       event.preventDefault();
       var team = $(this).val(),
