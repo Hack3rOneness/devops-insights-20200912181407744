@@ -69,11 +69,7 @@ class ViewModeController extends Controller {
         <div id="fb-main-content" class="fb-page">
           {$this->renderPage($page)}
         </div>
-        <script type="text/javascript" src="static/js/vendor/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="static/js/vendor/d3.min.js"></script>
-        <script type="text/javascript" src="static/js/plugins.js"></script>
-        <script type="text/javascript" src="static/js/_buildkit.js"></script>
-        <script type="text/javascript" src="static/js/fb-ctf.js"></script>
+        <script type="text/javascript" src="static/dist/js/app.js"></script>
       </body>;
   }
 }
