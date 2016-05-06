@@ -5,6 +5,16 @@ module.exports = function(grunt) {
         NODE_ENV: 'production'
       }
     },
+    sass: {
+      options: {
+        sourceMapEmbed: true
+      },
+      dist: {
+        files: {
+          'src/static/css/fb-ctf2.css': 'src/static/css/scss/fb-ctf.scss'
+        }
+      }
+    },
     eslint: {
       options: {
         force: true
@@ -62,6 +72,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-env');
@@ -70,6 +81,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-run');
 
   grunt.registerTask('check', ['force:eslint', 'run:flow']);
-  grunt.registerTask('default', ['check', 'browserify', 'copy:browserify']);
-  grunt.registerTask('release', ['env:release', 'eslint', 'run:flow', 'browserify', 'uglify']);
+  grunt.registerTask('default', ['check', 'browserify', 'copy:browserify', 'sass']);
+  grunt.registerTask('release', ['env:release', 'eslint', 'run:flow', 'browserify', 'uglify', 'sass']);
 };
