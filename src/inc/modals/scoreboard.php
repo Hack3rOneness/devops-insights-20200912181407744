@@ -21,7 +21,7 @@ class ScoreboardController {
       $now = time();
       $current_s = intval($now) - intval($start_ts);
       $current = intval($current_s/$s_each);
-      
+
       for ($i=0; $i<10; $i++) {
         $indicator_classes = 'indicator-cell ';
         if ($current >= $i) {
@@ -35,7 +35,7 @@ class ScoreboardController {
       for ($i=0; $i<10; $i++) {
         $indicator->appendChild(
           <span class="indicator-cell"></span>
-        ); 
+        );
       }
     }
     return $indicator;

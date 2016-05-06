@@ -3,12 +3,14 @@ var d3 = require('d3');
 
 var COLOR_LIGHT_BLUE = "#cff8fa";
 
-module.exports = (function() {
-  var data;
+module.exports = {
+  data: {},
 
   // Set up event listeners
-  function init(data) {
+  init: function(data) {
     this.data = data;
+    var self = this;
+
     $('.fb-graphic').each(function() {
       var $graphic = $(this),
           datafile = $graphic.data('file');
@@ -17,7 +19,7 @@ module.exports = (function() {
         return;
       }
       $graphic.addClass('initialized');
-      build(this, datafile);
+      self.build(this, datafile);
     });
 
     // Scoreboard filter
@@ -31,7 +33,7 @@ module.exports = (function() {
         $teamLine.hide();
       }
     });
-  }
+  },
 
   /**
    * build the graph
@@ -42,13 +44,15 @@ module.exports = (function() {
    * @param datafile (string)
    *   - the file to load, which contains the data
    */
-  function build(svgEl, datafile) {
+  build: function(svgEl, datafile) {
+    var self = this;
+
     if (datafile === undefined) {
       return;
     }
     var $container = $(svgEl).closest('.scoreboard-graphic-container');
 
-    $.get(datafile, function() {
+    $.get(datafile, function(data) {
       var scores = data;
       var maxScore = 0;
       $.each(scores, function() {
@@ -70,7 +74,7 @@ module.exports = (function() {
           HEIGHT = 220 - MARGIN.bottom,
 
           X_START = 1,
-          X_LENGTH = this.data.CONF.progressiveCount,
+          X_LENGTH = self.data.CONF.progressiveCount,
           xRange = d3.scale.linear().range([0, WIDTH]).domain([X_START, X_LENGTH]),
           /*yRange   = d3.scale.linear().range([HEIGHT, 0]).domain([d3.min(minMaxArray, function (d) {
            return d.score;
@@ -169,7 +173,4 @@ module.exports = (function() {
       console.error("/error");
     });
   }
-  return {
-    init: init
-  };
-})();
+};
