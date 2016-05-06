@@ -964,31 +964,45 @@ module.exports = {
 
     // category filter select (flags, bases)
     $('select[name="category_filter"]').on('change', function() {
+      var $status = $('select[name="status_filter"]');
       var $this = $(this);
-      var filter = $('option:selected', $this)[0].value;
-      if (filter === 'all') {
+      var category_filter = $('option:selected', $this)[0].value;
+      var status_filter = $('option:selected', $status)[0].value;
+      if (category_filter === 'all') {
         $('section[id!=new-element]').each(function() {
-          //console.log(this);
           $(this).removeClass('completely-hidden');
         });
       } else {
         $('section[id!=new-element]').each(function() {
           $(this).addClass('completely-hidden');
         });
-        var targets = $('option:contains("' + filter + '"):selected[class!=filter_option]');
+        var targets = $('option:contains("' + category_filter + '"):selected[class!=filter_option]');
         targets.each(function() {
           var target = $(this).closest('section[id!=new-element]')[0];
-          $(target).removeClass('completely-hidden');
-          //console.log($(this).closest('section[id!=new-element]')[0]);
+          $(target).removeClass("completely-hidden");
         });
+        // Apply also the status filter
+        if (status_filter != 'all') {
+          var filter_string = 'off';
+          if (status_filter === 'Enabled') {
+            filter_string = 'on';
+          }
+          var st_targets = $('input[type="radio"][id*="status--' + filter_string + '"]:checked[class!=filter_option]');
+          st_targets.each(function() {
+            var target = $(this).closest('section[id!=new-element]')[0];
+            $(target).removeClass('completely-hidden');
+          });
+        }
       }
     });
 
     // status filter select (quiz, flags, bases)
     $('select[name="status_filter"]').on('change', function() {
+      var $category = $('select[name="category_filter"]');
       var $this = $(this);
-      var filter = $('option:selected', $this)[0].value;
-      if (filter === 'all') {
+      var status_filter = $('option:selected', $this)[0].value;
+      var category_filter = $('option:selected', $category)[0].value;
+      if (status_filter === 'all') {
         $('section[id!=new-element]').each(function() {
           $(this).removeClass('completely-hidden');
         });
@@ -997,7 +1011,7 @@ module.exports = {
           $(this).addClass('completely-hidden');
         });
         var filter_string = 'off';
-        if (filter === 'Enabled') {
+        if (status_filter === 'Enabled') {
           filter_string = 'on';
         }
         var targets = $('input[type="radio"][id*="status--' + filter_string + '"]:checked[class!=filter_option]');
@@ -1005,6 +1019,14 @@ module.exports = {
           var target = $(this).closest('section[id!=new-element]')[0];
           $(target).removeClass('completely-hidden');
         });
+        // Apply also the category filter
+        if (category_filter != 'all') {
+          var cat_targets = $('option:contains("' + category_filter + '"):selected[class!=filter_option]');
+        cat_targets.each(function() {
+          var cat_target = $(this).closest('section[id!=new-element]')[0];
+          $(cat_target).removeClass('completely-hidden');
+        });
+        }
       }
     });
 
