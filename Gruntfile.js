@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'src/static/css/fb-ctf2.css': 'src/static/css/scss/fb-ctf.scss'
+          'src/static/css/fb-ctf.css': 'src/static/css/scss/fb-ctf.scss'
         }
       }
     },

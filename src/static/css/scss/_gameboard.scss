@@ -600,7 +600,8 @@ body[data-section="gameboard"] .fb-page {
       stroke-width: 1.5;
 
       &.active {
-        stroke: lighten($main-blue, 10%);
+        fill: #1f3b47;
+	stroke: #36687c;
         stroke-width: 1;
       }
     }
