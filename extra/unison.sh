@@ -7,16 +7,16 @@
 #
 
 if [[ "$#" -ne 1 ]]; then
-	echo "[!] Need path to CTF folder"
-	exit 1
+  echo "[!] Need path to CTF folder"
+  exit 1
 fi
 
 CODE_PATH="$1"
 
 # Make sure the right version is installed
 if [[ "$(unison -version | awk '{print $3}')" != "2.48.3" ]]; then
-	echo "Sorry, you need unison 2.48.3"
-	exit 1
+  echo "Sorry, you need unison 2.48.3"
+  exit 1
 fi
 
 # Generate ssh-config file from vagrant
@@ -28,7 +28,7 @@ vagrant ssh-config > "$SSH_CONFIG"
 echo "[+] Creating unison profile"
 PROFILE="
 root = $CODE_PATH
-root = ssh://default//var/www/facebook-ctf/
+root = ssh://default//var/www/fbctf/
 ignore = Name {.vagrant,.DS_Store,.sources,node_modules}
 
 prefer = $CODE_PATH
@@ -48,10 +48,10 @@ fi
 
 cd $UNISONDIR
 [[ -d "$UNISONDIR/.unison" ]] || mkdir "$UNISONDIR/.unison"
-echo "$PROFILE" > "$UNISONDIR/.unison/facebook-ctf.prf"
+echo "$PROFILE" > "$UNISONDIR/.unison/fbctf.prf"
 
 echo "[+] Sync'ing project in the background..."
-unison "facebook-ctf" &
+unison "fbctf" &
 
 echo "[+] Done"
 exit 0

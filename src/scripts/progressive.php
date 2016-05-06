@@ -1,8 +1,8 @@
 <?hh
 
-require_once('/var/www/facebook-ctf/vendor/autoload.php');
+require_once('/var/www/fbctf/vendor/autoload.php');
 
 while (Progressive::getGameStatus()) {
-	Progressive::take();
+  Progressive::take();
   sleep(Progressive::getCycle());
 }

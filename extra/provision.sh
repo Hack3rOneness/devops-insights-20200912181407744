@@ -5,11 +5,11 @@
 # Usage: ./provision.sh [dev | prod] [path_to_code]
 #
 
-DB="facebook-ctf"
+DB="fbctf"
 U="ctf"
 P="ctf"
 P_ROOT="root"
-CTF_PATH="/var/www/facebook-ctf"
+CTF_PATH="/var/www/fbctf"
 MODE=${1:-dev}
 CODE_PATH=${2:-/vagrant}
 
@@ -24,8 +24,8 @@ sudo rsync -a --exclude node_modules --exclude vendor "$CODE_PATH/" "$CTF_PATH/"
 
 # This is because sync'ing files is done with unison
 if [[ "$MODE" == "dev" ]]; then
-    echo "[+] Setting permissions"
-    sudo chmod -R 777 "$CTF_PATH/"
+  echo "[+] Setting permissions"
+  sudo chmod -R 777 "$CTF_PATH/"
 fi
 
 # There we go!
@@ -63,14 +63,13 @@ install_hhvm "$CTF_PATH"
 # Install Composer
 install_composer "$CTF_PATH"
 composer.phar install
-sudo chown -R vagrant:vagrant "$CTF_PATH/vendor"
 
 # Install NPM and grunt
 package npm
 package nodejs-legacy
-npm install -g grunt
-npm install -g flow-bin
 npm install
+sudo npm install -g grunt
+sudo npm install -g flow-bin
 
 # Run grunt to generate JS files
 grunt
@@ -89,6 +88,6 @@ import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH" "$MODE"
 sudo chmod 777 "$CTF_PATH/src/data/attachments"
 sudo chmod 777 "$CTF_PATH/src/data/attachments/deleted"
 
-log 'Facebook-CTF deployment is complete!'
+log 'fbctf deployment is complete!'
 
 exit 0

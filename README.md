@@ -28,8 +28,8 @@ TODO
 ### Development setup
 
 ```
-git clone https://github.com/CaptureTheBox/facebook-ctf.git
-cd facebook-ctf
+git clone https://github.com/facebook/fbctf.git
+cd fbctf
 vagrant up
 ```
 
@@ -48,9 +48,9 @@ If you are going to be developing outside of the Vagrant machine, you need to sy
 
 ## Production
 
-The target system needs to be Ubuntu 14.04. Clone the repository, for example in `/home/ubuntu/facebook-ctf`
+The target system needs to be Ubuntu 14.04. Clone the repository, for example in `/home/ubuntu/fbctf`
 
-`./extra/provision.sh prod /home/ubuntu/facebook-ctf`
+`./extra/provision.sh prod /home/ubuntu/fbctf`
 
 And be ready to provide the path for your SSL certificates csr and key files.
 

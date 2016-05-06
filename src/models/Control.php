@@ -113,7 +113,7 @@ class Control extends Model {
   }
 
   public static function backupDb(): void {
-    $filename = 'facebook-ctf-backup-'.date("d-m-Y").'.sql.gz';
+    $filename = 'fbctf-backup-'.date("d-m-Y").'.sql.gz';
     header('Content-Type: application/x-gzip');
     header('Content-Disposition: attachment; filename="'.$filename.'"');
     $cmd = Db::getInstance()->getBackupCmd().' | gzip --best';

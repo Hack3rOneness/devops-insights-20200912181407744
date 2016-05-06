@@ -19,7 +19,7 @@ function package() {
 function install_unison() {
   log "Installing Unison 2.48.3"
   cd /
-  sudo curl -sL https://www.archlinux.org/packages/extra/x86_64/unison/download/ | tar Jx
+  curl -sL https://www.archlinux.org/packages/extra/x86_64/unison/download/ | sudo tar Jx
 }
 
 function install_osquery() {
@@ -33,8 +33,8 @@ function install_osquery() {
 function install_mycli() {
   log "Installing MyCLI"
 
-  curl -s https://packagecloud.io/gpg.key | apt-key add -
-  apt-get install -y apt-transport-https
+  curl -s https://packagecloud.io/gpg.key | sudo apt-key add -
+  package apt-transport-https
   echo "deb https://packagecloud.io/amjith/mycli/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list
   sudo apt-get update
   package mycli
@@ -45,8 +45,8 @@ function install_mysql() {
 
   log "Installing MySQL"
 
-  echo "mysql-server-5.5 mysql-server/root_password password $__pwd" | debconf-set-selections
-  echo "mysql-server-5.5 mysql-server/root_password_again password $__pwd" | debconf-set-selections
+  echo "mysql-server-5.5 mysql-server/root_password password $__pwd" | sudo debconf-set-selections
+  echo "mysql-server-5.5 mysql-server/root_password_again password $__pwd" | sudo debconf-set-selections
   package mysql-server
 }
 
@@ -80,85 +80,85 @@ function install_nginx() {
     sudo cp "$__mycert" "$__cert"
     sudo cp "$__mykey" "$__key"
   fi
-  sudo cat "$__path/extra/nginx.conf" | sed "s|CTFPATH|$__path/src|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" > /etc/nginx/sites-available/fbctf.conf
+  cat "$__path/extra/nginx.conf" | sed "s|CTFPATH|$__path/src|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" | sudo tee /etc/nginx/sites-available/fbctf.conf
   sudo rm /etc/nginx/sites-enabled/default
   sudo ln -s /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
 
-    # Restart nginx
-    sudo nginx -t
-    sudo service nginx restart
-  }
+  # Restart nginx
+  sudo nginx -t
+  sudo service nginx restart
+}
 
-  function install_hhvm() {
-    local __path=$1
+function install_hhvm() {
+  local __path=$1
 
-    log "Adding HHVM key"
-    sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
-    log "Adding HHVM repo"
-    sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
-    sudo apt-get update
-    package hhvm
+  log "Adding HHVM key"
+  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
+  log "Adding HHVM repo"
+  sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
+  sudo apt-get update
+  package hhvm
 
-    log "Copying HHVM configuration"
-    sudo cat "$__path/extra/hhvm.conf" | sed "s|CTFPATH|$__path/|g" > /etc/hhvm/server.ini
+  log "Copying HHVM configuration"
+  cat "$__path/extra/hhvm.conf" | sed "s|CTFPATH|$__path/|g" | sudo tee /etc/hhvm/server.ini
 
-    log "HHVM as PHP systemwide"
-    sudo /usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
+  log "HHVM as PHP systemwide"
+  sudo /usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
 
-    log "Enabling HHVM to start by default"
-    sudo update-rc.d hhvm defaults
+  log "Enabling HHVM to start by default"
+  sudo update-rc.d hhvm defaults
 
-    log "Restart HHVM"
-    sudo service hhvm restart
-  }
+  log "Restart HHVM"
+  sudo service hhvm restart
+}
 
-  function install_composer() {
-    local __path=$1
+function install_composer() {
+  local __path=$1
 
-    log "Installing composer"
-    cd $__path
-    curl -sS https://getcomposer.org/installer | php
-    php composer.phar install
-    sudo mv composer.phar /usr/bin
-    sudo chmod +x /usr/bin/composer.phar
-  }
+  log "Installing composer"
+  cd $__path
+  curl -sS https://getcomposer.org/installer | php
+  php composer.phar install
+  sudo mv composer.phar /usr/bin
+  sudo chmod +x /usr/bin/composer.phar
+}
 
-  function import_empty_db() {
-    local __u="ctf"
-    local __p="ctf"
-    local __user=$1
-    local __pwd=$2
-    local __db=$3
-    local __path=$4
-    local __mode=$5
+function import_empty_db() {
+  local __u="ctf"
+  local __p="ctf"
+  local __user=$1
+  local __pwd=$2
+  local __db=$3
+  local __path=$4
+  local __mode=$5
 
-    log "Creating DB - $__db"
-    mysql -u "$__user" --password="$__pwd" -e "CREATE DATABASE \`$__db\`;"
+  log "Creating DB - $__db"
+  mysql -u "$__user" --password="$__pwd" -e "CREATE DATABASE \`$__db\`;"
 
-    log "Importing schema..."
-    mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/schema.sql;"
-    log "Importing countries..."
-    mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/countries.sql;"
-    log "Importing logos..."
-    mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/logos.sql;"
+  log "Importing schema..."
+  mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/schema.sql;"
+  log "Importing countries..."
+  mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/countries.sql;"
+  log "Importing logos..."
+  mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/logos.sql;"
 
-    log "Creating user..."
-    mysql -u "$__user" --password="$__pwd" -e "CREATE USER '$__u'@'localhost' IDENTIFIED BY '$__p';"
-    mysql -u "$__user" --password="$__pwd" -e "GRANT ALL PRIVILEGES ON \`$__db\`.* TO '$__u'@'localhost';"
-    mysql -u "$__user" --password="$__pwd" -e "FLUSH PRIVILEGES;"
+  log "Creating user..."
+  mysql -u "$__user" --password="$__pwd" -e "CREATE USER '$__u'@'localhost' IDENTIFIED BY '$__p';"
+  mysql -u "$__user" --password="$__pwd" -e "GRANT ALL PRIVILEGES ON \`$__db\`.* TO '$__u'@'localhost';"
+  mysql -u "$__user" --password="$__pwd" -e "FLUSH PRIVILEGES;"
 
-    log "DB Connection file"
-    sudo cat "$__path/extra/settings.ini.example" | sed "s/DATABASE/$__db/g" | sed "s/MYUSER/$__u/g" | sed "s/MYPWD/$__p/g" > "$__path/settings.ini"
+  log "DB Connection file"
+  cat "$__path/extra/settings.ini.example" | sed "s/DATABASE/$__db/g" | sed "s/MYUSER/$__u/g" | sed "s/MYPWD/$__p/g" > "$__path/settings.ini"
 
-    local PASSWORD
-    log "Adding default admin user"
-    if [[ $__mode = "dev" ]]; then
-      PASSWORD='password'
-    else
-      PASSWORD=$(head -c 500 /dev/urandom | md5sum | cut -d" " -f1)
-    fi
+  local PASSWORD
+  log "Adding default admin user"
+  if [[ $__mode = "dev" ]]; then
+    PASSWORD='password'
+  else
+    PASSWORD=$(head -c 500 /dev/urandom | md5sum | cut -d" " -f1)
+  fi
 
-    log "The password for admin is: $PASSWORD"
-    HASH=$(hhvm -f "$__path/extra/hash.php" "$PASSWORD")
-    mysql -u "$__user" --password="$__pwd" "$__db" -e "INSERT INTO teams (name, password_hash, admin, protected, logo, created_ts) VALUES('admin', '$HASH', 1, 1, 'admin', NOW());"
-  }
+  log "The password for admin is: $PASSWORD"
+  HASH=$(hhvm -f "$__path/extra/hash.php" "$PASSWORD")
+  mysql -u "$__user" --password="$__pwd" "$__db" -e "INSERT INTO teams (name, password_hash, admin, protected, logo, created_ts) VALUES('admin', '$HASH', 1, 1, 'admin', NOW());"
+}
