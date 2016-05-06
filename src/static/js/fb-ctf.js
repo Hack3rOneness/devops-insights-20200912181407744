@@ -25,7 +25,7 @@ Widget.rememberWidgets(widgetsList);
 
 // Capture enter key presses on login and registration forms
 $(document).on('keypress', 'input', function(e) {
-  if (e.keyCode == 13) {
+  if (e.keyCode == Keycode.codes['enter']) {
     e.preventDefault();
     var form_action = $('input[name=action]', e.target.form)[0].value;
     if (form_action == 'register_team') {
@@ -1981,7 +1981,7 @@ function setupInputListeners() {
           checkSelectedVisible();
         }
         // down arrow goes down in results box
-        else if (key === Keycodes.codes['down']) {
+        else if (key === Keycode.codes['down']) {
           $active = $cmdResultsList.find('li.selected');
 
           if ($active.nextAll(':not(.hidden)').length > 0) {
