@@ -133,6 +133,10 @@ module.exports = (function() {
     _load(modalName, DEFAULT_CLASSES, MODAL_DIR, LOAD_EXT, cb);
   }
 
+  function loadController(modalName, cb) {
+    _load(modalName, DEFAULT_CLASSES, '', '', cb);
+  }
+
   function loadPopupController(modalName, cb) {
     _load(modalName, POPUP_CLASSES, '', '', cb);
   }
@@ -256,6 +260,7 @@ module.exports = (function() {
     openPersistent: openPersistent,
     // load a popup modal
     loadPopup: loadPopup,
+    loadController: loadController,
     loadPopupController: loadPopupController,
     // load and show the popup modal for a country hover
     countryHoverPopup: countryHoverPopup,

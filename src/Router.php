@@ -27,6 +27,8 @@ class Router {
     switch ($page) {
       case 'action':
         return await (new ActionModalController())->genRender($modal);
+      case 'tutorial':
+        return await (new TutorialModalController())->genRender($modal);
       default:
         throw new NotFoundRedirectException();
     }

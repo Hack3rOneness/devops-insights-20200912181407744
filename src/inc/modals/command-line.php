@@ -1,4 +1,3 @@
-
 <div class="fb-modal-content fb-command-line fb-column-container">
 
     <div class="command-list">

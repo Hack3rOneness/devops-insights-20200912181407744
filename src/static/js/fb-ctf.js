@@ -1699,7 +1699,8 @@ function setupInputListeners() {
           tutorialSteps = 8,
           currStepIndex = 1;
 
-      Modal.load('tutorial--' + firstTutorial, function() {
+      var tutorialPath = 'index.php?p=tutorial&modal=';
+      Modal.loadController(tutorialPath + firstTutorial, function() {
         // we're done loading stuff, so remove the laoding class
         loadOut();
         buildTutorial();
@@ -1711,7 +1712,7 @@ function setupInputListeners() {
           var next = $(this).data('nextTutorial');
 
           if (next) {
-            var loadPath = 'inc/modals/tutorial--' + next + '.php';
+            var loadPath = tutorialPath + next;
             currStepIndex++;
             Utils.loadComponent('#fb-modal', loadPath, buildTutorial);
           } else {
