@@ -37,6 +37,8 @@ class Router {
         return await (new TeamModalController())->genRender($modal);
       case 'command-line':
         return await (new CommandLineModalController())->genRender($modal);
+      case 'choose-logo':
+        return await (new ChooseLogoModalController())->genRender($modal);
       default:
         throw new NotFoundRedirectException();
     }

@@ -1,13 +1,15 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+class :emblem-carousel extends :x:element {
+  category %flow;
 
-class LogosController {
-  public async function genRender(): Awaitable<:xhp> {
+  protected string $tagName = 'emblem-carousel';
+
+  protected function render(): XHPRoot {
     $logos_div = <div class="fb-slider fb-container container--large"></div>;
     $logos_ul = <ul class="slides"></ul>;
 
-    $logos = await Logo::genAllEnabledLogos();
+    $logos = HH\Asio\join(Logo::genAllEnabledLogos());
     foreach ($logos as $logo) {
       $xlink_href = '#icon--badge-'.$logo->getName();
       $logos_ul->appendChild(
@@ -23,7 +25,3 @@ class LogosController {
     return $logos_div;
   }
 }
-
-/* HH_IGNORE_ERROR[1002] */
-$logos_generated = new LogosController();
-echo \HH\Asio\join($logos_generated->genRender());

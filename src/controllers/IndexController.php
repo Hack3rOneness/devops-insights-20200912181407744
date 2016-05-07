@@ -194,23 +194,7 @@ class IndexController extends Controller {
   }
 
   public async function genRenderLogosSelection(): Awaitable<:xhp> {
-    $logos_list = <ul class="slides" />;
-    $all_enabled_logos = await Logo::genAllEnabledLogos();
-    foreach ($all_enabled_logos as $logo) {
-      $xlink_href = '#icon--badge-'.$logo->getName();
-      $logos_list->appendChild(
-        <li>
-          <svg class="icon--badge">
-            <use href={$xlink_href}/>
-
-          </svg>
-        </li>
-      );
-    }
-    return
-      <div class="fb-slider fb-container container--large">
-        {$logos_list}
-      </div>;
+    return <emblem-carousel />;
   }
 
   public async function genRenderRegistrationNames(): Awaitable<:xhp> {

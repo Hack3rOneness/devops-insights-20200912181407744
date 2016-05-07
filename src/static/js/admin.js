@@ -1,7 +1,6 @@
 // @flow
 
 var Slider = require('./slider');
-var Utils = require('./utils');
 var Modal = require('./modal');
 var Dropkick = require('dropkickjs');
 var $ = require('jquery');
@@ -1089,12 +1088,10 @@ module.exports = {
       var $self = $(this),
           $container = $self.closest('.fb-column-container');
 
-      Modal.loadPopup('choose-logo', function() {
+      Modal.loadPopupController('index.php?p=choose-logo&modal=choose-logo', 'choose-logo', function() {
         var $modal = $('#fb-modal');
 
-        Utils.loadComponent('.emblem-carousel', 'inc/components/emblem-carousel.php', function() {
-          Slider.init();
-        });
+        Slider.init();
 
         $('.js-store-logo', $modal).on('click', function(event) {
           event.preventDefault();
