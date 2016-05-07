@@ -862,7 +862,7 @@ function setupInputListeners() {
     function launchCaptureModal(country, capturedBy) {
       var data = FB_CTF.data.COUNTRIES[country];
 
-      Modal.loadPopup('country-capture', function() {
+      Modal.loadPopupController('index.php?p=country&modal=capture', function() {
         var $container = $('.fb-modal-content'),
             level_id = data ? data.level_id : 0,
             title = data ? data.title : '',

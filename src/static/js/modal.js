@@ -214,7 +214,7 @@ module.exports = (function() {
    *   - a callback to render the country data in the popup
    */
   function countryHoverPopup(cb) {
-    var loadPath = 'inc/modals/country-popup.php';
+    var loadPath = 'index.php?p=country&modal=popup';
     if ($countryHover.length === 0) {
       $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo($modalContainer);
     }
@@ -228,7 +228,7 @@ module.exports = (function() {
    *   - a callback to render the country data in the popup
    */
   function countryInactiveHoverPopup(cb) {
-    var loadPath = 'inc/modals/country-inactive-popup.php';
+    var loadPath = 'index.php?p=country&modal=inactive';
     if ($countryHover.length === 0) {
       $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--hover fb-section-border" />').appendTo($modalContainer);
     }
@@ -242,7 +242,7 @@ module.exports = (function() {
    *   - a callback to render the country data in the popup
    */
   function viewmodePopup(cb) {
-    var loadPath = 'inc/modals/country-popup--viewmode.php';
+    var loadPath = 'index.php?p=country&modal=viewmode';
     if ($countryHover.length === 0) {
       $countryHover = $('<div id="fb-country-popup" class="fb-popup-content popup--view-only" />').appendTo($modalContainer);
     }
