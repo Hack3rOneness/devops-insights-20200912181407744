@@ -29,14 +29,14 @@ class CategoryTest extends FBCTFTest {
   }
 
   public function testDeleteCategory(): void {
-    HH\Asio\join(Category::genDelete(1));
+    HH\Asio\join(Category::genDelete(2));
     $all = HH\Asio\join(Category::genAllCategories());
     $this->assertEquals(1, count($all));
 
     $c = $all[0];
-    $this->assertEquals(2, $c->getId());
-    $this->assertEquals('category 2', $c->getCategory());
-    $this->assertTrue($c->getProtected());
+    $this->assertEquals(1, $c->getId());
+    $this->assertEquals('category 1', $c->getCategory());
+    $this->assertFalse($c->getProtected());
   }
 
   public function testUpdateCategory(): void {
@@ -47,7 +47,7 @@ class CategoryTest extends FBCTFTest {
     $c = $all[1];
     $this->assertEquals(2, $c->getId());
     $this->assertEquals('category new', $c->getCategory());
-    $this->assertTrue($c->getProtected());
+    $this->assertFalse($c->getProtected());
   }
 
   public function testSingleCategory(): void {
@@ -55,6 +55,6 @@ class CategoryTest extends FBCTFTest {
 
     $this->assertEquals(2, $c->getId());
     $this->assertEquals('category 2', $c->getCategory());
-    $this->assertTrue($c->getProtected());
+    $this->assertFalse($c->getProtected());
   }
 }

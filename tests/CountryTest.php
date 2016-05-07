@@ -9,9 +9,7 @@ class CountryTest extends FBCTFTest {
     $this->assertEquals(2, count($all));
 
     $c = $all[0];
-    $this->assertFalse($c->getUsed());
-    $c = $all[1];
-    $this->assertFalse($c->getUsed());
+    $this->assertTrue($c->getUsed());
   }
 
   public function testSetStatus(): void {
@@ -42,6 +40,6 @@ class CountryTest extends FBCTFTest {
   }
 
   public function testIsActiveLevel(): void {
-    $this->assertFalse(HH\Asio\join(Country::genIsActiveLevel(1)));
+    $this->assertTrue(HH\Asio\join(Country::genIsActiveLevel(1)));
   }
 }

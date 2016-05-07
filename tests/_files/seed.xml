@@ -1,5 +1,39 @@
 <?xml version="1.0" ?>
 <dataset>
+    <table name="levels">
+        <column>id</column>
+        <column>active</column>
+        <column>type</column>
+        <column>title</column>
+        <column>description</column>
+        <column>entity_id</column>
+        <column>category_id</column>
+        <column>points</column>
+        <column>bonus</column>
+        <column>bonus_dec</column>
+        <column>bonus_fix</column>
+        <column>flag</column>
+        <column>hint</column>
+        <column>penalty</column>
+        <column>created_ts</column>
+        <row>
+          <value>1</value>
+          <value>1</value>
+          <value>base</value>
+          <value>title</value>
+          <value>description</value>
+          <value>1</value>
+          <value>1</value>
+          <value>10</value>
+          <value>1</value>
+          <value>1</value>
+          <value>1</value>
+          <value>flag</value>
+          <value>hint</value>
+          <value>1</value>
+          <value>2015-04-26 12:14:20</value>
+        </row>
+    </table>
     <table name="countries">
         <column>id</column>
         <column>iso_code</column>
@@ -41,7 +75,7 @@
         <row>
             <value>2</value>
             <value>category 2</value>
-            <value>1</value>
+            <value>0</value>
             <value>2016-04-26 12:14:20</value>
         </row>
     </table>

@@ -1589,7 +1589,7 @@ class AdminController extends Controller {
     if (count($scores) > 0) {
       $scores_tbody = <tbody></tbody>;
       foreach ($scores as $score) {
-        $level = await Level::genLevel($score->getLevelId());
+        $level = await Level::gen($score->getLevelId());
         $country = await Country::gen($level->getEntityId());
         $level_str = $country->getName() . ' - ' . $level->getTitle();
         $scores_tbody->appendChild(
@@ -1633,7 +1633,7 @@ class AdminController extends Controller {
     if (count($failures) > 0) {
       $failures_tbody = <tbody></tbody>;
       foreach ($failures as $failure) {
-        $level = await Level::genLevel($failure->getLevelId());
+        $level = await Level::gen($failure->getLevelId());
         $country = await Country::gen($level->getEntityId());
         $level_str = $country->getName() . ' - ' . $level->getTitle();
         $failures_tbody->appendChild(

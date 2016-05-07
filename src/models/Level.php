@@ -182,8 +182,8 @@ class Level extends Model {
     }
     await $db->queryf(
       'INSERT INTO levels '.
-      '(type, title, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, created_ts) '.
-      'VALUES (%s, %s, %s, %d, %d, %d, %d, %d, %d, %s, %s, %d, NOW())',
+      '(type, title, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, active, created_ts) '.
+      'VALUES (%s, %s, %s, %d, %d, %d, %d, %d, %d, %s, %s, %d, %d, NOW())',
       $type,
       $title,
       $description,
@@ -196,6 +196,7 @@ class Level extends Model {
       $flag,
       $hint,
       $penalty,
+      0, // active
     );
 
     // Mark entity as used
@@ -454,7 +455,7 @@ class Level extends Model {
     $db = await self::genDb();
 
     // Free country first.
-    $level = await self::genLevel($level_id);
+    $level = await self::gen($level_id);
     await Country::genSetUsed($level->getEntityId(), false);
 
     await $db->queryf(
@@ -599,7 +600,7 @@ class Level extends Model {
   }
 
   // Get a single level.
-  public static async function genLevel(
+  public static async function gen(
     int $level_id,
   ): Awaitable<Level> {
     $db = await self::genDb();
@@ -620,7 +621,7 @@ class Level extends Model {
     int $level_id,
     string $answer,
   ): Awaitable<bool> {
-    $level = await self::genLevel($level_id);
+    $level = await self::gen($level_id);
     return
       strtoupper(trim($level->getFlag())) === strtoupper(trim($answer));
   }
@@ -666,7 +667,7 @@ class Level extends Model {
       return false;
     }
 
-    $level = await self::genLevel($level_id);
+    $level = await self::gen($level_id);
 
     // Calculate points to give
     $points = $level->getPoints() + $level->getBonus();
@@ -694,7 +695,7 @@ class Level extends Model {
   ): Awaitable<bool> {
     $db = await self::genDb();
 
-    $level = await self::genLevel($level_id);
+    $level = await self::gen($level_id);
 
     // Calculate points to give
     $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
@@ -724,7 +725,7 @@ class Level extends Model {
   ): Awaitable<?string> {
     $db = await self::genDb();
 
-    $level = await self::genLevel($level_id);
+    $level = await self::gen($level_id);
     $penalty = $level->getPenalty();
 
     // Check if team has already gotten this hint or if the team has scored this already
