@@ -360,6 +360,7 @@ class AdminAjaxController extends AjaxController {
     case 'create_category':
       await Category::genCreate(
         must_have_string($params, 'category'),
+        false,
       );
       return Utils::ok_response('Created successfully', 'admin');
     case 'update_category':

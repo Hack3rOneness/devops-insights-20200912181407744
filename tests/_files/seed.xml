@@ -1,5 +1,24 @@
 <?xml version="1.0" ?>
 <dataset>
+    <table name="categories">
+        <column>id</column>
+        <column>category</column>
+        <column>protected</column>
+        <column>created_ts</column>
+        <row>
+            <value>1</value>
+            <value>category 1</value>
+            <value>0</value>
+            <value>2015-04-26 12:14:20</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>category 2</value>
+            <value>1</value>
+            <value>2016-04-26 12:14:20</value>
+        </row>
+
+    </table>
     <table name="links">
         <column>id</column>
         <column>link</column>
@@ -9,6 +28,20 @@
             <value>1</value>
             <value>link</value>
             <value>1</value>
+            <value>2016-04-26 12:14:20</value>
+        </row>
+    </table>
+    <table name="attachments">
+        <column>id</column>
+        <column>level_id</column>
+        <column>filename</column>
+        <column>type</column>
+        <column>created_ts</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>filename</value>
+            <value>jpeg</value>
             <value>2016-04-26 12:14:20</value>
         </row>
     </table>

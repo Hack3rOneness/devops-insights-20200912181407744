@@ -84,13 +84,15 @@ class Category extends Model {
   // Create category.
   public static async function genCreate(
     string $category,
+    bool $protected,
   ): Awaitable<int> {
     $db = await self::genDb();
 
     // Create category
     await $db->queryf(
-      'INSERT INTO categories (category, created_ts) VALUES (%s, NOW())',
+      'INSERT INTO categories (category, protected, created_ts) VALUES (%s, %d, NOW())',
       $category,
+      (int)$protected,
     );
 
     // Return newly created category_id
