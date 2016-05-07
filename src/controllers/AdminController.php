@@ -1485,7 +1485,7 @@ class AdminController extends Controller {
       </section>
     );
 
-    $all_countries = await Country::genAllCountries(false);
+    $all_countries = await Country::genAllCountries();
     foreach ($all_countries as $country) {
       $using_country = await Level::genWhoUses($country->getId());
       $current_use = ($using_country) ? 'Yes' : 'No';

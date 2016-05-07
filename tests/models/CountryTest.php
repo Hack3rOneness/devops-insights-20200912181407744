@@ -4,7 +4,7 @@ class CountryTest extends FBCTFTest {
 
   public function testUsedAdjust(): void {
     HH\Asio\join(Country::genUsedAdjust());
-    $all = HH\Asio\join(Country::genAllCountries(true));
+    $all = HH\Asio\join(Country::genAllCountriesForMap());
 
     $this->assertEquals(2, count($all));
 
@@ -19,7 +19,7 @@ class CountryTest extends FBCTFTest {
   }
 
   public function testAllCountries(): void {
-    $all = HH\Asio\join(Country::genAllCountries(true));
+    $all = HH\Asio\join(Country::genAllCountriesForMap());
     $this->assertEquals(2, count($all));
 
     $c = $all[0];
@@ -31,9 +31,9 @@ class CountryTest extends FBCTFTest {
     $this->assertEquals("d", $c->getD());
     $this->assertEquals("transform", $c->getTransform());
 
-    $all = HH\Asio\join(Country::genAllCountries(false));
+    $all = HH\Asio\join(Country::genAllCountries());
     $this->assertEquals(2, count($all));
-    $all = HH\Asio\join(Country::genAllMapCountries());
+    $all = HH\Asio\join(Country::genAllCountriesForMap());
     $this->assertEquals(2, count($all));
     $all = HH\Asio\join(Country::genAllAvailableCountries());
     $this->assertEquals(0, count($all));

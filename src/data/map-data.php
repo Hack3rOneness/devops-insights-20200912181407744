@@ -13,7 +13,7 @@ class MapDataController extends DataController {
     $my_team_id = SessionUtils::sessionTeam();
     $my_name = SessionUtils::sessionTeamName();
 
-    $enabled_countries = await Country::genAllEnabledCountries(true);
+    $enabled_countries = await Country::genAllEnabledCountriesForMap();
     foreach ($enabled_countries as $country) {
       $is_active_level = await Country::genIsActiveLevel($country->getId());
       $active = ($country->getUsed() && $is_active_level)

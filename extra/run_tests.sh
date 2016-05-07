@@ -24,7 +24,8 @@ echo "[+] DB Connection file"
 cat "$CODE_PATH/extra/settings.ini.example" | sed "s/DATABASE/$DB/g" | sed "s/MYUSER/$USER/g" | sed "s/MYPWD/$PWD/g" > "$CODE_PATH/settings.ini"
 
 echo "[+] Starting tests"
-hhvm -c tests/server.ini vendor/phpunit/phpunit/phpunit --configuration tests/phpunit.xml tests
+# Add xdebug.enable=1 to config ini file
+hhvm --config tests/server.ini vendor/phpunit/phpunit/phpunit --configuration tests/phpunit.xml tests
 
 echo "[+] Deleting test database"
 mysql --login-path=local -e "DROP DATABASE IF EXISTS $DB;"

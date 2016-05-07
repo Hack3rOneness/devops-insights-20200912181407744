@@ -1,6 +1,12 @@
 <?hh // strict
 
 class Country extends Model {
+
+  const string MC_KEY_ALL_COUNTRIES = 'all_countries';
+  const string MC_KEY_ALL_COUNTRIES_FOR_MAP = 'all_countries_for_map';
+  const string MC_KEY_ALL_ENABLED_COUNTRIES = 'all_enabled_countries_for_map';
+  const string MC_KEY_ALL_ENABLED_COUNTRIES_FOR_MAP = 'all_enabled_countries';
+
   private function __construct(
     private int $id,
     private string $iso_code,
@@ -50,6 +56,8 @@ class Country extends Model {
     await $db->queryf(
       'UPDATE countries SET used = 0 WHERE id NOT IN (SELECT entity_id FROM levels)',
     );
+
+    await self::genDeleteAllMemcacheKeys();
   }
 
   // Enable or disable a country
@@ -63,6 +71,8 @@ class Country extends Model {
       $status ? 1 : 0,
       $country_id,
     );
+
+    await self::genDeleteAllMemcacheKeys();
   }
 
   // Set the used flag for a country
@@ -76,63 +86,73 @@ class Country extends Model {
       $status ? 1 : 0,
       $country_id,
     );
+
+    await self::genDeleteAllMemcacheKeys();
   }
 
-  // Get all countries
-  public static async function genAllCountries(
-    bool $map,
+  private static async function genAll(
+    string $sql,
+    string $mcKey,
   ): Awaitable<array<Country>> {
-    $db = await self::genDb();
+    $mc = self::getMc();
+    $mc_result = $mc->get($mcKey);
 
-    if ($map) {
-      $result = await $db->queryf('SELECT * FROM countries ORDER BY CHAR_LENGTH(d)');
+    if ($mc_result) {
+      $rows = $mc_result;
     } else {
-      $result = await $db->queryf('SELECT * FROM countries ORDER BY name');
+      $db = await self::genDb();
+      /* HH_IGNORE_ERROR[4110] */ /* HH_IGNORE_ERROR[4027] This is safe not being a literal string */
+      $db_result = await $db->queryf($sql);
+      $rows = array_map(
+        $map ==> $map->toArray(),
+        $db_result->mapRows(),
+      );
+      $mc->set(
+        $mcKey,
+        $rows,
+      );
     }
 
     $countries = array();
-    foreach ($result->mapRows() as $row) {
+    foreach ($rows as $row) {
       $countries[] = self::countryFromRow($row);
     }
 
     return $countries;
+  }
+
+  public static async function genAllCountries(
+  ): Awaitable<array<Country>> {
+    return await self::genAll(
+      'SELECT * FROM countries ORDER BY name',
+      self::MC_KEY_ALL_COUNTRIES,
+    );
+  }
+
+  public static async function genAllCountriesForMap(
+  ): Awaitable<array<Country>> {
+    return await self::genAll(
+      'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)',
+      self::MC_KEY_ALL_COUNTRIES_FOR_MAP,
+    );
+  }
+
+  public static async function genAllEnabledCountries(
+  ): Awaitable<array<Country>> {
+    return await self::genAll(
+      'SELECT * FROM countries WHERE enabled = 1 ORDER BY name',
+      self::MC_KEY_ALL_ENABLED_COUNTRIES,
+    );
   }
 
   // All enabled countries. The weird sorting is because SVG lack of z-index
   // and things looking like shit in the map. See issue #20.
-  public static async function genAllEnabledCountries(
-    bool $map,
+  public static async function genAllEnabledCountriesForMap(
   ): Awaitable<array<Country>> {
-    $db = await self::genDb();
-
-    if ($map) {
-      $result = await $db->queryf('SELECT * FROM countries WHERE enabled = 1 ORDER BY CHAR_LENGTH(d)');
-    } else {
-      $result = await $db->queryf('SELECT * FROM countries WHERE enabled = 1 ORDER BY name');
-    }
-
-    $countries = array();
-    foreach ($result->mapRows() as $row) {
-      $countries[] = self::countryFromRow($row);
-    }
-
-    return $countries;
-  }
-
-  public static async function genAllMapCountries(
-  ): Awaitable<array<Country>> {
-    $db = await self::genDb();
-    
-    $result = await $db->queryf(
-      'SELECT * FROM countries ORDER BY CHAR_LENGTH(d)',
+    return await self::genAll(
+      'SELECT * FROM countries WHERE enabled = 1 ORDER BY CHAR_LENGTH(d)',
+      self::MC_KEY_ALL_ENABLED_COUNTRIES_FOR_MAP,
     );
-
-    $countries = array();
-    foreach ($result->mapRows() as $row) {
-      $countries[] = self::countryFromRow($row);
-    }
-
-    return $countries;
   }
 
   // All enabled and unused countries
@@ -146,7 +166,7 @@ class Country extends Model {
 
     $countries = array();
     foreach ($result->mapRows() as $row) {
-      $countries[] = self::countryFromRow($row);
+      $countries[] = self::countryFromRow($row->toArray());
     }
 
     return $countries;
@@ -164,7 +184,7 @@ class Country extends Model {
     );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
-    return intval($result->mapRows()[0]['COUNT(*)']) > 0;
+    return intval(firstx($result->mapRows())['COUNT(*)']) > 0;
   }
 
   // Get a country by id
@@ -179,7 +199,7 @@ class Country extends Model {
     );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
-    return self::countryFromRow($result->mapRows()[0]);
+    return self::countryFromRow(firstx($result->mapRows())->toArray());
   }
 
   // Get a random enabled, unused country ID
@@ -192,10 +212,10 @@ class Country extends Model {
     );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
-    return intval($result->mapRows()[0]['id']);
+    return intval(firstx($result->mapRows())['id']);
   }
 
-  private static function countryFromRow(Map<string, string> $row): Country {
+  private static function countryFromRow(array<string, string> $row): Country {
     return new Country(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'iso_code'),
@@ -205,5 +225,14 @@ class Country extends Model {
       must_have_idx($row, 'd'),
       must_have_idx($row, 'transform'),
     );
+  }
+
+  private static async function genDeleteAllMemcacheKeys(
+  ): Awaitable<void> {
+    $mc = self::getMc();
+    $mc->delete(self::MC_KEY_ALL_COUNTRIES);
+    $mc->delete(self::MC_KEY_ALL_COUNTRIES_FOR_MAP);
+    $mc->delete(self::MC_KEY_ALL_ENABLED_COUNTRIES);
+    $mc->delete(self::MC_KEY_ALL_ENABLED_COUNTRIES_FOR_MAP);
   }
 }
