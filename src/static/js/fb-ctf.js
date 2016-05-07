@@ -52,7 +52,7 @@ function activateTeams() {
       console.error("Invalid team name in markup");
       return;
     }
-    Modal.loadPopup('team', function() {
+    Modal.loadPopupController('index.php?p=team&modal=team', 'team', function() {
       var $modal = $('#fb-modal'),
           rank = teamData.rank + "",
           $teamMembers = $('.team-members', $modal);
@@ -862,7 +862,7 @@ function setupInputListeners() {
     function launchCaptureModal(country, capturedBy) {
       var data = FB_CTF.data.COUNTRIES[country];
 
-      Modal.loadPopupController('index.php?p=country&modal=capture', function() {
+      Modal.loadPopupController('index.php?p=country&modal=capture', 'country-capture', function() {
         var $container = $('.fb-modal-content'),
             level_id = data ? data.level_id : 0,
             title = data ? data.title : '',
@@ -1700,7 +1700,7 @@ function setupInputListeners() {
           currStepIndex = 1;
 
       var tutorialPath = 'index.php?p=tutorial&modal=';
-      Modal.loadController(tutorialPath + firstTutorial, function() {
+      Modal.loadController(tutorialPath + firstTutorial, 'tutorial--' + firstTutorial, function() {
         // we're done loading stuff, so remove the laoding class
         loadOut();
         buildTutorial();
@@ -1770,7 +1770,7 @@ function setupInputListeners() {
       console.log('1');
       $gameboard.find('[data-modal=scoreboard]').on('click', function() {
         console.log('2');
-        Modal.loadController('index.php?p=scoreboard&modal=scoreboard');
+        Modal.loadController('index.php?p=scoreboard&modal=scoreboard', 'scoreboard');
       });
 
       setInterval(Clock.clockRunning, 10);
@@ -1815,6 +1815,7 @@ function setupInputListeners() {
   FB_CTF.command_line = (function() {
     var loadPath = 'data/command-line.php',
         modalName = 'command-line',
+        modalPath = 'index.php?p=command-line&modal=command-line',
         $cmdPromptList,
         $cmdResultsList;
 
@@ -2199,7 +2200,7 @@ function setupInputListeners() {
           return;
         }
 
-        Modal.loadPopup('team', function() {
+        Modal.loadPopupController('index.php?p=team&modal=team', 'team', function() {
           var $modal = $('#fb-modal'),
               rank = teamData.rank + "",
               $teamMembers = $('.team-members', $modal);
@@ -2284,7 +2285,7 @@ function setupInputListeners() {
 
     // init the command line functionality
     function init() {
-      Modal.loadPersistent(modalName, function() {
+      Modal.loadPersistent(modalPath, modalName, function() {
         $.get(loadPath, function(data) {
           $cmdPromptList = $('.fb-command-line .command-list ul');
           $cmdResultsList = $('.fb-command-line .command-results ul');
@@ -2420,7 +2421,7 @@ function setupInputListeners() {
     // prompt logout
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopupController('index.php?p=action&modal=logout');
+      Modal.loadPopupController('index.php?p=action&modal=logout', 'action-logout');
     });
 
     // read more posts

@@ -95,19 +95,19 @@ module.exports = (function() {
    *   - a callback function for after the modal content loads
    */
   function loadPopup(modalName, cb) {
-    _load(modalName, POPUP_CLASSES, MODAL_DIR, LOAD_EXT, cb);
+    _load(modalName, modalName, POPUP_CLASSES, MODAL_DIR, LOAD_EXT, cb);
   }
 
   function load(modalName, cb) {
-    _load(modalName, DEFAULT_CLASSES, MODAL_DIR, LOAD_EXT, cb);
+    _load(modalName, modalName, DEFAULT_CLASSES, MODAL_DIR, LOAD_EXT, cb);
   }
 
-  function loadController(modalName, cb) {
-    _load(modalName, DEFAULT_CLASSES, '', '', cb);
+  function loadController(modalName, originalName, cb) {
+    _load(modalName, originalName, DEFAULT_CLASSES, '', '', cb);
   }
 
-  function loadPopupController(modalName, cb) {
-    _load(modalName, POPUP_CLASSES, '', '', cb);
+  function loadPopupController(modalName, originalName, cb) {
+    _load(modalName, originalName, POPUP_CLASSES, '', '', cb);
   }
 
   /**
@@ -128,10 +128,10 @@ module.exports = (function() {
    *   - a callback function for after the modal content loads
    *
    */
-  function _load(modalName, modalClasses, loadDir, loadExt, cb) {
+  function _load(modalName, className, modalClasses, loadDir, loadExt, cb) {
     var loadPath = loadDir + modalName + loadExt;
     closeHoverPopup();
-    modalClasses += ' modal--' + modalName;
+    modalClasses += ' modal--' + className;
 
     if ($modal.length === 0) {
       $modal = $('<div id="fb-modal" class="' + modalClasses + '" />').appendTo($modalContainer);
@@ -154,8 +154,8 @@ module.exports = (function() {
    * @param cb (function)
    *   - callback funtion for after the persistent modal is loaded
    */
-  function loadPersistent(modalName, cb) {
-    var loadPath = MODAL_DIR + modalName + LOAD_EXT,
+  function loadPersistent(modalPath, modalName, cb) {
+    var loadPath = modalPath,
         modalId = 'fb-modal-persistent--' + modalName,
         $modal = $(modalId);
 
