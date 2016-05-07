@@ -1,14 +1,9 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
-
-/* HH_IGNORE_ERROR[1002] */
-SessionUtils::sessionStart();
-SessionUtils::enforceLogin();
-
-class ScoreboardController {
+class ScoreboardModalController extends ModalController {
   public async function genGenerateIndicator(): Awaitable<:xhp> {
     $indicator = <div class="indicator game-progress-indicator"></div>;
+
     $game = await Configuration::gen('game');
     if ($game->getValue() === '1') {
       $start_ts = await Configuration::gen('start_ts');
@@ -22,26 +17,23 @@ class ScoreboardController {
       $current_s = intval($now) - intval($start_ts);
       $current = intval($current_s/$s_each);
 
-      for ($i=0; $i<10; $i++) {
+      for ($i = 0; $i < 10; $i++) {
         $indicator_classes = 'indicator-cell ';
         if ($current >= $i) {
           $indicator_classes .= 'active ';
         }
-        $indicator->appendChild(
-          <span class={$indicator_classes}></span>
-        );
+        $indicator->appendChild(<span class={$indicator_classes}></span>);
       }
     } else {
-      for ($i=0; $i<10; $i++) {
-        $indicator->appendChild(
-          <span class="indicator-cell"></span>
-        );
+      for ($i = 0; $i < 10; $i++) {
+        $indicator->appendChild(<span class="indicator-cell"></span>);
       }
     }
     return $indicator;
   }
 
-  public async function genRender(): Awaitable<:xhp> {
+  <<__Override>>
+  public async function genRender(string $_): Awaitable<:xhp> {
     $scoreboard_tbody = <tbody></tbody>;
 
     // If refresing is enabled, do the needful
@@ -83,7 +75,6 @@ class ScoreboardController {
           <a href="#" class="js-close-modal">
             <svg class="icon icon--close">
               <use href="#icon--close"/>
-
             </svg>
           </a>
         </div>
@@ -118,6 +109,3 @@ class ScoreboardController {
       </div>;
   }
 }
-
-$scoreboard_generated = new ScoreboardController();
-echo \HH\Asio\join($scoreboard_generated->genRender());

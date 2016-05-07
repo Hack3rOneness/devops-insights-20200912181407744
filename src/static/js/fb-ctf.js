@@ -1767,6 +1767,11 @@ function setupInputListeners() {
     function init() {
       // init the jquery object variables
       $gameboard = $('#fb-gameboard');
+      console.log('1');
+      $gameboard.find('[data-modal=scoreboard]').on('click', function() {
+        console.log('2');
+        Modal.loadController('index.php?p=scoreboard&modal=scoreboard');
+      });
 
       setInterval(Clock.clockRunning, 10);
 

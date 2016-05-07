@@ -22,28 +22,7 @@ module.exports = (function() {
     $modalContainer = $('#fb-main-content');
     $countryHover = $('#fb-country-popup');
 
-    //
-    // trigger the launch of a modal
-    //
-    $body.on('click', '.js-launch-modal', function(event) {
-      event.preventDefault();
-      var modal = $(this).data('modal'),
-          cb;
-
-      //
-      // if we're launching the login modal, add the active
-      //  class to the nav item
-      //
-      if (modal === 'login') {
-        $('.fb-main-nav a').removeClass('active');
-        $(this).addClass('active');
-      }
-      load(modal, cb);
-    });
-
-    //
     // close the modal
-    //
     $body.on('click', '.js-close-modal', close);
   }
 
@@ -60,16 +39,6 @@ module.exports = (function() {
     }
 
     $('div[id^="fb-modal"]').removeClass(ACTIVE_CLASS);
-
-    //
-    // @NOTICE
-    // this is here to re-enable the active state on the nav
-    //  in case it was altered when the modal was launched.
-    //
-    // TODO:
-    //if (_BUILDKIT !== undefined) {
-    //  _BUILDKIT.enableNavActiveState();
-    //}
   }
 
   /**

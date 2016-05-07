@@ -31,6 +31,8 @@ class Router {
         return await (new TutorialModalController())->genRender($modal);
       case 'country':
         return await (new CountryModalController())->genRender($modal);
+      case 'scoreboard':
+        return await (new ScoreboardModalController())->genRender($modal);
       default:
         throw new NotFoundRedirectException();
     }

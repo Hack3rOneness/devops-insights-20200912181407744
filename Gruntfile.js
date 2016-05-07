@@ -81,6 +81,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-run');
 
   grunt.registerTask('check', ['force:eslint', 'run:flow']);
-  grunt.registerTask('default', ['check', 'browserify', 'copy:browserify', 'sass']);
+  grunt.registerTask('build', ['browserify', 'copy:browserify', 'sass']);
+  grunt.registerTask('default', ['check', 'build']);
   grunt.registerTask('release', ['env:release', 'eslint', 'run:flow', 'browserify', 'uglify', 'sass']);
 };
