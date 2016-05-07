@@ -1182,7 +1182,7 @@ function setupInputListeners() {
         var latLines_active = 'translate(' + xRatio + 'px,' + (lngFocus - xRatio) + 'px)';
         latLines.attr('style', 'transform:' + latLines_active + ';-webkit-transform:' + latLines_active + ';-moz-transform:' + latLines_active + ';');
 
-        var lngLines_active = 'translate(' + (lngFocus + xRatio) + 'px,-' + xRatio + 'px)';
+        var lngLines_active = 'translate(' + (latFocus + xRatio) + 'px,-' + xRatio + 'px)';
         lngLines.attr('style', 'transform:' + lngLines_active + ';-webkit-transform:' + lngLines_active + ';-moz-transform:' + lngLines_active + ';');
 
         var crosshairs_xy_active = 'translate(' + (latFocus + xRatio) + 'px,' + (lngFocus - xRatio) + 'px) scale(' + zoomRatio + ')';
