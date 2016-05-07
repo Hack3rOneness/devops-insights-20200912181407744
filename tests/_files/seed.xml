@@ -91,6 +91,23 @@
             <value>2016-04-26 12:14:20</value>
         </row>
     </table>
+    <table name="logos">
+        <column>id</column>
+        <column>used</column>
+        <column>enabled</column>
+        <column>protected</column>
+        <column>name</column>
+        <column>logo</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>0</value>
+            <value>name</value>
+            <value>logo_path</value>
+        </row>
+    </table>
+
     <table name="attachments">
         <column>id</column>
         <column>level_id</column>
