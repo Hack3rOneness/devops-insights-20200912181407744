@@ -1,5 +1,17 @@
 <?xml version="1.0" ?>
 <dataset>
+    <table name="links">
+        <column>id</column>
+        <column>link</column>
+        <column>level_id</column>
+        <column>created_ts</column>
+        <row>
+            <value>1</value>
+            <value>link</value>
+            <value>1</value>
+            <value>2016-04-26 12:14:20</value>
+        </row>
+    </table>
     <table name="announcements_log">
         <column>id</column>
         <column>ts</column>
@@ -15,4 +27,5 @@
             <value>I like it!</value>
         </row>
     </table>
+
 </dataset>
