@@ -48,7 +48,7 @@ class AdminController extends Controller {
   private async function genGenerateCountriesSelect(
     int $selected,
   ): Awaitable<:xhp> {
-    $select = <select class="not_configuration" name="entity_id" />;
+    $select = <select class="not_configuration" name="entity_id" disabled={true} />;
 
     if ($selected === 0) {
       $select->appendChild(<option value="0" selected={true}>Auto</option>);
@@ -69,7 +69,7 @@ class AdminController extends Controller {
     int $selected,
   ): Awaitable<:xhp> {
     $categories = await Category::genAllCategories();
-    $select = <select class="not_configuration" name="category_id" />;
+    $select = <select class="not_configuration" name="category_id" disabled={true} />;
 
     foreach ($categories as $category) {
       if ($category->getCategory() === 'Quiz') {
@@ -1406,7 +1406,7 @@ class AdminController extends Controller {
         $category_name = <span class="logo-name">{$category->getCategory()}</span>;
       } else {
         $delete_action = <a class="highlighted--red" href="#" data-action="delete">DELETE</a>;
-        $category_name = 
+        $category_name =
           <div>
             <input name="category" type="text" value={$category->getCategory()}/>
             <a class="highlighted--yellow" href="#" data-action="save-category">Save</a>
