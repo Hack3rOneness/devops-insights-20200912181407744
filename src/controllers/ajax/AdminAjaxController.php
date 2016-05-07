@@ -446,6 +446,9 @@ class AdminAjaxController extends AjaxController {
     case 'backup_db':
       Control::backupDb();
       return Utils::ok_response('Success', 'admin');
+    case 'export_game':
+      Control::exportGame();
+      return Utils::ok_response('Success', 'admin');
     default:
       return Utils::error_response('Invalid action', 'admin');
     }

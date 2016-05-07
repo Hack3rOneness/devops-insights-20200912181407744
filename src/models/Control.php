@@ -112,12 +112,28 @@ class Control extends Model {
     await Progressive::genStop();
   }
 
+  public static function importGame(): void {
+  }
+
+  public static function exportGame(): void {
+    $levels = (object) array();
+    $teams = (object) array();
+    $data = (object) array();
+    
+    $data->{"teams"} = $teams;
+    $data->{"levels"} = $levels;
+
+    header('Content-Type: application/json');
+    header('Content-Disposition: attachment; filename=fbctf.json');
+    print json_encode($data, JSON_PRETTY_PRINT);
+    exit();
+  }
+
   public static function backupDb(): void {
     $filename = 'fbctf-backup-'.date("d-m-Y").'.sql.gz';
     header('Content-Type: application/x-gzip');
     header('Content-Disposition: attachment; filename="'.$filename.'"');
     $cmd = Db::getInstance()->getBackupCmd().' | gzip --best';
-    error_log($cmd);
     passthru($cmd);
   }
 

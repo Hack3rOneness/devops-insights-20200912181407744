@@ -371,6 +371,14 @@ function databaseBackup() {
   window.location.href = url;
 }
 
+// Export to JSON and download current game
+function exportCurrentGame() {
+  var csrf_token = $('input[name=csrf_token]')[0].value;
+  var action = 'export_game';
+  var url = 'index.php?p=admin&ajax=true&action=' + action + '&csrf_token=' + csrf_token;
+  window.location.href = url;
+}
+
 // Create tokens
 function createTokens() {
   var create_data = {
@@ -851,6 +859,8 @@ module.exports = {
         databaseBackup();
       } else if (action === 'create-tokens') {
         createTokens($section);
+      } else if (action === 'export-game') {
+        exportCurrentGame();
       } else if (action === 'edit') {
         $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', false);
