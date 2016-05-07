@@ -120,6 +120,8 @@ class Control extends Model {
     $teams = (object) array();
     $data = (object) array();
     
+    /* HH_FIXME[2011] */
+    /* HH_FIXME[1002] */
     $data->{"teams"} = $teams;
     $data->{"levels"} = $levels;
 

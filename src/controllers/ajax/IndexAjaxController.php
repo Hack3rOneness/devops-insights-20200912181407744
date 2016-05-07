@@ -194,7 +194,7 @@ class IndexAjaxController extends AjaxController {
         SessionUtils::sessionSet('name', $team->getName());
         SessionUtils::sessionSet(
           'csrf_token',
-          gmp_strval(
+          (string)gmp_strval(
             gmp_init(
               bin2hex(
                 openssl_random_pseudo_bytes(16)

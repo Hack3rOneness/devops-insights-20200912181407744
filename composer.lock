@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "955db42ba75cd94d8b421c4c04e0e876",
-    "content-hash": "6c101ebee82895316621d838b531ad33",
+    "hash": "7c9777c1bc61d22f535da8b9a14ebed3",
+    "content-hash": "e35587da56316a6f1f4c543566aa385b",
     "packages": [
         {
             "name": "facebook/xhp-lib",
@@ -261,6 +261,61 @@
                 "stub"
             ],
             "time": "2016-02-15 07:46:21"
+        },
+        {
+            "name": "phpunit/dbunit",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/dbunit.git",
+                "reference": "390cefcb101e07e1d6400dbdfc3b90ecf2c1279f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/dbunit/zipball/390cefcb101e07e1d6400dbdfc3b90ecf2c1279f",
+                "reference": "390cefcb101e07e1d6400dbdfc3b90ecf2c1279f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "ext-simplexml": "*",
+                "php": ">=5.4",
+                "phpunit/phpunit": "~4|~5",
+                "symfony/yaml": "~2.1|~3.0"
+            },
+            "bin": [
+                "dbunit"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "DbUnit port for PHP/PHPUnit to support database interaction testing.",
+            "homepage": "https://github.com/sebastianbergmann/dbunit/",
+            "keywords": [
+                "database",
+                "testing",
+                "xunit"
+            ],
+            "time": "2015-11-03 11:17:01"
         },
         {
             "name": "phpunit/php-code-coverage",
