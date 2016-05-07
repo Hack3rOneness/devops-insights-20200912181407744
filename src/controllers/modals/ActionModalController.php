@@ -3,7 +3,7 @@
 class ActionModalController extends ModalController {
   private function getModal(string $modal): (:xhp, :xhp) {
     switch ($modal) {
-      case 'begin_game':
+      case 'begin-game':
         $title = <h4>begin_<span class="highlighted">Game</span></h4>;
         $content =
           <div class="action-main">
@@ -14,7 +14,7 @@ class ActionModalController extends ModalController {
             </div>
           </div>;
         return tuple($title, $content);
-      case 'end_game':
+      case 'end-game':
         $title = <h4>end_<span class="highlighted">Game</span></h4>;
         $content =
           <div class="action-main">

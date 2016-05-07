@@ -914,7 +914,7 @@ module.exports = {
       }
 
       if (actionModal) {
-        Modal.loadPopupController('index.php?p=action&model=' + actionModal, function() {
+        Modal.loadPopupController('index.php?p=action&model=' + actionModal, 'action-' + actionModal, function() {
           $('#fb-modal .admin-section-name').text(sectionTitle);
         });
       }
@@ -1111,7 +1111,7 @@ module.exports = {
     // prompt begin game
     $('.js-begin-game').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopupController('index.php?p=action&modal=begin_game', function() {
+      Modal.loadPopupController('index.php?p=action&modal=begin-game', 'action-begin-game', function() {
         $('#begin_game').click(beginGame);
       });
     });
@@ -1119,7 +1119,7 @@ module.exports = {
     // prompt end game
     $('.js-end-game').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopupController('index.php?p=action&modal=end_game', function() {
+      Modal.loadPopupController('index.php?p=action&modal=end-game', 'action-end-game', function() {
         $('#end_game').click(endGame);
       });
     });
@@ -1127,7 +1127,7 @@ module.exports = {
     // prompt logout
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopupController('index.php?p=action&modal=logout');
+      Modal.loadPopupController('index.php?p=action&modal=logout', 'action-logout');
     });
 
     // show/hide answer

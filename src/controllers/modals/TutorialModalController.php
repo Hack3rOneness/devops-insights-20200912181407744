@@ -36,8 +36,8 @@ class TutorialModalController extends ModalController {
           <div class="main-text">
             <p>Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.</p><p>Click and Drag to move left, right, up and down.</p>
           </div>;
-        return tuple($step, 'Zoom', 'command-line', $header, $content);
-      case 'command-line':
+        return tuple($step, 'Zoom', 'command-lines', $header, $content);
+      case 'command-lines':
         $header =
           <div class="header-graphic">
             <div class="fb-column-container tutorial-graphic--command-lines">
