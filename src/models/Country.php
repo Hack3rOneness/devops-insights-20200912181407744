@@ -65,21 +65,6 @@ class Country extends Model {
     );
   }
 
-  // Check if a country is enabled
-  public static async function genIsEnabled(
-    int $country_id,
-  ): Awaitable<bool> {
-    $db = await self::genDb();
-
-    $result = await $db->queryf(
-      'SELECT enabled FROM countries WHERE id = %d LIMIT 1',
-      $country_id,
-    );
-
-    invariant($result->numRows() === 1, 'Expected exactly one result');
-    return (intval($result->mapRows()[0]) === 1);
-  }
-
   // Set the used flag for a country
   public static async function genSetUsed(
     int $country_id,
@@ -91,21 +76,6 @@ class Country extends Model {
       $status ? 1 : 0,
       $country_id,
     );
-  }
-
-  // Check if a country is used
-  public static async function genIsUsed(
-    int $country_id,
-  ): Awaitable<bool> {
-    $db = await self::genDb();
-
-    $result = await $db->queryf(
-      'SELECT used FROM countries WHERE id = %d LIMIT 1',
-      $country_id,
-    );
-
-    invariant($result->numRows() === 1, 'Expected exactly one result');
-    return intval($result->mapRows()[0]) === 1;
   }
 
   // Get all countries

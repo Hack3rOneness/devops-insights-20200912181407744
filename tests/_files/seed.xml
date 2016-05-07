@@ -1,5 +1,32 @@
 <?xml version="1.0" ?>
 <dataset>
+    <table name="countries">
+        <column>id</column>
+        <column>iso_code</column>
+        <column>name</column>
+        <column>used</column>
+        <column>enabled</column>
+        <column>d</column>
+        <column>transform</column>
+        <row>
+            <value>1</value>
+            <value>BR</value>
+            <value>Brazil</value>
+            <value>1</value>
+            <value>1</value>
+            <value>d</value>
+            <value>transform</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>US</value>
+            <value>United States</value>
+            <value>1</value>
+            <value>0</value>
+            <value>d</value>
+            <value>transform</value>
+        </row>
+    </table>
     <table name="categories">
         <column>id</column>
         <column>category</column>
@@ -17,7 +44,6 @@
             <value>1</value>
             <value>2016-04-26 12:14:20</value>
         </row>
-
     </table>
     <table name="links">
         <column>id</column>
