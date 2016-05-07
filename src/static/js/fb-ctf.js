@@ -52,7 +52,7 @@ function activateTeams() {
       console.error("Invalid team name in markup");
       return;
     }
-    Modal.loadPopupController('index.php?p=team&modal=team', 'team', function() {
+    Modal.loadPopup('p=team&modal=team', 'team', function() {
       var $modal = $('#fb-modal'),
           rank = teamData.rank + "",
           $teamMembers = $('.team-members', $modal);
@@ -862,7 +862,7 @@ function setupInputListeners() {
     function launchCaptureModal(country, capturedBy) {
       var data = FB_CTF.data.COUNTRIES[country];
 
-      Modal.loadPopupController('index.php?p=country&modal=capture', 'country-capture', function() {
+      Modal.loadPopup('p=country&modal=capture', 'country-capture', function() {
         var $container = $('.fb-modal-content'),
             level_id = data ? data.level_id : 0,
             title = data ? data.title : '',
@@ -1654,7 +1654,7 @@ function setupInputListeners() {
         event.stopPropagation();
         var country = $(this).closest('tr').data('country');
 
-        Modal.loadPopup('country-help', function() {
+        Modal.loadPopup('p=country&modal=help', 'country-help', function() {
           $('#fb-modal .add-new-help-chat').data('country', country);
           $('#fb-modal .country-name').text(country);
         });
@@ -1667,7 +1667,7 @@ function setupInputListeners() {
         event.preventDefault();
         event.stopPropagation();
         var country = $(this).closest('tr').data('country');
-        Modal.loadPopup('country-help-opponent', function() {
+        Modal.loadPopup('p=country&modal=help-opponent', 'country-help-opponent', function() {
           $('#fb-modal .add-new-help-chat').data('country', country);
         });
       });
@@ -1699,8 +1699,8 @@ function setupInputListeners() {
           tutorialSteps = 8,
           currStepIndex = 1;
 
-      var tutorialPath = 'index.php?p=tutorial&modal=';
-      Modal.loadController(tutorialPath + firstTutorial, 'tutorial--' + firstTutorial, function() {
+      var tutorialPath = 'p=tutorial&modal=';
+      Modal.load(tutorialPath + firstTutorial, 'tutorial--' + firstTutorial, function() {
         // we're done loading stuff, so remove the laoding class
         loadOut();
         buildTutorial();
@@ -1712,7 +1712,7 @@ function setupInputListeners() {
           var next = $(this).data('nextTutorial');
 
           if (next) {
-            var loadPath = tutorialPath + next;
+            var loadPath = 'index.php?' + tutorialPath + next;
             currStepIndex++;
             Utils.loadComponent('#fb-modal', loadPath, buildTutorial);
           } else {
@@ -1768,7 +1768,7 @@ function setupInputListeners() {
       // init the jquery object variables
       $gameboard = $('#fb-gameboard');
       $gameboard.find('[data-modal=scoreboard]').on('click', function() {
-        Modal.loadController('index.php?p=scoreboard&modal=scoreboard', 'scoreboard');
+        Modal.load('p=scoreboard&modal=scoreboard', 'scoreboard');
       });
 
       setInterval(Clock.clockRunning, 10);
@@ -1812,8 +1812,8 @@ function setupInputListeners() {
    */
   FB_CTF.command_line = (function() {
     var loadPath = 'data/command-line.php',
-        modalName = 'command-line',
-        modalPath = 'index.php?p=command-line&modal=command-line',
+        modalId = 'command-line',
+        modalParams = 'p=command-line&modal=command-line',
         $cmdPromptList,
         $cmdResultsList;
 
@@ -1863,7 +1863,7 @@ function setupInputListeners() {
 
           Modal.close();
           Modal.closeHoverPopup();
-          Modal.openPersistent(modalName);
+          Modal.openPersistent(modalId);
           if ($('li', $cmdPromptList).length % 2 === 0) {
             $cmdPromptList.addClass('offset');
           }
@@ -2198,7 +2198,7 @@ function setupInputListeners() {
           return;
         }
 
-        Modal.loadPopupController('index.php?p=team&modal=team', 'team', function() {
+        Modal.loadPopup('p=team&modal=team', 'team', function() {
           var $modal = $('#fb-modal'),
               rank = teamData.rank + "",
               $teamMembers = $('.team-members', $modal);
@@ -2283,7 +2283,7 @@ function setupInputListeners() {
 
     // init the command line functionality
     function init() {
-      Modal.loadPersistent(modalPath, modalName, function() {
+      Modal.loadPersistent(modalParams, modalId, function() {
         $.get(loadPath, function(data) {
           $cmdPromptList = $('.fb-command-line .command-list ul');
           $cmdResultsList = $('.fb-command-line .command-results ul');
@@ -2419,7 +2419,7 @@ function setupInputListeners() {
     // prompt logout
     $('.js-prompt-logout').on('click', function(event) {
       event.preventDefault();
-      Modal.loadPopupController('index.php?p=action&modal=logout', 'action-logout');
+      Modal.loadPopup('p=action&modal=logout', 'action-logout');
     });
 
     // read more posts
