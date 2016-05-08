@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /Users/mpomarole/projects/fbctf/src/models</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/nv.d3.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="../js/html5shiv.min.js"></script>
+  <script src="../js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="../index.html">/Users/mpomarole/projects/fbctf/src</a></li>
+        <li><a href="index.html">models</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Token.php.html#3">Token</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#3">Team</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#3">Configuration</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#3">Control</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#3">Session</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#3">FailureLog</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#3">HintLog</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#3">ScoreLog</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#3">Progressive</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Model.php.html#3">Model</a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Announcement.php.html#3">Announcement</a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="Category.php.html#3"></a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="Attachment.php.html#3">Attachment</a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="Link.php.html#3">Link</a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="Logo.php.html#3">Logo</a></td><td class="text-right">74%</td></tr>
+       <tr><td><a href="Country.php.html#3">Country</a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="Level.php.html#3">Level</a></td><td class="text-right">82%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Team.php.html#3">Team</a></td><td class="text-right">3660</td></tr>
+       <tr><td><a href="Token.php.html#3">Token</a></td><td class="text-right">420</td></tr>
+       <tr><td><a href="ScoreLog.php.html#3">ScoreLog</a></td><td class="text-right">380</td></tr>
+       <tr><td><a href="Session.php.html#3">Session</a></td><td class="text-right">380</td></tr>
+       <tr><td><a href="Progressive.php.html#3">Progressive</a></td><td class="text-right">306</td></tr>
+       <tr><td><a href="HintLog.php.html#3">HintLog</a></td><td class="text-right">272</td></tr>
+       <tr><td><a href="Configuration.php.html#3">Configuration</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="FailureLog.php.html#3">FailureLog</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="Level.php.html#3">Level</a></td><td class="text-right">96</td></tr>
+       <tr><td><a href="Country.php.html#3">Country</a></td><td class="text-right">34</td></tr>
+       <tr><td><a href="Logo.php.html#3">Logo</a></td><td class="text-right">21</td></tr>
+       <tr><td><a href="Attachment.php.html#3">Attachment</a></td><td class="text-right">19</td></tr>
+       <tr><td><a href="Category.php.html#3"></a></td><td class="text-right">18</td></tr>
+       <tr><td><a href="Link.php.html#3">Link</a></td><td class="text-right">14</td></tr>
+       <tr><td><a href="Announcement.php.html#3">Announcement</a></td><td class="text-right">11</td></tr>
+       <tr><td><a href="Model.php.html#3">Model</a></td><td class="text-right">8</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="ScoreLog.php.html#34"><abbr title="ScoreLog::getType">getType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#35"><abbr title="Team::getVisible">getVisible</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#144"><abbr title="Session::genCleanup">genCleanup</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#162"><abbr title="Session::genAllSessions">genAllSessions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#4"><abbr title="Team::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#19"><abbr title="Team::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#23"><abbr title="Team::getActive">getActive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#27"><abbr title="Team::getAdmin">getAdmin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#31"><abbr title="Team::getProtected">getProtected</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#39"><abbr title="Team::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#124"><abbr title="Session::genDelete">genDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#43"><abbr title="Team::getPasswordHash">getPasswordHash</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#47"><abbr title="Team::getPoints">getPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#51"><abbr title="Team::getLastScore">getLastScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#55"><abbr title="Team::getLogo">getLogo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#59"><abbr title="Team::getCreatedTs">getCreatedTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#63"><abbr title="Team::teamFromRow">teamFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#80"><abbr title="Team::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#97"><abbr title="Team::generateHash">generateHash</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#135"><abbr title="Session::genDeleteByTeam">genDeleteByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#111"><abbr title="Session::genUpdate">genUpdate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#113"><abbr title="Team::genVerifyCredentials">genVerifyCredentials</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#18"><abbr title="Session::getCookie">getCookie</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#66"><abbr title="ScoreLog::genResetScores">genResetScores</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#74"><abbr title="ScoreLog::genPreviousScore">genPreviousScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#104"><abbr title="ScoreLog::genAllScoresByTeam">genAllScoresByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#122"><abbr title="ScoreLog::genAllScoresByType">genAllScoresByType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#140"><abbr title="ScoreLog::genLogValidScore">genLogValidScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#4"><abbr title="Session::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#14"><abbr title="Session::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#22"><abbr title="Session::getData">getData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#97"><abbr title="Session::genSessionExist">genSessionExist</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#26"><abbr title="Session::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#30"><abbr title="Session::getCreatedTs">getCreatedTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#34"><abbr title="Session::getLastAccessTs">getLastAccessTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#38"><abbr title="Session::decodeTeamId">decodeTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#47"><abbr title="Session::genSetTeamId">genSetTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#57"><abbr title="Session::sessionFromRow">sessionFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#69"><abbr title="Session::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Session.php.html#82"><abbr title="Session::gen">gen</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#105"><abbr title="Team::regenerateHash">regenerateHash</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#142"><abbr title="Team::genCheckTeamStatus">genCheckTeamStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#38"><abbr title="ScoreLog::scorelogFromRow">scorelogFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#30"><abbr title="Token::getCreatedTs">getCreatedTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#493"><abbr title="Team::genCompletedLevel">genCompletedLevel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#512"><abbr title="Team::genMyRank">genMyRank</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#4"><abbr title="Token::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#14"><abbr title="Token::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#18"><abbr title="Token::getUsed">getUsed</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#22"><abbr title="Token::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#26"><abbr title="Token::getToken">getToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#34"><abbr title="Token::getUseTs">getUseTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#473"><abbr title="Team::genResetAllPoints">genResetAllPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#38"><abbr title="Token::tokenFromRow">tokenFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#49"><abbr title="Token::generate">generate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#63"><abbr title="Token::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#77"><abbr title="Token::genExport">genExport</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#85"><abbr title="Token::genDelete">genDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#96"><abbr title="Token::genAllTokens">genAllTokens</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#111"><abbr title="Token::genAllAvailableTokens">genAllAvailableTokens</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#127"><abbr title="Token::genCheck">genCheck</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#481"><abbr title="Team::genTeamsCount">genTeamsCount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#462"><abbr title="Team::genLastScore">genLastScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#160"><abbr title="Team::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#280"><abbr title="Team::genSetAdmin">genSetAdmin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#188"><abbr title="Team::genAddTeamData">genAddTeamData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#203"><abbr title="Team::genTeamData">genTeamData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#215"><abbr title="Team::genUpdate">genUpdate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#232"><abbr title="Team::genUpdateTeamPassword">genUpdateTeamPassword</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#245"><abbr title="Team::genDelete">genDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#256"><abbr title="Team::genSetStatus">genSetStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#269"><abbr title="Team::genSetStatusAll">genSetStatusAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#293"><abbr title="Team::genSetVisible">genSetVisible</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#444"><abbr title="Team::genPointsHealth">genPointsHealth</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#306"><abbr title="Team::genTeamExist">genTeamExist</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#325"><abbr title="Team::genAllActiveTeams">genAllActiveTeams</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#342"><abbr title="Team::genAllVisibleTeams">genAllVisibleTeams</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#359"><abbr title="Team::genLeaderboard">genLeaderboard</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#376"><abbr title="Team::genAllTeams">genAllTeams</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#393"><abbr title="Team::genTeam">genTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#410"><abbr title="Team::genTeamByName">genTeamByName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Team.php.html#427"><abbr title="Team::genPointsByType">genPointsByType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#50"><abbr title="ScoreLog::genAllScores">genAllScores</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Token.php.html#146"><abbr title="Token::genUse">genUse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#84"><abbr title="FailureLog::genAllFailuresByTeam">genAllFailuresByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#29"><abbr title="FailureLog::getFlag">getFlag</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#4"><abbr title="Configuration::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#4"><abbr title="FailureLog::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#13"><abbr title="FailureLog::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#17"><abbr title="FailureLog::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#21"><abbr title="FailureLog::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#25"><abbr title="FailureLog::getLevelId">getLevelId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#33"><abbr title="FailureLog::failurelogFromRow">failurelogFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#142"><abbr title="Control::genAllActivity">genAllActivity</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#44"><abbr title="FailureLog::genLogFailedScore">genLogFailedScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#59"><abbr title="FailureLog::genResetFailures">genResetFailures</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="FailureLog.php.html#68"><abbr title="FailureLog::genAllFailures">genAllFailures</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#30"><abbr title="ScoreLog::getLevelId">getLevelId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#4"><abbr title="HintLog::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#13"><abbr title="HintLog::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#151"><abbr title="Control::genResetBases">genResetBases</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#134"><abbr title="Control::backupDb">backupDb</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#7"><abbr title="Configuration::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#91"><abbr title="Configuration::genAllConfiguration">genAllConfiguration</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#15"><abbr title="Configuration::getValue">getValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#19"><abbr title="Configuration::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#24"><abbr title="Configuration::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#39"><abbr title="Configuration::gen">gen</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#61"><abbr title="Configuration::genUpdate">genUpdate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#76"><abbr title="Configuration::genValidField">genValidField</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#106"><abbr title="Configuration::configurationFromRow">configurationFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#118"><abbr title="Control::exportGame">exportGame</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#5"><abbr title="Control::genStartScriptLog">genStartScriptLog</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#19"><abbr title="Control::genStopScriptLog">genStopScriptLog</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#29"><abbr title="Control::genScriptPid">genScriptPid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#40"><abbr title="Control::genClearScriptLog">genClearScriptLog</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#47"><abbr title="Control::genBegin">genBegin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#94"><abbr title="Control::genEnd">genEnd</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Control.php.html#115"><abbr title="Control::importGame">importGame</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#17"><abbr title="HintLog::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#21"><abbr title="HintLog::getLevelId">getLevelId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#25"><abbr title="HintLog::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#87"><abbr title="Progressive::genTake">genTake</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#29"><abbr title="Progressive::getIteration">getIteration</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#33"><abbr title="Progressive::genGameStatus">genGameStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#39"><abbr title="Progressive::genCycle">genCycle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#45"><abbr title="Progressive::progressiveFromRow">progressiveFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#56"><abbr title="Progressive::genProgressiveScoreboard">genProgressiveScoreboard</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#75"><abbr title="Progressive::genCount">genCount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#95"><abbr title="Progressive::genReset">genReset</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#21"><abbr title="Progressive::getTeamName">getTeamName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#103"><abbr title="Progressive::genRun">genRun</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#111"><abbr title="Progressive::genStop">genStop</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#4"><abbr title="ScoreLog::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#14"><abbr title="ScoreLog::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#18"><abbr title="ScoreLog::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#22"><abbr title="ScoreLog::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScoreLog.php.html#26"><abbr title="ScoreLog::getPoints">getPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#25"><abbr title="Progressive::getPoints">getPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#17"><abbr title="Progressive::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#29"><abbr title="HintLog::getPenalty">getPenalty</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#13"><abbr title="Progressive::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#33"><abbr title="HintLog::hintlogFromRow">hintlogFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#44"><abbr title="HintLog::genLogGetHint">genLogGetHint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#58"><abbr title="HintLog::genResetHints">genResetHints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#67"><abbr title="HintLog::genPreviousHint">genPreviousHint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#97"><abbr title="HintLog::genAllHints">genAllHints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HintLog.php.html#113"><abbr title="HintLog::genAllHintsByTeam">genAllHintsByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Category.php.html#24"><abbr title="::getCreatedTs">getCreatedTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Progressive.php.html#4"><abbr title="Progressive::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Configuration.php.html#11"><abbr title="Configuration::getField">getField</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Level.php.html#104"><abbr title="Level::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">28%</td></tr>
+       <tr><td><a href="Model.php.html#7"><abbr title="Model::genDb">genDb</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Logo.php.html#112"><abbr title="Logo::logoFromRow">logoFromRow</abbr></a></td><td class="text-right">37%</td></tr>
+       <tr><td><a href="Link.php.html#105"><abbr title="Link::linkFromRow">linkFromRow</abbr></a></td><td class="text-right">40%</td></tr>
+       <tr><td><a href="Attachment.php.html#149"><abbr title="Attachment::attachmentFromRow">attachmentFromRow</abbr></a></td><td class="text-right">40%</td></tr>
+       <tr><td><a href="Level.php.html#83"><abbr title="Level::levelFromRow">levelFromRow</abbr></a></td><td class="text-right">41%</td></tr>
+       <tr><td><a href="Category.php.html#28"><abbr title="::categoryFromRow">categoryFromRow</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Category.php.html#38"><abbr title="::genAllCategories">genAllCategories</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Announcement.php.html#48"><abbr title="Announcement::genAllAnnouncements">genAllAnnouncements</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Country.php.html#44"><abbr title="Country::genUsedAdjust">genUsedAdjust</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Logo.php.html#79"><abbr title="Logo::genAllLogos">genAllLogos</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Country.php.html#198"><abbr title="Country::countryFromRow">countryFromRow</abbr></a></td><td class="text-right">55%</td></tr>
+       <tr><td><a href="Attachment.php.html#106"><abbr title="Attachment::genAllAttachments">genAllAttachments</abbr></a></td><td class="text-right">55%</td></tr>
+       <tr><td><a href="Country.php.html#82"><abbr title="Country::genAllCountries">genAllCountries</abbr></a></td><td class="text-right">60%</td></tr>
+       <tr><td><a href="Announcement.php.html#23"><abbr title="Announcement::announcementFromRow">announcementFromRow</abbr></a></td><td class="text-right">60%</td></tr>
+       <tr><td><a href="Link.php.html#59"><abbr title="Link::genAllLinks">genAllLinks</abbr></a></td><td class="text-right">66%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Team.php.html#113"><abbr title="Team::genVerifyCredentials">genVerifyCredentials</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="ScoreLog.php.html#74"><abbr title="ScoreLog::genPreviousScore">genPreviousScore</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Team.php.html#512"><abbr title="Team::genMyRank">genMyRank</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="HintLog.php.html#67"><abbr title="HintLog::genPreviousHint">genPreviousHint</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Level.php.html#104"><abbr title="Level::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#142"><abbr title="Team::genCheckTeamStatus">genCheckTeamStatus</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#256"><abbr title="Team::genSetStatus">genSetStatus</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#269"><abbr title="Team::genSetStatusAll">genSetStatusAll</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#280"><abbr title="Team::genSetAdmin">genSetAdmin</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#293"><abbr title="Team::genSetVisible">genSetVisible</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#306"><abbr title="Team::genTeamExist">genTeamExist</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ScoreLog.php.html#122"><abbr title="ScoreLog::genAllScoresByType">genAllScoresByType</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#325"><abbr title="Team::genAllActiveTeams">genAllActiveTeams</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#80"><abbr title="Team::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#359"><abbr title="Team::genLeaderboard">genLeaderboard</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#376"><abbr title="Team::genAllTeams">genAllTeams</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#493"><abbr title="Team::genCompletedLevel">genCompletedLevel</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Token.php.html#63"><abbr title="Token::genCreate">genCreate</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Token.php.html#96"><abbr title="Token::genAllTokens">genAllTokens</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Token.php.html#111"><abbr title="Token::genAllAvailableTokens">genAllAvailableTokens</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Team.php.html#342"><abbr title="Team::genAllVisibleTeams">genAllVisibleTeams</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Token.php.html#127"><abbr title="Token::genCheck">genCheck</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Session.php.html#162"><abbr title="Session::genAllSessions">genAllSessions</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="HintLog.php.html#97"><abbr title="HintLog::genAllHints">genAllHints</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Configuration.php.html#39"><abbr title="Configuration::gen">gen</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Configuration.php.html#91"><abbr title="Configuration::genAllConfiguration">genAllConfiguration</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="FailureLog.php.html#68"><abbr title="FailureLog::genAllFailures">genAllFailures</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="FailureLog.php.html#84"><abbr title="FailureLog::genAllFailuresByTeam">genAllFailuresByTeam</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="HintLog.php.html#113"><abbr title="HintLog::genAllHintsByTeam">genAllHintsByTeam</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Progressive.php.html#56"><abbr title="Progressive::genProgressiveScoreboard">genProgressiveScoreboard</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Progressive.php.html#111"><abbr title="Progressive::genStop">genStop</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ScoreLog.php.html#50"><abbr title="ScoreLog::genAllScores">genAllScores</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ScoreLog.php.html#104"><abbr title="ScoreLog::genAllScoresByTeam">genAllScoresByTeam</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Country.php.html#82"><abbr title="Country::genAllCountries">genAllCountries</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Model.php.html#7"><abbr title="Model::genDb">genDb</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Logo.php.html#79"><abbr title="Logo::genAllLogos">genAllLogos</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Category.php.html#38"><abbr title="::genAllCategories">genAllCategories</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Announcement.php.html#48"><abbr title="Announcement::genAllAnnouncements">genAllAnnouncements</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Attachment.php.html#106"><abbr title="Attachment::genAllAttachments">genAllAttachments</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Link.php.html#59"><abbr title="Link::genAllLinks">genAllLinks</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 3.3.1</a> using <a href="http://hhvm.com/" target="_top">HHVM 3.13.1</a> and <a href="https://phpunit.de/">PHPUnit 5.3.2</a> at Sun May 8 10:26:34 UTC 2016.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../js/jquery.min.js" type="text/javascript"></script>
+  <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../js/holder.min.js" type="text/javascript"></script>
+  <script src="../js/d3.min.js" type="text/javascript"></script>
+  <script src="../js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([9,0,0,0,1,0,0,1,5,1,0,0], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([151,0,0,1,2,3,7,3,0,0,0,109], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[68.421052631579,9,"<a href=\"Announcement.php.html#3\">Announcement<\/a>"],[73.076923076923,15,"<a href=\"Attachment.php.html#3\">Attachment<\/a>"],[71.428571428571,14,"<a href=\"Category.php.html#3\"><\/a>"],[0,13,"<a href=\"Configuration.php.html#3\">Configuration<\/a>"],[0,11,"<a href=\"Control.php.html#3\">Control<\/a>"],[78,27,"<a href=\"Country.php.html#3\">Country<\/a>"],[0,13,"<a href=\"FailureLog.php.html#3\">FailureLog<\/a>"],[0,16,"<a href=\"HintLog.php.html#3\">HintLog<\/a>"],[82.758620689655,71,"<a href=\"Level.php.html#3\">Level<\/a>"],[73.913043478261,12,"<a href=\"Link.php.html#3\">Link<\/a>"],[74.285714285714,17,"<a href=\"Logo.php.html#3\">Logo<\/a>"],[33.333333333333,4,"<a href=\"Model.php.html#3\">Model<\/a>"],[0,17,"<a href=\"Progressive.php.html#3\">Progressive<\/a>"],[0,19,"<a href=\"ScoreLog.php.html#3\">ScoreLog<\/a>"],[0,19,"<a href=\"Session.php.html#3\">Session<\/a>"],[0,60,"<a href=\"Team.php.html#3\">Team<\/a>"],[0,20,"<a href=\"Token.php.html#3\">Token<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"Announcement.php.html#4\">Announcement::__construct<\/a>"],[100,1,"<a href=\"Announcement.php.html#11\">Announcement::getId<\/a>"],[100,1,"<a href=\"Announcement.php.html#15\">Announcement::getAnnouncement<\/a>"],[100,1,"<a href=\"Announcement.php.html#19\">Announcement::getTs<\/a>"],[60,1,"<a href=\"Announcement.php.html#23\">Announcement::announcementFromRow<\/a>"],[100,1,"<a href=\"Announcement.php.html#31\">Announcement::genCreate<\/a>"],[100,1,"<a href=\"Announcement.php.html#39\">Announcement::genDelete<\/a>"],[50,2,"<a href=\"Announcement.php.html#48\">Announcement::genAllAnnouncements<\/a>"],[100,1,"<a href=\"Attachment.php.html#7\">Attachment::__construct<\/a>"],[100,1,"<a href=\"Attachment.php.html#10\">Attachment::getId<\/a>"],[100,1,"<a href=\"Attachment.php.html#14\">Attachment::getFilename<\/a>"],[100,1,"<a href=\"Attachment.php.html#18\">Attachment::getLevelId<\/a>"],[100,4,"<a href=\"Attachment.php.html#23\">Attachment::genCreate<\/a>"],[100,1,"<a href=\"Attachment.php.html#70\">Attachment::genUpdate<\/a>"],[100,1,"<a href=\"Attachment.php.html#81\">Attachment::genDelete<\/a>"],[55.555555555556,2,"<a href=\"Attachment.php.html#106\">Attachment::genAllAttachments<\/a>"],[100,1,"<a href=\"Attachment.php.html#124\">Attachment::gen<\/a>"],[100,1,"<a href=\"Attachment.php.html#138\">Attachment::genHasAttachments<\/a>"],[40,1,"<a href=\"Attachment.php.html#149\">Attachment::attachmentFromRow<\/a>"],[100,1,"<a href=\"Category.php.html#4\">::__construct<\/a>"],[100,1,"<a href=\"Category.php.html#12\">::getId<\/a>"],[100,1,"<a href=\"Category.php.html#16\">::getCategory<\/a>"],[100,1,"<a href=\"Category.php.html#20\">::getProtected<\/a>"],[0,1,"<a href=\"Category.php.html#24\">::getCreatedTs<\/a>"],[50,1,"<a href=\"Category.php.html#28\">::categoryFromRow<\/a>"],[50,2,"<a href=\"Category.php.html#38\">::genAllCategories<\/a>"],[100,2,"<a href=\"Category.php.html#54\">::genIsUsed<\/a>"],[100,1,"<a href=\"Category.php.html#73\">::genDelete<\/a>"],[100,1,"<a href=\"Category.php.html#85\">::genCreate<\/a>"],[100,1,"<a href=\"Category.php.html#109\">::genUpdate<\/a>"],[100,1,"<a href=\"Category.php.html#122\">::genSingleCategory<\/a>"],[0,1,"<a href=\"Configuration.php.html#4\">Configuration::__construct<\/a>"],[0,1,"<a href=\"Configuration.php.html#7\">Configuration::getId<\/a>"],[0,1,"<a href=\"Configuration.php.html#11\">Configuration::getField<\/a>"],[0,1,"<a href=\"Configuration.php.html#15\">Configuration::getValue<\/a>"],[0,1,"<a href=\"Configuration.php.html#19\">Configuration::getDescription<\/a>"],[0,1,"<a href=\"Configuration.php.html#24\">Configuration::genCreate<\/a>"],[0,2,"<a href=\"Configuration.php.html#39\">Configuration::gen<\/a>"],[0,1,"<a href=\"Configuration.php.html#61\">Configuration::genUpdate<\/a>"],[0,1,"<a href=\"Configuration.php.html#76\">Configuration::genValidField<\/a>"],[0,2,"<a href=\"Configuration.php.html#91\">Configuration::genAllConfiguration<\/a>"],[0,1,"<a href=\"Configuration.php.html#106\">Configuration::configurationFromRow<\/a>"],[0,1,"<a href=\"Control.php.html#5\">Control::genStartScriptLog<\/a>"],[0,1,"<a href=\"Control.php.html#19\">Control::genStopScriptLog<\/a>"],[0,1,"<a href=\"Control.php.html#29\">Control::genScriptPid<\/a>"],[0,1,"<a href=\"Control.php.html#40\">Control::genClearScriptLog<\/a>"],[0,1,"<a href=\"Control.php.html#47\">Control::genBegin<\/a>"],[0,1,"<a href=\"Control.php.html#94\">Control::genEnd<\/a>"],[0,1,"<a href=\"Control.php.html#115\">Control::importGame<\/a>"],[0,1,"<a href=\"Control.php.html#118\">Control::exportGame<\/a>"],[0,1,"<a href=\"Control.php.html#134\">Control::backupDb<\/a>"],[0,1,"<a href=\"Control.php.html#142\">Control::genAllActivity<\/a>"],[0,1,"<a href=\"Control.php.html#151\">Control::genResetBases<\/a>"],[100,1,"<a href=\"Country.php.html#4\">Country::__construct<\/a>"],[100,1,"<a href=\"Country.php.html#15\">Country::getId<\/a>"],[100,1,"<a href=\"Country.php.html#19\">Country::getIsoCode<\/a>"],[100,1,"<a href=\"Country.php.html#23\">Country::getName<\/a>"],[100,1,"<a href=\"Country.php.html#27\">Country::getUsed<\/a>"],[100,1,"<a href=\"Country.php.html#31\">Country::getEnabled<\/a>"],[100,1,"<a href=\"Country.php.html#35\">Country::getD<\/a>"],[100,1,"<a href=\"Country.php.html#39\">Country::getTransform<\/a>"],[50,1,"<a href=\"Country.php.html#44\">Country::genUsedAdjust<\/a>"],[100,2,"<a href=\"Country.php.html#56\">Country::genSetStatus<\/a>"],[100,2,"<a href=\"Country.php.html#69\">Country::genSetUsed<\/a>"],[60,3,"<a href=\"Country.php.html#82\">Country::genAllCountries<\/a>"],[100,3,"<a href=\"Country.php.html#103\">Country::genAllEnabledCountries<\/a>"],[100,2,"<a href=\"Country.php.html#122\">Country::genAllMapCountries<\/a>"],[100,2,"<a href=\"Country.php.html#139\">Country::genAllAvailableCountries<\/a>"],[100,1,"<a href=\"Country.php.html#156\">Country::genIsActiveLevel<\/a>"],[100,1,"<a href=\"Country.php.html#171\">Country::gen<\/a>"],[100,1,"<a href=\"Country.php.html#186\">Country::genRandomAvailableCountryId<\/a>"],[55.555555555556,1,"<a href=\"Country.php.html#198\">Country::countryFromRow<\/a>"],[0,1,"<a href=\"FailureLog.php.html#4\">FailureLog::__construct<\/a>"],[0,1,"<a href=\"FailureLog.php.html#13\">FailureLog::getId<\/a>"],[0,1,"<a href=\"FailureLog.php.html#17\">FailureLog::getTs<\/a>"],[0,1,"<a href=\"FailureLog.php.html#21\">FailureLog::getTeamId<\/a>"],[0,1,"<a href=\"FailureLog.php.html#25\">FailureLog::getLevelId<\/a>"],[0,1,"<a href=\"FailureLog.php.html#29\">FailureLog::getFlag<\/a>"],[0,1,"<a href=\"FailureLog.php.html#33\">FailureLog::failurelogFromRow<\/a>"],[0,1,"<a href=\"FailureLog.php.html#44\">FailureLog::genLogFailedScore<\/a>"],[0,1,"<a href=\"FailureLog.php.html#59\">FailureLog::genResetFailures<\/a>"],[0,2,"<a href=\"FailureLog.php.html#68\">FailureLog::genAllFailures<\/a>"],[0,2,"<a href=\"FailureLog.php.html#84\">FailureLog::genAllFailuresByTeam<\/a>"],[0,1,"<a href=\"HintLog.php.html#4\">HintLog::__construct<\/a>"],[0,1,"<a href=\"HintLog.php.html#13\">HintLog::getId<\/a>"],[0,1,"<a href=\"HintLog.php.html#17\">HintLog::getTs<\/a>"],[0,1,"<a href=\"HintLog.php.html#21\">HintLog::getLevelId<\/a>"],[0,1,"<a href=\"HintLog.php.html#25\">HintLog::getTeamId<\/a>"],[0,1,"<a href=\"HintLog.php.html#29\">HintLog::getPenalty<\/a>"],[0,1,"<a href=\"HintLog.php.html#33\">HintLog::hintlogFromRow<\/a>"],[0,1,"<a href=\"HintLog.php.html#44\">HintLog::genLogGetHint<\/a>"],[0,1,"<a href=\"HintLog.php.html#58\">HintLog::genResetHints<\/a>"],[0,3,"<a href=\"HintLog.php.html#67\">HintLog::genPreviousHint<\/a>"],[0,2,"<a href=\"HintLog.php.html#97\">HintLog::genAllHints<\/a>"],[0,2,"<a href=\"HintLog.php.html#113\">HintLog::genAllHintsByTeam<\/a>"],[100,1,"<a href=\"Level.php.html#4\">Level::__construct<\/a>"],[100,1,"<a href=\"Level.php.html#23\">Level::getId<\/a>"],[100,1,"<a href=\"Level.php.html#27\">Level::getActive<\/a>"],[100,1,"<a href=\"Level.php.html#31\">Level::getType<\/a>"],[100,1,"<a href=\"Level.php.html#35\">Level::getTitle<\/a>"],[100,1,"<a href=\"Level.php.html#39\">Level::getDescription<\/a>"],[100,1,"<a href=\"Level.php.html#43\">Level::getEntityId<\/a>"],[100,1,"<a href=\"Level.php.html#47\">Level::getCategoryId<\/a>"],[100,1,"<a href=\"Level.php.html#51\">Level::getPoints<\/a>"],[100,1,"<a href=\"Level.php.html#55\">Level::getBonus<\/a>"],[100,1,"<a href=\"Level.php.html#59\">Level::getBonusDec<\/a>"],[100,1,"<a href=\"Level.php.html#63\">Level::getBonusFix<\/a>"],[100,1,"<a href=\"Level.php.html#67\">Level::getFlag<\/a>"],[100,1,"<a href=\"Level.php.html#71\">Level::getHint<\/a>"],[100,1,"<a href=\"Level.php.html#75\">Level::getPenalty<\/a>"],[100,1,"<a href=\"Level.php.html#79\">Level::getCreatedTs<\/a>"],[41.176470588235,1,"<a href=\"Level.php.html#83\">Level::levelFromRow<\/a>"],[28.571428571429,3,"<a href=\"Level.php.html#104\">Level::genWhoUses<\/a>"],[100,2,"<a href=\"Level.php.html#123\">Level::genCheckStatus<\/a>"],[100,2,"<a href=\"Level.php.html#142\">Level::genCheckBase<\/a>"],[100,2,"<a href=\"Level.php.html#162\">Level::genCreate<\/a>"],[100,1,"<a href=\"Level.php.html#220\">Level::genCreateFlag<\/a>"],[100,1,"<a href=\"Level.php.html#249\">Level::genUpdateFlag<\/a>"],[100,1,"<a href=\"Level.php.html#279\">Level::genCreateQuiz<\/a>"],[100,1,"<a href=\"Level.php.html#315\">Level::genUpdateQuiz<\/a>"],[100,1,"<a href=\"Level.php.html#352\">Level::genCreateBase<\/a>"],[100,1,"<a href=\"Level.php.html#379\">Level::genUpdateBase<\/a>"],[100,2,"<a href=\"Level.php.html#407\">Level::genUpdate<\/a>"],[100,1,"<a href=\"Level.php.html#452\">Level::genDelete<\/a>"],[100,1,"<a href=\"Level.php.html#468\">Level::genSetStatus<\/a>"],[100,1,"<a href=\"Level.php.html#482\">Level::genSetStatusType<\/a>"],[100,2,"<a href=\"Level.php.html#496\">Level::genSetStatusAll<\/a>"],[100,2,"<a href=\"Level.php.html#517\">Level::genAllLevels<\/a>"],[100,2,"<a href=\"Level.php.html#534\">Level::genAllActiveLevels<\/a>"],[100,2,"<a href=\"Level.php.html#551\">Level::genAllActiveBases<\/a>"],[100,2,"<a href=\"Level.php.html#569\">Level::genAllTypeLevels<\/a>"],[100,1,"<a href=\"Level.php.html#588\">Level::genAllQuizLevels<\/a>"],[100,1,"<a href=\"Level.php.html#593\">Level::genAllBaseLevels<\/a>"],[100,1,"<a href=\"Level.php.html#598\">Level::genAllFlagLevels<\/a>"],[100,1,"<a href=\"Level.php.html#603\">Level::gen<\/a>"],[100,1,"<a href=\"Level.php.html#620\">Level::genCheckAnswer<\/a>"],[100,1,"<a href=\"Level.php.html#630\">Level::genAdjustBonus<\/a>"],[100,1,"<a href=\"Level.php.html#642\">Level::genLogBaseEntry<\/a>"],[100,2,"<a href=\"Level.php.html#658\">Level::genScoreLevel<\/a>"],[100,2,"<a href=\"Level.php.html#692\">Level::genScoreBase<\/a>"],[100,5,"<a href=\"Level.php.html#722\">Level::genLevelHint<\/a>"],[100,1,"<a href=\"Level.php.html#760\">Level::genBaseIP<\/a>"],[100,4,"<a href=\"Level.php.html#771\">Level::getBasesResponses<\/a>"],[100,1,"<a href=\"Level.php.html#815\">Level::genBaseScoring<\/a>"],[100,2,"<a href=\"Level.php.html#824\">Level::genStopBaseScoring<\/a>"],[100,1,"<a href=\"Link.php.html#4\">Link::__construct<\/a>"],[100,1,"<a href=\"Link.php.html#7\">Link::getId<\/a>"],[100,1,"<a href=\"Link.php.html#11\">Link::getLevelId<\/a>"],[100,1,"<a href=\"Link.php.html#15\">Link::getLink<\/a>"],[100,1,"<a href=\"Link.php.html#20\">Link::genCreate<\/a>"],[100,1,"<a href=\"Link.php.html#33\">Link::genUpdate<\/a>"],[100,1,"<a href=\"Link.php.html#48\">Link::genDelete<\/a>"],[66.666666666667,2,"<a href=\"Link.php.html#59\">Link::genAllLinks<\/a>"],[100,1,"<a href=\"Link.php.html#77\">Link::gen<\/a>"],[100,1,"<a href=\"Link.php.html#92\">Link::genHasLinks<\/a>"],[40,1,"<a href=\"Link.php.html#105\">Link::linkFromRow<\/a>"],[100,1,"<a href=\"Logo.php.html#4\">Logo::__construct<\/a>"],[100,1,"<a href=\"Logo.php.html#14\">Logo::getId<\/a>"],[100,1,"<a href=\"Logo.php.html#18\">Logo::getName<\/a>"],[100,1,"<a href=\"Logo.php.html#22\">Logo::getLogo<\/a>"],[100,1,"<a href=\"Logo.php.html#26\">Logo::getUsed<\/a>"],[100,1,"<a href=\"Logo.php.html#30\">Logo::getEnabled<\/a>"],[100,1,"<a href=\"Logo.php.html#34\">Logo::getProtected<\/a>"],[100,3,"<a href=\"Logo.php.html#39\">Logo::genCheckExists<\/a>"],[100,1,"<a href=\"Logo.php.html#52\">Logo::genSetEnabled<\/a>"],[100,1,"<a href=\"Logo.php.html#65\">Logo::genRandomLogo<\/a>"],[50,2,"<a href=\"Logo.php.html#79\">Logo::genAllLogos<\/a>"],[100,2,"<a href=\"Logo.php.html#96\">Logo::genAllEnabledLogos<\/a>"],[37.5,1,"<a href=\"Logo.php.html#112\">Logo::logoFromRow<\/a>"],[33.333333333333,2,"<a href=\"Model.php.html#7\">Model::genDb<\/a>"],[100,2,"<a href=\"Model.php.html#14\">Model::getMc<\/a>"],[0,1,"<a href=\"Progressive.php.html#4\">Progressive::__construct<\/a>"],[0,1,"<a href=\"Progressive.php.html#13\">Progressive::getId<\/a>"],[0,1,"<a href=\"Progressive.php.html#17\">Progressive::getTs<\/a>"],[0,1,"<a href=\"Progressive.php.html#21\">Progressive::getTeamName<\/a>"],[0,1,"<a href=\"Progressive.php.html#25\">Progressive::getPoints<\/a>"],[0,1,"<a href=\"Progressive.php.html#29\">Progressive::getIteration<\/a>"],[0,1,"<a href=\"Progressive.php.html#33\">Progressive::genGameStatus<\/a>"],[0,1,"<a href=\"Progressive.php.html#39\">Progressive::genCycle<\/a>"],[0,1,"<a href=\"Progressive.php.html#45\">Progressive::progressiveFromRow<\/a>"],[0,2,"<a href=\"Progressive.php.html#56\">Progressive::genProgressiveScoreboard<\/a>"],[0,1,"<a href=\"Progressive.php.html#75\">Progressive::genCount<\/a>"],[0,1,"<a href=\"Progressive.php.html#87\">Progressive::genTake<\/a>"],[0,1,"<a href=\"Progressive.php.html#95\">Progressive::genReset<\/a>"],[0,1,"<a href=\"Progressive.php.html#103\">Progressive::genRun<\/a>"],[0,2,"<a href=\"Progressive.php.html#111\">Progressive::genStop<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#4\">ScoreLog::__construct<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#14\">ScoreLog::getId<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#18\">ScoreLog::getTs<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#22\">ScoreLog::getTeamId<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#26\">ScoreLog::getPoints<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#30\">ScoreLog::getLevelId<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#34\">ScoreLog::getType<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#38\">ScoreLog::scorelogFromRow<\/a>"],[0,2,"<a href=\"ScoreLog.php.html#50\">ScoreLog::genAllScores<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#66\">ScoreLog::genResetScores<\/a>"],[0,3,"<a href=\"ScoreLog.php.html#74\">ScoreLog::genPreviousScore<\/a>"],[0,2,"<a href=\"ScoreLog.php.html#104\">ScoreLog::genAllScoresByTeam<\/a>"],[0,2,"<a href=\"ScoreLog.php.html#122\">ScoreLog::genAllScoresByType<\/a>"],[0,1,"<a href=\"ScoreLog.php.html#140\">ScoreLog::genLogValidScore<\/a>"],[0,1,"<a href=\"Session.php.html#4\">Session::__construct<\/a>"],[0,1,"<a href=\"Session.php.html#14\">Session::getId<\/a>"],[0,1,"<a href=\"Session.php.html#18\">Session::getCookie<\/a>"],[0,1,"<a href=\"Session.php.html#22\">Session::getData<\/a>"],[0,1,"<a href=\"Session.php.html#26\">Session::getTeamId<\/a>"],[0,1,"<a href=\"Session.php.html#30\">Session::getCreatedTs<\/a>"],[0,1,"<a href=\"Session.php.html#34\">Session::getLastAccessTs<\/a>"],[0,1,"<a href=\"Session.php.html#38\">Session::decodeTeamId<\/a>"],[0,1,"<a href=\"Session.php.html#47\">Session::genSetTeamId<\/a>"],[0,1,"<a href=\"Session.php.html#57\">Session::sessionFromRow<\/a>"],[0,1,"<a href=\"Session.php.html#69\">Session::genCreate<\/a>"],[0,1,"<a href=\"Session.php.html#82\">Session::gen<\/a>"],[0,1,"<a href=\"Session.php.html#97\">Session::genSessionExist<\/a>"],[0,1,"<a href=\"Session.php.html#111\">Session::genUpdate<\/a>"],[0,1,"<a href=\"Session.php.html#124\">Session::genDelete<\/a>"],[0,1,"<a href=\"Session.php.html#135\">Session::genDeleteByTeam<\/a>"],[0,1,"<a href=\"Session.php.html#144\">Session::genCleanup<\/a>"],[0,2,"<a href=\"Session.php.html#162\">Session::genAllSessions<\/a>"],[0,1,"<a href=\"Team.php.html#4\">Team::__construct<\/a>"],[0,1,"<a href=\"Team.php.html#19\">Team::getId<\/a>"],[0,1,"<a href=\"Team.php.html#23\">Team::getActive<\/a>"],[0,1,"<a href=\"Team.php.html#27\">Team::getAdmin<\/a>"],[0,1,"<a href=\"Team.php.html#31\">Team::getProtected<\/a>"],[0,1,"<a href=\"Team.php.html#35\">Team::getVisible<\/a>"],[0,1,"<a href=\"Team.php.html#39\">Team::getName<\/a>"],[0,1,"<a href=\"Team.php.html#43\">Team::getPasswordHash<\/a>"],[0,1,"<a href=\"Team.php.html#47\">Team::getPoints<\/a>"],[0,1,"<a href=\"Team.php.html#51\">Team::getLastScore<\/a>"],[0,1,"<a href=\"Team.php.html#55\">Team::getLogo<\/a>"],[0,1,"<a href=\"Team.php.html#59\">Team::getCreatedTs<\/a>"],[0,1,"<a href=\"Team.php.html#63\">Team::teamFromRow<\/a>"],[0,2,"<a href=\"Team.php.html#80\">Team::genWhoUses<\/a>"],[0,1,"<a href=\"Team.php.html#97\">Team::generateHash<\/a>"],[0,1,"<a href=\"Team.php.html#105\">Team::regenerateHash<\/a>"],[0,5,"<a href=\"Team.php.html#113\">Team::genVerifyCredentials<\/a>"],[0,2,"<a href=\"Team.php.html#142\">Team::genCheckTeamStatus<\/a>"],[0,1,"<a href=\"Team.php.html#160\">Team::genCreate<\/a>"],[0,1,"<a href=\"Team.php.html#188\">Team::genAddTeamData<\/a>"],[0,1,"<a href=\"Team.php.html#203\">Team::genTeamData<\/a>"],[0,1,"<a href=\"Team.php.html#215\">Team::genUpdate<\/a>"],[0,1,"<a href=\"Team.php.html#232\">Team::genUpdateTeamPassword<\/a>"],[0,1,"<a href=\"Team.php.html#245\">Team::genDelete<\/a>"],[0,2,"<a href=\"Team.php.html#256\">Team::genSetStatus<\/a>"],[0,2,"<a href=\"Team.php.html#269\">Team::genSetStatusAll<\/a>"],[0,2,"<a href=\"Team.php.html#280\">Team::genSetAdmin<\/a>"],[0,2,"<a href=\"Team.php.html#293\">Team::genSetVisible<\/a>"],[0,2,"<a href=\"Team.php.html#306\">Team::genTeamExist<\/a>"],[0,2,"<a href=\"Team.php.html#325\">Team::genAllActiveTeams<\/a>"],[0,2,"<a href=\"Team.php.html#342\">Team::genAllVisibleTeams<\/a>"],[0,2,"<a href=\"Team.php.html#359\">Team::genLeaderboard<\/a>"],[0,2,"<a href=\"Team.php.html#376\">Team::genAllTeams<\/a>"],[0,1,"<a href=\"Team.php.html#393\">Team::genTeam<\/a>"],[0,1,"<a href=\"Team.php.html#410\">Team::genTeamByName<\/a>"],[0,1,"<a href=\"Team.php.html#427\">Team::genPointsByType<\/a>"],[0,1,"<a href=\"Team.php.html#444\">Team::genPointsHealth<\/a>"],[0,1,"<a href=\"Team.php.html#462\">Team::genLastScore<\/a>"],[0,1,"<a href=\"Team.php.html#473\">Team::genResetAllPoints<\/a>"],[0,1,"<a href=\"Team.php.html#481\">Team::genTeamsCount<\/a>"],[0,2,"<a href=\"Team.php.html#493\">Team::genCompletedLevel<\/a>"],[0,3,"<a href=\"Team.php.html#512\">Team::genMyRank<\/a>"],[0,1,"<a href=\"Token.php.html#4\">Token::__construct<\/a>"],[0,1,"<a href=\"Token.php.html#14\">Token::getId<\/a>"],[0,1,"<a href=\"Token.php.html#18\">Token::getUsed<\/a>"],[0,1,"<a href=\"Token.php.html#22\">Token::getTeamId<\/a>"],[0,1,"<a href=\"Token.php.html#26\">Token::getToken<\/a>"],[0,1,"<a href=\"Token.php.html#30\">Token::getCreatedTs<\/a>"],[0,1,"<a href=\"Token.php.html#34\">Token::getUseTs<\/a>"],[0,1,"<a href=\"Token.php.html#38\">Token::tokenFromRow<\/a>"],[0,1,"<a href=\"Token.php.html#49\">Token::generate<\/a>"],[0,2,"<a href=\"Token.php.html#63\">Token::genCreate<\/a>"],[0,1,"<a href=\"Token.php.html#77\">Token::genExport<\/a>"],[0,1,"<a href=\"Token.php.html#85\">Token::genDelete<\/a>"],[0,2,"<a href=\"Token.php.html#96\">Token::genAllTokens<\/a>"],[0,2,"<a href=\"Token.php.html#111\">Token::genAllAvailableTokens<\/a>"],[0,2,"<a href=\"Token.php.html#127\">Token::genCheck<\/a>"],[0,1,"<a href=\"Token.php.html#146\">Token::genUse<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

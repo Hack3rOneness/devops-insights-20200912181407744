@@ -1,141 +1,140 @@
 <?xml version="1.0" ?>
 <dataset>
-    <table name="levels">
-        <column>id</column>
-        <column>active</column>
-        <column>type</column>
-        <column>title</column>
-        <column>description</column>
-        <column>entity_id</column>
-        <column>category_id</column>
-        <column>points</column>
-        <column>bonus</column>
-        <column>bonus_dec</column>
-        <column>bonus_fix</column>
-        <column>flag</column>
-        <column>hint</column>
-        <column>penalty</column>
-        <column>created_ts</column>
-        <row>
-          <value>1</value>
-          <value>1</value>
-          <value>base</value>
-          <value>title</value>
-          <value>description</value>
-          <value>1</value>
-          <value>1</value>
-          <value>10</value>
-          <value>1</value>
-          <value>1</value>
-          <value>1</value>
-          <value>flag</value>
-          <value>hint</value>
-          <value>1</value>
-          <value>2015-04-26 12:14:20</value>
-        </row>
-    </table>
-    <table name="countries">
-        <column>id</column>
-        <column>iso_code</column>
-        <column>name</column>
-        <column>used</column>
-        <column>enabled</column>
-        <column>d</column>
-        <column>transform</column>
-        <row>
-            <value>1</value>
-            <value>BR</value>
-            <value>Brazil</value>
-            <value>1</value>
-            <value>1</value>
-            <value>d</value>
-            <value>transform</value>
-        </row>
-        <row>
-            <value>2</value>
-            <value>US</value>
-            <value>United States</value>
-            <value>1</value>
-            <value>0</value>
-            <value>d</value>
-            <value>transform</value>
-        </row>
-    </table>
-    <table name="categories">
-        <column>id</column>
-        <column>category</column>
-        <column>protected</column>
-        <column>created_ts</column>
-        <row>
-            <value>1</value>
-            <value>category 1</value>
-            <value>0</value>
-            <value>2015-04-26 12:14:20</value>
-        </row>
-        <row>
-            <value>2</value>
-            <value>category 2</value>
-            <value>0</value>
-            <value>2016-04-26 12:14:20</value>
-        </row>
-    </table>
-    <table name="links">
-        <column>id</column>
-        <column>link</column>
-        <column>level_id</column>
-        <column>created_ts</column>
-        <row>
-            <value>1</value>
-            <value>link</value>
-            <value>1</value>
-            <value>2016-04-26 12:14:20</value>
-        </row>
-    </table>
-    <table name="logos">
-        <column>id</column>
-        <column>used</column>
-        <column>enabled</column>
-        <column>protected</column>
-        <column>name</column>
-        <column>logo</column>
-        <row>
-            <value>1</value>
-            <value>1</value>
-            <value>1</value>
-            <value>0</value>
-            <value>name</value>
-            <value>logo_path</value>
-        </row>
-    </table>
+  <table name="levels">
+    <column>id</column>
+    <column>active</column>
+    <column>type</column>
+    <column>title</column>
+    <column>description</column>
+    <column>entity_id</column>
+    <column>category_id</column>
+    <column>points</column>
+    <column>bonus</column>
+    <column>bonus_dec</column>
+    <column>bonus_fix</column>
+    <column>flag</column>
+    <column>hint</column>
+    <column>penalty</column>
+    <column>created_ts</column>
+    <row>
+      <value>1</value>
+      <value>1</value>
+      <value>base</value>
+      <value>title</value>
+      <value>description</value>
+      <value>1</value>
+      <value>1</value>
+      <value>10</value>
+      <value>1</value>
+      <value>1</value>
+      <value>1</value>
+      <value>flag</value>
+      <value>hint</value>
+      <value>1</value>
+      <value>2015-04-26 12:14:20</value>
+    </row>
+  </table>
+  <table name="countries">
+    <column>id</column>
+    <column>iso_code</column>
+    <column>name</column>
+    <column>used</column>
+    <column>enabled</column>
+    <column>d</column>
+    <column>transform</column>
+    <row>
+      <value>1</value>
+      <value>BR</value>
+      <value>Brazil</value>
+      <value>1</value>
+      <value>1</value>
+      <value>d</value>
+      <value>transform</value>
+    </row>
+    <row>
+      <value>2</value>
+      <value>US</value>
+      <value>United States</value>
+      <value>1</value>
+      <value>0</value>
+      <value>d</value>
+      <value>transform</value>
+    </row>
+  </table>
+  <table name="categories">
+    <column>id</column>
+    <column>category</column>
+    <column>protected</column>
+    <column>created_ts</column>
+    <row>
+      <value>1</value>
+      <value>category 1</value>
+      <value>0</value>
+      <value>2015-04-26 12:14:20</value>
+    </row>
+    <row>
+      <value>2</value>
+      <value>category 2</value>
+      <value>0</value>
+      <value>2016-04-26 12:14:20</value>
+    </row>
+  </table>
+  <table name="links">
+    <column>id</column>
+    <column>link</column>
+    <column>level_id</column>
+    <column>created_ts</column>
+    <row>
+      <value>1</value>
+      <value>link</value>
+      <value>1</value>
+      <value>2016-04-26 12:14:20</value>
+    </row>
+  </table>
+  <table name="logos">
+    <column>id</column>
+    <column>used</column>
+    <column>enabled</column>
+    <column>protected</column>
+    <column>name</column>
+    <column>logo</column>
+    <row>
+      <value>1</value>
+      <value>1</value>
+      <value>1</value>
+      <value>0</value>
+      <value>name</value>
+      <value>logo_path</value>
+    </row>
+  </table>
 
-    <table name="attachments">
-        <column>id</column>
-        <column>level_id</column>
-        <column>filename</column>
-        <column>type</column>
-        <column>created_ts</column>
-        <row>
-            <value>1</value>
-            <value>1</value>
-            <value>filename</value>
-            <value>jpeg</value>
-            <value>2016-04-26 12:14:20</value>
-        </row>
-    </table>
-    <table name="announcements_log">
-        <column>id</column>
-        <column>ts</column>
-        <column>announcement</column>
-        <row>
-            <value>1</value>
-            <value>2016-04-24 17:15:23</value>
-            <value>Hello buddy!</value>
-        </row>
-        <row>
-            <value>2</value>
-            <value>2016-04-26 12:14:20</value>
-            <value>I like it!</value>
-        </row>
-    </table>
-
+  <table name="attachments">
+    <column>id</column>
+    <column>level_id</column>
+    <column>filename</column>
+    <column>type</column>
+    <column>created_ts</column>
+    <row>
+      <value>1</value>
+      <value>1</value>
+      <value>filename</value>
+      <value>jpeg</value>
+      <value>2016-04-26 12:14:20</value>
+    </row>
+  </table>
+  <table name="announcements_log">
+    <column>id</column>
+    <column>ts</column>
+    <column>announcement</column>
+    <row>
+      <value>1</value>
+      <value>2016-04-24 17:15:23</value>
+      <value>Hello buddy!</value>
+    </row>
+    <row>
+      <value>2</value>
+      <value>2016-04-26 12:14:20</value>
+      <value>I like it!</value>
+    </row>
+  </table>
 </dataset>

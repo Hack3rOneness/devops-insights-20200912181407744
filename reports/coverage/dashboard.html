@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /Users/mpomarole/projects/fbctf/src</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/nv.d3.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/Users/mpomarole/projects/fbctf/src</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="data/country-data.php.html#9">CountryDataController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard-viewmode.php.html#5">LeaderboardModuleViewController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#3">RedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/leaderboard.php.html#9">LeaderboardDataController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/map-data.php.html#9">MapDataController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/scores.php.html#9">ScoresDataController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/teams.php.html#9">TeamDataController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/listview.php.html#9">ListviewController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity-viewmode.php.html#5">ActivityViewModeModuleController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity.php.html#9">ActivityModuleController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/announcements.php.html#9">AnnouncementsModuleController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/filter.php.html#9">FilterModuleController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/game-clock.php.html#8">ClockModuleController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard.php.html#9">LeaderboardModuleController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/configuration.php.html#9">ConfigurationController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/teams.php.html#9">TeamModuleController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#3">Configuration</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#3">Control</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#3">FailureLog</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#3">HintLog</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#3">Progressive</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#3">ScoreLog</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#3">Session</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#3">Team</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#3">Token</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#5">WorldViewMapController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/controller.php.html#3">DataController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world.php.html#9">WorldMapController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/command-line.php.html#9">CommandsController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#7">GameboardController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#41">InternalErrorRedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#35">LoginRedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#29">RegistrationRedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#53">GameRedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Router.php.html#3">Router</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#23">IndexRedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#3">SessionUtils</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#8">AdminController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#17">AdminRedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/announcements.php.html#9">AnnouncementsDataController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/Controller.php.html#3">Controller</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#3">IndexController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#47">NotFoundRedirectException</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#3">ViewModeController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AdminAjaxController.php.html#7">AdminAjaxController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AjaxController.php.html#3">AjaxController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/GameAjaxController.php.html#7">GameAjaxController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#3">IndexAjaxController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ActionModalController.php.html#3">ActionModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ChooseLogoModalController.php.html#3">ChooseLogoModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/CommandLineModalController.php.html#3">CommandLineModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/CountryModalController.php.html#3">CountryModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ScoreboardModalController.php.html#3">ScoreboardModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/TeamModalController.php.html#3">TeamModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/TutorialModalController.php.html#3">TutorialModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Model.php.html#3">Model</a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Db.php.html#3">Db</a></td><td class="text-right">35%</td></tr>
+       <tr><td><a href="models/Announcement.php.html#3">Announcement</a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="models/Attachment.php.html#3">Attachment</a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="models/Link.php.html#3">Link</a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="models/Logo.php.html#3">Logo</a></td><td class="text-right">74%</td></tr>
+       <tr><td><a href="models/Country.php.html#3">Country</a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="models/Level.php.html#3">Level</a></td><td class="text-right">82%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="controllers/AdminController.php.html#8">AdminController</a></td><td class="text-right">8930</td></tr>
+       <tr><td><a href="models/Team.php.html#3">Team</a></td><td class="text-right">3660</td></tr>
+       <tr><td><a href="controllers/ajax/AdminAjaxController.php.html#7">AdminAjaxController</a></td><td class="text-right">2450</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#3">IndexController</a></td><td class="text-right">1406</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#3">IndexAjaxController</a></td><td class="text-right">870</td></tr>
+       <tr><td><a href="SessionUtils.php.html#3">SessionUtils</a></td><td class="text-right">600</td></tr>
+       <tr><td><a href="Router.php.html#3">Router</a></td><td class="text-right">506</td></tr>
+       <tr><td><a href="models/Token.php.html#3">Token</a></td><td class="text-right">420</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#3">ScoreLog</a></td><td class="text-right">380</td></tr>
+       <tr><td><a href="models/Session.php.html#3">Session</a></td><td class="text-right">380</td></tr>
+       <tr><td><a href="models/Progressive.php.html#3">Progressive</a></td><td class="text-right">306</td></tr>
+       <tr><td><a href="models/HintLog.php.html#3">HintLog</a></td><td class="text-right">272</td></tr>
+       <tr><td><a href="data/country-data.php.html#9">CountryDataController</a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="controllers/ajax/GameAjaxController.php.html#7">GameAjaxController</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="models/Configuration.php.html#3">Configuration</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#3">FailureLog</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="inc/gameboard/modules/game-clock.php.html#8">ClockModuleController</a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="static/svg/map/world.php.html#9">WorldMapController</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="controllers/modals/TutorialModalController.php.html#3">TutorialModalController</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="models/Level.php.html#3">Level</a></td><td class="text-right">96</td></tr>
+       <tr><td><a href="data/map-data.php.html#9">MapDataController</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#5">WorldViewMapController</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="controllers/modals/ActionModalController.php.html#3">ActionModalController</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#7">GameboardController</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="controllers/Controller.php.html#3">Controller</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="controllers/modals/ScoreboardModalController.php.html#3">ScoreboardModalController</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="controllers/ajax/AjaxController.php.html#3">AjaxController</a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#3">ViewModeController</a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="data/command-line.php.html#9">CommandsController</a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="Db.php.html#3">Db</a></td><td class="text-right">37</td></tr>
+       <tr><td><a href="models/Country.php.html#3">Country</a></td><td class="text-right">34</td></tr>
+       <tr><td><a href="controllers/modals/CountryModalController.php.html#3">CountryModalController</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="data/leaderboard.php.html#9">LeaderboardDataController</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="models/Logo.php.html#3">Logo</a></td><td class="text-right">21</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard.php.html#9">LeaderboardModuleController</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="data/teams.php.html#9">TeamDataController</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="models/Attachment.php.html#3">Attachment</a></td><td class="text-right">19</td></tr>
+       <tr><td><a href="models/Link.php.html#3">Link</a></td><td class="text-right">14</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity.php.html#9">ActivityModuleController</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="inc/gameboard/modules/teams.php.html#9">TeamModuleController</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="inc/gameboard/modules/announcements.php.html#9">AnnouncementsModuleController</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="inc/gameboard/listview.php.html#9">ListviewController</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="data/scores.php.html#9">ScoresDataController</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="models/Announcement.php.html#3">Announcement</a></td><td class="text-right">11</td></tr>
+       <tr><td><a href="models/Model.php.html#3">Model</a></td><td class="text-right">8</td></tr>
+       <tr><td><a href="inc/gameboard/modules/filter.php.html#9">FilterModuleController</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard-viewmode.php.html#5">LeaderboardModuleViewController</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="data/announcements.php.html#9">AnnouncementsDataController</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity-viewmode.php.html#5">ActivityViewModeModuleController</a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="models/Control.php.html#19"><abbr title="Control::genStopScriptLog">genStopScriptLog</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#56"><abbr title="Progressive::genProgressiveScoreboard">genProgressiveScoreboard</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#4"><abbr title="ScoreLog::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#111"><abbr title="Progressive::genStop">genStop</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#103"><abbr title="Progressive::genRun">genRun</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#95"><abbr title="Progressive::genReset">genReset</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#87"><abbr title="Progressive::genTake">genTake</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#75"><abbr title="Progressive::genCount">genCount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#45"><abbr title="Progressive::progressiveFromRow">progressiveFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#18"><abbr title="ScoreLog::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#39"><abbr title="Progressive::genCycle">genCycle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#33"><abbr title="Progressive::genGameStatus">genGameStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#29"><abbr title="Progressive::getIteration">getIteration</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#25"><abbr title="Progressive::getPoints">getPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#21"><abbr title="Progressive::getTeamName">getTeamName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#17"><abbr title="Progressive::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#14"><abbr title="ScoreLog::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#22"><abbr title="ScoreLog::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#4"><abbr title="Progressive::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#140"><abbr title="ScoreLog::genLogValidScore">genLogValidScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#30"><abbr title="Session::getCreatedTs">getCreatedTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#26"><abbr title="Session::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#22"><abbr title="Session::getData">getData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#18"><abbr title="Session::getCookie">getCookie</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#14"><abbr title="Session::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#4"><abbr title="Session::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#122"><abbr title="ScoreLog::genAllScoresByType">genAllScoresByType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#26"><abbr title="ScoreLog::getPoints">getPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#104"><abbr title="ScoreLog::genAllScoresByTeam">genAllScoresByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#74"><abbr title="ScoreLog::genPreviousScore">genPreviousScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#66"><abbr title="ScoreLog::genResetScores">genResetScores</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#50"><abbr title="ScoreLog::genAllScores">genAllScores</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#38"><abbr title="ScoreLog::scorelogFromRow">scorelogFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#34"><abbr title="ScoreLog::getType">getType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#30"><abbr title="ScoreLog::getLevelId">getLevelId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Progressive.php.html#13"><abbr title="Progressive::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#113"><abbr title="HintLog::genAllHintsByTeam">genAllHintsByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#38"><abbr title="Session::decodeTeamId">decodeTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#115"><abbr title="Control::importGame">importGame</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#13"><abbr title="FailureLog::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#4"><abbr title="FailureLog::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#151"><abbr title="Control::genResetBases">genResetBases</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#142"><abbr title="Control::genAllActivity">genAllActivity</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#134"><abbr title="Control::backupDb">backupDb</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#118"><abbr title="Control::exportGame">exportGame</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#94"><abbr title="Control::genEnd">genEnd</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#21"><abbr title="FailureLog::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#47"><abbr title="Control::genBegin">genBegin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#40"><abbr title="Control::genClearScriptLog">genClearScriptLog</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#29"><abbr title="Control::genScriptPid">genScriptPid</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Control.php.html#5"><abbr title="Control::genStartScriptLog">genStartScriptLog</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#106"><abbr title="Configuration::configurationFromRow">configurationFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#91"><abbr title="Configuration::genAllConfiguration">genAllConfiguration</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#17"><abbr title="FailureLog::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#25"><abbr title="FailureLog::getLevelId">getLevelId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#97"><abbr title="HintLog::genAllHints">genAllHints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#21"><abbr title="HintLog::getLevelId">getLevelId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#67"><abbr title="HintLog::genPreviousHint">genPreviousHint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#58"><abbr title="HintLog::genResetHints">genResetHints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#44"><abbr title="HintLog::genLogGetHint">genLogGetHint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#33"><abbr title="HintLog::hintlogFromRow">hintlogFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#29"><abbr title="HintLog::getPenalty">getPenalty</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#25"><abbr title="HintLog::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#17"><abbr title="HintLog::getTs">getTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#29"><abbr title="FailureLog::getFlag">getFlag</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#13"><abbr title="HintLog::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/HintLog.php.html#4"><abbr title="HintLog::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#84"><abbr title="FailureLog::genAllFailuresByTeam">genAllFailuresByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#68"><abbr title="FailureLog::genAllFailures">genAllFailures</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#59"><abbr title="FailureLog::genResetFailures">genResetFailures</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#44"><abbr title="FailureLog::genLogFailedScore">genLogFailedScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#33"><abbr title="FailureLog::failurelogFromRow">failurelogFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#34"><abbr title="Session::getLastAccessTs">getLastAccessTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#47"><abbr title="Session::genSetTeamId">genSetTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#61"><abbr title="Configuration::genUpdate">genUpdate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#462"><abbr title="Team::genLastScore">genLastScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#14"><abbr title="Token::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#4"><abbr title="Token::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#512"><abbr title="Team::genMyRank">genMyRank</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#493"><abbr title="Team::genCompletedLevel">genCompletedLevel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#481"><abbr title="Team::genTeamsCount">genTeamsCount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#473"><abbr title="Team::genResetAllPoints">genResetAllPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#444"><abbr title="Team::genPointsHealth">genPointsHealth</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#22"><abbr title="Token::getTeamId">getTeamId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#427"><abbr title="Team::genPointsByType">genPointsByType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#410"><abbr title="Team::genTeamByName">genTeamByName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#393"><abbr title="Team::genTeam">genTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#376"><abbr title="Team::genAllTeams">genAllTeams</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#359"><abbr title="Team::genLeaderboard">genLeaderboard</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#342"><abbr title="Team::genAllVisibleTeams">genAllVisibleTeams</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#18"><abbr title="Token::getUsed">getUsed</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#26"><abbr title="Token::getToken">getToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#306"><abbr title="Team::genTeamExist">genTeamExist</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#127"><abbr title="Token::genCheck">genCheck</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world.php.html#10"><abbr title="WorldMapController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#34"><abbr title="WorldViewMapController::genRenderWorldMapView">genRenderWorldMapView</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#29"><abbr title="WorldViewMapController::renderWorldMap">renderWorldMap</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#9"><abbr title="WorldViewMapController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#6"><abbr title="WorldViewMapController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#146"><abbr title="Token::genUse">genUse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#111"><abbr title="Token::genAllAvailableTokens">genAllAvailableTokens</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#30"><abbr title="Token::getCreatedTs">getCreatedTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#96"><abbr title="Token::genAllTokens">genAllTokens</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#85"><abbr title="Token::genDelete">genDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#77"><abbr title="Token::genExport">genExport</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#63"><abbr title="Token::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#49"><abbr title="Token::generate">generate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#38"><abbr title="Token::tokenFromRow">tokenFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Token.php.html#34"><abbr title="Token::getUseTs">getUseTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#325"><abbr title="Team::genAllActiveTeams">genAllActiveTeams</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#293"><abbr title="Team::genSetVisible">genSetVisible</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#57"><abbr title="Session::sessionFromRow">sessionFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#4"><abbr title="Team::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#39"><abbr title="Team::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#35"><abbr title="Team::getVisible">getVisible</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#31"><abbr title="Team::getProtected">getProtected</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#27"><abbr title="Team::getAdmin">getAdmin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#23"><abbr title="Team::getActive">getActive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#19"><abbr title="Team::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#162"><abbr title="Session::genAllSessions">genAllSessions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#47"><abbr title="Team::getPoints">getPoints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#144"><abbr title="Session::genCleanup">genCleanup</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#135"><abbr title="Session::genDeleteByTeam">genDeleteByTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#124"><abbr title="Session::genDelete">genDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#111"><abbr title="Session::genUpdate">genUpdate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#97"><abbr title="Session::genSessionExist">genSessionExist</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#82"><abbr title="Session::gen">gen</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Session.php.html#69"><abbr title="Session::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#43"><abbr title="Team::getPasswordHash">getPasswordHash</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#51"><abbr title="Team::getLastScore">getLastScore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#280"><abbr title="Team::genSetAdmin">genSetAdmin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#188"><abbr title="Team::genAddTeamData">genAddTeamData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#269"><abbr title="Team::genSetStatusAll">genSetStatusAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#256"><abbr title="Team::genSetStatus">genSetStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#245"><abbr title="Team::genDelete">genDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#232"><abbr title="Team::genUpdateTeamPassword">genUpdateTeamPassword</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#215"><abbr title="Team::genUpdate">genUpdate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#203"><abbr title="Team::genTeamData">genTeamData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#160"><abbr title="Team::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#55"><abbr title="Team::getLogo">getLogo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#142"><abbr title="Team::genCheckTeamStatus">genCheckTeamStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#113"><abbr title="Team::genVerifyCredentials">genVerifyCredentials</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#105"><abbr title="Team::regenerateHash">regenerateHash</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#97"><abbr title="Team::generateHash">generateHash</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#80"><abbr title="Team::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#63"><abbr title="Team::teamFromRow">teamFromRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Team.php.html#59"><abbr title="Team::getCreatedTs">getCreatedTs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#76"><abbr title="Configuration::genValidField">genValidField</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="static/svg/map/world.php.html#24"><abbr title="WorldMapController::genRenderWorldMap">genRenderWorldMap</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#39"><abbr title="Configuration::gen">gen</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1547"><abbr title="AdminController::genGenerateTeamNames">genGenerateTeamNames</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2037"><abbr title="AdminController::genRenderSessionsContent">genRenderSessionsContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1959"><abbr title="AdminController::genRenderLogosContent">genRenderLogosContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1718"><abbr title="AdminController::genRenderTeamsContent">genRenderTeamsContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1672"><abbr title="AdminController::genGenerateTeamTabs">genGenerateTeamTabs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1630"><abbr title="AdminController::genGenerateTeamFailures">genGenerateTeamFailures</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1584"><abbr title="AdminController::genGenerateTeamScores">genGenerateTeamScores</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1449"><abbr title="AdminController::genRenderCountriesContent">genRenderCountriesContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2328"><abbr title="AdminController::renderLogsContent">renderLogsContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1371"><abbr title="AdminController::genRenderCategoriesContent">genRenderCategoriesContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1051"><abbr title="AdminController::genRenderBasesContent">genRenderBasesContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#724"><abbr title="AdminController::genRenderFlagsContent">genRenderFlagsContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#531"><abbr title="AdminController::genRenderQuizContent">genRenderQuizContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#477"><abbr title="AdminController::renderControlsContent">renderControlsContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#409"><abbr title="AdminController::genRenderAnnouncementsContent">genRenderAnnouncementsContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#172"><abbr title="AdminController::genRenderConfigurationContent">genRenderConfigurationContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2105"><abbr title="AdminController::renderScoreboardContent">renderScoreboardContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2510"><abbr title="AdminController::renderMainContent">renderMainContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#118"><abbr title="AdminController::genConfigurationDurationSelect">genConfigurationDurationSelect</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#108"><abbr title="GameboardController::renderPage">renderPage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#111"><abbr title="IndexController::renderRulesContent">renderRulesContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#60"><abbr title="IndexController::genRenderCountdownContent">genRenderCountdownContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#44"><abbr title="IndexController::renderMainContent">renderMainContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#30"><abbr title="IndexController::getPages">getPages</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#10"><abbr title="IndexController::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#5"><abbr title="IndexController::getTitle">getTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#120"><abbr title="GameboardController::genRenderBody">genRenderBody</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#35"><abbr title="GameboardController::renderMainContent">renderMainContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2515"><abbr title="AdminController::genRenderMainNav">genRenderMainNav</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#28"><abbr title="GameboardController::getPages">getPages</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#14"><abbr title="GameboardController::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#9"><abbr title="GameboardController::getTitle">getTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/Controller.php.html#30"><abbr title="Controller::processRequest">processRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/Controller.php.html#10"><abbr title="Controller::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2613"><abbr title="AdminController::genRenderBody">genRenderBody</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2561"><abbr title="AdminController::genRenderPage">genRenderPage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#133"><abbr title="AdminController::genRenderConfigurationTokens">genRenderConfigurationTokens</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#108"><abbr title="AdminController::genRegistrationTypeSelect">genRegistrationTypeSelect</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#24"><abbr title="Configuration::genCreate">genCreate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#48"><abbr title="NotFoundRedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#44"><abbr title="SessionUtils::sessionRefresh">sessionRefresh</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#14"><abbr title="SessionUtils::sessionStart">sessionStart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Router.php.html#62"><abbr title="Router::genRouteNormal">genRouteNormal</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Router.php.html#47"><abbr title="Router::genRouteAjax">genRouteAjax</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Router.php.html#23"><abbr title="Router::genRouteModel">genRouteModel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Router.php.html#4"><abbr title="Router::genRoute">genRoute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#54"><abbr title="GameRedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#42"><abbr title="InternalErrorRedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#52"><abbr title="SessionUtils::close">close</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#36"><abbr title="LoginRedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#30"><abbr title="RegistrationRedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#24"><abbr title="IndexRedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#18"><abbr title="AdminRedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#12"><abbr title="RedirectException::getStatusCode">getStatusCode</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#8"><abbr title="RedirectException::getPath">getPath</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RedirectException.php.html#4"><abbr title="RedirectException::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#48"><abbr title="SessionUtils::open">open</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#56"><abbr title="SessionUtils::read">read</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#89"><abbr title="AdminController::genGenerateFilterCategoriesSelect">genGenerateFilterCategoriesSelect</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#134"><abbr title="SessionUtils::sessionTeam">sessionTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#68"><abbr title="AdminController::genGenerateLevelCategoriesSelect">genGenerateLevelCategoriesSelect</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#48"><abbr title="AdminController::genGenerateCountriesSelect">genGenerateCountriesSelect</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#29"><abbr title="AdminController::getPages">getPages</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#15"><abbr title="AdminController::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#10"><abbr title="AdminController::getTitle">getTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#144"><abbr title="SessionUtils::CSRFToken">CSRFToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#139"><abbr title="SessionUtils::sessionTeamName">sessionTeamName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#129"><abbr title="SessionUtils::sessionAdmin">sessionAdmin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#66"><abbr title="SessionUtils::write">write</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#122"><abbr title="SessionUtils::enforceAdmin">enforceAdmin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#115"><abbr title="SessionUtils::enforceLogin">enforceLogin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#110"><abbr title="SessionUtils::sessionActive">sessionActive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#94"><abbr title="SessionUtils::sessionLogout">sessionLogout</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#89"><abbr title="SessionUtils::sessionSet">sessionSet</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#84"><abbr title="SessionUtils::gc">gc</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SessionUtils.php.html#79"><abbr title="SessionUtils::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#196"><abbr title="IndexController::genRenderLogosSelection">genRenderLogosSelection</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#200"><abbr title="IndexController::genRenderRegistrationNames">genRenderRegistrationNames</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#272"><abbr title="IndexController::genRenderRegistrationNoNames">genRenderRegistrationNoNames</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/teams.php.html#10"><abbr title="TeamDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#317"><abbr title="IndexController::genRenderRegistrationContent">genRenderRegistrationContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ScoreboardModalController.php.html#36"><abbr title="ScoreboardModalController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/TeamModalController.php.html#5"><abbr title="TeamModalController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/TutorialModalController.php.html#4"><abbr title="TutorialModalController::getStep">getStep</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/TutorialModalController.php.html#83"><abbr title="TutorialModalController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/announcements.php.html#10"><abbr title="AnnouncementsDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/command-line.php.html#10"><abbr title="CommandsController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/configuration.php.html#19"><abbr title="ConfigurationController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/controller.php.html#7"><abbr title="DataController::jsonSend">jsonSend</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/country-data.php.html#10"><abbr title="CountryDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/leaderboard.php.html#10"><abbr title="LeaderboardDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/map-data.php.html#10"><abbr title="MapDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="data/scores.php.html#10"><abbr title="ScoresDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/listview.php.html#10"><abbr title="ListviewController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/CommandLineModalController.php.html#5"><abbr title="CommandLineModalController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity-viewmode.php.html#6"><abbr title="ActivityViewModeModuleController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity.php.html#10"><abbr title="ActivityModuleController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/announcements.php.html#10"><abbr title="AnnouncementsModuleController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/filter.php.html#10"><abbr title="FilterModuleController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/game-clock.php.html#9"><abbr title="ClockModuleController::genGenerateIndicator">genGenerateIndicator</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/game-clock.php.html#47"><abbr title="ClockModuleController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard-viewmode.php.html#6"><abbr title="LeaderboardModuleViewController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard.php.html#10"><abbr title="LeaderboardModuleController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="inc/gameboard/modules/teams.php.html#10"><abbr title="TeamModuleController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#4"><abbr title="Configuration::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#7"><abbr title="Configuration::getId">getId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#11"><abbr title="Configuration::getField">getField</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#15"><abbr title="Configuration::getValue">getValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="models/Configuration.php.html#19"><abbr title="Configuration::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/CountryModalController.php.html#5"><abbr title="CountryModalController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ScoreboardModalController.php.html#4"><abbr title="ScoreboardModalController::genGenerateIndicator">genGenerateIndicator</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AdminAjaxController.php.html#9"><abbr title="AdminAjaxController::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#5"><abbr title="ViewModeController::getTitle">getTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#503"><abbr title="IndexController::genRenderBody">genRenderBody</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#477"><abbr title="IndexController::genRenderPage">genRenderPage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#439"><abbr title="IndexController::renderMainNav">renderMainNav</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#24"><abbr title="ViewModeController::getPages">getPages</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#30"><abbr title="ViewModeController::renderMainContent">renderMainContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#53"><abbr title="ViewModeController::renderPage">renderPage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#65"><abbr title="ViewModeController::genRenderBody">genRenderBody</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AdminAjaxController.php.html#97"><abbr title="AdminAjaxController::getActions">getActions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AdminAjaxController.php.html#142"><abbr title="AdminAjaxController::genHandleAction">genHandleAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AjaxController.php.html#7"><abbr title="AjaxController::genHandleAction">genHandleAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AjaxController.php.html#12"><abbr title="AjaxController::genHandleRequest">genHandleRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/AjaxController.php.html#17"><abbr title="AjaxController::processRequest">processRequest</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/GameAjaxController.php.html#9"><abbr title="GameAjaxController::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/GameAjaxController.php.html#32"><abbr title="GameAjaxController::getActions">getActions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/GameAjaxController.php.html#41"><abbr title="GameAjaxController::genHandleAction">genHandleAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#5"><abbr title="IndexAjaxController::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#36"><abbr title="IndexAjaxController::getActions">getActions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#45"><abbr title="IndexAjaxController::genHandleAction">genHandleAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#109"><abbr title="IndexAjaxController::genRegisterTeam">genRegisterTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#176"><abbr title="IndexAjaxController::genLoginTeam">genLoginTeam</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ActionModalController.php.html#4"><abbr title="ActionModalController::getModal">getModal</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ActionModalController.php.html#77"><abbr title="ActionModalController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/modals/ChooseLogoModalController.php.html#5"><abbr title="ChooseLogoModalController::genRender">genRender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#423"><abbr title="IndexController::renderMobilePage">renderMobilePage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#410"><abbr title="IndexController::renderErrorPage">renderErrorPage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#345"><abbr title="IndexController::genRenderLoginContent">genRenderLoginContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#10"><abbr title="ViewModeController::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Db.php.html#48"><abbr title="Db::genConnect">genConnect</abbr></a></td><td class="text-right">22%</td></tr>
+       <tr><td><a href="models/Level.php.html#104"><abbr title="Level::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">28%</td></tr>
+       <tr><td><a href="Db.php.html#17"><abbr title="Db::__construct">__construct</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Db.php.html#10"><abbr title="Db::getInstance">getInstance</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="models/Model.php.html#7"><abbr title="Model::genDb">genDb</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="models/Logo.php.html#112"><abbr title="Logo::logoFromRow">logoFromRow</abbr></a></td><td class="text-right">37%</td></tr>
+       <tr><td><a href="models/Attachment.php.html#149"><abbr title="Attachment::attachmentFromRow">attachmentFromRow</abbr></a></td><td class="text-right">40%</td></tr>
+       <tr><td><a href="models/Link.php.html#105"><abbr title="Link::linkFromRow">linkFromRow</abbr></a></td><td class="text-right">40%</td></tr>
+       <tr><td><a href="models/Level.php.html#83"><abbr title="Level::levelFromRow">levelFromRow</abbr></a></td><td class="text-right">41%</td></tr>
+       <tr><td><a href="models/Country.php.html#44"><abbr title="Country::genUsedAdjust">genUsedAdjust</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="models/Announcement.php.html#48"><abbr title="Announcement::genAllAnnouncements">genAllAnnouncements</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Db.php.html#32"><abbr title="Db::genConnection">genConnection</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="models/Logo.php.html#79"><abbr title="Logo::genAllLogos">genAllLogos</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="models/Attachment.php.html#106"><abbr title="Attachment::genAllAttachments">genAllAttachments</abbr></a></td><td class="text-right">55%</td></tr>
+       <tr><td><a href="models/Country.php.html#198"><abbr title="Country::countryFromRow">countryFromRow</abbr></a></td><td class="text-right">55%</td></tr>
+       <tr><td><a href="models/Announcement.php.html#23"><abbr title="Announcement::announcementFromRow">announcementFromRow</abbr></a></td><td class="text-right">60%</td></tr>
+       <tr><td><a href="models/Country.php.html#82"><abbr title="Country::genAllCountries">genAllCountries</abbr></a></td><td class="text-right">60%</td></tr>
+       <tr><td><a href="models/Link.php.html#59"><abbr title="Link::genAllLinks">genAllLinks</abbr></a></td><td class="text-right">66%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="controllers/ajax/AdminAjaxController.php.html#142"><abbr title="AdminAjaxController::genHandleAction">genHandleAction</abbr></a></td><td class="text-right">2256</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2561"><abbr title="AdminController::genRenderPage">genRenderPage</abbr></a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="data/country-data.php.html#10"><abbr title="CountryDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#109"><abbr title="IndexAjaxController::genRegisterTeam">genRegisterTeam</abbr></a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="controllers/ajax/GameAjaxController.php.html#41"><abbr title="GameAjaxController::genHandleAction">genHandleAction</abbr></a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#477"><abbr title="IndexController::genRenderPage">genRenderPage</abbr></a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="controllers/modals/TutorialModalController.php.html#4"><abbr title="TutorialModalController::getStep">getStep</abbr></a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="static/svg/map/world.php.html#24"><abbr title="WorldMapController::genRenderWorldMap">genRenderWorldMap</abbr></a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="data/map-data.php.html#10"><abbr title="MapDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#45"><abbr title="IndexAjaxController::genHandleAction">genHandleAction</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="Router.php.html#23"><abbr title="Router::genRouteModel">genRouteModel</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="controllers/modals/ActionModalController.php.html#4"><abbr title="ActionModalController::getModal">getModal</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1051"><abbr title="AdminController::genRenderBasesContent">genRenderBasesContent</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="data/command-line.php.html#10"><abbr title="CommandsController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="inc/gameboard/modules/game-clock.php.html#9"><abbr title="ClockModuleController::genGenerateIndicator">genGenerateIndicator</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1959"><abbr title="AdminController::genRenderLogosContent">genRenderLogosContent</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="controllers/ajax/IndexAjaxController.php.html#176"><abbr title="IndexAjaxController::genLoginTeam">genLoginTeam</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="Router.php.html#62"><abbr title="Router::genRouteNormal">genRouteNormal</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="inc/gameboard/modules/game-clock.php.html#47"><abbr title="ClockModuleController::genRender">genRender</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#724"><abbr title="AdminController::genRenderFlagsContent">genRenderFlagsContent</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="controllers/modals/CountryModalController.php.html#5"><abbr title="CountryModalController::genRender">genRender</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="models/Team.php.html#113"><abbr title="Team::genVerifyCredentials">genVerifyCredentials</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="controllers/modals/ScoreboardModalController.php.html#4"><abbr title="ScoreboardModalController::genGenerateIndicator">genGenerateIndicator</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="data/leaderboard.php.html#10"><abbr title="LeaderboardDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1449"><abbr title="AdminController::genRenderCountriesContent">genRenderCountriesContent</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard.php.html#10"><abbr title="LeaderboardModuleController::genRender">genRender</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#345"><abbr title="IndexController::genRenderLoginContent">genRenderLoginContent</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#34"><abbr title="WorldViewMapController::genRenderWorldMapView">genRenderWorldMapView</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#68"><abbr title="AdminController::genGenerateLevelCategoriesSelect">genGenerateLevelCategoriesSelect</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Router.php.html#4"><abbr title="Router::genRoute">genRoute</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1371"><abbr title="AdminController::genRenderCategoriesContent">genRenderCategoriesContent</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Router.php.html#47"><abbr title="Router::genRouteAjax">genRouteAjax</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#60"><abbr title="IndexController::genRenderCountdownContent">genRenderCountdownContent</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="data/teams.php.html#10"><abbr title="TeamDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="controllers/modals/ScoreboardModalController.php.html#36"><abbr title="ScoreboardModalController::genRender">genRender</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#48"><abbr title="AdminController::genGenerateCountriesSelect">genGenerateCountriesSelect</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="SessionUtils.php.html#66"><abbr title="SessionUtils::write">write</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="data/scores.php.html#10"><abbr title="ScoresDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity.php.html#10"><abbr title="ActivityModuleController::genRender">genRender</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="inc/gameboard/listview.php.html#10"><abbr title="ListviewController::genRender">genRender</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#118"><abbr title="AdminController::genConfigurationDurationSelect">genConfigurationDurationSelect</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="inc/gameboard/modules/announcements.php.html#10"><abbr title="AnnouncementsModuleController::genRender">genRender</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="inc/gameboard/modules/teams.php.html#10"><abbr title="TeamModuleController::genRender">genRender</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="models/HintLog.php.html#67"><abbr title="HintLog::genPreviousHint">genPreviousHint</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#74"><abbr title="ScoreLog::genPreviousScore">genPreviousScore</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="models/Team.php.html#512"><abbr title="Team::genMyRank">genMyRank</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#89"><abbr title="AdminController::genGenerateFilterCategoriesSelect">genGenerateFilterCategoriesSelect</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1630"><abbr title="AdminController::genGenerateTeamFailures">genGenerateTeamFailures</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#133"><abbr title="AdminController::genRenderConfigurationTokens">genRenderConfigurationTokens</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#317"><abbr title="IndexController::genRenderRegistrationContent">genRenderRegistrationContent</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#409"><abbr title="AdminController::genRenderAnnouncementsContent">genRenderAnnouncementsContent</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1718"><abbr title="AdminController::genRenderTeamsContent">genRenderTeamsContent</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/ajax/AjaxController.php.html#17"><abbr title="AjaxController::processRequest">processRequest</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1584"><abbr title="AdminController::genGenerateTeamScores">genGenerateTeamScores</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#172"><abbr title="AdminController::genRenderConfigurationContent">genRenderConfigurationContent</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1547"><abbr title="AdminController::genGenerateTeamNames">genGenerateTeamNames</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/Controller.php.html#30"><abbr title="Controller::processRequest">processRequest</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#200"><abbr title="IndexController::genRenderRegistrationNames">genRenderRegistrationNames</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="models/Level.php.html#104"><abbr title="Level::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#439"><abbr title="IndexController::renderMainNav">renderMainNav</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#306"><abbr title="Team::genTeamExist">genTeamExist</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#104"><abbr title="ScoreLog::genAllScoresByTeam">genAllScoresByTeam</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#122"><abbr title="ScoreLog::genAllScoresByType">genAllScoresByType</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Session.php.html#162"><abbr title="Session::genAllSessions">genAllSessions</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#80"><abbr title="Team::genWhoUses">genWhoUses</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2037"><abbr title="AdminController::genRenderSessionsContent">genRenderSessionsContent</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#142"><abbr title="Team::genCheckTeamStatus">genCheckTeamStatus</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#256"><abbr title="Team::genSetStatus">genSetStatus</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#269"><abbr title="Team::genSetStatusAll">genSetStatusAll</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#280"><abbr title="Team::genSetAdmin">genSetAdmin</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#293"><abbr title="Team::genSetVisible">genSetVisible</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#325"><abbr title="Team::genAllActiveTeams">genAllActiveTeams</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/ScoreLog.php.html#50"><abbr title="ScoreLog::genAllScores">genAllScores</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#342"><abbr title="Team::genAllVisibleTeams">genAllVisibleTeams</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#359"><abbr title="Team::genLeaderboard">genLeaderboard</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#376"><abbr title="Team::genAllTeams">genAllTeams</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Team.php.html#493"><abbr title="Team::genCompletedLevel">genCompletedLevel</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="data/announcements.php.html#10"><abbr title="AnnouncementsDataController::genGenerateData">genGenerateData</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Token.php.html#63"><abbr title="Token::genCreate">genCreate</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Token.php.html#96"><abbr title="Token::genAllTokens">genAllTokens</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Token.php.html#111"><abbr title="Token::genAllAvailableTokens">genAllAvailableTokens</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Token.php.html#127"><abbr title="Token::genCheck">genCheck</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="static/svg/map/world-view.php.html#9"><abbr title="WorldViewMapController::genRender">genRender</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#531"><abbr title="AdminController::genRenderQuizContent">genRenderQuizContent</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#2515"><abbr title="AdminController::genRenderMainNav">genRenderMainNav</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Progressive.php.html#111"><abbr title="Progressive::genStop">genStop</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/IndexController.php.html#272"><abbr title="IndexController::genRenderRegistrationNoNames">genRenderRegistrationNoNames</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Configuration.php.html#91"><abbr title="Configuration::genAllConfiguration">genAllConfiguration</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="inc/gameboard/modules/activity-viewmode.php.html#6"><abbr title="ActivityViewModeModuleController::genRender">genRender</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/ViewModeController.php.html#53"><abbr title="ViewModeController::renderPage">renderPage</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#108"><abbr title="GameboardController::renderPage">renderPage</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="inc/gameboard/modules/filter.php.html#10"><abbr title="FilterModuleController::genRender">genRender</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="SessionUtils.php.html#56"><abbr title="SessionUtils::read">read</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/GameboardController.php.html#35"><abbr title="GameboardController::renderMainContent">renderMainContent</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="inc/gameboard/modules/leaderboard-viewmode.php.html#6"><abbr title="LeaderboardModuleViewController::genRender">genRender</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="controllers/AdminController.php.html#1672"><abbr title="AdminController::genGenerateTeamTabs">genGenerateTeamTabs</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Progressive.php.html#56"><abbr title="Progressive::genProgressiveScoreboard">genProgressiveScoreboard</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Configuration.php.html#39"><abbr title="Configuration::gen">gen</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#68"><abbr title="FailureLog::genAllFailures">genAllFailures</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/FailureLog.php.html#84"><abbr title="FailureLog::genAllFailuresByTeam">genAllFailuresByTeam</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="SessionUtils.php.html#115"><abbr title="SessionUtils::enforceLogin">enforceLogin</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/HintLog.php.html#97"><abbr title="HintLog::genAllHints">genAllHints</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/HintLog.php.html#113"><abbr title="HintLog::genAllHintsByTeam">genAllHintsByTeam</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="SessionUtils.php.html#122"><abbr title="SessionUtils::enforceAdmin">enforceAdmin</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="models/Country.php.html#82"><abbr title="Country::genAllCountries">genAllCountries</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="models/Model.php.html#7"><abbr title="Model::genDb">genDb</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Db.php.html#10"><abbr title="Db::getInstance">getInstance</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="models/Announcement.php.html#48"><abbr title="Announcement::genAllAnnouncements">genAllAnnouncements</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Db.php.html#32"><abbr title="Db::genConnection">genConnection</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="models/Logo.php.html#79"><abbr title="Logo::genAllLogos">genAllLogos</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="models/Attachment.php.html#106"><abbr title="Attachment::genAllAttachments">genAllAttachments</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="models/Link.php.html#59"><abbr title="Link::genAllLinks">genAllLinks</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 3.3.1</a> using <a href="http://hhvm.com/" target="_top">HHVM 3.13.1</a> and <a href="https://phpunit.de/">PHPUnit 5.3.2</a> at Sun May 8 10:26:34 UTC 2016.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/holder.min.js" type="text/javascript"></script>
+  <script src="js/d3.min.js" type="text/javascript"></script>
+  <script src="js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([55,0,0,0,2,0,0,1,4,1,0,3], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([290,0,0,2,4,3,6,3,0,0,0,125], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[35,10,"<a href=\"Db.php.html#3\">Db<\/a>"],[0,3,"<a href=\"RedirectException.php.html#3\">RedirectException<\/a>"],[0,1,"<a href=\"RedirectException.php.html#17\">AdminRedirectException<\/a>"],[0,1,"<a href=\"RedirectException.php.html#23\">IndexRedirectException<\/a>"],[0,1,"<a href=\"RedirectException.php.html#29\">RegistrationRedirectException<\/a>"],[0,1,"<a href=\"RedirectException.php.html#35\">LoginRedirectException<\/a>"],[0,1,"<a href=\"RedirectException.php.html#41\">InternalErrorRedirectException<\/a>"],[0,1,"<a href=\"RedirectException.php.html#47\">NotFoundRedirectException<\/a>"],[0,1,"<a href=\"RedirectException.php.html#53\">GameRedirectException<\/a>"],[0,22,"<a href=\"Router.php.html#3\">Router<\/a>"],[0,24,"<a href=\"SessionUtils.php.html#3\">SessionUtils<\/a>"],[100,11,"<a href=\"Utils.php.html#77\">Utils<\/a>"],[0,94,"<a href=\"controllers\/AdminController.php.html#8\">AdminController<\/a>"],[0,8,"<a href=\"controllers\/Controller.php.html#3\">Controller<\/a>"],[0,8,"<a href=\"controllers\/GameboardController.php.html#7\">GameboardController<\/a>"],[0,37,"<a href=\"controllers\/IndexController.php.html#3\">IndexController<\/a>"],[0,7,"<a href=\"controllers\/ViewModeController.php.html#3\">ViewModeController<\/a>"],[0,49,"<a href=\"controllers\/ajax\/AdminAjaxController.php.html#7\">AdminAjaxController<\/a>"],[0,7,"<a href=\"controllers\/ajax\/AjaxController.php.html#3\">AjaxController<\/a>"],[0,13,"<a href=\"controllers\/ajax\/GameAjaxController.php.html#7\">GameAjaxController<\/a>"],[0,29,"<a href=\"controllers\/ajax\/IndexAjaxController.php.html#3\">IndexAjaxController<\/a>"],[0,8,"<a href=\"controllers\/modals\/ActionModalController.php.html#3\">ActionModalController<\/a>"],[0,1,"<a href=\"controllers\/modals\/ChooseLogoModalController.php.html#3\">ChooseLogoModalController<\/a>"],[0,1,"<a href=\"controllers\/modals\/CommandLineModalController.php.html#3\">CommandLineModalController<\/a>"],[0,5,"<a href=\"controllers\/modals\/CountryModalController.php.html#3\">CountryModalController<\/a>"],[100,1,"<a href=\"controllers\/modals\/ModalController.php.html#3\">ModalController<\/a>"],[0,8,"<a href=\"controllers\/modals\/ScoreboardModalController.php.html#3\">ScoreboardModalController<\/a>"],[0,1,"<a href=\"controllers\/modals\/TeamModalController.php.html#3\">TeamModalController<\/a>"],[0,11,"<a href=\"controllers\/modals\/TutorialModalController.php.html#3\">TutorialModalController<\/a>"],[0,2,"<a href=\"data\/announcements.php.html#9\">AnnouncementsDataController<\/a>"],[0,6,"<a href=\"data\/command-line.php.html#9\">CommandsController<\/a>"],[0,1,"<a href=\"data\/configuration.php.html#9\">ConfigurationController<\/a>"],[0,2,"<a href=\"data\/controller.php.html#3\">DataController<\/a>"],[0,15,"<a href=\"data\/country-data.php.html#9\">CountryDataController<\/a>"],[0,5,"<a href=\"data\/leaderboard.php.html#9\">LeaderboardDataController<\/a>"],[0,8,"<a href=\"data\/map-data.php.html#9\">MapDataController<\/a>"],[0,3,"<a href=\"data\/scores.php.html#9\">ScoresDataController<\/a>"],[0,4,"<a href=\"data\/teams.php.html#9\">TeamDataController<\/a>"],[0,3,"<a href=\"inc\/gameboard\/listview.php.html#9\">ListviewController<\/a>"],[0,2,"<a href=\"inc\/gameboard\/modules\/activity-viewmode.php.html#5\">ActivityViewModeModuleController<\/a>"],[0,3,"<a href=\"inc\/gameboard\/modules\/activity.php.html#9\">ActivityModuleController<\/a>"],[0,3,"<a href=\"inc\/gameboard\/modules\/announcements.php.html#9\">AnnouncementsModuleController<\/a>"],[0,2,"<a href=\"inc\/gameboard\/modules\/filter.php.html#9\">FilterModuleController<\/a>"],[0,12,"<a href=\"inc\/gameboard\/modules\/game-clock.php.html#8\">ClockModuleController<\/a>"],[0,2,"<a href=\"inc\/gameboard\/modules\/leaderboard-viewmode.php.html#5\">LeaderboardModuleViewController<\/a>"],[0,4,"<a href=\"inc\/gameboard\/modules\/leaderboard.php.html#9\">LeaderboardModuleController<\/a>"],[0,3,"<a href=\"inc\/gameboard\/modules\/teams.php.html#9\">TeamModuleController<\/a>"],[68.421052631579,9,"<a href=\"models\/Announcement.php.html#3\">Announcement<\/a>"],[73.076923076923,15,"<a href=\"models\/Attachment.php.html#3\">Attachment<\/a>"],[100,0,"<a href=\"xhp\/Svg.php.html#97\"><\/a>"],[0,13,"<a href=\"models\/Configuration.php.html#3\">Configuration<\/a>"],[0,11,"<a href=\"models\/Control.php.html#3\">Control<\/a>"],[78,27,"<a href=\"models\/Country.php.html#3\">Country<\/a>"],[0,13,"<a href=\"models\/FailureLog.php.html#3\">FailureLog<\/a>"],[0,16,"<a href=\"models\/HintLog.php.html#3\">HintLog<\/a>"],[82.758620689655,71,"<a href=\"models\/Level.php.html#3\">Level<\/a>"],[73.913043478261,12,"<a href=\"models\/Link.php.html#3\">Link<\/a>"],[74.285714285714,17,"<a href=\"models\/Logo.php.html#3\">Logo<\/a>"],[33.333333333333,4,"<a href=\"models\/Model.php.html#3\">Model<\/a>"],[0,17,"<a href=\"models\/Progressive.php.html#3\">Progressive<\/a>"],[0,19,"<a href=\"models\/ScoreLog.php.html#3\">ScoreLog<\/a>"],[0,19,"<a href=\"models\/Session.php.html#3\">Session<\/a>"],[0,60,"<a href=\"models\/Team.php.html#3\">Team<\/a>"],[0,20,"<a href=\"models\/Token.php.html#3\">Token<\/a>"],[0,8,"<a href=\"static\/svg\/map\/world-view.php.html#5\">WorldViewMapController<\/a>"],[0,11,"<a href=\"static\/svg\/map\/world.php.html#9\">WorldMapController<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[33.333333333333,2,"<a href=\"Db.php.html#10\">Db::getInstance<\/a>"],[33.333333333333,1,"<a href=\"Db.php.html#17\">Db::__construct<\/a>"],[100,1,"<a href=\"Db.php.html#22\">Db::__clone<\/a>"],[100,1,"<a href=\"Db.php.html#24\">Db::getBackupCmd<\/a>"],[50,2,"<a href=\"Db.php.html#32\">Db::genConnection<\/a>"],[100,1,"<a href=\"Db.php.html#40\">Db::disconnect<\/a>"],[100,1,"<a href=\"Db.php.html#44\">Db::isConnected<\/a>"],[22.222222222222,1,"<a href=\"Db.php.html#48\">Db::genConnect<\/a>"],[0,1,"<a href=\"RedirectException.php.html#4\">RedirectException::__construct<\/a>"],[0,1,"<a href=\"RedirectException.php.html#8\">RedirectException::getPath<\/a>"],[0,1,"<a href=\"RedirectException.php.html#12\">RedirectException::getStatusCode<\/a>"],[0,1,"<a href=\"RedirectException.php.html#18\">AdminRedirectException::__construct<\/a>"],[0,1,"<a href=\"RedirectException.php.html#24\">IndexRedirectException::__construct<\/a>"],[0,1,"<a href=\"RedirectException.php.html#30\">RegistrationRedirectException::__construct<\/a>"],[0,1,"<a href=\"RedirectException.php.html#36\">LoginRedirectException::__construct<\/a>"],[0,1,"<a href=\"RedirectException.php.html#42\">InternalErrorRedirectException::__construct<\/a>"],[0,1,"<a href=\"RedirectException.php.html#48\">NotFoundRedirectException::__construct<\/a>"],[0,1,"<a href=\"RedirectException.php.html#54\">GameRedirectException::__construct<\/a>"],[0,4,"<a href=\"Router.php.html#4\">Router::genRoute<\/a>"],[0,8,"<a href=\"Router.php.html#23\">Router::genRouteModel<\/a>"],[0,4,"<a href=\"Router.php.html#47\">Router::genRouteAjax<\/a>"],[0,6,"<a href=\"Router.php.html#62\">Router::genRouteNormal<\/a>"],[100,1,"<a href=\"SessionUtils.php.html#10\">SessionUtils::__construct<\/a>"],[100,1,"<a href=\"SessionUtils.php.html#12\">SessionUtils::__clone<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#14\">SessionUtils::sessionStart<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#44\">SessionUtils::sessionRefresh<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#48\">SessionUtils::open<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#52\">SessionUtils::close<\/a>"],[0,2,"<a href=\"SessionUtils.php.html#56\">SessionUtils::read<\/a>"],[0,3,"<a href=\"SessionUtils.php.html#66\">SessionUtils::write<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#79\">SessionUtils::destroy<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#84\">SessionUtils::gc<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#89\">SessionUtils::sessionSet<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#94\">SessionUtils::sessionLogout<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#110\">SessionUtils::sessionActive<\/a>"],[0,2,"<a href=\"SessionUtils.php.html#115\">SessionUtils::enforceLogin<\/a>"],[0,2,"<a href=\"SessionUtils.php.html#122\">SessionUtils::enforceAdmin<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#129\">SessionUtils::sessionAdmin<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#134\">SessionUtils::sessionTeam<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#139\">SessionUtils::sessionTeamName<\/a>"],[0,1,"<a href=\"SessionUtils.php.html#144\">SessionUtils::CSRFToken<\/a>"],[100,1,"<a href=\"Utils.php.html#78\">Utils::__construct<\/a>"],[100,1,"<a href=\"Utils.php.html#80\">Utils::__clone<\/a>"],[100,1,"<a href=\"Utils.php.html#82\">Utils::getGET<\/a>"],[100,1,"<a href=\"Utils.php.html#87\">Utils::getPOST<\/a>"],[100,1,"<a href=\"Utils.php.html#92\">Utils::getSERVER<\/a>"],[100,1,"<a href=\"Utils.php.html#97\">Utils::getFILES<\/a>"],[100,1,"<a href=\"Utils.php.html#102\">Utils::redirect<\/a>"],[100,1,"<a href=\"Utils.php.html#106\">Utils::request_response<\/a>"],[100,1,"<a href=\"Utils.php.html#115\">Utils::hint_response<\/a>"],[100,1,"<a href=\"Utils.php.html#123\">Utils::ok_response<\/a>"],[100,1,"<a href=\"Utils.php.html#127\">Utils::error_response<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#10\">AdminController::getTitle<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#15\">AdminController::getFilters<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#29\">AdminController::getPages<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#48\">AdminController::genGenerateCountriesSelect<\/a>"],[0,4,"<a href=\"controllers\/AdminController.php.html#68\">AdminController::genGenerateLevelCategoriesSelect<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#89\">AdminController::genGenerateFilterCategoriesSelect<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#108\">AdminController::genRegistrationTypeSelect<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#118\">AdminController::genConfigurationDurationSelect<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#133\">AdminController::genRenderConfigurationTokens<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#172\">AdminController::genRenderConfigurationContent<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#409\">AdminController::genRenderAnnouncementsContent<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#477\">AdminController::renderControlsContent<\/a>"],[0,2,"<a href=\"controllers\/AdminController.php.html#531\">AdminController::genRenderQuizContent<\/a>"],[0,6,"<a href=\"controllers\/AdminController.php.html#724\">AdminController::genRenderFlagsContent<\/a>"],[0,7,"<a href=\"controllers\/AdminController.php.html#1051\">AdminController::genRenderBasesContent<\/a>"],[0,4,"<a href=\"controllers\/AdminController.php.html#1371\">AdminController::genRenderCategoriesContent<\/a>"],[0,5,"<a href=\"controllers\/AdminController.php.html#1449\">AdminController::genRenderCountriesContent<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#1547\">AdminController::genGenerateTeamNames<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#1584\">AdminController::genGenerateTeamScores<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#1630\">AdminController::genGenerateTeamFailures<\/a>"],[0,2,"<a href=\"controllers\/AdminController.php.html#1672\">AdminController::genGenerateTeamTabs<\/a>"],[0,3,"<a href=\"controllers\/AdminController.php.html#1718\">AdminController::genRenderTeamsContent<\/a>"],[0,6,"<a href=\"controllers\/AdminController.php.html#1959\">AdminController::genRenderLogosContent<\/a>"],[0,2,"<a href=\"controllers\/AdminController.php.html#2037\">AdminController::genRenderSessionsContent<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#2105\">AdminController::renderScoreboardContent<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#2328\">AdminController::renderLogsContent<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#2510\">AdminController::renderMainContent<\/a>"],[0,2,"<a href=\"controllers\/AdminController.php.html#2515\">AdminController::genRenderMainNav<\/a>"],[0,15,"<a href=\"controllers\/AdminController.php.html#2561\">AdminController::genRenderPage<\/a>"],[0,1,"<a href=\"controllers\/AdminController.php.html#2613\">AdminController::genRenderBody<\/a>"],[100,1,"<a href=\"controllers\/Controller.php.html#4\">Controller::getTitle<\/a>"],[100,1,"<a href=\"controllers\/Controller.php.html#5\">Controller::getFilters<\/a>"],[100,1,"<a href=\"controllers\/Controller.php.html#6\">Controller::getPages<\/a>"],[100,1,"<a href=\"controllers\/Controller.php.html#8\">Controller::genRenderBody<\/a>"],[0,1,"<a href=\"controllers\/Controller.php.html#10\">Controller::genRender<\/a>"],[0,3,"<a href=\"controllers\/Controller.php.html#30\">Controller::processRequest<\/a>"],[0,1,"<a href=\"controllers\/GameboardController.php.html#9\">GameboardController::getTitle<\/a>"],[0,1,"<a href=\"controllers\/GameboardController.php.html#14\">GameboardController::getFilters<\/a>"],[0,1,"<a href=\"controllers\/GameboardController.php.html#28\">GameboardController::getPages<\/a>"],[0,2,"<a href=\"controllers\/GameboardController.php.html#35\">GameboardController::renderMainContent<\/a>"],[0,2,"<a href=\"controllers\/GameboardController.php.html#108\">GameboardController::renderPage<\/a>"],[0,1,"<a href=\"controllers\/GameboardController.php.html#120\">GameboardController::genRenderBody<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#5\">IndexController::getTitle<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#10\">IndexController::getFilters<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#30\">IndexController::getPages<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#44\">IndexController::renderMainContent<\/a>"],[0,4,"<a href=\"controllers\/IndexController.php.html#60\">IndexController::genRenderCountdownContent<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#111\">IndexController::renderRulesContent<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#196\">IndexController::genRenderLogosSelection<\/a>"],[0,3,"<a href=\"controllers\/IndexController.php.html#200\">IndexController::genRenderRegistrationNames<\/a>"],[0,2,"<a href=\"controllers\/IndexController.php.html#272\">IndexController::genRenderRegistrationNoNames<\/a>"],[0,3,"<a href=\"controllers\/IndexController.php.html#317\">IndexController::genRenderRegistrationContent<\/a>"],[0,4,"<a href=\"controllers\/IndexController.php.html#345\">IndexController::genRenderLoginContent<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#410\">IndexController::renderErrorPage<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#423\">IndexController::renderMobilePage<\/a>"],[0,2,"<a href=\"controllers\/IndexController.php.html#439\">IndexController::renderMainNav<\/a>"],[0,10,"<a href=\"controllers\/IndexController.php.html#477\">IndexController::genRenderPage<\/a>"],[0,1,"<a href=\"controllers\/IndexController.php.html#503\">IndexController::genRenderBody<\/a>"],[0,1,"<a href=\"controllers\/ViewModeController.php.html#5\">ViewModeController::getTitle<\/a>"],[0,1,"<a href=\"controllers\/ViewModeController.php.html#10\">ViewModeController::getFilters<\/a>"],[0,1,"<a href=\"controllers\/ViewModeController.php.html#24\">ViewModeController::getPages<\/a>"],[0,1,"<a href=\"controllers\/ViewModeController.php.html#30\">ViewModeController::renderMainContent<\/a>"],[0,2,"<a href=\"controllers\/ViewModeController.php.html#53\">ViewModeController::renderPage<\/a>"],[0,1,"<a href=\"controllers\/ViewModeController.php.html#65\">ViewModeController::genRenderBody<\/a>"],[0,1,"<a href=\"controllers\/ajax\/AdminAjaxController.php.html#9\">AdminAjaxController::getFilters<\/a>"],[0,1,"<a href=\"controllers\/ajax\/AdminAjaxController.php.html#97\">AdminAjaxController::getActions<\/a>"],[0,47,"<a href=\"controllers\/ajax\/AdminAjaxController.php.html#142\">AdminAjaxController::genHandleAction<\/a>"],[100,1,"<a href=\"controllers\/ajax\/AjaxController.php.html#4\">AjaxController::getFilters<\/a>"],[100,1,"<a href=\"controllers\/ajax\/AjaxController.php.html#5\">AjaxController::getActions<\/a>"],[0,1,"<a href=\"controllers\/ajax\/AjaxController.php.html#7\">AjaxController::genHandleAction<\/a>"],[0,1,"<a href=\"controllers\/ajax\/AjaxController.php.html#12\">AjaxController::genHandleRequest<\/a>"],[0,3,"<a href=\"controllers\/ajax\/AjaxController.php.html#17\">AjaxController::processRequest<\/a>"],[0,1,"<a href=\"controllers\/ajax\/GameAjaxController.php.html#9\">GameAjaxController::getFilters<\/a>"],[0,1,"<a href=\"controllers\/ajax\/GameAjaxController.php.html#32\">GameAjaxController::getActions<\/a>"],[0,11,"<a href=\"controllers\/ajax\/GameAjaxController.php.html#41\">GameAjaxController::genHandleAction<\/a>"],[0,1,"<a href=\"controllers\/ajax\/IndexAjaxController.php.html#5\">IndexAjaxController::getFilters<\/a>"],[0,1,"<a href=\"controllers\/ajax\/IndexAjaxController.php.html#36\">IndexAjaxController::getActions<\/a>"],[0,8,"<a href=\"controllers\/ajax\/IndexAjaxController.php.html#45\">IndexAjaxController::genHandleAction<\/a>"],[0,13,"<a href=\"controllers\/ajax\/IndexAjaxController.php.html#109\">IndexAjaxController::genRegisterTeam<\/a>"],[0,6,"<a href=\"controllers\/ajax\/IndexAjaxController.php.html#176\">IndexAjaxController::genLoginTeam<\/a>"],[0,7,"<a href=\"controllers\/modals\/ActionModalController.php.html#4\">ActionModalController::getModal<\/a>"],[0,1,"<a href=\"controllers\/modals\/ActionModalController.php.html#77\">ActionModalController::genRender<\/a>"],[0,1,"<a href=\"controllers\/modals\/ChooseLogoModalController.php.html#5\">ChooseLogoModalController::genRender<\/a>"],[0,1,"<a href=\"controllers\/modals\/CommandLineModalController.php.html#5\">CommandLineModalController::genRender<\/a>"],[0,5,"<a href=\"controllers\/modals\/CountryModalController.php.html#5\">CountryModalController::genRender<\/a>"],[100,1,"<a href=\"controllers\/modals\/ModalController.php.html#4\">ModalController::genRender<\/a>"],[0,5,"<a href=\"controllers\/modals\/ScoreboardModalController.php.html#4\">ScoreboardModalController::genGenerateIndicator<\/a>"],[0,3,"<a href=\"controllers\/modals\/ScoreboardModalController.php.html#36\">ScoreboardModalController::genRender<\/a>"],[0,1,"<a href=\"controllers\/modals\/TeamModalController.php.html#5\">TeamModalController::genRender<\/a>"],[0,10,"<a href=\"controllers\/modals\/TutorialModalController.php.html#4\">TutorialModalController::getStep<\/a>"],[0,1,"<a href=\"controllers\/modals\/TutorialModalController.php.html#83\">TutorialModalController::genRender<\/a>"],[0,2,"<a href=\"data\/announcements.php.html#10\">AnnouncementsDataController::genGenerateData<\/a>"],[0,6,"<a href=\"data\/command-line.php.html#10\">CommandsController::genGenerateData<\/a>"],[0,1,"<a href=\"data\/configuration.php.html#19\">ConfigurationController::genGenerateData<\/a>"],[100,1,"<a href=\"data\/controller.php.html#5\">DataController::genGenerateData<\/a>"],[0,1,"<a href=\"data\/controller.php.html#7\">DataController::jsonSend<\/a>"],[0,15,"<a href=\"data\/country-data.php.html#10\">CountryDataController::genGenerateData<\/a>"],[0,5,"<a href=\"data\/leaderboard.php.html#10\">LeaderboardDataController::genGenerateData<\/a>"],[0,8,"<a href=\"data\/map-data.php.html#10\">MapDataController::genGenerateData<\/a>"],[0,3,"<a href=\"data\/scores.php.html#10\">ScoresDataController::genGenerateData<\/a>"],[0,4,"<a href=\"data\/teams.php.html#10\">TeamDataController::genGenerateData<\/a>"],[0,3,"<a href=\"inc\/gameboard\/listview.php.html#10\">ListviewController::genRender<\/a>"],[0,2,"<a href=\"inc\/gameboard\/modules\/activity-viewmode.php.html#6\">ActivityViewModeModuleController::genRender<\/a>"],[0,3,"<a href=\"inc\/gameboard\/modules\/activity.php.html#10\">ActivityModuleController::genRender<\/a>"],[0,3,"<a href=\"inc\/gameboard\/modules\/announcements.php.html#10\">AnnouncementsModuleController::genRender<\/a>"],[0,2,"<a href=\"inc\/gameboard\/modules\/filter.php.html#10\">FilterModuleController::genRender<\/a>"],[0,6,"<a href=\"inc\/gameboard\/modules\/game-clock.php.html#9\">ClockModuleController::genGenerateIndicator<\/a>"],[0,6,"<a href=\"inc\/gameboard\/modules\/game-clock.php.html#47\">ClockModuleController::genRender<\/a>"],[0,2,"<a href=\"inc\/gameboard\/modules\/leaderboard-viewmode.php.html#6\">LeaderboardModuleViewController::genRender<\/a>"],[0,4,"<a href=\"inc\/gameboard\/modules\/leaderboard.php.html#10\">LeaderboardModuleController::genRender<\/a>"],[0,3,"<a href=\"inc\/gameboard\/modules\/teams.php.html#10\">TeamModuleController::genRender<\/a>"],[100,1,"<a href=\"models\/Announcement.php.html#4\">Announcement::__construct<\/a>"],[100,1,"<a href=\"models\/Announcement.php.html#11\">Announcement::getId<\/a>"],[100,1,"<a href=\"models\/Announcement.php.html#15\">Announcement::getAnnouncement<\/a>"],[100,1,"<a href=\"models\/Announcement.php.html#19\">Announcement::getTs<\/a>"],[60,1,"<a href=\"models\/Announcement.php.html#23\">Announcement::announcementFromRow<\/a>"],[100,1,"<a href=\"models\/Announcement.php.html#31\">Announcement::genCreate<\/a>"],[100,1,"<a href=\"models\/Announcement.php.html#39\">Announcement::genDelete<\/a>"],[50,2,"<a href=\"models\/Announcement.php.html#48\">Announcement::genAllAnnouncements<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#7\">Attachment::__construct<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#10\">Attachment::getId<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#14\">Attachment::getFilename<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#18\">Attachment::getLevelId<\/a>"],[100,4,"<a href=\"models\/Attachment.php.html#23\">Attachment::genCreate<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#70\">Attachment::genUpdate<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#81\">Attachment::genDelete<\/a>"],[55.555555555556,2,"<a href=\"models\/Attachment.php.html#106\">Attachment::genAllAttachments<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#124\">Attachment::gen<\/a>"],[100,1,"<a href=\"models\/Attachment.php.html#138\">Attachment::genHasAttachments<\/a>"],[40,1,"<a href=\"models\/Attachment.php.html#149\">Attachment::attachmentFromRow<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#4\">Configuration::__construct<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#7\">Configuration::getId<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#11\">Configuration::getField<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#15\">Configuration::getValue<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#19\">Configuration::getDescription<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#24\">Configuration::genCreate<\/a>"],[0,2,"<a href=\"models\/Configuration.php.html#39\">Configuration::gen<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#61\">Configuration::genUpdate<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#76\">Configuration::genValidField<\/a>"],[0,2,"<a href=\"models\/Configuration.php.html#91\">Configuration::genAllConfiguration<\/a>"],[0,1,"<a href=\"models\/Configuration.php.html#106\">Configuration::configurationFromRow<\/a>"],[0,1,"<a href=\"models\/Control.php.html#5\">Control::genStartScriptLog<\/a>"],[0,1,"<a href=\"models\/Control.php.html#19\">Control::genStopScriptLog<\/a>"],[0,1,"<a href=\"models\/Control.php.html#29\">Control::genScriptPid<\/a>"],[0,1,"<a href=\"models\/Control.php.html#40\">Control::genClearScriptLog<\/a>"],[0,1,"<a href=\"models\/Control.php.html#47\">Control::genBegin<\/a>"],[0,1,"<a href=\"models\/Control.php.html#94\">Control::genEnd<\/a>"],[0,1,"<a href=\"models\/Control.php.html#115\">Control::importGame<\/a>"],[0,1,"<a href=\"models\/Control.php.html#118\">Control::exportGame<\/a>"],[0,1,"<a href=\"models\/Control.php.html#134\">Control::backupDb<\/a>"],[0,1,"<a href=\"models\/Control.php.html#142\">Control::genAllActivity<\/a>"],[0,1,"<a href=\"models\/Control.php.html#151\">Control::genResetBases<\/a>"],[100,1,"<a href=\"models\/Country.php.html#4\">Country::__construct<\/a>"],[100,1,"<a href=\"models\/Country.php.html#15\">Country::getId<\/a>"],[100,1,"<a href=\"models\/Country.php.html#19\">Country::getIsoCode<\/a>"],[100,1,"<a href=\"models\/Country.php.html#23\">Country::getName<\/a>"],[100,1,"<a href=\"models\/Country.php.html#27\">Country::getUsed<\/a>"],[100,1,"<a href=\"models\/Country.php.html#31\">Country::getEnabled<\/a>"],[100,1,"<a href=\"models\/Country.php.html#35\">Country::getD<\/a>"],[100,1,"<a href=\"models\/Country.php.html#39\">Country::getTransform<\/a>"],[50,1,"<a href=\"models\/Country.php.html#44\">Country::genUsedAdjust<\/a>"],[100,2,"<a href=\"models\/Country.php.html#56\">Country::genSetStatus<\/a>"],[100,2,"<a href=\"models\/Country.php.html#69\">Country::genSetUsed<\/a>"],[60,3,"<a href=\"models\/Country.php.html#82\">Country::genAllCountries<\/a>"],[100,3,"<a href=\"models\/Country.php.html#103\">Country::genAllEnabledCountries<\/a>"],[100,2,"<a href=\"models\/Country.php.html#122\">Country::genAllMapCountries<\/a>"],[100,2,"<a href=\"models\/Country.php.html#139\">Country::genAllAvailableCountries<\/a>"],[100,1,"<a href=\"models\/Country.php.html#156\">Country::genIsActiveLevel<\/a>"],[100,1,"<a href=\"models\/Country.php.html#171\">Country::gen<\/a>"],[100,1,"<a href=\"models\/Country.php.html#186\">Country::genRandomAvailableCountryId<\/a>"],[55.555555555556,1,"<a href=\"models\/Country.php.html#198\">Country::countryFromRow<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#4\">FailureLog::__construct<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#13\">FailureLog::getId<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#17\">FailureLog::getTs<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#21\">FailureLog::getTeamId<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#25\">FailureLog::getLevelId<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#29\">FailureLog::getFlag<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#33\">FailureLog::failurelogFromRow<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#44\">FailureLog::genLogFailedScore<\/a>"],[0,1,"<a href=\"models\/FailureLog.php.html#59\">FailureLog::genResetFailures<\/a>"],[0,2,"<a href=\"models\/FailureLog.php.html#68\">FailureLog::genAllFailures<\/a>"],[0,2,"<a href=\"models\/FailureLog.php.html#84\">FailureLog::genAllFailuresByTeam<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#4\">HintLog::__construct<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#13\">HintLog::getId<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#17\">HintLog::getTs<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#21\">HintLog::getLevelId<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#25\">HintLog::getTeamId<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#29\">HintLog::getPenalty<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#33\">HintLog::hintlogFromRow<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#44\">HintLog::genLogGetHint<\/a>"],[0,1,"<a href=\"models\/HintLog.php.html#58\">HintLog::genResetHints<\/a>"],[0,3,"<a href=\"models\/HintLog.php.html#67\">HintLog::genPreviousHint<\/a>"],[0,2,"<a href=\"models\/HintLog.php.html#97\">HintLog::genAllHints<\/a>"],[0,2,"<a href=\"models\/HintLog.php.html#113\">HintLog::genAllHintsByTeam<\/a>"],[100,1,"<a href=\"models\/Level.php.html#4\">Level::__construct<\/a>"],[100,1,"<a href=\"models\/Level.php.html#23\">Level::getId<\/a>"],[100,1,"<a href=\"models\/Level.php.html#27\">Level::getActive<\/a>"],[100,1,"<a href=\"models\/Level.php.html#31\">Level::getType<\/a>"],[100,1,"<a href=\"models\/Level.php.html#35\">Level::getTitle<\/a>"],[100,1,"<a href=\"models\/Level.php.html#39\">Level::getDescription<\/a>"],[100,1,"<a href=\"models\/Level.php.html#43\">Level::getEntityId<\/a>"],[100,1,"<a href=\"models\/Level.php.html#47\">Level::getCategoryId<\/a>"],[100,1,"<a href=\"models\/Level.php.html#51\">Level::getPoints<\/a>"],[100,1,"<a href=\"models\/Level.php.html#55\">Level::getBonus<\/a>"],[100,1,"<a href=\"models\/Level.php.html#59\">Level::getBonusDec<\/a>"],[100,1,"<a href=\"models\/Level.php.html#63\">Level::getBonusFix<\/a>"],[100,1,"<a href=\"models\/Level.php.html#67\">Level::getFlag<\/a>"],[100,1,"<a href=\"models\/Level.php.html#71\">Level::getHint<\/a>"],[100,1,"<a href=\"models\/Level.php.html#75\">Level::getPenalty<\/a>"],[100,1,"<a href=\"models\/Level.php.html#79\">Level::getCreatedTs<\/a>"],[41.176470588235,1,"<a href=\"models\/Level.php.html#83\">Level::levelFromRow<\/a>"],[28.571428571429,3,"<a href=\"models\/Level.php.html#104\">Level::genWhoUses<\/a>"],[100,2,"<a href=\"models\/Level.php.html#123\">Level::genCheckStatus<\/a>"],[100,2,"<a href=\"models\/Level.php.html#142\">Level::genCheckBase<\/a>"],[100,2,"<a href=\"models\/Level.php.html#162\">Level::genCreate<\/a>"],[100,1,"<a href=\"models\/Level.php.html#220\">Level::genCreateFlag<\/a>"],[100,1,"<a href=\"models\/Level.php.html#249\">Level::genUpdateFlag<\/a>"],[100,1,"<a href=\"models\/Level.php.html#279\">Level::genCreateQuiz<\/a>"],[100,1,"<a href=\"models\/Level.php.html#315\">Level::genUpdateQuiz<\/a>"],[100,1,"<a href=\"models\/Level.php.html#352\">Level::genCreateBase<\/a>"],[100,1,"<a href=\"models\/Level.php.html#379\">Level::genUpdateBase<\/a>"],[100,2,"<a href=\"models\/Level.php.html#407\">Level::genUpdate<\/a>"],[100,1,"<a href=\"models\/Level.php.html#452\">Level::genDelete<\/a>"],[100,1,"<a href=\"models\/Level.php.html#468\">Level::genSetStatus<\/a>"],[100,1,"<a href=\"models\/Level.php.html#482\">Level::genSetStatusType<\/a>"],[100,2,"<a href=\"models\/Level.php.html#496\">Level::genSetStatusAll<\/a>"],[100,2,"<a href=\"models\/Level.php.html#517\">Level::genAllLevels<\/a>"],[100,2,"<a href=\"models\/Level.php.html#534\">Level::genAllActiveLevels<\/a>"],[100,2,"<a href=\"models\/Level.php.html#551\">Level::genAllActiveBases<\/a>"],[100,2,"<a href=\"models\/Level.php.html#569\">Level::genAllTypeLevels<\/a>"],[100,1,"<a href=\"models\/Level.php.html#588\">Level::genAllQuizLevels<\/a>"],[100,1,"<a href=\"models\/Level.php.html#593\">Level::genAllBaseLevels<\/a>"],[100,1,"<a href=\"models\/Level.php.html#598\">Level::genAllFlagLevels<\/a>"],[100,1,"<a href=\"models\/Level.php.html#603\">Level::gen<\/a>"],[100,1,"<a href=\"models\/Level.php.html#620\">Level::genCheckAnswer<\/a>"],[100,1,"<a href=\"models\/Level.php.html#630\">Level::genAdjustBonus<\/a>"],[100,1,"<a href=\"models\/Level.php.html#642\">Level::genLogBaseEntry<\/a>"],[100,2,"<a href=\"models\/Level.php.html#658\">Level::genScoreLevel<\/a>"],[100,2,"<a href=\"models\/Level.php.html#692\">Level::genScoreBase<\/a>"],[100,5,"<a href=\"models\/Level.php.html#722\">Level::genLevelHint<\/a>"],[100,1,"<a href=\"models\/Level.php.html#760\">Level::genBaseIP<\/a>"],[100,4,"<a href=\"models\/Level.php.html#771\">Level::getBasesResponses<\/a>"],[100,1,"<a href=\"models\/Level.php.html#815\">Level::genBaseScoring<\/a>"],[100,2,"<a href=\"models\/Level.php.html#824\">Level::genStopBaseScoring<\/a>"],[100,1,"<a href=\"models\/Link.php.html#4\">Link::__construct<\/a>"],[100,1,"<a href=\"models\/Link.php.html#7\">Link::getId<\/a>"],[100,1,"<a href=\"models\/Link.php.html#11\">Link::getLevelId<\/a>"],[100,1,"<a href=\"models\/Link.php.html#15\">Link::getLink<\/a>"],[100,1,"<a href=\"models\/Link.php.html#20\">Link::genCreate<\/a>"],[100,1,"<a href=\"models\/Link.php.html#33\">Link::genUpdate<\/a>"],[100,1,"<a href=\"models\/Link.php.html#48\">Link::genDelete<\/a>"],[66.666666666667,2,"<a href=\"models\/Link.php.html#59\">Link::genAllLinks<\/a>"],[100,1,"<a href=\"models\/Link.php.html#77\">Link::gen<\/a>"],[100,1,"<a href=\"models\/Link.php.html#92\">Link::genHasLinks<\/a>"],[40,1,"<a href=\"models\/Link.php.html#105\">Link::linkFromRow<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#4\">Logo::__construct<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#14\">Logo::getId<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#18\">Logo::getName<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#22\">Logo::getLogo<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#26\">Logo::getUsed<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#30\">Logo::getEnabled<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#34\">Logo::getProtected<\/a>"],[100,3,"<a href=\"models\/Logo.php.html#39\">Logo::genCheckExists<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#52\">Logo::genSetEnabled<\/a>"],[100,1,"<a href=\"models\/Logo.php.html#65\">Logo::genRandomLogo<\/a>"],[50,2,"<a href=\"models\/Logo.php.html#79\">Logo::genAllLogos<\/a>"],[100,2,"<a href=\"models\/Logo.php.html#96\">Logo::genAllEnabledLogos<\/a>"],[37.5,1,"<a href=\"models\/Logo.php.html#112\">Logo::logoFromRow<\/a>"],[33.333333333333,2,"<a href=\"models\/Model.php.html#7\">Model::genDb<\/a>"],[100,2,"<a href=\"models\/Model.php.html#14\">Model::getMc<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#4\">Progressive::__construct<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#13\">Progressive::getId<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#17\">Progressive::getTs<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#21\">Progressive::getTeamName<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#25\">Progressive::getPoints<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#29\">Progressive::getIteration<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#33\">Progressive::genGameStatus<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#39\">Progressive::genCycle<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#45\">Progressive::progressiveFromRow<\/a>"],[0,2,"<a href=\"models\/Progressive.php.html#56\">Progressive::genProgressiveScoreboard<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#75\">Progressive::genCount<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#87\">Progressive::genTake<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#95\">Progressive::genReset<\/a>"],[0,1,"<a href=\"models\/Progressive.php.html#103\">Progressive::genRun<\/a>"],[0,2,"<a href=\"models\/Progressive.php.html#111\">Progressive::genStop<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#4\">ScoreLog::__construct<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#14\">ScoreLog::getId<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#18\">ScoreLog::getTs<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#22\">ScoreLog::getTeamId<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#26\">ScoreLog::getPoints<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#30\">ScoreLog::getLevelId<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#34\">ScoreLog::getType<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#38\">ScoreLog::scorelogFromRow<\/a>"],[0,2,"<a href=\"models\/ScoreLog.php.html#50\">ScoreLog::genAllScores<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#66\">ScoreLog::genResetScores<\/a>"],[0,3,"<a href=\"models\/ScoreLog.php.html#74\">ScoreLog::genPreviousScore<\/a>"],[0,2,"<a href=\"models\/ScoreLog.php.html#104\">ScoreLog::genAllScoresByTeam<\/a>"],[0,2,"<a href=\"models\/ScoreLog.php.html#122\">ScoreLog::genAllScoresByType<\/a>"],[0,1,"<a href=\"models\/ScoreLog.php.html#140\">ScoreLog::genLogValidScore<\/a>"],[0,1,"<a href=\"models\/Session.php.html#4\">Session::__construct<\/a>"],[0,1,"<a href=\"models\/Session.php.html#14\">Session::getId<\/a>"],[0,1,"<a href=\"models\/Session.php.html#18\">Session::getCookie<\/a>"],[0,1,"<a href=\"models\/Session.php.html#22\">Session::getData<\/a>"],[0,1,"<a href=\"models\/Session.php.html#26\">Session::getTeamId<\/a>"],[0,1,"<a href=\"models\/Session.php.html#30\">Session::getCreatedTs<\/a>"],[0,1,"<a href=\"models\/Session.php.html#34\">Session::getLastAccessTs<\/a>"],[0,1,"<a href=\"models\/Session.php.html#38\">Session::decodeTeamId<\/a>"],[0,1,"<a href=\"models\/Session.php.html#47\">Session::genSetTeamId<\/a>"],[0,1,"<a href=\"models\/Session.php.html#57\">Session::sessionFromRow<\/a>"],[0,1,"<a href=\"models\/Session.php.html#69\">Session::genCreate<\/a>"],[0,1,"<a href=\"models\/Session.php.html#82\">Session::gen<\/a>"],[0,1,"<a href=\"models\/Session.php.html#97\">Session::genSessionExist<\/a>"],[0,1,"<a href=\"models\/Session.php.html#111\">Session::genUpdate<\/a>"],[0,1,"<a href=\"models\/Session.php.html#124\">Session::genDelete<\/a>"],[0,1,"<a href=\"models\/Session.php.html#135\">Session::genDeleteByTeam<\/a>"],[0,1,"<a href=\"models\/Session.php.html#144\">Session::genCleanup<\/a>"],[0,2,"<a href=\"models\/Session.php.html#162\">Session::genAllSessions<\/a>"],[0,1,"<a href=\"models\/Team.php.html#4\">Team::__construct<\/a>"],[0,1,"<a href=\"models\/Team.php.html#19\">Team::getId<\/a>"],[0,1,"<a href=\"models\/Team.php.html#23\">Team::getActive<\/a>"],[0,1,"<a href=\"models\/Team.php.html#27\">Team::getAdmin<\/a>"],[0,1,"<a href=\"models\/Team.php.html#31\">Team::getProtected<\/a>"],[0,1,"<a href=\"models\/Team.php.html#35\">Team::getVisible<\/a>"],[0,1,"<a href=\"models\/Team.php.html#39\">Team::getName<\/a>"],[0,1,"<a href=\"models\/Team.php.html#43\">Team::getPasswordHash<\/a>"],[0,1,"<a href=\"models\/Team.php.html#47\">Team::getPoints<\/a>"],[0,1,"<a href=\"models\/Team.php.html#51\">Team::getLastScore<\/a>"],[0,1,"<a href=\"models\/Team.php.html#55\">Team::getLogo<\/a>"],[0,1,"<a href=\"models\/Team.php.html#59\">Team::getCreatedTs<\/a>"],[0,1,"<a href=\"models\/Team.php.html#63\">Team::teamFromRow<\/a>"],[0,2,"<a href=\"models\/Team.php.html#80\">Team::genWhoUses<\/a>"],[0,1,"<a href=\"models\/Team.php.html#97\">Team::generateHash<\/a>"],[0,1,"<a href=\"models\/Team.php.html#105\">Team::regenerateHash<\/a>"],[0,5,"<a href=\"models\/Team.php.html#113\">Team::genVerifyCredentials<\/a>"],[0,2,"<a href=\"models\/Team.php.html#142\">Team::genCheckTeamStatus<\/a>"],[0,1,"<a href=\"models\/Team.php.html#160\">Team::genCreate<\/a>"],[0,1,"<a href=\"models\/Team.php.html#188\">Team::genAddTeamData<\/a>"],[0,1,"<a href=\"models\/Team.php.html#203\">Team::genTeamData<\/a>"],[0,1,"<a href=\"models\/Team.php.html#215\">Team::genUpdate<\/a>"],[0,1,"<a href=\"models\/Team.php.html#232\">Team::genUpdateTeamPassword<\/a>"],[0,1,"<a href=\"models\/Team.php.html#245\">Team::genDelete<\/a>"],[0,2,"<a href=\"models\/Team.php.html#256\">Team::genSetStatus<\/a>"],[0,2,"<a href=\"models\/Team.php.html#269\">Team::genSetStatusAll<\/a>"],[0,2,"<a href=\"models\/Team.php.html#280\">Team::genSetAdmin<\/a>"],[0,2,"<a href=\"models\/Team.php.html#293\">Team::genSetVisible<\/a>"],[0,2,"<a href=\"models\/Team.php.html#306\">Team::genTeamExist<\/a>"],[0,2,"<a href=\"models\/Team.php.html#325\">Team::genAllActiveTeams<\/a>"],[0,2,"<a href=\"models\/Team.php.html#342\">Team::genAllVisibleTeams<\/a>"],[0,2,"<a href=\"models\/Team.php.html#359\">Team::genLeaderboard<\/a>"],[0,2,"<a href=\"models\/Team.php.html#376\">Team::genAllTeams<\/a>"],[0,1,"<a href=\"models\/Team.php.html#393\">Team::genTeam<\/a>"],[0,1,"<a href=\"models\/Team.php.html#410\">Team::genTeamByName<\/a>"],[0,1,"<a href=\"models\/Team.php.html#427\">Team::genPointsByType<\/a>"],[0,1,"<a href=\"models\/Team.php.html#444\">Team::genPointsHealth<\/a>"],[0,1,"<a href=\"models\/Team.php.html#462\">Team::genLastScore<\/a>"],[0,1,"<a href=\"models\/Team.php.html#473\">Team::genResetAllPoints<\/a>"],[0,1,"<a href=\"models\/Team.php.html#481\">Team::genTeamsCount<\/a>"],[0,2,"<a href=\"models\/Team.php.html#493\">Team::genCompletedLevel<\/a>"],[0,3,"<a href=\"models\/Team.php.html#512\">Team::genMyRank<\/a>"],[0,1,"<a href=\"models\/Token.php.html#4\">Token::__construct<\/a>"],[0,1,"<a href=\"models\/Token.php.html#14\">Token::getId<\/a>"],[0,1,"<a href=\"models\/Token.php.html#18\">Token::getUsed<\/a>"],[0,1,"<a href=\"models\/Token.php.html#22\">Token::getTeamId<\/a>"],[0,1,"<a href=\"models\/Token.php.html#26\">Token::getToken<\/a>"],[0,1,"<a href=\"models\/Token.php.html#30\">Token::getCreatedTs<\/a>"],[0,1,"<a href=\"models\/Token.php.html#34\">Token::getUseTs<\/a>"],[0,1,"<a href=\"models\/Token.php.html#38\">Token::tokenFromRow<\/a>"],[0,1,"<a href=\"models\/Token.php.html#49\">Token::generate<\/a>"],[0,2,"<a href=\"models\/Token.php.html#63\">Token::genCreate<\/a>"],[0,1,"<a href=\"models\/Token.php.html#77\">Token::genExport<\/a>"],[0,1,"<a href=\"models\/Token.php.html#85\">Token::genDelete<\/a>"],[0,2,"<a href=\"models\/Token.php.html#96\">Token::genAllTokens<\/a>"],[0,2,"<a href=\"models\/Token.php.html#111\">Token::genAllAvailableTokens<\/a>"],[0,2,"<a href=\"models\/Token.php.html#127\">Token::genCheck<\/a>"],[0,1,"<a href=\"models\/Token.php.html#146\">Token::genUse<\/a>"],[0,1,"<a href=\"static\/svg\/map\/world-view.php.html#6\">WorldViewMapController::__construct<\/a>"],[0,2,"<a href=\"static\/svg\/map\/world-view.php.html#9\">WorldViewMapController::genRender<\/a>"],[0,1,"<a href=\"static\/svg\/map\/world-view.php.html#29\">WorldViewMapController::renderWorldMap<\/a>"],[0,4,"<a href=\"static\/svg\/map\/world-view.php.html#34\">WorldViewMapController::genRenderWorldMapView<\/a>"],[0,1,"<a href=\"static\/svg\/map\/world.php.html#10\">WorldMapController::genRender<\/a>"],[0,10,"<a href=\"static\/svg\/map\/world.php.html#24\">WorldMapController::genRenderWorldMap<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
