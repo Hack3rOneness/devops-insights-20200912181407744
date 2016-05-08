@@ -80,7 +80,9 @@ function install_nginx() {
     sudo cp "$__mycert" "$__cert"
     sudo cp "$__mykey" "$__key"
   fi
-  cat "$__path/extra/nginx.conf" | sed "s|CTFPATH|$__path/src|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" | sudo tee /etc/nginx/sites-available/fbctf.conf
+  __dhparam="/etc/nginx/certs/dhparam.pem"
+  sudo openssl dhparam -out "$__dhparam" 2048
+  cat "$__path/extra/nginx.conf" | sed "s|CTFPATH|$__path/src|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" | sed "s|DHPARAM_FILE|$__dhparam|g" | sudo tee /etc/nginx/sites-available/fbctf.conf
   sudo rm /etc/nginx/sites-enabled/default
   sudo ln -s /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
 
