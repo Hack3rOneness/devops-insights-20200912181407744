@@ -49,12 +49,12 @@ Be ready to provide the path for your SSL certificates csr and key files.
 ## Development
 
     git clone https://github.com/facebook/fbctf
-    cd fbcf
+    cd fbctf
     vagrant up
 
 
 
-This will create a local virtual machine with Ubuntu 14.04 using Vagrant and Virtual Box as the engine. It will be located on PATH_TO_CTF_FOLDER/.vagrant/machines. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on https://10.10.10.5 (https://10.10.10.5/) by default.
+This will create a local virtual machine with Ubuntu 14.04 using Vagrant and Virtual Box as the engine. It will be located on PATH_TO_CTF_FOLDER/.vagrant/machines. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5] (https://10.10.10.5) by default.
 
 ## Optional installation  
 
