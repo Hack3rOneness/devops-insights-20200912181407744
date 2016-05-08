@@ -35,12 +35,21 @@ source "$CTF_PATH/extra/lib.sh"
 set_motd "$CTF_PATH"
 
 # Off to a good start...
-sudo apt-get update
 package language-pack-en
 package emacs
 
-# osquery, of course!
-install_osquery
+# Adding repos for osquery (of course!), mycli and hhvm
+repo_osquery
+repo_mycli
+repo_hhvm
+
+# We only run this once so provisioning is faster
+sudo apt-get update
+
+# Install osquery, mycli and HHVM
+package osquery
+package mycli
+install_hhvm
 
 # Install htop
 package htop

@@ -11,7 +11,7 @@ function package() {
   if [[ -n "$(dpkg --get-selections | grep $1)" ]]; then
     log "$1 is already installed. skipping."
   else
-    log "installing $1"
+    log "Installing $1"
     sudo DEBIAN_FRONTEND=noninteractive apt-get install $1 -y --no-install-recommends
   fi
 }
@@ -22,22 +22,17 @@ function install_unison() {
   curl -sL https://www.archlinux.org/packages/extra/x86_64/unison/download/ | sudo tar Jx
 }
 
-function install_osquery() {
+function repo_osquery() {
   log "Adding osquery repository keys"
   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B
   sudo add-apt-repository "deb [arch=amd64] https://osquery-packages.s3.amazonaws.com/trusty trusty main"
-  sudo apt-get update
-  package osquery
 }
 
-function install_mycli() {
-  log "Installing MyCLI"
-
+function repo_mycli() {
+  log "Adding MyCLI repository keys"
   curl -s https://packagecloud.io/gpg.key | sudo apt-key add -
   package apt-transport-https
   echo "deb https://packagecloud.io/amjith/mycli/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list
-  sudo apt-get update
-  package mycli
 }
 
 function install_mysql() {
@@ -60,7 +55,6 @@ function install_nginx() {
   local __path=$1
   local __mode=$2
 
-  log "Installing nginx"
   package nginx
 
   log "Deploying certificates"
@@ -91,14 +85,16 @@ function install_nginx() {
   sudo service nginx restart
 }
 
-function install_hhvm() {
-  local __path=$1
-
+function repo_hhvm() {
   log "Adding HHVM key"
   sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
   log "Adding HHVM repo"
   sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
-  sudo apt-get update
+}
+
+function install_hhvm() {
+  local __path=$1
+
   package hhvm
 
   log "Copying HHVM configuration"
