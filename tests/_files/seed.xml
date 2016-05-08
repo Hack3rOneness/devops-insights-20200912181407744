@@ -1,5 +1,31 @@
 <?xml version="1.0" ?>
 <dataset>
+  <table name="teams">
+    <column>id</column>
+    <column>active</column>
+    <column>name</column>
+    <column>password_hash</column>
+    <column>points</column>
+    <column>last_score</column>
+    <column>logo</column>
+    <column>admin</column>
+    <column>protected</column>
+    <column>visible</column>
+    <column>created_ts</column>
+    <row>
+      <value>1</value>
+      <value>1</value>
+      <value>name</value>
+      <value>password_hash</value>
+      <value>10</value>
+      <value>2015-04-26 12:14:20</value>
+      <value>logo</value>
+      <value>0</value>
+      <value>0</value>
+      <value>1</value>
+      <value>2015-04-26 12:14:20</value>
+    </row>
+  </table>
   <table name="levels">
     <column>id</column>
     <column>active</column>
