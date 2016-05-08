@@ -2337,13 +2337,17 @@ class AdminController extends Controller {
         <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
       </header>
       <div class="radio-tabs">
-        <input type="radio" value="scores" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--scores" checked={true}/>
-        <label for="fb--admin--tabs--logs--scores">Scores</label>
-        <input type="radio" value="failures" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--failures"/>
-        <label for="fb--admin--tabs--logs--failures">Failures</label>
+        <input type="radio" value="registration" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--registration" checked={true}/>
+        <label for="fb--admin--tabs--logs--registration">Registration</label>
+        <input type="radio" value="Login" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--login"/>
+        <label for="fb--admin--tabs--logs--login">Login</label>
+        <input type="radio" value="admin" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--admin" checked={true}/>
+        <label for="fb--admin--tabs--logs--admin">Admin</label>
+        <input type="radio" value="game" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--game" checked={true}/>
+        <label for="fb--admin--tabs--logs--game">Game</label>
       </div>
       <div class="tab-content-container">
-        <div class="radio-tab-content active" data-tab="scores">
+        <div class="radio-tab-content active" data-tab="registration">
           <div class="admin-sections">
             <section class="admin-box">
               <div class="management-header">
@@ -2425,7 +2429,7 @@ class AdminController extends Controller {
             </section>
           </div>
         </div>
-        <div class="radio-tab-content" data-tab="failures">
+        <div class="radio-tab-content" data-tab="login">
           <div class="admin-sections">
             <section class="admin-box">
               <div class="management-header">

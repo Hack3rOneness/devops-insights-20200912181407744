@@ -48,8 +48,8 @@ Be ready to provide the path for your SSL certificates csr and key files.
 
 ## Development
 
-    git clone https://github.com/Facebook/FBCTF
-    cd facebook-ctf
+    git clone https://github.com/facebook/fbctf
+    cd fbcf
     vagrant up
 
 
@@ -71,11 +71,11 @@ If you run into any blockers, please submit and issue on the GitHub repo.
 
 ## Contribute 
 
-You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! 
+You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! [Here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) you can find more information about how to contribute.
 
 ## Have more questions? 
 
-Check out the wiki pages attached to this repo. 
+Check out the [wiki pages] (https://github.com/facebook/fbctf/wiki) attached to this repo. 
 
 ## License 
 
