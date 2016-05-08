@@ -41,9 +41,9 @@ The Facebook CTF platform can be provisioned in development or production enviro
 
 ## Production
 
-The target system needs to be Ubuntu 14.04. After installing git, clone the repository. For example, in `/home/ubuntu/facebook-ctf`
+The target system needs to be Ubuntu 14.04. After installing git, clone the repository. For example, in `/home/ubuntu/fbctf`
 Then, push the following command. 
-`./extra/provision.sh prod /home/ubuntu/facebook-ctf` 
+`./extra/provision.sh prod /home/ubuntu/fbcft`
 Be ready to provide the path for your SSL certificates csr and key files.
 
 ## Development
