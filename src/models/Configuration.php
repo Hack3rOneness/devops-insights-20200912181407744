@@ -20,21 +20,6 @@ class Configuration extends Model {
     return $this->description;
   }
 
-  // Create configuration entry.
-  public static async function genCreate(
-    string $field,
-    string $value,
-    string $description,
-  ): Awaitable<void> {
-    $db = await self::genDb();
-    await $db->queryf(
-      'INSERT INTO configuration (field, value, description) VALUES(%s, %s, %s) LIMIT 1',
-      $field,
-      $value,
-      $description,
-    );
-  }
-
   // Get configuration entry.
   public static async function gen(
     string $field,

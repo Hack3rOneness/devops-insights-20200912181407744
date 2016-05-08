@@ -1,5 +1,6 @@
 # Composer libraries
 /vendor
+/reports
 
 # NPM modules
 /node_modules

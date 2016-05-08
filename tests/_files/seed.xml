@@ -61,6 +61,18 @@
       <value>transform</value>
     </row>
   </table>
+  <table name="configuration">
+    <column>id</column>
+    <column>field</column>
+    <column>value</column>
+    <column>description</column>
+    <row>
+      <value>1</value>
+      <value>field</value>
+      <value>value</value>
+      <value>description</value>
+    </row>
+  </table>
   <table name="categories">
     <column>id</column>
     <column>category</column>
@@ -135,6 +147,57 @@
       <value>2</value>
       <value>2016-04-26 12:14:20</value>
       <value>I like it!</value>
+    </row>
+  </table>
+  <table name="failures_log">
+    <column>id</column>
+    <column>ts</column>
+    <column>team_id</column>
+    <column>level_id</column>
+    <column>flag</column>
+    <row>
+      <value>1</value>
+      <value>2016-04-24 17:15:23</value>
+      <value>1</value>
+      <value>1</value>
+      <value>flag</value>
+    </row>
+    <row>
+      <value>2</value>
+      <value>2015-04-24 17:15:23</value>
+      <value>1</value>
+      <value>2</value>
+      <value>flag 2</value>
+    </row>
+  </table>
+  <table name="progressive_log">
+    <column>id</column>
+    <column>ts</column>
+    <column>team_name</column>
+    <column>points</column>
+    <column>iteration</column>
+    <row>
+      <value>1</value>
+      <value>2016-04-24 17:15:23</value>
+      <value>team</value>
+      <value>10</value>
+      <value>1</value>
+    </row>
+  </table>
+  <table name="sessions">
+    <column>id</column>
+    <column>cookie</column>
+    <column>data</column>
+    <column>team_id</column>
+    <column>created_ts</column>
+    <column>last_access_ts</column>
+    <row>
+      <value>1</value>
+      <value>cookie</value>
+      <value>data</value>
+      <value>1</value>
+      <value>2015-04-24 17:15:23</value>
+      <value>2016-04-24 17:15:23</value>
     </row>
   </table>
 </dataset>

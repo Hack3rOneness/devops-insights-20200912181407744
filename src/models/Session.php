@@ -37,14 +37,17 @@ class Session extends Model {
 
   private static function decodeTeamId(string $data): int {
     // This is a bit janky
-    $delim1 = explode('team_id|', $data)[1];
-    $serialized = explode('name|', $delim1)[0];
+    $delim = explode('team_id|', $data)[1];
+    $serialized = explode('name|', $delim)[0];
     $unserialized = strval(unserialize($serialized));
     
     return intval($unserialized);
   }
 
-  public static async function genSetTeamId(string $cookie, string $data): Awaitable<void> {
+  public static async function genSetTeamId(
+    string $cookie,
+    string $data,
+  ): Awaitable<void> {
     $team_id = self::decodeTeamId($data);
     $db = await self::genDb();
     await $db->queryf(
@@ -72,7 +75,7 @@ class Session extends Model {
   ): Awaitable<void> {
     $db = await self::genDb();
     await $db->queryf(
-      'INSERT INTO sessions (cookie, data, created_ts, last_access_ts) VALUES (%s, %s, NOW(), NOW())',
+      'INSERT INTO sessions (cookie, data, created_ts, last_access_ts, team_id) VALUES (%s, %s, NOW(), NOW(), 1)',
       $cookie,
       $data,
     );

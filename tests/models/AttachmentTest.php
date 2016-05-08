@@ -1,6 +1,5 @@
 <?hh
 
-
 class AttachmentTest extends FBCTFTest {
 
   public function testAllAttachments(): void {

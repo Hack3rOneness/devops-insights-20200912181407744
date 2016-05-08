@@ -11,6 +11,9 @@ abstract class Model {
     return await self::$db->genConnection();
   }
 
+  /**
+   * @codeCoverageIgnore
+   */
   protected static function getMc(): MCRouter {
     if (self::$mc === MUST_MODIFY) {
       $config = parse_ini_file('../../settings.ini');

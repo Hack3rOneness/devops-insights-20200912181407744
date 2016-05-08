@@ -30,18 +30,6 @@ class Progressive extends Model {
     return $this->iteration;
   }
 
-  public static async function genGameStatus(
-  ): Awaitable<bool> {
-    $config = await Configuration::gen('game');
-    return $config->getValue() === '1';
-  }
-
-  public static async function genCycle(
-  ): Awaitable<int> {
-    $config = await Configuration::gen('progressive_cycle');
-    return intval($config->getValue());
-  }
-
   private static function progressiveFromRow(Map<string, string> $row): Progressive {
     return new Progressive(
       intval(must_have_idx($row, 'id')),
@@ -59,7 +47,7 @@ class Progressive extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT * FROM progressive_log WHERE team_name = %s GROUP BY iteration ORDER BY points ASC',
+      'SELECT * FROM progressive_log WHERE team_name = %s ORDER BY points ASC',
       $team_name,
     );
 
@@ -69,26 +57,6 @@ class Progressive extends Model {
     }
 
     return $progressive;
-  }
-
-  // Count how many iterations of the progressive scoreboard we have.
-  public static async function genCount(): Awaitable<int> {
-    $db = await self::genDb();
-
-    $result = await $db->queryf(
-      'SELECT COUNT(DISTINCT(iteration)) AS C FROM progressive_log',
-    );
-
-    invariant($result->numRows() === 1, 'Expected exactly one result');
-    return intval($result->mapRows()[0]['C']);
-  }
-
-  // Acquire the data for one iteration of the progressive scoreboard.
-  public static async function genTake(): Awaitable<void> {
-    $db = await self::genDb();
-    await $db->queryf(
-      'INSERT INTO progressive_log (ts, team_name, points, iteration) (SELECT NOW(), name, points, (SELECT IFNULL(MAX(iteration)+1, 1) FROM progressive_log) FROM teams)',
-    );
   }
 
   // Reset the progressive scoreboard.
