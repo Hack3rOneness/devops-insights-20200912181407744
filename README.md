@@ -21,13 +21,13 @@ The Facebook CTF platform can be provisioned in development or production enviro
 
 ## Requirements 
 
-* Production
+* **Production**
     * Hardware 
         * VM or physical machine running Linux 14.04 LTS
     * Software and accounts
         * Git 
         * GitHub Account
-* Development 
+* **Development** 
     * Hardware
         * VM or physical machine capable of running Linux or OSX
     * Software and accounts 
