@@ -59,6 +59,18 @@ class Progressive extends Model {
     return $progressive;
   }
 
+  // Count how many iterations of the progressive scoreboard we have.
+  public static async function genCount(): Awaitable<int> {
+    $db = await self::genDb();
+
+    $result = await $db->queryf(
+      'SELECT COUNT(DISTINCT(iteration)) AS C FROM progressive_log',
+    );
+
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['C']);
+  }
+
   // Reset the progressive scoreboard.
   public static async function genReset(): Awaitable<void> {
     $db = await self::genDb();
