@@ -267,7 +267,7 @@ General Admin
     }
   }
 
-  .selected-logo {
+  .selected-logo, .category {
     @include purista-medium;
 
     padding-bottom: 10px;
@@ -291,6 +291,13 @@ General Admin
 
     a {
       float: right;
+    }
+  }
+
+  .category {
+    input[name=category] {
+      margin-top: 10px;
+      margin-right: 10px;
     }
   }
 

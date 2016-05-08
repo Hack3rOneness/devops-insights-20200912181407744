@@ -1400,17 +1400,21 @@ class AdminController extends Controller {
     $categories = await Category::genAllCategories();
 
     foreach ($categories as $category) {
-      $is_used = await Category::genIsUsed($category->getId());;
-      if ($is_used || $category->getProtected()) {
-        $delete_action = <a></a>;
+      if ($category->getProtected()) {
         $category_name = <span class="logo-name">{$category->getCategory()}</span>;
       } else {
-        $delete_action = <a class="highlighted--red" href="#" data-action="delete">DELETE</a>;
         $category_name =
           <div>
             <input name="category" type="text" value={$category->getCategory()}/>
             <a class="highlighted--yellow" href="#" data-action="save-category">Save</a>
           </div>;
+      }
+
+      $is_used = await Category::genIsUsed($category->getId());;
+      if ($is_used || $category->getProtected()) {
+        $delete_action = <a></a>;
+      } else {
+        $delete_action = <a class="highlighted--red" href="#" data-action="delete">DELETE</a>;
       }
       $adminsections->appendChild(
         <section class="admin-box">
@@ -1422,7 +1426,7 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad">
-                <div class="selected-logo">
+                <div class="category">
                   <label>Category: </label>
                   {$category_name}
                 </div>
