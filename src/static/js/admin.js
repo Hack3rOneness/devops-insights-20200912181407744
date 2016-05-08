@@ -475,19 +475,42 @@ function createQuizLevel(section) {
   var points = $('.level_form input[name=points]', section)[0].value;
   var hint = $('.level_form input[name=hint]', section)[0].value;
   var penalty = $('.level_form input[name=penalty]', section)[0].value;
-  var create_data = {
-    action: 'create_quiz',
+
+  var requiredFields = {
     title: title,
     question: question,
     answer: answer,
-    entity_id: entity_id,
-    points: points,
-    hint: hint,
-    penalty: penalty
+    points: points
   };
-  if (title && question && answer && entity_id && points) {
+  var errors = validateForm(requiredFields);
+
+  if (errors.length === 0) {
+    var create_data = {
+      action: 'create_quiz',
+      title: title,
+      question: question,
+      answer: answer,
+      entity_id: entity_id,
+      points: points,
+      hint: hint,
+      penalty: penalty
+    };
     sendAdminRequest(create_data, true);
+  } else {
+    Modal.loadPopup('p=action&modal=error', 'action-error', function() {
+      $('ul.errors-list').append(errors);
+    });
   }
+}
+
+function validateForm(requiredFields) {
+  var errors = [];
+  for (var field in requiredFields) {
+    if (requiredFields[field] === '') {
+      errors.push($('<li>Missing required field ' + field + '</li>'));
+    }
+  }
+  return errors;
 }
 
 // Create flag level
@@ -827,7 +850,9 @@ module.exports = {
           lockClass = 'section-locked',
           sectionTitle = $self.closest('#fb-main-content').find('.admin-page-header h3').text().replace(' ', '_');
 
-      var $containingDiv;
+      var $containingDiv,
+          entity_select,
+          category_select;
 
       // Route the actions
       if (action === 'save') {
@@ -846,8 +871,14 @@ module.exports = {
         $section.addClass(lockClass);
         updateElement($section);
         $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
-        Dropkick($('[name=entity_id]', $section)[0]).disable();
-        Dropkick($('[name=category_id]', $section)[0]).disable();
+        entity_select = $('[name=entity_id]', $section)[0];
+        category_select = $('[name=category_id]', $section)[0];
+        if (entity_select !== undefined) {
+          Dropkick(entity_select).disable();
+        }
+        if (category_select !== undefined) {
+          Dropkick(category_select).disable();
+        }
       } else if (action === 'add-new') {
         addNewSection($self);
       } else if (action === 'save-category') {
@@ -865,8 +896,14 @@ module.exports = {
       } else if (action === 'edit') {
         $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', false);
-        Dropkick($('[name=entity_id]', $section)[0]).disable(false);
-        Dropkick($('[name=category_id]', $section)[0]).disable(false);
+        entity_select = $('[name=entity_id]', $section)[0];
+        category_select = $('[name=category_id]', $section)[0];
+        if (entity_select !== undefined) {
+          Dropkick(entity_select).disable(false);
+        }
+        if (category_select !== undefined) {
+          Dropkick(category_select).disable(false);
+        }
       } else if (action === 'delete') {
         $section.remove();
         deleteElement($section);
