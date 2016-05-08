@@ -24,7 +24,7 @@ class WorldMapController {
   public async function genRenderWorldMap(): Awaitable<:xhp> {
     $svg_countries = <g class="countries"></g>;
 
-    $all_map_countries = await Country::genAllMapCountries();
+    $all_map_countries = await Country::genAllCountriesForMap();
     foreach ($all_map_countries as $country) {
       $gameboard = await Configuration::gen('gameboard');
       if ($gameboard->getValue() === '1') {

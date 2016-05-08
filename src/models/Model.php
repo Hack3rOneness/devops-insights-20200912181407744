@@ -2,7 +2,7 @@
 
 abstract class Model {
   protected static Db $db = MUST_MODIFY;
-  protected static MCRouter $mc = MUST_MODIFY;
+  protected static Memcached $mc = MUST_MODIFY;
 
   protected static async function genDb(): Awaitable<AsyncMysqlConnection> {
     if (self::$db === MUST_MODIFY) {
@@ -14,14 +14,13 @@ abstract class Model {
   /**
    * @codeCoverageIgnore
    */
-  protected static function getMc(): MCRouter {
+  protected static function getMc(): Memcached {
     if (self::$mc === MUST_MODIFY) {
       $config = parse_ini_file('../../settings.ini');
       $host = must_have_idx($config, 'MC_HOST');
       $port = must_have_idx($config, 'MC_PORT');
-      self::$mc = MCRouter::createSimple(
-        Vector {$host.':'.$port},
-      );
+      self::$mc = new Memcached();
+      self::$mc->addServer($host, $port);
     }
     return self::$mc;
   }

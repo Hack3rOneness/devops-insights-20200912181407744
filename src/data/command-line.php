@@ -18,7 +18,7 @@ class CommandsController extends DataController {
     // List of active countries.
     $countries_results = array();
     $countries_key = "country_list";
-    $all_enabled_countries = await Country::genAllEnabledCountries(false);
+    $all_enabled_countries = await Country::genAllEnabledCountries();
     foreach ($all_enabled_countries as $country) {
       $is_active_level = await $country::genIsActiveLevel(intval($country->getId()));
       if ($country->getUsed() && $is_active_level) {

@@ -33,7 +33,7 @@ class WorldViewMapController {
 
   public async function genRenderWorldMapView(): Awaitable<:xhp> {
     $svg_countries = <g class="countries"></g>;
-    $all_map_countries = await Country::genAllMapCountries();
+    $all_map_countries = await Country::genAllCountriesForMap();
     foreach ($all_map_countries as $country) {
       $is_active_level = await Country::genIsActiveLevel($country->getId());
       $path_class = ($country->getUsed() && $is_active_level)

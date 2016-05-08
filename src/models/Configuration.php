@@ -1,6 +1,9 @@
 <?hh // strict
 
 class Configuration extends Model {
+
+  const string MC_KEY = 'configuration:';
+
   private function __construct(private int $id, private string $field, private string $value, private string $description) {
   }
 
@@ -25,10 +28,10 @@ class Configuration extends Model {
     string $field,
   ): Awaitable<Configuration> {
     $mc = self::getMc();
-    $key = 'configuration:' . $field;
-    $mc_result = await \HH\Asio\wrap($mc->get($key));
-    if ($mc_result->isSucceeded()) {
-      $result = json_decode($mc_result->getResult(), true);
+    $key = self::MC_KEY . $field;
+    $mc_result = $mc->get($key);
+    if ($mc_result) {
+      $result = $mc_result;
     } else {
       $db = await self::genDb();
       $db_result = await $db->queryf(
@@ -37,7 +40,7 @@ class Configuration extends Model {
       );
       invariant($db_result->numRows() === 1, 'Expected exactly one result');
       $result = firstx($db_result->mapRows())->toArray();
-      await $mc->set($key, json_encode($result));
+      $mc->set($key, $result);
     }
     return self::configurationFromRow($result);
   }
@@ -54,7 +57,7 @@ class Configuration extends Model {
       $field,
     );
 
-    await self::getMc()->del('configuration:' . $field);
+    self::getMc()->delete(self::MC_KEY . $field);
   }
 
   // Check if field is valid.

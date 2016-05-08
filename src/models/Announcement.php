@@ -1,6 +1,9 @@
 <?hh // strict
 
 class Announcement extends Model {
+
+  const string MC_KEY = 'all_announcements:';
+
   private function __construct(
     private int $id,
     private string $announcement,
@@ -20,7 +23,7 @@ class Announcement extends Model {
     return $this->ts;
   }
 
-  private static function announcementFromRow(Map<string, string> $row): Announcement {
+  private static function announcementFromRow(array<string, string> $row): Announcement {
     return new Announcement(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'announcement'),
@@ -34,6 +37,8 @@ class Announcement extends Model {
       'INSERT INTO announcements_log (ts, announcement) (SELECT NOW(), %s) LIMIT 1',
       $announcement,
     );
+
+    self::getMc()->delete(self::MC_KEY);
   }
 
   public static async function genDelete(int $announcement_id): Awaitable<void> {
@@ -42,17 +47,31 @@ class Announcement extends Model {
       'DELETE FROM announcements_log WHERE id = %d LIMIT 1',
       $announcement_id,
     );
+
+    self::getMc()->delete(self::MC_KEY);
   }
 
   // Get all tokens.
   public static async function genAllAnnouncements(): Awaitable<array<Announcement>> {
-    $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM announcements_log ORDER BY ts DESC',
-    );
+    $mc = self::getMc();
+    $mc_result = $mc->get(self::MC_KEY);
+
+    if ($mc_result) {
+      $rows = $mc_result;
+    } else {
+      $db = await self::genDb();
+      $db_result = await $db->queryf(
+        'SELECT * FROM announcements_log ORDER BY ts DESC',
+      );
+      $rows = array_map(
+        $map ==> $map->toArray(),
+        $db_result->mapRows(),
+      );
+      $mc->set(self::MC_KEY, $rows);
+    }
 
     $announcements = array();
-    foreach ($result->mapRows() as $row) {
+    foreach ($rows as $row) {
       $announcements[] = self::announcementFromRow($row);
     }
 
