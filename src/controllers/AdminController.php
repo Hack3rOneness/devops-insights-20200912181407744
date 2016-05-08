@@ -415,7 +415,7 @@ class AdminController extends Controller {
           <section class="admin-box">
             <form class="announcements_form">
               <input type="hidden" name="announcement_id" value={strval($announcement->getId())}/>
-              <header class="countries-management-header">
+              <header class="management-header">
                 <h6>{time_ago($announcement->getTs())}</h6>
                 <a class="highlighted--red" href="#" data-action="delete">DELETE</a>
               </header>
@@ -1416,7 +1416,7 @@ class AdminController extends Controller {
         <section class="admin-box">
           <form class="categories_form">
             <input type="hidden" name="category_id" value={strval($category->getId())}/>
-            <header class="countries-management-header">
+            <header class="management-header">
               <h6>ID{strval($category->getId())}</h6>
               {$delete_action}
             </header>
@@ -1508,7 +1508,7 @@ class AdminController extends Controller {
           <form class="country_form">
             <input type="hidden" name="country_id" value={strval($country->getId())}/>
             <input type="hidden" name="status_action" value={$highlighted_action}/>
-            <header class="countries-management-header">
+            <header class="management-header">
               <h6>ID{strval($country->getId())}</h6>
               {$status_action}
             </header>
@@ -1989,7 +1989,7 @@ class AdminController extends Controller {
           <form class="logo_form">
             <input type="hidden" name="logo_id" value={strval($logo->getId())}/>
             <input type="hidden" name="status_action" value={strtolower($action_text)}/>
-            <header class="logo-management-header">
+            <header class="management-header">
               <h6>ID{strval($logo->getId())}</h6>
               <a class={$highlighted_color} href="#" data-action={str_replace('_', '-', $highlighted_action)}>{$action_text}</a>
             </header>
@@ -2119,7 +2119,7 @@ class AdminController extends Controller {
         <div class="radio-tab-content active" data-tab="flags">
           <div class="admin-sections">
             <section class="admin-box">
-              <div class="logo-management-header">
+              <div class="management-header">
                 <h6>Flag 01</h6>
               </div>
               <div class="fb-column-container">
@@ -2158,7 +2158,7 @@ class AdminController extends Controller {
               </div>
             </section>
             <section class="admin-box">
-              <div class="logo-management-header">
+              <div class="management-header">
                 <h6>Flag 02</h6>
               </div>
               <div class="fb-column-container">
@@ -2342,7 +2342,7 @@ class AdminController extends Controller {
         <div class="radio-tab-content active" data-tab="scores">
           <div class="admin-sections">
             <section class="admin-box">
-              <div class="logo-management-header">
+              <div class="management-header">
                 <h6>Flag 01</h6>
               </div>
               <div class="fb-column-container">
@@ -2381,7 +2381,7 @@ class AdminController extends Controller {
               </div>
             </section>
             <section class="admin-box">
-              <div class="logo-management-header">
+              <div class="management-header">
                 <h6>Flag 02</h6>
               </div>
               <div class="fb-column-container">
@@ -2424,7 +2424,7 @@ class AdminController extends Controller {
         <div class="radio-tab-content" data-tab="failures">
           <div class="admin-sections">
             <section class="admin-box">
-              <div class="logo-management-header">
+              <div class="management-header">
                 <h6>Flag 03</h6>
               </div>
               <div class="fb-column-container">
@@ -2463,7 +2463,7 @@ class AdminController extends Controller {
               </div>
             </section>
             <section class="admin-box">
-              <div class="logo-management-header">
+              <div class="management-header">
                 <h6>Flag 04</h6>
               </div>
               <div class="fb-column-container">
