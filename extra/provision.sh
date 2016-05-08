@@ -46,10 +46,12 @@ repo_hhvm
 # We only run this once so provisioning is faster
 sudo apt-get update
 
-# Install osquery, mycli and HHVM
+# Install osquery and mycli
 package osquery
 package mycli
-install_hhvm
+
+# Install memcached
+package memcached
 
 # Install htop
 package htop
@@ -59,9 +61,6 @@ install_mysql "$P_ROOT"
 
 # Install MyCLI
 install_mycli
-
-# Install memcached
-package memcached
 
 # Install git
 package git
