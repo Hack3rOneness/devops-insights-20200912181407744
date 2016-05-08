@@ -149,11 +149,13 @@ function addNewSection($clicked) {
 
   $('.dk-select', $newSection).remove();
   $('select', $newSection).dropkick();
-  var select1 = $('[name=entity_id]', $newSection)[0];
-  var select2 = $('[name=category_id]', $newSection)[0];
-  if (select1 !== undefined && select2 !== undefined) {
-    Dropkick(select1).disable(false);
-    Dropkick(select2).disable(false);
+  var entity_select = $('[name=entity_id]', $newSection)[0];
+  var category_select = $('[name=category_id]', $newSection)[0];
+  if (entity_select !== undefined) {
+    Dropkick(entity_select).disable(false);
+  }
+  if (category_select !== undefined) {
+    Dropkick(category_select).disable(false);
   }
 
   if (titleText.indexOf('team') > -1) {
