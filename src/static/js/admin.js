@@ -84,13 +84,13 @@ function validateAdminForm($clicked) {
 
   $required.removeClass(errorClass).each(function() {
     var $self = $(this),
-        $requiredEl = $('input[type="text"], input[type="password"]', $self),
+        $requiredEl = $('input[type="text"], input[type="password"], textarea', $self),
         $logoName = $('.logo-name', $self);
 
     // All the conditions that would make this element trigger an error
     if (
       $requiredEl.val() === '' ||
-        $logoName.length > 0 && $logoName.text() === ''
+      $logoName.length > 0 && $logoName.text() === ''
     ) {
       $self.addClass(errorClass);
       valid = false;
@@ -476,41 +476,17 @@ function createQuizLevel(section) {
   var hint = $('.level_form input[name=hint]', section)[0].value;
   var penalty = $('.level_form input[name=penalty]', section)[0].value;
 
-  var requiredFields = {
+  var create_data = {
+    action: 'create_quiz',
     title: title,
     question: question,
     answer: answer,
-    points: points
+    entity_id: entity_id,
+    points: points,
+    hint: hint,
+    penalty: penalty
   };
-  var errors = validateForm(requiredFields);
-
-  if (errors.length === 0) {
-    var create_data = {
-      action: 'create_quiz',
-      title: title,
-      question: question,
-      answer: answer,
-      entity_id: entity_id,
-      points: points,
-      hint: hint,
-      penalty: penalty
-    };
-    sendAdminRequest(create_data, true);
-  } else {
-    Modal.loadPopup('p=action&modal=error', 'action-error', function() {
-      $('ul.errors-list').append(errors);
-    });
-  }
-}
-
-function validateForm(requiredFields) {
-  var errors = [];
-  for (var field in requiredFields) {
-    if (requiredFields[field] === '') {
-      errors.push($('<li>Missing required field ' + field + '</li>'));
-    }
-  }
-  return errors;
+  sendAdminRequest(create_data, true);
 }
 
 // Create flag level
@@ -523,6 +499,7 @@ function createFlagLevel(section) {
   var points = $('.level_form input[name=points]', section)[0].value;
   var hint = $('.level_form input[name=hint]', section)[0].value;
   var penalty = $('.level_form input[name=penalty]', section)[0].value;
+
   var create_data = {
     action: 'create_flag',
     title: title,
@@ -534,9 +511,7 @@ function createFlagLevel(section) {
     hint: hint,
     penalty: penalty
   };
-  if (title && description && flag && entity_id && points) {
-    sendAdminRequest(create_data, true);
-  }
+  sendAdminRequest(create_data, true);
 }
 
 // Create base level
@@ -549,6 +524,7 @@ function createBaseLevel(section) {
   var bonus = $('.level_form input[name=bonus]', section)[0].value;
   var hint = $('.level_form input[name=hint]', section)[0].value;
   var penalty = $('.level_form input[name=penalty]', section)[0].value;
+
   var create_data = {
     action: 'create_base',
     title: title,
@@ -560,9 +536,7 @@ function createBaseLevel(section) {
     hint: hint,
     penalty: penalty
   };
-  if (title && description && entity_id && points) {
-    sendAdminRequest(create_data, true);
-  }
+  sendAdminRequest(create_data, true);
 }
 
 // Update generic level
@@ -593,6 +567,7 @@ function updateQuizLevel(section) {
   var hint = $('.level_form input[name=hint]', section)[0].value;
   var penalty = $('.level_form input[name=penalty]', section)[0].value;
   var level_id = $('.level_form input[name=level_id]', section)[0].value;
+
   var update_data = {
     action: 'update_quiz',
     title: title,
@@ -606,9 +581,7 @@ function updateQuizLevel(section) {
     penalty: penalty,
     level_id: level_id
   };
-  if (title && question && answer && entity_id && points) {
-    sendAdminRequest(update_data, false);
-  }
+  sendAdminRequest(update_data, false);
 }
 
 // Update flag level
@@ -624,6 +597,7 @@ function updateFlagLevel(section) {
   var hint = $('.level_form input[name=hint]', section)[0].value;
   var penalty = $('.level_form input[name=penalty]', section)[0].value;
   var level_id = $('.level_form input[name=level_id]', section)[0].value;
+
   var update_data = {
     action: 'update_flag',
     title: title,
@@ -638,9 +612,7 @@ function updateFlagLevel(section) {
     penalty: penalty,
     level_id: level_id
   };
-  if (title && description && flag && entity_id && points) {
-    sendAdminRequest(update_data, false);
-  }
+  sendAdminRequest(update_data, false);
 }
 
 // Update base level
@@ -654,6 +626,7 @@ function updateBaseLevel(section) {
   var hint = $('.level_form input[name=hint]', section)[0].value;
   var penalty = $('.level_form input[name=penalty]', section)[0].value;
   var level_id = $('.level_form input[name=level_id]', section)[0].value;
+
   var update_data = {
     action: 'update_base',
     title: title,
@@ -666,9 +639,7 @@ function updateBaseLevel(section) {
     penalty: penalty,
     level_id: level_id
   };
-  if (title && description && entity_id && points) {
-    sendAdminRequest(update_data, false);
-  }
+  sendAdminRequest(update_data, false);
 }
 
 // Delete team
@@ -714,9 +685,7 @@ function updateTeam(section) {
     password: team_password,
     logo: team_logo
   };
-  if (team_id && team_name && team_logo) {
-    sendAdminRequest(update_data, false);
-  }
+  sendAdminRequest(update_data, false);
 }
 
 // Toggle team option
@@ -852,24 +821,21 @@ module.exports = {
 
       var $containingDiv,
           entity_select,
-          category_select;
+          category_select,
+          valid;
 
       // Route the actions
       if (action === 'save') {
-        var valid = validateAdminForm($self);
+        valid = validateAdminForm($self);
 
-        if (actionModal && valid === false) {
-          actionModal = 'error';
-        } else {
+        if (valid === true) {
           updateElement($section);
-        }
-        if (valid) {
           $section.addClass(lockClass);
           $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
         }
       } else if (action === 'save-no-validation') {
-        $section.addClass(lockClass);
         updateElement($section);
+        $section.addClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
         entity_select = $('[name=entity_id]', $section)[0];
         category_select = $('[name=category_id]', $section)[0];
@@ -884,7 +850,10 @@ module.exports = {
       } else if (action === 'save-category') {
         updateCategory($section);
       } else if (action === 'create') {
-        createElement($section);
+        valid = validateAdminForm($self);
+        if (valid === true) {
+          createElement($section);
+        }
       } else if (action === 'create-announcement') {
         createAnnouncement($section);
       } else if (action === 'backup-db') {

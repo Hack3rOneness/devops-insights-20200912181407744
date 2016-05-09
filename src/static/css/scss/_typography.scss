@@ -695,7 +695,8 @@ textarea {
   }
 
   input[type="text"],
-  input[type="password"] {
+  input[type="password"],
+  textarea {
     color: $red;
     border-color: $red;
   }

@@ -532,7 +532,7 @@ class AdminController extends Controller {
     $countries_select = await $this->genGenerateCountriesSelect(0);
     $adminsections =
       <div class="admin-sections">
-        <section id="new-element" class="admin-box completely-hidden">
+        <section id="new-element" class="validate-form admin-box completely-hidden">
           <form class="level_form quiz_form">
             <input type="hidden" name="level_type" value="quiz"/>
             <header class="admin-box-header">
@@ -540,11 +540,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" placeholder="Level title"/>
                 </div>
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Question</label>
                   <textarea name="question" placeholder="Quiz question" rows={4} ></textarea>
                 </div>
@@ -554,12 +554,12 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="form-el fb-column-container col-gutters">
-                  <div class="col col-2-3 el--block-label el--full-text">
+                <div class="fb-column-container col-gutters">
+                  <div class="form-el--required col col-2-3 el--block-label el--full-text">
                     <label>Answer</label>
                     <input name="answer" type="text"/>
                   </div>
-                  <div class="col col-1-3 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>Points</label>
                     <input name="points" type="text"/>
                   </div>
@@ -635,7 +635,7 @@ class AdminController extends Controller {
       $countries_select = await $this->genGenerateCountriesSelect($quiz->getEntityId());
 
       $adminsections->appendChild(
-        <section class="admin-box section-locked">
+        <section class="admin-box validate-form section-locked">
           <form class="level_form quiz_form" name={$quiz_id}>
             <input type="hidden" name="level_type" value="quiz"/>
             <input type="hidden" name="level_id" value={strval($quiz->getId())}/>
@@ -650,11 +650,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" value={$quiz->getTitle()} disabled={true}/>
                 </div>
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Question</label>
                   <textarea name="question" rows={6} disabled={true}>{$quiz->getDescription()}</textarea>
                 </div>
@@ -664,21 +664,21 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Answer</label>
                   <input name="answer" type="password" value={$quiz->getFlag()} disabled={true}/>
                   <a href="" class="toggle_answer_visibility">Show Answer</a>
                 </div>
-                <div class="form-el fb-column-container col-gutters">
-                  <div class="col col-1-3 el--block-label el--full-text">
+                <div class="fb-column-container col-gutters">
+                  <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>Points</label>
                     <input name="points" type="text" value={strval($quiz->getPoints())} disabled={true}/>
                   </div>
-                  <div class="col col-1-3 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>Bonus</label>
                     <input name="bonus" type="text" value={strval($quiz->getBonus())} disabled={true}/>
                   </div>
-                  <div class="col col-1-3 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>-Dec</label>
                     <input name="bonus_dec" type="text" value={strval($quiz->getBonusDec())} disabled={true}/>
                   </div>
@@ -699,7 +699,7 @@ class AdminController extends Controller {
               <div class="button-right">
                 <a href="#" class="admin--edit" data-action="edit">EDIT</a>
                 <button class="fb-cta cta--red" data-action="delete">Delete</button>
-                <button class="fb-cta cta--yellow" data-action="save-no-validation">Save</button>
+                <button class="fb-cta cta--yellow" data-action="save">Save</button>
               </div>
             </div>
           </form>
@@ -728,7 +728,7 @@ class AdminController extends Controller {
 
     $adminsections =
       <div class="admin-sections">
-        <section id="new-element" class="admin-box completely-hidden">
+        <section id="new-element" class="validate-form admin-box completely-hidden">
           <form class="level_form flag_form">
             <input type="hidden" name="level_type" value="flag"/>
             <header class="admin-box-header">
@@ -736,15 +736,15 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" placeholder="Level title"/>
                 </div>
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Description</label>
                   <textarea name="description" placeholder="Level description" rows={4}></textarea>
                 </div>
-                <div class="form-el fb-column-container col-gutters">
+                <div class="form-el--required fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
                     {$countries_select}
@@ -756,12 +756,12 @@ class AdminController extends Controller {
             </div>
           </div>
           <div class="col col-pad col-1-2">
-            <div class="form-el fb-column-container col-gutters">
-              <div class="col col-2-3 el--block-label el--full-text">
+            <div class="fb-column-container col-gutters">
+              <div class="form-el--required col col-2-3 el--block-label el--full-text">
                 <label>Flag</label>
                 <input name="flag" type="text"/>
               </div>
-              <div class="col col-1-3 el--block-label el--full-text">
+              <div class="form-el--required col col-1-3 el--block-label el--full-text">
                 <label>Points</label>
                 <input name="points" type="text"/>
               </div>
@@ -948,7 +948,7 @@ class AdminController extends Controller {
       $level_categories_select = await $this->genGenerateLevelCategoriesSelect($flag->getCategoryId());
 
       $adminsections->appendChild(
-        <section class="admin-box section-locked">
+        <section class="validate-form admin-box section-locked">
           <form class="level_form flag_form" name={$flag_id}>
             <input type="hidden" name="level_type" value="flag"/>
             <input type="hidden" name="level_id" value={strval($flag->getId())}/>
@@ -963,11 +963,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" value={$flag->getTitle()} disabled={true}/>
                 </div>
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Description</label>
                   <textarea name="description" rows={6} disabled={true}>{$flag->getDescription()}</textarea>
                 </div>
@@ -983,23 +983,23 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="form-el fb-column-container col-gutters">
-                  <div class="col el--block-label el--full-text">
+                <div class="fb-column-container col-gutters">
+                  <div class="form-el--required col el--block-label el--full-text">
                     <label>Flag</label>
                     <input name="flag" type="password" value={$flag->getFlag()} disabled={true}/>
                     <a href="" class="toggle_answer_visibility">Show Answer</a>
                   </div>
                 </div>
                 <div class="form-el fb-column-container col-gutters">
-                  <div class="col col-1-3 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>Points</label>
                     <input name="points" type="text" value={strval($flag->getPoints())} disabled={true}/>
                   </div>
-                  <div class="col col-1-3 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>Bonus</label>
                     <input name="bonus" type="text" value={strval($flag->getBonus())} disabled={true}/>
                   </div>
-                  <div class="col col-1-3 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>-Dec</label>
                     <input name="bonus_dec" type="text" value={strval($flag->getBonusDec())} disabled={true}/>
                   </div>
@@ -1023,7 +1023,7 @@ class AdminController extends Controller {
             <div class="button-right">
               <a href="#" class="admin--edit" data-action="edit">EDIT</a>
               <button class="fb-cta cta--red" data-action="delete">Delete</button>
-              <button class="fb-cta cta--yellow" data-action="save-no-validation">Save</button>
+              <button class="fb-cta cta--yellow" data-action="save">Save</button>
             </div>
             <div class="button-left">
               <button class="fb-cta" data-action="add-attachment">+ Attachment</button>
@@ -1055,7 +1055,7 @@ class AdminController extends Controller {
 
     $adminsections =
       <div class="admin-sections">
-        <section id="new-element" class="admin-box completely-hidden">
+        <section id="new-element" class="validate-form admin-box completely-hidden">
           <form class="level_form base_form">
             <input type="hidden" name="level_type" value="base"/>
             <header class="admin-box-header">
@@ -1063,11 +1063,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" placeholder="Level title"/>
                 </div>
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label>Description</label>
                   <textarea name="description" placeholder="Level description" rows={4}></textarea>
                 </div>
@@ -1083,12 +1083,12 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="form-el fb-column-container col-gutters">
-                  <div class="col col-1-2 el--block-label el--full-text">
+                <div class="fb-column-container col-gutters">
+                  <div class="form-el--required col col-1-2 el--block-label el--full-text">
                     <label>Keep Points</label>
                     <input name="points" type="text"/>
                   </div>
-                  <div class="col col-1-2 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-2 el--block-label el--full-text">
                     <label>Capture points</label>
                     <input name="bonus" type="text"/>
                   </div>
@@ -1279,78 +1279,78 @@ class AdminController extends Controller {
       $level_categories_select = await $this->genGenerateLevelCategoriesSelect($base->getCategoryId());
 
       $adminsections->appendChild(
-        <section class="admin-box section-locked">
-              <form class="level_form base_form" name={$base_id}>
-                <input type="hidden" name="level_type" value="base"/>
-                <input type="hidden" name="level_id" value={strval($base->getId())}/>
-                <header class="admin-box-header">
-                  <h3>Base Level {$c}</h3>
-                  <div class="admin-section-toggle radio-inline">
-                    <input type="radio" name={$base_status_name} id={$base_status_on_id} checked={$base_active_on}/>
-                    <label for={$base_status_on_id}>On</label>
-                    <input type="radio" name={$base_status_name} id={$base_status_off_id} checked={$base_active_off}/>
-                    <label for={$base_status_off_id}>Off</label>
-                  </div>
-                </header>
-                <div class="fb-column-container">
-                  <div class="col col-pad col-1-2">
-                    <div class="form-el el--block-label el--full-text">
-                      <label>Title</label>
-                      <input name="title" type="text" value={$base->getTitle()} disabled={true}/>
-                    </div>
-                    <div class="form-el el--block-label el--full-text">
-                      <label>Description</label>
-                      <textarea name="description" rows={4} disabled={true}>{$base->getDescription()}</textarea>
-                    </div>
-                    <div class="form-el fb-column-container col-gutters">
-                      <div class="col col-1-2 el--block-label el--full-text">
-                        <label for="">Country</label>
-                        {$countries_select}
-                      </div>
-                      <div class="col col-1-2 el--block-label el--full-text">
-                        <label for="">Category</label>
-                        {$level_categories_select}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col col-pad col-1-2">
-                    <div class="form-el fb-column-container col-gutters">
-                      <div class="col col-1-2 el--block-label el--full-text">
-                        <label>Points</label>
-                        <input name="points" type="text" value={strval($base->getPoints())} disabled={true}/>
-                      </div>
-                      <div class="col col-1-2 el--block-label el--full-text">
-                        <label>Bonus</label>
-                        <input name="bonus" type="text" value={strval($base->getBonus())} disabled={true}/>
-                      </div>
-                    </div>
-                    <div class="form-el fb-column-container col-gutters">
-                      <div class="col col-1-2 el--block-label el--full-text">
-                        <label>Hint</label>
-                        <input name="hint" type="text" value={$base->getHint()} disabled={true}/>
-                      </div>
-                      <div class="col col-1-2 el--block-label el--full-text">
-                        <label>Hint Penalty</label>
-                        <input name="penalty" type="text" value={strval($base->getPenalty())} disabled={true}/>
-                      </div>
-                    </div>
-                  </div>
+        <section class="validate-form admin-box section-locked">
+          <form class="level_form base_form" name={$base_id}>
+            <input type="hidden" name="level_type" value="base"/>
+            <input type="hidden" name="level_id" value={strval($base->getId())}/>
+            <header class="admin-box-header">
+              <h3>Base Level {$c}</h3>
+              <div class="admin-section-toggle radio-inline">
+                <input type="radio" name={$base_status_name} id={$base_status_on_id} checked={$base_active_on}/>
+                <label for={$base_status_on_id}>On</label>
+                <input type="radio" name={$base_status_name} id={$base_status_off_id} checked={$base_active_off}/>
+                <label for={$base_status_off_id}>Off</label>
+              </div>
+            </header>
+            <div class="fb-column-container">
+              <div class="col col-pad col-1-2">
+                <div class="form-el--required el--block-label el--full-text">
+                  <label>Title</label>
+                  <input name="title" type="text" value={$base->getTitle()} disabled={true}/>
                 </div>
-              </form>
-              {$attachments_div}
-              {$links_div}
-              <div class="admin-buttons admin-row">
-                <div class="button-right">
-                  <a href="#" class="admin--edit" data-action="edit">EDIT</a>
-                  <button class="fb-cta cta--red" data-action="delete">Delete</button>
-                  <button class="fb-cta cta--yellow" data-action="save-no-validation">Save</button>
+                <div class="form-el--required el--block-label el--full-text">
+                  <label>Description</label>
+                  <textarea name="description" rows={4} disabled={true}>{$base->getDescription()}</textarea>
                 </div>
-                <div class="button-left">
-                  <button class="fb-cta" data-action="add-attachment">+ Attachment</button>
-                  <button class="fb-cta" data-action="add-link">+ Link</button>
+                <div class="form-el fb-column-container col-gutters">
+                  <div class="col col-1-2 el--block-label el--full-text">
+                    <label for="">Country</label>
+                    {$countries_select}
+                  </div>
+                  <div class="col col-1-2 el--block-label el--full-text">
+                    <label for="">Category</label>
+                    {$level_categories_select}
+                  </div>
                 </div>
               </div>
-            </section>
+              <div class="col col-pad col-1-2">
+                <div class="form-el fb-column-container col-gutters">
+                  <div class="col col-1-2 el--block-label el--full-text">
+                    <label>Points</label>
+                    <input name="points" type="text" value={strval($base->getPoints())} disabled={true}/>
+                  </div>
+                  <div class="col col-1-2 el--block-label el--full-text">
+                    <label>Bonus</label>
+                    <input name="bonus" type="text" value={strval($base->getBonus())} disabled={true}/>
+                  </div>
+                </div>
+                <div class="form-el fb-column-container col-gutters">
+                  <div class="col col-1-2 el--block-label el--full-text">
+                    <label>Hint</label>
+                    <input name="hint" type="text" value={$base->getHint()} disabled={true}/>
+                  </div>
+                  <div class="col col-1-2 el--block-label el--full-text">
+                    <label>Hint Penalty</label>
+                    <input name="penalty" type="text" value={strval($base->getPenalty())} disabled={true}/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          {$attachments_div}
+          {$links_div}
+          <div class="admin-buttons admin-row">
+            <div class="button-right">
+              <a href="#" class="admin--edit" data-action="edit">EDIT</a>
+              <button class="fb-cta cta--red" data-action="delete">Delete</button>
+              <button class="fb-cta cta--yellow" data-action="save">Save</button>
+            </div>
+            <div class="button-left">
+              <button class="fb-cta" data-action="add-attachment">+ Attachment</button>
+              <button class="fb-cta" data-action="add-link">+ Link</button>
+            </div>
+          </div>
+        </section>
       );
       $c++;
     }
@@ -1729,13 +1729,13 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label class="admin-label" for="">Team Name</label>
                   <input name="team_name" type="text" value="" maxlength={20}/>
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="form-el el--block-label el--full-text">
+                <div class="form-el--required el--block-label el--full-text">
                   <label class="admin-label" for="">Password</label>
                   <input name="password" type="password" value=""/>
                 </div>
@@ -1748,11 +1748,10 @@ class AdminController extends Controller {
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
                       <use href="#icon--badge-"/>
-
                     </svg>
                   </div>
                 </div>
-                <div class="col col-grow">
+                <div class="form-el--required col col-grow">
                   <div class="selected-logo">
                     <label>Selected Logo: </label>
                     <span class="logo-name"></span>
@@ -1859,11 +1858,11 @@ class AdminController extends Controller {
                   </header>
                   <div class="fb-column-container">
                     <div class="col col-pad col-1-3">
-                      <div class="form-el el--block-label el--full-text">
+                      <div class="form-el--required el--block-label el--full-text">
                         <label class="admin-label" for="">Team Name</label>
                         <input name="team_name" type="text" value={$team->getName()} maxlength={20} disabled={true}/>
                       </div>
-                      <div class="form-el el--block-label el--full-text">
+                      <div class="form-el--required el--block-label el--full-text">
                         <label class="admin-label" for="">Score</label>
                         <input name="points" type="text" value={strval($team->getPoints())} disabled={true}/>
                       </div>
@@ -1897,11 +1896,10 @@ class AdminController extends Controller {
                         <div class="post-avatar has-avatar">
                           <svg class="icon icon--badge">
                             <use href={$xlink_href} />
-
                           </svg>
                         </div>
                       </div>
-                      <div class="col col-grow">
+                      <div class="form-el--required col col-grow">
                         <div class="selected-logo">
                           <label>Selected Logo: </label>
                           <span class="logo-name">{$team->getLogo()}</span>
@@ -1911,7 +1909,7 @@ class AdminController extends Controller {
                       <div class="col col-shrink admin-buttons">
                         <a href="#" class="admin--edit" data-action="edit">EDIT</a>
                         {$delete_button}
-                        <button class="fb-cta cta--yellow js-confirm-save" data-action="save-no-validation">Save</button>
+                        <button class="fb-cta cta--yellow js-confirm-save" data-action="save">Save</button>
                       </div>
                     </div>
                   </div>
