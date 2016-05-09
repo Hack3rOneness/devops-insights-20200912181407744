@@ -536,7 +536,7 @@ class Level extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT * FROM levels WHERE active = 1',
+      'SELECT * FROM levels WHERE active = 1 ORDER BY id',
     );
 
     $levels = array();
@@ -553,7 +553,7 @@ class Level extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT * FROM levels WHERE active = 1 AND type = %s',
+      'SELECT * FROM levels WHERE active = 1 AND type = %s ORDER BY id',
       'base'
     );
 
@@ -572,7 +572,7 @@ class Level extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT * FROM levels WHERE type = %s ORDER BY active DESC',
+      'SELECT * FROM levels WHERE type = %s ORDER BY id',
       $type,
     );
 
