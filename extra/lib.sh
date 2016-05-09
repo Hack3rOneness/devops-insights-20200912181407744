@@ -51,6 +51,22 @@ function set_motd() {
   sudo cp "$__path/extra/motd-ctf.sh" /etc/update-motd.d/10-help-text
 }
 
+function run_grunt() {
+  local __path=$1
+  local __mode=$2
+
+  grunt
+
+  # grunt watch on the VM will make sure your js files are
+  # properly updated when developing 'remotely' with unison.
+  # grunt watch might take up to 5 seconds to update a file,
+  # give it some time while you are developing.
+  if [[ $__mode = "dev" ]]; then
+    cd $__path
+    grunt watch &
+  fi
+}
+
 function install_nginx() {
   local __path=$1
   local __mode=$2

@@ -77,7 +77,7 @@ sudo npm install -g grunt
 sudo npm install -g flow-bin
 
 # Run grunt to generate JS files
-grunt
+run_grunt "$CTF_PATH" "$MODE"
 
 # Install nginx
 install_nginx "$CTF_PATH" "$MODE"
