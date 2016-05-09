@@ -56,6 +56,11 @@ function activateTeams() {
       var $modal = $('#fb-modal'),
           rank = teamData.rank + "",
           $teamMembers = $('.team-members', $modal);
+
+      $('[data-modal=scoreboard]').on('click', function() {
+        Modal.load('p=scoreboard&modal=scoreboard', 'scoreboard');
+      });
+
       // team name
       $('.team-name', $modal).text(team);
       // team badge
