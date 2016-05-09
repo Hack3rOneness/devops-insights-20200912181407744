@@ -50,8 +50,9 @@ class ActionModalController extends ModalController {
         $title = <h4>status_<span class="highlighted--red">Error</span></h4>;
         $content =
           <div class="action-main">
+            <div class="error-text">
             <p>Sorry your form was not saved. Please correct the all errors and save again.</p>
-            <br />
+            </div>
             <ul class="errors-list"></ul>
             <div class="action-actionable">
               <a href="#" class="fb-cta cta--yellow js-close-modal">OK</a>

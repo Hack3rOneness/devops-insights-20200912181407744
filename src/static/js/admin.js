@@ -223,6 +223,12 @@ function createAttachment(section) {
   var attachment_file = $('.attachment_form input[name=attachment_file]', section)[0].files[0];
   var csrf_token = $('input[name=csrf_token]')[0].value;
 
+  if (!validateFilename(filename)) {
+    Modal.loadPopup('p=action&modal=error', 'action-error', function() {
+      $('.error-text').html('<p>Filename can only contain letters, numbers, underscores, hyphens, and periods</p>');
+    });
+    return;
+  }
   if (level_id && filename && attachment_file) {
     var formData = new FormData();
     formData.append('attachment_file', attachment_file);
@@ -251,6 +257,10 @@ function createAttachment(section) {
       }
     });
   }
+}
+
+function validateFilename(filename) {
+  return filename.match(new RegExp('^[\\w\\-\\.]+$')) !== null;
 }
 
 // Create new link
