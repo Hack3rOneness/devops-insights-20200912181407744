@@ -226,4 +226,25 @@
       <value>2016-04-24 17:15:23</value>
     </row>
   </table>
+  <table name="registration_tokens">
+    <column>id</column>
+    <column>token</column>
+    <column>used</column>
+    <column>team_id</column>
+    <column>created_ts</column>
+    <row>
+      <value>1</value>
+      <value>token</value>
+      <value>0</value>
+      <value>1</value>
+      <value>2016-04-24 17:15:23</value>
+    </row>
+    <row>
+      <value>2</value>
+      <value>token 2</value>
+      <value>1</value>
+      <value>2</value>
+      <value>2016-04-23 17:15:23</value>
+    </row>
+  </table>
 </dataset>

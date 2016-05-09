@@ -15,8 +15,8 @@ class Token extends Model {
     return $this->id;
   }
 
-  public function getUsed(): int {
-    return $this->used;
+  public function getUsed(): bool {
+    return $this->used === 1;
   }
 
   public function getTeamId(): int {
@@ -29,10 +29,6 @@ class Token extends Model {
 
   public function getCreatedTs(): string {
     return $this->created_ts;
-  }
-
-  public function getUseTs(): string {
-    return $this->use_ts;
   }
 
   private static function tokenFromRow(Map<string, string> $row): Token {
@@ -68,7 +64,7 @@ class Token extends Model {
     for ($i = 0; $i < $token_number; $i++) {
       $token = self::generate();
       await $db->queryf(
-        'INSERT INTO registration_tokens (token, created_ts) VALUES (%s, NOW())',
+        'INSERT INTO registration_tokens (token, created_ts, used, team_id) VALUES (%s, NOW(), 0, 0)',
         $token,
       );
     }
@@ -123,7 +119,6 @@ class Token extends Model {
     return $tokens;
   }
 
-  // Check to see if the level is active.
   public static async function genCheck(
     string $token,
   ): Awaitable<bool> {
