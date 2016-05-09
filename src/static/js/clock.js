@@ -94,7 +94,7 @@ module.exports = {
       } else {
         setMilliseconds(new_milli);
       }
-      if(parseInt(getMilli()) === 0 && parseInt(getSeconds()) === 0) {
+      if (parseInt(getMilli()) === 0 && parseInt(getSeconds() && parseInt(getMinutes()) === 0 && parseInt(getHours()) === 0)) {
         this.stopClock = true;
         noClock();
       }
