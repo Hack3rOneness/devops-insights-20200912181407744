@@ -2335,17 +2335,17 @@ class AdminController extends Controller {
         <span class="admin-section--status">status_<span class="highlighted">OK</span></span>
       </header>
       <div class="radio-tabs">
-        <input type="radio" value="registration" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--registration" checked={true}/>
+        <input type="radio" value="registration_logs" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--registration" checked={true}/>
         <label for="fb--admin--tabs--logs--registration">Registration</label>
-        <input type="radio" value="Login" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--login"/>
+        <input type="radio" value="login_logs" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--login"/>
         <label for="fb--admin--tabs--logs--login">Login</label>
-        <input type="radio" value="admin" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--admin" checked={true}/>
+        <input type="radio" value="admin_logs" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--admin" checked={true}/>
         <label for="fb--admin--tabs--logs--admin">Admin</label>
-        <input type="radio" value="game" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--game" checked={true}/>
+        <input type="radio" value="game_logs" name="fb--admin--tabs--logs" id="fb--admin--tabs--logs--game" checked={true}/>
         <label for="fb--admin--tabs--logs--game">Game</label>
       </div>
       <div class="tab-content-container">
-        <div class="radio-tab-content active" data-tab="registration">
+        <div class="radio-tab-content active" data-tab="registration_logs">
           <div class="admin-sections">
             <section class="admin-box">
               <div class="management-header">
@@ -2427,7 +2427,171 @@ class AdminController extends Controller {
             </section>
           </div>
         </div>
-        <div class="radio-tab-content" data-tab="login">
+        <div class="radio-tab-content" data-tab="login_logs">
+          <div class="admin-sections">
+            <section class="admin-box">
+              <div class="management-header">
+                <h6>Flag 03</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use href="#icon--badge-invader" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Da Invaderz</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>345</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>Algeria</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+            <section class="admin-box">
+              <div class="management-header">
+                <h6>Flag 04</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use href="#icon--badge-car" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Tank SF</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>280</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>United States of America</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="radio-tab-content" data-tab="admin_logs">
+          <div class="admin-sections">
+            <section class="admin-box">
+              <div class="management-header">
+                <h6>Flag 03</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use href="#icon--badge-invader" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Da Invaderz</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>345</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>Algeria</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+            <section class="admin-box">
+              <div class="management-header">
+                <h6>Flag 04</h6>
+              </div>
+              <div class="fb-column-container">
+                <div class="col col-shrink col-pad">
+                  <div class="post-avatar has-avatar">
+                    <svg class="icon icon--badge">
+                      <use href="#icon--badge-car" />
+
+                    </svg>
+                  </div>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Team:</dt>
+                    <dd>Tank SF</dd>
+                    <dt>Time:</dt>
+                    <dd>02:59:09</dd>
+                    <dt>Date:</dt>
+                    <dd>2015-08-04</dd>
+                    <dt>Total Points:</dt>
+                    <dd>280</dd>
+                  </dl>
+                </div>
+                <div class="col col-grow col-pad">
+                  <dl>
+                    <dt>Country:</dt>
+                    <dd>United States of America</dd>
+                    <dt>Points:</dt>
+                    <dd>+35</dd>
+                    <dt>Flag Level:</dt>
+                    <dd>Expert</dd>
+                    <dt>Solution Time:</dt>
+                    <dd>00:15:23</dd>
+                  </dl>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="radio-tab-content" data-tab="game_logs">
           <div class="admin-sections">
             <section class="admin-box">
               <div class="management-header">

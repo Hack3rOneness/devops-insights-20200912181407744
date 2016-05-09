@@ -59,9 +59,6 @@ package htop
 # Install MySQL
 install_mysql "$P_ROOT"
 
-# Install MyCLI
-install_mycli
-
 # Install git
 package git
 
@@ -96,6 +93,6 @@ import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH" "$MODE"
 sudo chmod 777 "$CTF_PATH/src/data/attachments"
 sudo chmod 777 "$CTF_PATH/src/data/attachments/deleted"
 
-log 'fbctf deployment is complete!'
+log 'fbctf deployment is complete! Ready in https://10.10.10.5'
 
 exit 0
