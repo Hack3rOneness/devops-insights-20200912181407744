@@ -998,97 +998,45 @@ module.exports = {
       }, 5000);
     });
 
-    // category filter select (flags, bases)
-    $('select[name="category_filter"]').on('change', function() {
+    function levelsFilterChange() {
       var $this = $(this);
-      var category_filter = $('option:selected', $this)[0].value;
-      var $status = $($('select[name="status_filter"]'));
-      var status_filter = $('option:selected', $status)[0].value;
+      var category_filter = $('select[name="category_filter"] option:selected')[0].value;
+      var status_filter = $('select[name="status_filter"] option:selected')[0].value;
 
       // We hide all
       $('section[id!=new-element]').each(function() {
         $(this).addClass('completely-hidden');
       });
 
-      // All status
+      var id = '';
+      // all status
       if (status_filter === 'all') {
-        $('section[id!=new-element]').each(function() {
-          if (category_filter != 'all') {
-            $(this).filter(':contains("' + category_filter + '")').removeClass('completely-hidden');
-          } else {
-            $(this).removeClass('completely-hidden');
-          }
-        });
-      // Only enabled
+        id = 'status--';
       } else if (status_filter === 'Enabled') {
-        var targets = $('input[type="radio"][id*="status--on"]:checked[class!=filter_option]');
-        targets.each(function() {
-          var target = $(this).closest('section[id!=new-element]')[0];
-          if (category_filter != 'all') {
-            $(target).filter(':contains("' + category_filter + '")').removeClass('completely-hidden');
-          } else {
-            $(target).removeClass('completely-hidden');
-          }
-        });
-      // Only disabled
+        id = 'status--on';
       } else if (status_filter === 'Disabled') {
-        var targets = $('input[type="radio"][id*="status--off"]:checked[class!=filter_option]');
-        targets.each(function() {
-          var target = $(this).closest('section[id!=new-element]')[0];
-          if (category_filter != 'all') {
-            $(target).filter(':contains("' + category_filter + '")').removeClass('completely-hidden');
-          } else {
-            $(target).removeClass('completely-hidden');
-          }
-        });
+        id = 'status--off';
       }
-    });
+
+      var selector = 'input[type="radio"][id*="' + id + '"]:checked[class!=filter_option]';
+
+      var category_selector = 'select[name=category_id]';
+      if (category_filter !== 'all') {
+        category_selector = 'select[name=category_id] option:selected:contains(' + category_filter + ')';
+      }
+
+      $(selector).closest('section[id!=new-element]').each(function() {
+        if ($(this).find(category_selector).length > 0) {
+          $(this).removeClass('completely-hidden');
+        }
+      });
+    } // levelsFilterChange
+
+    // category filter select (flags, bases)
+    $('select[name="category_filter"]').on('change', levelsFilterChange);
 
     // status filter select (quiz, flags, bases)
-    $('select[name="status_filter"]').on('change', function() {
-      var $this = $(this);
-      var status_filter = $('option:selected', $this)[0].value;
-      var $category = $($('select[name="category_filter"]'));
-      var category_filter = $('option:selected', $category)[0].value;
-
-      // We hide all
-      $('section[id!=new-element]').each(function() {
-        $(this).addClass('completely-hidden');
-      });
-
-      // All status
-      if (status_filter === 'all') {    
-        $('section[id!=new-element]').each(function() {
-          if (category_filter != 'all') {
-            $(this).filter(':contains("' + category_filter + '")').removeClass('completely-hidden');
-          } else {
-            $(this).removeClass('completely-hidden');
-          }
-        });
-      // Only enabled
-      } else if (status_filter === 'Enabled') {
-        var targets = $('input[type="radio"][id*="status--on"]:checked[class!=filter_option]');
-        targets.each(function() {
-          var target = $(this).closest('section[id!=new-element]')[0];
-          if (category_filter != 'all') {
-            $(target).filter(':contains("' + category_filter + '")').removeClass('completely-hidden');
-          } else {
-            $(target).removeClass('completely-hidden');
-          }
-        });
-      // Only disabled
-      } else if (status_filter === 'Disabled') {
-        var targets = $('input[type="radio"][id*="status--off"]:checked[class!=filter_option]');
-        targets.each(function() {
-          var target = $(this).closest('section[id!=new-element]')[0];
-          if (category_filter != 'all') {
-            $(target).filter(':contains("' + category_filter + '")').removeClass('completely-hidden');
-          } else {
-            $(target).removeClass('completely-hidden');
-          }
-        });
-      }
-    });
+    $('select[name="status_filter"]').on('change', levelsFilterChange);
 
     // use filter select (countries)
     $('select[name="use_filter"]').on('change', function() {
