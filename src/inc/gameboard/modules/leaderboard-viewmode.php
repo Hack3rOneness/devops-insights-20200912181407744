@@ -34,7 +34,7 @@ class LeaderboardModuleViewController {
         <header class="module-header">
           <h6>Leaderboard</h6>
         </header>
-        <div class="module-content module-scrollable">
+        <div class="module-content module-scrollable leaderboard-viewmode">
           {$leaderboard_ul}
         </div>
       </div>;

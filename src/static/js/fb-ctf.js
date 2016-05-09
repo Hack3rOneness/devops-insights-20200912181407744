@@ -442,9 +442,7 @@ function setupInputListeners() {
         //
         // set up the listeners
         //
-        if (!VIEW_ONLY) {
-          gameEventListeners();
-        }
+        gameEventListeners();
 
         //
         // initialize the tutorial, if the query string is present
@@ -455,96 +453,93 @@ function setupInputListeners() {
           initTutorial();
         }
 
-        // Kick off all the timers to keep data refreshed, not on view mode
-        if (!VIEW_ONLY) {
+        // Kick off all the timers to keep data refreshed
 
-          // Load initial configuration
+        // Load initial configuration
+        loadConfData();
+
+        // Load initial command line
+        FB_CTF.command_line.loadCommandsData();
+        FB_CTF.command_line.init();
+
+        // Load initial filters
+        loadFilterModule();
+
+        // Load initial teams related modules and data
+        loadTeamData();
+        var loaded = loadTeamsModule();
+        $.when(loaded).done(function() {
+          activateTeams();
+        });
+        loadLeaderboardModule();
+
+        // Game clock
+        loadClockModule();
+
+        // Load initial activity
+        loadActivityModule();
+
+        // Configuration reloader
+        setInterval(function() {
           loadConfData();
+        }, FB_CTF.data.CONF.refreshConf);
 
-          // Load initial command line
-          FB_CTF.command_line.loadCommandsData();
-          FB_CTF.command_line.init();
+        // Countries
+        setInterval(function() {
+          if (FB_CTF.data.CONF.gameboard === '1') {
+            // Map
+            getCountryData();
+            refreshMapData();
+            // Announcements
+            if (Widget.getWidgetStatus('Announcements') === 'open') {
+              loadAnnouncementsModule();
+            }
+            // Filter
+            if (Widget.getWidgetStatus('Filter') === 'open') {
+              loadFilterModule();
+            }
+            // Activity
+            if (Widget.getWidgetStatus('Activity') === 'open') {
+              loadActivityModule();
+            }
+          } else {
+            clearMapData();
+            clearAnnouncements();
+            clearActivity();
+          }
+        }, FB_CTF.data.CONF.refreshMap);
 
-          // Load initial filters
+        // Teams
+        setInterval(function() {
+          if (FB_CTF.data.CONF.gameboard === '1') {
+            // Teams
+            loadTeamData();
+            if (Widget.getWidgetStatus('Teams') === 'open') {
+              loadTeamsModule();
+            }
+            if (Widget.getWidgetStatus('Leaderboard') === 'open') {
+              loadLeaderboardModule();
+            }
+          } else {
+            clearTeams();
+            clearLeaderboard();
+          }
+        }, FB_CTF.data.CONF.refreshMap);
+
+        // Forcefully refreshing all modules every minute
+        setInterval(function() {
+          loadAnnouncementsModule();
           loadFilterModule();
-
-          // Load initial teams related modules and data
-          loadTeamData();
-          var loaded = loadTeamsModule();
-          $.when(loaded).done(function() {
-            activateTeams();
-          });
-          loadLeaderboardModule();
-
-          // Game clock
-          loadClockModule();
-
-          // Load initial activity
           loadActivityModule();
+          loadTeamsModule();
+          loadLeaderboardModule();
+          loadClockModule();
+        }, 60000);
 
-          // Configuration reloader
-          setInterval(function() {
-            loadConfData();
-          }, FB_CTF.data.CONF.refreshConf);
-
-          // Countries
-          setInterval(function() {
-            if (FB_CTF.data.CONF.gameboard === '1') {
-              // Map
-              getCountryData();
-              refreshMapData();
-              // Announcements
-              if (Widget.getWidgetStatus('Announcements') === 'open') {
-                loadAnnouncementsModule();
-              }
-              // Filter
-              if (Widget.getWidgetStatus('Filter') === 'open') {
-                loadFilterModule();
-              }
-              // Activity
-              if (Widget.getWidgetStatus('Activity') === 'open') {
-                loadActivityModule();
-              }
-            } else {
-              clearMapData();
-              clearAnnouncements();
-              clearActivity();
-            }
-          }, FB_CTF.data.CONF.refreshMap);
-
-          // Teams
-          setInterval(function() {
-            if (FB_CTF.data.CONF.gameboard === '1') {
-              // Teams
-              loadTeamData();
-              if (Widget.getWidgetStatus('Teams') === 'open') {
-                loadTeamsModule();
-              }
-              if (Widget.getWidgetStatus('Leaderboard') === 'open') {
-                loadLeaderboardModule();
-              }
-            } else {
-              clearTeams();
-              clearLeaderboard();
-            }
-          }, FB_CTF.data.CONF.refreshMap);
-
-          // Forcefully refreshing all modules every minute
-          setInterval(function() {
-            loadAnnouncementsModule();
-            loadFilterModule();
-            loadActivityModule();
-            loadTeamsModule();
-            loadLeaderboardModule();
-            loadClockModule();
-          }, 60000);
-
-          // Commands
-          setInterval(function() {
-            FB_CTF.command_line.loadCommandsData();
-          }, FB_CTF.data.CONF.refreshCmd);
-        } else { // VIEW MODE
-        }
+        // Commands
+        setInterval(function() {
+          FB_CTF.command_line.loadCommandsData();
+        }, FB_CTF.data.CONF.refreshCmd);
       });
     }
 
@@ -599,8 +594,6 @@ function setupInputListeners() {
 
       $modules.each(function() {
         var $scrollable = $('.module-scrollable', this),
-            scrollHeight = $scrollable.children('ul').height() - $scrollable.height(),
-            scrollTime = scrollHeight / 0.05,
             scrollInterval;
 
         $scrollable.on('mouseover', function(event) {
@@ -739,12 +732,8 @@ function setupInputListeners() {
      *
      * @param country (string)
      *   - the country that is being captured
-     *
-     * @param capturingTeam (string)
-     *   - an optional parameter for the team that is attempting
-     *      to capture the given country
      */
-    function captureCountry(country, capturingTeam) {
+    function captureCountry(country) {
       var $selectCountry = $('.countries .land[title="' + country + '"]', $mapSvg),
           capturedBy = getCapturedByMarkup($selectCountry.closest('g').data('captured')),
           showAnimation = !(is_ie || LIST_VIEW),
@@ -782,7 +771,7 @@ function setupInputListeners() {
 
       if (VIEW_ONLY) {
         setTimeout(function() {
-          captureViewOnly(country, capturedBy, capturingTeam);
+          captureViewOnly(country);
         }, animationDuration);
       } else {
         setTimeout(function() {
@@ -804,10 +793,7 @@ function setupInputListeners() {
      *   - an optional parameter for the team that is attempting
      *      to capture the given country
      */
-    function captureViewOnly(country, capturedBy, capturingTeam) {
-      if (capturingTeam === undefined) {
-        capturingTeam = FB_CTF.data.CONF.currentTeam;
-      }
+    function captureViewOnly(country) {
 
       Modal.viewmodePopup(function() {
         var $container = $('#fb-country-popup'),
@@ -815,9 +801,8 @@ function setupInputListeners() {
             positionY = $('.latitude-focus').position().top - $container.height() - 60,
             points = FB_CTF.data.COUNTRIES && FB_CTF.data.COUNTRIES[country] ? FB_CTF.data.COUNTRIES[country].points : 0;
 
-        $('.capturing-team-name', $container).text(capturingTeam);
+        $('.capturing-team-name', $container).text(country);
         $('.points-value', $container).text('+ ' + points + ' Pts');
-        $('.country-owner', $container).text(capturedBy);
         $('.country-name', $container).text(country);
 
         $container.css({
@@ -864,7 +849,7 @@ function setupInputListeners() {
      * @param capturedBy (string)
      *   - the user or team who has captured this country
      */
-    function launchCaptureModal(country, capturedBy) {
+    function launchCaptureModal(country) {
       var data = FB_CTF.data.COUNTRIES[country];
 
       Modal.loadPopup('p=country&modal=capture', 'country-capture', function() {
@@ -1328,7 +1313,6 @@ function setupInputListeners() {
       var mapPath = 'static/svg/map/world-view.php';
 
       return $.get(mapPath, function(data) {
-        console.log("map loaded");
         $map = $('.fb-map');
         $map.html(data);
         $mapSvg = $('#fb-gameboard-map');
@@ -1524,7 +1508,7 @@ function setupInputListeners() {
       var loadPath = 'data/map-data.php';
 
       return $.get(loadPath, function(data) {
-        $.each(data, function(key, value) {
+        $.each(data, function(key) {
           $('#' + key)[0].classList.remove('active');
           $('#' + key)[0].parentNode.removeAttribute('data-captured');
           $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
@@ -1852,8 +1836,7 @@ function setupInputListeners() {
           // since the modal is fading in, we need to delay the
           //  focus so that it actually focuses when the modal
           //  appears
-          animDelay = 400,
-          numCommands = $('li', $cmdPromptList).length;
+          animDelay = 400;
       //
       // get the command line up
       //
@@ -2296,7 +2279,7 @@ function setupInputListeners() {
           FB_CTF.data.COMMAND = data;
 
           if (FB_CTF.data.COMMAND && FB_CTF.data.COMMAND.commands) {
-            $.each(FB_CTF.data.COMMAND.commands, function(command, cmdData) {
+            $.each(FB_CTF.data.COMMAND.commands, function(command) {
               $cmdPromptList.append('<li>' + command + '</li>');
             });
             eventListeners();

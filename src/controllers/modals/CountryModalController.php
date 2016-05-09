@@ -14,7 +14,7 @@ class CountryModalController extends ModalController {
             <ul class="country-capture-stats">
               <li>captured_<span class="highlighted country-name"></span></li>
               <li>flag_owner_<span class="highlighted country-owner"></span></li>
-            </ul>;
+            </ul>
           </div>;
       case 'inactive':
         return

@@ -140,7 +140,7 @@ module.exports = {
         .attr('fill', 'black')
         .attr('stroke-width', 2);
 
-      scores.forEach(function(d, i) {
+      scores.forEach(function(d) {
         graphic.append('svg:path')
           .attr('d', lineFunc(d.values))
           .attr('class', 'team-score-line')

@@ -111,8 +111,13 @@ $module-margin: 20px;
       }
 
       .module--inner-right {
+        &:not(.activity-viewmode) {
+          left: 50%;
+        }
+        &.activity-viewmode {
+          left: 31%;
+        }
         bottom: 0;
-        left: 50%;
         right: 29%;
         padding-left: 10px;
         padding-right: 10px;
@@ -217,10 +222,16 @@ $module-margin: 20px;
       }
 
       .module-content {
-        height: calc(33vh - 62px);
         margin-top: 10px;
         visibility: visible;
         opacity: 1;
+
+        &:not(.leaderboard-viewmode) {
+          height: calc(33vh - 62px);
+        }
+        &.leaderboard-viewmode {
+          height: calc(97vh - 62px);
+        }
       }
     }
 
