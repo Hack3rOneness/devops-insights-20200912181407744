@@ -1,4 +1,4 @@
-<?hh // strict 
+<?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
 
@@ -27,7 +27,7 @@ class CountryDataController extends DataController {
       }
 
       $category = await Category::genSingleCategory($level->getCategoryId());
-      if (count($level->getHint()) > 0) {
+      if ($level->getHint() !== '') {
         // There is hint, can this team afford it?
         if ($level->getPenalty() > $my_team->getPoints()) { // Not enough points
           $hint_cost = -2;
