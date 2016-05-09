@@ -41,7 +41,6 @@ function sendAdminRequest(request_data: any, refresh_page) {
     // TODO: Make this a modal
     console.log('ERROR');
   }).done(function(data) {
-    console.log(data);
     var responseData = JSON.parse(data);
     if (responseData.result == 'OK') {
       console.log('OK');
@@ -396,6 +395,14 @@ function createTokens() {
     action: 'create_tokens'
   };
   sendAdminRequest(create_data, true);
+}
+
+// Create tokens
+function exportTokens() {
+  var csrf_token = $('input[name=csrf_token]')[0].value;
+  var action = 'export_tokens';
+  var url = 'index.php?p=admin&ajax=true&action=' + action + '&csrf_token=' + csrf_token;
+  window.location.href = url;
 }
 
 // Delete announcement
@@ -838,7 +845,7 @@ module.exports = {
       if (action === 'save') {
         valid = validateAdminForm($self);
 
-        if (valid === true) {
+        if (valid) {
           updateElement($section);
           $section.addClass(lockClass);
           $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
@@ -861,7 +868,7 @@ module.exports = {
         updateCategory($section);
       } else if (action === 'create') {
         valid = validateAdminForm($self);
-        if (valid === true) {
+        if (valid) {
           createElement($section);
         }
       } else if (action === 'create-announcement') {
@@ -870,6 +877,8 @@ module.exports = {
         databaseBackup();
       } else if (action === 'create-tokens') {
         createTokens($section);
+      } else if (action === 'export-tokens') {
+        exportTokens($section);
       } else if (action === 'export-game') {
         exportCurrentGame();
       } else if (action === 'edit') {

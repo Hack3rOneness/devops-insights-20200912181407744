@@ -73,9 +73,15 @@ class Token extends Model {
   public static async function genExport(): Awaitable<void> {
     $db = await self::genDb();
     $result = await $db->queryf(
-      'SELECT * FROM registration_tokens WHERE used = 0',
+      'SELECT token FROM registration_tokens WHERE used = 0',
     );
-    // TODO
+
+    $tokens = array_map($m ==> $m['token'], $result->mapRows());
+
+    header('Content-Type: application/json');
+    header('Content-Disposition: attachment; filename=tokens.json');
+    print json_encode($tokens, JSON_PRETTY_PRINT);
+    exit();
   }
 
   public static async function genDelete(

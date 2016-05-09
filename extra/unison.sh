@@ -29,7 +29,7 @@ echo "[+] Creating unison profile"
 PROFILE="
 root = $CODE_PATH
 root = ssh://default//var/www/fbctf/
-ignore = Name {.vagrant,.DS_Store,.sources,node_modules}
+ignore = Name {.vagrant,.DS_Store,.sources,node_modules,settings.ini}
 
 prefer = $CODE_PATH
 repeat = 2
