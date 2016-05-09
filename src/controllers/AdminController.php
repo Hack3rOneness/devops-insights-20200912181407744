@@ -540,11 +540,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" placeholder="Level title"/>
                 </div>
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Question</label>
                   <textarea name="question" placeholder="Quiz question" rows={4} ></textarea>
                 </div>
@@ -554,7 +554,7 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="fb-column-container col-gutters">
+                <div class="form-el fb-column-container col-gutters">
                   <div class="form-el--required col col-2-3 el--block-label el--full-text">
                     <label>Answer</label>
                     <input name="answer" type="text"/>
@@ -650,11 +650,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" value={$quiz->getTitle()} disabled={true}/>
                 </div>
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Question</label>
                   <textarea name="question" rows={6} disabled={true}>{$quiz->getDescription()}</textarea>
                 </div>
@@ -664,12 +664,12 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Answer</label>
                   <input name="answer" type="password" value={$quiz->getFlag()} disabled={true}/>
                   <a href="" class="toggle_answer_visibility">Show Answer</a>
                 </div>
-                <div class="fb-column-container col-gutters">
+                <div class="form-el fb-column-container col-gutters">
                   <div class="form-el--required col col-1-3 el--block-label el--full-text">
                     <label>Points</label>
                     <input name="points" type="text" value={strval($quiz->getPoints())} disabled={true}/>
@@ -736,15 +736,15 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" placeholder="Level title"/>
                 </div>
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Description</label>
                   <textarea name="description" placeholder="Level description" rows={4}></textarea>
                 </div>
-                <div class="form-el--required fb-column-container col-gutters">
+                <div class="form-el form-el--required fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
                     {$countries_select}
@@ -756,7 +756,7 @@ class AdminController extends Controller {
             </div>
           </div>
           <div class="col col-pad col-1-2">
-            <div class="fb-column-container col-gutters">
+            <div class="form-el fb-column-container col-gutters">
               <div class="form-el--required col col-2-3 el--block-label el--full-text">
                 <label>Flag</label>
                 <input name="flag" type="text"/>
@@ -851,7 +851,7 @@ class AdminController extends Controller {
                 </form>
               </div>
             </div>
-            <div class="admin-buttons col col-pad col-1-3">
+            <div class="admin-buttons col col-1-3">
               <div class="col el--block-label el--full-text">
                 <button class="fb-cta cta--red" data-action="delete-new-attachment">X</button>
                 <button class="fb-cta cta--yellow" data-action="create-attachment">Create</button>
@@ -933,7 +933,7 @@ class AdminController extends Controller {
                   </form>
                 </div>
               </div>
-              <div class="admin-buttons col col-pad col-1-3">
+              <div class="admin-buttons col col-1-3">
                 <div class="col el--block-label el--full-text">
                   <button class="fb-cta cta--red" data-action="delete-link">X</button>
                 </div>
@@ -963,11 +963,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" value={$flag->getTitle()} disabled={true}/>
                 </div>
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Description</label>
                   <textarea name="description" rows={6} disabled={true}>{$flag->getDescription()}</textarea>
                 </div>
@@ -983,7 +983,7 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="fb-column-container col-gutters">
+                <div class="form-el fb-column-container col-gutters">
                   <div class="form-el--required col el--block-label el--full-text">
                     <label>Flag</label>
                     <input name="flag" type="password" value={$flag->getFlag()} disabled={true}/>
@@ -1063,11 +1063,11 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" placeholder="Level title"/>
                 </div>
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Description</label>
                   <textarea name="description" placeholder="Level description" rows={4}></textarea>
                 </div>
@@ -1083,7 +1083,7 @@ class AdminController extends Controller {
                 </div>
               </div>
               <div class="col col-pad col-1-2">
-                <div class="fb-column-container col-gutters">
+                <div class="form-el fb-column-container col-gutters">
                   <div class="form-el--required col col-1-2 el--block-label el--full-text">
                     <label>Keep Points</label>
                     <input name="points" type="text"/>
@@ -1294,15 +1294,15 @@ class AdminController extends Controller {
             </header>
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Title</label>
                   <input name="title" type="text" value={$base->getTitle()} disabled={true}/>
                 </div>
-                <div class="form-el--required el--block-label el--full-text">
+                <div class="form-el form-el--required el--block-label el--full-text">
                   <label>Description</label>
                   <textarea name="description" rows={4} disabled={true}>{$base->getDescription()}</textarea>
                 </div>
-                <div class="form-el fb-column-container col-gutters">
+                <div class="form-el form-el--required fb-column-container col-gutters">
                   <div class="col col-1-2 el--block-label el--full-text">
                     <label for="">Country</label>
                     {$countries_select}
@@ -1315,7 +1315,7 @@ class AdminController extends Controller {
               </div>
               <div class="col col-pad col-1-2">
                 <div class="form-el fb-column-container col-gutters">
-                  <div class="col col-1-2 el--block-label el--full-text">
+                  <div class="form-el--required col col-1-2 el--block-label el--full-text">
                     <label>Points</label>
                     <input name="points" type="text" value={strval($base->getPoints())} disabled={true}/>
                   </div>
@@ -1858,11 +1858,11 @@ class AdminController extends Controller {
                   </header>
                   <div class="fb-column-container">
                     <div class="col col-pad col-1-3">
-                      <div class="form-el--required el--block-label el--full-text">
+                      <div class="form-el form-el--required el--block-label el--full-text">
                         <label class="admin-label" for="">Team Name</label>
                         <input name="team_name" type="text" value={$team->getName()} maxlength={20} disabled={true}/>
                       </div>
-                      <div class="form-el--required el--block-label el--full-text">
+                      <div class="form-el form-el--required el--block-label el--full-text">
                         <label class="admin-label" for="">Score</label>
                         <input name="points" type="text" value={strval($team->getPoints())} disabled={true}/>
                       </div>
