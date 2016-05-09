@@ -77,9 +77,9 @@ class AdminController extends Controller {
       }
 
       if ($category->getId() === $selected) {
-        $select->appendChild(<option value={strval($category->getId())} selected={true}>{$category->getCategory()}</option>);
+        $select->appendChild(<option id="category_option" value={strval($category->getId())} selected={true}>{$category->getCategory()}</option>);
       } else {
-        $select->appendChild(<option value={strval($category->getId())}>{$category->getCategory()}</option>);
+        $select->appendChild(<option id="category_option" value={strval($category->getId())}>{$category->getCategory()}</option>);
       }
     }
 
