@@ -247,4 +247,28 @@
       <value>2016-04-23 17:15:23</value>
     </row>
   </table>
+  <table name="scores_log">
+    <column>id</column>
+    <column>ts</column>
+    <column>team_id</column>
+    <column>points</column>
+    <column>level_id</column>
+    <column>type</column>
+    <row>
+      <value>1</value>
+      <value>2016-04-24 17:15:23</value>
+      <value>1</value>
+      <value>10</value>
+      <value>2</value>
+      <value>flag</value>
+    </row>
+    <row>
+      <value>2</value>
+      <value>2016-04-24 17:15:23</value>
+      <value>1</value>
+      <value>15</value>
+      <value>3</value>
+      <value>base</value>
+    </row>
+  </table>
 </dataset>
