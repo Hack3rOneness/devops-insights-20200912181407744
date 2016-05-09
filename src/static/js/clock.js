@@ -56,7 +56,7 @@ module.exports = {
       var milli = getMilli();
       var new_milli = parseInt(milli) - 1;
 
-      if (new_milli < 0) {
+      if (new_milli <= 0) {
         var seconds = getSeconds();
         if (parseInt(seconds) > 0) {
           setMilliseconds('99');
@@ -64,7 +64,7 @@ module.exports = {
           setMilliseconds('0');
         }
         var new_seconds = parseInt(seconds) - 1;
-        if (new_seconds < 0) {
+        if (new_seconds <= 0) {
           var minutes = getMinutes();
           if (parseInt(minutes) > 0) {
             setSeconds('59');
@@ -72,7 +72,7 @@ module.exports = {
             setSeconds('0');
           }
           var new_minutes = parseInt(minutes) - 1;
-          if (new_minutes < 0) {
+          if (new_minutes <= 0) {
             var hours = getHours();
             if (parseInt(hours) > 0) {
               setMinutes('59');
@@ -80,7 +80,7 @@ module.exports = {
               setMinutes('0');
             }
             var new_hours = parseInt(hours) - 1;
-            if (new_hours < 0) {
+            if (new_hours <= 0) {
               setHours(0);
             } else {
               setHours(new_hours);
@@ -94,7 +94,7 @@ module.exports = {
       } else {
         setMilliseconds(new_milli);
       }
-      if (parseInt(getMilli()) === 0 && parseInt(getSeconds() && parseInt(getMinutes()) === 0 && parseInt(getHours()) === 0)) {
+      if (parseInt(getMilli()) === 0 && parseInt(getSeconds()) === 0 && parseInt(getMinutes()) === 0 && parseInt(getHours()) === 0) {
         this.stopClock = true;
         noClock();
       }
