@@ -2316,8 +2316,12 @@ function setupInputListeners() {
     $body = $('body');
 
     $('#login_button').click(Index.loginTeam);
-    $('#register_names > #register_button').click(Index.registerNames);
-    $('#register_team > #register_button').click(Index.registerTeam);
+    var names_required = $('#register_names').length > 0;
+    if (names_required) {
+      $('#register_button').click(Index.registerNames);
+    } else {
+      $('#register_button').click(Index.registerTeam);
+    }
 
     // load the svg sprite. This is in the FB_CTF namespace
     //  rather than the buildkit as this is the recommended
