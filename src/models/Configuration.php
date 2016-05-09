@@ -31,7 +31,7 @@ class Configuration extends Model {
     $key = self::MC_KEY . $field;
     $mc_result = $mc->get($key);
     if ($mc_result) {
-      $result = json_decode($mc_result, true);
+      $result = $mc_result;
     } else {
       $db = await self::genDb();
       $db_result = await $db->queryf(
