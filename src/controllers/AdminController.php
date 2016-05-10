@@ -1748,6 +1748,7 @@ class AdminController extends Controller {
                   <div class="post-avatar has-avatar">
                     <svg class="icon icon--badge">
                       <use href="#icon--badge-"/>
+
                     </svg>
                   </div>
                 </div>
@@ -1896,6 +1897,7 @@ class AdminController extends Controller {
                         <div class="post-avatar has-avatar">
                           <svg class="icon icon--badge">
                             <use href={$xlink_href} />
+
                           </svg>
                         </div>
                       </div>
@@ -2104,7 +2106,46 @@ class AdminController extends Controller {
       </div>;
   }
 
-  public function renderLogsContent(): :xhp {
+  public async function genRenderLogsContent(): Awaitable<:xhp> {
+    $logs_tbody = <tbody></tbody>;
+    $gamelogs = await GameLog::genGameLog();
+    foreach ($gamelogs as $gamelog) {
+      if ($gamelog->getEntry() === 'score') {
+        $log_entry = <span class="highlighted--green">{$gamelog->getEntry()}</span>;
+      } else {
+        $log_entry = <span class="highlighted--red">{$gamelog->getEntry()}</span>;
+      }
+      $team = await Team::genTeam($gamelog->getTeamId());
+      $level = await Level::gen($gamelog->getLevelId());
+      $country = await Country::gen($level->getEntityId());
+      $level_str = $country->getName() . ' - ' . $level->getTitle() . ' - ' . $level->getType();
+      $logs_tbody->appendChild(
+        <tr>
+          <td>{time_ago($gamelog->getTs())}</td>
+          <td>{$log_entry}</td>
+          <td>{$level_str}</td>
+          <td>{strval($gamelog->getPoints())}</td>
+          <td>{$team->getName()}</td>
+          <td>{$gamelog->getFlag()}</td>
+        </tr>
+      );
+    }
+
+    $logs_table = 
+      <table>
+        <thead>
+            <tr>
+              <th>time_</th>
+              <th>entry_</th>
+              <th>level_</th>
+              <th>pts_</th>
+              <th>team_</th>
+              <th>flag_</th>
+            </tr>
+          </thead>
+          {$logs_tbody}
+      </table>;
+
     return
       <div>
       <header class="admin-page-header">
@@ -2113,6 +2154,12 @@ class AdminController extends Controller {
       </header>
       <div class="admin-sections">
         <section class="admin-box">
+          <header class="admin-box-header">
+            <h3>Game Logs Timeline</h3>
+          </header>
+          <div class="fb-column-container">
+            {$logs_table}
+          </div>
         </section>
       </div>
     </div>;
@@ -2208,7 +2255,7 @@ class AdminController extends Controller {
         return await $this->genRenderSessionsContent();
         break;
       case 'logs':
-        return $this->renderLogsContent();
+        return await $this->genRenderLogsContent();
         break;
       default:
         return $this->renderMainContent();
