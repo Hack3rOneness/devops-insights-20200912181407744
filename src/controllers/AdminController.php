@@ -2107,44 +2107,53 @@ class AdminController extends Controller {
   }
 
   public async function genRenderLogsContent(): Awaitable<:xhp> {
-    $logs_tbody = <tbody></tbody>;
     $gamelogs = await GameLog::genGameLog();
-    foreach ($gamelogs as $gamelog) {
-      if ($gamelog->getEntry() === 'score') {
-        $log_entry = <span class="highlighted--green">{$gamelog->getEntry()}</span>;
-      } else {
-        $log_entry = <span class="highlighted--red">{$gamelog->getEntry()}</span>;
-      }
-      $team = await Team::genTeam($gamelog->getTeamId());
-      $level = await Level::gen($gamelog->getLevelId());
-      $country = await Country::gen($level->getEntityId());
-      $level_str = $country->getName() . ' - ' . $level->getTitle() . ' - ' . $level->getType();
-      $logs_tbody->appendChild(
-        <tr>
-          <td>{time_ago($gamelog->getTs())}</td>
-          <td>{$log_entry}</td>
-          <td>{$level_str}</td>
-          <td>{strval($gamelog->getPoints())}</td>
-          <td>{$team->getName()}</td>
-          <td>{$gamelog->getFlag()}</td>
-        </tr>
-      );
-    }
 
-    $logs_table = 
-      <table>
-        <thead>
-            <tr>
-              <th>time_</th>
-              <th>entry_</th>
-              <th>level_</th>
-              <th>pts_</th>
-              <th>team_</th>
-              <th>flag_</th>
-            </tr>
-          </thead>
-          {$logs_tbody}
-      </table>;
+    if (count($gamelogs) > 0) {
+      $logs_tbody = <tbody></tbody>;
+      foreach ($gamelogs as $gamelog) {
+        if ($gamelog->getEntry() === 'score') {
+          $log_entry = <span class="highlighted--green">{$gamelog->getEntry()}</span>;
+        } else {
+          $log_entry = <span class="highlighted--red">{$gamelog->getEntry()}</span>;
+        }
+        $team = await Team::genTeam($gamelog->getTeamId());
+        $level = await Level::gen($gamelog->getLevelId());
+        $country = await Country::gen($level->getEntityId());
+        $level_str = $country->getName() . ' - ' . $level->getTitle() . ' - ' . $level->getType();
+        $logs_tbody->appendChild(
+          <tr>
+            <td>{time_ago($gamelog->getTs())}</td>
+            <td>{$log_entry}</td>
+            <td>{$level_str}</td>
+            <td>{strval($gamelog->getPoints())}</td>
+            <td>{$team->getName()}</td>
+            <td>{$gamelog->getFlag()}</td>
+          </tr>
+        );
+      }
+      $logs_table = 
+        <table>
+          <thead>
+              <tr>
+                <th>time_</th>
+                <th>entry_</th>
+                <th>level_</th>
+                <th>pts_</th>
+                <th>team_</th>
+                <th>flag_</th>
+              </tr>
+            </thead>
+            {$logs_tbody}
+        </table>;
+    } else {
+      $logs_table = 
+        <div class="fb-column-container">
+          <div class="col col-pad">
+            No Entries
+          </div>
+        </div>;
+    }
 
     return
       <div>
@@ -2192,7 +2201,7 @@ class AdminController extends Controller {
         <nav class="admin-nav-links row-fluid">
           <ul>
             <li><a href="/index.php?p=admin&page=configuration">Configuration</a></li>
-            <li><a href="/index.php?p=admin&page=controls">Controls</a></li>
+            <!--<li><a href="/index.php?p=admin&page=controls">Controls</a></li>-->
             <li><a href="/index.php?p=admin&page=announcements">Announcements</a></li>
             <li><a href="/index.php?p=admin&page=quiz">Levels: Quiz</a></li>
             <li><a href="/index.php?p=admin&page=flags">Levels: Flags</a></li>
