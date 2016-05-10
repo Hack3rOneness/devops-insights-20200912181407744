@@ -999,7 +999,6 @@ module.exports = {
     });
 
     function levelsFilterChange() {
-      var $this = $(this);
       var category_filter = $('select[name="category_filter"] option:selected')[0].value;
       var status_filter = $('select[name="status_filter"] option:selected')[0].value;
 

@@ -50,56 +50,67 @@ function getHours() {
 }
 
 module.exports = {
-  stopClock: false,
-  clockRunning: function() {
-    if (!this.stopClock) {
-      var milli = getMilli();
-      var new_milli = parseInt(milli) - 1;
+  isStopped: function() {
+    return getMilli() === '--' &&
+      getSeconds() === '--' &&
+      getMinutes() === '--' &&
+      getHours() === '--';
+  },
+  isFinished: function() {
+    return parseInt(getMilli()) === 0 &&
+      parseInt(getSeconds()) === 0 &&
+      parseInt(getMinutes()) === 0 &&
+      parseInt(getHours()) === 0;
+  },
+  runClock: function() {
+    if (this.isStopped() || this.isFinished()) {
+      noClock();
+      return;
+    }
 
-      if (new_milli <= 0) {
-        var seconds = getSeconds();
-        if (parseInt(seconds) > 0) {
-          setMilliseconds('99');
+    var milli = getMilli();
+    var new_milli = parseInt(milli) - 1;
+
+    if (new_milli <= 0) {
+      var seconds = getSeconds();
+      if (parseInt(seconds) > 0) {
+        setMilliseconds('99');
+      } else {
+        setMilliseconds('0');
+      }
+      var new_seconds = parseInt(seconds) - 1;
+      if (new_seconds <= 0) {
+        var minutes = getMinutes();
+        if (parseInt(minutes) > 0) {
+          setSeconds('59');
         } else {
-          setMilliseconds('0');
+          setSeconds('0');
         }
-        var new_seconds = parseInt(seconds) - 1;
-        if (new_seconds <= 0) {
-          var minutes = getMinutes();
-          if (parseInt(minutes) > 0) {
-            setSeconds('59');
+        var new_minutes = parseInt(minutes) - 1;
+        if (new_minutes <= 0) {
+          var hours = getHours();
+          if (parseInt(hours) > 0) {
+            setMinutes('59');
           } else {
-            setSeconds('0');
+            setMinutes('0');
           }
-          var new_minutes = parseInt(minutes) - 1;
-          if (new_minutes <= 0) {
-            var hours = getHours();
-            if (parseInt(hours) > 0) {
-              setMinutes('59');
-            } else {
-              setMinutes('0');
-            }
-            var new_hours = parseInt(hours) - 1;
-            if (new_hours <= 0) {
-              setHours(0);
-            } else {
-              setHours(new_hours);
-            }
+          var new_hours = parseInt(hours) - 1;
+          if (new_hours <= 0) {
+            setHours(0);
           } else {
-            setMinutes(new_minutes);
+            setHours(new_hours);
           }
         } else {
-          setSeconds(new_seconds);
+          setMinutes(new_minutes);
         }
       } else {
-        setMilliseconds(new_milli);
-      }
-      if (parseInt(getMilli()) === 0 && parseInt(getSeconds()) === 0 && parseInt(getMinutes()) === 0 && parseInt(getHours()) === 0) {
-        this.stopClock = true;
-        noClock();
+        setSeconds(new_seconds);
       }
     } else {
-      clearInterval(this.clockRunning);
+      setMilliseconds(new_milli);
     }
+
+    // recurse after 10 ms
+    setTimeout(this.runClock.bind(this), 10);
   }
 };

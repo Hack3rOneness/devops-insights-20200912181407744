@@ -1344,16 +1344,16 @@ function setupInputListeners() {
      * load module generic
      */
     function loadModuleGeneric(loadPath, targetSelector) {
-      $.get(loadPath, function(data) {
-        var $target = $(targetSelector);
-        $target.html(data);
-        var df = $.Deferred();
-        return df.resolve();
-      }).error(function() {
-        console.error("There was a problem retrieving the module.");
-        console.log(loadPath);
-        console.error("/error");
-      });
+      return $.get(loadPath)
+        .done(function(data) {
+          var $target = $(targetSelector);
+          $target.html(data);
+        })
+        .error(function() {
+          console.error("There was a problem retrieving the module.");
+          console.log(loadPath);
+          console.error("/error");
+        });
     }
 
     /**
@@ -1383,7 +1383,9 @@ function setupInputListeners() {
       var clockModulePath = 'inc/gameboard/modules/game-clock.php';
       var clockSelector = 'aside[data-module="game-clock"]';
 
-      return loadModuleGeneric(clockModulePath, clockSelector);
+      return loadModuleGeneric(clockModulePath, clockSelector).done(function() {
+        Clock.runClock();
+      });
     }
 
     /**
@@ -1759,8 +1761,6 @@ function setupInputListeners() {
       $gameboard.find('[data-modal=scoreboard]').on('click', function() {
         Modal.load('p=scoreboard&modal=scoreboard', 'scoreboard');
       });
-
-      setInterval(Clock.clockRunning, 10);
 
       VIEW_ONLY = $body.data('section') === 'viewer-mode';
 
