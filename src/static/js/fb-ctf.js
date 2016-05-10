@@ -109,21 +109,21 @@ function setupInputListeners() {
   //
   // filter the map based on category
   //
-  $('input[name=fb--module--filter--category]').click(function() {
+  $(document).on('click', 'input[name=fb--module--filter--category]', function() {
     toggleCountryGroup("category", $(this).val());
   });
 
   //
   // filter the map based on status
   //
-  $('input[name="fb--module--filter--status"]').click(function() {
+  $(document).on('click', 'input[name=fb--module--filter--status]', function() {
     toggleCountryGroup("status", $(this).val());
   });
 
   //
   // filter the filters
   //
-  $("input[name=fb--module--filter]").click(function() {
+  $(document).on('click', 'input[name=fb--module--filter]', function() {
     var filter_type = $(this).val();
     if (filter_type === 'category') {
       $('#status-filter-content').removeClass('active');
