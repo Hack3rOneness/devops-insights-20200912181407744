@@ -553,10 +553,20 @@
 .multiple-registration-list {
   counter-reset: multiple-registration;
 
+  .registration-name {
+    min-width: 200px;
+  }
+
+  .registration-email {
+    min-width: 200px;
+  }
+
   li {
     counter-increment: multiple-registration;
     position: relative;
     padding-left: 40px;
+    max-width: 600px;
+    margin: auto;
 
     &:before {
       content: counter(multiple-registration, decimal-leading-zero);

@@ -209,11 +209,11 @@ class IndexController extends Controller {
         <li class="fb-column-container">
           <div class="col col-2-4 form-el el--text">
             <label for="">Name</label>
-            <input name={$name_} type="text"/>
+            <input class="registration-name" name={$name_} type="text"/>
           </div>
           <div class="col col-2-4 form-el el--text">
             <label for="">Email</label>
-            <input name={$email_} type="email"/>
+            <input class="registration-email" name={$email_} type="email"/>
           </div>
         </li>
       );
