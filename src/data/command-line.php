@@ -105,15 +105,6 @@ class CommandsController extends DataController {
     $command_close->{"function"} = $command_close_function;
     $commands->{$command_close_key} = $command_close;
 
-    // Show list view command: list
-    $command_list = (object) array();
-    $command_list_function = (object) array();
-    $command_list_function->{"name"} = "open-listview";
-    $command_list_key = "list";
-    $command_list->{"results"} = array("On", "Off");
-    $command_list->{"function"} = $command_list_function;
-    $commands->{$command_list_key} = $command_list;
-
     // Put it all together and print JSON.
     $commands_line_data->{$results_library_key} = $results_library;
     $commands_line_data->{$commands_key} = $commands;

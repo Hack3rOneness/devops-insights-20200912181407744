@@ -817,6 +817,22 @@ function deleteSession(section) {
   }
 }
 
+function saveLevel($section: any, lockClass) {
+  updateElement($section);
+  $section.addClass(lockClass);
+  $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
+  var entity_select = $('[name=entity_id]', $section)[0];
+  var category_select = $('[name=category_id]', $section)[0];
+  if (entity_select !== undefined) {
+    Dropkick(entity_select).close();
+    Dropkick(entity_select).disable();
+  }
+  if (category_select !== undefined) {
+    Dropkick(category_select).close();
+    Dropkick(category_select).disable();
+  }
+}
+
 module.exports = {
   init: function() {
     // Capture enter key presses to avoid unexpected actions
@@ -837,31 +853,16 @@ module.exports = {
           sectionTitle = $self.closest('#fb-main-content').find('.admin-page-header h3').text().replace(' ', '_');
 
       var $containingDiv,
-          entity_select,
-          category_select,
           valid;
 
       // Route the actions
       if (action === 'save') {
         valid = validateAdminForm($self);
-
         if (valid) {
-          updateElement($section);
-          $section.addClass(lockClass);
-          $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
+          saveLevel($section, lockClass);
         }
       } else if (action === 'save-no-validation') {
-        updateElement($section);
-        $section.addClass(lockClass);
-        $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
-        entity_select = $('[name=entity_id]', $section)[0];
-        category_select = $('[name=category_id]', $section)[0];
-        if (entity_select !== undefined) {
-          Dropkick(entity_select).disable();
-        }
-        if (category_select !== undefined) {
-          Dropkick(category_select).disable();
-        }
+        saveLevel();
       } else if (action === 'add-new') {
         addNewSection($self);
       } else if (action === 'save-category') {
@@ -884,8 +885,8 @@ module.exports = {
       } else if (action === 'edit') {
         $section.removeClass(lockClass);
         $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', false);
-        entity_select = $('[name=entity_id]', $section)[0];
-        category_select = $('[name=category_id]', $section)[0];
+        var entity_select = $('[name=entity_id]', $section)[0];
+        var category_select = $('[name=category_id]', $section)[0];
         if (entity_select !== undefined) {
           Dropkick(entity_select).disable(false);
         }

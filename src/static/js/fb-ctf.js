@@ -2120,9 +2120,6 @@ function setupInputListeners() {
         case 'open-module':
           cmd_openModule();
           break;
-        case 'open-listview':
-          cmd_toggleListView();
-          break;
         default:
           console.error("That command's associated function is undefined.");
           break;
@@ -2247,20 +2244,6 @@ function setupInputListeners() {
           Widget.setWidgetStatus(module, 'open');
         }
         $body.trigger('module-changestate');
-
-        Modal.close();
-        clearCommandPrompt();
-
-        $('body').off('command-option-selected');
-      });
-    }
-
-    // toggle the list view
-    function cmd_toggleListView() {
-      $('body').on('command-option-selected', function(event, data) {
-        var enable = data.selected === "On" ? true : false;
-
-        FB_CTF.gameboard.toggleListView(enable);
 
         Modal.close();
         clearCommandPrompt();
