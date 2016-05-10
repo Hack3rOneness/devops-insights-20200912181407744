@@ -50,6 +50,7 @@ function getHours() {
 }
 
 module.exports = {
+  isRunning: false,
   isStopped: function() {
     return getMilli() === '--' &&
       getSeconds() === '--' &&
@@ -64,10 +65,12 @@ module.exports = {
   },
   runClock: function() {
     if (this.isStopped() || this.isFinished()) {
+      this.isRunning = false;
       noClock();
       return;
     }
 
+    this.isRunning = true;
     var milli = getMilli();
     var new_milli = parseInt(milli) - 1;
 

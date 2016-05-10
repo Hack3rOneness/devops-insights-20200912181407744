@@ -1384,7 +1384,9 @@ function setupInputListeners() {
       var clockSelector = 'aside[data-module="game-clock"]';
 
       return loadModuleGeneric(clockModulePath, clockSelector).done(function() {
-        Clock.runClock();
+        if (Clock.isRunning === false) {
+          Clock.runClock();
+        }
       });
     }
 
