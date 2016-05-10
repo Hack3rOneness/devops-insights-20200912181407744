@@ -2,13 +2,14 @@
 
 require_once('/var/www/fbctf/vendor/autoload.php');
 
-while ((Configuration::get('game')->getValue() === '1')) {
+$conf_game = \HH\Asio\join(Configuration::gen('game'));
+while ($conf_game->getValue() === '1') {
   // Get all active base levels
   $bases_endpoints = array();
-  foreach (Level::allActiveBases() as $base) {
+  foreach (\HH\Asio\join(Level::genAllActiveBases()) as $base) {
     $endpoint = array(
       'id' => $base->getId(),
-      'url' => Level::getBaseIP($base->getId())
+      'url' => \HH\Asio\join(Level::genBaseIP($base->getId()))
     );
     array_push($bases_endpoints, $endpoint);
   }
@@ -20,9 +21,9 @@ while ((Configuration::get('game')->getValue() === '1')) {
       $json_r = json_decode($response['response'])[0];
       $teamname = $json_r->team;
       // Give points to the team if exists
-      if (Team::teamExist($teamname)) {
-        $team = Team::getTeamByName($teamname);
-        Level::scoreBase($response['id'], $team->getId());
+      if (\HH\Asio\join(Team::genTeamExist($teamname))) {
+        $team = \HH\Asio\join(Team::genTeamByName($teamname));
+        \HH\Asio\join(Level::genScoreBase($response['id'], $team->getId()));
         //echo "Points\n";
       }
       //echo "Base(".strval($response['id']).") taken by ".$teamname."\n";
@@ -30,8 +31,9 @@ while ((Configuration::get('game')->getValue() === '1')) {
       $code = -1;
       //echo "Base(".strval($response['id']).") is DOWN\n";
     }
-    Level::logBaseEntry($response['id'], $code, strval($response['response']));
+    \HH\Asio\join(Level::genLogBaseEntry($response['id'], $code, strval($response['response'])));
   }
   // Wait until next iteration
-  sleep(intval(Configuration::get('bases_cycle')->getValue()));
+  $bases_cycle = \HH\Asio\join(Configuration::gen('bases_cycle'));
+  sleep(intval($bases_cycle->getValue()));
 }
