@@ -3,7 +3,7 @@ var $ = window.jQuery;
 require('bxslider');
 
 module.exports = {
-  init: function(maxSlides) {
+  init: function() {
     var selector = '.fb-slider';
     var itemWidth = $(selector).closest('#fb-modal').length > 0 ? 90 : 120;
 
