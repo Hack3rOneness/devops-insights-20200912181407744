@@ -2,7 +2,7 @@
 
 require_once('/var/www/fbctf/vendor/autoload.php');
 
-while (Progressive::getGameStatus()) {
-  Progressive::take();
-  sleep(Progressive::getCycle());
+while (\HH\Asio\join(Progressive::genGameStatus())) {
+  \HH\Asio\join(Progressive::genTake());
+  sleep(\HH\Asio\join(Progressive::genCycle()));
 }
