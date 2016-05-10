@@ -67,11 +67,13 @@ If you are going to be developing outside of the Vagrant machine, you need to sy
 `./extra/unison.sh PATH_TO_CTF_FOLDER`
 
 
-If you run into any blockers, please submit and issue on the GitHub repo. 
+If you run into any blockers, please submit an issue on the GitHub repo. 
 
 ## Contribute 
 
-You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! [Here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) you can find more information about how to contribute.
+You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! Click [Here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) to find out how to contribute.
+
+Facebook also has [bug bounty program] (https://www.facebook.com/whitehat/) that includes FBCTF. If you find a security vulnerability in the platform, please submit it via the process outlined on that page and do not file a public issue.
 
 ## Have more questions? 
 
