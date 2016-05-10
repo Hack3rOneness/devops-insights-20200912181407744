@@ -6,8 +6,8 @@ class :emblem-carousel extends :x:element {
   protected string $tagName = 'emblem-carousel';
 
   protected function render(): XHPRoot {
-    $logos_div = <div class="fb-slider fb-container container--large"></div>;
-    $logos_ul = <ul class="slides"></ul>;
+    $logos_div = <div class="fb-container container--large"></div>;
+    $logos_ul = <ul class="fb-slider slides"></ul>;
 
     $logos = HH\Asio\join(Logo::genAllEnabledLogos());
     foreach ($logos as $logo) {

@@ -173,7 +173,7 @@ function addNewSection($clicked) {
 
   $sectionContainer.append($newSection);
 
-  Slider.init();
+  Slider.init(5);
 }
 
 /**
@@ -1113,7 +1113,7 @@ module.exports = {
       Modal.loadPopup('p=choose-logo&modal=choose-logo', 'choose-logo', function() {
         var $modal = $('#fb-modal');
 
-        Slider.init();
+        Slider.init(5);
 
         $('.js-store-logo', $modal).on('click', function(event) {
           event.preventDefault();

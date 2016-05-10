@@ -1,37 +1,19 @@
-var $ = require('jquery');
+window.jQuery = require('jquery');
+var $ = window.jQuery;
+require('bxslider');
 
-module.exports = (function() {
-  var selector = '.fb-slider';
-
-  /**
-   * init the slider
-   *
-   * @param cb (function)
-   *   - an optional callback function to run after
-   *      the slider loads
-   */
-  function init(cb) {
+module.exports = {
+  init: function(maxSlides) {
+    var selector = '.fb-slider';
     var itemWidth = $(selector).closest('#fb-modal').length > 0 ? 90 : 120;
 
-    $(selector).flexslider({
-      namespace: "fb-slider-",
-      animation: "slide",
-      selector: ".slides > li",
-      slideshow: false,
-      minItems: 2,
-      itemWidth: itemWidth,
-      maxItems: 7,
-      move: 1,
-      controlNav: false,
-      start: function() {
-        if (typeof cb === 'function') {
-          cb();
-        }
-      }
+    window.jQuery(selector).bxSlider({
+      slideWidth: itemWidth,
+      slideMargin: 20,
+      pager: false,
+      minSlides: 2,
+      maxSlides: 5,
+      moveSlides: 1
     });
   }
-
-  return {
-    init: init
-  };
-})();
+};

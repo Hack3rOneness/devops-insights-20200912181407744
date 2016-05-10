@@ -2313,7 +2313,7 @@ function setupInputListeners() {
     //  done loading
     $body.on('content-loaded', function() {
       // load the sliders
-      Slider.init();
+      Slider.init(5);
 
       // load the grpahics
       Graphics.init(FB_CTF.data);
