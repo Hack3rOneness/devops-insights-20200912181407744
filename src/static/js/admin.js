@@ -1000,36 +1000,59 @@ module.exports = {
     });
 
     function levelsFilterChange() {
-      var category_filter = $('select[name="category_filter"] option:selected')[0].value;
       var status_filter = $('select[name="status_filter"] option:selected')[0].value;
-
-      // We hide all
-      $('section[id!=new-element]').each(function() {
-        $(this).addClass('completely-hidden');
-      });
-
+      var $category_filter = $('select[name="category_filter"] option:selected');
       var id = '';
-      // all status
-      if (status_filter === 'all') {
-        id = 'status--';
-      } else if (status_filter === 'Enabled') {
-        id = 'status--on';
-      } else if (status_filter === 'Disabled') {
-        id = 'status--off';
-      }
+      var selector;
 
-      var selector = 'input[type="radio"][id*="' + id + '"]:checked[class!=filter_option]';
+      // Quizzes don't have a category filter
+      if ($category_filter.length > 0) {
+        var category_filter = $category_filter[0].value;
 
-      var category_selector = 'select[name=category_id]';
-      if (category_filter !== 'all') {
-        category_selector = 'select[name=category_id] option:selected:contains(' + category_filter + ')';
-      }
+        // Hide all
+        $('section[id!=new-element]').each(function() {
+          $(this).addClass('completely-hidden');
+        });
 
-      $(selector).closest('section[id!=new-element]').each(function() {
-        if ($(this).find(category_selector).length > 0) {
-          $(this).removeClass('completely-hidden');
+        if (status_filter === 'all') {
+          id = 'status--';
+        } else if (status_filter === 'Enabled') {
+          id = 'status--on';
+        } else if (status_filter === 'Disabled') {
+          id = 'status--off';
         }
-      });
+
+        selector = 'input[type="radio"][id*="' + id + '"]:checked[class!=filter_option]';
+
+        var category_selector = 'select[name=category_id]';
+        if (category_filter !== 'all') {
+          category_selector = 'select[name=category_id] option:selected:contains(' + category_filter + ')';
+        }
+
+        $(selector).closest('section[id!=new-element]').each(function() {
+          if ($(this).find(category_selector).length > 0) {
+            $(this).removeClass('completely-hidden');
+          }
+        });
+      } else {
+        // Handle quizzes
+
+        // Hide all
+        $('section[id!=new-element]').each(function() {
+          $(this).addClass('completely-hidden');
+        });
+
+        if (status_filter === 'all') {
+          id = 'status--';
+        } else if (status_filter === 'Enabled') {
+          id = 'status--on';
+        } else if (status_filter === 'Disabled') {
+          id = 'status--off';
+        }
+
+        selector = 'input[type="radio"][id*="' + id + '"]:checked[class!=filter_option]';
+        $(selector).closest('section[id!=new-element]').removeClass('completely-hidden');
+      }
     } // levelsFilterChange
 
     // category filter select (flags, bases)
