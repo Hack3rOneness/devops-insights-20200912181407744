@@ -2,73 +2,58 @@
 
 ## What is FBCTF?
 
-The Facebook CTF is a platform to host “Jeopardy” and “King of the Hill” style Capture the Flag competitions.
+The Facebook CTF is a platform to host Jeopardy and “King of the Hill” style Capture the Flag competitions.
 
 ## How do I use FBCTF?
 
-* Organize a competition. This can be with as few as two participants, all the way up to several hundred. The participants can be physically present, virtually active, or a combination of the two.
+* Organize a competition. This can be with as few as two participants, all the way up to several hundred. The participants can be physically present, active online, or a combination of the two.
 * Follow setup instructions below to spin up platform infrastructure.
-* Enter challenges into Admin Panel
+* Enter challenges into admin page
 * Have participants register as teams
-    * If a closed competition:
-        * In Admin Portal, generate and export tokens to be shared with approved teams, then point participants towards hosted webpage
-    * If  an open competition:
-        * Point participants towards hosted webpage
+    * If running a closed competition:
+        * In the admin page, generate and export tokens to be shared with approved teams, then point participants towards the registration page
+    * If running an open competition:
+        * Point participants towards the registration page
 * Enjoy!
 
 # Installation
 
 The Facebook CTF platform can be provisioned in development or production environments.
 
-## Requirements
+### Production
 
-* **Production**
-    * Hardware
-        * VM or physical machine running Linux 14.04 LTS
-    * Software and accounts
-        * Git
-        * GitHub Account
-* **Development**
-    * Hardware
-        * VM or physical machine capable of running Linux or OSX
-    * Software and accounts
-        * Virtual Box (https://www.virtualbox.org/wiki/Downloads)
-        * Vagrant (https://www.vagrantup.com/downloads.html)
-        * Brew (http://brew.sh/) (required only for OS X)
-        * Github Account
-    * Required installations for SSH’ing and developing outside of the Vagrant Machine
-        * Vagrant-manager (http://vagrantmanager.com/downloads/)
-        * Unison (https://www.cis.upenn.edu/~bcpierce/unison/download.html)
+The target system needs to be Ubuntu 14.04. Run the following commands:
 
-## Production
+```bash
+sudo apt-get install git
+git clone https://github.com/facebook/fbctf
+cd fbctf
+./extra/provision.sh prod `pwd`
+```
 
-The target system needs to be Ubuntu 14.04. After installing git, clone the repository. For example, in `/home/ubuntu/fbctf`
-Then, push the following command.
-`./extra/provision.sh prod /home/ubuntu/fbcft`
-Be ready to provide the path for your SSL certificates csr and key files.
+This will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. Be ready to provide the path for your SSL certificate's CSR and key files.
 
-## Development
+### Development
 
-    git clone https://github.com/facebook/fbctf
-    cd fbctf
-    vagrant up
+While it is possible to do development on a physical Ubuntu machine (and possibly other Linux distros as well), we highly recommend doing all development a Vagrant VM. First, install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html). Then run:
 
+```bash
+git clone https://github.com/facebook/fbctf
+cd fbctf
+vagrant up
+```
 
+This will create a local virtual machine with Ubuntu 14.04 using Vagrant and VirtualBox as the provider. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5](https://10.10.10.5) by default.
 
-This will create a local virtual machine with Ubuntu 14.04 using Vagrant and Virtual Box as the engine. It will be located on PATH_TO_CTF_FOLDER/.vagrant/machines. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5] (https://10.10.10.5) by default.
+#### Optional installation
 
-## Optional installation
-
-If you want to ssh into the virtualbox, run:
-
-`vagrant ssh`
-
-If you are going to be developing outside of the Vagrant machine, you need to synchronize the files using unison (bi-directional rsync, over SSH).
+If you are going to be modifying files outside of the Vagrant VM, you will need to synchronize the files using [Unison](https://www.cis.upenn.edu/~bcpierce/unison/download.html) (bi-directional file sync over SSH). Once Unison is installed, you can sync your local repo with the VM with the following command:
 
 `./extra/unison.sh PATH_TO_CTF_FOLDER`
 
+Note that the unison script will not sync NPM dependencies, so if you ever need to run `npm install`, you should always run it on the VM itself.
 
-If you run into any blockers, please submit an issue on the GitHub repo.
+This step is not necessary if all development is done on the VM.
 
 ## Contribute
 
