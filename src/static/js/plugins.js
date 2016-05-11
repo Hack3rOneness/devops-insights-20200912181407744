@@ -4,7 +4,6 @@ var jQuery = require('jquery');
 window.jQuery = jQuery;
 require('typed.js');
 
-require('flexslider');
 require('hoverintent-jqplugin')(jQuery);
 
 /**
