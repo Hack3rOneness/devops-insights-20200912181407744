@@ -35,7 +35,7 @@ This will place the code in the `/var/www/fbctf` directory, install all dependen
 
 ### Development
 
-While it is possible to do development on a physical Ubuntu machine (and possibly other Linux distros as well), we highly recommend doing all development a Vagrant VM. First, install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html). Then run:
+While it is possible to do development on a physical Ubuntu machine (and possibly other Linux distros as well), we highly recommend doing all development on a Vagrant VM. First, install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html). Then run:
 
 ```bash
 git clone https://github.com/facebook/fbctf
