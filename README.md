@@ -33,7 +33,11 @@ cd fbctf
 ./extra/provision.sh prod `pwd`
 ```
 
-This will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. Be ready to provide the path for your SSL certificate's CSR and key files. The password for the user `admin` will be printed in the console at the end of provisioning, as it is randomly generated everytime the CTF platform is provisioned.
+This will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. Be ready to provide the path for your SSL certificate's CSR and key files. More information on setting up SSL is specific in the next session, but note that if you are just testing out the platform and not running it production, you want to use the instructions listed in the Development section below, as this takes care generating certificates for you. We will provide more info on generating your own certificates for production in the future.
+
+The password for the user `admin` will be printed in the console at the end of provisioning, as it is randomly generated everytime the CTF platform is provisioned. We will add a way to change this password from the command line in the near future (in the meantime, you can figure out how to do it manually by looking at the `import_empty_db` function in `./extra/lib.sh`.
+
+Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page.
 
 ### Development
 
@@ -45,7 +49,19 @@ cd fbctf
 vagrant up
 ```
 
-This will create a local virtual machine with Ubuntu 14.04 using Vagrant and VirtualBox as the provider. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5](https://10.10.10.5) by default.
+This will create a local virtual machine with Ubuntu 14.04 using Vagrant and VirtualBox as the provider. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5](https://10.10.10.5) by default. You can find any error logs in `/var/log/hhvm/error.log`.
+
+
+Note that if you don't want to use the Vagrant VM (not recommended), you can provision in dev mode manually. To do so, run the following commands:
+
+```
+sudo apt-get install git
+git clone https://github.com/facebook/fbctf
+cd fbctf
+./extra/provision.sh dev `pwd`
+```
+
+Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page.
 
 #### Optional installation
 

@@ -9,6 +9,8 @@ Complete your CLA here: <https://code.facebook.com/cla>
 
 First, ensure the issue was not already reported by doing a search. If you cannot find an existing issue, create a new issue. Make the title and description as clear as possible, and include a test case or screenshot to reproduce or illustrate the problem if possible.
 
+Check for error messages in `/var/log/hhvm/error.log`, and if you see any, please add them to your issue.
+
 ## Submitting a PR
 
 Before submitting a large PR for a new feature or improvement, please create an issue first. This will allow us to discuss the feature before much development effort is put into it. After we've agreed that the feature would fit in the scope of the project, or if the change is small enough to not require an issue, follow these steps to create a PR:
