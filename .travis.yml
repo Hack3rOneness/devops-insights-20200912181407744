@@ -1,6 +1,7 @@
 language: php
 php:
   - hhvm
+sudo: required
 install: ./extra/provision.sh dev $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR
 
 # We don't run phpunit at the moment
