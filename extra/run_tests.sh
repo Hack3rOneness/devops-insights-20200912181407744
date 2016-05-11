@@ -11,7 +11,11 @@ PWD="ctf"
 CODE_PATH=${1:-/vagrant}
 
 echo "[+] Starting tests setup in $CODE_PATH"
-# mysql_config_editor set --login-path=local --host=localhost --user="root" --password
+
+if ! [[ $(mysql_config_editor print --login-path=local) ]]; then
+  mysql_config_editor set --login-path=local --host=localhost --user="root" --password
+fi
+
 mysql --login-path=local -e "CREATE DATABASE $DB;"
 mysql --login-path=local -e "CREATE USER '$USER'@'localhost' IDENTIFIED BY '$PWD';"
 mysql --login-path=local -e "GRANT ALL ON $DB.* TO '$USER'@'localhost';"
