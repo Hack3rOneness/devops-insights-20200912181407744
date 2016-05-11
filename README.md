@@ -1,48 +1,49 @@
+# FBCTF [![Build Status](https://travis-ci.com/facebook/fbctf.svg?token=iA22NGxXs7orkhB2bopa&branch=master)](https://travis-ci.com/facebook/fbctf)
 
 ## What is FBCTF?
 
-The Facebook CTF is a platform to host “Jeopardy” and “King of the Hill” style Capture the Flag competitions. 
+The Facebook CTF is a platform to host “Jeopardy” and “King of the Hill” style Capture the Flag competitions.
 
 ## How do I use FBCTF?
 
-* Organize a competition. This can be with as few as two participants, all the way up to several hundred. The participants can be physically present, virtually active, or a combination of the two. 
-* Follow setup instructions below to spin up platform infrastructure. 
-* Enter challenges into Admin Panel 
+* Organize a competition. This can be with as few as two participants, all the way up to several hundred. The participants can be physically present, virtually active, or a combination of the two.
+* Follow setup instructions below to spin up platform infrastructure.
+* Enter challenges into Admin Panel
 * Have participants register as teams
-    * If a closed competition: 
+    * If a closed competition:
         * In Admin Portal, generate and export tokens to be shared with approved teams, then point participants towards hosted webpage
-    * If  an open competition: 
+    * If  an open competition:
         * Point participants towards hosted webpage
 * Enjoy!
 
-# Installation 
+# Installation
 
 The Facebook CTF platform can be provisioned in development or production environments.
 
-## Requirements 
+## Requirements
 
 * **Production**
-    * Hardware 
+    * Hardware
         * VM or physical machine running Linux 14.04 LTS
     * Software and accounts
-        * Git 
+        * Git
         * GitHub Account
-* **Development** 
+* **Development**
     * Hardware
         * VM or physical machine capable of running Linux or OSX
-    * Software and accounts 
+    * Software and accounts
         * Virtual Box (https://www.virtualbox.org/wiki/Downloads)
         * Vagrant (https://www.vagrantup.com/downloads.html)
         * Brew (http://brew.sh/) (required only for OS X)
         * Github Account
     * Required installations for SSH’ing and developing outside of the Vagrant Machine
-        * Vagrant-manager (http://vagrantmanager.com/downloads/) 
-        * Unison (https://www.cis.upenn.edu/~bcpierce/unison/download.html) 
+        * Vagrant-manager (http://vagrantmanager.com/downloads/)
+        * Unison (https://www.cis.upenn.edu/~bcpierce/unison/download.html)
 
 ## Production
 
 The target system needs to be Ubuntu 14.04. After installing git, clone the repository. For example, in `/home/ubuntu/fbctf`
-Then, push the following command. 
+Then, push the following command.
 `./extra/provision.sh prod /home/ubuntu/fbcft`
 Be ready to provide the path for your SSL certificates csr and key files.
 
@@ -56,7 +57,7 @@ Be ready to provide the path for your SSL certificates csr and key files.
 
 This will create a local virtual machine with Ubuntu 14.04 using Vagrant and Virtual Box as the engine. It will be located on PATH_TO_CTF_FOLDER/.vagrant/machines. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5] (https://10.10.10.5) by default.
 
-## Optional installation  
+## Optional installation
 
 If you want to ssh into the virtualbox, run:
 
@@ -67,20 +68,18 @@ If you are going to be developing outside of the Vagrant machine, you need to sy
 `./extra/unison.sh PATH_TO_CTF_FOLDER`
 
 
-If you run into any blockers, please submit an issue on the GitHub repo. 
+If you run into any blockers, please submit an issue on the GitHub repo.
 
-## Contribute 
+## Contribute
 
 You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! Click [Here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) to find out how to contribute.
 
 Facebook also has [bug bounty program] (https://www.facebook.com/whitehat/) that includes FBCTF. If you find a security vulnerability in the platform, please submit it via the process outlined on that page and do not file a public issue.
 
-## Have more questions? 
+## Have more questions?
 
-Check out the [wiki pages] (https://github.com/facebook/fbctf/wiki) attached to this repo. 
+Check out the [wiki pages] (https://github.com/facebook/fbctf/wiki) attached to this repo.
 
-## License 
+## License
 
 This source code is licensed under the Creative Commons Attribution-NonCommercial 4.0 International license found in the LICENSE file in the root directory of this source tree.
-
-
