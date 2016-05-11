@@ -851,7 +851,7 @@ class AdminController extends Controller {
                 </form>
               </div>
             </div>
-            <div class="admin-buttons col col-1-3">
+            <div class="admin-buttons col col-pad col-1-3">
               <div class="col el--block-label el--full-text">
                 <button class="fb-cta cta--red" data-action="delete-new-attachment">X</button>
                 <button class="fb-cta cta--yellow" data-action="create-attachment">Create</button>
@@ -933,7 +933,7 @@ class AdminController extends Controller {
                   </form>
                 </div>
               </div>
-              <div class="admin-buttons col col-1-3">
+              <div class="admin-buttons col col-pad col-1-3">
                 <div class="col el--block-label el--full-text">
                   <button class="fb-cta cta--red" data-action="delete-link">X</button>
                 </div>
@@ -2132,7 +2132,7 @@ class AdminController extends Controller {
           </tr>
         );
       }
-      $logs_table = 
+      $logs_table =
         <table>
           <thead>
               <tr>
@@ -2147,7 +2147,7 @@ class AdminController extends Controller {
             {$logs_tbody}
         </table>;
     } else {
-      $logs_table = 
+      $logs_table =
         <div class="fb-column-container">
           <div class="col col-pad">
             No Entries
