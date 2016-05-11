@@ -13,6 +13,7 @@ www.pid
 
 # Configuration files
 *.ini
+!tests/server.ini
 
 # Vagrant Artifacts
 .vagrant
