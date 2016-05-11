@@ -33,7 +33,7 @@ cd fbctf
 ./extra/provision.sh prod `pwd`
 ```
 
-This will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. Be ready to provide the path for your SSL certificate's CSR and key files.
+This will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. Be ready to provide the path for your SSL certificate's CSR and key files. The password for the user `admin` will be printed in the console at the end of provisioning, as it is randomly generated everytime the CTF platform is provisioned.
 
 ### Development
 
