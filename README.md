@@ -4,7 +4,7 @@
 
 The Facebook CTF is a platform to host Jeopardy and “King of the Hill” style Capture the Flag competitions.
 
-![](http://i.giphy.com/3oEjHEwH4TqJtHmug8.gif)
+<div align="center"><img src="screencapture.gif" /></div>
 
 ## How do I use FBCTF?
 
