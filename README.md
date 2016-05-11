@@ -59,7 +59,7 @@ This step is not necessary if all development is done on the VM.
 
 ## Contribute
 
-You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! Click [Here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) to find out how to contribute.
+You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! Click [here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) to find out how to contribute.
 
 Facebook also has [bug bounty program] (https://www.facebook.com/whitehat/) that includes FBCTF. If you find a security vulnerability in the platform, please submit it via the process outlined on that page and do not file a public issue.
 
