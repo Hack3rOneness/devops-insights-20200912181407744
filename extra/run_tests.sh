@@ -25,8 +25,8 @@ echo "[+] Starting tests"
 hhvm --config tests/server.ini vendor/phpunit/phpunit/phpunit --configuration tests/phpunit.xml tests
 
 echo "[+] Deleting test database"
-mysql -u="$DB_USER" --password="$DB_PWD" -e "DROP DATABASE IF EXISTS $DB;"
-mysql -u="$DB_USER" --password="$DB_PWD" -e "FLUSH PRIVILEGES;"
+mysql -u "$DB_USER" --password="$DB_PWD" -e "DROP DATABASE IF EXISTS $DB;"
+mysql -u "$DB_USER" --password="$DB_PWD" -e "FLUSH PRIVILEGES;"
 
 exit 0
 
