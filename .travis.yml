@@ -1,7 +1,7 @@
 language: php
 php:
   - hhvm
-install: ./extra/provision.sh dev $TRAVIS_BUILD_DIR
+install: ./extra/provision.sh dev $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR
 
 # We don't run phpunit at the moment
 script: true

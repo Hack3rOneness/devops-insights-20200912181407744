@@ -9,23 +9,26 @@ DB="fbctf"
 U="ctf"
 P="ctf"
 P_ROOT="root"
-CTF_PATH="/var/www/fbctf"
 MODE=${1:-dev}
 CODE_PATH=${2:-/vagrant}
-
+CTF_PATH=${3:-/var/www/fbctf}
 
 echo "[+] Provisioning in $MODE mode"
 
-echo "[+] Creating code folder $CTF_PATH"
-[[ -d "$CTF_PATH" ]] || sudo mkdir -p "$CTF_PATH"
+# We only create a new directory and rsync files over if it's different from the
+# original code path
+if [[ "$CODE_PATH" != "$CTF_PATH" ]]; then
+    echo "[+] Creating code folder $CTF_PATH"
+    [[ -d "$CTF_PATH" ]] || sudo mkdir -p "$CTF_PATH"
 
-echo "[+] Copying all CTF code to destination folder"
-sudo rsync -a --exclude node_modules --exclude vendor "$CODE_PATH/" "$CTF_PATH/"
+    echo "[+] Copying all CTF code to destination folder"
+    sudo rsync -a --exclude node_modules --exclude vendor "$CODE_PATH/" "$CTF_PATH/"
 
-# This is because sync'ing files is done with unison
-if [[ "$MODE" == "dev" ]]; then
-  echo "[+] Setting permissions"
-  sudo chmod -R 777 "$CTF_PATH/"
+    # This is because sync'ing files is done with unison
+    if [[ "$MODE" == "dev" ]]; then
+        echo "[+] Setting permissions"
+        sudo chmod -R 777 "$CTF_PATH/"
+    fi
 fi
 
 # There we go!
