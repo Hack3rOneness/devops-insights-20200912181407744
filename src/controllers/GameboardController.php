@@ -46,7 +46,7 @@ class GameboardController extends Controller {
               <li>
                 <a>Navigation</a>
                 <ul class="subnav">
-                  <li><a href="/index.php?p=view">View Mode</a></li>
+                  <!-- <li><a href="/index.php?p=view">View Mode</a></li> -->
                   <li><a href="#" class="fb-init-tutorial">Tutorial</a></li>
                   {$admin_link}
                   <li><a href="/index.php?page=rules" target="_blank">Rules</a></li>
