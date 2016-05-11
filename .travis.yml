@@ -1,6 +1,6 @@
-language: php
-php:
-  - hhvm
+# We use language generic because that's the only thing that's supported for the
+# trusty distro
+language: generic
 sudo: required
 dist: trusty
 install: ./extra/provision.sh dev $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR
