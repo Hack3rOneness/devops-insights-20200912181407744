@@ -110,6 +110,7 @@ function self_signed_cert() {
 function letsencrypt_cert() {
   local __email=$3
   local __domain=$4
+  local __docker=$5
 
   dl "https://dl.eff.org/certbot-auto" /usr/bin/certbot-auto
   sudo chmod a+x /usr/bin/certbot-auto
@@ -125,9 +126,21 @@ function letsencrypt_cert() {
     __mydomain=$__domain
   fi
 
-  /usr/bin/certbot-auto certonly -n --agree-tos --standalone --standalone-supported-challenges tls-sni-01 -m "$__myemail" -d "$__mydomain"
-  sudo ln -s "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1" || true
-  sudo ln -s "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2" || true
+  if [[ $__docker = true ]]; then
+    cat <<- EOF > /root/tmp/certbot.sh
+		#!/bin/bash
+		if [[ ! ( -d /etc/letsencrypt && "\$(ls -A /etc/letsencrypt)" ) ]]; then
+		    /usr/bin/certbot-auto certonly -n --agree-tos --standalone --standalone-supported-challenges tls-sni-01 -m "$__myemail" -d "$__mydomain"
+		fi
+		sudo ln -sf "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1"
+		sudo ln -sf "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2"
+EOF
+    sudo chmod +x /root/tmp/certbot.sh
+  else
+    /usr/bin/certbot-auto certonly -n --agree-tos --standalone --standalone-supported-challenges tls-sni-01 -m "$__myemail" -d "$__mydomain"
+    sudo ln -s "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1" || true
+    sudo ln -s "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2" || true
+  fi
 }
 
 function own_cert() {
@@ -146,6 +159,7 @@ function install_nginx() {
   local __certs=$3
   local __email=$4
   local __domain=$5
+  local __docker=$6
 
   local __certs_path="/etc/nginx/certs"
 
@@ -167,7 +181,10 @@ function install_nginx() {
         own_cert "$__cert" "$__key"
       ;;
       certbot)
-        letsencrypt_cert "$__cert" "$__key" "$__email" "$__domain"
+        if [[ $__docker = true ]]; then
+          self_signed_cert "$__cert" "$__key"
+        fi
+        letsencrypt_cert "$__cert" "$__key" "$__email" "$__domain" "$__docker"
       ;;
       *)
         error_log "Unrecognized type of certificate"
