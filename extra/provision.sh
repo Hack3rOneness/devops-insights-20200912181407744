@@ -41,10 +41,9 @@ set_motd "$CTF_PATH"
 package language-pack-en
 package emacs
 
-# Adding repos for osquery (of course!), mycli and hhvm
+# Adding repos for osquery (of course!) and mycli
 repo_osquery
 repo_mycli
-repo_hhvm
 
 # We only run this once so provisioning is faster
 sudo apt-get update

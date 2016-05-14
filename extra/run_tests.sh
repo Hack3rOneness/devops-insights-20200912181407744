@@ -22,11 +22,8 @@ echo "[+] DB Connection file"
 cat "$CODE_PATH/extra/settings.ini.example" | sed "s/DATABASE/$DB/g" | sed "s/MYUSER/$DB_USER/g" | sed "s/MYPWD/$DB_PWD/g" > "$CODE_PATH/settings.ini"
 
 echo "[+] Starting tests"
-hhvm --config tests/server.ini vendor/phpunit/phpunit/phpunit --configuration tests/phpunit.xml tests
+hhvm vendor/phpunit/phpunit/phpunit tests
 
 echo "[+] Deleting test database"
 mysql -u "$DB_USER" --password="$DB_PWD" -e "DROP DATABASE IF EXISTS $DB;"
 mysql -u "$DB_USER" --password="$DB_PWD" -e "FLUSH PRIVILEGES;"
-
-exit 0
-
