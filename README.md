@@ -30,7 +30,7 @@ The target system needs to be Ubuntu 14.04. Run the following commands:
 sudo apt-get install git
 git clone https://github.com/facebook/fbctf
 cd fbctf
-./extra/provision.sh prod `pwd`
+./extra/provision.sh prod $PWD
 ```
 
 This will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. Be ready to provide the path for your SSL certificate's CSR and key files. More information on setting up SSL is specific in the next session, but note that if you are just testing out the platform and not running it production, you want to use the instructions listed in the Development section below, as this takes care generating certificates for you. We will provide more info on generating your own certificates for production in the future.
@@ -58,7 +58,7 @@ Note that if you don't want to use the Vagrant VM (not recommended), you can pro
 sudo apt-get install git
 git clone https://github.com/facebook/fbctf
 cd fbctf
-./extra/provision.sh dev `pwd`
+./extra/provision.sh dev $PWD
 ```
 
 Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page.
