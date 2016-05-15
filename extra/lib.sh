@@ -104,7 +104,7 @@ function install_nginx() {
 function install_hhvm() {
   local __path=$1
 
-  sudo apt-get install software-properties-common
+  package software-properties-common
 
   log "Adding HHVM key"
   sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
@@ -114,7 +114,7 @@ function install_hhvm() {
 
   log "Installing HHVM"
   sudo apt-get update
-  sudo apt-get install hhvm
+  package hhvm
 
   log "Copying HHVM configuration"
   cat "$__path/extra/hhvm.conf" | sed "s|CTFPATH|$__path/|g" | sudo tee /etc/hhvm/server.ini
