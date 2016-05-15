@@ -51,6 +51,11 @@ vagrant up
 
 This will create a local virtual machine with Ubuntu 14.04 using Vagrant and VirtualBox as the provider. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5](https://10.10.10.5) by default. You can find any error logs in `/var/log/hhvm/error.log`.
 
+If you are using a non-english locale on the host system, you will run into problems during the installation. The easiest solution is to run vagrant with a default englisch locale:
+
+```bash
+LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 vagrant up
+```
 
 Note that if you don't want to use the Vagrant VM (not recommended), you can provision in dev mode manually. To do so, run the following commands:
 
