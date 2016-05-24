@@ -101,16 +101,19 @@ function install_nginx() {
   sudo service nginx restart
 }
 
-function repo_hhvm() {
-  log "Adding HHVM key"
-  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
-  log "Adding HHVM repo"
-  sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
-}
-
 function install_hhvm() {
   local __path=$1
 
+  package software-properties-common
+
+  log "Adding HHVM key"
+  sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
+
+  log "Adding HHVM repo"
+  sudo add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main"
+
+  log "Installing HHVM"
+  sudo apt-get update
   package hhvm
 
   log "Copying HHVM configuration"
