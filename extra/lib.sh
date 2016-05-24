@@ -101,6 +101,8 @@ function install_nginx() {
   sudo service nginx restart
 }
 
+# TODO: We should split this function into one where the repo is added, and a
+# second where the repo is installed
 function install_hhvm() {
   local __path=$1
 

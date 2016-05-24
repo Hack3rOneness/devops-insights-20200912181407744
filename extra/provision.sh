@@ -2,8 +2,11 @@
 #
 # Facebook CTF: Provision script for vagrant dev environment
 #
-# Usage: ./provision.sh [dev | prod] [path_to_code]
+# Usage: ./provision.sh [dev | prod] [path_to_code] [path_to_destination]
 #
+
+# We want the provision script to fail as soon as there are any errors
+set -e
 
 DB="fbctf"
 U="ctf"
@@ -37,26 +40,26 @@ source "$CTF_PATH/extra/lib.sh"
 # Ascii art is always appreciated
 set_motd "$CTF_PATH"
 
-# Off to a good start...
+# Some people need this language pack installed or HHVM will report errors
 package language-pack-en
-package emacs
 
-# Adding repos for osquery (of course!) and mycli
-repo_osquery
-repo_mycli
+# Repos to be added in dev mode
+if [[ "$MODE" = "dev" ]]; then
+    repo_mycli
+fi
 
 # We only run this once so provisioning is faster
 sudo apt-get update
 
-# Install osquery and mycli
-package osquery
-package mycli
+# Packages to be installed in dev mode
+if [[ "$MODE" = "dev" ]]; then
+    package mycli
+    package emacs
+    package htop
+fi
 
 # Install memcached
 package memcached
-
-# Install htop
-package htop
 
 # Install MySQL
 install_mysql "$P_ROOT"
