@@ -5,12 +5,6 @@ to do this once to work on any of Facebook's open source projects.
 
 Complete your CLA here: <https://code.facebook.com/cla>
 
-## Reporting an Issue
-
-First, ensure the issue was not already reported by doing a search. If you cannot find an existing issue, create a new issue. Make the title and description as clear as possible, and include a test case or screenshot to reproduce or illustrate the problem if possible.
-
-Check for error messages in `/var/log/hhvm/error.log`, and if you see any, please add them to your issue.
-
 ## Submitting a PR
 
 Before submitting a large PR for a new feature or improvement, please create an issue first. This will allow us to discuss the feature before much development effort is put into it. After we've agreed that the feature would fit in the scope of the project, or if the change is small enough to not require an issue, follow these steps to create a PR:
@@ -38,6 +32,7 @@ git push origin my-fix
 
 - Create a new [Pull Request](https://help.github.com/articles/using-pull-requests/#initiating-the-pull-request)
 - We will review your PR and request changes if necessary.
+- When you make a new commit fixing a requested change, please squash your changes using `git rebase`. You can find more info on how to do this [here](https://help.github.com/articles/about-git-rebase/#an-example-of-using-git-rebase).
 - Once all requested changes have been made, we will merge your pull request.
 
 ## Coding Guidelines

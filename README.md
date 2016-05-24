@@ -78,6 +78,12 @@ Note that the unison script will not sync NPM dependencies, so if you ever need 
 
 This step is not necessary if all development is done on the VM.
 
+## Reporting an Issue
+
+First, ensure the issue was not already reported by doing a search. If you cannot find an existing issue, create a new issue. Make the title and description as clear as possible, and include a test case or screenshot to reproduce or illustrate the problem if possible.
+
+If you have issues installing the platform, please provide the entire output of the provision script in your issue. Also include any error messages you find in `/var/log/hhvm/error.log`.
+
 ## Contribute
 
 You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! Click [here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) to find out how to contribute.
