@@ -20,24 +20,7 @@ The Facebook CTF is a platform to host Jeopardy and “King of the Hill” style
 
 # Installation
 
-The Facebook CTF platform can be provisioned in development or production environments.
-
-### Production
-
-The target system needs to be Ubuntu 14.04. Run the following commands:
-
-```bash
-sudo apt-get install git
-git clone https://github.com/facebook/fbctf
-cd fbctf
-./extra/provision.sh prod $PWD
-```
-
-This will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. Be ready to provide the path for your SSL certificate's CSR and key files. More information on setting up SSL is specific in the next session, but note that if you are just testing out the platform and not running it production, you want to use the instructions listed in the Development section below, as this takes care generating certificates for you. We will provide more info on generating your own certificates for production in the future.
-
-The password for the user `admin` will be printed in the console at the end of provisioning, as it is randomly generated everytime the CTF platform is provisioned. We will add a way to change this password from the command line in the near future (in the meantime, you can figure out how to do it manually by looking at the `import_empty_db` function in `./extra/lib.sh`.
-
-Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page.
+The Facebook CTF platform can be provisioned in development or production environments. Note that the *only* supported system is Ubuntu 14.04. Ubuntu 16.04 is not supported at this time. We will accept PRs to support other platforms, but we will not officially support those platforms if there any issues.
 
 ### Development
 
@@ -49,7 +32,9 @@ cd fbctf
 vagrant up
 ```
 
-This will create a local virtual machine with Ubuntu 14.04 using Vagrant and VirtualBox as the provider. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The credentials will be admin/password and the machine will be available on [https://10.10.10.5](https://10.10.10.5) by default. You can find any error logs in `/var/log/hhvm/error.log`.
+This will create a local virtual machine with Ubuntu 14.04 using Vagrant and VirtualBox as the provider. The provisioning script will install all necessary software to the platform locally, using self-signed certificates. The platform will be available on [https://10.10.10.5](https://10.10.10.5) by default. You can find any error logs in `/var/log/hhvm/error.log`. If you would like to change this IP address, you can find the configuration for it in the `Vagrantfile`.
+
+Once the VM has started, go to the URL/IP of the server (10.10.10.5 in the default case). Click the "Login" link at the top right, enter the 'admin' as the team name and 'password' as the password (without quotes). You will be redirected to the administration page. At the bottom of the navigation bar on the left, there will be a link to go to the gameboard.
 
 If you are using a non-english locale on the host system, you will run into problems during the installation. The easiest solution is to run vagrant with a default englisch locale:
 
@@ -66,7 +51,22 @@ cd fbctf
 ./extra/provision.sh dev $PWD
 ```
 
-Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page.
+### Production
+
+The target system needs to be Ubuntu 14.04. Run the following commands:
+
+```bash
+sudo apt-get install git
+git clone https://github.com/facebook/fbctf
+cd fbctf
+./extra/provision.sh prod $PWD
+```
+
+*Note*: Because this is a production environment, the password will be randomly generated when the provision script finishes. This ensures that you can't forget to change the default password after provisioning. Make sure to watch the very end of the provision script, as the password will be printed out. It will not be stored elsewhere, so either keep track of it or change it. We will add a way to change this password from the command line in the near future (in the meantime, you can figure out how to do it manually by looking at the `import_empty_db` function in `./extra/lib.sh`.
+
+The provision script will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. In order to run in production mode, we require that you use SSL. The provision script will ask you for your SSL certificate's CSR and key files. More information on setting up SSL is specific in the next session, but note that if you are just testing out the platform and not running it production, you want to use the instructions listed in the Development section below, as this takes care generating certificates for you. We will support Let's Encrypt in the future.
+
+Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page. Enter the credentials you received at the end of the provision script to log in.
 
 #### Optional installation
 
