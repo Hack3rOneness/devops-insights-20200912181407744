@@ -177,7 +177,22 @@ function import_empty_db() {
     PASSWORD=$(head -c 500 /dev/urandom | md5sum | cut -d" " -f1)
   fi
 
+  set_password "$PASSWORD" "$__user" "$__pwd" "$__db" "$__path"
   log "The password for admin is: $PASSWORD"
-  HASH=$(hhvm -f "$__path/extra/hash.php" "$PASSWORD")
-  mysql -u "$__user" --password="$__pwd" "$__db" -e "INSERT INTO teams (name, password_hash, admin, protected, logo, created_ts) VALUES('admin', '$HASH', 1, 1, 'admin', NOW());"
+}
+
+function set_password() {
+    local __admin_pwd=$1
+    local __user=$2
+    local __db_pwd=$3
+    local __db=$4
+    local __path=$5
+
+    HASH=$(hhvm -f "$__path/extra/hash.php" "$__admin_pwd")
+
+    # First try to delete the existing admin user
+    mysql -u "$__user" --password="$__db_pwd" "$__db" -e "DELETE FROM teams WHERE name='admin' AND admin=1"
+
+    # Then insert the new admin user with ID 1 (just as a convention, we shouldn't rely on this in the code)
+    mysql -u "$__user" --password="$__db_pwd" "$__db" -e "INSERT INTO teams (id, name, password_hash, admin, protected, logo, created_ts) VALUES (1, 'admin', '$HASH', 1, 1, 'admin', NOW());"
 }
