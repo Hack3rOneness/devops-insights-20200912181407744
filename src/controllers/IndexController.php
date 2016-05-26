@@ -58,7 +58,6 @@ class IndexController extends Controller {
   }
 
   public async function genRenderCountdownContent(): Awaitable<:xhp> {
-    SessionUtils::sessionStart();
     if (SessionUtils::sessionActive()) {
       $play_nav =
         <form class="fb-form inner-container">
@@ -437,7 +436,6 @@ class IndexController extends Controller {
   }
 
   public function renderMainNav(): :xhp {
-    SessionUtils::sessionStart();
     if (SessionUtils::sessionActive()) {
       $right_nav =
         <ul class="nav-right">

@@ -1,9 +1,5 @@
 <?hh // strict
 
-/* HH_IGNORE_ERROR[1002] */
-SessionUtils::sessionStart();
-SessionUtils::enforceLogin();
-
 class GameAjaxController extends AjaxController {
   <<__Override>>
   protected function getFilters(): array<string, mixed> {
