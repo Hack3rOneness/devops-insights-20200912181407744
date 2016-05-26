@@ -47,12 +47,16 @@ class Router {
   private static async function genRouteAjax(
     string $page,
   ): Awaitable<string> {
+    SessionUtils::sessionStart();
     switch ($page) {
       case 'index':
         return await (new IndexAjaxController())->genHandleRequest();
       case 'admin':
+        SessionUtils::enforceLogin();
+        SessionUtils::enforceAdmin();
         return await (new AdminAjaxController())->genHandleRequest();
       case 'game':
+        SessionUtils::enforceLogin();
         return await (new GameAjaxController())->genHandleRequest();
       default:
         throw new NotFoundRedirectException();
@@ -60,18 +64,21 @@ class Router {
   }
 
   private static async function genRouteNormal(string $page): Awaitable<:xhp> {
+    SessionUtils::sessionStart();
     switch ($page) {
       case 'admin':
+        SessionUtils::enforceLogin();
+        SessionUtils::enforceAdmin();
         return await (new AdminController())->genRender();
       case 'index':
         return await (new IndexController())->genRender();
       case 'game':
+        SessionUtils::enforceLogin();
         return await (new GameboardController())->genRender();
       case 'view':
         return await (new ViewModeController())->genRender();
       case 'logout':
         // TODO: Make a confirmation modal?
-        SessionUtils::sessionStart();
         SessionUtils::sessionLogout();
         invariant(false, 'should not reach here');
       default:

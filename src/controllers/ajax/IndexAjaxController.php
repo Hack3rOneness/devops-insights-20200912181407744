@@ -187,7 +187,6 @@ class IndexAjaxController extends AjaxController {
     $team = await Team::genVerifyCredentials($team_id, $password);
 
     if ($team) {
-      SessionUtils::sessionStart();
       SessionUtils::sessionRefresh();
       if (!SessionUtils::sessionActive()) {
         SessionUtils::sessionSet('team_id', strval($team->getId()));
@@ -198,8 +197,8 @@ class IndexAjaxController extends AjaxController {
             gmp_init(
               bin2hex(
                 openssl_random_pseudo_bytes(16)
-              ), 
-            16), 
+              ),
+            16),
           62)
         );
         SessionUtils::sessionSet('IP', must_have_string(Utils::getSERVER(), 'REMOTE_ADDR'));
