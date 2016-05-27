@@ -62,7 +62,13 @@ cd fbctf
 ./extra/provision.sh prod $PWD
 ```
 
-*Note*: Because this is a production environment, the password will be randomly generated when the provision script finishes. This ensures that you can't forget to change the default password after provisioning. Make sure to watch the very end of the provision script, as the password will be printed out. It will not be stored elsewhere, so either keep track of it or change it. We will add a way to change this password from the command line in the near future (in the meantime, you can figure out how to do it manually by looking at the `import_empty_db` function in `./extra/lib.sh`.
+*Note*: Because this is a production environment, the password will be randomly generated when the provision script finishes. This ensures that you can't forget to change the default password after provisioning. Make sure to watch the very end of the provision script, as the password will be printed out. It will not be stored elsewhere, so either keep track of it or change it. In order to change the password, run the following command:
+
+```
+set_password new_password ctf ctf fbctf $PWD
+```
+
+This will set the password to 'new_password', assuming the database user/password is ctf/ctf and the database name is fbctf (these are the defaults).
 
 The provision script will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. In order to run in production mode, we require that you use SSL. The provision script will ask you for your SSL certificate's CSR and key files. More information on setting up SSL is specific in the next session, but note that if you are just testing out the platform and not running it production, you want to use the instructions listed in the Development section below, as this takes care generating certificates for you. We will support Let's Encrypt in the future.
 

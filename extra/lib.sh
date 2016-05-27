@@ -47,7 +47,12 @@ function install_mysql() {
 
 function set_motd() {
   local __path=$1
-  sudo chmod -x /etc/update-motd.d/51-cloudguest
+
+  # If the cloudguest MOTD exists, disable it
+  if [[ -f /etc/update-motd.d/51/cloudguest ]]; then
+    sudo chmod -x /etc/update-motd.d/51-cloudguest
+  fi
+
   sudo cp "$__path/extra/motd-ctf.sh" /etc/update-motd.d/10-help-text
 }
 
@@ -101,6 +106,8 @@ function install_nginx() {
   sudo service nginx restart
 }
 
+# TODO: We should split this function into one where the repo is added, and a
+# second where the repo is installed
 function install_hhvm() {
   local __path=$1
 
@@ -175,7 +182,22 @@ function import_empty_db() {
     PASSWORD=$(head -c 500 /dev/urandom | md5sum | cut -d" " -f1)
   fi
 
+  set_password "$PASSWORD" "$__user" "$__pwd" "$__db" "$__path"
   log "The password for admin is: $PASSWORD"
-  HASH=$(hhvm -f "$__path/extra/hash.php" "$PASSWORD")
-  mysql -u "$__user" --password="$__pwd" "$__db" -e "INSERT INTO teams (name, password_hash, admin, protected, logo, created_ts) VALUES('admin', '$HASH', 1, 1, 'admin', NOW());"
+}
+
+function set_password() {
+    local __admin_pwd=$1
+    local __user=$2
+    local __db_pwd=$3
+    local __db=$4
+    local __path=$5
+
+    HASH=$(hhvm -f "$__path/extra/hash.php" "$__admin_pwd")
+
+    # First try to delete the existing admin user
+    mysql -u "$__user" --password="$__db_pwd" "$__db" -e "DELETE FROM teams WHERE name='admin' AND admin=1"
+
+    # Then insert the new admin user with ID 1 (just as a convention, we shouldn't rely on this in the code)
+    mysql -u "$__user" --password="$__db_pwd" "$__db" -e "INSERT INTO teams (id, name, password_hash, admin, protected, logo, created_ts) VALUES (1, 'admin', '$HASH', 1, 1, 'admin', NOW());"
 }
