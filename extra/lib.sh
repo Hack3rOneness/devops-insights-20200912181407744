@@ -47,7 +47,12 @@ function install_mysql() {
 
 function set_motd() {
   local __path=$1
-  sudo chmod -x /etc/update-motd.d/51-cloudguest
+
+  # If the cloudguest MOTD exists, disable it
+  if [[ -f /etc/update-motd.d/51/cloudguest ]]; then
+    sudo chmod -x /etc/update-motd.d/51-cloudguest
+  fi
+
   sudo cp "$__path/extra/motd-ctf.sh" /etc/update-motd.d/10-help-text
 }
 
