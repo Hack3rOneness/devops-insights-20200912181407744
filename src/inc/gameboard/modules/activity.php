@@ -1,6 +1,7 @@
 <?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/language/language.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -8,9 +9,12 @@ SessionUtils::enforceLogin();
 
 class ActivityModuleController {
   public async function genRender(): Awaitable<:xhp> {
+    await tr_start();
     $activity_ul = <ul class="activity-stream"></ul>;
 
     $all_activity = await Control::genAllActivity();
+    $config = await Configuration::gen('language');
+    $language = $config->getValue();
     foreach ($all_activity as $score) {
       if (intval($score['team_id']) === SessionUtils::sessionTeam()) {
         $class_li = 'your-team';
@@ -19,9 +23,10 @@ class ActivityModuleController {
         $class_li = 'opponent-team';
         $class_span = 'opponent-name';
       }
+      $translated_country = locale_get_display_region('-'.$score['country'], $language);
       $activity_ul->appendChild(
         <li class={$class_li}>
-          [ {time_ago($score['time'])} ] <span class={$class_span}>{$score['team']}</span> captured {$score['country']}
+          [ {time_ago($score['time'])} ] <span class={$class_span}>{$score['team']}</span>&nbsp;{tr('captured')}&nbsp;{$translated_country}
         </li>
       );
     }
@@ -29,7 +34,7 @@ class ActivityModuleController {
     return
       <div>
         <header class="module-header">
-          <h6>Activity</h6>
+          <h6>{tr('Activity')}</h6>
         </header>
         <div class="module-content">
           <div class="fb-section-border">

@@ -1,5 +1,7 @@
 <?hh // strict
 
+include($_SERVER['DOCUMENT_ROOT'] . '/language/language.php');
+
 abstract class Controller {
   abstract protected function getTitle(): string;
   abstract protected function getFilters(): array<string, mixed>;
@@ -8,6 +10,7 @@ abstract class Controller {
   abstract protected function genRenderBody(string $page): Awaitable<:xhp>;
 
   public async function genRender(): Awaitable<:xhp> {
+    await tr_start();
     $page = $this->processRequest();
     $body = await $this->genRenderBody($page);
     return

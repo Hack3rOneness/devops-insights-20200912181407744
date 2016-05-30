@@ -3,6 +3,7 @@
 class CommandLineModalController extends ModalController {
   <<__Override>>
   public async function genRender(string $_): Awaitable<:xhp> {
+    await tr_start();
     return
       <div class="fb-modal-content fb-command-line fb-column-container">
         <div class="command-list">
