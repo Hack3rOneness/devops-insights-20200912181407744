@@ -23,6 +23,6 @@ function tr($word){
     return $lang[$word];
   else{
     error_log("\nWarning: '{$word}' has no translation in the selected language. Using the English version instead.");
-    return "Notset".$word;
+    return $word;
   }
 }
