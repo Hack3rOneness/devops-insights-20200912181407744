@@ -78,7 +78,6 @@ class ActionModalController extends ModalController {
 
   <<__Override>>
   public async function genRender(string $modal): Awaitable<:xhp> {
-    await tr_start();
     list($title, $content) = $this->getModal($modal);
 
     return

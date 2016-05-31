@@ -3,7 +3,6 @@
 class CountryModalController extends ModalController {
   <<__Override>>
   public async function genRender(string $modal): Awaitable<:xhp> {
-    await tr_start();
     switch ($modal) {
       case 'viewmode':
         return

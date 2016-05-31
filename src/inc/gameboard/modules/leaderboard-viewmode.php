@@ -1,7 +1,6 @@
 <?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/language/language.php');
 
 class LeaderboardModuleViewController {
   public async function genRender(): Awaitable<:xhp> {

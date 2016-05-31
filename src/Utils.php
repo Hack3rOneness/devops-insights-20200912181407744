@@ -1,7 +1,5 @@
 <?hh // strict
 
-include('language/language.php');
-
 /* HH_IGNORE_ERROR[2001] */
 const MUST_MODIFY = /* UNSAFE_EXPR */ "<<must-modify:\xEE\xFF\xFF>";
 
@@ -77,7 +75,7 @@ function time_ago(string $ts): string {
 }
 
 class Utils {
-  private function __construct() { tr_start(); }
+  private function __construct() {}
 
   private function __clone(): void {}
 

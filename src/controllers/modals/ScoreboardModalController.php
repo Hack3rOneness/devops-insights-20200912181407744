@@ -34,7 +34,6 @@ class ScoreboardModalController extends ModalController {
 
   <<__Override>>
   public async function genRender(string $_): Awaitable<:xhp> {
-    await tr_start();
     $scoreboard_tbody = <tbody></tbody>;
 
     // If refresing is enabled, do the needful

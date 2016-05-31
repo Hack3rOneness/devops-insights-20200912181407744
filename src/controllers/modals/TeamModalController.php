@@ -3,7 +3,6 @@
 class TeamModalController extends ModalController {
   <<__Override>>
   public async function genRender(string $_): Awaitable<:xhp> {
-    await tr_start();
     return
       <div class="fb-modal-content">
         <div class="modal-title">

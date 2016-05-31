@@ -1,7 +1,6 @@
 <?hh // strict
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/language/language.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();

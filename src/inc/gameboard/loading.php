@@ -1,5 +1,6 @@
 <?hh
-include($_SERVER['DOCUMENT_ROOT'] . '/language/language.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+
 echo \HH\Asio\join(genRenderLoading());
 
 async function genRenderLoading(): Awaitable<string> {

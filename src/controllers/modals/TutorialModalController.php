@@ -81,7 +81,6 @@ class TutorialModalController extends ModalController {
 
   <<__Override>>
   public async function genRender(string $step): Awaitable<:xhp> {
-    await tr_start();
     list($step, $name, $next_step, $header, $content) = $this->getStep($step);
 
     return
