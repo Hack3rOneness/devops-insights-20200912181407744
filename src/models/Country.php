@@ -118,6 +118,11 @@ class Country extends Model {
       $countries[] = await self::countryFromRow($row);
     }
 
+    usort($countries, function($a, $b)
+    {
+      return strcmp($a->name, $b->name);
+    });
+
     return $countries;
   }
 
@@ -140,7 +145,7 @@ class Country extends Model {
   public static async function genAllEnabledCountries(
   ): Awaitable<array<Country>> {
     return await self::genAll(
-      'SELECT * FROM countries WHERE enabled = 1 ORDER BY iso_code',
+      'SELECT * FROM countries WHERE enabled = 1',
       self::MC_KEY_ALL_ENABLED_COUNTRIES,
     );
   }
@@ -161,13 +166,18 @@ class Country extends Model {
     $db = await self::genDb();
 
     $result = await $db->queryf(
-      'SELECT * FROM countries WHERE enabled = 1 AND used = 0 ORDER BY iso_code',
+      'SELECT * FROM countries WHERE enabled = 1 AND used = 0',
     );
 
     $countries = array();
     foreach ($result->mapRows() as $row) {
       $countries[] = await self::countryFromRow($row->toArray());
     }
+
+    usort($countries, function($a, $b)
+    {
+      return strcmp($a->name, $b->name);
+    });
 
     return $countries;
   }
