@@ -7,6 +7,29 @@ function log() {
   echo "[+] $1"
 }
 
+function error_log() {
+  RED='\033[0;31m'
+  NORMAL='\033[0m'
+  echo "${RED} [!] $1 ${NORMAL}"
+}
+
+function ok_log() {
+  GREEN='\033[0;32m'
+  NORMAL='\033[0m'
+  echo "${GREEN} [+] $1 ${NORMAL}"
+}
+
+function dl() {
+  local __url=$1
+  local __dest=$2
+
+  if [ -n "$(which wget)" ]; then
+    wget -q "$__url" -O "$__dest"
+  else
+    curl -s "$__url" -o "$__dest"
+  fi
+}
+
 function package() {
   if [[ -n "$(dpkg --get-selections | grep $1)" ]]; then
     log "$1 is already installed. skipping."
@@ -72,32 +95,94 @@ function run_grunt() {
   fi
 }
 
+function self_signed_cert() {
+  local __csr="/etc/nginx/certs/dev.csr"
+  local __devcert=$1
+  local __devkey=$2
+
+  sudo openssl req -nodes -newkey rsa:2048 -keyout "$__devkey" -out "$__csr" -subj "/O=Facebook CTF"
+  sudo openssl x509 -req -days 365 -in "$__csr" -signkey "$__devkey" -out "$__devcert"
+}
+
+function letsencrypt_cert() {
+  local __email=$3
+  local __domain=$4
+
+  sudo dl "https://dl.eff.org/certbot-auto" /usr/bin/certbot-auto
+  sudo chmod a+x /usr/bin/certbot-auto
+
+  if [[ $__email == "none" ]]; then
+    read -p ' -> What is the email for the SSL Certificate recovery? ' __myemail
+  else
+    __myemail=$__email
+  fi
+  if [[ $__domain == "none" ]]; then
+    read -p ' -> What is the domain for the SSL Certificate? ' __mydomain
+  else
+    __mydomain=$__domain
+  fi
+
+  /usr/bin/certbot-auto certonly -n --standalone --standalone-supported-challenges tls-sni-01 -m "$__myemail" -d "$__mydomain"
+  sudo ln -s "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1"
+  sudo ln -s "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2"
+}
+
+function own_cert() {
+  local __owncert=$1
+  local __ownkey=$2
+
+  read -p ' -> SSL Certificate file location? ' __mycert
+  read -p ' -> SSL Key Certificate file location? ' __mykey
+  sudo cp "$__mycert" "$__owncert"
+  sudo cp "$__mykey" "$__ownkey"
+}
+
 function install_nginx() {
   local __path=$1
   local __mode=$2
+  local __certs=$3
+  local __email=$4
+  local __domain=$5
+
+  local __certs_path="/etc/nginx/certs"
 
   package nginx
 
   log "Deploying certificates"
-  sudo mkdir -p /etc/nginx/certs
+  sudo mkdir -p "$__certs_path"
 
   if [[ $__mode = "dev" ]]; then
-    __csr="/etc/nginx/certs/dev.csr"
-    __cert="/etc/nginx/certs/dev.crt"
-    __key="/etc/nginx/certs/dev.key"
-    sudo openssl req -nodes -newkey rsa:2048 -keyout "$__key" -out "$__csr" -subj "/O=Facebook CTF"
-    sudo openssl x509 -req -days 365 -in "$__csr" -signkey "$__key" -out "$__cert"
+    local __cert="$__certs_path/dev.crt"
+    local __key="$__certs_path/dev.key"
+    self_signed_cert "$__cert" "$__key"
   elif [[ $__mode = "prod" ]]; then
-    __cert="/etc/nginx/certs/fbctf.csr"
-    __key="/etc/nginx/certs/fbctf.key"
-    read -p ' -> SSL Certificate file location? ' __mycert
-    read -p ' -> SSL Key Certificate file location? ' __mykey
-    sudo cp "$__mycert" "$__cert"
-    sudo cp "$__mykey" "$__key"
+    local __cert="$__certs_path/fbctf.crt"
+    local __key="$__certs_path/fbctf.key"
+    case "$__certs" in
+      self)
+        self_signed_cert "$__cert" "$__key"
+        break
+      ;;
+      own)
+        own_cert "$__cert" "$__key"
+        break
+      ;;
+      certbot)
+        letsencrypt_cert "$__cert" "$__key" "$__email" "$__domain"
+        break
+      ;;
+      *)
+        error_log "Unrecognized type of certificate"
+        exit 1
+      ;;
+    esac
   fi
+
   __dhparam="/etc/nginx/certs/dhparam.pem"
   sudo openssl dhparam -out "$__dhparam" 2048
+
   cat "$__path/extra/nginx.conf" | sed "s|CTFPATH|$__path/src|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" | sed "s|DHPARAM_FILE|$__dhparam|g" | sudo tee /etc/nginx/sites-available/fbctf.conf
+
   sudo rm /etc/nginx/sites-enabled/default
   sudo ln -s /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
 
@@ -187,17 +272,17 @@ function import_empty_db() {
 }
 
 function set_password() {
-    local __admin_pwd=$1
-    local __user=$2
-    local __db_pwd=$3
-    local __db=$4
-    local __path=$5
+  local __admin_pwd=$1
+  local __user=$2
+  local __db_pwd=$3
+  local __db=$4
+  local __path=$5
 
-    HASH=$(hhvm -f "$__path/extra/hash.php" "$__admin_pwd")
+  HASH=$(hhvm -f "$__path/extra/hash.php" "$__admin_pwd")
 
-    # First try to delete the existing admin user
-    mysql -u "$__user" --password="$__db_pwd" "$__db" -e "DELETE FROM teams WHERE name='admin' AND admin=1"
+  # First try to delete the existing admin user
+  mysql -u "$__user" --password="$__db_pwd" "$__db" -e "DELETE FROM teams WHERE name='admin' AND admin=1"
 
-    # Then insert the new admin user with ID 1 (just as a convention, we shouldn't rely on this in the code)
-    mysql -u "$__user" --password="$__db_pwd" "$__db" -e "INSERT INTO teams (id, name, password_hash, admin, protected, logo, created_ts) VALUES (1, 'admin', '$HASH', 1, 1, 'admin', NOW());"
+  # Then insert the new admin user with ID 1 (just as a convention, we shouldn't rely on this in the code)
+  mysql -u "$__user" --password="$__db_pwd" "$__db" -e "INSERT INTO teams (id, name, password_hash, admin, protected, logo, created_ts) VALUES (1, 'admin', '$HASH', 1, 1, 'admin', NOW());"
 }

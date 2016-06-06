@@ -48,7 +48,7 @@ Note that if you don't want to use the Vagrant VM (not recommended), you can pro
 sudo apt-get install git
 git clone https://github.com/facebook/fbctf
 cd fbctf
-./extra/provision.sh dev $PWD
+./extra/provision.sh -m dev -s $PWD
 ```
 
 ### Production
@@ -59,7 +59,7 @@ The target system needs to be 64 bit Ubuntu 14.04. Run the following commands:
 sudo apt-get install git
 git clone https://github.com/facebook/fbctf
 cd fbctf
-./extra/provision.sh prod $PWD
+./extra/provision.sh -m prod -s $PWD
 ```
 
 *Note*: Because this is a production environment, the password will be randomly generated when the provision script finishes. This ensures that you can't forget to change the default password after provisioning. Make sure to watch the very end of the provision script, as the password will be printed out. It will not be stored elsewhere, so either keep track of it or change it. In order to change the password, run the following command:
@@ -70,7 +70,11 @@ set_password new_password ctf ctf fbctf $PWD
 
 This will set the password to 'new_password', assuming the database user/password is ctf/ctf and the database name is fbctf (these are the defaults).
 
-The provision script will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. In order to run in production mode, we require that you use SSL. The provision script will ask you for your SSL certificate's CSR and key files. More information on setting up SSL is specific in the next session, but note that if you are just testing out the platform and not running it production, you want to use the instructions listed in the Development section below, as this takes care generating certificates for you. We will support Let's Encrypt in the future.
+By default, the provision script will place the code in the `/var/www/fbctf` directory, install all dependencies, and start the server. In order to run in production mode, we require that you use SSL. You can choose between generating new self-signed, using your own or generate valid SSL certificates using [Let's Encrypt](https://letsencrypt.org/). The provision script uses [certbot](https://certbot.eff.org/) to assist with the generation of valid SSL certificates. Use the help to see all the available options with the command:
+
+```
+./extra/provision -h
+```
 
 Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page. Enter the credentials you received at the end of the provision script to log in.
 
