@@ -2,7 +2,7 @@
 #
 # fbctf provisioning script
 #
-# Usage: usage [-h|--help] [PARAMETER [ARGUMENT]] [PARAMETER [ARGUMENT]] ...
+# Usage: provision.sh [-h|--help] [PARAMETER [ARGUMENT]] [PARAMETER [ARGUMENT]] ...
 #
 # Parameters:
 #   -h, --help            Shows this help message and exit.
@@ -28,9 +28,9 @@
 #
 # Examples:
 #   Provision fbctf in development mode:
-#     usage -m dev -s /home/foobar/fbctf -d /var/fbctf
+#     provision.sh -m dev -s /home/foobar/fbctf -d /var/fbctf
 #   Provision fbctf in production mode using my own certificate:
-#     usage -m prod -c own -k /etc/certs/my.key -C /etc/certs/cert.crt -s /home/foobar/fbctf -d /var/fbctf
+#     provision.sh -m prod -c own -k /etc/certs/my.key -C /etc/certs/cert.crt -s /home/foobar/fbctf -d /var/fbctf
 
 # We want the provision script to fail as soon as there are any errors
 set -e
