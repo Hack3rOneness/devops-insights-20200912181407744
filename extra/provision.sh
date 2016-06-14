@@ -204,12 +204,6 @@ package git
 # Install HHVM
 install_hhvm "$CTF_PATH"
 
-# Quick fix for issue within the HHVM package and Ubuntu 14.04 LTS
-# For reference: https://github.com/facebook/hhvm/issues/7150
-log "Fix for HHVM package issue, see https://github.com/facebook/hhvm/issues/7150"
-package liblz4-1 
-package libdouble-conversion1
-
 # Install Composer
 install_composer "$CTF_PATH"
 composer.phar install
