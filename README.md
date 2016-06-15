@@ -36,6 +36,12 @@ This will create a local virtual machine with Ubuntu 14.04 using Vagrant and Vir
 
 Once the VM has started, go to the URL/IP of the server (10.10.10.5 in the default case). Click the "Login" link at the top right, enter the 'admin' as the team name and 'password' as the password (without quotes). You will be redirected to the administration page. At the bottom of the navigation bar on the left, there will be a link to go to the gameboard.
 
+To login to the Vagrant VM, navigate to the fbctf folder and run:
+
+```
+vagrant ssh
+```
+
 If you are using a non-English locale on the host system, you will run into problems during the installation. The easiest solution is to run vagrant with a default English locale:
 
 ```bash
