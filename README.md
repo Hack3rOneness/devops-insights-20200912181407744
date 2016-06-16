@@ -20,7 +20,7 @@ The Facebook CTF is a platform to host Jeopardy and “King of the Hill” style
 
 # Installation
 
-The Facebook CTF platform can be provisioned in development or production environments. Note that the *only* supported system is 64 bit Ubuntu 14.04. Ubuntu 16.04 is not supported at this time, nor is 32 bit. We will accept PRs to support other platforms, but we will not officially support those platforms if there any issues.
+The Facebook CTF platform can be provisioned in development or production environments. Note that the *only* supported system is 64 bit Ubuntu 14.04. Ubuntu 16.04 is not supported at this time, nor is 32 bit. We will accept PRs to support other platforms, but we will not officially support those platforms if there are any issues.
 
 ### Development
 
