@@ -182,6 +182,9 @@ fi
 # We only run this once so provisioning is faster
 sudo apt-get update
 
+# Some Ubuntu distros don't come with curl installed
+package curl
+
 # Some people need this language pack installed or HHVM will report errors
 package language-pack-en
 

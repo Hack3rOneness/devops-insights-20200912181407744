@@ -183,8 +183,9 @@ function install_nginx() {
 
   cat "$__path/extra/nginx.conf" | sed "s|CTFPATH|$__path/src|g" | sed "s|CER_FILE|$__cert|g" | sed "s|KEY_FILE|$__key|g" | sed "s|DHPARAM_FILE|$__dhparam|g" | sudo tee /etc/nginx/sites-available/fbctf.conf
 
-  sudo rm /etc/nginx/sites-enabled/default
-  sudo ln -s /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
+  sudo rm -f /etc/nginx/sites-enabled/default
+  sudo ln -sf /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
+
 
   # Restart nginx
   sudo nginx -t
