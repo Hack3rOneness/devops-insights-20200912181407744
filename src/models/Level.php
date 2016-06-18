@@ -654,38 +654,72 @@ class Level extends Model {
     );
   }
 
+  private static async function withLock(
+    string $lock_name,
+    int $team_id,
+    (function(): Awaitable<mixed>) $thunk,
+  ): Awaitable<mixed> {
+    $lock_name = sprintf('%s/%s_%d', sys_get_temp_dir(), $lock_name, $team_id);
+    $lock = fopen($lock_name, 'w');
+
+    if ($lock === false) {
+      error_log('Failed to open lock file $lock_name');
+      return null;
+    }
+    if (!flock($lock, LOCK_EX)) {
+      fclose($lock);
+      return null;
+    }
+
+    $result = await $thunk();
+
+    // Release the scoring lock
+    flock($lock, LOCK_UN);
+    fclose($lock);
+
+    return $result;
+  }
+
   // Score level. Works for quiz and flags.
   public static async function genScoreLevel(
     int $level_id,
     int $team_id,
   ): Awaitable<bool> {
-    $db = await self::genDb();
-
-    // Check if team has already scored this level
-    $previous_score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
-    if ($previous_score) {
-      return false;
-    }
-
-    $level = await self::gen($level_id);
-
-    // Calculate points to give
-    $points = $level->getPoints() + $level->getBonus();
-
-    // Adjust bonus
-    await self::genAdjustBonus($level_id);
-
-    // Score!
-    await $db->queryf(
-      'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
-      $points,
+    $result = await self::withLock(
+      'score_level_lock',
       $team_id,
+      async function(): Awaitable<mixed> use ($level_id, $team_id) {
+        $db = await self::genDb();
+
+        // Check if team has already scored this level
+        $previous_score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
+        if ($previous_score) {
+          return false;
+        }
+
+        $level = await self::gen($level_id);
+
+        // Calculate points to give
+        $points = $level->getPoints() + $level->getBonus();
+
+        // Adjust bonus
+        await self::genAdjustBonus($level_id);
+
+        // Score!
+        await $db->queryf(
+          'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
+          $points,
+          $team_id,
+        );
+
+        // Log the score
+        await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
+
+        return true;
+      }
     );
 
-    // Log the score...
-    await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
-
-    return true;
+    return boolval($result);
   }
 
   // Score base.
@@ -693,29 +727,37 @@ class Level extends Model {
     int $level_id,
     int $team_id,
   ): Awaitable<bool> {
-    $db = await self::genDb();
-
-    $level = await self::gen($level_id);
-
-    // Calculate points to give
-    $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
-    if ($score) {
-      $points = $level->getPoints();
-    } else {
-      $points = $level->getPoints() + $level->getBonus();
-    }
-
-    // Score!
-    await $db->queryf(
-      'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
-      $points,
+    $result = await self::withLock(
+      'score_base_lock',
       $team_id,
+      async function(): Awaitable<mixed> use ($level_id, $team_id) {
+        $db = await self::genDb();
+
+        $level = await self::gen($level_id);
+
+        // Calculate points to give
+        $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
+        if ($score) {
+          $points = $level->getPoints();
+        } else {
+          $points = $level->getPoints() + $level->getBonus();
+        }
+
+        // Score!
+        await $db->queryf(
+          'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
+          $points,
+          $team_id,
+        );
+
+        // Log the score...
+        await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
+
+        return true;
+      }
     );
 
-     // Log the score...
-    await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
-
-    return true;
+    return boolval($result);
   }
 
   // Get hint.
@@ -723,37 +765,45 @@ class Level extends Model {
     int $level_id,
     int $team_id,
   ): Awaitable<?string> {
-    $db = await self::genDb();
-
-    $level = await self::gen($level_id);
-    $penalty = $level->getPenalty();
-
-    // Check if team has already gotten this hint or if the team has scored this already
-    // If so, hint is free
-    $hint = await HintLog::genPreviousHint($level_id, $team_id, false);
-    $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
-    if ($hint || $score) {
-      $penalty = 0;
-    }
-
-    // Make sure team has enough points to pay
-    $team = await Team::genTeam($team_id);
-    if ($team->getPoints() < $penalty) {
-      return null;
-    }
-
-    // Adjust points
-    await $db->queryf(
-      'UPDATE teams SET points = points - %d WHERE id = %d LIMIT 1',
-      $penalty,
+    $result = await self::withLock(
+      'hint_lock',
       $team_id,
+      async function(): Awaitable<mixed> use ($level_id, $team_id) {
+        $db = await self::genDb();
+
+        $level = await self::gen($level_id);
+        $penalty = $level->getPenalty();
+
+        // Check if team has already gotten this hint or if the team has scored this already
+        // If so, hint is free
+        $hint = await HintLog::genPreviousHint($level_id, $team_id, false);
+        $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
+        if ($hint || $score) {
+          $penalty = 0;
+        }
+
+        // Make sure team has enough points to pay
+        $team = await Team::genTeam($team_id);
+        if ($team->getPoints() < $penalty) {
+          return null;
+        }
+
+        // Adjust points
+        await $db->queryf(
+          'UPDATE teams SET points = points - %d WHERE id = %d LIMIT 1',
+          $penalty,
+          $team_id,
+        );
+
+        // Log the hint
+        await HintLog::genLogGetHint($level_id, $team_id, $penalty);
+
+        // Hint!
+        return $level->getHint();
+      }
     );
 
-    // Log the hint
-    await HintLog::genLogGetHint($level_id, $team_id, $penalty);
-
-    // Hint!
-    return $level->getHint();
+    return $result !== null ? strval($result) : null;
   }
 
   // Get the IP from a base level.
