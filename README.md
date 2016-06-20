@@ -51,7 +51,7 @@ LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 vagrant up
 Note that if you don't want to use the Vagrant VM (not recommended), you can provision in dev mode manually. To do so, run the following commands:
 
 ```
-supo apt-get update
+sudo apt-get update
 sudo apt-get install git
 git clone https://github.com/facebook/fbctf
 cd fbctf
@@ -63,7 +63,7 @@ cd fbctf
 The target system needs to be 64 bit Ubuntu 14.04. Run the following commands:
 
 ```bash
-supo apt-get update
+sudo apt-get update
 sudo apt-get install git
 git clone https://github.com/facebook/fbctf
 cd fbctf
