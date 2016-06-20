@@ -1,4 +1,4 @@
-# FBCTF [![Build Status](https://travis-ci.org/facebook/fbctf.svg?branch=master)](https://travis-ci.org/facebook/fbctf)
+# FBCTF [![Build Status](https://travis-ci.org/facebook/fbctf.svg)](https://travis-ci.org/facebook/fbctf)
 
 ## What is FBCTF?
 
