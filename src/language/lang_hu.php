@@ -1,5 +1,6 @@
 <?hh // strict
 
+/* HH_IGNORE_ERROR[1002] */
 $translations = array(
 	'date and time format' => 'Y.m.d D H:i:s', //used by date() function
 

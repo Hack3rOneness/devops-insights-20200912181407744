@@ -1,6 +1,7 @@
 <?hh // strict
 
 /* HH_IGNORE_ERROR[2001] */
+/* HH_IGNORE_ERROR[2035] */
 const MUST_MODIFY = /* UNSAFE_EXPR */ "<<must-modify:\xEE\xFF\xFF>";
 
 function must_have_idx<Tk, Tv>(
