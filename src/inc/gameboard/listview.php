@@ -8,7 +8,6 @@ SessionUtils::enforceLogin();
 
 class ListviewController {
   public async function genRender(): Awaitable<:xhp> {
-    await tr_start();
     $listview_div = <div class="listview-container"></div>;
     $listview_table = <table></table>;
 
@@ -18,9 +17,9 @@ class ListviewController {
       $category = await Category::genSingleCategory($level->getCategoryId());
       $previous_score = await ScoreLog::genPreviousScore($level->getId(), SessionUtils::sessionTeam(), false);
       if ($previous_score) {
-        $span_status = <span class="fb-status status--yours">{tr('Captured')}</span>;
+        $span_status = <span class="fb-status status--yours">Captured</span>;
       } else {
-        $span_status = <span class="fb-status status--open">{tr('Open')}</span>;
+        $span_status = <span class="fb-status status--open">Open</span>;
       }
       $listview_table->appendChild(
         <tr data-country={$country->getName()}>

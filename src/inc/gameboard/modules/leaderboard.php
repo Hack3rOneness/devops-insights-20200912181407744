@@ -8,7 +8,6 @@ SessionUtils::enforceLogin();
 
 class LeaderboardModuleController {
   public async function genRender(): Awaitable<:xhp> {
-    await tr_start();
     $leaderboard_ul = <ul></ul>;
 
     $my_team = await Team::genTeam(SessionUtils::sessionTeam());
@@ -33,9 +32,9 @@ class LeaderboardModuleController {
             </div>
             <div class="player-info">
               <h6>{$team->getName()}</h6>
-              <span class="player-rank">{tr('Rank')}&nbsp;{$rank}</span>
+              <span class="player-rank">Rank {$rank}</span>
               <br></br>
-              <span class="player-score">{strval($team->getPoints())}&nbsp;{tr('pts')}</span>
+              <span class="player-score">{strval($team->getPoints())} pts</span>
             </div>
           </li>
         );
@@ -46,15 +45,15 @@ class LeaderboardModuleController {
     return
       <div>
         <header class="module-header">
-          <h6>{tr('Leaderboard')}</h6>
+          <h6>Leaderboard</h6>
         </header>
         <div class="module-content">
           <div class="fb-section-border">
             <div class="module-top player-info">
               <h5 class="player-name">{$my_team->getName()}</h5>
-              <span class="player-rank">{tr('Your Rank')}: {$my_rank}</span>
+              <span class="player-rank">Your Rank: {$my_rank}</span>
               <br></br>
-              <span class="player-score">{tr('Your Score')}: {strval($my_team->getPoints())}&nbsp;{tr('pts')}</span>
+              <span class="player-score">Your Score: {strval($my_team->getPoints())} Pts</span>
             </div>
             <div class="module-scrollable leaderboard-info">
               {$leaderboard_ul}
