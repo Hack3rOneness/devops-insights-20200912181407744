@@ -2,7 +2,6 @@
 
 class Router {
   public static async function genRoute(): Awaitable<string> {
-    await tr_start();
     $page = idx(Utils::getGET(), 'p');
     if (!is_string($page)) {
       $page = 'index';

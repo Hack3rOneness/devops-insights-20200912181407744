@@ -8,7 +8,6 @@ SessionUtils::enforceLogin();
 
 class TeamModuleController {
   public async function genRender(): Awaitable<:xhp> {
-    await tr_start();
     $leaderboard = await Team::genLeaderboard();
     $rank = 1;
 
@@ -34,7 +33,7 @@ class TeamModuleController {
     return
       <div>
         <header class="module-header">
-          <h6>{tr('Teams')}</h6>
+          <h6>Teams</h6>
         </header>
         <div class="module-content">
           <div class="fb-section-border">
@@ -42,9 +41,9 @@ class TeamModuleController {
             <!-- <div class="module-top">
               <div class="radio-tabs">
                 <input type="radio" name="fb--module--teams" id="fb--module--teams--all" checked={true}/>
-                <label for="fb--module--teams--all" class="click-effect"><span>{tr('Everyone')}</span></label>
+                <label for="fb--module--teams--all" class="click-effect"><span>Everyone</span></label>
                 <input type="radio" name="fb--module--teams" id="fb--module--teams--your-team"/>
-                <label for="fb--module--teams--your-team" class="click-effect"><span>{tr('Your Team')}</span></label>
+                <label for="fb--module--teams--your-team" class="click-effect"><span>Your Team</span></label>
               </div>
             </div> -->
             <div class="module-scrollable">
