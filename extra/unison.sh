@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# Facebook CTF: Script to install unison 2.48.3
+# Facebook CTF: Script to install unison. Valid version: 2.48.4
 # https://keylocation.sg/blog/vagrant-and-unison-without-a-plugin/
 #
-# Usage: ./unison.sh [path_to_ctf_code] [unison_full_path]
+# Usage: ./unison.sh [path_to_ctf_code] [unison_full_path] [unison_version]
 #
 
 if [[ "$#" -lt 1 ]]; then
@@ -18,9 +18,15 @@ else
   UNISON="$2"
 fi
 
+if [[ -z "$3" ]]; then
+  UNISON_VERSION="2.48.4"
+else
+  UNISON_VERSION="$3"
+fi
+
 # Make sure the right version is installed
-if [[ "$($UNISON -version | awk '{print $3}')" != "2.48.4" ]]; then
-  echo "Sorry, you need unison 2.48.3"
+if [[ "$($UNISON -version | awk '{print $3}')" != "$UNISON_VERSION" ]]; then
+  echo "Sorry, you need unison $UNISON_VERSION"
   exit 1
 fi
 
