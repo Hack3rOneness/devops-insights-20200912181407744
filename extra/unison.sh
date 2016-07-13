@@ -19,7 +19,7 @@ else
 fi
 
 # Make sure the right version is installed
-if [[ "$($UNISON -version | awk '{print $3}')" != "2.48.3" ]]; then
+if [[ "$($UNISON -version | awk '{print $3}')" != "2.48.4" ]]; then
   echo "Sorry, you need unison 2.48.3"
   exit 1
 fi

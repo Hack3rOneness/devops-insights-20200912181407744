@@ -40,7 +40,7 @@ function package() {
 }
 
 function install_unison() {
-  log "Installing Unison 2.48.3"
+  log "Installing Unison 2.48.4"
   cd /
   curl -sL https://www.archlinux.org/packages/extra/x86_64/unison/download/ | sudo tar Jx
 }
