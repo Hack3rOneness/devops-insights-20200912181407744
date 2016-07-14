@@ -25,7 +25,13 @@ class Db {
     $usr = must_have_idx($this->config, 'DB_USERNAME');
     $pwd = must_have_idx($this->config, 'DB_PASSWORD');
     $db = must_have_idx($this->config, 'DB_NAME');
-    $backup_cmd = 'mysqldump --add-drop-database -u '.escapeshellarg($usr).' --password='.escapeshellarg($pwd).' '.escapeshellarg($db);
+    $backup_cmd =
+      'mysqldump --add-drop-database -u '.
+      escapeshellarg($usr).
+      ' --password='.
+      escapeshellarg($pwd).
+      ' '.
+      escapeshellarg($db);
     return $backup_cmd;
   }
 
@@ -52,12 +58,7 @@ class Db {
     $username = must_have_idx($this->config, 'DB_USERNAME');
     $password = must_have_idx($this->config, 'DB_PASSWORD');
 
-    $this->conn = await $this->pool->connect(
-      $host,
-      (int)$port,
-      $db_name,
-      $username,
-      $password,
-    );
+    $this->conn = await $this->pool
+      ->connect($host, (int) $port, $db_name, $username, $password);
   }
 }

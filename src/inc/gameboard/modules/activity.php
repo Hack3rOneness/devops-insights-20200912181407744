@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -22,10 +22,13 @@ class ActivityModuleController {
         $class_li = 'opponent-team';
         $class_span = 'opponent-name';
       }
-      $translated_country = locale_get_display_region('-'.$score['country'], $language);
+      $translated_country =
+        locale_get_display_region('-'.$score['country'], $language);
       $activity_ul->appendChild(
         <li class={$class_li}>
-          [ {time_ago($score['time'])} ] <span class={$class_span}>{$score['team']}</span>&nbsp;{tr('captured')}&nbsp;{$translated_country}
+          [ {time_ago($score['time'])} ]
+          <span class={$class_span}>{$score['team']}</span>&nbsp;
+          {tr('captured')}&nbsp;{$translated_country}
         </li>
       );
     }

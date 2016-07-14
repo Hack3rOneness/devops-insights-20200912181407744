@@ -16,9 +16,7 @@ class Control extends Model {
     );
   }
 
-  public static async function genStopScriptLog(
-    int $pid,
-  ): Awaitable<void> {
+  public static async function genStopScriptLog(int $pid): Awaitable<void> {
     $db = await self::genDb();
     await $db->queryf(
       'UPDATE scripts SET status = 0 WHERE pid = %d LIMIT 1',
@@ -26,9 +24,7 @@ class Control extends Model {
     );
   }
 
-  public static async function genScriptPid(
-    string $name,
-  ): Awaitable<int> {
+  public static async function genScriptPid(string $name): Awaitable<int> {
     $db = await self::genDb();
     $result = await $db->queryf(
       'SELECT pid FROM scripts WHERE name = %s AND status = 1 LIMIT 1',
@@ -39,9 +35,7 @@ class Control extends Model {
 
   public static async function genClearScriptLog(): Awaitable<void> {
     $db = await self::genDb();
-    await $db->queryf(
-      'DELETE FROM scripts WHERE id > 0 AND status = 0',
-    );
+    await $db->queryf('DELETE FROM scripts WHERE id > 0 AND status = 0');
   }
 
   public static async function genBegin(): Awaitable<void> {
@@ -112,14 +106,13 @@ class Control extends Model {
     await Progressive::genStop();
   }
 
-  public static function importGame(): void {
-  }
+  public static function importGame(): void {}
 
   public static function exportGame(): void {
     $levels = (object) array();
     $teams = (object) array();
     $data = (object) array();
-    
+
     /* HH_FIXME[2011] */
     /* HH_FIXME[1002] */
     $data->{"teams"} = $teams;
@@ -142,9 +135,10 @@ class Control extends Model {
   public static async function genAllActivity(
   ): Awaitable<Vector<Map<string, string>>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT scores_log.ts AS time, teams.name AS team, countries.iso_code AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time DESC LIMIT 50',
-    );
+    $result =
+      await $db->queryf(
+        'SELECT scores_log.ts AS time, teams.name AS team, countries.iso_code AS country, scores_log.team_id AS team_id FROM scores_log, levels, teams, countries WHERE scores_log.level_id = levels.id AND levels.entity_id = countries.id AND scores_log.team_id = teams.id AND teams.visible = 1 ORDER BY time DESC LIMIT 50',
+      );
     return $result->mapRows();
   }
 

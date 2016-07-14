@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -33,8 +33,16 @@ class CountryDataController extends DataController {
           $hint_cost = -2;
           $hint = 'no';
         } else {
-          $hint = await HintLog::genPreviousHint($level->getId(), $my_team->getId(), false);
-          $score = await ScoreLog::genPreviousScore($level->getId(), $my_team->getId(), false);
+          $hint = await HintLog::genPreviousHint(
+            $level->getId(),
+            $my_team->getId(),
+            false,
+          );
+          $score = await ScoreLog::genPreviousScore(
+            $level->getId(),
+            $my_team->getId(),
+            false,
+          );
           // Has this team requested this hint or scored this level before?
           if ($hint || $score) {
             $hint_cost = 0;
@@ -52,7 +60,8 @@ class CountryDataController extends DataController {
       $attachments_list = array();
       $has_attachments = await Attachment::genHasAttachments($level->getId());
       if ($has_attachments) {
-        $all_attachments = await Attachment::genAllAttachments($level->getId());
+        $all_attachments =
+          await Attachment::genAllAttachments($level->getId());
         foreach ($all_attachments as $attachment) {
           array_push($attachments_list, $attachment->getFilename());
         }
@@ -83,21 +92,22 @@ class CountryDataController extends DataController {
         $owner = 'Uncaptured';
       }
       $country_data = (object) array(
-        'level_id'    => $level->getId(),
-        'title'       => $level->getTitle(),
-        'intro'       => $level->getDescription(),
-        'type'        => $level->getType(),
-        'points'      => $level->getPoints(),
-        'bonus'       => $level->getBonus(),
-        'category'    => $category->getCategory(),
-        'owner'       => $owner,
-        'completed'   => $completed_by,
-        'hint'        => $hint,
-        'hint_cost'   => $hint_cost,
+        'level_id' => $level->getId(),
+        'title' => $level->getTitle(),
+        'intro' => $level->getDescription(),
+        'type' => $level->getType(),
+        'points' => $level->getPoints(),
+        'bonus' => $level->getBonus(),
+        'category' => $category->getCategory(),
+        'owner' => $owner,
+        'completed' => $completed_by,
+        'hint' => $hint,
+        'hint_cost' => $hint_cost,
         'attachments' => $attachments_list,
-        'links'       => $links_list
+        'links' => $links_list,
       );
-      /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
+      /* HH_FIXME[1002] */
+      /* HH_FIXME[2011] */
       $countries_data->{$country->getName()} = $country_data;
     }
 

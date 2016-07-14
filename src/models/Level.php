@@ -16,9 +16,8 @@ class Level extends Model {
     private string $flag,
     private string $hint,
     private int $penalty,
-    private string $created_ts
-  ) {
-  }
+    private string $created_ts,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -101,9 +100,7 @@ class Level extends Model {
   }
 
   // Retrieve the level that is using one country
-  public static async function genWhoUses(
-    int $country_id,
-  ): Awaitable<?Level> {
+  public static async function genWhoUses(int $country_id): Awaitable<?Level> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -120,9 +117,7 @@ class Level extends Model {
   }
 
   // Check to see if the level is active.
-  public static async function genCheckStatus(
-    int $level_id,
-  ): Awaitable<bool> {
+  public static async function genCheckStatus(int $level_id): Awaitable<bool> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -139,16 +134,15 @@ class Level extends Model {
   }
 
   // Check to see if the level is a base.
-  public static async function genCheckBase(
-    int $level_id,
-  ): Awaitable<bool> {
+  public static async function genCheckBase(int $level_id): Awaitable<bool> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT COUNT(*) FROM levels WHERE id = %d AND active = 1 AND type = %s LIMIT 1',
-      $level_id,
-      'base',
-    );
+    $result =
+      await $db->queryf(
+        'SELECT COUNT(*) FROM levels WHERE id = %d AND active = 1 AND type = %s LIMIT 1',
+        $level_id,
+        'base',
+      );
 
     if ($result->numRows() > 0) {
       invariant($result->numRows() === 1, 'Expected exactly one result');
@@ -203,14 +197,15 @@ class Level extends Model {
     await Country::genSetUsed($ent_id, true);
 
     // Return the newly created level_id
-    $result = await $db->queryf(
-      'SELECT id FROM levels WHERE title = %s AND description = %s AND entity_id = %d AND flag = %s AND category_id = %d LIMIT 1',
-      $title,
-      $description,
-      $ent_id,
-      $flag,
-      $category_id,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT id FROM levels WHERE title = %s AND description = %s AND entity_id = %d AND flag = %s AND category_id = %d LIMIT 1',
+        $title,
+        $description,
+        $ent_id,
+        $flag,
+        $category_id,
+      );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
     return intval(must_have_idx($result->mapRows()[0], 'id'));
@@ -227,7 +222,7 @@ class Level extends Model {
     int $bonus,
     int $bonus_dec,
     string $hint,
-    int $penalty
+    int $penalty,
   ): Awaitable<int> {
     return await self::genCreate(
       'flag',
@@ -241,7 +236,7 @@ class Level extends Model {
       $bonus,
       $flag,
       $hint,
-      $penalty
+      $penalty,
     );
   }
 
@@ -257,7 +252,7 @@ class Level extends Model {
     int $bonus_dec,
     string $hint,
     int $penalty,
-    int $level_id
+    int $level_id,
   ): Awaitable<void> {
     await self::genUpdate(
       $title,
@@ -271,7 +266,7 @@ class Level extends Model {
       $flag,
       $hint,
       $penalty,
-      $level_id
+      $level_id,
     );
   }
 
@@ -285,13 +280,13 @@ class Level extends Model {
     int $bonus,
     int $bonus_dec,
     string $hint,
-    int $penalty
+    int $penalty,
   ): Awaitable<int> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
       'SELECT id FROM categories WHERE category = %s LIMIT 1',
-      'Quiz'
+      'Quiz',
     );
 
     $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
@@ -307,7 +302,7 @@ class Level extends Model {
       $bonus,
       $answer,
       $hint,
-      $penalty
+      $penalty,
     );
   }
 
@@ -322,13 +317,13 @@ class Level extends Model {
     int $bonus_dec,
     string $hint,
     int $penalty,
-    int $level_id
+    int $level_id,
   ): Awaitable<void> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
       'SELECT id FROM categories WHERE category = %s LIMIT 1',
-      'Quiz'
+      'Quiz',
     );
 
     $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
@@ -344,7 +339,7 @@ class Level extends Model {
       $answer,
       $hint,
       $penalty,
-      $level_id
+      $level_id,
     );
   }
 
@@ -357,7 +352,7 @@ class Level extends Model {
     int $points,
     int $bonus,
     string $hint,
-    int $penalty
+    int $penalty,
   ): Awaitable<int> {
     return await self::genCreate(
       'base',
@@ -371,7 +366,7 @@ class Level extends Model {
       $bonus,
       '',
       $hint,
-      $penalty
+      $penalty,
     );
   }
 
@@ -385,7 +380,7 @@ class Level extends Model {
     int $bonus,
     string $hint,
     int $penalty,
-    int $level_id
+    int $level_id,
   ): Awaitable<void> {
     await self::genUpdate(
       $title,
@@ -399,7 +394,7 @@ class Level extends Model {
       '',
       $hint,
       $penalty,
-      $level_id
+      $level_id,
     );
   }
 
@@ -416,7 +411,7 @@ class Level extends Model {
     string $flag,
     string $hint,
     int $penalty,
-    int $level_id
+    int $level_id,
   ): Awaitable<void> {
     $db = await self::genDb();
 
@@ -449,19 +444,14 @@ class Level extends Model {
   }
 
   // Delete level.
-  public static async function genDelete(
-    int $level_id,
-  ): Awaitable<void> {
+  public static async function genDelete(int $level_id): Awaitable<void> {
     $db = await self::genDb();
 
     // Free country first.
     $level = await self::gen($level_id);
     await Country::genSetUsed($level->getEntityId(), false);
 
-    await $db->queryf(
-      'DELETE FROM levels WHERE id = %d LIMIT 1',
-      $level_id,
-    );
+    await $db->queryf('DELETE FROM levels WHERE id = %d LIMIT 1', $level_id);
   }
 
   // Enable or disable level by passing 1 or 0.
@@ -473,7 +463,7 @@ class Level extends Model {
 
     await $db->queryf(
       'UPDATE levels SET active = %d WHERE id = %d LIMIT 1',
-      (int)$active,
+      (int) $active,
       $level_id,
     );
   }
@@ -487,7 +477,7 @@ class Level extends Model {
 
     await $db->queryf(
       'UPDATE levels SET active = %d WHERE type = %s',
-      (int)$active,
+      (int) $active,
       $type,
     );
   }
@@ -502,25 +492,22 @@ class Level extends Model {
     if ($type === 'all') {
       await $db->queryf(
         'UPDATE levels SET active = %d WHERE id > 0',
-        (int)$active,
+        (int) $active,
       );
     } else {
       await $db->queryf(
         'UPDATE levels SET active = %d WHERE type = %s',
-        (int)$active,
+        (int) $active,
         $type,
       );
     }
   }
 
   // All levels.
-  public static async function genAllLevels(
-  ): Awaitable<array<Level>> {
+  public static async function genAllLevels(): Awaitable<array<Level>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM levels',
-    );
+    $result = await $db->queryf('SELECT * FROM levels');
 
     $levels = array();
     foreach ($result->mapRows() as $row) {
@@ -531,13 +518,11 @@ class Level extends Model {
   }
 
   // All levels by status.
-  public static async function genAllActiveLevels(
-  ): Awaitable<array<Level>> {
+  public static async function genAllActiveLevels(): Awaitable<array<Level>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM levels WHERE active = 1 ORDER BY id',
-    );
+    $result =
+      await $db->queryf('SELECT * FROM levels WHERE active = 1 ORDER BY id');
 
     $levels = array();
     foreach ($result->mapRows() as $row) {
@@ -548,13 +533,12 @@ class Level extends Model {
   }
 
   // All levels by status.
-  public static async function genAllActiveBases(
-  ): Awaitable<array<Level>> {
+  public static async function genAllActiveBases(): Awaitable<array<Level>> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
       'SELECT * FROM levels WHERE active = 1 AND type = %s ORDER BY id',
-      'base'
+      'base',
     );
 
     $bases = array();
@@ -600,9 +584,7 @@ class Level extends Model {
   }
 
   // Get a single level.
-  public static async function gen(
-    int $level_id,
-  ): Awaitable<Level> {
+  public static async function gen(int $level_id): Awaitable<Level> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -622,14 +604,11 @@ class Level extends Model {
     string $answer,
   ): Awaitable<bool> {
     $level = await self::gen($level_id);
-    return
-      strtoupper(trim($level->getFlag())) === strtoupper(trim($answer));
+    return strtoupper(trim($level->getFlag())) === strtoupper(trim($answer));
   }
 
   // Adjust bonus.
-  public static async function genAdjustBonus(
-    int $level_id,
-  ): Awaitable<void> {
+  public static async function genAdjustBonus(int $level_id): Awaitable<void> {
     $db = await self::genDb();
 
     await $db->queryf(
@@ -659,7 +638,8 @@ class Level extends Model {
     int $team_id,
     (function(): Awaitable<mixed>) $thunk,
   ): Awaitable<mixed> {
-    $lock_name = sprintf('%s/%s_%d', sys_get_temp_dir(), $lock_name, $team_id);
+    $lock_name =
+      sprintf('%s/%s_%d', sys_get_temp_dir(), $lock_name, $team_id);
     $lock = fopen($lock_name, 'w');
 
     if ($lock === false) {
@@ -685,39 +665,46 @@ class Level extends Model {
     int $level_id,
     int $team_id,
   ): Awaitable<bool> {
-    $result = await self::withLock(
-      'score_level_lock',
-      $team_id,
-      async function(): Awaitable<mixed> use ($level_id, $team_id) {
-        $db = await self::genDb();
+    $result =
+      await self::withLock(
+        'score_level_lock',
+        $team_id,
+        async function(): Awaitable<mixed> use ($level_id, $team_id) {
+          $db = await self::genDb();
 
-        // Check if team has already scored this level
-        $previous_score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
-        if ($previous_score) {
-          return false;
-        }
+          // Check if team has already scored this level
+          $previous_score =
+            await ScoreLog::genPreviousScore($level_id, $team_id, false);
+          if ($previous_score) {
+            return false;
+          }
 
-        $level = await self::gen($level_id);
+          $level = await self::gen($level_id);
 
-        // Calculate points to give
-        $points = $level->getPoints() + $level->getBonus();
+          // Calculate points to give
+          $points = $level->getPoints() + $level->getBonus();
 
-        // Adjust bonus
-        await self::genAdjustBonus($level_id);
+          // Adjust bonus
+          await self::genAdjustBonus($level_id);
 
-        // Score!
-        await $db->queryf(
-          'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
-          $points,
-          $team_id,
-        );
+          // Score!
+          await $db->queryf(
+            'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
+            $points,
+            $team_id,
+          );
 
-        // Log the score
-        await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
+          // Log the score
+          await ScoreLog::genLogValidScore(
+            $level_id,
+            $team_id,
+            $points,
+            $level->getType(),
+          );
 
-        return true;
-      }
-    );
+          return true;
+        },
+      );
 
     return boolval($result);
   }
@@ -727,35 +714,42 @@ class Level extends Model {
     int $level_id,
     int $team_id,
   ): Awaitable<bool> {
-    $result = await self::withLock(
-      'score_base_lock',
-      $team_id,
-      async function(): Awaitable<mixed> use ($level_id, $team_id) {
-        $db = await self::genDb();
+    $result =
+      await self::withLock(
+        'score_base_lock',
+        $team_id,
+        async function(): Awaitable<mixed> use ($level_id, $team_id) {
+          $db = await self::genDb();
 
-        $level = await self::gen($level_id);
+          $level = await self::gen($level_id);
 
-        // Calculate points to give
-        $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
-        if ($score) {
-          $points = $level->getPoints();
-        } else {
-          $points = $level->getPoints() + $level->getBonus();
-        }
+          // Calculate points to give
+          $score =
+            await ScoreLog::genPreviousScore($level_id, $team_id, false);
+          if ($score) {
+            $points = $level->getPoints();
+          } else {
+            $points = $level->getPoints() + $level->getBonus();
+          }
 
-        // Score!
-        await $db->queryf(
-          'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
-          $points,
-          $team_id,
-        );
+          // Score!
+          await $db->queryf(
+            'UPDATE teams SET points = points + %d, last_score = NOW() WHERE id = %d LIMIT 1',
+            $points,
+            $team_id,
+          );
 
-        // Log the score...
-        await ScoreLog::genLogValidScore($level_id, $team_id, $points, $level->getType());
+          // Log the score...
+          await ScoreLog::genLogValidScore(
+            $level_id,
+            $team_id,
+            $points,
+            $level->getType(),
+          );
 
-        return true;
-      }
-    );
+          return true;
+        },
+      );
 
     return boolval($result);
   }
@@ -765,51 +759,51 @@ class Level extends Model {
     int $level_id,
     int $team_id,
   ): Awaitable<?string> {
-    $result = await self::withLock(
-      'hint_lock',
-      $team_id,
-      async function(): Awaitable<mixed> use ($level_id, $team_id) {
-        $db = await self::genDb();
+    $result =
+      await self::withLock(
+        'hint_lock',
+        $team_id,
+        async function(): Awaitable<mixed> use ($level_id, $team_id) {
+          $db = await self::genDb();
 
-        $level = await self::gen($level_id);
-        $penalty = $level->getPenalty();
+          $level = await self::gen($level_id);
+          $penalty = $level->getPenalty();
 
-        // Check if team has already gotten this hint or if the team has scored this already
-        // If so, hint is free
-        $hint = await HintLog::genPreviousHint($level_id, $team_id, false);
-        $score = await ScoreLog::genPreviousScore($level_id, $team_id, false);
-        if ($hint || $score) {
-          $penalty = 0;
-        }
+          // Check if team has already gotten this hint or if the team has scored this already
+          // If so, hint is free
+          $hint = await HintLog::genPreviousHint($level_id, $team_id, false);
+          $score =
+            await ScoreLog::genPreviousScore($level_id, $team_id, false);
+          if ($hint || $score) {
+            $penalty = 0;
+          }
 
-        // Make sure team has enough points to pay
-        $team = await Team::genTeam($team_id);
-        if ($team->getPoints() < $penalty) {
-          return null;
-        }
+          // Make sure team has enough points to pay
+          $team = await Team::genTeam($team_id);
+          if ($team->getPoints() < $penalty) {
+            return null;
+          }
 
-        // Adjust points
-        await $db->queryf(
-          'UPDATE teams SET points = points - %d WHERE id = %d LIMIT 1',
-          $penalty,
-          $team_id,
-        );
+          // Adjust points
+          await $db->queryf(
+            'UPDATE teams SET points = points - %d WHERE id = %d LIMIT 1',
+            $penalty,
+            $team_id,
+          );
 
-        // Log the hint
-        await HintLog::genLogGetHint($level_id, $team_id, $penalty);
+          // Log the hint
+          await HintLog::genLogGetHint($level_id, $team_id, $penalty);
 
-        // Hint!
-        return $level->getHint();
-      }
-    );
+          // Hint!
+          return $level->getHint();
+        },
+      );
 
     return $result !== null ? strval($result) : null;
   }
 
   // Get the IP from a base level.
-  public static async function genBaseIP(
-    int $base_id,
-  ): Awaitable<string> {
+  public static async function genBaseIP(int $base_id): Awaitable<string> {
     $links = await Link::genAllLinks($base_id);
     $link = $links[0];
     $ip = explode(':', $link->getLink())[0];
@@ -846,10 +840,10 @@ class Level extends Model {
     } while ($running > 0);
 
     // Get responses and remove handlers
-    foreach($curl_handlers as $id => $c) {
+    foreach ($curl_handlers as $id => $c) {
       $r = array(
         'id' => intval($id),
-        'response' => curl_multi_getcontent($c)
+        'response' => curl_multi_getcontent($c),
       );
       curl_multi_remove_handle($multi_handler, $c);
       array_push($responses, $r);
@@ -862,17 +856,18 @@ class Level extends Model {
   }
 
   // Bases processing and scoring.
-  public static async function genBaseScoring(
-  ): Awaitable<void> {
+  public static async function genBaseScoring(): Awaitable<void> {
     $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
-    $cmd = 'hhvm -vRepo.Central.Path=/var/run/hhvm/.hhvm.hhbc_bases '.$document_root.'/scripts/bases.php > /dev/null 2>&1 & echo $!';
+    $cmd =
+      'hhvm -vRepo.Central.Path=/var/run/hhvm/.hhvm.hhbc_bases '.
+      $document_root.
+      '/scripts/bases.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     await Control::genStartScriptLog(intval($pid), 'bases', $cmd);
   }
 
   // Stop bases processing and scoring process.
-  public static async function genStopBaseScoring(
-  ): Awaitable<void> {
+  public static async function genStopBaseScoring(): Awaitable<void> {
     // Kill running process
     $pid = await Control::genScriptPid('bases');
     if ($pid > 0) {

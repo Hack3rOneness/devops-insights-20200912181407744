@@ -45,9 +45,7 @@ class Router {
     }
   }
 
-  private static async function genRouteAjax(
-    string $page,
-  ): Awaitable<string> {
+  private static async function genRouteAjax(string $page): Awaitable<string> {
     SessionUtils::sessionStart();
     switch ($page) {
       case 'index':

@@ -7,9 +7,8 @@ class ScoreLog extends Model {
     private int $team_id,
     private int $points,
     private int $level_id,
-    private string $type
-    ) {
-  }
+    private string $type,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -47,12 +46,9 @@ class ScoreLog extends Model {
   }
 
   // Get all scores.
-  public static async function genAllScores(
-  ): Awaitable<array<ScoreLog>> {
+  public static async function genAllScores(): Awaitable<array<ScoreLog>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM scores_log ORDER BY ts DESC',
-    );
+    $result = await $db->queryf('SELECT * FROM scores_log ORDER BY ts DESC');
 
     $scores = array();
     foreach ($result->mapRows() as $row) {
@@ -65,9 +61,7 @@ class ScoreLog extends Model {
   // Reset all scores.
   public static async function genResetScores(): Awaitable<void> {
     $db = await self::genDb();
-    await $db->queryf(
-      'DELETE FROM scores_log WHERE id > 0',
-    );
+    await $db->queryf('DELETE FROM scores_log WHERE id > 0');
   }
 
   // Check if there is a previous score.
@@ -79,17 +73,19 @@ class ScoreLog extends Model {
     $db = await self::genDb();
 
     if ($any_team) {
-      $result = await $db->queryf(
-        'SELECT COUNT(*) FROM scores_log WHERE level_id = %d AND team_id IN (SELECT id FROM teams WHERE id != %d AND visible = 1)',
-        $level_id,
-        $team_id,
-      );
-    } else { 
-      $result = await $db->queryf(
-        'SELECT COUNT(*) FROM scores_log WHERE level_id = %d AND team_id = %d',
-        $level_id,
-        $team_id,
-      );
+      $result =
+        await $db->queryf(
+          'SELECT COUNT(*) FROM scores_log WHERE level_id = %d AND team_id IN (SELECT id FROM teams WHERE id != %d AND visible = 1)',
+          $level_id,
+          $team_id,
+        );
+    } else {
+      $result =
+        await $db->queryf(
+          'SELECT COUNT(*) FROM scores_log WHERE level_id = %d AND team_id = %d',
+          $level_id,
+          $team_id,
+        );
     }
 
     if ($result->numRows() > 0) {

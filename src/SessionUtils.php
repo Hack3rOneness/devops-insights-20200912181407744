@@ -19,7 +19,7 @@ class SessionUtils {
       array(__CLASS__, 'read'),
       array(__CLASS__, 'write'),
       array(__CLASS__, 'destroy'),
-      array(__CLASS__, 'gc')
+      array(__CLASS__, 'gc'),
     );
     session_name(self::$s_name);
     session_set_cookie_params(
@@ -27,7 +27,7 @@ class SessionUtils {
       self::$s_path,
       must_have_string(Utils::getSERVER(), 'SERVER_NAME'),
       self::$s_secure,
-      self::$s_httponly
+      self::$s_httponly,
     );
     session_start();
     setcookie(
@@ -37,7 +37,7 @@ class SessionUtils {
       self::$s_path,
       must_have_string(Utils::getSERVER(), 'SERVER_NAME'),
       self::$s_secure,
-      self::$s_httponly
+      self::$s_httponly,
     );
   }
 
@@ -100,7 +100,7 @@ class SessionUtils {
       $params["path"],
       $params["domain"],
       $params["secure"],
-      $params["httponly"]
+      $params["httponly"],
     );
     session_destroy();
 
@@ -109,7 +109,7 @@ class SessionUtils {
 
   public static function sessionActive(): bool {
     /* HH_IGNORE_ERROR[2050] */
-    return (bool)(array_key_exists('team_id', $_SESSION));
+    return (bool) (array_key_exists('team_id', $_SESSION));
   }
 
   public static function enforceLogin(): void {

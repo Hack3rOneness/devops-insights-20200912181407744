@@ -4,8 +4,10 @@ class Country extends Model {
 
   const string MC_KEY_ALL_COUNTRIES = 'all_countries';
   const string MC_KEY_ALL_COUNTRIES_FOR_MAP = 'all_countries_for_map';
-  const string MC_KEY_ALL_ENABLED_COUNTRIES = 'all_enabled_countries_for_map';
-  const string MC_KEY_ALL_ENABLED_COUNTRIES_FOR_MAP = 'all_enabled_countries';
+  const string
+    MC_KEY_ALL_ENABLED_COUNTRIES = 'all_enabled_countries_for_map';
+  const string
+    MC_KEY_ALL_ENABLED_COUNTRIES_FOR_MAP = 'all_enabled_countries';
 
   private function __construct(
     private int $id,
@@ -15,8 +17,7 @@ class Country extends Model {
     private int $enabled,
     private string $d,
     private string $transform,
-  ) {
-  }
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -47,8 +48,7 @@ class Country extends Model {
   }
 
   // Make sure all the countries used field is good
-  public static async function genUsedAdjust(
-  ): Awaitable<void> {
+  public static async function genUsedAdjust(): Awaitable<void> {
     $db = await self::genDb();
     await $db->queryf(
       'UPDATE countries SET used = 1 WHERE id IN (SELECT entity_id FROM levels)',
@@ -101,16 +101,11 @@ class Country extends Model {
       $rows = $mc_result;
     } else {
       $db = await self::genDb();
-      /* HH_IGNORE_ERROR[4110] */ /* HH_IGNORE_ERROR[4027] This is safe not being a literal string */
+      /* HH_IGNORE_ERROR[4110] */
+      /* HH_IGNORE_ERROR[4027] This is safe not being a literal string */
       $db_result = await $db->queryf($sql);
-      $rows = array_map(
-        $map ==> $map->toArray(),
-        $db_result->mapRows(),
-      );
-      $mc->set(
-        $mcKey,
-        $rows,
-      );
+      $rows = array_map($map ==> $map->toArray(), $db_result->mapRows());
+      $mc->set($mcKey, $rows);
     }
 
     $countries = array();
@@ -118,16 +113,17 @@ class Country extends Model {
       $countries[] = await self::countryFromRow($row);
     }
 
-    usort($countries, function($a, $b)
-    {
-      return strcmp($a->name, $b->name);
-    });
+    usort(
+      $countries,
+      function($a, $b) {
+        return strcmp($a->name, $b->name);
+      },
+    );
 
     return $countries;
   }
 
-  public static async function genAllCountries(
-  ): Awaitable<array<Country>> {
+  public static async function genAllCountries(): Awaitable<array<Country>> {
     return await self::genAll(
       'SELECT * FROM countries ORDER BY iso_code',
       self::MC_KEY_ALL_COUNTRIES,
@@ -174,10 +170,12 @@ class Country extends Model {
       $countries[] = await self::countryFromRow($row->toArray());
     }
 
-    usort($countries, function($a, $b)
-    {
-      return strcmp($a->name, $b->name);
-    });
+    usort(
+      $countries,
+      function($a, $b) {
+        return strcmp($a->name, $b->name);
+      },
+    );
 
     return $countries;
   }
@@ -198,9 +196,7 @@ class Country extends Model {
   }
 
   // Get a country by id
-  public static async function gen(
-    int $country_id,
-  ): Awaitable<Country> {
+  public static async function gen(int $country_id): Awaitable<Country> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -209,27 +205,33 @@ class Country extends Model {
     );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
-    $new_country = await self::countryFromRow(firstx($result->mapRows())->toArray());
+    $new_country =
+      await self::countryFromRow(firstx($result->mapRows())->toArray());
     return $new_country;
   }
 
   // Get a random enabled, unused country ID
-  public static async function genRandomAvailableCountryId(
-  ): Awaitable<int> {
+  public static async function genRandomAvailableCountryId(): Awaitable<int> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT id FROM countries WHERE enabled = 1 AND used = 0 ORDER BY RAND() LIMIT 1',
-    );
+    $result =
+      await $db->queryf(
+        'SELECT id FROM countries WHERE enabled = 1 AND used = 0 ORDER BY RAND() LIMIT 1',
+      );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
     return intval(firstx($result->mapRows())['id']);
   }
 
-  private static async function countryFromRow(array<string, string> $row): Awaitable<Country> {
+  private static async function countryFromRow(
+    array<string, string> $row,
+  ): Awaitable<Country> {
     $config = await Configuration::gen('language');
     $language = $config->getValue();
-    $translated_name = locale_get_display_region('-'.must_have_idx($row, 'iso_code'), $language);
+    $translated_name = locale_get_display_region(
+      '-'.must_have_idx($row, 'iso_code'),
+      $language,
+    );
     return new Country(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'iso_code'),
@@ -241,8 +243,7 @@ class Country extends Model {
     );
   }
 
-  private static async function genDeleteAllMemcacheKeys(
-  ): Awaitable<void> {
+  private static async function genDeleteAllMemcacheKeys(): Awaitable<void> {
     $mc = self::getMc();
     $mc->delete(self::MC_KEY_ALL_COUNTRIES);
     $mc->delete(self::MC_KEY_ALL_COUNTRIES_FOR_MAP);

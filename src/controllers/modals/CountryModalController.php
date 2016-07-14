@@ -12,8 +12,14 @@ class CountryModalController extends ModalController {
               <span class="points-value fb-numbers"></span>
             </header>
             <ul class="country-capture-stats">
-              <li>{tr('captured_')}<span class="highlighted country-name"></span></li>
-              <li>{tr('flag_owner_')}<span class="highlighted country-owner"></span></li>
+              <li>
+                {tr('captured_')}
+                <span class="highlighted country-name"></span>
+              </li>
+              <li>
+                {tr('flag_owner_')}
+                <span class="highlighted country-owner"></span>
+              </li>
             </ul>
           </div>;
       case 'inactive':
@@ -23,7 +29,8 @@ class CountryModalController extends ModalController {
               <h4><span class="country-name"></span></h4>
             </div>
             <div class="country-capture-stats fb-column-container">
-              <div class="inactive-country">{tr('INACTIVE')}
+              <div class="inactive-country">
+                {tr('INACTIVE')}
               </div>
             </div>
           </div>;
@@ -31,7 +38,10 @@ class CountryModalController extends ModalController {
         return
           <div>
             <div class="modal-title">
-              <h4><span class="country-name"></span> - <span class="country-title"></span></h4>
+              <h4>
+                <span class="country-name"></span> -
+                <span class="country-title"></span>
+              </h4>
             </div>
             <div class="country-capture-stats fb-column-container">
               <div class="points-display">
@@ -60,26 +70,44 @@ class CountryModalController extends ModalController {
         return
           <div class="fb-modal-content">
             <div class="modal-title">
-              <h4>{tr('capture_')}<span class="country-name highlighted"></span> - <span class="country-title"></span></h4>
-              <a href="#" class="js-close-modal"><svg class="icon icon--close"><use href="#icon--close"/></svg></a>
+              <h4>
+                {tr('capture_')}
+                <span class="country-name highlighted"></span> -
+                <span class="country-title"></span>
+              </h4>
+              <a href="#" class="js-close-modal">
+                <svg class="icon icon--close">
+                  <use href="#icon--close" />
+                </svg>
+              </a>
             </div>
             <form class="fb-form country-capture-form">
               <input name="level_id" type="hidden" value="" />
-              <textarea rows={4} class="capture-text" disabled={true}></textarea>
-              <br/>
+              <textarea rows={4} class="capture-text" disabled={true}>
+              </textarea>
+              <br />
               <div class="capture-links"></div>
-              <br/>
+              <br />
               <fieldset class="form-set">
                 <div class="answer_no_bases form-el el--text">
-                  <input placeholder={tr('Insert your answer')} name="answer" type="text" autocomplete="off" />
+                  <input
+                    placeholder={tr('Insert your answer')}
+                    name="answer"
+                    type="text"
+                    autocomplete="off"
+                  />
                 </div>
               </fieldset>
               <div class="form-el--multiple-actions fb-column-container">
                 <div class="col col-1-2">
-                  <a class="fb-cta cta--blue js-trigger-hint"><span>{tr('Request Hint')}</span></a>
+                  <a class="fb-cta cta--blue js-trigger-hint">
+                    <span>{tr('Request Hint')}</span>
+                  </a>
                 </div>
                 <div class="answer_no_bases col col-1-2 actions--right">
-                  <a class="fb-cta cta--yellow js-trigger-score">{tr('Submit')}</a>
+                  <a class="fb-cta cta--yellow js-trigger-score">
+                    {tr('Submit')}
+                  </a>
                 </div>
               </div>
             </form>
@@ -90,7 +118,8 @@ class CountryModalController extends ModalController {
               </div>
             </div>
             <footer class="modal-footer fb-column-container">
-              <div class="col col-1-2 country-capture-stats fb-column-container">
+              <div
+                class="col col-1-2 country-capture-stats fb-column-container">
                 <div class="points-display">
                   <span class="points-number fb-numbers"></span>
                   <span class="points-label">{tr('PTS')}</span>
@@ -108,7 +137,9 @@ class CountryModalController extends ModalController {
                   </dl>
                 </div>
               </div>
-              <div class="col col-1-2 country-capture-completed fb-column-container">
+              <div
+                class=
+                  "col col-1-2 country-capture-completed fb-column-container">
                 <span>{tr('completed_by')} &gt;</span>
                 <ul class="completed-list"></ul>
               </div>

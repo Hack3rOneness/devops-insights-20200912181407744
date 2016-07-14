@@ -15,10 +15,7 @@ abstract class AjaxController {
   }
 
   private function processRequest(): (string, array<string, mixed>) {
-    $input_methods = array(
-      'POST' => INPUT_POST,
-      'GET' => INPUT_GET,
-    );
+    $input_methods = array('POST' => INPUT_POST, 'GET' => INPUT_GET);
     $method = must_have_string(Utils::getSERVER(), 'REQUEST_METHOD');
 
     $filter = idx($this->getFilters(), $method);
@@ -28,10 +25,7 @@ abstract class AjaxController {
     }
 
     $input_method = must_have_idx($input_methods, $method);
-    $parameters = filter_input_array(
-      $input_method,
-      $filter,
-    );
+    $parameters = filter_input_array($input_method, $filter);
 
     $action = idx($parameters, 'action', 'main');
     if (!in_array($action, $this->getActions())) {

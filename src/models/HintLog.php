@@ -6,9 +6,8 @@ class HintLog extends Model {
     private string $ts,
     private int $level_id,
     private int $team_id,
-    private int $penalty
-    ) {
-  }
+    private int $penalty,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -55,12 +54,9 @@ class HintLog extends Model {
     );
   }
 
-  public static async function genResetHints(
-  ): Awaitable<void> {
+  public static async function genResetHints(): Awaitable<void> {
     $db = await self::genDb();
-    await $db->queryf(
-      'DELETE FROM hints_log WHERE id > 0',
-    );
+    await $db->queryf('DELETE FROM hints_log WHERE id > 0');
   }
 
   // Check if there is a previous hint.
@@ -72,17 +68,19 @@ class HintLog extends Model {
     $db = await self::genDb();
 
     if ($any_team) {
-      $result = await $db->queryf(
-        'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id != %d',
-        $level_id,
-        $team_id,
-      );
+      $result =
+        await $db->queryf(
+          'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id != %d',
+          $level_id,
+          $team_id,
+        );
     } else {
-      $result = await $db->queryf(
-        'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id = %d',
-        $level_id,
-        $team_id,
-      );
+      $result =
+        await $db->queryf(
+          'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id = %d',
+          $level_id,
+          $team_id,
+        );
     }
 
     if ($result->numRows() > 0) {
@@ -94,12 +92,9 @@ class HintLog extends Model {
   }
 
   // Get all scores.
-  public static async function genAllHints(
-  ): Awaitable<array<HintLog>> {
+  public static async function genAllHints(): Awaitable<array<HintLog>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM hints_log ORDER BY ts DESC',
-    );
+    $result = await $db->queryf('SELECT * FROM hints_log ORDER BY ts DESC');
 
     $hints = array();
     foreach ($result->mapRows() as $row) {

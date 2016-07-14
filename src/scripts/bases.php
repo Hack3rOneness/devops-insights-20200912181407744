@@ -1,6 +1,6 @@
 <?hh
 
-require_once('/var/www/fbctf/vendor/autoload.php');
+require_once ('/var/www/fbctf/vendor/autoload.php');
 
 $conf_game = \HH\Asio\join(Configuration::gen('game'));
 while ($conf_game->getValue() === '1') {
@@ -9,7 +9,7 @@ while ($conf_game->getValue() === '1') {
   foreach (\HH\Asio\join(Level::genAllActiveBases()) as $base) {
     $endpoint = array(
       'id' => $base->getId(),
-      'url' => \HH\Asio\join(Level::genBaseIP($base->getId()))
+      'url' => \HH\Asio\join(Level::genBaseIP($base->getId())),
     );
     array_push($bases_endpoints, $endpoint);
   }
@@ -31,7 +31,13 @@ while ($conf_game->getValue() === '1') {
       $code = -1;
       //echo "Base(".strval($response['id']).") is DOWN\n";
     }
-    \HH\Asio\join(Level::genLogBaseEntry($response['id'], $code, strval($response['response'])));
+    \HH\Asio\join(
+      Level::genLogBaseEntry(
+        $response['id'],
+        $code,
+        strval($response['response']),
+      ),
+    );
   }
   // Wait until next iteration
   $bases_cycle = \HH\Asio\join(Configuration::gen('bases_cycle'));

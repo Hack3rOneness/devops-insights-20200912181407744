@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -15,7 +15,9 @@ class AnnouncementsModuleController {
       foreach ($announcements as $announcement) {
         $announcements_ul->appendChild(
           <li>
-            <span class="announcement-highlight">{$announcement->getAnnouncement()}</span>
+            <span class="announcement-highlight">
+              {$announcement->getAnnouncement()}
+            </span>
           </li>
         );
       }
@@ -28,8 +30,7 @@ class AnnouncementsModuleController {
         </header>
         <div class="module-content">
           <div class="fb-section-border">
-            <div class="module-top">
-            </div>
+            <div class="module-top"></div>
             <div class="module-scrollable">
               {$announcements_ul}
             </div>

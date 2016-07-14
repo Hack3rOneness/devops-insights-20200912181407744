@@ -8,9 +8,8 @@ class GameLog extends Model {
     private int $level_id,
     private int $points,
     private string $type,
-    private string $flag
-    ) {
-  }
+    private string $flag,
+  ) {}
 
   public function getTs(): string {
     return $this->ts;
@@ -18,7 +17,7 @@ class GameLog extends Model {
 
   public function getEntry(): string {
     return $this->entry;
-  }  
+  }
 
   public function getTeamId(): int {
     return $this->team_id;
@@ -53,16 +52,16 @@ class GameLog extends Model {
   }
 
   // Get all game scores.
-  public static async function genGameLog(
-  ): Awaitable<array<GameLog>> {
+  public static async function genGameLog(): Awaitable<array<GameLog>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT ts, %s AS entry, team_id, level_id, points, type, %s AS flag FROM scores_log UNION SELECT ts, %s AS entry, team_id, level_id, 0 AS points, %s AS type, flag FROM failures_log ORDER BY ts DESC',
-      'score',
-      '',
-      'failure',
-      '',
-    );
+    $result =
+      await $db->queryf(
+        'SELECT ts, %s AS entry, team_id, level_id, points, type, %s AS flag FROM scores_log UNION SELECT ts, %s AS entry, team_id, level_id, 0 AS points, %s AS type, flag FROM failures_log ORDER BY ts DESC',
+        'score',
+        '',
+        'failure',
+        '',
+      );
 
     $gamelog = array();
     foreach ($result->mapRows() as $row) {

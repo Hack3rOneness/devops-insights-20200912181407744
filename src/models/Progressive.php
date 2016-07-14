@@ -6,9 +6,8 @@ class Progressive extends Model {
     private string $ts,
     private string $team_name,
     private int $points,
-    private int $iteration
-  ) {
-  }
+    private int $iteration,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -30,19 +29,19 @@ class Progressive extends Model {
     return $this->iteration;
   }
 
-  public static async function genGameStatus(
-  ): Awaitable<bool> {
+  public static async function genGameStatus(): Awaitable<bool> {
     $config = await Configuration::gen('game');
     return $config->getValue() === '1';
   }
 
-  public static async function genCycle(
-  ): Awaitable<int> {
+  public static async function genCycle(): Awaitable<int> {
     $config = await Configuration::gen('progressive_cycle');
     return intval($config->getValue());
   }
 
-  private static function progressiveFromRow(Map<string, string> $row): Progressive {
+  private static function progressiveFromRow(
+    Map<string, string> $row,
+  ): Progressive {
     return new Progressive(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'ts'),
@@ -57,10 +56,11 @@ class Progressive extends Model {
     string $team_name,
   ): Awaitable<array<Progressive>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM progressive_log WHERE team_name = %s GROUP BY iteration ORDER BY points ASC',
-      $team_name,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT * FROM progressive_log WHERE team_name = %s GROUP BY iteration ORDER BY points ASC',
+        $team_name,
+      );
     $progressive = array();
     foreach ($result->mapRows() as $row) {
       $progressive[] = self::progressiveFromRow($row);
@@ -89,15 +89,16 @@ class Progressive extends Model {
   // Reset the progressive scoreboard.
   public static async function genReset(): Awaitable<void> {
     $db = await self::genDb();
-    await $db->queryf(
-      'DELETE FROM progressive_log WHERE id > 0',
-    );
+    await $db->queryf('DELETE FROM progressive_log WHERE id > 0');
   }
 
   // Kick off the progressive scoreboard in the background.
   public static async function genRun(): Awaitable<void> {
     $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
-    $cmd = 'hhvm -vRepo.Central.Path=/var/run/hhvm/.hhvm.hhbc_progressive '.$document_root.'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
+    $cmd =
+      'hhvm -vRepo.Central.Path=/var/run/hhvm/.hhvm.hhbc_progressive '.
+      $document_root.
+      '/scripts/progressive.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     await Control::genStartScriptLog(intval($pid), 'progressive', $cmd);
   }

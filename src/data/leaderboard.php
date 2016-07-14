@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -23,20 +23,21 @@ class LeaderboardDataController extends DataController {
     $my_team_data = (object) array(
       'badge' => $my_team->getLogo(),
       'points' => $my_team->getPoints(),
-      'rank' => $my_rank
+      'rank' => $my_rank,
     );
-    /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
+    /* HH_FIXME[1002] */
+    /* HH_FIXME[2011] */
     $leaderboard_data->{'my_team'} = $my_team_data;
 
     $teams_data = (object) array();
     $rank = 1;
     $l_max = (count($leaders) > 5) ? 5 : count($leaders);
-    for($i = 0; $i<$l_max; $i++) {
+    for ($i = 0; $i < $l_max; $i++) {
       $team = $leaders[$i];
       $team_data = (object) array(
         'badge' => $team->getLogo(),
         'points' => $team->getPoints(),
-        'rank' => $rank
+        'rank' => $rank,
       );
       if ($team->getName()) {
         $teams_data->{$team->getName()} = $team_data;

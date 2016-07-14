@@ -5,9 +5,8 @@ class Category extends Model {
     private int $id,
     private string $category,
     private int $protected,
-    private string $created_ts
-  ) {
-  }
+    private string $created_ts,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -38,9 +37,7 @@ class Category extends Model {
   public static async function genAllCategories(): Awaitable<array<Category>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM categories',
-    );
+    $result = await $db->queryf('SELECT * FROM categories');
 
     $categories = array();
     foreach ($result->mapRows() as $row) {
@@ -51,9 +48,7 @@ class Category extends Model {
   }
 
   // Check if category is used.
-  public static async function genIsUsed(
-    int $category_id,
-  ): Awaitable<bool> {
+  public static async function genIsUsed(int $category_id): Awaitable<bool> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -70,9 +65,7 @@ class Category extends Model {
   }
 
   // Delete category.
-  public static async function genDelete(
-    int $category_id,
-  ): Awaitable<void> {
+  public static async function genDelete(int $category_id): Awaitable<void> {
     $db = await self::genDb();
 
     await $db->queryf(
@@ -92,7 +85,7 @@ class Category extends Model {
     await $db->queryf(
       'INSERT INTO categories (category, protected, created_ts) VALUES (%s, %d, NOW())',
       $category,
-      (int)$protected,
+      (int) $protected,
     );
 
     // Return newly created category_id

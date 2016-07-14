@@ -1,8 +1,11 @@
 <?hh // strict
 
 class Link extends Model {
-  private function __construct(private int $id, private int $levelId, private string $link) {
-  }
+  private function __construct(
+    private int $id,
+    private int $levelId,
+    private string $link,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -45,14 +48,9 @@ class Link extends Model {
   }
 
   // Delete existing link.
-  public static async function genDelete(
-    int $link_id,
-  ): Awaitable<void> {
+  public static async function genDelete(int $link_id): Awaitable<void> {
     $db = await self::genDb();
-    await $db->queryf(
-      'DELETE FROM links WHERE id = %d LIMIT 1',
-      $link_id,
-    );
+    await $db->queryf('DELETE FROM links WHERE id = %d LIMIT 1', $link_id);
   }
 
   // Get all links for a given level.
@@ -60,10 +58,8 @@ class Link extends Model {
     int $level_id,
   ): Awaitable<array<Link>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM links WHERE level_id = %d',
-      $level_id,
-    );
+    $result =
+      await $db->queryf('SELECT * FROM links WHERE level_id = %d', $level_id);
 
     $links = array();
     foreach ($result->mapRows() as $row) {
@@ -74,9 +70,7 @@ class Link extends Model {
   }
 
   // Get a single link.
-  public static async function gen(
-    int $link_id,
-  ): Awaitable<Link> {
+  public static async function gen(int $link_id): Awaitable<Link> {
     $db = await self::genDb();
     $result = await $db->queryf(
       'SELECT * FROM links WHERE id = %d LIMIT 1',
@@ -89,9 +83,7 @@ class Link extends Model {
   }
 
   // Check if a level has links.
-  public static async function genHasLinks(
-    int $level_id,
-  ): Awaitable<bool> {
+  public static async function genHasLinks(int $level_id): Awaitable<bool> {
     $db = await self::genDb();
     $result = await $db->queryf(
       'SELECT COUNT(*) FROM links WHERE level_id = %d',
