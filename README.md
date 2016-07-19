@@ -112,9 +112,9 @@ Once you've provisioned the VM, go to the URL/IP of the server. Click the "Login
 
 #### Optional installation
 
-If you are going to be modifying files outside of the Vagrant VM, you will need to synchronize the files using [Unison](https://www.cis.upenn.edu/~bcpierce/unison/download.html) (bi-directional file sync over SSH). Once Unison is installed, you can sync your local repo with the VM with the following command:
+If you are going to be modifying files outside of the Vagrant VM, you will need to synchronize the files using [Unison](https://www.cis.upenn.edu/~bcpierce/unison/download.html) (bi-directional file sync over SSH). Once Unison is installed, you can sync your local repo with the VM with the following command from the root of the repository (outside the VM):
 
-`./extra/unison.sh PATH_TO_CTF_FOLDER`
+`./extra/unison.sh $PWD`
 
 Note that the unison script will not sync NPM dependencies, so if you ever need to run `npm install`, you should always run it on the VM itself.
 
