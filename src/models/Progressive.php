@@ -41,7 +41,7 @@ class Progressive extends Model {
     $config = await Configuration::gen('progressive_cycle');
     return intval($config->getValue());
   }
-  
+
   private static function progressiveFromRow(Map<string, string> $row): Progressive {
     return new Progressive(
       intval(must_have_idx($row, 'id')),
@@ -97,7 +97,7 @@ class Progressive extends Model {
   // Kick off the progressive scoreboard in the background.
   public static async function genRun(): Awaitable<void> {
     $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
-    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_progressive '.$document_root.'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
+    $cmd = 'hhvm -vRepo.Central.Path=/var/run/hhvm/.hhvm.hhbc_progressive '.$document_root.'/scripts/progressive.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     await Control::genStartScriptLog(intval($pid), 'progressive', $cmd);
   }

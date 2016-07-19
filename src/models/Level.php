@@ -865,7 +865,7 @@ class Level extends Model {
   public static async function genBaseScoring(
   ): Awaitable<void> {
     $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
-    $cmd = 'hhvm -vRepo.Central.Path=/tmp/.hhvm.hhbc_bases '.$document_root.'/scripts/bases.php > /dev/null 2>&1 & echo $!';
+    $cmd = 'hhvm -vRepo.Central.Path=/var/run/hhvm/.hhvm.hhbc_bases '.$document_root.'/scripts/bases.php > /dev/null 2>&1 & echo $!';
     $pid = shell_exec($cmd);
     await Control::genStartScriptLog(intval($pid), 'bases', $cmd);
   }
