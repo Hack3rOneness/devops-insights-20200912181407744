@@ -17,6 +17,7 @@ git checkout -b my-fix master
 
 - Make your changes, including test cases if applicable. Make sure to follow the coding guidelines described below.
 - Run `hh_client` and `grunt`, and ensure there are no new errors in the output
+- Run `extra/format.sh` to apply standard formatting
 - Commit your errors with a descriptive message
 
 ```
@@ -45,6 +46,7 @@ git push origin my-fix
 - Always run `hh_client` before committing to ensure there are no hack errors
 - Always run `grunt` before committing to ensure there are no JS/SCSS errors
  - `eslint` warnings unrelated to your changes are fine, but there should never be more warnings after a commit than before a commit
+- Always run `extra/format.sh` before committing to ensure standard formatting
 - Don't add extra spaces between parenthesis, i.e. do `foo(1, 2)`, not `foo( 1, 2 )`
 - Always use spaces around binary operators, i.e. `$i = 0`, not `$i=0`
 - Use CamelCase for member variables/functions and snake_case for local variables/global functions
