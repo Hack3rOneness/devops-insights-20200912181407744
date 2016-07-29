@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -20,7 +20,8 @@ class CommandsController extends DataController {
     $countries_key = "country_list";
     $all_enabled_countries = await Country::genAllEnabledCountries();
     foreach ($all_enabled_countries as $country) {
-      $is_active_level = await $country::genIsActiveLevel(intval($country->getId()));
+      $is_active_level =
+        await $country::genIsActiveLevel(intval($country->getId()));
       if ($country->getUsed() && $is_active_level) {
         array_push($countries_results, $country->getName());
       }
@@ -28,7 +29,13 @@ class CommandsController extends DataController {
 
     // List of modules
     $modules_results = array(
-      "All", "Leaderboard", "Announcements", "Activity", "Teams", "Filter", "Game Clock"
+      "All",
+      "Leaderboard",
+      "Announcements",
+      "Activity",
+      "Teams",
+      "Filter",
+      "Game Clock",
     );
     $modules_key = "modules";
 
@@ -49,7 +56,8 @@ class CommandsController extends DataController {
     }
     array_push($categories_results, "All");
 
-    /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
+    /* HH_FIXME[1002] */
+    /* HH_FIXME[2011] */
     $results_library->{$countries_key} = $countries_results;
     $results_library->{$modules_key} = $modules_results;
     $results_library->{$teams_key} = $teams_results;

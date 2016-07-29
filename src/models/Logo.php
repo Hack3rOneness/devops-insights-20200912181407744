@@ -7,9 +7,8 @@ class Logo extends Model {
     private int $enabled,
     private int $protected,
     private string $name,
-    private string $logo
-  ) {
-  }
+    private string $logo,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -36,9 +35,7 @@ class Logo extends Model {
   }
 
   // Check to see if the logo exists.
-  public static async function genCheckExists(
-    string $logo,
-  ): Awaitable<bool> {
+  public static async function genCheckExists(string $logo): Awaitable<bool> {
     $all_logos = await self::genAllEnabledLogos();
     foreach ($all_logos as $l) {
       if ($logo === $l->getName()) {
@@ -56,14 +53,13 @@ class Logo extends Model {
     $db = await self::genDb();
     await $db->queryf(
       'UPDATE logos SET enabled = %d WHERE id = %d LIMIT 1',
-      (int)$enabled,
+      (int) $enabled,
       $logo_id,
     );
   }
 
   // Retrieve a random logo from the table.
-  public static async function genRandomLogo(
-  ): Awaitable<string> {
+  public static async function genRandomLogo(): Awaitable<string> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -76,13 +72,10 @@ class Logo extends Model {
   }
 
   // All the logos.
-  public static async function genAllLogos(
-  ): Awaitable<array<Logo>> {
+  public static async function genAllLogos(): Awaitable<array<Logo>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM logos',
-    );
+    $result = await $db->queryf('SELECT * FROM logos');
 
     $logos = array();
     foreach ($result->mapRows() as $row) {
@@ -93,8 +86,7 @@ class Logo extends Model {
   }
 
   // All the enabled logos.
-  public static async function genAllEnabledLogos(
-  ): Awaitable<array<Logo>> {
+  public static async function genAllEnabledLogos(): Awaitable<array<Logo>> {
     $db = await self::genDb();
 
     $result = await $db->queryf(

@@ -7,9 +7,8 @@ class Session extends Model {
     private string $data,
     private int $team_id,
     private string $created_ts,
-    private string $last_access_ts
-  ) {
-  }
+    private string $last_access_ts,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -40,7 +39,7 @@ class Session extends Model {
     $delim = explode('team_id|', $data)[1];
     $serialized = explode('name|', $delim)[0];
     $unserialized = strval(unserialize($serialized));
-    
+
     return intval($unserialized);
   }
 
@@ -54,7 +53,7 @@ class Session extends Model {
       'UPDATE sessions SET team_id = %d WHERE cookie = %s LIMIT 1',
       $team_id,
       $cookie,
-    );  
+    );
   }
 
   private static function sessionFromRow(Map<string, string> $row): Session {
@@ -82,9 +81,7 @@ class Session extends Model {
   }
 
   // Retrieve the session by cookie.
-  public static async function gen(
-    string $cookie,
-  ): Awaitable<Session> {
+  public static async function gen(string $cookie): Awaitable<Session> {
     $db = await self::genDb();
     $result = await $db->queryf(
       'SELECT * FROM sessions WHERE cookie = %s LIMIT 1',
@@ -124,9 +121,7 @@ class Session extends Model {
   }
 
   // Delete the session for a given cookie.
-  public static async function genDelete(
-    string $cookie,
-  ): Awaitable<void> {
+  public static async function genDelete(string $cookie): Awaitable<void> {
     $db = await self::genDb();
     await $db->queryf(
       'DELETE FROM sessions WHERE cookie = %s LIMIT 1',
@@ -144,9 +139,7 @@ class Session extends Model {
   }
 
   // Does cleanup of cookies.
-  public static async function genCleanup(
-    int $maxlifetime,
-  ): Awaitable<void> {
+  public static async function genCleanup(int $maxlifetime): Awaitable<void> {
     $db = await self::genDb();
     // Clean up expired sessions
     await $db->queryf(

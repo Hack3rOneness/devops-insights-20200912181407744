@@ -12,10 +12,10 @@ class ScoreboardModalController extends ModalController {
       $end_ts = $end_ts->getValue();
 
       $seconds = intval($end_ts) - intval($start_ts);
-      $s_each = intval($seconds/10);
+      $s_each = intval($seconds / 10);
       $now = time();
       $current_s = intval($now) - intval($start_ts);
-      $current = intval($current_s/$s_each);
+      $current = intval($current_s / $s_each);
 
       for ($i = 0; $i < 10; $i++) {
         $indicator_classes = 'indicator-cell ';
@@ -44,16 +44,24 @@ class ScoreboardModalController extends ModalController {
 
       foreach ($leaderboard as $team) {
         $team_id = 'fb-scoreboard--team-'.strval($team->getId());
-        $color = '#' . substr(md5($team->getName()), 0, 6) . ';';
-        $style = 'color: '.$color.'; background:' .$color. ';';
+        $color = '#'.substr(md5($team->getName()), 0, 6).';';
+        $style = 'color: '.$color.'; background:'.$color.';';
         $quiz = await Team::genPointsByType($team->getId(), 'quiz');
         $flag = await Team::genPointsByType($team->getId(), 'flag');
         $base = await Team::genPointsByType($team->getId(), 'base');
         $scoreboard_tbody->appendChild(
           <tr>
             <td style="width: 10%;" class="el--radio">
-              <input type="checkbox" name="fb-scoreboard-filter" id={$team_id} value={$team->getName()} checked={true}/>
-              <label class="click-effect" for={$team_id}><span style={$style}>FU</span></label>
+              <input
+                type="checkbox"
+                name="fb-scoreboard-filter"
+                id={$team_id}
+                value={$team->getName()}
+                checked={true}
+              />
+              <label class="click-effect" for={$team_id}>
+                <span style={$style}>FU</span>
+              </label>
             </td>
             <td style="width: 10%;">{$rank}</td>
             <td style="width: 40%;">{$team->getName()}</td>
@@ -74,12 +82,17 @@ class ScoreboardModalController extends ModalController {
           <h4>{tr('scoreboard_')}</h4>
           <a href="#" class="js-close-modal">
             <svg class="icon icon--close">
-              <use href="#icon--close"/>
+              <use href="#icon--close" />
             </svg>
           </a>
         </div>
         <div class="scoreboard-graphic scoreboard-graphic-container">
-          <svg class="fb-graphic" data-file="data/scores.php" width="820" height={220}></svg>
+          <svg
+            class="fb-graphic"
+            data-file="data/scores.php"
+            width="820"
+            height={220}>
+          </svg>
         </div>
         <div class="game-progress fb-progress-bar fb-cf row-fixed">
           {$indicator}

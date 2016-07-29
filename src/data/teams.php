@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -32,11 +32,12 @@ class TeamDataController extends DataController {
           'base' => $base,
           'quiz' => $quiz,
           'flag' => $flag,
-          'total' => $team->getPoints()
-        )
+          'total' => $team->getPoints(),
+        ),
       );
       if ($team->getName()) {
-        /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
+        /* HH_FIXME[1002] */
+        /* HH_FIXME[2011] */
         $teams_data->{$team->getName()} = $team_data;
       }
       $rank++;

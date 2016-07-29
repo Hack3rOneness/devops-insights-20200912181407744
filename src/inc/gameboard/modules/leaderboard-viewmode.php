@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 class LeaderboardModuleViewController {
   public async function genRender(): Awaitable<:xhp> {
@@ -23,7 +23,9 @@ class LeaderboardModuleViewController {
             <h6>{$team->getName()}</h6>
             <span class="player-rank">{tr('Rank')}&nbsp;{$rank}</span>
             <br></br>
-            <span class="player-score">{strval($team->getPoints())}&nbsp;{tr('pts')}</span>
+            <span class="player-score">
+              {strval($team->getPoints())}&nbsp;{tr('pts')}
+            </span>
           </div>
         </li>
       );

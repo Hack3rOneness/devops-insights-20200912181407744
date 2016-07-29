@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -23,7 +23,8 @@ class ConfigurationController extends DataController {
 
     $gameboard = await Configuration::gen('gameboard');
 
-    /* HH_FIXME[1002] */ /* HH_FIXME[2011] */
+    /* HH_FIXME[1002] */
+    /* HH_FIXME[2011] */
     $conf_data->{'currentTeam'} = SessionUtils::sessionTeamName();
     $conf_data->{'gameboard'} = $gameboard->getValue();
     $conf_data->{'refreshTeams'} = $this->teams_cycle;

@@ -4,8 +4,12 @@ class Configuration extends Model {
 
   const string MC_KEY = 'configuration:';
 
-  private function __construct(private int $id, private string $field, private string $value, private string $description) {
-  }
+  private function __construct(
+    private int $id,
+    private string $field,
+    private string $value,
+    private string $description,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -24,11 +28,9 @@ class Configuration extends Model {
   }
 
   // Get configuration entry.
-  public static async function gen(
-    string $field,
-  ): Awaitable<Configuration> {
+  public static async function gen(string $field): Awaitable<Configuration> {
     $mc = self::getMc();
-    $key = self::MC_KEY . $field;
+    $key = self::MC_KEY.$field;
     $mc_result = $mc->get($key);
     if ($mc_result) {
       $result = $mc_result;
@@ -57,13 +59,11 @@ class Configuration extends Model {
       $field,
     );
 
-    self::getMc()->delete(self::MC_KEY . $field);
+    self::getMc()->delete(self::MC_KEY.$field);
   }
 
   // Check if field is valid.
-  public static async function genValidField(
-    string $field,
-  ): Awaitable<bool> {
+  public static async function genValidField(string $field): Awaitable<bool> {
     $db = await self::genDb();
     $result = await $db->queryf(
       'SELECT COUNT(*) FROM configuration WHERE field = %s',
@@ -79,9 +79,7 @@ class Configuration extends Model {
   public static async function genAllConfiguration(
   ): Awaitable<array<Configuration>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM configuration',
-    );
+    $result = await $db->queryf('SELECT * FROM configuration');
 
     $configuration = array();
     foreach ($result->mapRows() as $row) {
@@ -91,7 +89,9 @@ class Configuration extends Model {
     return $configuration;
   }
 
-  private static function configurationFromRow(array<string, string> $row): Configuration {
+  private static function configurationFromRow(
+    array<string, string> $row,
+  ): Configuration {
     return new Configuration(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'field'),

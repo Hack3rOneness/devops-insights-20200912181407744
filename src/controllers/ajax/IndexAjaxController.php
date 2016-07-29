@@ -5,40 +5,30 @@ class IndexAjaxController extends AjaxController {
   protected function getFilters(): array<string, mixed> {
     return array(
       'POST' => array(
-        'team_id'     => FILTER_VALIDATE_INT,
-        'teamname'    => FILTER_UNSAFE_RAW,
-        'password'    => FILTER_UNSAFE_RAW,
-        'logo'        => array(
-          'filter'      => FILTER_VALIDATE_REGEXP,
-          'options'     => array(
-            'regexp'      => '/^[\w-]+$/'
-          ),
+        'team_id' => FILTER_VALIDATE_INT,
+        'teamname' => FILTER_UNSAFE_RAW,
+        'password' => FILTER_UNSAFE_RAW,
+        'logo' => array(
+          'filter' => FILTER_VALIDATE_REGEXP,
+          'options' => array('regexp' => '/^[\w-]+$/'),
         ),
-        'token'        => array(
-          'filter'      => FILTER_VALIDATE_REGEXP,
-          'options'     => array(
-            'regexp'      => '/^[\w]+$/'
-          ),
+        'token' => array(
+          'filter' => FILTER_VALIDATE_REGEXP,
+          'options' => array('regexp' => '/^[\w]+$/'),
         ),
-        'names'       => FILTER_UNSAFE_RAW,
-        'emails'      => FILTER_UNSAFE_RAW,
-        'action'      => array(
-          'filter'      => FILTER_VALIDATE_REGEXP,
-          'options'     => array(
-            'regexp'      => '/^[\w-]+$/'
-          ),
-        )
-      )
+        'names' => FILTER_UNSAFE_RAW,
+        'emails' => FILTER_UNSAFE_RAW,
+        'action' => array(
+          'filter' => FILTER_VALIDATE_REGEXP,
+          'options' => array('regexp' => '/^[\w-]+$/'),
+        ),
+      ),
     );
   }
 
   <<__Override>>
   protected function getActions(): array<string> {
-    return array(
-      'register_team',
-      'register_names',
-      'login_team',
-    );
+    return array('register_team', 'register_names', 'login_team');
   }
 
   <<__Override>>
@@ -47,62 +37,58 @@ class IndexAjaxController extends AjaxController {
     array<string, mixed> $params,
   ): Awaitable<string> {
     switch ($action) {
-    case 'none':
-      return Utils::error_response('Invalid action', 'index');
-    case 'register_team':
-      return await $this->genRegisterTeam(
-        must_have_string($params, 'teamname'),
-        must_have_string($params, 'password'),
-        strval(must_have_idx($params, 'token')),
-        must_have_string($params, 'logo'),
-        false,
-        array(),
-        array(),
-      );
-    case 'register_names':
-      $names = json_decode(must_have_string($params, 'names'));
-      $emails = json_decode(must_have_string($params, 'emails'));
-      invariant(
-        is_array($names) &&
-        is_array($emails),
-        'names and emails should be arrays',
-      );
+      case 'none':
+        return Utils::error_response('Invalid action', 'index');
+      case 'register_team':
+        return await $this->genRegisterTeam(
+          must_have_string($params, 'teamname'),
+          must_have_string($params, 'password'),
+          strval(must_have_idx($params, 'token')),
+          must_have_string($params, 'logo'),
+          false,
+          array(),
+          array(),
+        );
+      case 'register_names':
+        $names = json_decode(must_have_string($params, 'names'));
+        $emails = json_decode(must_have_string($params, 'emails'));
+        invariant(
+          is_array($names) && is_array($emails),
+          'names and emails should be arrays',
+        );
 
-      return await $this->genRegisterTeam(
-        must_have_string($params, 'teamname'),
-        must_have_string($params, 'password'),
-        strval(must_have_idx($params, 'token')),
-        must_have_string($params, 'logo'),
-        true,
-        $names,
-        $emails,
-      );
-    case 'login_team':
-      $team_id = null;
-      $login_select = await Configuration::gen('login_select');
-      if ($login_select->getValue() === '1') {
-        $team_id = must_have_int($params, 'team_id');
-      } else {
-        $team_name = must_have_string($params, 'teamname');
-        $team_exists = await Team::genTeamExist($team_name);
-        if ($team_exists) {
-          $team = await Team::genTeamByName($team_name);
-          $team_id = $team->getId();
+        return await $this->genRegisterTeam(
+          must_have_string($params, 'teamname'),
+          must_have_string($params, 'password'),
+          strval(must_have_idx($params, 'token')),
+          must_have_string($params, 'logo'),
+          true,
+          $names,
+          $emails,
+        );
+      case 'login_team':
+        $team_id = null;
+        $login_select = await Configuration::gen('login_select');
+        if ($login_select->getValue() === '1') {
+          $team_id = must_have_int($params, 'team_id');
         } else {
-          return Utils::error_response('Login failed', 'login');
+          $team_name = must_have_string($params, 'teamname');
+          $team_exists = await Team::genTeamExist($team_name);
+          if ($team_exists) {
+            $team = await Team::genTeamByName($team_name);
+            $team_id = $team->getId();
+          } else {
+            return Utils::error_response('Login failed', 'login');
+          }
         }
-      }
-      invariant(is_int($team_id), 'team_id should be an int');
+        invariant(is_int($team_id), 'team_id should be an int');
 
-      $password = must_have_string($params, 'password');
+        $password = must_have_string($params, 'password');
 
-      // If we are here, login!
-      return await $this->genLoginTeam(
-        $team_id,
-        $password,
-      );
-    default:
-      return Utils::error_response('Invalid action', 'index');
+        // If we are here, login!
+        return await $this->genLoginTeam($team_id, $password);
+      default:
+        return Utils::error_response('Invalid action', 'index');
     }
   }
 
@@ -124,7 +110,7 @@ class IndexAjaxController extends AjaxController {
     // Check if tokenized registration is enabled
     $registration_type = await Configuration::gen('registration_type');
     if ($registration_type->getValue() === '2') {
-      $token_check = await Token::genCheck((string)$token);
+      $token_check = await Token::genCheck((string) $token);
       // Check provided token
       if ($token === null || !$token_check) {
         return Utils::error_response('Registration failed', 'registration');
@@ -150,11 +136,12 @@ class IndexAjaxController extends AjaxController {
     $team_exists = await Team::genTeamExist($shortname);
     if (!$team_exists) {
       $password_hash = Team::generateHash($password);
-      $team_id = await Team::genCreate($shortname, $password_hash, $final_logo);
+      $team_id =
+        await Team::genCreate($shortname, $password_hash, $final_logo);
       if ($team_id) {
         // Store team players data, if enabled
         if ($register_names) {
-          for ($i=0; $i<count($names); $i++) {
+          for ($i = 0; $i < count($names); $i++) {
             await Team::genAddTeamData($names[$i], $emails[$i], $team_id);
           }
         }
@@ -193,15 +180,15 @@ class IndexAjaxController extends AjaxController {
         SessionUtils::sessionSet('name', $team->getName());
         SessionUtils::sessionSet(
           'csrf_token',
-          (string)gmp_strval(
-            gmp_init(
-              bin2hex(
-                openssl_random_pseudo_bytes(16)
-              ),
-            16),
-          62)
+          (string) gmp_strval(
+            gmp_init(bin2hex(openssl_random_pseudo_bytes(16)), 16),
+            62,
+          ),
         );
-        SessionUtils::sessionSet('IP', must_have_string(Utils::getSERVER(), 'REMOTE_ADDR'));
+        SessionUtils::sessionSet(
+          'IP',
+          must_have_string(Utils::getSERVER(), 'REMOTE_ADDR'),
+        );
         if ($team->getAdmin()) {
           SessionUtils::sessionSet('admin', strval($team->getAdmin()));
         }

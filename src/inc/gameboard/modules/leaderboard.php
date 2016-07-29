@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -20,14 +20,14 @@ class LeaderboardModuleController {
       $leaders = await Team::genLeaderboard();
       $rank = 1;
       $l_max = (count($leaders) > 5) ? 5 : count($leaders);
-      for($i = 0; $i<$l_max; $i++) {
+      for ($i = 0; $i < $l_max; $i++) {
         $team = $leaders[$i];
         $xlink_href = '#icon--badge-'.$team->getLogo();
         $leaderboard_ul->appendChild(
           <li class="fb-user-card">
             <div class="user-avatar">
               <svg class="icon--badge">
-                <use href={$xlink_href}/>
+                <use href={$xlink_href} />
 
               </svg>
             </div>
@@ -35,7 +35,9 @@ class LeaderboardModuleController {
               <h6>{$team->getName()}</h6>
               <span class="player-rank">{tr('Rank')}&nbsp;{$rank}</span>
               <br></br>
-              <span class="player-score">{strval($team->getPoints())}&nbsp;{tr('pts')}</span>
+              <span class="player-score">
+                {strval($team->getPoints())}&nbsp;{tr('pts')}
+              </span>
             </div>
           </li>
         );
@@ -54,7 +56,10 @@ class LeaderboardModuleController {
               <h5 class="player-name">{$my_team->getName()}</h5>
               <span class="player-rank">{tr('Your Rank')}: {$my_rank}</span>
               <br></br>
-              <span class="player-score">{tr('Your Score')}: {strval($my_team->getPoints())}&nbsp;{tr('pts')}</span>
+              <span class="player-score">
+                {tr('Your Score')}: {strval($my_team->getPoints())}&nbsp;
+                {tr('pts')}
+              </span>
             </div>
             <div class="module-scrollable leaderboard-info">
               {$leaderboard_ul}

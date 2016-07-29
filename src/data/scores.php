@@ -1,6 +1,6 @@
 <?hh // strict
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php');
 
 /* HH_IGNORE_ERROR[1002] */
 SessionUtils::sessionStart();
@@ -14,12 +14,11 @@ class ScoresDataController extends DataController {
     foreach ($leaderboard as $team) {
       $values = array();
       $i = 1;
-      $progressive_scoreboard = await Progressive::genProgressiveScoreboard($team->getName());
+      $progressive_scoreboard =
+        await Progressive::genProgressiveScoreboard($team->getName());
       foreach ($progressive_scoreboard as $progress) {
-        $score = (object) array(
-          'time' => $i,
-          'score' => $progress->getPoints()
-        );
+        $score =
+          (object) array('time' => $i, 'score' => $progress->getPoints());
         array_push($values, $score);
         $i++;
       }
@@ -27,7 +26,7 @@ class ScoresDataController extends DataController {
       $element = (object) array(
         'team' => $team->getName(),
         'color' => '#'.$color,
-        'values' => $values
+        'values' => $values,
       );
       array_push($data, $element);
     }

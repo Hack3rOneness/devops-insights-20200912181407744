@@ -12,9 +12,8 @@ class Team extends Model {
     private int $points,
     private string $last_score,
     private string $logo,
-    private string $created_ts
-  ) {
-  }
+    private string $created_ts,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -81,10 +80,7 @@ class Team extends Model {
     string $logo,
   ): Awaitable<array<Team>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM teams WHERE logo = %s',
-      $logo,
-    );
+    $result = await $db->queryf('SELECT * FROM teams WHERE logo = %s', $logo);
 
     $teams = array();
     foreach ($result->mapRows() as $row) {
@@ -95,18 +91,18 @@ class Team extends Model {
 
   // Generate salted hash.
   public static function generateHash(string $password): string {
-    $options = array(
-      'cost' => 12,
-    );
+    $options = array('cost' => 12);
     return strval(password_hash($password, PASSWORD_DEFAULT, $options));
   }
 
   // Checks if hash need refreshing.
   public static function regenerateHash(string $password_hash): bool {
-    $options = array(
-      'cost' => 12,
+    $options = array('cost' => 12);
+    return (bool) password_needs_rehash(
+      $password_hash,
+      PASSWORD_DEFAULT,
+      $options,
     );
-    return (bool)password_needs_rehash($password_hash, PASSWORD_DEFAULT, $options);
   }
 
   // Verify if login is valid.
@@ -115,10 +111,11 @@ class Team extends Model {
     string $password,
   ): Awaitable<?Team> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM teams WHERE id = %d AND (active = 1 OR admin = 1) LIMIT 1',
-      $team_id,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT * FROM teams WHERE id = %d AND (active = 1 OR admin = 1) LIMIT 1',
+        $team_id,
+      );
 
     if ($result->numRows() > 0) {
       invariant($result->numRows() === 1, 'Expected exactly one result');
@@ -173,12 +170,13 @@ class Team extends Model {
     );
 
     // Return newly created team_id
-    $result = await $db->queryf(
-      'SELECT id FROM teams WHERE name = %s AND password_hash = %s AND logo = %s LIMIT 1',
-      $name,
-      $password_hash,
-      $logo,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT id FROM teams WHERE name = %s AND password_hash = %s AND logo = %s LIMIT 1',
+        $name,
+        $password_hash,
+        $logo,
+      );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
     return intval($result->mapRows()[0]['id']);
@@ -242,9 +240,7 @@ class Team extends Model {
   }
 
   // Delete team.
-  public static async function genDelete(
-    int $team_id,
-  ): Awaitable<void> {
+  public static async function genDelete(int $team_id): Awaitable<void> {
     $db = await self::genDb();
     await $db->queryf(
       'DELETE FROM teams WHERE id = %d AND protected = 0 LIMIT 1',
@@ -266,9 +262,7 @@ class Team extends Model {
   }
 
   // Enable or disable all teams by passing 1 or 0.
-  public static async function genSetStatusAll(
-    bool $status,
-  ): Awaitable<void> {
+  public static async function genSetStatusAll(bool $status): Awaitable<void> {
     $db = await self::genDb();
     await $db->queryf(
       'UPDATE teams SET active = %d WHERE id > 0 AND protected = 0',
@@ -322,13 +316,11 @@ class Team extends Model {
   }
 
   // All active teams.
-  public static async function genAllActiveTeams(
-  ): Awaitable<array<Team>> {
+  public static async function genAllActiveTeams(): Awaitable<array<Team>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM teams WHERE active = 1 ORDER BY id',
-    );
+    $result =
+      await $db->queryf('SELECT * FROM teams WHERE active = 1 ORDER BY id');
 
     $teams = array();
     foreach ($result->mapRows() as $row) {
@@ -339,8 +331,7 @@ class Team extends Model {
   }
 
   // All visible teams.
-  public static async function genAllVisibleTeams(
-  ): Awaitable<array<Team>> {
+  public static async function genAllVisibleTeams(): Awaitable<array<Team>> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -356,13 +347,13 @@ class Team extends Model {
   }
 
   // Leaderboard order.
-  public static async function genLeaderboard(
-  ): Awaitable<array<Team>> {
+  public static async function genLeaderboard(): Awaitable<array<Team>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM teams WHERE active = 1 AND visible = 1 ORDER BY points DESC, last_score ASC',
-    );
+    $result =
+      await $db->queryf(
+        'SELECT * FROM teams WHERE active = 1 AND visible = 1 ORDER BY points DESC, last_score ASC',
+      );
 
     $teams = array();
     foreach ($result->mapRows() as $row) {
@@ -373,13 +364,10 @@ class Team extends Model {
   }
 
   // All teams.
-  public static async function genAllTeams(
-  ): Awaitable<array<Team>> {
+  public static async function genAllTeams(): Awaitable<array<Team>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM teams ORDER BY points DESC',
-    );
+    $result = await $db->queryf('SELECT * FROM teams ORDER BY points DESC');
 
     $teams = array();
     foreach ($result->mapRows() as $row) {
@@ -390,9 +378,7 @@ class Team extends Model {
   }
 
   // Get a single team.
-  public static async function genTeam(
-    int $team_id,
-  ): Awaitable<Team> {
+  public static async function genTeam(int $team_id): Awaitable<Team> {
     $db = await self::genDb();
 
     $result = await $db->queryf(
@@ -430,27 +416,27 @@ class Team extends Model {
   ): Awaitable<int> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT IFNULL(SUM(points), 0) AS points FROM scores_log WHERE type = %s AND team_id = %d',
-      $type,
-      $team_id,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT IFNULL(SUM(points), 0) AS points FROM scores_log WHERE type = %s AND team_id = %d',
+        $type,
+        $team_id,
+      );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
     return intval(idx($result->mapRows()[0], 'points'));
   }
 
   // Get healthy status for points.
-  public static async function genPointsHealth(
-    int $team_id,
-  ): Awaitable<bool> {
+  public static async function genPointsHealth(int $team_id): Awaitable<bool> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT IFNULL(t.points, 0) AS points, IFNULL(SUM(s.points), 0) AS sum FROM teams AS t, scores_log AS s WHERE t.id = %d AND s.team_id = %d',
-      $team_id,
-      $team_id,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT IFNULL(t.points, 0) AS points, IFNULL(SUM(s.points), 0) AS sum FROM teams AS t, scores_log AS s WHERE t.id = %d AND s.team_id = %d',
+        $team_id,
+        $team_id,
+      );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
     $value = $result->mapRows()[0];
@@ -459,9 +445,7 @@ class Team extends Model {
   }
 
   // Update the last_score field.
-  public static async function genLastScore(
-    int $team_id,
-  ): Awaitable<void> {
+  public static async function genLastScore(int $team_id): Awaitable<void> {
     $db = await self::genDb();
     await $db->queryf(
       'UPDATE teams SET last_score = NOW() WHERE id = %d LIMIT 1',
@@ -472,19 +456,14 @@ class Team extends Model {
   // Set all points to zero for all teams.
   public static async function genResetAllPoints(): Awaitable<void> {
     $db = await self::genDb();
-    await $db->queryf(
-      'UPDATE teams SET points = 0 WHERE id > 0',
-    );
+    await $db->queryf('UPDATE teams SET points = 0 WHERE id > 0');
   }
 
   // Teams total number.
-  public static async function genTeamsCount(
-  ): Awaitable<int> {
+  public static async function genTeamsCount(): Awaitable<int> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT COUNT(*) AS count FROM teams',
-    );
+    $result = await $db->queryf('SELECT COUNT(*) AS count FROM teams');
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
     return intval(idx($result->mapRows()[0], 'COUNT(*)'));
@@ -494,11 +473,12 @@ class Team extends Model {
     int $level_id,
   ): Awaitable<Team> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM teams WHERE id = (SELECT team_id FROM scores_log WHERE level_id = %d ORDER BY ts LIMIT 0,1) AND visible = 1 AND active = 1',
-      $level_id,
-    );
-   return self::teamFromRow($result->mapRows()[0]);
+    $result =
+      await $db->queryf(
+        'SELECT * FROM teams WHERE id = (SELECT team_id FROM scores_log WHERE level_id = %d ORDER BY ts LIMIT 0,1) AND visible = 1 AND active = 1',
+        $level_id,
+      );
+    return self::teamFromRow($result->mapRows()[0]);
   }
 
   public static async function genCompletedLevel(
@@ -506,10 +486,11 @@ class Team extends Model {
   ): Awaitable<array<Team>> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT * FROM teams WHERE id IN (SELECT team_id FROM scores_log WHERE level_id = %d ORDER BY ts) AND visible = 1 AND active = 1',
-      $level_id,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT * FROM teams WHERE id IN (SELECT team_id FROM scores_log WHERE level_id = %d ORDER BY ts) AND visible = 1 AND active = 1',
+        $level_id,
+      );
 
     $teams = array();
     foreach ($result->mapRows() as $row) {
@@ -520,9 +501,7 @@ class Team extends Model {
   }
 
   // Get rank position for a team
-  public static async function genMyRank(
-    int $team_id,
-  ): Awaitable<int> {
+  public static async function genMyRank(int $team_id): Awaitable<int> {
     $rank = 1;
     $leaderboard = await self::genLeaderboard();
     foreach ($leaderboard as $team) {

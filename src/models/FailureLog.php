@@ -6,9 +6,8 @@ class FailureLog extends Model {
     private string $ts,
     private int $team_id,
     private int $level_id,
-    private string $flag
-    ) {
-  }
+    private string $flag,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -30,7 +29,9 @@ class FailureLog extends Model {
     return $this->flag;
   }
 
-  private static function failurelogFromRow(Map<string, string> $row): FailureLog {
+  private static function failurelogFromRow(
+    Map<string, string> $row,
+  ): FailureLog {
     return new FailureLog(
       intval(must_have_idx($row, 'id')),
       must_have_idx($row, 'ts'),
@@ -56,21 +57,16 @@ class FailureLog extends Model {
   }
 
   // Reset all failures.
-  public static async function genResetFailures(
-  ): Awaitable<void> {
+  public static async function genResetFailures(): Awaitable<void> {
     $db = await self::genDb();
-    await $db->queryf(
-      'DELETE FROM failures_log WHERE id > 0',
-    );
+    await $db->queryf('DELETE FROM failures_log WHERE id > 0');
   }
 
   // Get all scores.
-  public static async function genAllFailures(
-  ): Awaitable<array<FailureLog>> {
+  public static async function genAllFailures(): Awaitable<array<FailureLog>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM failures_log ORDER BY ts DESC',
-    );
+    $result =
+      await $db->queryf('SELECT * FROM failures_log ORDER BY ts DESC');
 
     $failures = array();
     foreach ($result->mapRows() as $row) {

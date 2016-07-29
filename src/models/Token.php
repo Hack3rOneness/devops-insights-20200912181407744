@@ -4,12 +4,11 @@ class Token extends Model {
   private function __construct(
     private int $id,
     private int $used,
-    private int $team_id, 
+    private int $team_id,
     private string $token,
     private string $created_ts,
-    private string $use_ts
-    ) {
-  }
+    private string $use_ts,
+  ) {}
 
   public function getId(): int {
     return $this->id;
@@ -46,12 +45,7 @@ class Token extends Model {
     $token_len = 15;
     $crypto_strong = True;
     return md5(
-      base64_encode(
-        openssl_random_pseudo_bytes(
-          $token_len,
-          $crypto_strong,
-        )
-      )
+      base64_encode(openssl_random_pseudo_bytes($token_len, $crypto_strong)),
     );
   }
 
@@ -84,9 +78,7 @@ class Token extends Model {
     exit();
   }
 
-  public static async function genDelete(
-    string $token,
-  ): Awaitable<void> {
+  public static async function genDelete(string $token): Awaitable<void> {
     $db = await self::genDb();
     $result = await $db->queryf(
       'DELETE from registration_tokens WHERE token = %s LIMIT 1',
@@ -97,9 +89,7 @@ class Token extends Model {
   // Get all tokens.
   public static async function genAllTokens(): Awaitable<array<Token>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM registration_tokens',
-    );
+    $result = await $db->queryf('SELECT * FROM registration_tokens');
 
     $tokens = array();
     foreach ($result->mapRows() as $row) {
@@ -113,9 +103,8 @@ class Token extends Model {
   public static async function genAllAvailableTokens(
   ): Awaitable<array<Token>> {
     $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM registration_tokens WHERE used = 0',
-    );
+    $result =
+      await $db->queryf('SELECT * FROM registration_tokens WHERE used = 0');
 
     $tokens = array();
     foreach ($result->mapRows() as $row) {
@@ -125,15 +114,14 @@ class Token extends Model {
     return $tokens;
   }
 
-  public static async function genCheck(
-    string $token,
-  ): Awaitable<bool> {
+  public static async function genCheck(string $token): Awaitable<bool> {
     $db = await self::genDb();
 
-    $result = await $db->queryf(
-      'SELECT COUNT(*) FROM registration_tokens WHERE used = 0 AND token = %s',
-      $token,
-    );
+    $result =
+      await $db->queryf(
+        'SELECT COUNT(*) FROM registration_tokens WHERE used = 0 AND token = %s',
+        $token,
+      );
 
     if ($result->numRows() > 0) {
       invariant($result->numRows() === 1, 'Expected exactly one result');
