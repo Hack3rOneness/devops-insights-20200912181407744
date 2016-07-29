@@ -83,6 +83,7 @@ function run_grunt() {
   local __path=$1
   local __mode=$2
 
+  cd "$__path"
   grunt
 
   # grunt watch on the VM will make sure your js files are
@@ -90,7 +91,6 @@ function run_grunt() {
   # grunt watch might take up to 5 seconds to update a file,
   # give it some time while you are developing.
   if [[ $__mode = "dev" ]]; then
-    cd $__path
     grunt watch &
   fi
 }
@@ -286,4 +286,37 @@ function set_password() {
 
   # Then insert the new admin user with ID 1 (just as a convention, we shouldn't rely on this in the code)
   mysql -u "$__user" --password="$__db_pwd" "$__db" -e "INSERT INTO teams (id, name, password_hash, admin, protected, logo, created_ts) VALUES (1, 'admin', '$HASH', 1, 1, 'admin', NOW());"
+}
+
+function update_repo() {
+  local __mode=$1
+  local __code_path=$2
+  local __ctf_path=$3
+
+  if pgrep -x "grunt" > /dev/null
+  then
+    killall -9 grunt
+  fi
+
+  echo "[+] Pulling from remote repository"
+  git pull --rebase https://github.com/facebook/fbctf.git
+
+  echo "[+] Starting sync to $__ctf_path"
+  if [[ "$__code_path" != "$__ctf_path" ]]; then
+      [[ -d "$__ctf_path" ]] || sudo mkdir -p "$__ctf_path"
+
+      echo "[+] Copying all CTF code to destination folder"
+      sudo rsync -a --exclude node_modules --exclude vendor "$__code_path/" "$__ctf_path/"
+
+      # This is because sync'ing files is done with unison
+      if [[ "$__mode" == "dev" ]]; then
+          echo "[+] Setting permissions"
+          sudo chmod -R 777 "$__ctf_path/"
+      fi
+  fi
+
+  cd "$__ctf_path"
+  composer.phar install
+
+  run_grunt "$__ctf_path" "$__mode"
 }
