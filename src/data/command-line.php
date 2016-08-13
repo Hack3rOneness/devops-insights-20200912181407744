@@ -15,13 +15,19 @@ class CommandsController extends DataController {
     $results_library = (object) array();
     $results_library_key = "results_library";
 
+    $all_levels = await Level::genAllLevels();
+    $levels_map = Map {};
+    foreach ($all_levels as $level) {
+      $levels_map[$level->getEntityId()] = $level;
+    }
+
     // List of active countries.
     $countries_results = array();
     $countries_key = "country_list";
     $all_enabled_countries = await Country::genAllEnabledCountries();
     foreach ($all_enabled_countries as $country) {
-      $is_active_level =
-        await $country::genIsActiveLevel(intval($country->getId()));
+      $level = $levels_map->get($country->getId());
+      $is_active_level = $level !== null && $level->getActive();
       if ($country->getUsed() && $is_active_level) {
         array_push($countries_results, $country->getName());
       }
