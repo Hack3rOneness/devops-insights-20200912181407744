@@ -36,25 +36,32 @@ class WorldMapController {
   public async function genRenderWorldMap(): Awaitable<:xhp> {
     $svg_countries = <g class="countries"></g>;
 
+    $all_levels = await Level::genAllLevels();
     $all_map_countries = await Country::genAllCountriesForMap();
+
+    $levels_map = Map {};
+    foreach ($all_levels as $level) {
+      $levels_map[$level->getEntityId()] = $level;
+    }
+
     foreach ($all_map_countries as $country) {
       $gameboard = await Configuration::gen('gameboard');
       if ($gameboard->getValue() === '1') {
-        $is_active_level = await Country::genIsActiveLevel($country->getId());
+        $level = $levels_map->get($country->getId());
+        $is_active_level = $level !== null && $level->getActive();
         $path_class =
           ($country->getUsed() && $is_active_level) ? 'land active' : 'land';
         $map_indicator = 'map-indicator ';
         $data_captured = null;
-        $country_level = await Level::genWhoUses($country->getId());
 
-        if ($country_level) {
+        if ($level) {
           $my_previous_score = await ScoreLog::genPreviousScore(
-            $country_level->getId(),
+            $level->getId(),
             SessionUtils::sessionTeam(),
             false,
           );
           $other_previous_score = await ScoreLog::genPreviousScore(
-            $country_level->getId(),
+            $level->getId(),
             SessionUtils::sessionTeam(),
             true,
           );
@@ -64,7 +71,7 @@ class WorldMapController {
           } else if ($other_previous_score) {
             $map_indicator .= 'captured--opponent';
             $completed_by =
-              await Team::genCompletedLevel($country_level->getId());
+              await Team::genCompletedLevel($level->getId());
             $data_captured = '';
             foreach ($completed_by as $c) {
               $data_captured .= ' '.$c->getName();

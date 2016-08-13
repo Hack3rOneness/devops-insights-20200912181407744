@@ -13,11 +13,19 @@ class MapDataController extends DataController {
     $my_team_id = SessionUtils::sessionTeam();
     $my_name = SessionUtils::sessionTeamName();
 
+
+    $all_levels = await Level::genAllLevels();
     $enabled_countries = await Country::genAllEnabledCountriesForMap();
+
+    $levels_map = Map {};
+    foreach ($all_levels as $level) {
+      $levels_map[$level->getEntityId()] = $level;
+    }
+
     foreach ($enabled_countries as $country) {
-      $is_active_level = await Country::genIsActiveLevel($country->getId());
+      $country_level = $levels_map->get($country->getId());
+      $is_active_level = $country_level !== null && $country_level->getActive();
       $active = ($country->getUsed() && $is_active_level) ? 'active' : '';
-      $country_level = await Level::genWhoUses($country->getId());
       if ($country_level) {
         $my_previous_score = await ScoreLog::genPreviousScore(
           $country_level->getId(),
