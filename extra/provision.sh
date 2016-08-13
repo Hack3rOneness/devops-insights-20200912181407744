@@ -25,6 +25,7 @@
 #   -e EMAIL, --email EMAIL      Domain for the SSL certificate to be generated using letsencrypt.
 #   -s PATH, --code PATH         Path to fbctf code.
 #   -d PATH, --destination PATH  Destination path to place the fbctf folder.
+#   --update                     Pull from master GitHub branch and sync files to fbctf folder
 #
 # Examples:
 #   Provision fbctf in development mode:
@@ -75,6 +76,7 @@ function usage() {
   printf "  -e EMAIL, --email EMAIL \tDomain for the SSL certificate to be generated using letsencrypt.\n"
   printf "  -s PATH, --code PATH \t\tPath to fbctf code. Default is /vagrant\n"
   printf "  -d PATH, --destination PATH \tDestination path to place the fbctf folder. Default is /var/www/fbctf\n"
+  printf "  --update \t\tPull from master GitHub branch and sync files to fbctf folder"
   printf "\nExamples:\n"
   printf "  Provision fbctf in development mode:\n"
   printf "\t%s -m dev -s /home/foobar/fbctf -d /var/fbctf\n" "${0}"
@@ -82,7 +84,7 @@ function usage() {
   printf "\t%s -m prod -c own -k /etc/certs/my.key -C /etc/certs/cert.crt -s /home/foobar/fbctf -d /var/fbctf\n" "${0}"
 }
 
-ARGS=$(getopt -n "$0" -o hm:c:k:C:D:e:s:d: -l "help,mode:,cert:,keyfile:,certfile:,domain:,email:,code:,destination:" -- "$@")
+ARGS=$(getopt -n "$0" -o hm:c:k:C:D:e:s:d: -l "help,mode:,cert:,keyfile:,certfile:,domain:,email:,code:,destination:,update" -- "$@")
 
 eval set -- "$ARGS"
 
@@ -136,6 +138,10 @@ while true; do
       CTF_PATH=$2
       shift 2
       ;;
+    --update)
+      UPDATE=true
+      shift
+      ;;
     --)
       shift
       break
@@ -146,6 +152,13 @@ while true; do
       ;;
   esac
 done
+
+source "$CODE_PATH/extra/lib.sh"
+
+if [ "$UPDATE" == true ] ; then
+    update_repo "$MODE" "$CODE_PATH" "$CTF_PATH"
+    exit 0
+fi
 
 echo "[+] Provisioning in $MODE mode"
 echo "[+] Using $TYPE certificate"
@@ -169,7 +182,6 @@ if [[ "$CODE_PATH" != "$CTF_PATH" ]]; then
 fi
 
 # There we go!
-source "$CTF_PATH/extra/lib.sh"
 
 # Ascii art is always appreciated
 set_motd "$CTF_PATH"
