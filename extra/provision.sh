@@ -219,6 +219,11 @@ package git
 # Install HHVM
 install_hhvm "$CTF_PATH"
 
+# If provisioning is in prod, improve HHVM performance
+if [[ "$MODE" == "prod" ]]; then
+  hhvm_performance "$CTF_PATH"
+fi
+
 # Install Composer
 install_composer "$CTF_PATH"
 composer.phar install

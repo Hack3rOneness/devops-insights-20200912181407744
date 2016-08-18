@@ -222,6 +222,13 @@ function install_hhvm() {
   sudo service hhvm restart
 }
 
+function hhvm_performance() {
+  local __path=$1
+
+  log "Enabling HHVM RepoAuthoritative mode"
+  sudo hhvm-repo-mode enable "$__path"
+}
+
 function install_composer() {
   local __path=$1
 
