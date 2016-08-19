@@ -126,8 +126,8 @@ function letsencrypt_cert() {
   fi
 
   /usr/bin/certbot-auto certonly -n --agree-tos --standalone --standalone-supported-challenges tls-sni-01 -m "$__myemail" -d "$__mydomain"
-  sudo ln -s "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1"
-  sudo ln -s "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2"
+  sudo ln -s "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1" || true
+  sudo ln -s "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2" || true
 }
 
 function own_cert() {
@@ -162,15 +162,12 @@ function install_nginx() {
     case "$__certs" in
       self)
         self_signed_cert "$__cert" "$__key"
-        break
       ;;
       own)
         own_cert "$__cert" "$__key"
-        break
       ;;
       certbot)
         letsencrypt_cert "$__cert" "$__key" "$__email" "$__domain"
-        break
       ;;
       *)
         error_log "Unrecognized type of certificate"
