@@ -219,11 +219,6 @@ package git
 # Install HHVM
 install_hhvm "$CTF_PATH"
 
-# If provisioning is in prod, improve HHVM performance
-if [[ "$MODE" == "prod" ]]; then
-  hhvm_performance "$CTF_PATH"
-fi
-
 # Install Composer
 install_composer "$CTF_PATH"
 composer.phar install
@@ -251,6 +246,11 @@ import_empty_db "root" "$P_ROOT" "$DB" "$CTF_PATH" "$MODE"
 # Make attachments folder world writable
 sudo chmod 777 "$CTF_PATH/src/data/attachments"
 sudo chmod 777 "$CTF_PATH/src/data/attachments/deleted"
+
+# If provisioning is in prod, improve HHVM performance
+if [[ "$MODE" == "prod" ]]; then
+    hhvm_performance "$CTF_PATH"
+fi
 
 ok_log 'fbctf deployment is complete! Ready in https://10.10.10.5'
 

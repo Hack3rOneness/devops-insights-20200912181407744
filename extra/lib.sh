@@ -66,6 +66,9 @@ function install_mysql() {
   echo "mysql-server-5.5 mysql-server/root_password password $__pwd" | sudo debconf-set-selections
   echo "mysql-server-5.5 mysql-server/root_password_again password $__pwd" | sudo debconf-set-selections
   package mysql-server
+
+  # It should be started automatically, but just in case
+  sudo service mysql start
 }
 
 function set_motd() {
@@ -146,8 +149,6 @@ function install_nginx() {
 
   local __certs_path="/etc/nginx/certs"
 
-  package nginx
-
   log "Deploying certificates"
   sudo mkdir -p "$__certs_path"
 
@@ -177,6 +178,10 @@ function install_nginx() {
       ;;
     esac
   fi
+
+  # We make sure to install nginx after installing the cert, because if we use
+  # letsencrypt, we need to be sure nothing is listening on that port
+  package nginx
 
   __dhparam="/etc/nginx/certs/dhparam.pem"
   sudo openssl dhparam -out "$__dhparam" 2048
@@ -227,6 +232,7 @@ function hhvm_performance() {
 
   log "Enabling HHVM RepoAuthoritative mode"
   sudo hhvm-repo-mode enable "$__path"
+  sudo chown www-data:www-data /var/run/hhvm/hhvm.hhbc
 }
 
 function install_composer() {
@@ -250,7 +256,7 @@ function import_empty_db() {
   local __mode=$5
 
   log "Creating DB - $__db"
-  mysql -u "$__user" --password="$__pwd" -e "CREATE DATABASE \`$__db\`;"
+  mysql -u "$__user" --password="$__pwd" -e "CREATE DATABASE IF NOT EXISTS \`$__db\`;"
 
   log "Importing schema..."
   mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/schema.sql;"
@@ -260,7 +266,7 @@ function import_empty_db() {
   mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/logos.sql;"
 
   log "Creating user..."
-  mysql -u "$__user" --password="$__pwd" -e "CREATE USER '$__u'@'localhost' IDENTIFIED BY '$__p';"
+  # We don't need to run a CREATE USER command because GRANT will automatically create it
   mysql -u "$__user" --password="$__pwd" -e "GRANT ALL PRIVILEGES ON \`$__db\`.* TO '$__u'@'localhost';"
   mysql -u "$__user" --password="$__pwd" -e "FLUSH PRIVILEGES;"
 
