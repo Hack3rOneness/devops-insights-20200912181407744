@@ -68,7 +68,7 @@ function install_mysql() {
   package mysql-server
 
   # It should be started automatically, but just in case
-  sudo service mysql start
+  sudo service mysql restart
 }
 
 function set_motd() {
@@ -191,7 +191,6 @@ function install_nginx() {
   sudo rm -f /etc/nginx/sites-enabled/default
   sudo ln -sf /etc/nginx/sites-available/fbctf.conf /etc/nginx/sites-enabled/fbctf.conf
 
-
   # Restart nginx
   sudo nginx -t
   sudo service nginx restart
@@ -266,7 +265,7 @@ function import_empty_db() {
   mysql -u "$__user" --password="$__pwd" "$__db" -e "source $__path/database/logos.sql;"
 
   log "Creating user..."
-  # We don't need to run a CREATE USER command because GRANT will automatically create it
+  mysql -u "$__user" --password="$__pwd" -e "CREATE USER '$__u'@'localhost' IDENTIFIED BY '$__p';" || true # don't fail if the user exists
   mysql -u "$__user" --password="$__pwd" -e "GRANT ALL PRIVILEGES ON \`$__db\`.* TO '$__u'@'localhost';"
   mysql -u "$__user" --password="$__pwd" -e "FLUSH PRIVILEGES;"
 
