@@ -84,7 +84,7 @@ function usage() {
   printf "\t%s -m prod -c own -k /etc/certs/my.key -C /etc/certs/cert.crt -s /home/foobar/fbctf -d /var/fbctf\n" "${0}"
 }
 
-ARGS=$(getopt -n "$0" -o hm:c:k:C:D:e:s:d: -l "help,mode:,cert:,keyfile:,certfile:,domain:,email:,code:,destination:,update" -- "$@")
+ARGS=$(getopt -n "$0" -o hm:c:k:C:D:e:s:d: -l "help,mode:,cert:,keyfile:,certfile:,domain:,email:,code:,destination:,update,docker" -- "$@")
 
 eval set -- "$ARGS"
 
@@ -142,6 +142,10 @@ while true; do
       UPDATE=true
       shift
       ;;
+    --docker)
+      DOCKER=true
+      shift
+      ;;
     --)
       shift
       break
@@ -186,6 +190,9 @@ fi
 # Ascii art is always appreciated
 set_motd "$CTF_PATH"
 
+# Some Ubuntu distros don't come with curl installed
+package curl
+
 # Repos to be added in dev mode
 if [[ "$MODE" == "dev" ]]; then
     repo_mycli
@@ -193,9 +200,6 @@ fi
 
 # We only run this once so provisioning is faster
 sudo apt-get update
-
-# Some Ubuntu distros don't come with curl installed
-package curl
 
 # Some people need this language pack installed or HHVM will report errors
 package language-pack-en
@@ -234,7 +238,7 @@ sudo npm install -g flow-bin
 run_grunt "$CTF_PATH" "$MODE"
 
 # Install nginx and certificates
-install_nginx "$CTF_PATH" "$MODE" "$TYPE" "$EMAIL" "$DOMAIN"
+install_nginx "$CTF_PATH" "$MODE" "$TYPE" "$EMAIL" "$DOMAIN" "$DOCKER"
 
 # Install unison 2.48.3
 install_unison

@@ -120,6 +120,45 @@ Note that the unison script will not sync NPM dependencies, so if you ever need 
 
 This step is not necessary if all development is done on the VM.
 
+# Using Docker
+
+[Dockerfile](Dockerfile) is provided, you can use docker to deploy fbctf to both development and production.
+
+### Development
+
+This build command will provision fbctf in dev mode in docker:
+
+`docker build --build-arg MODE=dev -t="fbctf_in_dev" .`
+
+
+Run command:
+
+`docker run -p 80:80 -p 443:443 fbctf_in_dev`
+
+Once you've started the container, go to the URL/IP of the server. Click the "Login" link at the top right, enter the default admin credentials, and you'll be redirected to the admin page.
+
+### Production
+
+This build command will provision fbctf in prod mode in docker. Once you've started the container, Let's Encrypt will take YOUR_DOMAIN to obtain a trusted certificate at zero cost:
+
+`docker build --build-arg MODE=prod --build-arg DOMAIN=test.mydomain.com --build-arg EMAIL=myemail@mydomain.com --build-arg TYPE=certbot -t="fbctf_in_prod" .`
+
+Run command:
+
+`docker run -p 80:80 -p 443:443 -v /etc/letsencrypt:/etc/letsencrypt fbctf_in_prod`
+
+*Note 1: Because this is a production environment, the password will be randomly generated when the provision script finishes. Make sure to watch the very end of the provision script while image is building, as the password will be printed out. It will not be stored elsewhere, so either keep track of it or change it. In order to change the password, run the following command in container:*
+
+```
+set_password new_password ctf ctf fbctf /root
+```
+
+*This will set the password to 'new_password', assuming the database user/password is ctf/ctf and the database name is fbctf (these are the defaults).*
+
+*Note 2: You'll have to mount /etc/letsencrypt as a volume to persist the certs. ex: `docker run -v /etc/letsencrypt:/etc/letsencrypt ...`*
+
+You can go to the URL/IP of the server, click the "Login" link at the top right, enter the admin credentials, and you'll be redirected to the admin page.
+
 ## Reporting an Issue
 
 First, ensure the issue was not already reported by doing a search. If you cannot find an existing issue, create a new issue. Make the title and description as clear as possible, and include a test case or screenshot to reproduce or illustrate the problem if possible.
