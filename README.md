@@ -17,6 +17,7 @@ The Facebook CTF is a platform to host Jeopardy and “King of the Hill” style
     * If running an open competition:
         * Point participants towards the registration page
 * Enjoy!
+* Note: We're hiring! If you're interested in the remote eng lead position, apply [here](http://pro.applytojob.com/apply/Qe1YmW/CTF-Engineering-Lead)!
 
 # Installation
 
@@ -170,6 +171,8 @@ If you have issues installing the platform, please provide the entire output of 
 You’ve used it, now you want to make it better? Awesome! Pull requests are welcome! Click [here] (https://github.com/facebook/fbctf/blob/master/CONTRIBUTING.md) to find out how to contribute.
 
 Facebook also has [bug bounty program] (https://www.facebook.com/whitehat/) that includes FBCTF. If you find a security vulnerability in the platform, please submit it via the process outlined on that page and do not file a public issue.
+
+We're also hiring a dedicated engineering lead for FBCTF! If you're interested in the remote position, apply [here](http://pro.applytojob.com/apply/Qe1YmW/CTF-Engineering-Lead)!
 
 ## Have more questions?
 
