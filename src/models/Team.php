@@ -1,6 +1,6 @@
 <?hh // strict
 
-class Team extends Model {
+class Team extends Model implements Importable, Exportable {
   private function __construct(
     private int $id,
     private int $active,
@@ -72,6 +72,54 @@ class Team extends Model {
       must_have_idx($row, 'last_score'),
       must_have_idx($row, 'logo'),
       must_have_idx($row, 'created_ts'),
+    );
+  }
+
+  // Import teams.
+  public static async function importAll(
+    array<string, array<string, mixed>> $elements
+  ): Awaitable<bool> {
+    foreach ($elements as $team) {
+      $name = must_have_string($team, 'name');
+      $exist = await self::genTeamExist($name);
+      if (!$exist) {
+        $team_id = await self::genCreateAll(
+          (bool)must_have_idx($team, 'active'),
+          $name,
+          must_have_string($team, 'password_hash'),
+          must_have_int($team, 'points'),
+          must_have_string($team, 'logo'),
+          (bool)must_have_idx($team, 'admin'),
+          (bool)must_have_idx($team, 'protected'),
+          (bool)must_have_idx($team, 'visible'),
+        );
+      }
+    }
+    return true;
+  }
+
+  // Export teams.
+  public static async function exportAll(): Awaitable<array<string, array<string, mixed>>> {
+    $all_teams_data = array();
+    $all_teams = await self::genAllTeams();
+
+    foreach ($all_teams as $team) {
+      $team_data = self::genTeamData($team->getId());
+      $one_team = array(
+        'name' => $team->getName(),
+        'active' => $team->getActive(),
+        'admin' => $team->getAdmin(),
+        'protected' => $team->getProtected(),
+        'visible' => $team->getVisible(),
+        'password_hash' => $team->getPasswordHash(),
+        'points' => $team->getPoints(),
+        'logo' => $team->getLogo(),
+        'data' => $team_data
+      );
+      array_push($all_teams_data, $one_team);
+    }
+    return array(
+      'teams' => $all_teams_data
     );
   }
 
@@ -177,6 +225,44 @@ class Team extends Model {
         $password_hash,
         $logo,
       );
+
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['id']);
+  }
+
+  // Create a team (all the fields) and return the created team id.
+  public static async function genCreateAll(
+    bool $active,
+    string $name,
+    string $password_hash,
+    int $points,
+    string $logo,
+    bool $admin,
+    bool $protected,
+    bool $visible,
+  ): Awaitable<int> {
+    $db = await self::genDb();
+
+    // Create team
+    await $db->queryf(
+      'INSERT INTO teams (name, password_hash, points, logo, active, admin, protected, visible, created_ts) VALUES (%s, %s, %d, %s, %d, %d, %d, %d, NOW())',
+      $name,
+      $password_hash,
+      $points,
+      $logo,
+      $active ? 1 : 0,
+      $admin ? 1 : 0,
+      $protected ? 1 : 0,
+      $visible ? 1 : 0,
+    );
+
+    // Return newly created team_id
+    $result = await $db->queryf(
+      'SELECT id FROM teams WHERE name = %s AND password_hash = %s AND logo = %s LIMIT 1',
+      $name,
+      $password_hash,
+      $logo,
+    );
 
     invariant($result->numRows() === 1, 'Expected exactly one result');
     return intval($result->mapRows()[0]['id']);

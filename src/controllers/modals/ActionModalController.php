@@ -79,15 +79,13 @@ class ActionModalController extends ModalController {
       case 'error':
         $title =
           <h4>
-            {tr('status_')}
-            <span class="highlighted--red">{tr('Error')}</span>
+            {tr('status_')}<span class="highlighted--red">{tr('Error')}</span>
           </h4>;
         $content =
           <div class="action-main">
             <div class="error-text">
               <p>
-                {tr(
-                  'Sorry your form was not saved. Please correct the all errors and save again.',
+                {tr('Sorry your form was not saved. Please correct the all errors and save again.',
                 )}
               </p>
             </div>
@@ -102,8 +100,7 @@ class ActionModalController extends ModalController {
       case 'cancel':
         $title =
           <h4>
-            {tr('cancel_')}
-            <span class="admin-section-name highlighted"></span>
+            {tr('cancel_')}<span class="admin-section-name highlighted"></span>
           </h4>;
         $content =
           <div class="action-main">
@@ -118,6 +115,23 @@ class ActionModalController extends ModalController {
               </a>
               <a href="#" class="fb-cta cta--yellow js-close-modal">
                 {tr('Yes')}
+              </a>
+            </div>
+          </div>;
+        return tuple($title, $content);
+      case 'import-done':
+        $title =
+          <h4>
+            {tr('status_')}<span class="highlighted">{tr('Imported')}</span>
+          </h4>;
+        $content =
+          <div class="action-main">
+            <p>{tr('Items have been imported successfully')}</p>
+            <div class="action-actionable">
+              <a
+                href="#"
+                class="fb-cta cta--yellow js-close-modal js-confirm-save">
+                {tr('OK')}
               </a>
             </div>
           </div>;

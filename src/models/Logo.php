@@ -1,6 +1,6 @@
 <?hh // strict
 
-class Logo extends Model {
+class Logo extends Model implements Importable, Exportable {
   private function __construct(
     private int $id,
     private int $used,
@@ -35,10 +35,10 @@ class Logo extends Model {
   }
 
   // Check to see if the logo exists.
-  public static async function genCheckExists(string $logo): Awaitable<bool> {
-    $all_logos = await self::genAllEnabledLogos();
+  public static async function genCheckExists(string $name): Awaitable<bool> {
+    $all_logos = await self::genAllLogos();
     foreach ($all_logos as $l) {
-      if ($logo === $l->getName()) {
+      if ($name === $l->getName()) {
         return true;
       }
     }
@@ -110,5 +110,75 @@ class Logo extends Model {
       must_have_idx($row, 'name'),
       must_have_idx($row, 'logo'),
     );
+  }
+
+  // Import logos.
+  public static async function importAll(
+    array<string, array<string, mixed>> $elements
+  ): Awaitable<bool> {
+    foreach ($elements as $logo) {
+      $name = must_have_string($logo, 'name');
+      $exist = await self::genCheckExists($name);
+      if (!$exist) {
+        await self::genCreate(
+          (bool)must_have_idx($logo, 'used'),
+          (bool)must_have_idx($logo, 'enabled'),
+          (bool)must_have_idx($logo, 'protected'),
+          $name,
+          must_have_string($logo, 'logo'),
+        );
+      }
+    }
+    return true;
+  }
+
+  // Export logos.
+  public static async function exportAll(): Awaitable<array<string, array<string, mixed>>> {
+    $all_logos_data = array();
+    $all_logos = await self::genAllLogos();
+
+    foreach ($all_logos as $logo) {
+      $one_logo = array(
+        'name' => $logo->getName(),
+        'logo' => $logo->getLogo(),
+        'used' => $logo->getUsed(),
+        'enabled' => $logo->getEnabled(),
+        'protected' => $logo->getProtected()
+      );
+      array_push($all_logos_data, $one_logo);
+    }
+    return array(
+      'logos' => $all_logos_data
+    );
+  }
+
+  // Create logo.
+  public static async function genCreate(
+    bool $used,
+    bool $enabled,
+    bool $protected,
+    string $name,
+    string $logo,
+  ): Awaitable<int> {
+    $db = await self::genDb();
+
+    // Create category
+    await $db->queryf(
+      'INSERT INTO logos (used, enabled, protected, name, logo) VALUES (%d, %d, %d, %s, %s)',
+      $used ? 1 : 0,
+      $enabled ? 1 : 0,
+      $protected ? 1 : 0,
+      $name,
+      $logo,
+    );
+
+    // Return newly created logo_id
+    $result = await $db->queryf(
+      'SELECT id FROM logos WHERE logo = %s LIMIT 1',
+      $name,
+    );
+
+    invariant($result->numRows() === 1, 'Expected exactly one result');
+    return intval($result->mapRows()[0]['id']);
   }
 }

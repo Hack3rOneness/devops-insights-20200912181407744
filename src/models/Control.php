@@ -1,7 +1,6 @@
 <?hh // strict
 
 class Control extends Model {
-
   public static async function genStartScriptLog(
     int $pid,
     string $name,
@@ -106,21 +105,110 @@ class Control extends Model {
     await Progressive::genStop();
   }
 
-  public static function importGame(): void {}
+  public static async function importGame(): Awaitable<bool> {
+    $data_game = self::readJSON('game_file');
+    if ($data_game) {
+      $logos = must_have_idx($data_game, 'logos');
+      $logos_result = await Logo::importAll($logos);
+      if (!$logos_result) {
+        return false;
+      }
+      $teams = must_have_idx($data_game, 'teams');
+      $teams_result = await Team::importAll($teams);
+      if (!$teams_result) {
+        return false;
+      }
+      $categories = must_have_idx($data_game, 'categories');
+      $categories_result = await Category::importAll($categories);
+      if (!$categories_result) {
+        return false;
+      }
+      $levels = must_have_idx($data_game, 'levels');
+      $levels_result = await Level::importAll($levels);
+      if (!$levels_result) {
+        return false;
+      }
+      return true;
+    }
+    return false;
+  }
 
-  public static function exportGame(): void {
-    $levels = (object) array();
-    $teams = (object) array();
-    $data = (object) array();
+  public static async function importTeams(): Awaitable<bool> {
+    $data_teams = JSONImporterController::readJSON('teams_file');
+    if ($data_teams) {
+      $teams = must_have_idx($data_teams, 'teams');
+      return await Team::importAll($teams);
+    }
+    return false;
+  }
 
-    /* HH_FIXME[2011] */
-    /* HH_FIXME[1002] */
-    $data->{"teams"} = $teams;
-    $data->{"levels"} = $levels;
+  public static async function importLogos(): Awaitable<bool> {
+    $data_logos = JSONImporterController::readJSON('logos_file');
+    if ($data_logos) {
+      $logos = must_have_idx($data_logos, 'logos');
+      return await Logo::importAll($logos);
+    }
+    return false;
+  }
 
-    header('Content-Type: application/json');
-    header('Content-Disposition: attachment; filename=fbctf.json');
-    print json_encode($data, JSON_PRETTY_PRINT);
+  public static async function importLevels(): Awaitable<bool> {
+    $data_levels = JSONImporterController::readJSON('levels_file');
+    if ($data_levels) {
+      $levels = must_have_idx($data_levels, 'levels');
+      return await Level::importAll($levels);
+    }
+    return false;
+  }
+
+  public static async function importCategories(): Awaitable<bool> {
+    $data_categories = JSONImporterController::readJSON('categories_file');
+    if ($data_categories) {
+      $categories = must_have_idx($data_categories, 'categories');
+      return await Category::importAll($categories);
+    }
+    return false;
+  }
+
+  public static async function exportGame(): Awaitable<void> {
+    $game = array();
+    $logos = await Logo::exportAll();
+    $game['logos'] = $logos;
+    $teams = await Team::exportAll();
+    $game['teams'] = $teams;
+    $categories = await Category::exportAll();
+    $game['categories'] = $categories;
+    $levels = await Level::exportAll();
+    $game['levels'] = $levels;
+    $output_file = 'fbctf_game.json';
+    JSONExporterController::sendJSON($game, $output_file);
+    exit();
+  }
+
+  public static async function exportTeams(): Awaitable<void> {
+    $teams = await Team::exportAll();
+    $output_file = 'fbctf_teams.json';
+    JSONExporterController::sendJSON($teams, $output_file);
+    exit();
+  }
+
+  public static async function exportLogos(): Awaitable<void> {
+    $logos = await Logo::exportAll();
+    $output_file = 'fbctf_logos.json';
+    JSONExporterController::sendJSON($logos, $output_file);
+    exit();
+  }
+
+  public static async function exportLevels(): Awaitable<void> {
+    $levels = await Level::exportAll();
+    $output_file = 'fbctf_levels.json';
+    JSONExporterController::sendJSON($levels, $output_file);
+    exit();
+  }
+
+  public static async function exportCategories(): Awaitable<void> {
+    $categories = await Category::exportAll();
+    $output_file = 'fbctf_categories.json';
+    JSONExporterController::sendJSON($categories, $output_file);
     exit();
   }
 
