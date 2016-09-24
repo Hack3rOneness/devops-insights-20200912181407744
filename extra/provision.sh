@@ -164,6 +164,16 @@ if [ "$UPDATE" == true ] ; then
     exit 0
 fi
 
+
+AVAILABLE_RAM=`free -mt | grep Total | awk '{print $2}'`
+
+if [ $free -lt 1024 ]; then
+        echo "[+] FBCTF is likely to fail to install without 1GB or more of RAM."
+        echo "[+] Sleeping for 5 seconds."
+
+        sleep 5
+fi
+
 echo "[+] Provisioning in $MODE mode"
 echo "[+] Using $TYPE certificate"
 echo "[+] Source code folder $CODE_PATH"
