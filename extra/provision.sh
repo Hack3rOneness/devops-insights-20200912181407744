@@ -167,7 +167,7 @@ fi
 
 AVAILABLE_RAM=`free -mt | grep Total | awk '{print $2}'`
 
-if [ $free -lt 1024 ]; then
+if [ $AVAILABLE_RAM -lt 1024 ]; then
         echo "[+] FBCTF is likely to fail to install without 1GB or more of RAM."
         echo "[+] Sleeping for 5 seconds."
 
