@@ -132,13 +132,13 @@ function letsencrypt_cert() {
 		if [[ ! ( -d /etc/letsencrypt && "\$(ls -A /etc/letsencrypt)" ) ]]; then
 		    /usr/bin/certbot-auto certonly -n --agree-tos --standalone --standalone-supported-challenges tls-sni-01 -m "$__myemail" -d "$__mydomain"
 		fi
-		sudo ln -sf "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1"
+		sudo ln -sf "/etc/letsencrypt/live/$__mydomain/fullchain.pem" "$1"
 		sudo ln -sf "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2"
 EOF
     sudo chmod +x /root/tmp/certbot.sh
   else
     /usr/bin/certbot-auto certonly -n --agree-tos --standalone --standalone-supported-challenges tls-sni-01 -m "$__myemail" -d "$__mydomain"
-    sudo ln -s "/etc/letsencrypt/live/$__mydomain/cert.pem" "$1" || true
+    sudo ln -s "/etc/letsencrypt/live/$__mydomain/fullchain.pem" "$1" || true
     sudo ln -s "/etc/letsencrypt/live/$__mydomain/privkey.pem" "$2" || true
   fi
 }
