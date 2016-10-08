@@ -655,5 +655,5 @@ $translations = array(
   'Skip to play' =>
     'Überspringen',
   'Powered By Facebook' =>
-    'Powered By Facebook',
+    'Präsentiert von Facebook',
 );
