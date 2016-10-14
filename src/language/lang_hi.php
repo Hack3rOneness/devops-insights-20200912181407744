@@ -5,594 +5,594 @@ $translations = array(
     'H:i:s D d/m/Y', //used by date() function
   //Translations for IndexController
   'Facebook CTF' =>
-    'Facebook CTF',
+    'फेसबुक CTF',
   'Conquer the world' =>
-    'Conquereix el món',
+    'दुनिया जीत लो',
   'Play' =>
-    'Jugar',
+    'प्ले',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Benvingut al "Capture The Flag" de Facebook. Premeu el botó de "a jugar" per entrar al CTF. Bona sort en la conquesta.',
+    'फेसबुक पर आपका स्वागत है ध्वज प्रतियोगिता पर कब्जा। क्लिक करके "खेलते हैं," आप सरकारी CTF चुनौती में दर्ज किया जाएगा। अपनी विजय में गुड लक।',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    'Prepara\'t a que comenci el CTF i accedeix al taulell de joc ara!',
+    'CTF शुरू किया और अब gameboard का उपयोग करने के लिए तैयार हो जाओ!',
   'Gameboard' =>
-    'Taulell de joc',
+    'खेल का बोर्ड',
   'Register Team' =>
-    'Registrar Equip',
+    'रजिस्टर टीम',
   'Get ready for the CTF to start and register your team now!' =>
-    'Prepara\'t per començar el CTF i registra el teu equip ara!',
+    'CTF शुरू करते हैं और अब अपनी टीम को पंजीकृत करने के लिए तैयार हो जाओ!',
   'Login' =>
-    'Iniciar Sessió',
+    'लॉग इन करें',
   'Soon' =>
-    'Properament',
+    'शीघ्र',
   'Upcoming Game' =>
-    'Proper Joc',
+    'आगामी खेल',
   '_days' =>
-    '_dies',
+    '_days',
   '_hours' =>
-    '_hores',
+    '_घंटे',
   '_minutes' =>
-    '_minuts',
+    '_minutes',
   '_seconds' =>
-    '_segons',
+    '_seconds',
   'Official CTF Rules' =>
-    'Normativa Oficial del CTF',
+    'सरकारी CTF नियम',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Les següents accions no estan permeses, a no ser que sigui contradit explicitament pels administradors de l\'event.',
+    'निम्न क्रियाओं में निषिद्ध कर रहे हैं, जब तक कि स्पष्ट रूप से घटना व्यवस्थापक द्वारा अन्यथा बताया।',
   'Rule' =>
-    'Norma',
+    'नियम',
   'Cooperation' =>
-    'Cooperació',
+    'सहयोग',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Sense cooperació entre els equips amb comptes independents. Compartir claus o revelar pistes a altres equips es considera trampa, no ho facis.',
+    'स्वतंत्र खातों के साथ टीमों के बीच कोई सहयोग। चाबियों का साझा करने या अन्य टीमों को खुलासा संकेत उपलब्ध कराने धोखा दे रही है, यह मत करो। ',
   'Attacking Scoreboard' =>
-    'Taulell de Puntuacions d\'Atac',
+    'हमला स्कोरबोर्ड',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'No ataquis la infrastructura de la competició. En case de trobar cap vulnerabilitat, siusplay avisa als organitzadors inmediatament',
+    'कोई प्रतियोगिता के बुनियादी ढांचे पर हमला। अगर कीड़े या vulns पाए जाते हैं, प्रतियोगिता के आयोजकों को तुरंत सचेत करें।',
   'Sabotage' =>
-    'Sabotatge',
+    'तोड़फोड़',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'No sabotegis altres equips, or de destorbar el seu progrés de forma individual.',
+    'बिल्कुल अन्य प्रतिस्पर्धी टीमों का कोई sabotaging, या किसी भी तरह से उनके स्वतंत्र प्रगति में बाधा उत्पन्न में।',
   'Bruteforcing' =>
-    'Força bruta',
+    'Bruteforcing',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'No realitzis força bruta per atacar als serveis',
+    'कोई जानवर चुनौती ध्वज के लिए मजबूर / स्कोरिंग साइट के खिलाफ। कुंजी',
   'Denial Of Service' =>
-    'Denegació de Servei',
+    'सेवा की मनाई',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'Realitzar un atac de denegació de servei a la plataforma o a qualsevol de les proves està prohibit',
+    'CTF मंच या चुनौतियों में से किसी के लिए मना किया है खुराक।',
   'Legal' =>
-    'Legal',
+    'कानूनी',
   'Disclaimer' =>
-    'Disclaimer',
+    'अस्वीकरण',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.',
+    'प्रतियोगिता में भाग लेने से, आप किसी भी और सभी दायित्व, दावा या चोट, क्षति या व्यक्तियों और संपत्ति को नुकसान के साथ जो संबंध में निरंतर किया जा सकता है के लिए किसी भी तरह की कार्रवाई से फेसबुक और अपने कर्मचारियों, और होस्टिंग संगठन को रिहा करने के लिए सहमत प्रतियोगिता। आप स्वीकार करते हैं और मानते हैं कि फेसबुक एट अल तकनीकी, हार्डवेयर या सॉफ्टवेयर विफलताओं, या अन्य त्रुटियों या समस्याओं जो प्रतियोगिता के संबंध में हो सकता है के लिए जिम्मेदार नहीं है।',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
-    'If you have any questions about what is or is not allowed, please ask an organizer.',
+    'तुम क्या है या अनुमति नहीं है के बारे में किसी भी सवाल है, तो एक आयोजक कहें।',
   'Have fun!' =>
-    'Passa-ho be!',
+    'मज़े करो!',
   'Name' =>
-    'Nom',
+    'नाम',
   'Email' =>
-    'Email',
+    'ईमेल',
   'Token' =>
-    'Token',
+    'टोकन',
   'Team Registration' =>
-    'Registre d\'Equip',
+    'टीम पंजीकरण',
   'Team Name' =>
-    'Nom de l\'equip',
+    'टीम का नाम',
   'Password' =>
-    'Contrassenya',
+    'पासवर्ड',
   'Choose an Emblem' =>
-    'Escollir un emblema',
+    'एक प्रतीक चुनें',
   'Sign Up' =>
-    'Donar-se d\'alta',
+    'साइन अप करें',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Dona\'t d\'alta per a jugar al Capture The Flag aqui. Quan estiguis registrat accediràs a la sessió.',
+    'यहाँ पर कब्जा झंडा खेलने के लिए रजिस्टर। एक बार जब आप पंजीकृत है, तो आप में लॉग इन किया जाएगा।',
   'Not Available' =>
-    'No Disponible',
+    'उपलब्ध नहीं है',
   'Team Registration will be open soon, stay tuned!' =>
-    'L\'equip es registrarà aviat, estigueu atents!',
+    'टीम पंजीकरण जल्द ही खोल दिया जाएगा, देखते रहें!',
   'Try Again' =>
-    'Tornar a intentar-ho',
+    'पुनः प्रयास करें',
   'Select' =>
-    'Selecciona',
+    'चुनते हैं',
   'Team Login' =>
-    'Login de l\'equip',
+    'टीम लॉग इन',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Si us plau entreu les vostres credencials aqui. Si no esteu registrats, podeu fer-ho clickant a "Donar-vos d\'alta". ',
+    'कृपया यहां लॉगिन करें। आप पंजीकृत नहीं किया है, तो आप क्लिक करके नीचे "साइन अप" से ऐसा कर सकते हैं। ',
   'Team Login will be open soon, stay tuned!' =>
-    'Team Login will be open soon, stay tuned!',
+    'टीम लॉग इन जल्द ही खोल दिया जाएगा, देखते रहें!',
   'ERROR' =>
-    'ERROR',
+    'त्रुटि',
   'Start Over' =>
-    'Començar de Nou',
+    'फिर से शुरू करना',
   'Window is too small' =>
-    'La Finestra és massa petita',
+    'विंडो बहुत छोटा है',
   'For the best CTF experience, please make window size bigger.' =>
-    'Per a una millor experiència es recomenable fer el tamany de la finestra més gran',
+    'सर्वश्रेष्ठ CTF अनुभव के लिए, कृपया विंडो का आकार बड़ा बना।',
   'Thank you.' =>
-    'Gràcies.',
+    'धन्यवाद।',
   'Logout' =>
-    'Tanca la Sessió',
+    'लोग आउट',
   'Registration' =>
-    'Registre',
+    'पंजीकरण',
   'Play CTF' =>
-    'Jugar al CTF',
+    'प्ले CTF',
   'Rules' =>
-    'Normes',
+    'नियम',
   //Translations for GameboardController
   'Admin' =>
-    'Admin',
+    'व्यवस्थापक',
   'ADMIN' =>
-    'ADMIN',
+    'व्यवस्थापक',
   'Navigation' =>
-    'Navigació',
+    'पथ प्रदर्शन',
   'View Mode' =>
-    'Manera De Visualitzar',
+    'दृश्य मोड',
   'View mode' =>
-    'Mode de Visuatlització',
+    'दृश्य मोड',
   'Tutorial' =>
-    'Tutorial',
+    'ट्यूटोरियल',
   'Scoreboard' =>
-    'Taulell De Puntuació',
+    'स्कोरबोर्ड',
   'You' =>
-    'Tu',
+    'आप',
   'Others' =>
-    'Altri',
+    'दूसरों',
   'All' =>
-    'All',
+    'सब',
   'Leaderboard' =>
-    'Taulell de Lideratges',
+    'लीडरबोर्ड',
   'Announcements' =>
-    'Anuncis',
+    'घोषणाएँ',
   'Teams' =>
-    'Equips',
+    ' टीमों के',
   'Filter' =>
-    'Filtrar',
+    'फिल्टर',
   'Activity' =>
-    'Activitat',
+    'गतिविधि',
   'Game Clock' =>
-    'Rellotge del Joc',
+    'खेल घड़ी',
   //Translations for AdminController
   'Auto' =>
-    'Automàtic',
+    'ऑटो',
   'All Categories' =>
-    'Totes les Categories',
+    'सब वर्ग',
   'Open' =>
-    'Obrir',
+    'खुला',
   'Tokenized' =>
     'Tokenized',
   'Hour' =>
-    'Hora',
+    'काल',
   'Hours' =>
-    'Hores',
+    'घंटे',
   'Used by' =>
-    'Utilitzat per',
+    'के द्वारा उपयोग',
   'Used By' =>
-    'Fet servir',
+    'के द्वारा उपयोग',
   'Available' =>
-    'Disponible',
+    'उपलब्ध',
   'Registration Tokens' =>
-    'Registrar Tokens',
+    'पंजीकरण टोकन',
   'Create More' =>
-    'Crear Més',
+    'बनाएं अधिक',
   'Export Available' =>
-    'Exportar Disponibles',
+    'निर्यात उपलब्ध',
   'Not started yet' =>
-    'Encara no ha començat',
+    'अभी तक शुरू नहीं हुआ',
   'Configuration' =>
-    'Configuració',
+    ' विन्यास',
   'Tokens' =>
-    'Tokens',
+    'टोकन',
   'Game Configuration' =>
-    'Configuració del Joc',
+    'खेल विन्यास',
   'OK' =>
-    'OK',
+    'ठीक',
   'status_' =>
-    'status_',
+    'स्थिति_',
   'On' =>
-    'On',
+    'पर',
   'Off' =>
-    'Off',
+    'बंद',
   'Player Names' =>
-    'Noms dels Jugadors',
+    'खिलाड़ी के नाम',
   'Players Per Team' =>
-    'Jugadors per Equip',
+    'प्रति टीम के खिलाड़ियों को',
   'Registration Type' =>
-    'Tipus de Registre',
+    'पंजीकरण प्रकार',
   'Strong Passwords' =>
-    'Contrassenyes Fortes',
+    'मजबूत पासवर्ड',
   'Team Selection' =>
-    'Selectió d\'Equip',
+    'टीम के चयन',
   'Game' =>
-    'Joc',
+    'खेल',
   'Scoring' =>
-    'Puntuacions',
+    'स्कोरिंग',
   'Progressive Cycle (s)' =>
-    'Cicles Progressius (s)',
+    'प्रगतिशील चक्र (s)',
   'Refresh Gameboard' =>
-    'Actualitza el taulell de joc',
+    'ताज़ा gameboard',
   'Default Bonus' =>
-    'Bonus per Defecte',
+    'मूलभूत बोनस',
   'Bases Cycle (s)' =>
-    'Cicle de les Bases (s)',
+    'आधारों चक्र (s)',
   'Default Bonus Dec' =>
-    'Default Bonus Dec',
+    'मूलभूत बोनस दिसम्बर',
   'Timer' =>
-    'Temporitzador',
+    'टाइमर',
   'Server Time' =>
-    'Hora del Servidor',
+    'सर्वर समय',
   'Game Duration' =>
-    'Duració del Joc',
+    'खेल अवधि',
   'Begin Time' =>
-    'Hora de començar!',
+    'शुरू टाइम',
   'Expected End Time' =>
-    'S\'esperava la fi del Temps',
+    'उम्मीद अंत समय',
   'Language' =>
-    'Idioma',
+    'भाषा',
   'DELETE' =>
-    'ESBORRAR',
+    'हटाएँ',
   'Delete' =>
-    'Esborrar',
+    'हटाएँ',
   'No Announcements' =>
-    'No Hi Ha Anuncis',
+    'नहीं घोषणाएँ',
   'Game Controls' =>
-    'Controls del Joc',
+    'खेल नियंत्रण',
   'Write New Announcement here' =>
-    'Escriu un nou Anunci aqui',
+    'नई घोषणा लिखें यहां',
   'Create' =>
-    'Crear',
+    'सर्जन करना',
   'General' =>
-    'General',
+    'सामान्य',
   'Back Up Database' =>
-    'Realitzar copia de seguretat eBack Up Database',
+    'डेटाबेस वापस ऊपर',
   'Export Full Game' =>
-    'Exportar el Joc Sencer',
+    'निर्यात पूरा खेल',
   'Import Full Game' =>
-    'Importar el Joc Sencer',
+    'आयात पूरा खेल',
   'Import Teams' =>
-    'Importar Equips',
+    'आयात टीमों के',
   'Export Teams' =>
-    'Exportar Equips',
+    'निर्यात टीमों के',
   'Import Logos' =>
-    'Importar Logos',
+    'आयात लोगो',
   'Export Logos' =>
-    'Exportar Logos',
+    'निर्यात लोगो',
   'Import Levels' =>
-    'Importar Nivells',
+    'आयात के स्तर',
   'Export Levels' =>
-    'Exportar Nivells',
+    'निर्यात का स्तर',
   'Import Categories' =>
-    'Importar Categories',
+    'आयात श्रेणियाँ',
   'Export Categories' =>
-    'Exportar Categories',
+    'निर्यात श्रेणियाँ',
   'Levels' =>
-    'Nivells',
+    'स्तर',
   'New Quiz Level' =>
-    'Nou nivell del Quiz',
+    'नई प्रश्नोत्तरी स्तर',
   'Title' =>
-    'Títol',
+    'शीर्षक',
   'Question' =>
-    'Pregunta',
+    'सवाल',
   'Level title' =>
-    'Nivell_Titol',
+    'स्तर का शीर्षक',
   'Quiz question' =>
-    'Pregunta de Quiz',
+    'क्विज सवाल',
   'Country' =>
-    'Païs',
+    'देश',
   'Answer' =>
-    'Resposta',
+    'उत्तर',
   'Points' =>
-    'Punts',
+    'अंक',
   'Hint' =>
-    'Pista',
+    'सुझाव',
   'Hint Penalty' =>
-    'Penalització per Pista',
+    'सुझाव जुर्माना',
   'EDIT' =>
-    'EDITAR',
+    'संपादन',
   'All Quiz Levels' =>
-    'Tots els Nivells de Quiz',
+    'सभी प्रश्नोत्तरी स्तर',
   'Filter By:' =>
-    'Filtrar Per:',
+    'के द्वारा छनित:',
   'All Status' =>
-    'Tots els Estats',
+    'सभी स्थिति',
   'Enabled' =>
-    'Habilitat',
+    'सक्षम',
   'Disabled' =>
-    'Deshabilitat',
+    'अक्षम',
   'Quiz Level' =>
-    'Nivell del Quiz',
+    'क्विज स्तर',
   'Show Answer' =>
-    'Mostrar Resposta',
+    'उत्तर दिखाओ',
   'Bonus' =>
-    'Bonus',
+    'बोनस',
   '-Dec' =>
     '-Dec',
   'Save' =>
-    'Desar',
+    'बचाना',
   'Quiz Management' =>
-    'Gestió del Quiz',
+    'क्विज प्रबंधन',
   'Add Quiz Level' =>
-    'Afegir Nivell de Quiz',
+    'जोड़ें प्रश्नोत्तरी स्तर',
   'New Flag Level' =>
-    'Nova Flag pel Nivell',
+    'नया झंडा स्तर',
   'Description' =>
-    'Descripció',
+    'विवरण',
   'Level description' =>
-    'Descripció del Nivell',
+    'स्तर विवरण',
   'Category' =>
-    'Categoria',
+    'वर्ग',
   'Flag' =>
-    'Flag',
+    'झंडा',
   'flag' =>
-    'flag',
+    'झंडा',
   'All Flag Levels' =>
-    'Flags de Tots els Nivells',
+    'सभी झंडा स्तर',
   'New Attachment:' =>
-    'Nou Adjunt:',
+    'नई कुर्की:',
   'Attachment' =>
-    'Adjunt',
+    'अनुलग्नक',
   'Link' =>
-    'Enllaç',
+    'संपर्क',
   'New Link:' =>
-    'Nou Enllaç:',
+    'नई लिंक:',
   'Flag Level' =>
-    'Nivell de Flag',
+    'ध्वज स्तर',
   'Categories' =>
-    'Categories',
+    'श्रेणियाँ',
   '+ Attachment' =>
-    '+ Adjunt',
+    '+ अनुलग्नक',
   '+ Link' =>
-    '+ Enllaç',
+    '+ लिंक',
   'Flags Management' =>
-    'Gestió de Flags',
+    'झंडे प्रबंधन',
   'Add Flag Level' =>
-    'Afegir flags i nivell',
+    'जोड़ें ध्वज स्तर',
   'New Base Level' =>
-    'Nou Nivell Base',
+    'न्यू आधार स्तर',
   'Keep Points' =>
-    'Conservar Punts',
+    'अंक रखना',
   'Capture points' =>
-    'Capturar punts',
+    'कैद अंक',
   'All Base Levels' =>
-    'Tots els nivells Base',
+    'सभी आधार स्तर',
   'Base Level' =>
-    'Nivell Base',
+    'आधार स्तर',
   'Bases Management' =>
-    'Bases Management',
+    'आधारों प्रबंधन',
   'Add Base Level' =>
-    'Add Base Level',
+    'जोड़ें आधार स्तर',
   'New Category' =>
-    'Nova Categoria',
+    'नई श्रेणी',
   'Category: ' =>
-    'Category: ',
+    'वर्ग: ',
   'Categories Management' =>
-    'Gestió de Categories',
+    'श्रेणियाँ प्रबंधन',
   'Add Category' =>
-    'Afegir Categoria',
+    'श्रेणी जोड़ना',
   'All Countries' =>
-    'Tots els Païssos',
+    'सभी देश',
   'In Use' =>
-    'En us',
+    'उपयोग में',
   'In use' =>
-    'En us',
+    'उपयोग में',
   'Not Used' =>
-    'No esta Utilitzat',
+    'उपयोग नहीं किया',
   'Yes' =>
-    'Si',
+    'हाँ',
   'No' =>
-    'No',
+    'नहीं',
   'ISO Code' =>
-    'Codi ISO',
+    'आईएसओ कोड',
   'Countries Management' =>
-    'Gestió de Païssos',
+    'देशों प्रबंधन',
   'No Team Names' =>
-    'No hi ha noms per l\'equip',
+    'नहीं टीम के नाम',
   'time' =>
-    'time',
+    'पहर',
   'type' =>
-    'tipus',
+    'प्रकार',
   'pts' =>
-    'pts',
+    'अंक',
   'Level' =>
-    'Nivell',
+    'स्तर',
   'level' =>
-    'nivell',
+    'स्तर',
   'No Scores' =>
-    'No hi ha Puntuacions',
+    'नहीं स्कोर',
   'Attempt' =>
-    'Intent',
+    'प्रयास',
   'No Failures' =>
-    'No hi ha fracassos',
+    'कोई विफलताओं',
   'Team' =>
-    'Team',
+    'टीम',
   'team' =>
-    'team',
+    'टीम',
   'Names' =>
-    'Noms',
+    'नाम',
   'Scores' =>
-    'Puntuacions',
+    'स्कोर',
   'Failures' =>
-    'Fracassos',
+    'विफलताओं',
   'New Team' =>
-    'Nou Equip',
+    'नई टीम',
   'Team Logo' =>
-    'Logo de l\'Equip',
+    'टीम लोगो',
   'Selected Logo:' =>
-    'Logo escollit:',
+    'चुने लोगो:',
   'Select Logo' =>
-    'Seleccionar Logo',
+    'लोगो चुनें',
   'All Teams' =>
-    'Tots els Equips',
+    'सभी टीमों के',
   'Protected' =>
-    'Protegit',
+    'संरक्षित',
   'Score' =>
-    'Puntiació',
+    'स्कोर',
   'Change Password' =>
-    'Canviar contrassenya',
+    'पासवर्ड बदलें',
   'Admin Level' =>
-    'Nivell d\'administrador',
+    'व्यवस्थापक स्तर',
   'Visibility' =>
-    'Visibilitat',
+    'दृश्यता',
   'Team Management' =>
-    'Gestió d\'equip',
+    'टीम प्रबंधन',
   'Add Team' =>
-    'Afegir Equip',
+    'टीम जोड़ें',
   'None' =>
-    'Cap',
+    'कोई नहीं',
   'Logo Name' =>
-    'Nom del Logo',
+    'लोगो का नाम',
   'Logo Management' =>
-    'Gestor de Logos',
+    'लोगो प्रबंधन',
   'Session' =>
-    'Session',
+    'सत्र',
   'Cookie' =>
-    'Cookie',
+    'कुकी',
   'Creation Time' =>
-    'Creation Time',
+    'रचना समय',
   'Last Access' =>
-    'Últim Acces',
+    'अंतिम पहुंच',
   'Data' =>
-    'Dades',
+    'जानकारी',
   'Sessions' =>
-    'Sessions',
+    'सत्र',
   'entry' =>
-    'entry',
+    'प्रवेश',
   'No Entries' =>
-    'No hi ha entrades',
+    'कोई प्रविष्टि नहीं',
   'Game Logs' =>
-    'Registres del Joc',
+    'खेल लॉग',
   'Game Logs Timeline' =>
-    'Linea de temps dels registres del Joc',
+    'खेल लॉग टाइमलाइन',
   'End Game' =>
-    'Finalitzar Joc',
+    'End खेल',
   'Begin Game' =>
-    'Begin Game',
+    'शुरू खेल',
   'Game Admin' =>
-    'Administrador del Joc',
+    'खेल व्यवस्थापक',
   'Controls' =>
-    'Controls',
+    'नियंत्रण',
   'Quiz' =>
-    'Preguntes i Respostes',
+    'क्विज',
   'Flags' =>
-    'Flags',
+    'झंडे',
   'Bases' =>
-    'Bases',
+    'कुर्सियां',
   'Countries' =>
-    'Països',
+    'देश',
   'Logos' =>
-    'Logos',
+     'लोगो',
   //Translations for inc/* and inc/gameboard/*
   'captured' =>
-    'captured',
+    'पकड़े',
   'Status' =>
-    'Estat',
+    'स्थिति',
   'Completed' =>
-    'Completat',
+    'पूरा कर लिया है',
   'Remaining' =>
-    'Restant',
+    'शेष',
   'Start' =>
-    'Començar',
+    'प्रारंभ',
   'End' =>
-    'Acabar',
+    'समाप्त',
   'Rank' =>
-    'Rang',
+    'श्रेणी',
   'pts' =>
-    'pts', //points
+    'अंक', // अंक
   'Your Rank' =>
-    'El teu Rang',
+    'आपका रैंक',
   'Your Score' =>
-    'La teva puntuació',
+    'अपने स्कोर',
   'Everyone' =>
-    'Tothom',
+    'हर कोई',
   'Your Team' =>
-    'El Teu Equip',
+    'आपकी टीम',
   'Captured' =>
-    'Catpurats',
+    'पकड़े',
   'Initiating' =>
-    'Iniciant',
+    'आरंभ',
   'run : > boot_sequence' =>
-    'run : > boot_sequence',
+    'चलाने: > boot_sequence',
   'Extracting' =>
-    'Extraient',
+    'निकालने',
   //Translations for Utils.php's time_ago() function
   'just now' =>
-    'Ara mateix',
+    'अभी',
   'd' =>
-    'd', //day
+    'डी', //day
   'hr' =>
-    'hr', //hour
+    'घंटे', //घंटे
   'min' =>
-    'min', //minute
+    'मिनट', //मिनट
   'sec' =>
-    'sec', //second
+    'सेकंड', //सेकंड
   'ds' =>
-    'd', //days
+    'डी', //दिन
   'hrs' =>
-    'hrs', //hours
+    'बजे', //घंटे
   'mins' =>
-    'mins', //minutes
+    'मिनट', //मिनट
   'secs' =>
-    'secs', //seconds
+    'सेकेंड', //सेकेंड
   'ago' =>
-    'ago',
+    'पहले',
   //Translations for ModalControllers
   'begin_' =>
-    'begin_',
+    'शुरू_',
   'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start' =>
-    'Estas segur que vols començar el joc? Els registres s\'sesborraran i el taulell de puntuacions apareixera progressivament',
+    'क्या आप वाकई खेल बंद किक करने के लिए चाहते हैं? Logs साफ हो जाएगा और प्रगतिशील स्कोरबोर्ड शुरू कर देंगे',
   'end_' =>
-    'end_',
+    'समाप्त_',
   'Are you sure you want to finish the current game?' =>
-    'Estas segur que vols finalitzar el joc actual?',
+    'क्या आप मौजूदा खेल खत्म करना चाहते हैं?',
   'Are you sure you want to logout from the game?' =>
-    'Estas segur que vols tancar la sessió actual del joc?',
+    'क्या आप वाकई इस खेल से लॉगआउट करना चाहते हैं?',
   'Saved' =>
-    'Desat',
+    'बचाया',
   'All changes have been successfully saved.' =>
-    'Tots els canvis s\'shan gravat de forma satisfactoria',
+    'सभी परिवर्तन सफलतापूर्वक बचा लिया गया है।',
   'Error' =>
-    'Error',
+    'त्रुटि',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'Ho sentim, el formulari no s\'ha desat. Si us plau corregiu els errors i premeu "Desar" de nou',
+    'माफ करना अपने फार्म सहेजा नहीं गया था। कृपया सभी त्रुटियों को ठीक करें और फिर से बचाने के लिए।',
   'cancel_' =>
-    'cancel_',
+    'रद्द करना_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
-    'Are you sure you want to cancel? You have unsaved changes that will be reverted.',
+    'पक्का आप रद्द करना चाहते हैं? आप बिना सहेजे गए परिवर्तन है कि वापस सौंप दिया जाएगा।',
   'choose_logo' =>
-    'choose_logo',
+    'Choose_logo',
   'captured_' =>
-    'captured_',
+    'पकड़े_',
   'flag_owner_' =>
     'flag_owner_',
   'INACTIVE' =>
-    'INACTIVE',
+    'निष्क्रिय',
   'PTS' =>
-    'PTS',
+    'पीटीएस',
   'category' =>
-    'category',
+    'वर्ग',
   'capture_' =>
-    'capture_',
+    'कब्जा_',
   'Insert your answer' =>
-    'Insert your answer',
+    'आपका जवाब डालें',
   'Request Hint' =>
-    'Request Hint',
+    'अनुरोध सुझाव',
   'Submit' =>
-    'Submit',
+    'जमा करें',
   'hint_' =>
-    'hint_',
+    'Hint_',
   'first_capture' =>
     'first_capture',
   'completed_by' =>
-    'completed_by',
+    'द्वारा पूरा किया गया',
   'scoreboard_' =>
     'scoreboard_',
   'filter_' =>
     'filter_',
   'rank_' =>
-    'rank_',
+    'श्रेणी_',
   'team_name_' =>
-    'team_name_',
+    'टीम का नाम_',
   'quiz_pts_' =>
     'quiz_pts_',
   'flag_pts_' =>
@@ -604,7 +604,7 @@ $translations = array(
   'team_' =>
     'team_',
   'team_members' =>
-    'team_members',
+    'टीम का सदस्या',
   'base_pts' =>
     'base_pts',
   'quiz_pts' =>
@@ -614,45 +614,45 @@ $translations = array(
   'total_pts' =>
     'total_pts',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
-    'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.',
+    'उपकरण सलाखों gameboard के सभी किनारों पर स्थित हैं। विस्तार और प्रत्येक उपकरण पट्टी बंद करने के लिए एक वर्ग टैप करें।',
   'Tool_Bars' =>
     'Tool_Bars',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
-    'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.',
+    'ठोकर "खेल घड़ी" gameplay के दौरान समय का ट्रैक रखने के लिए। बार जब आप का सबसे अच्छा मिल मत करो।',
   'Game_Clock' =>
     'Game_Clock',
   'Countries marked with an ' =>
-    'Countries marked with an ',
+    'देशों के साथ चिह्नित ',
   'are captured by you.' =>
-    'are captured by you.',
+    'आप के द्वारा कब्जा कर रहे हैं।',
   ' are owned by others.' =>
-    ' are owned by others.',
+    'दूसरों के स्वामित्व में हैं।',
   'Captures' =>
-    'Captures',
+    'कब्जा',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'Prem Mes[+] per fer apropar el Zoom o Menys[-] per allunyar.',
+    'नल प्लस [+] ज़ूम करने के लिए। ठोकर ऋण [-] ज़ूम आउट करने के लिए ।',
   'Click and Drag to move left, right, up and down.' =>
-    'Clicka i arrossega per moure esquerra, dreta, amunt i avall',
+    'पर क्लिक करें और, ठीक है, ऊपर और नीचे करने के लिए छोड़ दिया और कदम खींचें।',
   'Zoom' =>
-    'Zoom',
+    'ज़ूम',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".',
+    'आगे स्लेश टैप [/] कंप्यूटर आदेशों को सक्रिय करें। आदेशों की एक सूची "नियम" के नीचे पाया जा सकता है।',
   'Command_Line' =>
-    'Linea_De_Comandes',
+    'कमांड लाइन',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'Prem "Nav" per accedir als enllaços principals de navegació (Normes del Joc, Registre, Blog, Feines && ..)',
+    '"नव" प्ले, पंजीकरण, ब्लॉग, नौकरियों के नियम और अधिक की तरह मुख्य नेविगेशन लिंक का उपयोग करने के लिए क्लिक करें।',
   'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
-    'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.',
+    '"स्कोरबोर्ड" वास्तविक समय खेल सांख्यिकी और रेखांकन का उपयोग करने के लिए क्लिक करके अपने प्रतियोगिता ट्रैक।',
   'Have fun, be the best and conquer the world.' =>
-    'Diverteix-te, sigues el millor i conquereix el món.',
+    'मजेदार है, सबसे अच्छा हो सकता है और दुनिया को जीत है।',
   'Game_On' =>
-    'Game_On',
+    'खेल शुरू',
   'tutorial_' =>
-    'tutorial_',
+    'Tutorial_',
   'Next' =>
-    'Següent',
+    'अगला',
   'Skip to play' =>
-    'Salta per començar a jugar',
+    'खेलने के लिए जाएं',
   'Powered By Facebook' =>
-    'Powered By Facebook',
+    'फेसबुक द्वारा संचालित',
 );
