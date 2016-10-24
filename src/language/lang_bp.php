@@ -38,7 +38,7 @@ $translations = array(
   'Official CTF Rules' =>
     'Regras Oficiais',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'As seguintes ações são proibidas, a menos que explicitamente dito de outra forma pelos Admins do evento.',
+    'As seguintes ações são proibidas, a menos que explicitamente dito de outra forma pelos administradores do evento.',
   'Rule' =>
     'Regra',
   'Cooperation' =>
@@ -60,11 +60,11 @@ $translations = array(
   'Denial Of Service' =>
     'Denial Of Service',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'Aplicar DoS contra a plataforma CTF é proibido.',
+    'Aplicar DDoS contra a plataforma CTF é proibido.',
   'Legal' =>
     'Legal',
   'Disclaimer' =>
-    'Disclaimer',
+    'Aviso Legal',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
     'Ao participar da competição, você concorda em livrar o Facebook, seus funcionários e os organizadores de toda e qualquer responsabilidade, reclamações e ações de qualquer tipo de ferimentos, danos ou prejuízos a pessoas e bens que possam estar ligados à competição. Você reconhece e concorda que o Facebook et al não é responsável por falhas técnicas de hardware e software, nem por outros problemas que possam ocorrer relacionados à competição.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
