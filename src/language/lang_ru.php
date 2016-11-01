@@ -12,7 +12,7 @@ $translations = array(
   'Play' =>
     'Играть',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Добро пожаловать на соревнование Capture the Flag от Facebook. Нажав "Играть", вы примете участие в официальном состязании CTF. Желаем удачи.',
+    'Добро пожаловать на соревнование Capture the Flag от Facebook. Нажмите кнопку "Играть", вы примете участие в официальном состязании CTF. Желаем удачи!',
   'Get ready for the CTF to start and access the gameboard now!' =>
     'Приготовьтесь к началу CTF и получите доступ к игровому полю!',
   'Gameboard' =>
@@ -28,13 +28,13 @@ $translations = array(
   'Upcoming Game' =>
     'Предстоящая Игра',
   '_days' =>
-    '_дней',
+    '_дн.',
   '_hours' =>
-    '_часов',
+    '_ч',
   '_minutes' =>
-    '_минут',
+    '_мин',
   '_seconds' =>
-    '_секунд',
+    '_с',
   'Official CTF Rules' =>
     'Официальные Правила CTF',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
@@ -44,25 +44,25 @@ $translations = array(
   'Cooperation' =>
     'Взаимопомощь',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Никакой кооперации и сотрудничества между командами с независимыми аккаунтами. Распространение ключей или предоставление откровенных подсказок другим командам является мошенничеством, не делайте этого.',
+    'Запрещается кооперация и сотрудничество между командами с независимыми аккаунтами. Распространение ключей и предоставление явных подсказок другим командам является мошенничеством и запрещено.',
   'Attacking Scoreboard' =>
-    'Атака Инфраструктуры',
+    'Атака инфраструктуры',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'Никакой атаки на инфраструктуру соревнования. Если были найдены баги или уязвимости, пожалуйста, сообщите об этом организаторам немедленно.',
+    'Запрещены попытки повлиять на инфраструктуру соревнования. В случае обнаружения багов или уязвимостей просим немедленно сообщить о них организаторам.',
   'Sabotage' =>
     'Вредительство',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'Абсолютно никакого вредительства другим командам или затруднения их независимого прогресса любыми способами.',
+    'Строго запрещено вредить другим командам или каким-либо образом мешать их независимому прогрессу.',
   'Bruteforcing' =>
-    'Брутфорс',
+    'Атака полным перебором',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'Никакого брутфорса flag/ ключей на сайте соревнования.',
+    'Подбор флагов и ключей методом полного перебора на сайте соревнования запрещен.',
   'Denial Of Service' =>
     'DoS-атака',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
     'DoS-атака на платформу CTF или на любое состязание запрещена.',
   'Legal' =>
-    'Заявление об ограничении ответственности',
+    'Заявление',
   'Disclaimer' =>
     'Disclaimer',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
@@ -88,7 +88,7 @@ $translations = array(
   'Sign Up' =>
     'Зарегистрироваться',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Зарегистрируйтесь, чтобы сыграть в Capture The Flag. Как только вы зарегистрировались, вы будете оставаться в системе.',
+    'Зарегистрируйтесь, чтобы сыграть в Capture The Flag. После завершения регистрации автоматически будет выполнен вход в систему.',
   'Not Available' =>
     'Недоступно',
   'Team Registration will be open soon, stay tuned!' =>
@@ -100,7 +100,7 @@ $translations = array(
   'Team Login' =>
     'Вход для Команды',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Пожалуйста, войдите. Если вы не регистрировались, вы можете сделать это нажав "Зарегистрироваться" ниже.',
+    'Пожалуйста, выполните вход. Если вы не регистрировались, нажмите кнопку "Зарегистрироваться" ниже.',
   'Team Login will be open soon, stay tuned!' =>
     'Вход для Команды будет скоро открыт, оставайтесь на связи!',
   'ERROR' =>
@@ -110,7 +110,7 @@ $translations = array(
   'Window is too small' =>
     'Окно слишком маленькое',
   'For the best CTF experience, please make window size bigger.' =>
-    'Для наилучших ощущений от игры, пожалуйста, сделайте размер окна больше.',
+    'Для наилучших ощущений от игры увеличьте размер окна.',
   'Thank you.' =>
     'Спасибо.',
   'Logout' =>
@@ -158,19 +158,19 @@ $translations = array(
   'Auto' =>
     'Авто',
   'All Categories' =>
-    'Все Категории',
+    'Все категории',
   'Open' =>
-    'Открыть',
+    'Открытая',
   'Tokenized' =>
-    'Токенизировано',
+    'По токенам',
   'Hour' =>
     'Час',
   'Hours' =>
     'Часы',
   'Used by' =>
-    'Используется',
+    'Использует',
   'Used By' =>
-    'Используется',
+    'Использует',
   'Available' =>
     'Доступно',
   'Registration Tokens' =>
@@ -202,7 +202,7 @@ $translations = array(
   'Registration Type' =>
     'Тип Регистрации',
   'Strong Passwords' =>
-    'Сильные Пароли',
+    'Надежные Пароли',
   'Team Selection' =>
     'Выбор Команды',
   'Game' =>
@@ -210,13 +210,13 @@ $translations = array(
   'Scoring' =>
     'Зарабатывание Очков',
   'Progressive Cycle (s)' =>
-    'Последующий цикл (s)',
+    'Возрастающий цикл (с)',
   'Refresh Gameboard' =>
     'Обновить Игровое Поле',
   'Default Bonus' =>
     'Бонус по Умолчанию',
   'Bases Cycle (s)' =>
-    'Базовый Цикл (s)',
+    'Базовый Цикл (с)',
   'Default Bonus Dec' =>
     'Снижение Бонуса по Умолчанию',
   'Timer' =>
@@ -264,7 +264,7 @@ $translations = array(
   'Export Levels' =>
     'Экспортировать Уровни',
   'Import Categories' =>
-    'Импоритровать Категории',
+    'Импортировать Категории',
   'Export Categories' =>
     'Экспортировать Категории',
   'Levels' =>
@@ -296,7 +296,7 @@ $translations = array(
   'Filter By:' =>
     'Отфильтровать По:',
   'All Status' =>
-    'Статус Всего',
+    'Все статусы',
   'Enabled' =>
     'Включено',
   'Disabled' =>
@@ -336,7 +336,7 @@ $translations = array(
   'Link' =>
     'Ссылка',
   'New Link:' =>
-    'Новая Сылка:',
+    'Новая Ссылка:',
   'Flag Level' =>
     'Уровень Флага',
   'Categories' =>
@@ -348,7 +348,7 @@ $translations = array(
   'Flags Management' =>
     'Управление Флагами',
   'Add Flag Level' =>
-    'Добавить Уровень Флага',
+    'Добавить Уровень с Флагом',
   'New Base Level' =>
     'Новый Уровень Базы',
   'Keep Points' =>
@@ -394,7 +394,7 @@ $translations = array(
   'type' =>
     'тип',
   'pts' =>
-    'очки',
+    'очк',
   'Level' =>
     'Уровень',
   'level' =>
@@ -440,7 +440,7 @@ $translations = array(
   'Add Team' =>
     'Добавить Команду',
   'None' =>
-    'Ничего',
+    'Никто',
   'Logo Name' =>
     'Название Логотипа',
   'Logo Management' =>
@@ -498,8 +498,6 @@ $translations = array(
     'Конец',
   'Rank' =>
     'Ранг',
-  'pts' =>
-    'очк', //points
   'Your Rank' =>
     'Ваш Ранг',
   'Your Score' =>
@@ -524,17 +522,17 @@ $translations = array(
   'hr' =>
     'час', //hour
   'min' =>
-    'минута', //minute
+    'мин', //minute
   'sec' =>
-    'секунда', //second
+    'с', //second
   'ds' =>
-    'дней', //days
+    'дн.', //days
   'hrs' =>
-    'часов', //hours
+    'ч', //hours
   'mins' =>
-    'минут', //minutes
+    'мин', //minutes
   'secs' =>
-    'секунд', //seconds
+    'с', //seconds
   'ago' =>
     'назад',
   //Translations for ModalControllers
@@ -579,7 +577,7 @@ $translations = array(
   'Request Hint' =>
     'Попросить Подсказку',
   'Submit' =>
-    'Подать',
+    'Отправить',
   'hint_' =>
     'подсказка_',
   'first_capture' =>
@@ -615,9 +613,9 @@ $translations = array(
   'total_pts' =>
     'всего_очки',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
-    'Тулбары находятся на всех краях таблицы. Нажмите на категорию, чтобы развернуть и свернуть каждый тулбар.',
+    'На всех краях игрового поля расположены панели инструментов. Выберите категорию, чтобы развернуть и свернуть соответствующую панель инструментов.',
   'Tool_Bars' =>
-    'Тулбары',
+    'Панели_Инструментов',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
     'Нажмите на "Игровые Часы", чтобы следить за временем во время игры. Не позволяйте времени застать себя врасплох.',
   'Game_Clock' =>
@@ -625,7 +623,7 @@ $translations = array(
   'Countries marked with an ' =>
     'Страны, отмеченные ',
   'are captured by you.' =>
-    ' захваченные вами.',
+    ' захвачены вами.',
   ' are owned by others.' =>
     ' принадлежат другим.',
   'Captures' =>
@@ -633,17 +631,17 @@ $translations = array(
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
     'Нажмите Плюс[+], чтобы Увеличить масштаб. Нажмите Минус[-], чтобы Уменьшить масштаб.',
   'Click and Drag to move left, right, up and down.' =>
-    'Нажмите и Перетащите, чтобы передвинуть влево, вправо, наверх или вниз.',
+    'Нажмите и перетащите, чтобы передвинуть влево, вправо, наверх или вниз.',
   'Zoom' =>
-    'Масштабировать',
+    'Масштабирование',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'Используйте Слэш [/], чтобы активировать компьютерные команды. Список команд может быть найден в "Правилах".',
+    'Используйте Слэш [/], чтобы активировать компьютерные команды. Список команд можно найти в "Правилах".',
   'Command_Line' =>
     'Командная_Строка',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
     'Нажмите на "Навигацию", чтобы получить основные навигационные ссылки вроде Правил Игры, Регистрации, Блога, Вакансий и проч.',
   'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
-    'Следите за своим соревнованием через "таблицу", чтобы получать статистику игры и графики в режиме реального времени.',
+    'Следите за ходом соревнования с помощью "таблицы", где можно просматривать статистику игры и графики в режиме реального времени.',
   'Have fun, be the best and conquer the world.' =>
     'Насладитесь игрой, будьте лучшими и захватите мир.',
   'Game_On' =>
@@ -651,9 +649,9 @@ $translations = array(
   'tutorial_' =>
     'обучение_',
   'Next' =>
-    'Следующий',
+    'След.',
   'Skip to play' =>
     'Пропустить',
   'Powered By Facebook' =>
-    'Powered By Facebook',
+    'При поддержке Facebook',
 );
