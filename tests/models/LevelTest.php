@@ -32,11 +32,11 @@ class LevelTest extends FBCTFTest {
       2, // penalty
     ));
 
-    $this->assertEquals(2, $id);
+    $this->assertEquals(4, $id);
     $all = HH\Asio\join(Level::genAllLevels());
-    $this->assertEquals(2, count($all));
-    $l = $all[1];
-    $this->assertEquals(2, $l->getId());
+    $this->assertEquals(4, count($all));
+    $l = $all[3];
+    $this->assertEquals(4, $l->getId());
     $this->assertFalse($l->getActive());
     $this->assertEquals('flag', $l->getType());
     $this->assertEquals('title 2', $l->getTitle());
@@ -66,11 +66,11 @@ class LevelTest extends FBCTFTest {
       2, // penalty
     ));
 
-    $this->assertEquals(2, $id);
+    $this->assertEquals(4, $id);
     $all = HH\Asio\join(Level::genAllLevels());
-    $this->assertEquals(2, count($all));
-    $l = $all[1];
-    $this->assertEquals(2, $l->getId());
+    $this->assertEquals(4, count($all));
+    $l = $all[3];
+    $this->assertEquals(4, $l->getId());
     $this->assertFalse($l->getActive());
     $this->assertEquals('flag', $l->getType());
     $this->assertEquals('title 2', $l->getTitle());
@@ -102,7 +102,7 @@ class LevelTest extends FBCTFTest {
     ));
 
     $all = HH\Asio\join(Level::genAllLevels());
-    $this->assertEquals(1, count($all));
+    $this->assertEquals(3, count($all));
     $l = $all[0];
     $this->assertEquals(1, $l->getId());
     $this->assertTrue($l->getActive());
@@ -123,13 +123,13 @@ class LevelTest extends FBCTFTest {
   public function testDelete(): void {
     HH\Asio\join(Level::genDelete(1));
     $all = HH\Asio\join(Level::genAllLevels());
-    $this->assertEquals(0, count($all));
+    $this->assertEquals(2, count($all));
   }
 
   public function testSetStatus(): void {
     HH\Asio\join(Level::genSetStatus(1, false));
     $all = HH\Asio\join(Level::genAllLevels());
-    $this->assertEquals(1, count($all));
+    $this->assertEquals(3, count($all));
     $l = $all[0];
     $this->assertFalse($l->getActive());
   }
@@ -137,7 +137,7 @@ class LevelTest extends FBCTFTest {
   public function testSetStatusType(): void {
     HH\Asio\join(Level::genSetStatusType(false, 'base'));
     $all = HH\Asio\join(Level::genAllLevels());
-    $this->assertEquals(1, count($all));
+    $this->assertEquals(3, count($all));
     $l = $all[0];
     $this->assertEquals('base', $l->getType());
     $this->assertFalse($l->getActive());
@@ -146,7 +146,7 @@ class LevelTest extends FBCTFTest {
   public function testSetStatusAll(): void {
     HH\Asio\join(Level::genSetStatusAll(false, 'base'));
     $all = HH\Asio\join(Level::genAllLevels());
-    $this->assertEquals(1, count($all));
+    $this->assertEquals(3, count($all));
     $l = $all[0];
     $this->assertEquals('base', $l->getType());
     $this->assertFalse($l->getActive());
@@ -154,7 +154,7 @@ class LevelTest extends FBCTFTest {
 
   public function testAllActiveLevels(): void {
     $all = HH\Asio\join(Level::genAllActiveLevels());
-    $this->assertEquals(1, count($all));
+    $this->assertEquals(3, count($all));
   }
 
   public function testAllActiveBases(): void {
@@ -164,21 +164,28 @@ class LevelTest extends FBCTFTest {
 
   public function testAllTypeLevels(): void {
     $all = HH\Asio\join(Level::genAllTypeLevels('flag'));
-    $this->assertEquals(0, count($all));
+    $this->assertEquals(1, count($all));
   }
 
   public function testAll(): void {
     $all = HH\Asio\join(Level::genAllQuizLevels());
-    $this->assertEquals(0, count($all));
+    $this->assertEquals(1, count($all));
     $all = HH\Asio\join(Level::genAllBaseLevels());
     $this->assertEquals(1, count($all));
     $all = HH\Asio\join(Level::genAllFlagLevels());
-    $this->assertEquals(0, count($all));
+    $this->assertEquals(1, count($all));
   }
 
   public function testCheckAnswer(): void {
     $this->assertFalse(HH\Asio\join(Level::genCheckAnswer(1, 'no')));
     $this->assertTrue(HH\Asio\join(Level::genCheckAnswer(1, 'flag')));
+    $this->assertTrue(HH\Asio\join(Level::genCheckAnswer(1, 'FLAG')));
+    $this->assertFalse(HH\Asio\join(Level::genCheckAnswer(2, 'no')));
+    $this->assertTrue(HH\Asio\join(Level::genCheckAnswer(2, 'quiz')));
+    $this->assertTrue(HH\Asio\join(Level::genCheckAnswer(2, 'QUIZ')));
+    $this->assertFalse(HH\Asio\join(Level::genCheckAnswer(3, 'no')));
+    $this->assertFalse(HH\Asio\join(Level::genCheckAnswer(3, 'FLAG')));
+    $this->assertTrue(HH\Asio\join(Level::genCheckAnswer(3, 'flag')));
   }
 
   public function testAdjustBonus(): void {
