@@ -73,15 +73,15 @@ class Control extends Model {
     $config = await Configuration::gen('game_duration_unit');
     $duration_unit = $config->getValue();
     switch ($duration_unit) {
-    case 'd':
-      $duration = $duration_value * 60 * 60 * 24;
-      break;
-    case 'h':
-      $duration = $duration_value * 60 * 60;
-      break;
-    case 'm':
-      $duration = $duration_value * 60;
-      break;
+      case 'd':
+        $duration = $duration_value * 60 * 60 * 24;
+        break;
+      case 'h':
+        $duration = $duration_value * 60 * 60;
+        break;
+      case 'm':
+        $duration = $duration_value * 60;
+        break;
     }
     $end_ts = $start_ts + $duration;
     await Configuration::genUpdate('end_ts', strval($end_ts));
@@ -119,24 +119,36 @@ class Control extends Model {
   }
 
   public static async function importGame(): Awaitable<bool> {
-    $data_game = self::readJSON('game_file');
-    if ($data_game) {
-      $logos = must_have_idx($data_game, 'logos');
+    $data_game = JSONImporterController::readJSON('game_file');
+    if (is_array($data_game)) {
+      $logos = array_pop(must_have_idx($data_game, 'logos'));
+      if (!$logos) {
+        return false;
+      }
       $logos_result = await Logo::importAll($logos);
       if (!$logos_result) {
         return false;
       }
-      $teams = must_have_idx($data_game, 'teams');
+      $teams = array_pop(must_have_idx($data_game, 'teams'));
+      if (!$teams) {
+        return false;
+      }
       $teams_result = await Team::importAll($teams);
       if (!$teams_result) {
         return false;
       }
-      $categories = must_have_idx($data_game, 'categories');
+      $categories = array_pop(must_have_idx($data_game, 'categories'));
+      if (!$categories) {
+        return false;
+      }
       $categories_result = await Category::importAll($categories);
       if (!$categories_result) {
         return false;
       }
-      $levels = must_have_idx($data_game, 'levels');
+      $levels = array_pop(must_have_idx($data_game, 'levels'));
+      if (!$levels) {
+        return false;
+      }
       $levels_result = await Level::importAll($levels);
       if (!$levels_result) {
         return false;
@@ -148,7 +160,7 @@ class Control extends Model {
 
   public static async function importTeams(): Awaitable<bool> {
     $data_teams = JSONImporterController::readJSON('teams_file');
-    if ($data_teams) {
+    if (is_array($data_teams)) {
       $teams = must_have_idx($data_teams, 'teams');
       return await Team::importAll($teams);
     }
@@ -157,7 +169,7 @@ class Control extends Model {
 
   public static async function importLogos(): Awaitable<bool> {
     $data_logos = JSONImporterController::readJSON('logos_file');
-    if ($data_logos) {
+    if (is_array($data_logos)) {
       $logos = must_have_idx($data_logos, 'logos');
       return await Logo::importAll($logos);
     }
@@ -166,7 +178,7 @@ class Control extends Model {
 
   public static async function importLevels(): Awaitable<bool> {
     $data_levels = JSONImporterController::readJSON('levels_file');
-    if ($data_levels) {
+    if (is_array($data_levels)) {
       $levels = must_have_idx($data_levels, 'levels');
       return await Level::importAll($levels);
     }
@@ -175,7 +187,7 @@ class Control extends Model {
 
   public static async function importCategories(): Awaitable<bool> {
     $data_categories = JSONImporterController::readJSON('categories_file');
-    if ($data_categories) {
+    if (is_array($data_categories)) {
       $categories = must_have_idx($data_categories, 'categories');
       return await Category::importAll($categories);
     }

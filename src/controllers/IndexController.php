@@ -462,7 +462,7 @@ class IndexController extends Controller {
         $login_select = "on";
         $login_team = <select name="team_id" />;
         $login_team->appendChild(<option value="0">{tr('Select')}</option>);
-        $all_active_teams = await Team::genAllActiveTeams();
+        $all_active_teams = await MultiTeam::genAllActiveTeams();
         foreach ($all_active_teams as $team) {
           error_log('Getting '.$team->getName());
           $login_team->appendChild(
@@ -551,7 +551,7 @@ class IndexController extends Controller {
     return
       <main role="main" class="fb-main page--login full-height fb-scroll">
         <header class="fb-section-header fb-container">
-          <h1 class="fb-glitch" data-text="{tr('ERROR')}">{tr('ERROR')}</h1>
+          <h1 class="fb-glitch" data-text={tr('ERROR')}>{tr('ERROR')}</h1>
         </header>
         <div class="fb-actionable">
           <h1>¯\_(ツ)_/¯</h1>

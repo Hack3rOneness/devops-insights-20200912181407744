@@ -43,30 +43,36 @@ class GameAjaxController extends AjaxController {
       case 'answer_level':
         $scoring = await Configuration::gen('scoring');
         if ($scoring->getValue() === '1') {
-          $check_base =
-            await Level::genCheckBase(must_have_int($params, 'level_id'));
-          $check_answer = await Level::genCheckAnswer(
-            must_have_int($params, 'level_id'),
-            must_have_string($params, 'answer'),
-          );
-          // Check if level is not a base
-          if ($check_base) {
+          $level_id = must_have_int($params, 'level_id');
+          $answer = must_have_string($params, 'answer');
+          $check_base = await Level::genCheckBase($level_id);
+          $check_status = await Level::genCheckStatus($level_id);
+          $check_answer = await Level::genCheckAnswer($level_id, $answer);
+          // Check if level is not a base or if level isn't active
+          if ($check_base || !$check_status) {
             return Utils::error_response('Failed', 'game');
             // Check if answer is valid
           } else if ($check_answer) {
             // Give points!
             await Level::genScoreLevel(
-              must_have_int($params, 'level_id'),
+              $level_id,
               SessionUtils::sessionTeam(),
             );
             // Update teams last score
             await Team::genLastScore(SessionUtils::sessionTeam());
+            // Invalidate score cache
+            MultiTeam::invalidateMCRecords('ALL_TEAMS');
+            MultiTeam::invalidateMCRecords('POINTS_BY_TYPE');
+            MultiTeam::invalidateMCRecords('LEADERBOARD');
+            MultiTeam::invalidateMCRecords('TEAMS_BY_LEVEL');
+            MultiTeam::invalidateMCRecords('TEAMS_FIRST_CAP');
+            ScoreLog::invalidateMCRecords('LEVEL_CAPTURES');
             return Utils::ok_response('Success', 'game');
           } else {
             await FailureLog::genLogFailedScore(
-              must_have_int($params, 'level_id'),
+              $level_id,
               SessionUtils::sessionTeam(),
-              must_have_string($params, 'answer'),
+              $answer,
             );
             return Utils::error_response('Failed', 'game');
           }

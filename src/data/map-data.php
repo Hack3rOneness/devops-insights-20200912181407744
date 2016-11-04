@@ -13,7 +13,6 @@ class MapDataController extends DataController {
     $my_team_id = SessionUtils::sessionTeam();
     $my_name = SessionUtils::sessionTeamName();
 
-
     $all_levels = await Level::genAllLevels();
     $enabled_countries = await Country::genAllEnabledCountriesForMap();
 
@@ -24,7 +23,8 @@ class MapDataController extends DataController {
 
     foreach ($enabled_countries as $country) {
       $country_level = $levels_map->get($country->getId());
-      $is_active_level = $country_level !== null && $country_level->getActive();
+      $is_active_level =
+        $country_level !== null && $country_level->getActive();
       $active = ($country->getUsed() && $is_active_level) ? 'active' : '';
       if ($country_level) {
         $my_previous_score = await ScoreLog::genPreviousScore(
@@ -46,7 +46,7 @@ class MapDataController extends DataController {
         } else if ($other_previous_score) {
           $captured_by = 'opponent';
           $completed_by =
-            await Team::genCompletedLevel($country_level->getId());
+            await MultiTeam::genCompletedLevel($country_level->getId());
           $data_captured = '';
           foreach ($completed_by as $c) {
             $data_captured .= ' '.$c->getName();

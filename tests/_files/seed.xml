@@ -59,11 +59,44 @@
       <value>1</value>
       <value>2015-04-26 12:14:20</value>
     </row>
+    <row>
+      <value>2</value>
+      <value>1</value>
+      <value>quiz</value>
+      <value>title</value>
+      <value>description</value>
+      <value>1</value>
+      <value>1</value>
+      <value>10</value>
+      <value>1</value>
+      <value>1</value>
+      <value>1</value>
+      <value>quiz</value>
+      <value>hint</value>
+      <value>1</value>
+      <value>2015-04-26 12:14:20</value>
+    </row>
+    <row>
+      <value>3</value>
+      <value>1</value>
+      <value>flag</value>
+      <value>title</value>
+      <value>description</value>
+      <value>1</value>
+      <value>1</value>
+      <value>10</value>
+      <value>1</value>
+      <value>1</value>
+      <value>1</value>
+      <value>flag</value>
+      <value>hint</value>
+      <value>1</value>
+      <value>2015-04-26 12:14:20</value>
+    </row>
   </table>
   <table name="countries">
     <column>id</column>
     <column>iso_code</column>
-    <column>name</column>
     <column>used</column>
     <column>enabled</column>
     <column>d</column>
@@ -71,7 +104,6 @@
     <row>
       <value>1</value>
       <value>BR</value>
-      <value>Brazil</value>
       <value>1</value>
       <value>1</value>
       <value>d</value>
@@ -80,7 +112,6 @@
     <row>
       <value>2</value>
       <value>US</value>
-      <value>United States</value>
       <value>1</value>
       <value>0</value>
       <value>d</value>
@@ -96,6 +127,12 @@
       <value>1</value>
       <value>field</value>
       <value>value</value>
+      <value>description</value>
+    </row>
+    <row>
+      <value>2</value>
+      <value>language</value>
+      <value>en</value>
       <value>description</value>
     </row>
   </table>

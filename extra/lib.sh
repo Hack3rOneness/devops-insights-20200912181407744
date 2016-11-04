@@ -51,13 +51,6 @@ function repo_osquery() {
   sudo add-apt-repository "deb [arch=amd64] https://osquery-packages.s3.amazonaws.com/trusty trusty main"
 }
 
-function repo_mycli() {
-  log "Adding MyCLI repository keys"
-  curl -s https://packagecloud.io/gpg.key | sudo apt-key add -
-  package apt-transport-https
-  echo "deb https://packagecloud.io/amjith/mycli/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list
-}
-
 function install_mysql() {
   local __pwd=$1
 
@@ -333,19 +326,21 @@ function update_repo() {
     killall -9 grunt
   fi
 
-  echo "[+] Pulling from remote repository"
+  log "Pulling from remote repository"
   git pull --rebase https://github.com/facebook/fbctf.git
 
-  echo "[+] Starting sync to $__ctf_path"
+  log "Starting sync to $__ctf_path"
   if [[ "$__code_path" != "$__ctf_path" ]]; then
       [[ -d "$__ctf_path" ]] || sudo mkdir -p "$__ctf_path"
 
-      echo "[+] Copying all CTF code to destination folder"
+      log "Copying all CTF code to destination folder"
       sudo rsync -a --exclude node_modules --exclude vendor "$__code_path/" "$__ctf_path/"
 
       # This is because sync'ing files is done with unison
       if [[ "$__mode" == "dev" ]]; then
-          echo "[+] Setting permissions"
+          log "Configuring git to ignore permission changes"
+          git --git-dir="$CTF_PATH/" config core.filemode false
+          log "Setting permissions"
           sudo chmod -R 777 "$__ctf_path/"
       fi
   fi

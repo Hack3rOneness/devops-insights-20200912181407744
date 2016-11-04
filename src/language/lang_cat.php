@@ -3,64 +3,64 @@
 /* HH_IGNORE_ERROR[1002] */
 $translations = array(
   'date and time format' =>
-    'H:i:s D m/d/Y', //used by date() function
+    'H:i:s D d/m/Y', //used by date() function
   //Translations for IndexController
   'Facebook CTF' =>
     'Facebook CTF',
   'Conquer the world' =>
-    'Conquer the world',
+    'Conquereix el món',
   'Play' =>
-    'Play',
+    'Jugar',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.',
+    'Benvingut al "Capture The Flag" de Facebook. Premeu el botó de "a jugar" per entrar al CTF. Bona sort en la conquesta.',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    'Get ready for the CTF to start and access the gameboard now!',
+    'Prepara\'t a que comenci el CTF i accedeix al taulell de joc ara!',
   'Gameboard' =>
-    'Gameboard',
+    'Taulell de joc',
   'Register Team' =>
-    'Register Team',
+    'Registrar Equip',
   'Get ready for the CTF to start and register your team now!' =>
-    'Get ready for the CTF to start and register your team now!',
+    'Prepara\'t per començar el CTF i registra el teu equip ara!',
   'Login' =>
-    'Login',
+    'Iniciar Sessió',
   'Soon' =>
-    'Soon',
+    'Properament',
   'Upcoming Game' =>
-    'Upcoming Game',
+    'Proper Joc',
   '_days' =>
-    '_days',
+    '_dies',
   '_hours' =>
-    '_hours',
+    '_hores',
   '_minutes' =>
-    '_minutes',
+    '_minuts',
   '_seconds' =>
-    '_seconds',
+    '_segons',
   'Official CTF Rules' =>
-    'Official CTF Rules',
+    'Normativa Oficial del CTF',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Following actions are prohibited, unless explicitly told otherwise by event Admins.',
+    'Les següents accions no estan permeses, a no ser que sigui contradit explicitament pels administradors de l\'event.',
   'Rule' =>
-    'Rule',
+    'Norma',
   'Cooperation' =>
-    'Cooperation',
+    'Cooperació',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.',
+    'Sense cooperació entre els equips amb comptes independents. Compartir claus o revelar pistes a altres equips es considera trampa, no ho facis.',
   'Attacking Scoreboard' =>
-    'Attacking Scoreboard',
+    'Taulell de Puntuacions d\'Atac',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.',
+    'No ataquis la infrastructura de la competició. En case de trobar cap vulnerabilitat, siusplay avisa als organitzadors inmediatament',
   'Sabotage' =>
-    'Sabotage',
+    'Sabotatge',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.',
+    'No sabotegis altres equips, or de destorbar el seu progrés de forma individual.',
   'Bruteforcing' =>
-    'Bruteforcing',
+    'Força bruta',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'No brute forcing of challenge flag/ keys against the scoring site.',
+    'No realitzis força bruta per atacar als serveis',
   'Denial Of Service' =>
-    'Denial Of Service',
+    'Denegació de Servei',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'DoSing the CTF platform or any of the challenges is forbidden.',
+    'Realitzar un atac de denegació de servei a la plataforma o a qualsevol de les proves està prohibit',
   'Legal' =>
     'Legal',
   'Disclaimer' =>
@@ -70,123 +70,123 @@ $translations = array(
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
     'If you have any questions about what is or is not allowed, please ask an organizer.',
   'Have fun!' =>
-    'Have fun!',
+    'Passa-ho be!',
   'Name' =>
-    'Name',
+    'Nom',
   'Email' =>
     'Email',
   'Token' =>
     'Token',
   'Team Registration' =>
-    'Team Registration',
+    'Registre d\'Equip',
   'Team Name' =>
-    'Team Name',
+    'Nom de l\'equip',
   'Password' =>
-    'Password',
+    'Contrassenya',
   'Choose an Emblem' =>
-    'Choose an Emblem',
+    'Escollir un emblema',
   'Sign Up' =>
-    'Sign Up',
+    'Donar-se d\'alta',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Register to play Capture The Flag here. Once you have registered, you will be logged in.',
+    'Dona\'t d\'alta per a jugar al Capture The Flag aqui. Quan estiguis registrat accediràs a la sessió.',
   'Not Available' =>
-    'Not Available',
+    'No Disponible',
   'Team Registration will be open soon, stay tuned!' =>
-    'Team Registration will be open soon, stay tuned!',
+    'L\'equip es registrarà aviat, estigueu atents!',
   'Try Again' =>
-    'Try Again',
+    'Tornar a intentar-ho',
   'Select' =>
-    'Select',
+    'Selecciona',
   'Team Login' =>
-    'Team Login',
+    'Login de l\'equip',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ',
+    'Si us plau entreu les vostres credencials aqui. Si no esteu registrats, podeu fer-ho clickant a "Donar-vos d\'alta". ',
   'Team Login will be open soon, stay tuned!' =>
     'Team Login will be open soon, stay tuned!',
   'ERROR' =>
     'ERROR',
   'Start Over' =>
-    'Start Over',
+    'Començar de Nou',
   'Window is too small' =>
-    'Window is too small',
+    'La Finestra és massa petita',
   'For the best CTF experience, please make window size bigger.' =>
-    'For the best CTF experience, please make window size bigger.',
+    'Per a una millor experiència es recomenable fer el tamany de la finestra més gran',
   'Thank you.' =>
-    'Thank you.',
+    'Gràcies.',
   'Logout' =>
-    'Logout',
+    'Tanca la Sessió',
   'Registration' =>
-    'Registration',
+    'Registre',
   'Play CTF' =>
-    'Play CTF',
+    'Jugar al CTF',
   'Rules' =>
-    'Rules',
+    'Normes',
   //Translations for GameboardController
   'Admin' =>
     'Admin',
   'ADMIN' =>
     'ADMIN',
   'Navigation' =>
-    'Navigation',
+    'Navigació',
   'View Mode' =>
-    'View Mode',
+    'Manera De Visualitzar',
   'View mode' =>
-    'View mode',
+    'Mode de Visuatlització',
   'Tutorial' =>
     'Tutorial',
   'Scoreboard' =>
-    'Scoreboard',
+    'Taulell De Puntuació',
   'You' =>
-    'You',
+    'Tu',
   'Others' =>
-    'Others',
+    'Altri',
   'All' =>
     'All',
   'Leaderboard' =>
-    'Leaderboard',
+    'Taulell de Lideratges',
   'Announcements' =>
-    'Announcements',
+    'Anuncis',
   'Teams' =>
-    'Teams',
+    'Equips',
   'Filter' =>
-    'Filter',
+    'Filtrar',
   'Activity' =>
-    'Activity',
+    'Activitat',
   'Game Clock' =>
-    'Game Clock',
+    'Rellotge del Joc',
   //Translations for AdminController
   'Auto' =>
-    'Auto',
+    'Automàtic',
   'All Categories' =>
-    'All Categories',
+    'Totes les Categories',
   'Open' =>
-    'Open',
+    'Obrir',
   'Tokenized' =>
     'Tokenized',
   'Hour' =>
-    'Hour',
+    'Hora',
   'Hours' =>
-    'Hours',
+    'Hores',
   'Used by' =>
-    'Used by',
+    'Utilitzat per',
   'Used By' =>
-    'Used By',
+    'Fet servir',
   'Available' =>
-    'Available',
+    'Disponible',
   'Registration Tokens' =>
-    'Registration Tokens',
+    'Registrar Tokens',
   'Create More' =>
-    'Create More',
+    'Crear Més',
   'Export Available' =>
-    'Export Available',
+    'Exportar Disponibles',
   'Not started yet' =>
-    'Not started yet',
+    'Encara no ha començat',
   'Configuration' =>
-    'Configuration',
+    'Configuració',
   'Tokens' =>
     'Tokens',
   'Game Configuration' =>
-    'Game Configuration',
+    'Configuració del Joc',
   'OK' =>
     'OK',
   'status_' =>
@@ -196,255 +196,255 @@ $translations = array(
   'Off' =>
     'Off',
   'Player Names' =>
-    'Player Names',
+    'Noms dels Jugadors',
   'Players Per Team' =>
-    'Players Per Team',
+    'Jugadors per Equip',
   'Registration Type' =>
-    'Registration Type',
+    'Tipus de Registre',
   'Strong Passwords' =>
-    'Strong Passwords',
+    'Contrassenyes Fortes',
   'Team Selection' =>
-    'Team Selection',
+    'Selectió d\'Equip',
   'Game' =>
-    'Game',
+    'Joc',
   'Scoring' =>
-    'Scoring',
+    'Puntuacions',
   'Progressive Cycle (s)' =>
-    'Progressive Cycle (s)',
+    'Cicles Progressius (s)',
   'Refresh Gameboard' =>
-    'Refresh Gameboard',
+    'Actualitza el taulell de joc',
   'Default Bonus' =>
-    'Default Bonus',
+    'Bonus per Defecte',
   'Bases Cycle (s)' =>
-    'Bases Cycle (s)',
+    'Cicle de les Bases (s)',
   'Default Bonus Dec' =>
     'Default Bonus Dec',
   'Timer' =>
-    'Timer',
+    'Temporitzador',
   'Server Time' =>
-    'Server Time',
+    'Hora del Servidor',
   'Game Duration' =>
-    'Game Duration',
+    'Duració del Joc',
   'Begin Time' =>
-    'Begin Time',
+    'Hora de començar!',
   'Expected End Time' =>
-    'Expected End Time',
+    'S\'esperava la fi del Temps',
   'Language' =>
-    'Language',
+    'Idioma',
   'DELETE' =>
-    'DELETE',
+    'ESBORRAR',
   'Delete' =>
-    'Delete',
+    'Esborrar',
   'No Announcements' =>
-    'No Announcements',
+    'No Hi Ha Anuncis',
   'Game Controls' =>
-    'Game Controls',
+    'Controls del Joc',
   'Write New Announcement here' =>
-    'Write New Announcement here',
+    'Escriu un nou Anunci aqui',
   'Create' =>
-    'Create',
+    'Crear',
   'General' =>
     'General',
   'Back Up Database' =>
-    'Back Up Database',
+    'Realitzar copia de seguretat eBack Up Database',
   'Export Full Game' =>
-    'Export Full Game',
+    'Exportar el Joc Sencer',
   'Import Full Game' =>
-    'Import Full Game',
+    'Importar el Joc Sencer',
   'Import Teams' =>
-    'Import Teams',
+    'Importar Equips',
   'Export Teams' =>
-    'Export Teams',
+    'Exportar Equips',
   'Import Logos' =>
-    'Import Logos',
+    'Importar Logos',
   'Export Logos' =>
-    'Export Logos',
+    'Exportar Logos',
   'Import Levels' =>
-    'Import Levels',
+    'Importar Nivells',
   'Export Levels' =>
-    'Export Levels',
+    'Exportar Nivells',
   'Import Categories' =>
-    'Import Categories',
+    'Importar Categories',
   'Export Categories' =>
-    'Export Categories',
+    'Exportar Categories',
   'Levels' =>
-    'Levels',
+    'Nivells',
   'New Quiz Level' =>
-    'New Quiz Level',
+    'Nou nivell del Quiz',
   'Title' =>
-    'Title',
+    'Títol',
   'Question' =>
-    'Question',
+    'Pregunta',
   'Level title' =>
-    'Level title',
+    'Nivell_Titol',
   'Quiz question' =>
-    'Quiz question',
+    'Pregunta de Quiz',
   'Country' =>
-    'Country',
+    'Païs',
   'Answer' =>
-    'Answer',
+    'Resposta',
   'Points' =>
-    'Points',
+    'Punts',
   'Hint' =>
-    'Hint',
+    'Pista',
   'Hint Penalty' =>
-    'Hint Penalty',
+    'Penalització per Pista',
   'EDIT' =>
-    'EDIT',
+    'EDITAR',
   'All Quiz Levels' =>
-    'All Quiz Levels',
+    'Tots els Nivells de Quiz',
   'Filter By:' =>
-    'Filter By:',
+    'Filtrar Per:',
   'All Status' =>
-    'All Status',
+    'Tots els Estats',
   'Enabled' =>
-    'Enabled',
+    'Habilitat',
   'Disabled' =>
-    'Disabled',
+    'Deshabilitat',
   'Quiz Level' =>
-    'Quiz Level',
+    'Nivell del Quiz',
   'Show Answer' =>
-    'Show Answer',
+    'Mostrar Resposta',
   'Bonus' =>
     'Bonus',
   '-Dec' =>
     '-Dec',
   'Save' =>
-    'Save',
+    'Desar',
   'Quiz Management' =>
-    'Quiz Management',
+    'Gestió del Quiz',
   'Add Quiz Level' =>
-    'Add Quiz Level',
+    'Afegir Nivell de Quiz',
   'New Flag Level' =>
-    'New Flag Level',
+    'Nova Flag pel Nivell',
   'Description' =>
-    'Description',
+    'Descripció',
   'Level description' =>
-    'Level description',
+    'Descripció del Nivell',
   'Category' =>
-    'Category',
+    'Categoria',
   'Flag' =>
     'Flag',
   'flag' =>
     'flag',
   'All Flag Levels' =>
-    'All Flag Levels',
+    'Flags de Tots els Nivells',
   'New Attachment:' =>
-    'New Attachment:',
+    'Nou Adjunt:',
   'Attachment' =>
-    'Attachment',
+    'Adjunt',
   'Link' =>
-    'Link',
+    'Enllaç',
   'New Link:' =>
-    'New Link:',
+    'Nou Enllaç:',
   'Flag Level' =>
-    'Flag Level',
+    'Nivell de Flag',
   'Categories' =>
     'Categories',
   '+ Attachment' =>
-    '+ Attachment',
+    '+ Adjunt',
   '+ Link' =>
-    '+ Link',
+    '+ Enllaç',
   'Flags Management' =>
-    'Flags Management',
+    'Gestió de Flags',
   'Add Flag Level' =>
-    'Add Flag Level',
+    'Afegir flags i nivell',
   'New Base Level' =>
-    'New Base Level',
+    'Nou Nivell Base',
   'Keep Points' =>
-    'Keep Points',
+    'Conservar Punts',
   'Capture points' =>
-    'Capture points',
+    'Capturar punts',
   'All Base Levels' =>
-    'All Base Levels',
+    'Tots els nivells Base',
   'Base Level' =>
-    'Base Level',
+    'Nivell Base',
   'Bases Management' =>
     'Bases Management',
   'Add Base Level' =>
     'Add Base Level',
   'New Category' =>
-    'New Category',
+    'Nova Categoria',
   'Category: ' =>
     'Category: ',
   'Categories Management' =>
-    'Categories Management',
+    'Gestió de Categories',
   'Add Category' =>
-    'Add Category',
+    'Afegir Categoria',
   'All Countries' =>
-    'All Countries',
+    'Tots els Païssos',
   'In Use' =>
-    'In Use',
+    'En us',
   'In use' =>
-    'In use',
+    'En us',
   'Not Used' =>
-    'Not Used',
+    'No esta Utilitzat',
   'Yes' =>
-    'Yes',
+    'Si',
   'No' =>
     'No',
   'ISO Code' =>
-    'ISO Code',
+    'Codi ISO',
   'Countries Management' =>
-    'Countries Management',
+    'Gestió de Païssos',
   'No Team Names' =>
-    'No Team Names',
+    'No hi ha noms per l\'equip',
   'time' =>
     'time',
   'type' =>
-    'type',
+    'tipus',
   'pts' =>
     'pts',
   'Level' =>
-    'Level',
+    'Nivell',
   'level' =>
-    'level',
+    'nivell',
   'No Scores' =>
-    'No Scores',
+    'No hi ha Puntuacions',
   'Attempt' =>
-    'Attempt',
+    'Intent',
   'No Failures' =>
-    'No Failures',
+    'No hi ha fracassos',
   'Team' =>
     'Team',
   'team' =>
     'team',
   'Names' =>
-    'Names',
+    'Noms',
   'Scores' =>
-    'Scores',
+    'Puntuacions',
   'Failures' =>
-    'Failures',
+    'Fracassos',
   'New Team' =>
-    'New Team',
+    'Nou Equip',
   'Team Logo' =>
-    'Team Logo',
+    'Logo de l\'Equip',
   'Selected Logo:' =>
-    'Selected Logo:',
+    'Logo escollit:',
   'Select Logo' =>
-    'Select Logo',
+    'Seleccionar Logo',
   'All Teams' =>
-    'All Teams',
+    'Tots els Equips',
   'Protected' =>
-    'Protected',
+    'Protegit',
   'Score' =>
-    'Score',
+    'Puntiació',
   'Change Password' =>
-    'Change Password',
+    'Canviar contrassenya',
   'Admin Level' =>
-    'Admin Level',
+    'Nivell d\'administrador',
   'Visibility' =>
-    'Visibility',
+    'Visibilitat',
   'Team Management' =>
-    'Team Management',
+    'Gestió d\'equip',
   'Add Team' =>
-    'Add Team',
+    'Afegir Equip',
   'None' =>
-    'None',
+    'Cap',
   'Logo Name' =>
-    'Logo Name',
+    'Nom del Logo',
   'Logo Management' =>
-    'Logo Management',
+    'Gestor de Logos',
   'Session' =>
     'Session',
   'Cookie' =>
@@ -452,75 +452,75 @@ $translations = array(
   'Creation Time' =>
     'Creation Time',
   'Last Access' =>
-    'Last Access',
+    'Últim Acces',
   'Last Page Access' =>
-    'Last Page Access',
+    'Darrera Pàgina d\'Accés',
   'Data' =>
-    'Data',
+    'Dades',
   'Sessions' =>
     'Sessions',
   'entry' =>
     'entry',
   'No Entries' =>
-    'No Entries',
+    'No hi ha entrades',
   'Game Logs' =>
-    'Game Logs',
+    'Registres del Joc',
   'Game Logs Timeline' =>
-    'Game Logs Timeline',
+    'Linea de temps dels registres del Joc',
   'End Game' =>
-    'End Game',
+    'Finalitzar Joc',
   'Begin Game' =>
     'Begin Game',
   'Game Admin' =>
-    'Game Admin',
+    'Administrador del Joc',
   'Controls' =>
     'Controls',
   'Quiz' =>
-    'Quiz',
+    'Preguntes i Respostes',
   'Flags' =>
     'Flags',
   'Bases' =>
     'Bases',
   'Countries' =>
-    'Countries',
+    'Països',
   'Logos' =>
     'Logos',
   //Translations for inc/* and inc/gameboard/*
   'captured' =>
     'captured',
   'Status' =>
-    'Status',
+    'Estat',
   'Completed' =>
-    'Completed',
+    'Completat',
   'Remaining' =>
-    'Remaining',
+    'Restant',
   'Start' =>
-    'Start',
+    'Començar',
   'End' =>
-    'End',
+    'Acabar',
   'Rank' =>
-    'Rank',
+    'Rang',
   'pts' =>
     'pts', //points
   'Your Rank' =>
-    'Your Rank',
+    'El teu Rang',
   'Your Score' =>
-    'Your Score',
+    'La teva puntuació',
   'Everyone' =>
-    'Everyone',
+    'Tothom',
   'Your Team' =>
-    'Your Team',
+    'El Teu Equip',
   'Captured' =>
-    'Captured',
+    'Catpurats',
   'Initiating' =>
-    'Initiating',
+    'Iniciant',
   'run : > boot_sequence' =>
     'run : > boot_sequence',
   'Extracting' =>
-    'Extracting',
+    'Extraient',
   //Translations for Utils.php's time_ago() function
   'just now' =>
-    'just now',
+    'Ara mateix',
   'd' =>
     'd', //day
   'hr' =>
@@ -543,21 +543,21 @@ $translations = array(
   'begin_' =>
     'begin_',
   'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start' =>
-    'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start',
+    'Estas segur que vols començar el joc? Els registres s\'sesborraran i el taulell de puntuacions apareixera progressivament',
   'end_' =>
     'end_',
   'Are you sure you want to finish the current game?' =>
-    'Are you sure you want to finish the current game?',
+    'Estas segur que vols finalitzar el joc actual?',
   'Are you sure you want to logout from the game?' =>
-    'Are you sure you want to logout from the game?',
+    'Estas segur que vols tancar la sessió actual del joc?',
   'Saved' =>
-    'Saved',
+    'Desat',
   'All changes have been successfully saved.' =>
-    'All changes have been successfully saved.',
+    'Tots els canvis s\'shan gravat de forma satisfactoria',
   'Error' =>
     'Error',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'Sorry your form was not saved. Please correct the all errors and save again.',
+    'Ho sentim, el formulari no s\'ha desat. Si us plau corregiu els errors i premeu "Desar" de nou',
   'cancel_' =>
     'cancel_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
@@ -633,29 +633,29 @@ $translations = array(
   'Captures' =>
     'Captures',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.',
+    'Prem Mes[+] per fer apropar el Zoom o Menys[-] per allunyar.',
   'Click and Drag to move left, right, up and down.' =>
-    'Click and Drag to move left, right, up and down.',
+    'Clicka i arrossega per moure esquerra, dreta, amunt i avall',
   'Zoom' =>
     'Zoom',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
     'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".',
   'Command_Line' =>
-    'Command_Line',
+    'Linea_De_Comandes',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.',
-  'Track your competition by clicking "scoreboard" to access real-time game statistics and graphs.' =>
-    'Track your competition by clicking "scoreboard" to access real-time game statistics and graphs.',
+    'Prem "Nav" per accedir als enllaços principals de navegació (Normes del Joc, Registre, Blog, Feines && ..)',
+  'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
+    'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.',
   'Have fun, be the best and conquer the world.' =>
-    'Have fun, be the best and conquer the world.',
+    'Diverteix-te, sigues el millor i conquereix el món.',
   'Game_On' =>
     'Game_On',
   'tutorial_' =>
     'tutorial_',
   'Next' =>
-    'Next',
+    'Següent',
   'Skip to play' =>
-    'Skip to play',
+    'Salta per començar a jugar',
   'Powered By Facebook' =>
     'Powered By Facebook',
 );

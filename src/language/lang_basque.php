@@ -3,192 +3,192 @@
 /* HH_IGNORE_ERROR[1002] */
 $translations = array(
   'date and time format' =>
-    'H:i:s D m/d/Y', //used by date() function
+    'H:i:s D d/m/Y', //used by date() function
   //Translations for IndexController
   'Facebook CTF' =>
     'Facebook CTF',
   'Conquer the world' =>
-    'Conquer the world',
+    'Konkistatzen mundu',
   'Play' =>
     'Play',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.',
+    'Ongi etorri Facebook Capture bandera Lehiaketan. Beheko "Play," zuk egingo dira CTF erronka ofiziala sartu. Zorte ona zure konkista.',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    'Get ready for the CTF to start and access the gameboard now!',
+    'Talde CTF hasteko eta sartzeko gameboard orain prest!',
   'Gameboard' =>
-    'Gameboard',
+    'Game Taula',
   'Register Team' =>
-    'Register Team',
+    'Eman izena Team',
   'Get ready for the CTF to start and register your team now!' =>
-    'Get ready for the CTF to start and register your team now!',
+    'Talde hasteko eta erregistratu zure taldea orain CTF prest!',
   'Login' =>
-    'Login',
+    'Saioa hasi',
   'Soon' =>
-    'Soon',
+    'Handik',
   'Upcoming Game' =>
-    'Upcoming Game',
+    'Datozen Game',
   '_days' =>
-    '_days',
+    '_egun',
   '_hours' =>
-    '_hours',
+    '_ordu',
   '_minutes' =>
-    '_minutes',
+    '_minutu',
   '_seconds' =>
-    '_seconds',
+    '_segundotan',
   'Official CTF Rules' =>
-    'Official CTF Rules',
+    'CTF arauak Ofiziala',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Following actions are prohibited, unless explicitly told otherwise by event Admins.',
+    'Hurrengo ekintzak debekatuta daude, esplizituki esan ezean Gertaera Kudeatzaileek arabera.',
   'Rule' =>
-    'Rule',
+    'Arau',
   'Cooperation' =>
-    'Cooperation',
+    'Lankidetza',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.',
+    'Ez lankidetza taldeen arteko kontuak independente batera. gakoak partekatzea edo iruzurra agerian utziz ukituak emanez beste taldeei, ez du ezer egingo.',
   'Attacking Scoreboard' =>
-    'Attacking Scoreboard',
+    'erasotu Scoreboard',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.',
+    'Ez dago lehiaketa azpiegitura erasotzeko. bugs edo vulns aurkitzen ez bada, mesedez ohartarazi lehiaketaren antolatzaileek berehala.',
   'Sabotage' =>
-    'Sabotage',
+    'sabotaje',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.',
+    'Absolutely no lehian beste taldeetako sabotaging, edo inolaz beren aurrerapen independente oztopatuz ere.',
   'Bruteforcing' =>
-    'Bruteforcing',
+    'brute behartzea',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'No brute forcing of challenge flag/ keys against the scoring site.',
+    'Ez brute erronka banderaren behartuz / puntuazio gunean aurka gakoak.',
   'Denial Of Service' =>
-    'Denial Of Service',
+    'Zerbitzua ukatzea',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'DoSing the CTF platform or any of the challenges is forbidden.',
+    'CTF plataforma dosifikazio edo erronkei edozein debekatuta dago.',
   'Legal' =>
-    'Legal',
+    'Lege',
   'Disclaimer' =>
-    'Disclaimer',
+    'Lege-oharra',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.',
+    'lehiaketan parte hartuz, Facebook eta bere langile, eta hosting erakundearen askatzeko edozein eta guztiak erantzukizunik, erreklamazio edo edozein motatako ekintzak ezgaitasunaren lesioak, kalteak edo galerak pertsonen eta ondasunen zein konexio iraunkorra daitezke for from onartzen duzu lehiaketa. Onartzen duzu eta ados Facebook et al, ez da tekniko, hardware edo software hutsegiteak, edo beste akatsak edo bertan daiteke lehiaketaren lotuta gertatzen arazoak erantzule.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
-    'If you have any questions about what is or is not allowed, please ask an organizer.',
+    'zer da edo ez da onartzen buruzko edozein zalantza izanez gero, galdetu du antolatzaile.',
   'Have fun!' =>
-    'Have fun!',
+    'Ondo pasa!',
   'Name' =>
-    'Name',
+    'Izena',
   'Email' =>
-    'Email',
+    'Emaila',
   'Token' =>
     'Token',
   'Team Registration' =>
-    'Team Registration',
+    'Team Izen ematea',
   'Team Name' =>
-    'Team Name',
+    'Team izena',
   'Password' =>
-    'Password',
+    'Pasahitza',
   'Choose an Emblem' =>
-    'Choose an Emblem',
+    'Aukeratu ikur bat',
   'Sign Up' =>
-    'Sign Up',
+    'Izena eman',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Register to play Capture The Flag here. Once you have registered, you will be logged in.',
+    'Eman izena Capture bandera hemen jolasteko. Behin erregistratuta, izango duzu saioa egingo.',
   'Not Available' =>
     'Not Available',
   'Team Registration will be open soon, stay tuned!' =>
-    'Team Registration will be open soon, stay tuned!',
+    'Team Izen-ematea zabalik izango da laster, egonaldia sintonizatuta!',
   'Try Again' =>
-    'Try Again',
+    'Saiatu berriro',
   'Select' =>
-    'Select',
+    'Aukeratu',
   'Team Login' =>
-    'Team Login',
+    'Team Sartu',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ',
+    'Mesedez, sartu hemendik. zuk ez baduzu izena eman, egin ahal izango duzu klik eginez "Erregistratu" beheko.',
   'Team Login will be open soon, stay tuned!' =>
-    'Team Login will be open soon, stay tuned!',
+    'Team Sartu zabalik izango da laster, egonaldia sintonizatuta!',
   'ERROR' =>
-    'ERROR',
+    'ERROREA',
   'Start Over' =>
-    'Start Over',
+    'Berriro hasi',
   'Window is too small' =>
-    'Window is too small',
+    'Leiho txikiegia da',
   'For the best CTF experience, please make window size bigger.' =>
-    'For the best CTF experience, please make window size bigger.',
+    'du CTF esperientzia onena lortzeko, mesedez, egin leihoaren tamaina handiagoa.',
   'Thank you.' =>
-    'Thank you.',
+    'Eskerrik asko.',
   'Logout' =>
-    'Logout',
+    'Saioa amaitu',
   'Registration' =>
-    'Registration',
+    'Izen-ematea',
   'Play CTF' =>
     'Play CTF',
   'Rules' =>
-    'Rules',
+    'Arauak',
   //Translations for GameboardController
   'Admin' =>
     'Admin',
   'ADMIN' =>
     'ADMIN',
   'Navigation' =>
-    'Navigation',
+    'Nabigazioa',
   'View Mode' =>
-    'View Mode',
+    'Ikusi Modua',
   'View mode' =>
-    'View mode',
+    'Ikusi modua',
   'Tutorial' =>
-    'Tutorial',
+    'Tutoretza',
   'Scoreboard' =>
     'Scoreboard',
   'You' =>
-    'You',
+    'Duzu',
   'Others' =>
-    'Others',
+    'Beste batzuk',
   'All' =>
-    'All',
+    'Guztiak',
   'Leaderboard' =>
-    'Leaderboard',
+    'Goiburu',
   'Announcements' =>
-    'Announcements',
+    'Deialdiak',
   'Teams' =>
-    'Teams',
+    'Taldeak',
   'Filter' =>
     'Filter',
   'Activity' =>
-    'Activity',
+    'Jarduera',
   'Game Clock' =>
-    'Game Clock',
+    'Game Erlojuaren',
   //Translations for AdminController
   'Auto' =>
     'Auto',
   'All Categories' =>
-    'All Categories',
+    'Kategoria Guztiak',
   'Open' =>
     'Open',
   'Tokenized' =>
     'Tokenized',
   'Hour' =>
-    'Hour',
+    'Ordua',
   'Hours' =>
-    'Hours',
+    'Ordutegia',
   'Used by' =>
-    'Used by',
+    'Erabilitako arabera',
   'Used By' =>
-    'Used By',
+    'Erabilitako Arabera',
   'Available' =>
-    'Available',
+    'Eskuragarri',
   'Registration Tokens' =>
-    'Registration Tokens',
+    'Izen-ematea Tokens',
   'Create More' =>
-    'Create More',
+    'Sortu Gehiago',
   'Export Available' =>
-    'Export Available',
+    'Export Eskuragarri',
   'Not started yet' =>
-    'Not started yet',
+    'Hasi gabe oraindik',
   'Configuration' =>
-    'Configuration',
+    'Konfigurazioa',
   'Tokens' =>
     'Tokens',
   'Game Configuration' =>
-    'Game Configuration',
+    'Game Konfigurazioa',
   'OK' =>
-    'OK',
+    'Ondo Da',
   'status_' =>
     'status_',
   'On' =>
@@ -196,115 +196,99 @@ $translations = array(
   'Off' =>
     'Off',
   'Player Names' =>
-    'Player Names',
+    'Jokalarien Izenak',
   'Players Per Team' =>
-    'Players Per Team',
+    'Team Per Jokalariak',
   'Registration Type' =>
-    'Registration Type',
+    'TErregistro Mota',
   'Strong Passwords' =>
     'Strong Passwords',
   'Team Selection' =>
-    'Team Selection',
+    'Team Hautaketa',
   'Game' =>
     'Game',
   'Scoring' =>
-    'Scoring',
+    'Puntuazio',
   'Progressive Cycle (s)' =>
-    'Progressive Cycle (s)',
+    'Progressive Zikloak',
   'Refresh Gameboard' =>
-    'Refresh Gameboard',
+    'Freskatu Game Kontseilua',
   'Default Bonus' =>
-    'Default Bonus',
+    'Bonus Default',
   'Bases Cycle (s)' =>
-    'Bases Cycle (s)',
+    'Oinarriak Zikloak',
   'Default Bonus Dec' =>
-    'Default Bonus Dec',
+    'Bonus Default Dec',
   'Timer' =>
     'Timer',
   'Server Time' =>
-    'Server Time',
+    'Server Ordua',
   'Game Duration' =>
     'Game Duration',
   'Begin Time' =>
-    'Begin Time',
+    'Hasi Time',
   'Expected End Time' =>
-    'Expected End Time',
+    'Espero zen End Time',
   'Language' =>
-    'Language',
+    'Hizkuntza',
   'DELETE' =>
-    'DELETE',
+    'eZABATU',
   'Delete' =>
-    'Delete',
+    'ezabatu',
   'No Announcements' =>
-    'No Announcements',
+    'Ez Iragarpenak',
   'Game Controls' =>
-    'Game Controls',
+    'Game Kontrolak',
   'Write New Announcement here' =>
-    'Write New Announcement here',
+    'Idatzi Anuntzio Berria hemen',
   'Create' =>
-    'Create',
+    'Sortu',
   'General' =>
     'General',
   'Back Up Database' =>
-    'Back Up Database',
-  'Export Full Game' =>
-    'Export Full Game',
-  'Import Full Game' =>
-    'Import Full Game',
-  'Import Teams' =>
-    'Import Teams',
-  'Export Teams' =>
-    'Export Teams',
-  'Import Logos' =>
-    'Import Logos',
-  'Export Logos' =>
-    'Export Logos',
-  'Import Levels' =>
-    'Import Levels',
-  'Export Levels' =>
-    'Export Levels',
-  'Import Categories' =>
-    'Import Categories',
-  'Export Categories' =>
-    'Export Categories',
+    'Backup Database',
+  'Export Game' =>
+    'Export Game',
+  'Import Game' =>
+    'Inportatu Game',
   'Levels' =>
-    'Levels',
+    'Mailak',
   'New Quiz Level' =>
-    'New Quiz Level',
+    'New Quiz Maila',
   'Title' =>
-    'Title',
+    'Izenburua',
   'Question' =>
-    'Question',
+    'Galdera',
   'Level title' =>
-    'Level title',
+    'Maila izenburua',
   'Quiz question' =>
-    'Quiz question',
+    'Quiz galdera',
   'Country' =>
-    'Country',
+    'Herriko',
   'Answer' =>
-    'Answer',
+    'Erantzuna',
   'Points' =>
-    'Points',
+    'Puntuak',
   'Hint' =>
     'Hint',
   'Hint Penalty' =>
-    'Hint Penalty',
+    'Hint Zigorra',
   'EDIT' =>
     'EDIT',
   'All Quiz Levels' =>
-    'All Quiz Levels',
+    'Quiz Mailak Guztiak',
   'Filter By:' =>
     'Filter By:',
   'All Status' =>
-    'All Status',
+    'Status guztiak',
   'Enabled' =>
-    'Enabled',
+    'Gaituta',
   'Disabled' =>
-    'Disabled',
+    'Ezinduen',
   'Quiz Level' =>
-    'Quiz Level',
+    'Quiz Maila',
   'Show Answer' =>
-    'Show Answer',
+    'Erakutsi Erantzuna',
   'Bonus' =>
     'Bonus',
   '-Dec' =>
@@ -312,215 +296,215 @@ $translations = array(
   'Save' =>
     'Save',
   'Quiz Management' =>
-    'Quiz Management',
+    'Quiz Kudeaketa',
   'Add Quiz Level' =>
-    'Add Quiz Level',
+    'Gehitu Quiz Maila',
   'New Flag Level' =>
-    'New Flag Level',
+    'Bandera Maila New',
   'Description' =>
-    'Description',
+    'Deskribapena',
   'Level description' =>
-    'Level description',
+    'Maila azalpena',
   'Category' =>
-    'Category',
+    'Kategoria',
   'Flag' =>
-    'Flag',
+    'Bandera',
   'flag' =>
-    'flag',
+    'bandera',
   'All Flag Levels' =>
-    'All Flag Levels',
+    'Bandera Mailak Guztiak',
   'New Attachment:' =>
-    'New Attachment:',
+    'Attachment New:',
   'Attachment' =>
     'Attachment',
   'Link' =>
     'Link',
   'New Link:' =>
-    'New Link:',
+    'Link New:',
   'Flag Level' =>
-    'Flag Level',
+    'Bandera Maila',
   'Categories' =>
-    'Categories',
+    'Kategoriak',
   '+ Attachment' =>
     '+ Attachment',
   '+ Link' =>
     '+ Link',
   'Flags Management' =>
-    'Flags Management',
+    'Banderak Kudeaketa',
   'Add Flag Level' =>
-    'Add Flag Level',
+    'Gehitu Bandera Maila',
   'New Base Level' =>
-    'New Base Level',
+    'Base Maila New',
   'Keep Points' =>
-    'Keep Points',
+    'Jarrai Puntuak',
   'Capture points' =>
-    'Capture points',
+    'Capture puntuak',
   'All Base Levels' =>
-    'All Base Levels',
+    'Base Mailak Guztiak',
   'Base Level' =>
-    'Base Level',
+    'Base Maila',
   'Bases Management' =>
-    'Bases Management',
+    'Oinarriak Kudeaketa',
   'Add Base Level' =>
-    'Add Base Level',
+    'Gehitu Oinarrizko Mailari',
   'New Category' =>
-    'New Category',
+    'Kategoria Berria',
   'Category: ' =>
-    'Category: ',
+    'Kategoria: ',
   'Categories Management' =>
-    'Categories Management',
+    'Kategoriak Kudeaketa',
   'Add Category' =>
-    'Add Category',
+    'Gehitu Kategoria',
   'All Countries' =>
-    'All Countries',
+    'Herrialdeak Guztiak',
   'In Use' =>
-    'In Use',
+    'In Erabilera',
   'In use' =>
-    'In use',
+    'In erabilera',
   'Not Used' =>
-    'Not Used',
+    'Erabili Gabe',
   'Yes' =>
-    'Yes',
+    'Bai',
   'No' =>
-    'No',
+    'Ez',
   'ISO Code' =>
-    'ISO Code',
+    'Kodea ISO',
   'Countries Management' =>
-    'Countries Management',
+    'Herriak Kudeaketa',
   'No Team Names' =>
     'No Team Names',
   'time' =>
-    'time',
+    'denbora',
   'type' =>
-    'type',
+    'mota',
   'pts' =>
     'pts',
   'Level' =>
-    'Level',
+    'Maila',
   'level' =>
-    'level',
+    'maila',
   'No Scores' =>
-    'No Scores',
+    'Ez Puntuazioak',
   'Attempt' =>
-    'Attempt',
+    'Saiakera',
   'No Failures' =>
-    'No Failures',
+    'Ez Matxurak',
   'Team' =>
     'Team',
   'team' =>
     'team',
   'Names' =>
-    'Names',
+    'Izenak',
   'Scores' =>
-    'Scores',
+    'Puntuazioak',
   'Failures' =>
-    'Failures',
+    'Porrotak',
   'New Team' =>
-    'New Team',
+    'Team New',
   'Team Logo' =>
-    'Team Logo',
+    'Team Logotipoa',
   'Selected Logo:' =>
-    'Selected Logo:',
+    'Aukeratutako Logotipoa:',
   'Select Logo' =>
-    'Select Logo',
+    'Aukeratu Logotipoa',
   'All Teams' =>
-    'All Teams',
+    'Taldeak Guztiak',
   'Protected' =>
-    'Protected',
+    'Babestutako',
   'Score' =>
-    'Score',
+    'Puntuazioa',
   'Change Password' =>
-    'Change Password',
+    'Aldatu Pasahitza',
   'Admin Level' =>
-    'Admin Level',
+    'Admin Maila',
   'Visibility' =>
-    'Visibility',
+    'Ikusgarritasuna',
   'Team Management' =>
-    'Team Management',
+    'Team Kudeaketa',
   'Add Team' =>
-    'Add Team',
+    'Gehitu Team',
   'None' =>
-    'None',
+    'Bat ere ez',
   'Logo Name' =>
-    'Logo Name',
+    'Logo Izenao',
   'Logo Management' =>
-    'Logo Management',
+    'Logo Kudeaketa',
   'Session' =>
     'Session',
   'Cookie' =>
     'Cookie',
   'Creation Time' =>
-    'Creation Time',
+    'Sorkuntza Time',
   'Last Access' =>
-    'Last Access',
+    'Azken Access',
   'Last Page Access' =>
-    'Last Page Access',
+    'Azken Page Access',
   'Data' =>
-    'Data',
+    'Datuak',
   'Sessions' =>
     'Sessions',
   'entry' =>
-    'entry',
+    'istorio',
   'No Entries' =>
-    'No Entries',
+    'sarrerarik ez',
   'Game Logs' =>
-    'Game Logs',
+    'Game Agerraldiak',
   'Game Logs Timeline' =>
-    'Game Logs Timeline',
+    'Game Agerraldiak Timeline',
   'End Game' =>
     'End Game',
   'Begin Game' =>
-    'Begin Game',
+    'Hasi Jokoa',
   'Game Admin' =>
     'Game Admin',
   'Controls' =>
-    'Controls',
+    'Kontrolak',
   'Quiz' =>
     'Quiz',
   'Flags' =>
-    'Flags',
+    'Banderak',
   'Bases' =>
-    'Bases',
+    'Oinarriak',
   'Countries' =>
-    'Countries',
+    'Herriak',
   'Logos' =>
     'Logos',
   //Translations for inc/* and inc/gameboard/*
   'captured' =>
-    'captured',
+    'harrapatu',
   'Status' =>
-    'Status',
+    'Egoera',
   'Completed' =>
-    'Completed',
+    'Osatua',
   'Remaining' =>
-    'Remaining',
+    'Geratzen',
   'Start' =>
-    'Start',
+    'Hasiera',
   'End' =>
-    'End',
+    'Amaiera',
   'Rank' =>
     'Rank',
   'pts' =>
     'pts', //points
   'Your Rank' =>
-    'Your Rank',
+    'zure Rank',
   'Your Score' =>
-    'Your Score',
+    'zure Puntuazioa',
   'Everyone' =>
-    'Everyone',
+    'Guztiek',
   'Your Team' =>
-    'Your Team',
+    'zure Team',
   'Captured' =>
-    'Captured',
+    'Ateratako',
   'Initiating' =>
-    'Initiating',
+    'sustatzaileak',
   'run : > boot_sequence' =>
     'run : > boot_sequence',
   'Extracting' =>
-    'Extracting',
+    'ateratzean',
   //Translations for Utils.php's time_ago() function
   'just now' =>
-    'just now',
+    'Oraintxe',
   'd' =>
     'd', //day
   'hr' =>
@@ -530,7 +514,7 @@ $translations = array(
   'sec' =>
     'sec', //second
   'ds' =>
-    'd', //days
+    'ds', //days
   'hrs' =>
     'hrs', //hours
   'mins' =>
@@ -538,124 +522,124 @@ $translations = array(
   'secs' =>
     'secs', //seconds
   'ago' =>
-    'ago',
+    'duela',
   //Translations for ModalControllers
   'begin_' =>
-    'begin_',
+    'hasiko_',
   'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start' =>
-    'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start',
+    'Ziur off alboratzen jokoa nahi duzu? Agerraldiak garbituko dira eta indize progresiboa hasiko da',
   'end_' =>
     'end_',
   'Are you sure you want to finish the current game?' =>
-    'Are you sure you want to finish the current game?',
+    'Ziur uneko jokoa amaitzea nahi duzu?',
   'Are you sure you want to logout from the game?' =>
-    'Are you sure you want to logout from the game?',
+    'Ziur joko du saioa amaitu nahi duzu?',
   'Saved' =>
-    'Saved',
+    'gordetako',
   'All changes have been successfully saved.' =>
-    'All changes have been successfully saved.',
+    'Aldaketa guztiak ondo gorde dira.',
   'Error' =>
     'Error',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'Sorry your form was not saved. Please correct the all errors and save again.',
+    'Sentitzen dut, zure inprimaki ez da gorde. Zuzendu akats guztiak eta gorde berriro.',
   'cancel_' =>
-    'cancel_',
+    'bertan behera_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
-    'Are you sure you want to cancel? You have unsaved changes that will be reverted.',
+    'Ziur bertan behera utzi nahi duzula? itzulia egingo dira aldaketak gorde.',
   'choose_logo' =>
-    'choose_logo',
+    'aukeratu_logo',
   'captured_' =>
-    'captured_',
+    'harrapatu_',
   'flag_owner_' =>
-    'flag_owner_',
+    'bandera_jabea_',
   'INACTIVE' =>
     'INACTIVE',
   'PTS' =>
     'PTS',
   'category' =>
-    'category',
+    'kategoria',
   'capture_' =>
-    'capture_',
+    'harrapaketa_',
   'Insert your answer' =>
-    'Insert your answer',
+    'Sartu zure erantzuna',
   'Request Hint' =>
-    'Request Hint',
+    'Eskatu Hint',
   'Submit' =>
-    'Submit',
+    'Bidali',
   'hint_' =>
-    'hint_',
+    'iradokizun_',
   'first_capture' =>
-    'first_capture',
+    'lehen_harrapaketa',
   'completed_by' =>
-    'completed_by',
+    'amaitu_arabera',
   'scoreboard_' =>
-    'scoreboard_',
+    'indizea_',
   'filter_' =>
     'filter_',
   'rank_' =>
     'rank_',
   'team_name_' =>
-    'team_name_',
+    'taldea_izen_',
   'quiz_pts_' =>
     'quiz_pts_',
   'flag_pts_' =>
-    'flag_pts_',
+    'bandera_pts_',
   'base_pts_' =>
     'base_pts_',
   'total_pts_' =>
-    'total_pts_',
+    'guztira_pts_',
   'team_' =>
     'team_',
   'team_members' =>
-    'team_members',
+    'team_kideak',
   'base_pts' =>
     'base_pts',
   'quiz_pts' =>
     'quiz_pts',
   'flag_pts' =>
-    'flag_pts',
+    'bandera_pts',
   'total_pts' =>
-    'total_pts',
+    'guztira_pts',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
-    'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.',
+    'Tool tabernak gameboard ertzetan kokatuta dago. Ukitu kategoria bat hedatzeko eta tresna barra bakoitza itxi.',
   'Tool_Bars' =>
-    'Tool_Bars',
+    'Tool_Tabernak',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
-    'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.',
+    'Ukitu "joko erloju" denbora segimendua egiteko jokatzeko zehar. Ez utzi denbora lortu duzun onena.',
   'Game_Clock' =>
-    'Game_Clock',
+    'Joko_Erlojuaren',
   'Countries marked with an ' =>
-    'Countries marked with an ',
+    'Herriak batekin markatutako ',
   'are captured by you.' =>
-    'are captured by you.',
+    'zara harrapatu.',
   ' are owned by others.' =>
-    ' are owned by others.',
+    ' diren beste batzuk jabetzakoa.',
   'Captures' =>
     'Captures',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.',
+    'Tap Plus[+] hurbiltzeko. Tap Minus[-] txikiagotzeko.',
   'Click and Drag to move left, right, up and down.' =>
-    'Click and Drag to move left, right, up and down.',
+    'Egin klik eta arrastatu ezkerreko mugitu, eskuinera, gora eta behera.',
   'Zoom' =>
     'Zoom',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".',
+    'Ukitu Forward Slash [/] ordenagailu komandoak aktibatzeko. komandoak direnen zerrenda "arauak" azpian aurki daiteke.',
   'Command_Line' =>
-    'Command_Line',
+    'Komando_Line',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.',
-  'Track your competition by clicking "scoreboard" to access real-time game statistics and graphs.' =>
-    'Track your competition by clicking "scoreboard" to access real-time game statistics and graphs.',
+    'Egin klik "Nav" nagusia nabigazioa Play, Izen-ematea, Blog arauak, Enplegua eta gehiago bezalako estekak sartzeko.',
+  'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
+    'Track zure lehiaketa "indize" klikatzen denbora errealean jokoa estatistikak eta grafikoak sartzeko moduan.',
   'Have fun, be the best and conquer the world.' =>
-    'Have fun, be the best and conquer the world.',
+    'Have fun, onena izan eta mundua konkistatzeko.',
   'Game_On' =>
     'Game_On',
   'tutorial_' =>
-    'tutorial_',
+    'tutoretza_',
   'Next' =>
-    'Next',
+    'Hurrengoa',
   'Skip to play' =>
     'Skip to play',
   'Powered By Facebook' =>
-    'Powered By Facebook',
+    'Nork Facebook By',
 );
