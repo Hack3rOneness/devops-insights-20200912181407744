@@ -12,63 +12,63 @@ $translations = array(
   'Play' =>
     'Spielen',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Willkommen beim Facebook Capture The Flag Wettkampf. Sobald du auf "Spielen" klickst, trittst du die offizielle CTF-Herausforderung an. Viel Erfolg bei deiner Eroberung.',
+    'Willkommen beim "Capture The Flag"-Wettkampf von Facebook. Klicke auf "Spielen" und stelle dich der offiziellen CTF-Herausforderung. Auf eine erfolgreiche Eroberung!',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    'Mach dich bereit für den CTF-Wettkampf und betrete nun das Spielbrett!',
+    'Bist du bereit für den CTF-Wettkampf? Dann betritt das Spielbrett jetzt!',
   'Gameboard' =>
     'Spielbrett',
   'Register Team' =>
     'Team registrieren',
   'Get ready for the CTF to start and register your team now!' =>
-    'Mach dich bereit für den CTF-Wettkamp und erstelle jetzt dein Team!',
+    'Mach dich bereit für den CTF-Wettkampf und registriere jetzt dein Team!',
   'Login' =>
     'Anmelden',
   'Soon' =>
     'Demnächst',
   'Upcoming Game' =>
-    'Die nächsten Spiele',
+    'Bevorstehendes Spiel',
   '_days' =>
-    '_tage',
+    '_Tage',
   '_hours' =>
-    '_stunden',
+    '_Stunden',
   '_minutes' =>
-    '_minuten',
+    '_Minuten',
   '_seconds' =>
-    '_sekunden',
+    '_Sekunden',
   'Official CTF Rules' =>
     'Offizielle CTF-Regeln',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Folgende Aktionen sind nicht erlaubt, sofern diese nicht außdrücklich von den Admins anders mitgeteilt wurden.',
+    'Nachfolgende Aktionen sind nicht zulässig, es sei denn sie wären ausdrücklich von Event-Administratoren genehmigt.',
   'Rule' =>
     'Regel',
   'Cooperation' =>
     'Zusammenarbeit',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Keine Zusammenarbeit zwischen Teams mit unabhängigen Konten. Das Austauschen von Schlüsseln oder die Bereitstellung aufschlussreicher Hinweise zu anderen Teams ist Betrug, also lass es sein.',
+    'Teams mit unabhängigen Konten dürfen nicht zusammenarbeiten. Schlüssel mit anderen Teams zu teilen oder ihnen hilfreiche Tipps zu geben, ist Betrug. Tu es nicht.',
   'Attacking Scoreboard' =>
-    'Attacken-Punktetafel',
+    'Anzeigetafel der Angriffe',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'Kein Angriff auf die Konkurrenz-Infrastruktur. Wenn du Fehler oder Schwachstellen gefunden hast, bitte informiere sofort den Wettbewerbsveranstalter.',
+    'Die Infrastruktur der Konkurrenz darf nicht angegriffen werden. Wenn du Fehler oder Schwachstellen findest, informiere bitte sofort die Organisatoren des Wettbewerbs.',
   'Sabotage' =>
     'Sabotage',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'Keine Sabotage der gegnerischen Teams, dass in irgendeiner Weise den Fortschritt behindern könnte.',
+    'Konkurrierende Teams zu sabotieren oder ihren unabhängigen Fortschritt in irgendeiner Weise zu behindern, ist nicht zulässig.',
   'Bruteforcing' =>
     'Brute-Force-Angriffe',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'Keine Brute-Force-Angriffe von Flaggen- und Schlüssel-Herausforderungen gegen die Punktetafelseite.',
+    'Brute-Force-Angriffe auf Flaggen- oder Schlüssel-Herausforderungen der Site, die Punkte erzielt, sind nicht zulässig.',
   'Denial Of Service' =>
     'Denial of Service',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'DoSing der CTF-Plattform oder gegen irgendwelche Herausforderungen ist nicht erlaubt.',
+    'DoS-Angriffe auf die CTF-Plattform oder auf eine der Herausforderungen sind nicht zulässig.',
   'Legal' =>
-    'Impressum',
+    'Rechtsbelehrung',
   'Disclaimer' =>
-    'Disclaimer',
+    'Haftungsausschluss',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'Durch die Teilnahme am Wettbewerb erklärst du dich von Facebook und seine Mitarbeiter zu lösen. Du hast keinerlei Ansprüche gegenüber der Hosting-Organisation. Wir übernehmen keinerlei Haftung jeglicher Art für Verletzungen, Schäden oder Verluste an Personen- und Sachschäden, die im Zusammenhang mit dem Wettbewerb auftreten können. Du stimmt hiermit zu, dass Facebook für technische, Hardware- oder Softwarefehler nicht verantwortlich ist, oder andere Fehler oder Probleme, die im Zusammenhang mit dem Wettbewerb auftreten können.',
+    'Durch die Teilnahme am Wettbewerb erklärst du dich bereit, Facebook, die Mitarbeiter von Facebook sowie das Hosting-Unternehmen von jeglicher Haftung, allen Ansprüchen sowie Klagen jedweder Art in Hinblick auf Personen- und Sachschäden sowie Verlusten, die im Zusammenhang mit dem Wettbewerb auftreten können, freizustellen. Du erkennst an und erklärst dich einverstanden, dass Facebook et al nicht für technische, Hardware- und Softwarefehler oder andere Fehler oder Probleme, die im Zusammenhang mit dem Wettbewerb auftreten können, verantwortlich sind.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
-    'Solltest du Fragen haben was erlaubt und was nicht erlaubt ist, frage bitte einen Veranstalter.',
+    'Bei Fragen dazu, was zulässig und was nicht zulässig ist, wende dich bitte an einen Veranstalter.',
   'Have fun!' =>
     'Viel Spaß!',
   'Name' =>
@@ -78,39 +78,39 @@ $translations = array(
   'Token' =>
     'Token',
   'Team Registration' =>
-    'Team-Registrierung',
+    'Teamregistrierung',
   'Team Name' =>
-    'Team-Name',
+    'Name des Teams',
   'Password' =>
-    'Passwort',
+    'Kennwort',
   'Choose an Emblem' =>
-    'Wähle ein Symbol',
+    'Wähle ein Symbol aus.',
   'Sign Up' =>
     'Registrieren',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Registriere dich hier, um Capture The Flag zu spielen. Sobald du dich registriert hast, kannst du dich anmelden.',
+    'Registriere dich hier, um "Capture The Flag" zu spielen. Sobald du dich registriert hast, wirst du angemeldet.',
   'Not Available' =>
     'Nicht verfügbar',
   'Team Registration will be open soon, stay tuned!' =>
-    'Team-Registrierungen werden bald verfügbar sein!',
+    'Die Teamregistrierung wird schon bald möglich sein!',
   'Try Again' =>
-    'Versuch es noch einmal',
+    'Versuche es erneut.',
   'Select' =>
-    'Wählen',
+    'Auswählen',
   'Team Login' =>
-    'Team-Anmeldung',
+    'Teamanmeldung',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
     'Bitte melde dich hier an. Falls du noch nicht registriert bist, klicke unten auf "Registrieren".',
   'Team Login will be open soon, stay tuned!' =>
-    'Team-Anmeldungen werden bald verfügbar sein!',
+    'Die Teamanmeldung wird in kurzer Zeit möglich sein!',
   'ERROR' =>
     'FEHLER',
   'Start Over' =>
-    'Neustarten',
+    'Neu starten',
   'Window is too small' =>
-    'Dein Browserfenster ist zu klein',
+    'Das Browserfenster ist zu klein.',
   'For the best CTF experience, please make window size bigger.' =>
-    'Für die beste CTF-Erfahrung vergrößere bitte dein Browserfenster.',
+    'Bitte vergrößere das Browserfenster! CTF spielt sich dann viel besser.',
   'Thank you.' =>
     'Vielen Dank.',
   'Logout' =>
@@ -133,9 +133,9 @@ $translations = array(
   'View mode' =>
     'Anzeigemodus',
   'Tutorial' =>
-    'Anleitung',
+    'Einführung',
   'Scoreboard' =>
-    'Punktetafel',
+    'Anzeigetafel',
   'You' =>
     'Du',
   'Others' =>
@@ -153,46 +153,46 @@ $translations = array(
   'Activity' =>
     'Aktivität',
   'Game Clock' =>
-    'Spielzeituhr',
+    'Uhr',
   //Translations for AdminController
   'Auto' =>
-    'Auto',
+    'Autom.',
   'All Categories' =>
     'Alle Kategorien',
   'Open' =>
     'Offen',
   'Tokenized' =>
-    'In Tokens übersetzt',
+    'Tokenisiert',
   'Hour' =>
     'Stunde',
   'Hours' =>
     'Stunden',
   'Used by' =>
-    'Benutzt von',
+    'Verwendet von',
   'Used By' =>
-    'Benutzt von',
+    'Verwendet von',
   'Available' =>
     'Verfügbar',
   'Registration Tokens' =>
-    'Registrierungs-Tokens',
+    'Registrierungstokens',
   'Create More' =>
-    'Erstelle mehr',
+    'Weitere erstellen',
   'Export Available' =>
     'Export verfügbar',
   'Not started yet' =>
-    'Noch nicht angefangen',
+    'Noch nicht begonnen',
   'Configuration' =>
     'Konfiguration',
   'Tokens' =>
-    'Tokens',
+    'Token',
   'Game Configuration' =>
-    'Spieleinstellungen',
+    'Spielkonfiguration',
   'OK' =>
-    'OK',
+    'O. K.',
   'status_' =>
-    'status_',
+    'Status_',
   'On' =>
-    'An',
+    'Ein',
   'Off' =>
     'Aus',
   'Player Names' =>
@@ -202,33 +202,33 @@ $translations = array(
   'Registration Type' =>
     'Registrierungstyp',
   'Strong Passwords' =>
-    'Starke Passwörter',
+    'Sichere Kennwörter',
   'Team Selection' =>
-    'Teamaufstellung',
+    'Teamauswahl',
   'Game' =>
     'Spiel',
   'Scoring' =>
-    'Spielergebnis',
+    'Punkterfassung',
   'Progressive Cycle (s)' =>
-    'Fortlaufender-Zyklus (s)',
+    'Progressive(r) Zyklus/-en',
   'Refresh Gameboard' =>
     'Spielbrett aktualisieren',
   'Default Bonus' =>
-    'Standard-Bonus',
+    'Standardbonus',
   'Bases Cycle (s)' =>
-    'Basen-Zyklus (s)',
+    'Zyklus/-en Basen',
   'Default Bonus Dec' =>
-    'Standard-Bonus Dec',
+    'Standardbonus Dec',
   'Timer' =>
     'Timer',
   'Server Time' =>
     'Serverzeit',
   'Game Duration' =>
-    'Spielzeit',
+    'Spieldauer',
   'Begin Time' =>
-    'Anfangszeit',
+    'Startzeitpunkt',
   'Expected End Time' =>
-    'Erwartete Endzeit',
+    'Erwarteter Endzeitpunkt',
   'Language' =>
     'Sprache',
   'DELETE' =>
@@ -240,13 +240,13 @@ $translations = array(
   'Game Controls' =>
     'Spielsteuerung',
   'Write New Announcement here' =>
-    'Neue Ankündigung verfassen',
+    'Hier neue Ankündigung verfassen',
   'Create' =>
     'Erstellen',
   'General' =>
     'Allgemein',
   'Back Up Database' =>
-    'Datenbank-Backup',
+    'Datenbank sichern',
   'Export Full Game' =>
     'Vollständiges Spiel exportieren',
   'Import Full Game' =>
@@ -260,25 +260,25 @@ $translations = array(
   'Export Logos' =>
     'Logos exportieren',
   'Import Levels' =>
-    'Levels importieren',
+    'Level importieren',
   'Export Levels' =>
-    'Levels exportieren',
+    'Level exportieren',
   'Import Categories' =>
     'Kategorien importieren',
   'Export Categories' =>
     'Kategorien exportieren',
   'Levels' =>
-    'Levels',
+    'Level',
   'New Quiz Level' =>
-    'Neues Quiz-Level',
+    'Neues Quizlevel',
   'Title' =>
     'Titel',
   'Question' =>
     'Frage',
   'Level title' =>
-    'Level-Titel',
+    'Titel des Levels',
   'Quiz question' =>
-    'Quiz-Frage',
+    'Quizfrage',
   'Country' =>
     'Land',
   'Answer' =>
@@ -286,25 +286,25 @@ $translations = array(
   'Points' =>
     'Punkte',
   'Hint' =>
-    'Hinweis',
+    'Tipp',
   'Hint Penalty' =>
-    'Hinweis-Strafe',
+    'Tippmalus',
   'EDIT' =>
-    'ÄNDERN',
+    'BEARBEITEN',
   'All Quiz Levels' =>
-    'Alle Quiz-Levels',
+    'Alle Quizlevel',
   'Filter By:' =>
     'Filtern nach:',
   'All Status' =>
-    'Alle Status',
+    'Beliebiger Status',
   'Enabled' =>
     'Aktiviert',
   'Disabled' =>
     'Deaktiviert',
   'Quiz Level' =>
-    'Quiz-Level',
+    'Quizlevel',
   'Show Answer' =>
-    'Antowort anzeigen',
+    'Antwort anzeigen',
   'Bonus' =>
     'Bonus',
   '-Dec' =>
@@ -314,21 +314,21 @@ $translations = array(
   'Quiz Management' =>
     'Quiz verwalten',
   'Add Quiz Level' =>
-    'Quiz-Level hinzufügen',
+    'Quizlevel hinzufügen',
   'New Flag Level' =>
-    'Neues Flaggen-Level',
+    'Neues Flaggenlevel',
   'Description' =>
     'Beschreibung',
   'Level description' =>
-    'Level-Beschreibung',
-  'Category' =>
+    'Levelbeschreibung',
+  'Gameboard' =>
     'Kategorie',
   'Flag' =>
     'Flagge',
   'flag' =>
-    'flagge',
+    'Flagge',
   'All Flag Levels' =>
-    'Alle Flaggen-Levels',
+    'Alle Flaggenlevel',
   'New Attachment:' =>
     'Neuer Anhang:',
   'Attachment' =>
@@ -338,7 +338,7 @@ $translations = array(
   'New Link:' =>
     'Neuer Link:',
   'Flag Level' =>
-    'Flaggen-Level',
+    'Flaggenlevel',
   'Categories' =>
     'Kategorien',
   '+ Attachment' =>
@@ -348,21 +348,21 @@ $translations = array(
   'Flags Management' =>
     'Flaggen verwalten',
   'Add Flag Level' =>
-    'Flaggen-Level hinzufügen',
+    'Flaggenlevel hinzufügen',
   'New Base Level' =>
-    'Neues Basis-Level',
+    'Neues Basislevel',
   'Keep Points' =>
-    'Haltende Punkte',
+    'Punkte beibehalten',
   'Capture points' =>
-    'Erobernde Punkte',
+    'Eroberungspunkte',
   'All Base Levels' =>
-    'Alle Basis-Levels',
+    'Alle Basislevel',
   'Base Level' =>
-    'Basis-Level',
+    'Basislevel',
   'Bases Management' =>
     'Basen verwalten',
   'Add Base Level' =>
-    'Basis-Level hinzufügen',
+    'Basislevel hinzufügen',
   'New Category' =>
     'Neue Kategorie',
   'Category: ' =>
@@ -374,11 +374,11 @@ $translations = array(
   'All Countries' =>
     'Alle Länder',
   'In Use' =>
-    'In Benutzung',
+    'Wird verwendet',
   'In use' =>
-    'In Benutzung',
+    'Wird verwendet',
   'Not Used' =>
-    'Nicht benutzt',
+    'Wird nicht verwendet',
   'Yes' =>
     'Ja',
   'No' =>
@@ -394,17 +394,17 @@ $translations = array(
   'type' =>
     'Typ',
   'pts' =>
-    'Punkte',
+    'Pkte',
   'Level' =>
     'Level',
   'level' =>
-    'level',
+    'Level',
   'No Scores' =>
-    'Keine Ergebnisse',
+    'Keine Punkte',
   'Attempt' =>
-    'Versuchen',
+    'Versuch',
   'No Failures' =>
-    'Keine Ausfälle',
+    'Nie gescheitert',
   'Team' =>
     'Team',
   'team' =>
@@ -414,27 +414,27 @@ $translations = array(
   'Scores' =>
     'Punkte',
   'Failures' =>
-    'Ausfälle',
+    'Gescheitert',
   'New Team' =>
     'Neues Team',
   'Team Logo' =>
-    'Team-Logo',
+    'Teamlogo',
   'Selected Logo:' =>
     'Ausgewähltes Logo:',
   'Select Logo' =>
-    'Logo wählen',
+    'Logo auswählen',
   'All Teams' =>
     'Alle Teams',
   'Protected' =>
     'Geschützt',
   'Score' =>
-    'Ergebnis',
+    'Punkte',
   'Change Password' =>
-    'Passwort ändern',
+    'Kennwort ändern',
   'Admin Level' =>
-    'Admin-Level',
+    'Adminlevel',
   'Visibility' =>
-    'Sichtbarkeit',
+    'Sicht',
   'Team Management' =>
     'Team verwalten',
   'Add Team' =>
@@ -442,33 +442,33 @@ $translations = array(
   'None' =>
     'Keine',
   'Logo Name' =>
-    'Logo-Name',
+    'Logoname',
   'Logo Management' =>
-    'Logo verwalten',
+    'Logos verwalten',
   'Session' =>
-    'Session',
+    'Sitzung',
   'Cookie' =>
     'Cookie',
   'Creation Time' =>
-    'Entstehungszeit',
+    'Erstellt',
   'Last Access' =>
     'Letzter Zugriff',
   'Data' =>
     'Daten',
   'Sessions' =>
-    'Sessions',
+    'Sitzungen',
   'entry' =>
     'Eintrag',
   'No Entries' =>
     'Keine Einträge',
   'Game Logs' =>
-    'Spiel-Protokolle',
+    'Spielprotokolle',
   'Game Logs Timeline' =>
-    'Spiel-Protokoll-Zeitstrahl',
+    'Zeitstrahl der Spielprotokolle',
   'End Game' =>
-    'Spielende',
+    'Spiel beenden',
   'Begin Game' =>
-    'Spielbeginn',
+    'Spiel beginnen',
   'Game Admin' =>
     'Spiel-Admin',
   'Controls' =>
@@ -499,7 +499,7 @@ $translations = array(
   'Rank' =>
     'Rang',
   'pts' =>
-    'Punkte', //points
+    'Pkte', //points
   'Your Rank' =>
     'Dein Rang',
   'Your Score' =>
@@ -511,11 +511,11 @@ $translations = array(
   'Captured' =>
     'Erobert',
   'Initiating' =>
-    'Beginnend',
+    'Initialisiere',
   'run : > boot_sequence' =>
-    'Lauf : > Startvorgang',
+    'Ausführen: > Boot-Sequenz',
   'Extracting' =>
-    'Extrahieren',
+    'Extrahiere',
   //Translations for Utils.php's time_ago() function
   'just now' =>
     'gerade',
@@ -536,124 +536,124 @@ $translations = array(
   'secs' =>
     'Sekunden', //seconds
   'ago' =>
-    'vor',
+    'zuvor',
   //Translations for ModalControllers
   'begin_' =>
     'beginnen_',
   'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start' =>
-    'Bist du dir sicher, dass du ein neues Spiel beginnen möchtest? Die Protokolle werden gelöscht und die fortlaufende Punktetafel beginnt.',
+    'Bist du sicher, dass du ein neues Spiel beginnen möchtest? Alle Protokolle werden gelöscht und die progressive Anzeigetafel wird gestartet.',
   'end_' =>
-    'beenden_',
+    'Beenden_',
   'Are you sure you want to finish the current game?' =>
-    'Bist du dir sicher, dass du das aktuelle Spiel beenden möchstest?',
+    'Bist du sicher, dass du das aktuelle Spiel beenden möchtest?',
   'Are you sure you want to logout from the game?' =>
-    'Bist du dir sicher, dass du dich aus dem Spiel ausloggen möchtest?',
+    'Bist du sicher, dass du dich beim Spiel abmelden möchtest?',
   'Saved' =>
     'Gespeichert',
   'All changes have been successfully saved.' =>
-    'Alle Änderungen wurden erflogreich gespeichert.',
+    'Alle Änderungen wurden erfolgreich gespeichert.',
   'Error' =>
     'Fehler',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
     'Leider wurden deine Eingaben nicht gespeichert. Bitte korrigiere alle Fehler und speichere erneut.',
   'cancel_' =>
-    'abbrechen_',
+    'Abbrechen_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
-    'Bist du sicher, dass du abbrechen möchtest? Deine nicht gespeicherten Änderungen gehen damit verloren.',
+    'Bist du sicher, dass du abbrechen möchtest? Deine nicht gespeicherten Änderungen gehen verloren.',
   'choose_logo' =>
     'Logo auswählen',
   'captured_' =>
-    'erobert_',
+    'Erobert_',
   'flag_owner_' =>
-    'flaggen_besitzer_',
+    'Flaggenbesitzer_',
   'INACTIVE' =>
     'INAKTIV',
   'PTS' =>
-    'PUNKTE',
+    'PKTE',
   'category' =>
     'Kategorie',
   'capture_' =>
-    'erobern_',
+    'Erobern_',
   'Insert your answer' =>
-    'Gebe deine Antwort ein',
+    'Gib eine Antwort ein.',
   'Request Hint' =>
-    'Hinweis anfragen',
+    'Tipp anfordern',
   'Submit' =>
     'Absenden',
   'hint_' =>
-    'hinweis_',
+    'Tipp_',
   'first_capture' =>
-    'erste_eroberung',
+    'Erste_Eroberung',
   'completed_by' =>
-    'vervollständigt_von',
+    'Abgeschlossen_von',
   'scoreboard_' =>
-    'punktetafel_',
+    'Anzeigetafel_',
   'filter_' =>
-    'filter_',
+    'Filter_',
   'rank_' =>
-    'rang_',
+    'Rang_',
   'team_name_' =>
-    'team_name_',
+    'Teamname_',
   'quiz_pts_' =>
-    'quiz_punkte_',
+    'Quizpunkte_',
   'flag_pts_' =>
-    'flaggen_punkte_',
+    'Flaggenpunkte_',
   'base_pts_' =>
-    'basis_punkte_',
+    'Basispunkte_',
   'total_pts_' =>
-    'gesamtpunkte_',
+    'Gesamtpunktzahl_',
   'team_' =>
-    'team_',
+    'Team_',
   'team_members' =>
-    'team_mitglieder',
+    'Teammitglieder',
   'base_pts' =>
-    'basis_punkte',
+    'Basispunkte',
   'quiz_pts' =>
-    'quiz_punkte',
+    'Quizpunkte',
   'flag_pts' =>
-    'flaggen_punkte',
+    'Flaggenpunkte',
   'total_pts' =>
-    'gesamtpunkte',
+    'Gesamtpunktzahl',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
-    'Symbolleisten befinden sich an allen Ecken des Spielbretts. Drücke auf auf eine Kategorie um diese zu öffnen und jede Symbolleiste zu schließen.',
+    'Die Symbolleisten finden sich an den Rändern des Spielbretts. Klicke auf eine Kategorie, um die entsprechende Symbolleiste ein- oder auszublenden.',
   'Tool_Bars' =>
-    'Tool_Bars',
+    'Symbolleisten',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
-    'Drücke auf "Spielzeituhr" um die Zeit während des Spiels im Auge zu behalten.',
+    'Klicke auf die Uhr, um während des Spielens die Zeit im Auge zu behalten. Pass auf, dass sie dir nicht davonläuft.',
   'Game_Clock' =>
-    'Spielzeituhr',
+    'Uhr',
   'Countries marked with an ' =>
-    'Länder markiert mit ',
+    'Länder, die mit',
   'are captured by you.' =>
-    'sind von dir erobert.',
+    'markiert sind, wurden von dir erobert.',
   ' are owned by others.' =>
-    ' sind von anderen erobert.',
+    'markiert sind, wurden von anderen erobert.',
   'Captures' =>
-    'Erobern',
+    'Eroberungen',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'Drücke Plus[+] um hinein zu zoomen. Drücke Minus[-] heraus zu zoomen.',
+    'Drücke die Plustaste [+], um heranzuzoomen. Drücke die Minustaste [-], um herauszuzoomen.',
   'Click and Drag to move left, right, up and down.' =>
-    'Klicke und ziehe nach links, rechts, oben und unten um dich zu bewegen.',
+    'Klicke und ziehe nach links, rechts, oben oder unten, um dich zu bewegen.',
   'Zoom' =>
-    'Zoom',
+    'Zoomen',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'Drücke [/] um Computerbefehle zu aktivieren. Eine Liste mit den Befehlen findest du unter "Regeln".',
+    'Drücke die Taste [/], um Computerbefehle zu aktivieren. Unter "Regeln" findest du eine Liste dieser Befehle.',
   'Command_Line' =>
     'Kommandozeile',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'Drücke auf "Navigation" um auf die Hauptnavigationslinks wie z. B. Spielregeln, Registrierung, Blog, Jobs & mehr zu gelangen.',
+    'Klicke auf "Navigation", um auf die Hauptelemente der Navigation wie Spielregeln, Registrierung, Blog, Jobs und ähnliches zuzugreifen.',
   'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
-    'Verfolge deinen Wettkampf indem du auf "Punktetafel" klickst. Hier hast du Zugriff auf Spielstatistiken und -grafiken in Echtzeit.',
+    'Klicke auf "Anzeigetafel", um die Spielstatistik und Diagramme in Echtzeit anzuzeigen und so deine Konkurrenz im Auge zu behalten.',
   'Have fun, be the best and conquer the world.' =>
-    'Viel Spaß! Sei der Beste und erobere die Welt.',
+    'Viel Spaß! Zeige, was du kannst, und erobere die Welt!',
   'Game_On' =>
     'Spiel starten',
   'tutorial_' =>
-    'anleitung_',
+    'Einführung_',
   'Next' =>
     'Weiter',
   'Skip to play' =>
-    'Überspringen',
+    'Weiterspielen',
   'Powered By Facebook' =>
-    'Präsentiert von Facebook',
+    'Powered by Facebook',
 );
