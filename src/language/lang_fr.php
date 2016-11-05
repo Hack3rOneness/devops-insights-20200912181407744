@@ -12,9 +12,9 @@ $translations = array(
   'Play' =>
     'Jouer',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Bienvenue dans la compétition Capture the Flag de Facebook. En cliquant sur "Jouer," vous serez inscrit au CTF officiel. Bonne chance dans votre conquête.',
+    'Bienvenue dans la compétition Capture the Flag de Facebook. En cliquant sur « Jouer », vous serez inscrit au CTF officiel. Bonne chance dans votre conquête.',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    'Préparez-vous pour le CTF, démarrer et accéder au jeu maintenant!',
+    'Préparez-vous pour le CTF. Lancez-vous et accédez au jeu maintenant !',
   'Gameboard' =>
     'Jeu',
   'Register Team' =>
@@ -36,9 +36,9 @@ $translations = array(
   '_seconds' =>
     '_secondes',
   'Official CTF Rules' =>
-    'Régles officiels de la capture de drapeau',
+    'Règles officielles de la capture de drapeau',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Les actions suivantes sont interdites, sauf avis contraire explicitement par les administrateurs de l\'événement.',
+    'Les actions suivantes sont interdites, sauf par indication contraire de la part des administrateurs de l\'événement',
   'Rule' =>
     'Régles',
   'Cooperation' =>
@@ -46,7 +46,7 @@ $translations = array(
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
     'Aucune coopération entre les équipes avec des comptes indépendants. Partager des clés ou  fournir des indices à d\'autres équipes est considéré comme de la triche, merci de ne pas le faire.',
   'Attacking Scoreboard' =>
-    'Tableau des scores des attaques',
+    'Attaques ciblant le tableau d’affichage',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
     'N\'attaquez pas l\'infrastructure de la compétition. Si des bugs ou vulnérabilités sont trouvés, merci d\'alerter immédiatement les organisateurs de la compétition.',
   'Sabotage' =>
@@ -66,11 +66,11 @@ $translations = array(
   'Disclaimer' =>
     'Avertissement',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'En participant au concours, vous acceptez de libérer Facebook et ses employés, et l'organisation d'hébergement de toute responsabilité, réclamation ou action de quelque nature que ce soit pour des blessures, des dommages ou des pertes pour les personnes et les biens qui peuvent être maintenus dans le cadre de la concours. Vous reconnaissez et acceptez que Facebook et al est pas responsable technique, matériel ou logiciel, ou d\'autres erreurs ou des problèmes qui peuvent se produire dans le cadre du concours.',
+    'En participant au concours, vous acceptez de libérer Facebook et ses employés, et l\'organisation d\'hébergement de toute responsabilité, réclamation ou action de quelque nature que ce soit pour des blessures, des dommages ou des pertes pour les personnes et les biens qui peuvent être maintenus dans le cadre de la concours. Vous reconnaissez et acceptez que Facebook et al ne peut être tenu responsable pour toute défaillance à caractère technique, matériel ou logiciel, ou pour d’autres erreurs ou problèmes qui peuvent se produire dans le cadre du concours.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
     'Si vous avez des questions sur ce qui est ou non autorisé, s\'il vous plaît demander à un organisateur.',
   'Have fun!' =>
-    'Amusez vous!',
+    'Amusez-vous !',
   'Name' =>
     'Nom',
   'Email' =>
@@ -80,7 +80,7 @@ $translations = array(
   'Team Registration' =>
     'Inscription d\'une équipe',
   'Team Name' =>
-    'Inscription de l\'équipe',
+    'Nom de l’équipe ',
   'Password' =>
     'Mot de passe',
   'Choose an Emblem' =>
