@@ -12,7 +12,7 @@ $translations = array(
   'Play' =>
     'Spela',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Välkommen till Facebooks "Capture the Flag"-tävling. Genom att klicka på spela antar du den officiella CTF-utmaningen. Lycka till med din erövring.',
+    'Välkommen till Facebooks "Capture the Flag"-tävling. Genom att klicka på spela antar du den officiella CTF-utmaningen. Lycka till med erövringen.',
   'Get ready for the CTF to start and access the gameboard now!' =>
     'Gör dig redo för början på CTF och få tillgång till spelbrädet nu!',
   'Gameboard' =>
@@ -26,7 +26,7 @@ $translations = array(
   'Soon' =>
     'Snart',
   'Upcoming Game' =>
-    'Kommande Spel',
+    'Kommande spel',
   '_days' =>
     '_dagar',
   '_hours' =>
@@ -44,37 +44,37 @@ $translations = array(
   'Cooperation' =>
     'Samarbete',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Inget samarbete mellan lag med enskilda konton. Delande av nycklar eller avslöjande av ledtrådar till andra lag är fusk, gör det inte.',
+    'Inget samarbete mellan lag med enskilda konton. Delning av nycklar eller avslöjande av ledtrådar till andra lag är fusk, så gör det inte.',
   'Attacking Scoreboard' =>
     'Resultattavla: Attacker',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'Attacker på tävlingens infrastruktur är förbjudna. Om buggar eller sårbara punkter hittas, vänligen kontakta tävlingsarrangörerna omedelbart.',
+    'Attacker mot tävlingens infrastruktur är förbjudna. Om buggar eller sårbara punkter hittas så kontakta tävlingsarrangörerna omedelbart.',
   'Sabotage' =>
     'Sabotage',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'Att sabotera för andra tävlande lag eller att på något sätt hindra lagets framsteg är absolut förbjudet.',
+    'Det är absolut förbjudet att sabotera för andra tävlande lag eller att på något sätt hindra lagets framsteg.',
   'Bruteforcing' =>
     'Bruteforcing',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'Användande av brute force-metoder för att få flaggor/nycklar är förbjudet.',
+    'Användning av metoder med bruteforcing för att få flaggor/nycklar är förbjudet.',
   'Denial Of Service' =>
     'DoS-attacker',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'Att använda DoS-tjänster för att attackera platformen eller enskilda utmaningar är förbjudet.',
+    'Det är förbjudet att använda DoS-tjänster för att attackera plattformen eller enskilda utmaningar.',
   'Legal' =>
     'Juridiskt',
   'Disclaimer' =>
-    'Disclaimer',
+    'Friskrivning',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'Genom att delta i tävlingen friskriver du Facebook och dess anställda, såväl som värden för tävlingen från allt ansvar för skador på egendom, stölder och personskador som kan uppkomma under tävlingens gång. Du accepterar att Facebook et al inte ansvarar för tekniska-, hårdvaru- eller mjukvarufel som kan uppkomma under tävlingens gång.',
+    'Genom att delta i tävlingen friskriver du Facebook och dess anställda, såväl som värden för tävlingen, från allt ansvar för skador på egendom, stölder och personskador som kan uppkomma under tävlingens gång. Du accepterar att Facebook et al inte ansvarar för teknik-, hårdvaru- eller mjukvarufel som kan uppkomma under tävlingens gång.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
-    'Har du några frågor om vad som är tillåtet eller inte, vänligen fråga en organisatör.',
+    'Har du några frågor om vad som är tillåtet eller inte så fråga en organisatör.',
   'Have fun!' =>
-    'Ha kul!',
+    'Ha så kul!',
   'Name' =>
     'Namn',
   'Email' =>
-    'Epost',
+    'E-post',
   'Token' =>
     'Token',
   'Team Registration' =>
@@ -84,25 +84,25 @@ $translations = array(
   'Password' =>
     'Lösenord',
   'Choose an Emblem' =>
-    'Välj en Lagsymbol',
+    'Välj en lagsymbol',
   'Sign Up' =>
     'Skapa Konto',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Skapa ett konto för att kunna spela Capture The Flag. När kontot är skapat kommer du loggas in.',
+    'Skapa ett konto för att kunna spela Capture The Flag. När kontot är skapat kommer du att loggas in.',
   'Not Available' =>
     'Ej tillgängligt.',
   'Team Registration will be open soon, stay tuned!' =>
-    'Lagregistrering kommer öppna snart, håll ögonen öppna!',
+    'Lagregistreringen öppnar snart, håll ögonen öppna!',
   'Try Again' =>
-    'Försök Igen',
+    'Försök igen',
   'Select' =>
     'Välj',
   'Team Login' =>
     'Laginloggning',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Vänligen logga in här. Om du inte skapat ett konto kan du göra det genom att klicka på "Skapa Konto" nedan.',
+    'Logga in här. Om du inte skapat ett konto kan du göra det genom att klicka på "Skapa konto" nedan.',
   'Team Login will be open soon, stay tuned!' =>
-    'Laginloggning kommer öppna snart, håll ögonen öppna!',
+    'Laginloggningen öppnar snart, håll ögonen öppna!',
   'ERROR' =>
     'FEL',
   'Start Over' =>
@@ -110,13 +110,13 @@ $translations = array(
   'Window is too small' =>
     'Fönstret är för litet',
   'For the best CTF experience, please make window size bigger.' =>
-    'Vänligen öka fönsterstorleken för den bästa CTF-upplevelsen.',
+    'Öka fönsterstorleken för bästa möjliga CTF-upplevelse.',
   'Thank you.' =>
     'Tack.',
   'Logout' =>
     'Logga ut',
   'Registration' =>
-    'Skapa Konto',
+    'Registrering',
   'Play CTF' =>
     'Spela CTF',
   'Rules' =>
@@ -158,11 +158,11 @@ $translations = array(
   'Auto' =>
     'Automatisk',
   'All Categories' =>
-    'Alla Kategorier',
+    'Alla kategorier',
   'Open' =>
     'Öppen',
   'Tokenized' =>
-    'Tokenizerad',
+    'Tokeniserad',
   'Hour' =>
     'Timme',
   'Hours' =>
@@ -170,21 +170,21 @@ $translations = array(
   'Used by' =>
     'Använt av',
   'Used By' =>
-    'Använt Av',
+    'Använt av',
   'Available' =>
     'Tillgänglig',
   'Registration Tokens' =>
-    'Tokens för registrering',
+    'Token för registrering',
   'Create More' =>
-    'Skapa Fler',
+    'Skapa fler',
   'Export Available' =>
-    'Export Tillgänglig',
+    'Export tillgänglig',
   'Not started yet' =>
     'Inte startad ännu',
   'Configuration' =>
     'Konfiguration',
   'Tokens' =>
-    'Tokens',
+    'Token',
   'Game Configuration' =>
     'Spelkonfiguration',
   'OK' =>
@@ -198,11 +198,11 @@ $translations = array(
   'Player Names' =>
     'Spelarnamn',
   'Players Per Team' =>
-    'Spelare Per Lag',
+    'Spelare per lag',
   'Registration Type' =>
-    'Registreringstype',
+    'Registreringstyp',
   'Strong Passwords' =>
-    'Säkra Passwords',
+    'Säkra lösenord',
   'Team Selection' =>
     'Val av lag',
   'Game' =>
@@ -210,15 +210,15 @@ $translations = array(
   'Scoring' =>
     'Poängsystem',
   'Progressive Cycle (s)' =>
-    'Progressive Cycle (s)',
+    'Progressiva cykler',
   'Refresh Gameboard' =>
     'Uppdatera spelbrädet',
   'Default Bonus' =>
     'Standardbonus',
   'Bases Cycle (s)' =>
-    'Bases Cycle (s)',
+    'Bascykler',
   'Default Bonus Dec' =>
-    'Standardbonus Minskande',
+    'Standardbonusminskning',
   'Timer' =>
     'Timer',
   'Server Time' =>
@@ -236,7 +236,7 @@ $translations = array(
   'Delete' =>
     'Radera',
   'No Announcements' =>
-    'Inga Meddelanden',
+    'Inga meddelanden',
   'Game Controls' =>
     'Spelkontroller',
   'Write New Announcement here' =>
@@ -256,13 +256,13 @@ $translations = array(
   'Export Teams' =>
     'Exportera lag',
   'Import Logos' =>
-    'Importera logotyper',
+    'Importera symboler',
   'Export Logos' =>
-    'Exportera logotyper',
+    'Exportera symboler',
   'Import Levels' =>
-    'Importera banor',
+    'Importera nivåer',
   'Export Levels' =>
-    'Exportera banir',
+    'Exportera nivåer',
   'Import Categories' =>
     'Importera kategorier',
   'Export Categories' =>
@@ -270,7 +270,7 @@ $translations = array(
   'Levels' =>
     'Nivåer',
   'New Quiz Level' =>
-    'Ny Quiznivå',
+    'Ny quiznivå',
   'Title' =>
     'Titel',
   'Question' =>
@@ -292,11 +292,11 @@ $translations = array(
   'EDIT' =>
     'REDIGERA',
   'All Quiz Levels' =>
-    'Alla Quiznivåer',
+    'Alla quiznivåer',
   'Filter By:' =>
     'Filtrera efter:',
   'All Status' =>
-    'All Status',
+    'Alla-status',
   'Enabled' =>
     'På',
   'Disabled' =>
@@ -308,15 +308,15 @@ $translations = array(
   'Bonus' =>
     'Bonus',
   '-Dec' =>
-    '-Minskande',
+    '-Minskning',
   'Save' =>
     'Spara',
   'Quiz Management' =>
-    'Hantera Quiz',
+    'Hantera quiz',
   'Add Quiz Level' =>
-    'Lägg till Quiznivå',
+    'Lägg till quiznivå',
   'New Flag Level' =>
-    'Ny Flaggnivå',
+    'Ny flaggnivå',
   'Description' =>
     'Beskrivning',
   'Level description' =>
@@ -330,7 +330,7 @@ $translations = array(
   'All Flag Levels' =>
     'Alla flaggnivåer',
   'New Attachment:' =>
-    'Ny Bilaga:',
+    'Ny bilaga:',
   'Attachment' =>
     'Bilaga',
   'Link' =>
@@ -348,9 +348,9 @@ $translations = array(
   'Flags Management' =>
     'Flagghantering',
   'Add Flag Level' =>
-    'Lägg till Flaggnivå',
+    'Lägg till flaggnivå',
   'New Base Level' =>
-    'Ny Basnivå',
+    'Ny basnivå',
   'Keep Points' =>
     'Behåll poäng',
   'Capture points' =>
@@ -362,7 +362,7 @@ $translations = array(
   'Bases Management' =>
     'Bashantering',
   'Add Base Level' =>
-    'Lägg till Basnivå',
+    'Lägg till basnivå',
   'New Category' =>
     'Ny kategori',
   'Category: ' =>
@@ -378,7 +378,7 @@ $translations = array(
   'In use' =>
     'Används',
   'Not Used' =>
-    'Används Ej',
+    'Används ej',
   'Yes' =>
     'Ja',
   'No' =>
@@ -444,7 +444,7 @@ $translations = array(
   'Logo Name' =>
     'Symbolnamn',
   'Logo Management' =>
-    'Hantera Symboler',
+    'Hantera symboler',
   'Session' =>
     'Session',
   'Cookie' =>
@@ -458,13 +458,13 @@ $translations = array(
   'Sessions' =>
     'Sessioner',
   'entry' =>
-    'ingång',
+    'inmatning',
   'No Entries' =>
-    'Ingen ingång',
+    'Ingen inmatning',
   'Game Logs' =>
-    'Spel-loggar',
+    'Spelloggar',
   'Game Logs Timeline' =>
-    'Tidslinje över spel-loggar',
+    'Tidslinje över spelloggar',
   'End Game' =>
     'Avsluta spel',
   'Begin Game' =>
@@ -480,7 +480,7 @@ $translations = array(
   'Bases' =>
     'Baser',
   'Countries' =>
-    'Lag',
+    'Länder',
   'Logos' =>
     'Symboler',
   //Translations for inc/* and inc/gameboard/*
@@ -497,11 +497,11 @@ $translations = array(
   'End' =>
     'Slut',
   'Rank' =>
-    'Rank',
+    'Rankning',
   'pts' =>
     'poäng', //points
   'Your Rank' =>
-    'Din ranking',
+    'Din rankning',
   'Your Score' =>
     'Dina poäng',
   'Everyone' =>
@@ -511,9 +511,9 @@ $translations = array(
   'Captured' =>
     'Erövrade',
   'Initiating' =>
-    'Initierande',
+    'Initierar',
   'run : > boot_sequence' =>
-    'run : > boot_sequence',
+    'kör: startsekvens_',
   'Extracting' =>
     'Extraherar',
   //Translations for Utils.php's time_ago() function
@@ -541,7 +541,7 @@ $translations = array(
   'begin_' =>
     'start_',
   'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start' =>
-    'Är du säker på att du vill starta spelet? Loggar kommer rensas och den progressiva resultattavlan kommer startas',
+    'Är du säker på att du vill starta spelet? Loggar kommer att rensas och den progressiva resultattavlan startas',
   'end_' =>
     'slut_',
   'Are you sure you want to finish the current game?' =>
@@ -555,17 +555,17 @@ $translations = array(
   'Error' =>
     'Fel',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'Tyvärr kunde ditt formulär inte sparas. Vänligen rätta till alla fel och spara igen.',
+    'Tyvärr kunde ditt formulär inte sparas. Rätta till alla fel och spara igen.',
   'cancel_' =>
     'avbryt_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
-    'Är du säker på att du vill avbryta? Alla osparade ändringar kommer förkastas.',
+    'Är du säker på att du vill avbryta? Ändringar kommer inte att sparas.',
   'choose_logo' =>
-    'choose_logo',
+    'välj_symbol',
   'captured_' =>
-    'captured_',
+    'erövrat_',
   'flag_owner_' =>
-    'flag_owner_',
+    'flaggägare_',
   'INACTIVE' =>
     'INAKTIV',
   'PTS' =>
@@ -593,35 +593,35 @@ $translations = array(
   'rank_' =>
     'ranking_',
   'team_name_' =>
-    'lag_namn_',
+    'lagnamn_',
   'quiz_poäng_' =>
-    'quiz_poäng_',
+    'quizpoäng_',
   'flag_pts_' =>
-    'flagg_poäng_',
+    'flaggpoäng_',
   'base_pts_' =>
-    'bas_poäng_',
+    'baspoäng_',
   'total_pts_' =>
-    'total_poäng_',
+    'totalpoäng_',
   'team_' =>
     'lag_',
   'team_members' =>
     'lag_medlemmar',
   'base_pts' =>
-    'bas_poäng',
+    'baspoäng',
   'quiz_pts' =>
-    'quiz_poäng',
+    'quizpoäng',
   'flag_pts' =>
-    'flagg_poäng',
+    'flaggpoäng',
   'total_pts' =>
-    'total_poäng',
+    'totalpoäng',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
     'Verktygsfält är placerade på alla spelbrädets kanter. Klicka på en kategori för att öppna och stänga verktygsfälten.',
   'Tool_Bars' =>
-    'Verktygs_Fält',
+    'Verktygsfält',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
-    'Klicka på "Spelklocka" för att hålla koll på tiden under spelets gång.',
+    'Tryck på "Spelklocka" för att hålla koll på tiden under spelets gång.',
   'Game_Clock' =>
-    'Spel_Klocka',
+    'Spelklocka',
   'Countries marked with an ' =>
     'Länder markerade med ett ',
   'are captured by you.' =>
@@ -631,23 +631,23 @@ $translations = array(
   'Captures' =>
     'Erövringar',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'Klicka på Plus[+] för att Zooma in. Tryck Minus[-] för att Zooma ut.',
+    'Tryck på Plus[+] för att zooma in. Tryck på minus[-] för att zooma ut.',
   'Click and Drag to move left, right, up and down.' =>
-    'Klicka och drag för att flytta vänster, höger, upp och ner.',
+    'Klicka och dra för att flytta åt vänster, höger, uppåt och nedåt.',
   'Zoom' =>
     'Zooma',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'Tryck på snedsträck [/] för att aktivera datorkommandon. En lista över kommandon kan hittas under "Regler".',
+    'Tryck på snedstreck [/] för att aktivera datorkommandon. En lista över kommandon kan hittas under "Regler".',
   'Command_Line' =>
-    'Command_Line',
+    'Kommandorad_',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'Klicka på "Nav" för att få tillgång till grundläggande navigeringslänkar såsom Spelregler, Registrering, Blogg, Jobb & mer.',
+    'Klicka på "Nav" för att få tillgång till grundläggande navigeringslänkar som Spelregler, Registrering, Blogg, Jobb med mera.',
   'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
     'Håll koll på dina konkurrenter genom att klicka på "resultattavla" för att få tillgång till spelstatistik och grafer i realtid.',
   'Have fun, be the best and conquer the world.' =>
-    'Ha kul, var bäst och erövra världen.',
+    'Ha så kul, var bäst och erövra världen.',
   'Game_On' =>
-    'Game_On',
+    'Spela_på',
   'tutorial_' =>
     'introduktion_',
   'Next' =>
