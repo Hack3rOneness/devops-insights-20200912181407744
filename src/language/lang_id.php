@@ -10,15 +10,15 @@ $translations = array(
   'Conquer the world' =>
     'Kuasai dunia',
   'Play' =>
-    'Mulai',
+    'Bermain',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Selamat datang di Kompetisi Facebook Capture the Flag. Dengan menekan "Mulai" maka kamu akan dapat mulai bermain di Kompetisi Facebook CTF. Semoga beruntung dalam menguasai dunia.',
+    'Selamat datang di Kompetisi Facebook Capture the Flag. Dengan menekan "Bermain" maka kamu akan dapat mulai bermain di Kompetisi Facebook CTF. Semoga beruntung dalam menguasai dunia.',
   'Get ready for the CTF to start and access the gameboard now!' =>
     'Bersiaplah untuk bermain dan masuki permainan sekarang!',
   'Gameboard' =>
     'Permainan',
   'Register Team' =>
-    'Pendaftaran Tim',
+    'Daftarkan Tim',
   'Get ready for the CTF to start and register your team now!' =>
     'Bersiaplah untuk bermain dan daftarkan tim kamu sekarang juga!',
   'Login' =>
@@ -44,9 +44,9 @@ $translations = array(
   'Cooperation' =>
     'Bekerja Sama',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Tidak ada kerja sama antar tim dengan akun individual. Jangan berbagi kunci jawaban dengan tim lain, hal ini dianggap sebagai kecurangan.',
+    'Tidak ada kerja sama antar tim dengan akun individual. Jangan berbagi kunci jawaban atau memberikan petunjuk kepada tim lain, hal ini dianggap sebagai kecurangan.',
   'Attacking Scoreboard' =>
-    'Memanfaatkan Bug untuk Mendapatkan Nilai',
+    'Memanfaatkan Bug pada Papan Nilai',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
     'Dilarang memanfaatkan bug atau celah keamanan di dalam permainan. Jika kamu menemukan bug atau celah keamanan, tolong segera beritahu penyelenggara kompetisi.',
   'Sabotage' =>
@@ -56,19 +56,19 @@ $translations = array(
   'Bruteforcing' =>
     'Bruteforcing',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'Dilarang melakukan brute force flag / key permainan pada web penilaian.',
+    'Dilarang melakukan brute force flag / kunci permainan pada web penilaian.',
   'Denial Of Service' =>
     'Denial Of Service',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'Dilarang melakukan Denial of Service (DoS) pada platform CTF.',
+    'Dilarang melakukan Denial of Service (DoS) pada platform CTF atau setiap tantangan yang tersedia.',
   'Legal' =>
     'Legal',
   'Disclaimer' =>
-    'Pernyataan Umum',
+    'Pelepasan Tanggung Jawab',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'Dengan berpartisipasi pada kontes ini, kamu setuju untuk tidak menuntut Facebook, staf-staf Facebook, dan penyelenggara permainan dari segala tuntutan yang mengakibatkan luka, kerusakan, atau kehilangan baik terjadi pada perseorangan ataupun properti. Kamu mengerti dan setuju bahwa Facebook et al tidak bertanggung jawab atas kesalahan teknis, perangkat keras, perangkat lunak, ataupun kesalahan lainnya yang mungkin terjadi dan berhubungan dengan kontes.',
+    'Dengan berpartisipasi pada kontes ini, kamu setuju untuk melepaskan Facebook, karyawan Facebook, dan penyelenggara permainan dari setiap dan segala tuntutan yang mengakibatkan cedera, kerusakan, atau kehilangan baik yang terjadi pada perseorangan ataupun properti yang bisa terjadi berkaitan dengan kontes ini. Kamu mengerti dan setuju bahwa Facebook et al tidak bertanggung jawab atas kesalahan teknis, perangkat keras, perangkat lunak, ataupun kesalahan lainnya yang mungkin terjadi sehubungan dengan kontes ini.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
-    'Jika kamu memiliki pertanyaan tentang peraturan lainnya, silahkan bertanya pada penyelenggara kontes.',
+    'Jika kamu memiliki pertanyaan tentang hal yang diperbolehkan dan dilarang, silakan hubungi penyelenggara kontes.',
   'Have fun!' =>
     'Selamat bermain!',
   'Name' =>
@@ -78,11 +78,11 @@ $translations = array(
   'Token' =>
     'Token',
   'Team Registration' =>
-    'Registrasi Tim',
+    'Pendaftaran Tim',
   'Team Name' =>
     'Nama Tim',
   'Password' =>
-    'Password',
+    'Kata Sandi',
   'Choose an Emblem' =>
     'Pilih Logo',
   'Sign Up' =>
@@ -92,7 +92,7 @@ $translations = array(
   'Not Available' =>
     'Tidak Tersedia',
   'Team Registration will be open soon, stay tuned!' =>
-    'Registrasi Tim akan tersedia sebentar lagi, tunggu sebentar!',
+    'Pendaftaran Tim akan dibuka sebentar lagi, tunggu sebentar!',
   'Try Again' =>
     'Coba Lagi',
   'Select' =>
@@ -102,15 +102,15 @@ $translations = array(
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
     'Silahkan login disini. Jika kamu belum terdaftar, kamu dapat menekan tombol "Daftar Baru" di bawah. ',
   'Team Login will be open soon, stay tuned!' =>
-    'Login Tim akan tersedia sebentar lagi, tunggu sebentar!',
+    'Login Tim akan dibuka sebentar lagi, tunggu sebentar!',
   'ERROR' =>
-    'ERROR',
+    'KESALAHAN',
   'Start Over' =>
     'Mulai Lagi',
   'Window is too small' =>
     'Jendela browser terlalu kecil',
   'For the best CTF experience, please make window size bigger.' =>
-    'Untuk pengalaman bermain CTF yang terbaik, mohon perbesar ukuran jendela browser anda.',
+    'Untuk pengalaman bermain CTF yang terbaik, mohon perbesar ukuran jendela browser-mu.',
   'Thank you.' =>
     'Terima kasih.',
   'Logout' =>
@@ -129,9 +129,9 @@ $translations = array(
   'Navigation' =>
     'Navigasi',
   'View Mode' =>
-    'Mode Lihat',
+    'Mode Tampilan',
   'View mode' =>
-    'Mode lihat',
+    'Mode tampilan',
   'Tutorial' =>
     'Tutorial',
   'Scoreboard' =>
@@ -143,7 +143,7 @@ $translations = array(
   'All' =>
     'Semua',
   'Leaderboard' =>
-    'Papan Ranking',
+    'Papan Peringkat',
   'Announcements' =>
     'Pengumuman',
   'Teams' =>
@@ -178,7 +178,7 @@ $translations = array(
   'Create More' =>
     'Buat Lagi',
   'Export Available' =>
-    'Dapat di-export',
+    'Ekspor Tersedia',
   'Not started yet' =>
     'Belum dimulai',
   'Configuration' =>
@@ -208,11 +208,11 @@ $translations = array(
   'Game' =>
     'Permainan',
   'Scoring' =>
-    'Cara Penilaian',
+    'Penilaian',
   'Progressive Cycle (s)' =>
-    'Progressive Cycle (s)',
+    'Siklus Progresif',
   'Refresh Gameboard' =>
-    'Muat Ulang Permainan',
+    'Segarkan Permainan',
   'Default Bonus' =>
     'Bonus Standard',
   'Bases Cycle (s)' =>
@@ -244,29 +244,29 @@ $translations = array(
   'Create' =>
     'Buat',
   'General' =>
-    'General',
+    'Umum',
   'Back Up Database' =>
-    'Back Up Database',
+    'Cadangkan Basis Data',
   'Export Full Game' =>
-    'Export Semua Permainan',
+    'Ekspor Semua Permainan',
   'Import Full Game' =>
-    'Import Semua Permainan',
+    'Impor Semua Permainan',
   'Import Teams' =>
-    'Import Tim',
+    'Impor Tim',
   'Export Teams' =>
-    'Export Tim',
+    'Ekspor Tim',
   'Import Logos' =>
-    'Import Logo',
+    'Impor Logo',
   'Export Logos' =>
-    'Export Logo',
+    'Ekspor Logo',
   'Import Levels' =>
-    'Import Level',
+    'Impor Level',
   'Export Levels' =>
-    'Export Level',
+    'Ekspor Level',
   'Import Categories' =>
-    'Import Kategori',
+    'Impor Kategori',
   'Export Categories' =>
-    'Export Kategori',
+    'Ekspor Kategori',
   'Levels' =>
     'Level',
   'New Quiz Level' =>
@@ -278,7 +278,7 @@ $translations = array(
   'Level title' =>
     'Judul level',
   'Quiz question' =>
-    'Judul kuis',
+    'Pertanyaan kuis',
   'Country' =>
     'Negara',
   'Answer' =>
@@ -288,7 +288,7 @@ $translations = array(
   'Hint' =>
     'Petunjuk',
   'Hint Penalty' =>
-    'Denda menggunakan Petunjuk',
+    'Pinalti Petunjuk',
   'EDIT' =>
     'UBAH',
   'All Quiz Levels' =>
@@ -298,9 +298,9 @@ $translations = array(
   'All Status' =>
     'Semua Status',
   'Enabled' =>
-    'Dinyalakan',
+    'Aktif',
   'Disabled' =>
-    'Dimatikan',
+    'Nonaktif',
   'Quiz Level' =>
     'Kuis Level',
   'Show Answer' =>
@@ -312,7 +312,7 @@ $translations = array(
   'Save' =>
     'Simpan',
   'Quiz Management' =>
-    'Pengaturan Kuis',
+    'Manajemen Kuis',
   'Add Quiz Level' =>
     'Tambahkan Kuis',
   'New Flag Level' =>
@@ -426,7 +426,7 @@ $translations = array(
   'All Teams' =>
     'Semua Tim',
   'Protected' =>
-    'Protected',
+    'Dilindungi',
   'Score' =>
     'Nilai',
   'Change Password' =>
@@ -446,7 +446,7 @@ $translations = array(
   'Logo Management' =>
     'Pengaturan Logo',
   'Session' =>
-    'Session',
+    'Sesi',
   'Cookie' =>
     'Cookie',
   'Creation Time' =>
@@ -456,13 +456,13 @@ $translations = array(
   'Data' =>
     'Data',
   'Sessions' =>
-    'Session',
+    'Sesi',
   'entry' =>
-    'entry',
+    'entri',
   'No Entries' =>
     'Tidak Ada Catatan',
   'Game Logs' =>
-    'Catatan Permainan',
+    'Log Permainan',
   'Game Logs Timeline' =>
     'Jangka Waktu Catatan',
   'End Game' =>
@@ -555,7 +555,7 @@ $translations = array(
   'Error' =>
     'Error',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'Gagal menyimpan. Mohon perbaiki semua erro yang terjadi dan cobalah menyimpan kembali.',
+    'Formulir kamu tidak tersimpan. Mohon perbaiki semua kesalahan yang terjadi dan cobalah menyimpan kembali.',
   'cancel_' =>
     'batal_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
@@ -563,7 +563,7 @@ $translations = array(
   'choose_logo' =>
     'pilih_logo',
   'captured_' =>
-    'captured_',
+    'menguasai_',
   'flag_owner_' =>
     'flag_owner_',
   'INACTIVE' =>
@@ -579,7 +579,7 @@ $translations = array(
   'Request Hint' =>
     'Minta Petunjuk',
   'Submit' =>
-    'Masukkan',
+    'Kirim',
   'hint_' =>
     'petunjuk_',
   'first_capture' =>
@@ -655,5 +655,5 @@ $translations = array(
   'Skip to play' =>
     'Langsung bermain',
   'Powered By Facebook' =>
-    'Dibuat Oleh Facebook',
+    'Didukung Oleh Facebook',
 );
