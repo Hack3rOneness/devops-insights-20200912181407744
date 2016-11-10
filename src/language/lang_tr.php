@@ -38,7 +38,7 @@ $translations = array(
   'Official CTF Rules' =>
     'Resmi CTF Kuralları',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Aşağıdaki eylemler, etkinlik Adminleri tarafından açık bir şekilde aksi belirtilmedikçe yasaklanmıştır.',
+    'Aşağıdaki eylemler, etkinlik Yöneticileri tarafından açık bir şekilde aksi belirtilmedikçe yasaklanmıştır.',
   'Rule' =>
     'Kural',
   'Cooperation' =>
@@ -123,9 +123,9 @@ $translations = array(
     'Kurallar',
   //Translations for GameboardController
   'Admin' =>
-    'Admin',
+    'Yönetici',
   'ADMIN' =>
-    'ADMIN',
+    'YÖNETİCİ',
   'Navigation' =>
     'Gezinti',
   'View Mode' =>
@@ -133,7 +133,7 @@ $translations = array(
   'View mode' =>
     'Görüntüleme modu',
   'Tutorial' =>
-    'Tutorial',
+    'Öğretici',
   'Scoreboard' =>
     'Skor Tablosu',
   'You' =>
@@ -432,7 +432,7 @@ $translations = array(
   'Change Password' =>
     'Şifre Değiştir',
   'Admin Level' =>
-    'Admin Seviyesi',
+    'Yönetici Seviyesi',
   'Visibility' =>
     'Görünürlük',
   'Team Management' =>
@@ -470,7 +470,7 @@ $translations = array(
   'Begin Game' =>
     'Oyunu Başlat',
   'Game Admin' =>
-    'Oyun Admini',
+    'Oyun Yöneticisi',
   'Controls' =>
     'Kontroller',
   'Quiz' =>
@@ -641,7 +641,7 @@ $translations = array(
   'Command_Line' =>
     'Komut_Satırı',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'Oyun Kuralları, Kayıt, Blog, Kariyer ve daha fazla ana yönlendirme bağlantısına ulaşmak için "Nav"a tıklayın.',
+    'Oyun Kuralları, Kayıt, Blog, Kariyer ve daha fazla ana yönlendirme bağlantısına ulaşmak için "Gez"e tıklayın.',
   'Track your competition by clicking "scoreboard" to access real-time game statistics and graphs.' =>
     '"skor tablosu"na tıklayarak gerçek zamanlı oyun istatistiklerine ve grafiklere erişin, rakiplerinizi takip edin.',
   'Have fun, be the best and conquer the world.' =>
@@ -649,7 +649,7 @@ $translations = array(
   'Game_On' =>
     'Oyun_Başlasın',
   'tutorial_' =>
-    'tutorial_',
+    'öğretici_',
   'Next' =>
     'İleri',
   'Skip to play' =>
