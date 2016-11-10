@@ -38,13 +38,13 @@ $translations = array(
   'Official CTF Rules' =>
     'Resmi CTF Kuralları',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Aşağıdaki eylemler, aksi açık bir şekilde etkinlik Adminleri tarafından belirtilmedikçe yasaklanmıştır.',
+    'Aşağıdaki eylemler, etkinlik Adminleri tarafından açık bir şekilde aksi belirtilmedikçe yasaklanmıştır.',
   'Rule' =>
     'Kural',
   'Cooperation' =>
     'İşbirliği',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Bağımsız hesapları olan takımlar arasında işbirliği yapılmayacaktır. Diğer takımlarla anahtar paylaşımı veya açıklayıcı ipuçları verme hile sayılmaktadır, yapmayın.',
+    'Bağımsız hesapları olan takımlar arasında işbirliği yasaktır. Diğer takımlarla anahtar paylaşmak veya onlara açıklayıcı ipuçları vermek hile sayılmaktadır, bunları yapmayın.',
   'Attacking Scoreboard' =>
     'Saldırma Skor Tablosu',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
@@ -60,13 +60,13 @@ $translations = array(
   'Denial Of Service' =>
     'Denial Of Service',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'CTF platformunu veya herhangi bir görevi DoSlemek yasaktır.',
+    'CTF platformunu veya herhangi bir görevi DoS\'lamak yasaktır.',
   'Legal' =>
-    'Yasal Kısım',
+    'Yasal',
   'Disclaimer' =>
     'Feragatname',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'Yarışmaya katılarak Facebook\'un, onun çalışanlarının ve yarışmaya evsahipliği yapan organizasyonun her türlü yükümlülüğünden; yarışmayla ilişkili olan insanlara ve mülkiyete yönelik yaralanma, zarar görme ve kayıplara dair iddiada veya eylemde bulunmaktan feragat ettiğinizi onaylıyorsunuz. Teknik, donanımsal veya yazılımsal arıza veya hatalarda, ya da yarışmayla ilişkili olarak gerçekleşebilecek başka hatalarda Facebook et al.ın sorumluluk sahibi olmadığını kabulleniyor ve onaylıyorsunuz.',
+    'Yarışmaya katılmak suretiyle Facebook\'u, onun çalışanlarını ve barındırma hizmeti veren kurumu, yarışmayla bağlantılı olarak cana ve mala gelebilecek zararlar, hasarlar ve kayıplarla ilgili her türlü ve tüm yükümlülüklerden, davalardan veya işlemlerden masun tutmayı kabul etmektesiniz. Teknik, donanımsal veya yazılımsal arıza veya hatalarda, ya da yarışmayla ilişkili olarak gerçekleşebilecek başka hatalarda Facebook ve diğerlerinin sorumluluk sahibi olmadığını kabulleniyor ve onaylamaktasınız.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
     'Nelere izin verilip nelerin yasaklandığı hakkında herhangi bir sorunuz varsa lütfen bir organizatöre sorun.',
   'Have fun!' =>
@@ -74,7 +74,7 @@ $translations = array(
   'Name' =>
     'Ad',
   'Email' =>
-    'Email',
+    'E-posta',
   'Token' =>
     'Token',
   'Team Registration' =>
@@ -100,7 +100,7 @@ $translations = array(
   'Team Login' =>
     'Takım Girişi',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Lütfen buradan giriş yapın. Eğer kayıt olmadıysanız Aşağıdan "Kayıt Olun"a tıklayarak kayıt yaptırabilirsiniz. ',
+    'Lütfen buradan giriş yapın. Eğer kayıt olmadıysanız aşağıdan "Kayıt Olun"a tıklayarak kayıt yaptırabilirsiniz. ',
   'Team Login will be open soon, stay tuned!' =>
     'Takım Girişi yakında açılacak, takipte kalın!',
   'ERROR' =>
@@ -127,7 +127,7 @@ $translations = array(
   'ADMIN' =>
     'ADMIN',
   'Navigation' =>
-    'Naigasyon',
+    'Gezinti',
   'View Mode' =>
     'Görüntüleme Modu',
   'View mode' =>
@@ -246,7 +246,7 @@ $translations = array(
   'General' =>
     'Genel',
   'Back Up Database' =>
-    'Veritabanı Yedekle',
+    'Veritabanını Yedekle',
   'Export Full Game' =>
     'Tüm Oyunu Dışa Aktar',
   'Import Full Game' =>
@@ -258,15 +258,15 @@ $translations = array(
   'Import Logos' =>
     'Logoları Dışarıdan Al',
   'Export Logos' =>
-    'Logoları Dışarıdan Aktar',
+    'Logoları Dışa Aktar',
   'Import Levels' =>
     'Seviyeleri Dışarıdan Al',
   'Export Levels' =>
-    'Seviyeleri Dışarıdan Aktar',
+    'Seviyeleri Dışa Aktar',
   'Import Categories' =>
     'Kategorileri Dışarıdan Al',
   'Export Categories' =>
-    'Kategorileri Dışarıdan Aktar',
+    'Kategorileri Dışa Aktar',
   'Levels' =>
     'Seviyeler',
   'New Quiz Level' =>
@@ -440,7 +440,7 @@ $translations = array(
   'Add Team' =>
     'Takım Ekle',
   'None' =>
-    'Hiç',
+    'Yok',
   'Logo Name' =>
     'Logo Adı',
   'Logo Management' =>
@@ -450,7 +450,7 @@ $translations = array(
   'Cookie' =>
     'Çerez',
   'Creation Time' =>
-    'Yaratılış Saati',
+    'Oluşturma Saati',
   'Last Access' =>
     'Son Erişim',
   'Data' =>
@@ -567,7 +567,7 @@ $translations = array(
   'flag_owner_' =>
     'flag_sahibi_',
   'INACTIVE' =>
-    'ETKİSİZ',
+    'AKTİF DEĞİL',
   'PTS' =>
     'PUAN',
   'category' =>
@@ -585,7 +585,7 @@ $translations = array(
   'first_capture' =>
     'ilk_ele_geçirme',
   'completed_by' =>
-    'tarafından_tamamlandı',
+    'tamamlayan',
   'scoreboard_' =>
     'skor_tablosu_',
   'filter_' =>
@@ -635,9 +635,9 @@ $translations = array(
   'Click and Drag to move left, right, up and down.' =>
     'Sola, sağa, yukarı ve aşağı hareket etmek için tıklayıp sürükleyin.',
   'Zoom' =>
-    'Yakınlık',
+    'Yakınlaştır',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'Bilgisayar komutlarını etkinleştirmek için Bölü[/] simgesine tıklayın. Komut listesi "Kurallar" altında bulunabilir.',
+    'Bilgisayar komutlarını etkinleştirmek için Eğik Çizgi[/] simgesine tıklayın. Komut listesi "Kurallar" altında bulunabilir.',
   'Command_Line' =>
     'Komut_Satırı',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
