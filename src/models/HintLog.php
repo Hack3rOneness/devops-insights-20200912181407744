@@ -1,6 +1,12 @@
 <?hh // strict
 
 class HintLog extends Model {
+
+  protected static string $MC_KEY = 'hintlog:';
+
+  protected static Map<string, string>
+    $MC_KEYS = Map {'USED_HINTS' => 'hint_level_teams'};
+
   private function __construct(
     private int $id,
     private string $ts,
@@ -52,6 +58,7 @@ class HintLog extends Model {
       $team_id,
       $penalty,
     );
+    self::invalidateMCRecords(); // Invalidate Memcached HintLog data.
   }
 
   public static async function genResetHints(): Awaitable<void> {
@@ -64,30 +71,84 @@ class HintLog extends Model {
     int $level_id,
     int $team_id,
     bool $any_team,
+    bool $refresh = false,
   ): Awaitable<bool> {
-    $db = await self::genDb();
-
-    if ($any_team) {
-      $result =
-        await $db->queryf(
-          'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id != %d',
-          $level_id,
-          $team_id,
-        );
+    $mc_result = self::getMCRecords('USED_HINTS');
+    if (!$mc_result || count($mc_result) === 0 || $refresh) {
+      $db = await self::genDb();
+      $hints_used = Map {};
+      $result = await $db->queryf('SELECT level_id, team_id FROM hints_log');
+      foreach ($result->mapRows() as $row) {
+        if ($hints_used->contains(intval($row->get('level_id')))) {
+          $hints_used_teams = $hints_used->get(intval($row->get('level_id')));
+          invariant(
+            $hints_used_teams !== null,
+            'hints_used_teams should not be null',
+          );
+          $hints_used_teams->add(intval($row->get('team_id')));
+          $hints_used->set(intval($row->get('level_id')), $hints_used_teams);
+        } else {
+          $hints_used_teams = Vector {};
+          $hints_used_teams->add(intval($row->get('team_id')));
+          $hints_used->add(
+            Pair {intval($row->get('level_id')), $hints_used_teams},
+          );
+        }
+      }
+      self::setMCRecords('USED_HINTS', new Map($hints_used));
+      if ($hints_used->contains($level_id)) {
+        if ($any_team) {
+          $hints_used_teams = $hints_used->get($level_id);
+          invariant(
+            $hints_used_teams !== null,
+            'hints_used_teams should not be null',
+          );
+          $team_id_key = $hints_used_teams->linearSearch($team_id);
+          if ($team_id_key !== -1) {
+            $hints_used_teams->removeKey($team_id_key);
+          }
+          return intval(count($hints_used_teams)) > 0;
+        } else {
+          $hints_used_teams = $hints_used->get($level_id);
+          invariant(
+            $hints_used_teams !== null,
+            'hints_used_teams should not be null',
+          );
+          $team_id_key = $hints_used_teams->linearSearch($team_id);
+          return $team_id_key !== -1;
+        }
+      } else {
+        return false;
+      }
     } else {
-      $result =
-        await $db->queryf(
-          'SELECT COUNT(*) FROM hints_log WHERE level_id = %d AND team_id = %d',
-          $level_id,
-          $team_id,
-        );
-    }
-
-    if ($result->numRows() > 0) {
-      invariant($result->numRows() === 1, 'Expected exactly one result');
-      return intval($result->mapRows()[0]['COUNT(*)']) > 0;
-    } else {
-      return false;
+      invariant(
+        $mc_result instanceof Map,
+        'hints_used should be of type Map',
+      );
+      if ($mc_result->contains($level_id)) {
+        if ($any_team) {
+          $hints_used_teams = $mc_result->get($level_id);
+          invariant(
+            $hints_used_teams !== null,
+            'hints_used_teams should not be null',
+          );
+          $team_id_key = $hints_used_teams->linearSearch($team_id);
+          if ($team_id_key !== -1) {
+            $hints_used_teams->removeKey($team_id_key);
+          }
+          return intval(count($hints_used_teams)) > 0;
+        } else {
+          $hints_used_teams = $mc_result->get($level_id);
+          invariant(
+            $hints_used_teams !== null,
+            'hints_used_teams should not be null',
+          );
+          $team_id_key = $hints_used_teams->linearSearch($team_id);
+          return $team_id_key !== -1;
+        }
+      } else {
+        return false;
+      }
     }
   }
 
