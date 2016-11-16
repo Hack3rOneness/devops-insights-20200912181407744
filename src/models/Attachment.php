@@ -4,6 +4,15 @@ class Attachment extends Model {
   // TODO: Configure this
   const string attachmentsDir = '/data/attachments/';
 
+  protected static string $MC_KEY = 'attachments:';
+
+  protected static Map<string, string>
+    $MC_KEYS = Map {
+      'LEVELS_COUNT' => 'attachment_levels_count',
+      'LEVEL_ATTACHMENTS' => 'attachment_levels',
+      'ATTACHMENTS' => 'attachments_by_id',
+    };
+
   private function __construct(
     private int $id,
     private int $levelId,
@@ -69,6 +78,8 @@ class Attachment extends Model {
       $level_id,
     );
 
+    self::invalidateMCRecords(); // Invalidate Memcached Attachment data.
+
     return true;
   }
 
@@ -85,6 +96,7 @@ class Attachment extends Model {
       $level_id,
       $id,
     );
+    self::invalidateMCRecords(); // Invalidate Memcached Attachment data.
   }
 
   // Delete existing attachment.
@@ -117,50 +129,130 @@ class Attachment extends Model {
       'DELETE FROM attachments WHERE id = %d LIMIT 1',
       $attachment_id,
     );
+    self::invalidateMCRecords(); // Invalidate Memcached Attachment data.
   }
 
   // Get all attachments for a given level.
   public static async function genAllAttachments(
     int $level_id,
+    bool $refresh = false,
   ): Awaitable<array<Attachment>> {
-    $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM attachments WHERE level_id = %d',
-      $level_id,
-    );
-
-    $attachments = array();
-    foreach ($result->mapRows() as $row) {
-      $attachments[] = self::attachmentFromRow($row);
+    $mc_result = self::getMCRecords('LEVEL_ATTACHMENTS');
+    if (!$mc_result || count($mc_result) === 0 || $refresh) {
+      $db = await self::genDb();
+      $attachments = array();
+      $result = await $db->queryf('SELECT * FROM attachments');
+      foreach ($result->mapRows() as $row) {
+        $attachments[$row->get('level_id')][] = self::attachmentFromRow($row);
+      }
+      self::setMCRecords('LEVEL_ATTACHMENTS', new Map($attachments));
+      $attachments = new Map($attachments);
+      if ($attachments->contains($level_id)) {
+        $attachment = $attachments->get($level_id);
+        invariant(
+          is_array($attachment),
+          'attachment should be an array of Attachment',
+        );
+        return $attachment;
+      } else {
+        return array();
+      }
+    } else {
+      invariant(
+        $mc_result instanceof Map,
+        'cache return should be of type Map',
+      );
+      if ($mc_result->contains($level_id)) {
+        $attachment = $mc_result->get($level_id);
+        invariant(
+          is_array($attachment),
+          'attachment should be an array of Attachment',
+        );
+        return $attachment;
+      } else {
+        return array();
+      }
     }
-
-    return $attachments;
   }
 
   // Get a single attachment.
-  public static async function gen(int $attachment_id): Awaitable<Attachment> {
-    $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT * FROM attachments WHERE id = %d LIMIT 1',
-      $attachment_id,
-    );
-
-    invariant($result->numRows() === 1, 'Expected exactly one result');
-    return self::attachmentFromRow($result->mapRows()[0]);
+  /* HH_IGNORE_ERROR[4110]: Claims - It is incompatible with void because this async function implicitly returns Awaitable<void>, yet this returns Awaitable<Attachment> and the type is checked on line 185 */
+  public static async function gen(
+    int $attachment_id,
+    bool $refresh = false,
+  ): Awaitable<Attachment> {
+    $mc_result = self::getMCRecords('ATTACHMENTS');
+    if (!$mc_result || count($mc_result) === 0 || $refresh) {
+      $db = await self::genDb();
+      $attachments = Map {};
+      $result = await $db->queryf('SELECT * FROM attachments');
+      foreach ($result->mapRows() as $row) {
+        $attachments->add(
+          Pair {intval($row->get('id')), self::attachmentFromRow($row)},
+        );
+      }
+      self::setMCRecords('ATTACHMENTS', $attachments);
+      if ($attachments->contains($attachment_id)) {
+        $attachment = $attachments->get($attachment_id);
+        invariant(
+          $attachment instanceof Attachment,
+          'attachment should be of type Attachment',
+        );
+        return $attachment;
+      }
+    } else {
+      invariant(
+        $mc_result instanceof Map,
+        'cache return should be of type Map',
+      );
+      if ($mc_result->contains($attachment_id)) {
+        $attachment = $mc_result->get($attachment_id);
+        invariant(
+          $attachment instanceof Attachment,
+          'attachment should be of type Attachment',
+        );
+        return $attachment;
+      }
+    }
   }
 
   // Check if a level has attachments.
   public static async function genHasAttachments(
     int $level_id,
+    bool $refresh = false,
   ): Awaitable<bool> {
-    $db = await self::genDb();
-    $result = await $db->queryf(
-      'SELECT COUNT(*) FROM attachments WHERE level_id = %d',
-      $level_id,
-    );
-
-    invariant($result->numRows() === 1, 'Expected exactly one result');
-    return intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0;
+    $mc_result = self::getMCRecords('LEVELS_COUNT');
+    if (!$mc_result || count($mc_result) === 0 || $refresh) {
+      $db = await self::genDb();
+      $attachment_count = Map {};
+      $result =
+        await $db->queryf(
+          'SELECT levels.id as level_id, COUNT(attachments.id) as count FROM levels LEFT JOIN attachments ON levels.id = attachments.level_id GROUP BY levels.id',
+        );
+      foreach ($result->mapRows() as $row) {
+        $attachment_count->add(
+          Pair {intval($row->get('level_id')), intval($row->get('count'))},
+        );
+      }
+      self::setMCRecords('LEVELS_COUNT', $attachment_count);
+      if ($attachment_count->contains($level_id)) {
+        $level_attachment_count = $attachment_count->get($level_id);
+        return intval($level_attachment_count) > 0;
+      } else {
+        return false;
+      }
+    } else {
+      invariant(
+        $mc_result instanceof Map,
+        'attachments should be of type Map',
+      );
+      if ($mc_result->contains($level_id)) {
+        $level_attachment_count = $mc_result->get($level_id);
+        return intval($level_attachment_count) > 0;
+      } else {
+        return false;
+      }
+    }
   }
 
   private static function attachmentFromRow(

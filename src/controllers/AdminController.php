@@ -271,22 +271,41 @@ class AdminController extends Controller {
   }
 
   public async function genRenderConfigurationContent(): Awaitable<:xhp> {
-    $registration = await Configuration::gen('registration');
-    $registration_players = await Configuration::gen('registration_players');
-    $login = await Configuration::gen('login');
-    $login_select = await Configuration::gen('login_select');
-    $login_strongpasswords =
-      await Configuration::gen('login_strongpasswords');
-    $registration_names = await Configuration::gen('registration_names');
-    $scoring = await Configuration::gen('scoring');
-    $gameboard = await Configuration::gen('gameboard');
-    $timer = await Configuration::gen('timer');
-    $progressive_cycle = await Configuration::gen('progressive_cycle');
-    $default_bonus = await Configuration::gen('default_bonus');
-    $default_bonusdec = await Configuration::gen('default_bonusdec');
-    $bases_cycle = await Configuration::gen('bases_cycle');
-    $start_ts = await Configuration::gen('start_ts');
-    $end_ts = await Configuration::gen('end_ts');
+    $awaitables = Map {
+      'registration' => Configuration::gen('registration'),
+      'registration_players' => Configuration::gen('registration_players'),
+      'login' => Configuration::gen('login'),
+      'login_select' => Configuration::gen('login_select'),
+      'login_strongpasswords' => Configuration::gen('login_strongpasswords'),
+      'registration_names' => Configuration::gen('registration_names'),
+      'scoring' => Configuration::gen('scoring'),
+      'gameboard' => Configuration::gen('gameboard'),
+      'timer' => Configuration::gen('timer'),
+      'progressive_cycle' => Configuration::gen('progressive_cycle'),
+      'default_bonus' => Configuration::gen('default_bonus'),
+      'default_bonusdec' => Configuration::gen('default_bonusdec'),
+      'bases_cycle' => Configuration::gen('bases_cycle'),
+      'start_ts' => Configuration::gen('start_ts'),
+      'end_ts' => Configuration::gen('end_ts'),
+    };
+
+    $results = await \HH\Asio\m($awaitables);
+
+    $registration = $results['registration'];
+    $registration_players = $results['registration_players'];
+    $login = $results['login'];
+    $login_select = $results['login_select'];
+    $login_strongpasswords = $results['login_strongpasswords'];
+    $registration_names = $results['registration_names'];
+    $scoring = $results['scoring'];
+    $gameboard = $results['gameboard'];
+    $timer = $results['timer'];
+    $progressive_cycle = $results['progressive_cycle'];
+    $default_bonus = $results['default_bonus'];
+    $default_bonusdec = $results['default_bonusdec'];
+    $bases_cycle = $results['bases_cycle'];
+    $start_ts = $results['start_ts'];
+    $end_ts = $results['end_ts'];
 
     $registration_on = $registration->getValue() === '1';
     $registration_off = $registration->getValue() === '0';
@@ -345,10 +364,18 @@ class AdminController extends Controller {
       $registration_tokens = <div></div>;
     }
 
-    $registration_type_select = await $this->genRegistrationTypeSelect();
+    $awaitables = Map {
+      'registration_type_select' => $this->genRegistrationTypeSelect(),
+      'configuration_duration_select' =>
+        $this->genConfigurationDurationSelect(),
+      'language_select' => $this->genLanguageSelect(),
+    };
+    $results = await \HH\Asio\m($awaitables);
+
+    $registration_type_select = $results['registration_type_select'];
     $configuration_duration_select =
-      await $this->genConfigurationDurationSelect();
-    $language_select = await $this->genLanguageSelect();
+      $results['configuration_duration_select'];
+    $language_select = $results['language_select'];
 
     return
       <div>
@@ -808,6 +835,12 @@ class AdminController extends Controller {
                       data-action="import-game">
                       {tr('Import Full Game')}
                     </button>
+                    <input
+                      class="completely-hidden"
+                      id="import-game_file"
+                      type="file"
+                      name="game_file"
+                    />
                   </div>
                 </div>
               </div>
@@ -1250,11 +1283,20 @@ class AdminController extends Controller {
   }
 
   public async function genRenderFlagsContent(): Awaitable<:xhp> {
-    $countries_select = await $this->genGenerateCountriesSelect(0);
-    $level_categories_select =
-      await $this->genGenerateLevelCategoriesSelect(0);
-    $filter_categories_select =
-      await $this->genGenerateFilterCategoriesSelect();
+    $awaitables = Map {
+      'countries_select' => $this->genGenerateCountriesSelect(0),
+      'level_categories_select' => $this->genGenerateLevelCategoriesSelect(
+        0,
+      ),
+      'filter_categories_select' =>
+        $this->genGenerateFilterCategoriesSelect(),
+    };
+
+    $results = await \HH\Asio\m($awaitables);
+
+    $countries_select = $results['countries_select'];
+    $level_categories_select = $results['level_categories_select'];
+    $filter_categories_select = $results['filter_categories_select'];
 
     $adminsections =
       <div class="admin-sections">
@@ -1573,10 +1615,18 @@ class AdminController extends Controller {
         }
       }
 
-      $countries_select =
-        await $this->genGenerateCountriesSelect($flag->getEntityId());
-      $level_categories_select =
-        await $this->genGenerateLevelCategoriesSelect($flag->getCategoryId());
+      $awaitables = Map {
+        'countries_select' => $this->genGenerateCountriesSelect(
+          $flag->getEntityId(),
+        ),
+        'level_categories_select' =>
+          $this->genGenerateLevelCategoriesSelect($flag->getCategoryId()),
+      };
+
+      $results = await HH\Asio\m($awaitables);
+
+      $countries_select = $results['countries_select'];
+      $level_categories_select = $results['level_categories_select'];
 
       $adminsections->appendChild(
         <section class="validate-form admin-box section-locked">
@@ -1759,11 +1809,20 @@ class AdminController extends Controller {
   }
 
   public async function genRenderBasesContent(): Awaitable<:xhp> {
-    $countries_select = await $this->genGenerateCountriesSelect(0);
-    $level_categories_select =
-      await $this->genGenerateLevelCategoriesSelect(0);
-    $filter_categories_select =
-      await $this->genGenerateFilterCategoriesSelect();
+    $awaitables = Map {
+      'countries_select' => $this->genGenerateCountriesSelect(0),
+      'level_categories_select' => $this->genGenerateLevelCategoriesSelect(
+        0,
+      ),
+      'filter_categories_select' =>
+        $this->genGenerateFilterCategoriesSelect(),
+    };
+
+    $results = await \HH\Asio\m($awaitables);
+
+    $countries_select = $results['countries_select'];
+    $level_categories_select = $results['level_categories_select'];
+    $filter_categories_select = $results['filter_categories_select'];
 
     $adminsections =
       <div class="admin-sections">
@@ -2083,10 +2142,18 @@ class AdminController extends Controller {
         $l_c++;
       }
 
-      $countries_select =
-        await $this->genGenerateCountriesSelect($base->getEntityId());
-      $level_categories_select =
-        await $this->genGenerateLevelCategoriesSelect($base->getCategoryId());
+      $awaitables = Map {
+        'countries_select' => $this->genGenerateCountriesSelect(
+          $base->getEntityId(),
+        ),
+        'level_categories_select' =>
+          $this->genGenerateLevelCategoriesSelect($base->getCategoryId()),
+      };
+
+      $results = await HH\Asio\m($awaitables);
+
+      $countries_select = $results['countries_select'];
+      $level_categories_select = $results['level_categories_select'];
 
       $adminsections->appendChild(
         <section class="validate-form admin-box section-locked">
@@ -2858,10 +2925,19 @@ class AdminController extends Controller {
       $tab_scores = 'scores'.strval($team->getId());
       $tab_failures = 'failures'.strval($team->getId());
 
-      $team_tabs = await $this->genGenerateTeamTabs($team->getId());
-      $team_names = await $this->genGenerateTeamNames($team->getId());
-      $team_scores = await $this->genGenerateTeamScores($team->getId());
-      $team_failures = await $this->genGenerateTeamFailures($team->getId());
+      $awaitables = Map {
+        'team_tabs' => $this->genGenerateTeamTabs($team->getId()),
+        'team_names' => $this->genGenerateTeamNames($team->getId()),
+        'team_scores' => $this->genGenerateTeamScores($team->getId()),
+        'team_failures' => $this->genGenerateTeamFailures($team->getId()),
+      };
+
+      $results = await \HH\Asio\m($awaitables);
+
+      $team_tabs = $results['team_tabs'];
+      $team_names = $results['team_names'];
+      $team_scores = $results['team_scores'];
+      $team_failures = $results['team_failures'];
 
       $adminsections->appendChild(
         <div>
@@ -3241,6 +3317,7 @@ class AdminController extends Controller {
 
     if (count($gamelogs) > 0) {
       $logs_tbody = <tbody></tbody>;
+      $logs_table = <div></div>;
       foreach ($gamelogs as $gamelog) {
         if ($gamelog->getEntry() === 'score') {
           $log_entry =
@@ -3249,40 +3326,62 @@ class AdminController extends Controller {
           $log_entry =
             <span class="highlighted--red">{$gamelog->getEntry()}</span>;
         }
-        $team = await MultiTeam::genTeam($gamelog->getTeamId());
-        $level = await Level::gen($gamelog->getLevelId());
-        $country = await Country::gen($level->getEntityId());
-        $level_str =
-          $country->getName().
-          ' - '.
-          $level->getTitle().
-          ' - '.
-          $level->getType();
-        $logs_tbody->appendChild(
-          <tr>
-            <td>{time_ago($gamelog->getTs())}</td>
-            <td>{$log_entry}</td>
-            <td>{$level_str}</td>
-            <td>{strval($gamelog->getPoints())}</td>
-            <td>{$team->getName()}</td>
-            <td>{$gamelog->getFlag()}</td>
-          </tr>
-        );
-      }
-      $logs_table =
-        <table>
-          <thead>
+
+        $awaitables = Map {
+          'team' => MultiTeam::genTeam($gamelog->getTeamId()),
+          'level' => Level::gen($gamelog->getLevelId()),
+        };
+
+        $results = await \HH\Asio\m($awaitables);
+
+        if ($results->contains('team') && $results->contains('level')) {
+          $team = $results->get('team');
+          invariant($team !== null, 'Team should not be null');
+          invariant($team instanceof Team, 'team should be of type Team');
+
+          $level = $results->get('level');
+          invariant($level !== null, 'Level should not be null');
+          invariant(
+            $level instanceof Level,
+            'level should be of type Level',
+          );
+
+          $country = await Country::gen($level->getEntityId());
+
+          $team_name = $team->getName();
+
+          $level_str =
+            $country->getName().
+            ' - '.
+            $level->getTitle().
+            ' - '.
+            $level->getType();
+          $logs_tbody->appendChild(
             <tr>
-              <th>{tr('time')}_</th>
-              <th>{tr('entry')}_</th>
-              <th>{tr('level')}_</th>
-              <th>{tr('pts')}_</th>
-              <th>{tr('team')}_</th>
-              <th>{tr('flag')}_</th>
+              <td>{time_ago($gamelog->getTs())}</td>
+              <td>{$log_entry}</td>
+              <td>{$level_str}</td>
+              <td>{strval($gamelog->getPoints())}</td>
+              <td>{$team_name}</td>
+              <td>{$gamelog->getFlag()}</td>
             </tr>
-          </thead>
-          {$logs_tbody}
-        </table>;
+          );
+        }
+        $logs_table =
+          <table>
+            <thead>
+              <tr>
+                <th>{tr('time')}_</th>
+                <th>{tr('entry')}_</th>
+                <th>{tr('level')}_</th>
+                <th>{tr('pts')}_</th>
+                <th>{tr('team')}_</th>
+                <th>{tr('flag')}_</th>
+              </tr>
+            </thead>
+            {$logs_tbody}
+          </table>;
+      }
     } else {
       $logs_table =
         <div class="fb-column-container">

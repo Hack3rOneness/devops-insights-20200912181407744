@@ -8,503 +8,519 @@ $translations = array(
   'Facebook CTF' =>
     'Facebook CTF',
   'Conquer the world' =>
-    'Conquista el mundo',
+    'Conquista il mondo',
   'Play' =>
-    'Jugar',
+    'Gioca',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Bienvenido a la competición CTF de Facebook. Al hacer clic en "Jugar," entrarás en la competición CTF. ¡Mucha suerte!.',
+    'Benvenuti alla competizione di Facebook "Cattura la bandiera". Cliccando su "Gioca" entrerai nella competizione ufficiale CTF. Buona fortuna nella tua conquista.',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    '¡Prepárate para competir y acceder al panel de juego!',
+    'Preparati per iniziare la CTF. Accedi al pannello di gioco ora!',
   'Gameboard' =>
-    'Panel de juego',
+    'Pannello di gioco',
   'Register Team' =>
-    'Registrar Equipo',
+    'Registra Squadra',
   'Get ready for the CTF to start and register your team now!' =>
-    '¡Prepárate para competir y registrar tu equipo!',
+    'preparati per iniziare la CTF e registrare la tua squadra ora!',
   'Login' =>
-    'Inciar Sesión',
+    'Login',
   'Soon' =>
-    'Próximamente',
+    'Presto',
   'Upcoming Game' =>
-    'Próximo Juego',
+    'Prossimi Giochi',
   '_days' =>
-    '_días',
+    '_giorni',
   '_hours' =>
-    '_horas',
+    '_ore',
   '_minutes' =>
-    '_minutos',
+    '_minuti',
   '_seconds' =>
-    '_segundos',
+    '_secondi',
   'Official CTF Rules' =>
-    'Reglas Oficiales de CTF',
+    'Regole Ufficiali CTF',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Las siguientes acciones se encuentran prohibidas, si no son permitidas explícitamente por los Administradores del evento.',
+    'Le seguenti azioni sono proibite, se non esplicitamente consentite dagli Admin',
   'Rule' =>
-    'Regla',
+    'Regole',
   'Cooperation' =>
-    'Cooperación',
+    'Collaborazione',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Los equipos con cuentas independientes no pueden cooperar entre sí. Compartir claves o pistas con otros equipos es hacer trampa, no lo hagas.',
+    'La collaborazione tra squadre con account indipendenti non è permessa. Condividere chiavi o fornire suggerimenti alle altre squadre è barare, non farlo.',
   'Attacking Scoreboard' =>
-    'Puntuaciones de Ataque',
+    'Tabella punti Attacchi',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'Prohibido atacar la infraestructura de la competencia. Si se encuentra alguna vulnerabilidad, por favor alerten inmediatamente a los organizadores.',
+    'Non attaccare le infrastrutture degli avversari. Se vengono trovati errori o vulnerabilità, si prega di avvisare immediatamente gli organizzatori del concorso.',
   'Sabotage' =>
-    'Sabotaje',
+    'Sabotaggi',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'Está totalmente prohibido sabotear a otros equipos dentro del juego, o impedir el progreso de algún otro modo.',
+    'Non è assolutamente consentito sabotare le altre squadre in competizione, o in qualche modo ostacolare il loro progresso.',
   'Bruteforcing' =>
-    'Fuerza Bruta',
+    'Bruteforcing',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'No aplicar fuerza bruta contra el sitio para las claves o soluciones del reto.',
+    'Non è permesso usare Bruteforcing contro il sito dei punteggi al fine di trovare le bandiere/ chiavi',
   'Denial Of Service' =>
-    'Denegación De Servicio',
+    'Denial Of Service',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'Queda prohibido hacer ataques de denegación de servicio a la plataform de CTF.',
+    'DDoS contro la piattaforma CTF o contro qualsiasi competizione è proibita.',
   'Legal' =>
-    'Legal',
+    'Legale',
   'Disclaimer' =>
     'Disclaimer',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'Al participar en el concurso, usted acepta liberar a Facebook y sus empleados, y a la organizadora del evento de cualquier responsabilidad, reclamos o acciones de cualquier tipo por lesiones, daños o pérdidas a las personas y bienes que puedan ir en relación con el concurso. Usted reconoce y acepta que Facebook y otros no se hacen responsables de fallos técnicos, de hardware o software, u otros errores o problemas que pueden ocurrir relacionados al concurso',
+    'Partecipando al concorso, l\'utente accetta di liberare Facebook ed i suoi dipendenti, e l\'organizzazione da ogni e qualsiasi responsabilità, pretese o azioni di qualsiasi tipo di lesioni, danni o perdite a persone e beni che possono essere sostenuti in connessione con il concorso. L\'utente prende atto ed accetta che Facebook ed altri non sono responsabili per errori tecnici, hardware o software, o altri errori o problemi che possono verificarsi in relazione al concorso.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
-    'Si tiene alguna pregunta acerca de lo que está o no permitido, consulte a un organizador.',
+    'Se avete domande su ciò che è o non è consentito, si prega di chiedere all\'organizzatore.',
   'Have fun!' =>
-    '¡Diviértete!',
+    'Divertiti!',
   'Name' =>
-    'Nombre',
+    'Nome',
   'Email' =>
-    'Correo Electrónico',
+    'Email',
   'Token' =>
     'Token',
   'Team Registration' =>
-    'Registro de Equipo',
+    'Registrazione Squadra',
   'Team Name' =>
-    'Nombre de Equipo',
+    'Nome Squadra',
   'Password' =>
     'Password',
   'Choose an Emblem' =>
-    'Elige un Emblema',
+    'Scegli un Emblema',
   'Sign Up' =>
-    'Regístrate',
+    'Registrazione',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Regístrate aquí para jugar Capture The Flag. Una vez registrado, accederás al sitio.',
+    'Registrati per giocare a Cattura la Bandiera. Una volta registrato, sarai collegato.',
   'Not Available' =>
-    'No Disponible',
+    'Non Disponibile',
   'Team Registration will be open soon, stay tuned!' =>
-    '¡El registro de equipos se habilitará pronto, mantente al tanto!',
+    'Le iscrizioni delle Squadre saranno aperte a breve, restate sintonizzati!',
   'Try Again' =>
-    'Intentar Nuevamente',
+    'Riprova',
   'Select' =>
-    'Seleccionar',
+    'Seleziona',
   'Team Login' =>
-    'Acceso de Equipo',
+    'Login Squadra',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Por favor inicia sesión aquí. Si no lo hiciste, puedes hacerlo haciendo clic en "Registro" más abajo. ',
+    'Effettua il login qui. Se non sei ancora registrato, puoi farlo cliccando su "Registrazione"',
   'Team Login will be open soon, stay tuned!' =>
-    '¡El Acceso de Equipo se abrirá pronto, mantente al tanto!',
+    'Il login delle squadre sarà aperto a breve, resta sintonizzato',
   'ERROR' =>
-    'ERROR',
+    'ERRORE',
   'Start Over' =>
-    'Iniciar',
+    'Ricominciare',
   'Window is too small' =>
-    'La ventana es muy pequeña',
+    'La finestra è troppo piccola',
   'For the best CTF experience, please make window size bigger.' =>
-    'Para una mejor experiencia, por favor agranda tu ventana.',
+    'Per una migliore esperienza, ingrandisci la dimensione della finestra.',
   'Thank you.' =>
-    'Gracias.',
+    'Grazie.',
   'Logout' =>
-    'Cerrar Sesión',
+    'Disconnettiti',
   'Registration' =>
-    'Registro',
+    'Registrazione',
   'Play CTF' =>
-    'Jugar CTF',
+    'Gioca CTF',
   'Rules' =>
-    'Reglas',
+    'Regole',
   //Translations for GameboardController
   'Admin' =>
     'Admin',
   'ADMIN' =>
     'ADMIN',
   'Navigation' =>
-    'Navegación',
+    'Navigazione',
   'View Mode' =>
-    'Modo Visualización',
+    'Modalità di Visualizzazione',
   'View mode' =>
-    'Modo visualización',
+    'Modalità di visualizzazione',
   'Tutorial' =>
     'Tutorial',
   'Scoreboard' =>
-    'Puntuaciones',
+    'Tabella punti',
   'You' =>
-    'Tú',
+    'Tu',
   'Others' =>
-    'Otros',
+    'Altri',
   'All' =>
-    'Todos',
+    'Tutti',
   'Leaderboard' =>
-    'Tabla de Posiciones',
+    'Classifica',
   'Announcements' =>
-    'Anuncios',
+    'Annunci',
   'Teams' =>
-    'Equipos',
+    'Squadre',
   'Filter' =>
-    'Filtrar',
+    'Filtro',
   'Activity' =>
-    'Actividad',
+    'Attività',
   'Game Clock' =>
-    'Reloj del Juego',
+    'Orologio Gioco',
   //Translations for AdminController
   'Auto' =>
     'Auto',
   'All Categories' =>
-    'Todas las Categorías',
+    'Tutte le Categorie',
   'Open' =>
-    'Abrir',
+    'Apri',
   'Tokenized' =>
     'Tokenized',
   'Hour' =>
-    'Hora',
+    'Ora',
   'Hours' =>
-    'Horas',
+    'Ore',
   'Used by' =>
-    'Utilizado por',
+    'Usato da',
   'Used By' =>
-    'Utilizado Por',
+    'Usato Da',
   'Available' =>
-    'Disponible',
+    'Disponibile',
   'Registration Tokens' =>
-    'Tokens de Registro',
+    'Registrazione Token',
   'Create More' =>
-    'Crear Más',
+    'Crea Altro',
   'Export Available' =>
-    'Exportar Disponibles',
+    'Esporta Disponibili',
   'Not started yet' =>
-    'No inició aún',
+    'Non ancora iniziata',
   'Configuration' =>
-    'Configuración',
+    'Configurazione',
   'Tokens' =>
     'Tokens',
   'Game Configuration' =>
-    'Configuración del Juego',
+    'Configurazione Gioco',
   'OK' =>
     'OK',
   'status_' =>
-    'estado_',
+    'stato_',
   'On' =>
     'On',
   'Off' =>
     'Off',
   'Player Names' =>
-    'Nombre de los Jugadores',
+    'Nomi Giocatori',
   'Players Per Team' =>
-    'Jugadores Por Equipo',
+    'Giocatori per Squadra',
   'Registration Type' =>
-    'Tipo de Registro',
+    'Tipo di Registrazione',
   'Strong Passwords' =>
-    'Contraseñas Seguras',
+    'Password Complessa',
   'Team Selection' =>
-    'Selección de Equipo',
+    'Selezione Squadra',
   'Game' =>
-    'Juego',
+    'Gioco',
   'Scoring' =>
-    'Puntuación',
+    'Punteggio',
   'Progressive Cycle (s)' =>
-    'Ciclos Progresivos',
+    'Cicli Progressivi',
   'Refresh Gameboard' =>
-    'Refrescar Panel de Juego',
+    'Aggiona Pannello di gioco',
   'Default Bonus' =>
-    'Bonus por defecto',
+    'Bonus di Default',
   'Bases Cycle (s)' =>
-    'Ciclos Base',
+    'Cicli Basi',
   'Default Bonus Dec' =>
-    'Bonus Dec por defecto',
+    'Bonus di Default Dec',
   'Timer' =>
-    'Temporizador',
+    'Cronometro',
   'Server Time' =>
-    'Tiempo de Servidor',
+    'Ora Server',
   'Game Duration' =>
-    'Duración del Juego',
+    'Durata Gioco',
   'Begin Time' =>
-    'Tiempo de Inicio',
+    'Ora di Inizio',
   'Expected End Time' =>
-    'Tiempo de Finalización Esperada',
+    'Ora di Fine Prevista',
   'Language' =>
-    'Lenguaje',
+    'Lingua',
   'DELETE' =>
-    'BORRAR',
+    'ELIMINA',
   'Delete' =>
-    'Borrar',
+    'Elimina',
   'No Announcements' =>
-    'No hay Anuncios',
+    'Nessun Annuncio',
   'Game Controls' =>
-    'Controles del Juego',
+    'Controlli Gioco.',
   'Write New Announcement here' =>
-    'Escribir Nuevo Anuncio aquí',
+    'Scrivi Nuovo Annuncio qui',
   'Create' =>
-    'Crear',
+    'Crea',
   'General' =>
-    'General',
+    'Generale',
   'Back Up Database' =>
-    'Hacer Copia de Seguridad de la Base de Datos',
-  'Export Game' =>
-    'Exportar Juego',
-  'Import Game' =>
-    'Importar Juego',
+    'Back Up Database',
+  'Export Full Game' =>
+    'Esporta Gioco Completo',
+  'Import Full Game' =>
+    'Importa Gioco Completo',
+  'Import Teams' =>
+    'Importa Squadre',
+  'Export Teams' =>
+    'Esporta Squadre',
+  'Import Logos' =>
+    'Importa Logo',
+  'Export Logos' =>
+    'Esporta Logo',
+  'Import Levels' =>
+    'Importa Livelli',
+  'Export Levels' =>
+    'Esporta Livelli',
+  'Import Categories' =>
+    'Importa Categorie',
+  'Export Categories' =>
+    'Esporta Categorie',
   'Levels' =>
-    'Niveles',
+    'Livelli',
   'New Quiz Level' =>
-    'Nuevo Nivel Acertijo',
+    'Nuovo Livello Quiz',
   'Title' =>
-    'Título',
+    'Titolo',
   'Question' =>
-    'Pregunta',
+    'Domande',
   'Level title' =>
-    'Título del Nivel',
+    'Titolo Livello',
   'Quiz question' =>
-    'Acertijo',
+    'Domande Quiz',
   'Country' =>
-    'País',
+    'Paese',
   'Answer' =>
-    'Respuesta',
+    'Risposta',
   'Points' =>
-    'Puntos',
+    'Punti',
   'Hint' =>
-    'Pista',
+    'Suggerimento',
   'Hint Penalty' =>
-    'Penalidad de la Pista',
+    'Penalità Suggerimento',
   'EDIT' =>
-    'EDITAR',
+    'MODIFICA',
   'All Quiz Levels' =>
-    'Todos los Niveles Acertijo',
+    'Tutti i livelli dei Quiz',
   'Filter By:' =>
-    'Filtrar por:',
+    'Filtra Per:',
   'All Status' =>
-    'Todos los Estados',
+    'Tutto lo stato',
   'Enabled' =>
-    'Habilitado',
+    'Abilitato',
   'Disabled' =>
-    'Deshabilitado',
+    'Disabilitato',
   'Quiz Level' =>
-    'Nivel Acertijo',
+    'Livello Quiz',
   'Show Answer' =>
-    'Mostrar Respuesta',
+    'Mostra Risposta',
   'Bonus' =>
     'Bonus',
   '-Dec' =>
     '-Dec',
   'Save' =>
-    'Guardar',
+    'Salva',
   'Quiz Management' =>
-    'Administración de Acertijos',
+    'Gestione Quiz',
   'Add Quiz Level' =>
-    'Añadir nuevo nivel de Acertijo',
+    'Aggiungi Livello Quiz',
   'New Flag Level' =>
-    'Nuevo Nivel Bandera',
+    'Nuova Bandiera Livello',
   'Description' =>
-    'Descripción',
+    'Descrizione',
   'Level description' =>
-    'Descripción del Nivel',
+    'Descrizione Livello',
   'Category' =>
-    'Categoría',
+    'Categoria',
   'Flag' =>
-    'Bandera',
+    'Bandiera',
   'flag' =>
-    'bandera',
+    'bandiera',
   'All Flag Levels' =>
-    'Todos los Niveles Bandera',
+    'Tutte le Bandiere del Livello',
   'New Attachment:' =>
-    'Nuevo Adjunto:',
+    'Nuovo Allegato:',
   'Attachment' =>
-    'Adjunto',
+    'Allegato',
   'Link' =>
     'Link',
   'New Link:' =>
-    'Nuevo Link:',
+    'Nuovo Link:',
   'Flag Level' =>
-    'Nivel Bandera',
+    'Livelo Bandiera',
   'Categories' =>
-    'Categorias',
+    'Categorie',
   '+ Attachment' =>
-    '+ Adjunto',
+    '+ Allegato',
   '+ Link' =>
     '+ Link',
   'Flags Management' =>
-    'Administrar Banderas',
+    'Gestione Bandiere',
   'Add Flag Level' =>
-    'Añadir Nivel Bandera',
+    'Aggiungi Livello Bandiera',
   'New Base Level' =>
-    'Nuevo Nivel Base',
+    'Nuovo Livello Base',
   'Keep Points' =>
-    'Mantener Puntos',
+    'Mantieni Punti',
   'Capture points' =>
-    'Capturar puntos',
+    'Punti Cattura',
   'All Base Levels' =>
-    'Todos los Niveles Base',
+    'Tutti i livelli Base',
   'Base Level' =>
-    'Nivel Base',
+    'Livello Base',
   'Bases Management' =>
-    'Administrar Bases',
+    'Gestioni Basi',
   'Add Base Level' =>
-    'Añadir Nivel Base',
+    'Aggiungi Livello Base',
   'New Category' =>
-    'Nueva Categoría',
+    'Nuova Categoria',
   'Category: ' =>
-    'Categoría: ',
+    'Categoria: ',
   'Categories Management' =>
-    'Administrar Categorías',
+    'Gestione Categorie',
   'Add Category' =>
-    'Añadir Categoría',
+    'Aggiungi Categoria',
   'All Countries' =>
-    'Todos lo Países',
+    'Tutti i Paesi',
   'In Use' =>
-    'En Uso',
+    'In Uso',
   'In use' =>
-    'En uso',
+    'In uso',
   'Not Used' =>
-    'Sin Usar',
+    'Non Usato',
   'Yes' =>
     'Si',
   'No' =>
     'No',
   'ISO Code' =>
-    'Código ISO',
+    'Codice ISO',
   'Countries Management' =>
-    'Adminsitrar Países',
+    'Gestione Paesi',
   'No Team Names' =>
-    'No hay Nombre de Equipos',
+    'Nessun Nome Squadra',
   'time' =>
-    'tiempo',
+    'Tempo',
   'type' =>
     'tipo',
   'pts' =>
     'pts',
   'Level' =>
-    'Nivel',
+    'Livello',
   'level' =>
-    'nivel',
+    'livello',
   'No Scores' =>
-    'No hay puntaciones',
+    'Nessun punteggio',
   'Attempt' =>
-    'Intento',
+    'Tentativo',
   'No Failures' =>
-    'Sin Fallas',
+    'Nessun Fallimento',
   'Team' =>
-    'Equipo',
+    'Squadra',
   'team' =>
-    'equipo',
+    'squadra',
   'Names' =>
-    'Nombres',
+    'Nomi',
   'Scores' =>
-    'Puntuaciones',
+    'Punteggi',
   'Failures' =>
-    'Fallas',
+    'Fallimenti',
   'New Team' =>
-    'Nuevo Equipo',
+    'Nuova Squadra',
   'Team Logo' =>
-    'Logo de Equipo',
+    'Team Logo',
   'Selected Logo:' =>
-    'Logo Seleccionado:',
+    'Logo Selezionato:',
   'Select Logo' =>
-    'Seleccionar Logo',
+    'Seleziona Logo',
   'All Teams' =>
-    'Todos los Equipos',
+    'Tutte le Squadre',
   'Protected' =>
-    'Protegido',
+    'Protetto',
   'Score' =>
-    'Puntuación',
+    'Punteggio',
   'Change Password' =>
-    'Cambiar Password',
+    'Cambia Password',
   'Admin Level' =>
-    'Administrar Nivel',
+    'Livello Admin',
   'Visibility' =>
-    'Visibilidad',
+    'Visibilità',
   'Team Management' =>
-    'Administrar Equipo',
+    'Gestione Squadra',
   'Add Team' =>
-    'Añadir Equipo',
+    'Aggiungi Squadra',
   'None' =>
-    'Ningúno',
+    'None',
   'Logo Name' =>
-    'Nombre de Logo',
+    'Nome Logo',
   'Logo Management' =>
-    'Administración de Logo',
+    'Gestione Logo',
   'Session' =>
-    'Sesión',
+    'Sessione',
   'Cookie' =>
     'Cookie',
   'Creation Time' =>
-    'Tiempo de Creación',
+    'Ora di Creazione',
   'Last Access' =>
-    'Último Acceso',
+    'Ultimo Accesso',
   'Last Page Access' =>
-    'Última Página de Acceso',
+    'L\'ultimo accesso Pagina',
   'Data' =>
-    'Datos',
+    'Data',
   'Sessions' =>
-    'Sesiones',
+    'Sessioni',
   'entry' =>
-    'entrada',
+    'entrata',
   'No Entries' =>
-    'Sin Entrada',
+    'nessuna entrata',
   'Game Logs' =>
-    'Logs del Juego',
+    'Log di Gioco Logs',
   'Game Logs Timeline' =>
-    'Logs del Juego en Linea de Tiempo',
+    'Timeline log di Gioco',
   'End Game' =>
-    'Finalizar Juego',
+    'Fine del Gioco',
   'Begin Game' =>
-    'Iniciar Juego',
+    'Inizia il Gioco',
   'Game Admin' =>
-    'Administración del Juego',
+    'Gioco Admin',
   'Controls' =>
-    'Controles',
+    'Controlli',
   'Quiz' =>
-    'Acertijo',
+    'Quiz',
   'Flags' =>
-    'Banderas',
+    'Bandiere',
   'Bases' =>
-    'Bases',
+    'Basi',
   'Countries' =>
-    'Países',
+    'Paesi',
   'Logos' =>
-    'Logos',
+    'Loghi',
   //Translations for inc/* and inc/gameboard/*
   'captured' =>
-    'capturado',
+    'catturata',
   'Status' =>
-    'Estado',
+    'Stati',
   'Completed' =>
-    'Completado',
+    'Completato',
   'Remaining' =>
-    'Restante',
+    'Rimanente',
   'Start' =>
-    'Iniciar',
+    'Inizio',
   'End' =>
-    'Finalizar',
+    'Fine',
   'Rank' =>
-    'Posición',
+    'Grado',
   'pts' =>
     'pts', //points
   'Your Rank' =>
-    'Tu Posición',
+    'Il tuo Grado',
   'Your Score' =>
-    'Tu Puntaje',
+    'Il tuo Punteggio',
   'Everyone' =>
-    'Todos',
+    'Tutti',
   'Your Team' =>
-    'Tu Equipo',
+    'La Tua Squadra',
   'Captured' =>
-    'Capturado',
+    'Catturato',
   'Initiating' =>
-    'Iniciando',
+    'Avvio',
   'run : > boot_sequence' =>
-    'run : > boot_sequence',
+    'esegui : > boot_sequence',
   'Extracting' =>
-    'Extrayendo',
+    'Estrazione',
   //Translations for Utils.php's time_ago() function
   'just now' =>
-    'justo ahora',
+    'proprio adesso',
   'd' =>
     'd', //day
   'hr' =>
@@ -512,134 +528,134 @@ $translations = array(
   'min' =>
     'min', //minute
   'sec' =>
-    'seg', //second
+    'sec', //second
   'ds' =>
     'd', //days
   'hrs' =>
-    'hrs', //hours
+    'hr', //hours
   'mins' =>
-    'mins', //minutes
+    'min', //minutes
   'secs' =>
-    'segs', //seconds
+    'sec', //seconds
   'ago' =>
-    'atrás',
+    'fa',
   //Translations for ModalControllers
   'begin_' =>
-    'comenzar_',
+    'inizio_',
   'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start' =>
-    '¿Está seguro de que desea iniciar el juego? Los logs se borrarán y el panel de puntuaciones iniciará',
+    'Sei sicuro di voler uscire dal gioco? i registri verranno cancellati e i progressi inizieranno',
   'end_' =>
-    'finalizar_',
+    'fine_',
   'Are you sure you want to finish the current game?' =>
-    '¿Está seguro que desea finalizar el juego actual?',
+    'Sei sicuro di voler terminare la partita in corso?',
   'Are you sure you want to logout from the game?' =>
-    '¿Está seguro que desea salir del juego?',
+    'Sei sicuro di voler uscire dal gioco?',
   'Saved' =>
-    'Guardado',
+    'Salvato',
   'All changes have been successfully saved.' =>
-    'Todos los cambios fueron guardados exitosamente.',
+    'Tutti i cambiamenti sono stati salvati con successo.',
   'Error' =>
-    'Error',
+    'Errore',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'Lo sentimos tu formulario no fue guardado. Por favor corrige los errores e inténtalo otra vez.',
+    'Spiacente, il modulo non è stato salvato. Si prega di correggere gli errori e salvare nuovamente.',
   'cancel_' =>
-    'cancelar_',
+    'cancel_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
-    'Está seguro que desea cancelar? Los cambios sin guardar se perderán.',
+    'Sei sicuro di voler annullare? Hai modifiche non salvate che saranno perdute.',
   'choose_logo' =>
-    'elegir_logo',
+    'scegli_logo',
   'captured_' =>
-    'captured_',
+    'catturato_',
   'flag_owner_' =>
-    'flag_owner_',
+    'bandiera_proprietario_',
   'INACTIVE' =>
-    'INACTIVO',
+    'INATTIVO',
   'PTS' =>
     'PTS',
   'category' =>
-    'categoría',
+    'categoria',
   'capture_' =>
-    'capture_',
+    'cattura_',
   'Insert your answer' =>
-    'Introduce tu respuesta',
+    'Inserisci la tua risposta',
   'Request Hint' =>
-    'Solicitar Pista',
+    'Richiedi Aiuto',
   'Submit' =>
-    'Enviar',
+    'Invia',
   'hint_' =>
-    'pista_',
+    'Aiuto_',
   'first_capture' =>
-    'first_capture',
+    'prima_cattura',
   'completed_by' =>
-    'completado_por',
+    'completata_da',
   'scoreboard_' =>
     'scoreboard_',
   'filter_' =>
-    'filter_',
+    'filtro_',
   'rank_' =>
-    'rank_',
+    'grado_',
   'team_name_' =>
-    'team_name_',
+    'squadra_nome_',
   'quiz_pts_' =>
     'quiz_pts_',
   'flag_pts_' =>
-    'flag_pts_',
+    'bandiera_pts_',
   'base_pts_' =>
     'base_pts_',
   'total_pts_' =>
     'total_pts_',
   'team_' =>
-    'team_',
+    'squadra_',
   'team_members' =>
-    'team_members',
+    'squadra_membri',
   'base_pts' =>
     'base_pts',
   'quiz_pts' =>
     'quiz_pts',
   'flag_pts' =>
-    'flag_pts',
+    'bandiera_pts',
   'total_pts' =>
     'total_pts',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
-    'Las barras de herramientas se encuentran en todos los bordes del panel de juego. Pulsa en una categoría para ampliar y cerrar cada barra de herramientas.',
+    'barre degli strumenti si trovano su tutti i bordi del pannello di gioco. Toccare una categoria per espandere e chiudere ogni barra degli strumenti.',
   'Tool_Bars' =>
     'Tool_Bars',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
-    'Pulsa el "Reloj del Juego" para hacer seguimiento del tiempo. No dejes que el tiempo te gane.',
+    'premi su "Orologio di giooc" per tenere traccia del tempo durante il gioco. Non lasciare che il tempo abbia la meglio su di voi.',
   'Game_Clock' =>
     'Game_Clock',
   'Countries marked with an ' =>
-    'Países marcados con una ',
+    'Paesi contrassegnati con un  ',
   'are captured by you.' =>
-    'son capturados por vos.',
+    'sono stati catturati da te.',
   ' are owned by others.' =>
-    ' le pertenecen a otros.',
+    ' sono di altri.',
   'Captures' =>
-    'Capturas',
+    'Cattura',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'Pulsa Más[+] para Acercarte. Pulsa Menos[-] para Alejarte.',
+    'premi sul più[+] per avvicinarti. premi su meno[-] per allontanarti.',
   'Click and Drag to move left, right, up and down.' =>
-    'Presiona y Arrastra para moverte por la izquierda, derecha, arriba o abajo',
+    'clicca e trascina per muoverti a sinistra, destra, su e giù.',
   'Zoom' =>
     'Zoom',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'Presiona Slash [/] para activar los comandos del juego. La lista completa de comandos puede ser encontrada en "Reglas".',
+    'primi barra[/] per attivare i comandi del computer. una lista di comandi la puoi trovare sotto "Regole".',
   'Command_Line' =>
     'Command_Line',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'Presiona "Nav" para acceder a los links principales como Reglas del Juego, Registro, Blog, Trabajo y más.',
+    'clicca su "Nav" per accedere alla navigazione principale come regole del gioco, registrazione, blog, lavori e altro.',
   'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
-    'Haz un seguimiento del juego haciendo clic en "scoreboard" para acceder a estadísticas y gráficas en tiempo real.',
+    'Tieni traccia della competizione cliccando su "Tabella punti" per accedere alla statistiche e grafici in tempo reale del gioco.',
   'Have fun, be the best and conquer the world.' =>
-    'Diviértete, sé el mejor y conquista el mundo.',
+    'Buon divertimento, sii il migliore e conquista il mondo.',
   'Game_On' =>
-    'Game_On',
+    'Gioco_On',
   'tutorial_' =>
     'tutorial_',
   'Next' =>
-    'Siguiente',
+    'Prossimo',
   'Skip to play' =>
-    'Continuar para jugar',
+    'Vai a Giocare',
   'Powered By Facebook' =>
-    'Powered By Facebook',
+    'Sviluppato da Facebook',
 );

@@ -213,11 +213,6 @@ set_motd "$CTF_PATH"
 # Some Ubuntu distros don't come with curl installed
 package curl
 
-# Repos to be added in dev mode
-if [[ "$MODE" == "dev" ]]; then
-    repo_mycli
-fi
-
 # We only run this once so provisioning is faster
 sudo apt-get update
 
@@ -226,7 +221,9 @@ package language-pack-en
 
 # Packages to be installed in dev mode
 if [[ "$MODE" == "dev" ]]; then
-    package mycli
+    sudo apt-get install -y build-essential curl python-dev
+    package python-pip
+    sudo -H pip install mycli
     package emacs
     package htop
 fi
@@ -249,6 +246,10 @@ composer.phar install
 
 # Install NPM and grunt
 package npm
+
+# Update NPM with itself: https://github.com/npm/npm/issues/14610
+sudo npm install -g npm@lts
+
 package nodejs-legacy
 sudo npm install
 sudo npm install -g grunt

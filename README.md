@@ -183,8 +183,6 @@ You’ve used it, now you want to make it better? Awesome! Pull requests are wel
 
 Facebook also has [bug bounty program] (https://www.facebook.com/whitehat/) that includes FBCTF. If you find a security vulnerability in the platform, please submit it via the process outlined on that page and do not file a public issue.
 
-We're also hiring a dedicated engineering lead for FBCTF! If you're interested in the remote position, apply [here](http://pro.applytojob.com/apply/Qe1YmW/CTF-Engineering-Lead)!
-
 ## Have more questions?
 
 Check out the [wiki pages] (https://github.com/facebook/fbctf/wiki) attached to this repo.

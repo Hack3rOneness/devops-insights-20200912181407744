@@ -14,7 +14,7 @@ class ListviewController {
 
     $active_levels = await Level::genAllActiveLevels();
     foreach ($active_levels as $level) {
-      $country = await Country::gen(intval($level->getId()));
+      $country = await Country::gen(intval($level->getEntityId()));
       $category = await Category::genSingleCategory($level->getCategoryId());
       $previous_score = await ScoreLog::genPreviousScore(
         $level->getId(),
