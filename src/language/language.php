@@ -8,7 +8,7 @@ async function tr_start(): Awaitable<void> {
   $config = await Configuration::gen('language');
   $language = $config->getValue();
   $document_root = must_have_string(Utils::getSERVER(), 'DOCUMENT_ROOT');
-  if (preg_match('/^\w{2}$/', $language) &&
+  if (preg_match('/^[^,;]+$/', $language) &&
       file_exists($document_root."/language/lang_".$language.".php")) {
     include ($document_root."/language/lang_".$language.".php");
   } else {
