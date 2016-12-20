@@ -333,7 +333,38 @@ class IndexController extends Controller {
             </fieldset>
             <div class="fb-choose-emblem">
               <h6>{tr('Choose an Emblem')}</h6>
-              <div class="emblem-carousel">{$logos_section}</div>
+              <h6>
+                <a href="#" id="custom-emblem-link">{tr('or upload your own')}</a>
+              </h6>
+              <div class="custom-emblem">
+                <input
+                  autocomplete="off"
+                  name="custom-emblem"
+                  id="custom-emblem-input"
+                  type="file"
+                  accept="image/*"
+                />
+                <img
+                  id="custom-emblem-preview"
+                  src=""
+                  height={62}
+                  width={80}>
+                </img>
+              </div>
+              <div class="emblem-carousel">
+                <div id="custom-emblem-carousel-notice">
+                  <div class="center-wrapper">
+                    <h6>
+                      <a href="#" id="custom-emblem-clear-link">
+                        {tr(
+                          'Clear your custom emblem to use a default emblem.',
+                        )}
+                      </a>
+                    </h6>
+                  </div>
+                </div>
+                {$logos_section}
+              </div>
             </div>
             <div class="form-el--actions fb-container container--small">
               <p>
@@ -406,7 +437,40 @@ class IndexController extends Controller {
             </fieldset>
             <div class="fb-choose-emblem">
               <h6>{tr('Choose an Emblem')}</h6>
-              <div class="emblem-carousel">{$logos_section}</div>
+              <h6>
+                <a href="#" id="custom-emblem-link">
+                  {tr('or upload your own')}
+                </a>
+              </h6>
+              <div class="custom-emblem">
+                <input
+                  autocomplete="off"
+                  name="custom-emblem"
+                  id="custom-emblem-input"
+                  type="file"
+                  accept="image/*"
+                />
+                <img
+                  id="custom-emblem-preview"
+                  src=""
+                  height={62}
+                  width={80}>
+                </img>
+              </div>
+              <div class="emblem-carousel">
+                <div id="custom-emblem-carousel-notice">
+                  <div class="center-wrapper">
+                    <h6>
+                      <a href="#" id="custom-emblem-clear-link">
+                        {tr(
+                          'Clear your custom emblem to use a default emblem.',
+                        )}
+                      </a>
+                    </h6>
+                  </div>
+                </div>
+                {$logos_section}
+              </div>
             </div>
             <div class="form-el--actions fb-container container--small">
               <p>
