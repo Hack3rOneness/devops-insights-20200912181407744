@@ -12,15 +12,15 @@ $translations = array(
   'Play' =>
     'بازی کنید',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'به رقابت فتح پرچم فیسبوک خوش آمدید. با کلیک روی دکمه "بازی کنید" به محیط مسابقه وارد خواهید شد. موفق باشید.',
+    'به رقابت فتح پرچم فیسبوک خوش آمدید. با کلیک روی دکمه "بازی کنید" به محیط مسابقه وارد خواهید شد. در رقابتتان موفق باشید.',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    'برای مسابقه آماده باشید و به صفحه بازی بروید!',
+    'برای شروع مسابقه آماده شوید و هم‌اکنون به صفحه ‌بازی بروید!',
   'Gameboard' =>
     'صفحه بازی',
   'Register Team' =>
-    'ثبت نام تیم',
+    'ثبت‌نام تیم',
   'Get ready for the CTF to start and register your team now!' =>
-    'برای مسابقه آماده باشید و تیم مورد نظر خود را ثبت کنید',
+    'برای شروع مسابقه آماده شوید و تیم خود را هم‌اکنون ثبت کنید',
   'Login' =>
     'ورود',
   'Soon' =>
@@ -38,25 +38,25 @@ $translations = array(
   'Official CTF Rules' =>
     'قوانین رسمی مسابقه',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'اقدامات زیر ممنوع است مگر اینکه به صراحت توسط تیم برگزار کننده بیان شده باشد.',
+    'اقدامات زیر ممنوع است مگر اینکه به صراحت توسط سرپرست‌های مسابقه بیان شده باشد.',
   'Rule' =>
     'قانون',
   'Cooperation' =>
     'همکاری',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'تیم ها نباید با هم همکاری داشته باشند. اشتراک گذاشتن جواب چالش ها یا راهنمایی کردن سایر تیم ها تقلب محسوب می شود.',
+    'تیم‌های دارای حساب‌های مستقل نباید باهم همکاری داشته باشند. اشتراک‌گذاری کلیدها  با سایر تیم‌ها یا ارائه سرنخ‌ها تقلب محسوب می شود. این کار را انجام ندهید.',
   'Attacking Scoreboard' =>
-    'حمله به زیر ساخت مسابقه',
+    'حمله به تابلو امتیازها',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'به هیچ وجه به زیر ساخت مسابقه حمله نکنید. اگر باگ یا آسیب پذیری کشف کردید، لطفا آن را به تیم برگزار کننده گزارش دهید.',
+    'به زیر ساخت مسابقه حمله نکنید. اگر اشکال یا آسیب‌پذیری پیدا کردید، لطفاً آن را فوراً به برگزارکنندگان مسابقه گزارش دهید.',
   'Sabotage' =>
     'خرابکاری',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'هیچ گونه خرابکاری در روند مسابقه دادن سایر تیم ها ایجاد نکنید.',
+    'هیچ‌گونه خرابکاری در روند مسابقه سایر تیم‌های رقیب ایجاد نکنید یا به‌ هیچ‌صورتی مانع پیشرفت آن‌ها نشوید.',
   'Bruteforcing' =>
-    'بروت فورس',
+    ' حمله بی‌رحمانه',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'هیچ گونه بروت فورس روی سایت مسابقه برای بدست آوردن کلید مسابقه نزنید.',
+    '    'هیچ گونه حمله بی‌رحمانه (brute forcing) روی سایت مسابقه برای بدست آوردن پرچم/کلید مسابقه نزنید.',
   'Denial Of Service' =>
     'ممانعت از سرویس',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
@@ -66,7 +66,7 @@ $translations = array(
   'Disclaimer' =>
     'سلب مسئولیت',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.',
+    'با شرکت در این رقابت، موافقت می‌کنید در قبال جراحت، آسیب یا ضرری که به افراد و اموال در ارتباط با این رقابت وارد می‌شود، فیس‌بوک و کارمندان آن و سازمان میزبان هیچ‌گونه مسئولیتی ندارند و نمی‌توان دراین‌خصوص چیزی از آن‌ها مطالبه کرد. شما تأیید و موافقت می‌کنید که فیس‌بوک و همکارانش درقبال نقص‌های نرم‌افزاری یا فنی یا سایر مشکلات و خطاهایی که ممکن است درارتباط با رقابت با آن‌ها مواجه شوید، هیچ مسئولیتی ندارند.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
     'اگر درباره ممنوع بودن یا نبودن اقدامی ابهام دارید، حتما از برگزار کنندگان مسابقه سوال کنید.',
   'Have fun!' =>
@@ -76,23 +76,23 @@ $translations = array(
   'Email' =>
     'ایمیل',
   'Token' =>
-    'توکن',
+    'کد',
   'Team Registration' =>
-    'ثبت نام تیم',
+    'ثبت‌نام تیم',
   'Team Name' =>
     'نام تیم',
   'Password' =>
-    'پسورد',
+    'گذرواژه',
   'Choose an Emblem' =>
     'یک علامت انتخاب کنید',
   'Sign Up' =>
-    'ثبت نام',
+    'ثبت‌نام',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'در اینجا برای شرکت در رقابت فتح پرچم ثبت نام کنید. بعد از ثبت نام موفق به سایت مسابقه وارد می شوید.',
+    'در اینجا برای شرکت در رقابت فتح پرچم ثبت‌نام کنید. پس از ثبت‌نام موفق وارد سیستم خواهید شد.',
   'Not Available' =>
     'در دسترس نیست',
   'Team Registration will be open soon, stay tuned!' =>
-    'ثبت نام تیم ها به زودی فعال خواهد شد. در ارتباط باشید!',
+    'ثبت‌نام تیم به‌زودی فعال خواهد شد. در ارتباط باشید!',
   'Try Again' =>
     'دوباره تلاش کنید',
   'Select' =>
@@ -100,23 +100,23 @@ $translations = array(
   'Team Login' =>
     'ورود تیم',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'لطفا وارد شوید. اگر هنوز ثبت نام نکرده اید، می توانید با کلیک روی دکمه "ثبت نام" این کار را انجام دهید.',
+    'لطفا از اینجا وارد شوید. اگر هنوز ثبت‌نام نکرده اید، می توانید با کلیک روی دکمه "ثبت‌نام" این کار را انجام دهید.',
   'Team Login will be open soon, stay tuned!' =>
     'ورود تیم به زودی فعال خواهد شد. در ارتباط باشید!',
   'ERROR' =>
     'خطا',
   'Start Over' =>
-    'دوباره آغاز کنید',
+    'شروع مجدد',
   'Window is too small' =>
     'پنجره تان خیلی کوچک است',
   'For the best CTF experience, please make window size bigger.' =>
-    'برای داشتن تجربه بهتر از مسابقه، لطفا پنجره را بزرگتر بکنید.',
+    'برای داشتن تجربه بهتر از مسابقه، لطفا پنجره را بزرگ‌تر کنید.',
   'Thank you.' =>
     'با سپاس.',
   'Logout' =>
     'خروج',
   'Registration' =>
-    'ثبت نام',
+    'ثبت‌نام',
   'Play CTF' =>
     'آغاز رقابت',
   'Rules' =>
@@ -125,7 +125,7 @@ $translations = array(
   'Admin' =>
     'Admin',
   'ADMIN' =>
-    'ادمین',
+    'Admin',
   'Navigation' =>
     'راهبری',
   'View Mode' =>
@@ -143,7 +143,7 @@ $translations = array(
   'All' =>
     'همه',
   'Leaderboard' =>
-    'تیم های برتر',
+    'جدول رده‌بندی',
   'Announcements' =>
     'اعلانات',
   'Teams' =>
@@ -162,7 +162,7 @@ $translations = array(
   'Open' =>
     'باز',
   'Tokenized' =>
-    'توکن دار',
+    'کددار شده',
   'Hour' =>
     'ساعت',
   'Hours' =>
@@ -174,21 +174,22 @@ $translations = array(
   'Available' =>
     'در دسترس',
   'Registration Tokens' =>
-    'توکن ثبت نام',
+    'کدهای ثبت‌نام',
   'Create More' =>
     'ساخت بیشتر',
   'Export Available' =>
-    'اکسپورت موجود است',
+    'صدور (Export) موجود است',
   'Not started yet' =>
     'هنوز شروع نشده است',
   'Configuration' =>
     'تنظیمات',
   'Tokens' =>
-    'توکن ها',
+    'کدها',
   'Game Configuration' =>
     'تنظیمات بازی',
   'OK' =>
-    'اوکی',
+    'تأیید
+',
   'status_' =>
     'وضعیت_',
   'On' =>
@@ -198,11 +199,11 @@ $translations = array(
   'Player Names' =>
     'اسامی بازیکنان',
   'Players Per Team' =>
-    'بازیکنان به ازای هر تیم',
+    'بازیکنان هر تیم',
   'Registration Type' =>
-    'نوع ثبت نام',
+    'نوع ثبت‌نام',
   'Strong Passwords' =>
-    'رمز قوی',
+    'گذرواژه‌ قوی',
   'Team Selection' =>
     'انتخاب تیم',
   'Game' =>
@@ -218,7 +219,7 @@ $translations = array(
   'Bases Cycle (s)' =>
     'Bases Cycle (s)',
   'Default Bonus Dec' =>
-    'کاهش پیش فرض جایزه',
+    'مقدار پیش فرض کاهش جایزه',
   'Timer' =>
     'تایمر',
   'Server Time' =>
@@ -226,7 +227,7 @@ $translations = array(
   'Game Duration' =>
     'مدت بازی',
   'Begin Time' =>
-    'شروع بازی',
+    'زمان شروع',
   'Expected End Time' =>
     'زمان مورد انتظار برای پایان',
   'Language' =>
@@ -246,27 +247,27 @@ $translations = array(
   'General' =>
     'عمومی',
   'Back Up Database' =>
-    'بکاپ دیتابیس',
+    'پشتیبان گیری از پایگاه داده',
   'Export Full Game' =>
-    'اکسپورت کامل بازی',
+    'صدور (Export) کامل بازی',
   'Import Full Game' =>
-    'ایمپورت کامل بازی',
+    'وارد کردن (Import) کامل بازی',
   'Import Teams' =>
-    'ایمپورت تیم ها',
+    'وارد کردن (Import) تیم ها',
   'Export Teams' =>
-    'اکسپورت تیم ها',
+    'صدور (Export) تیم ها',
   'Import Logos' =>
-    'ایمپورت لوگوها',
+    'وارد کردن (Import) نمادها',
   'Export Logos' =>
-    'اکسپورت لوگوها',
+    'صدور (Export) نمادها',
   'Import Levels' =>
-    'ایمپورت چالش ها',
+    'وارد کردن (Import) چالش ها',
   'Export Levels' =>
-    'اکسپورت چالش ها',
+    'صدور (Export) چالش ها',
   'Import Categories' =>
-    'ایمپورت دسته ها',
+    'وارد کردن (Import) دسته ها',
   'Export Categories' =>
-    'اکسپورت دسته ها',
+    'صدور (Export) دسته ها',
   'Levels' =>
     'چالش ها',
   'New Quiz Level' =>
@@ -290,11 +291,11 @@ $translations = array(
   'Hint Penalty' =>
     'پنالتی راهنمایی',
   'EDIT' =>
-    'راهنمایی',
+    'ویرایش',
   'All Quiz Levels' =>
     'همه ی آموزه ای',
   'Filter By:' =>
-    'فیلتر با:',
+    'فیلترشده توسط:',
   'All Status' =>
     'همه وضعیت ها',
   'Enabled' =>
@@ -308,7 +309,7 @@ $translations = array(
   'Bonus' =>
     'امتیاز',
   '-Dec' =>
-    '-منفی',
+    'کاهش',
   'Save' =>
     'ذخیره',
   'Quiz Management' =>
@@ -334,9 +335,9 @@ $translations = array(
   'Attachment' =>
     'پیوست',
   'Link' =>
-    'لینک',
+    'پیوند',
   'New Link:' =>
-    'لینک جدید:',
+    'پیوند جدید:',
   'Flag Level' =>
     'چالش پرچمی',
   'Categories' =>
@@ -400,11 +401,11 @@ $translations = array(
   'level' =>
     'چالش',
   'No Scores' =>
-    'هیچ امتیاز',
+    'بدون امتیاز',
   'Attempt' =>
     'تلاش',
   'No Failures' =>
-    'هیچ اشتباه',
+    'بدون شکست',
   'Team' =>
     'تیم',
   'team' =>
@@ -414,15 +415,15 @@ $translations = array(
   'Scores' =>
     'امتیازها',
   'Failures' =>
-    'اشتباه ها',
+    'شکست‌ها',
   'New Team' =>
     'تیم جدید',
   'Team Logo' =>
-    'لوگو تیم جدید',
+    'نماد تیم جدید',
   'Selected Logo:' =>
-    'لوگو انتخاب شده:',
+    'نماد انتخاب شده:',
   'Select Logo' =>
-    'لوگو انتخاب کنید',
+    'نماد انتخاب کنید',
   'All Teams' =>
     'همه تیم ها',
   'Protected' =>
@@ -430,11 +431,11 @@ $translations = array(
   'Score' =>
     'امتیاز',
   'Change Password' =>
-    'تغییر پسورد',
+    'تغییر گذرواژه',
   'Admin Level' =>
     'سطح ادمین',
   'Visibility' =>
-    'قابل مشاهده',
+    'قابلیت مشاهده',
   'Team Management' =>
     'مدیریت تیم',
   'Add Team' =>
@@ -442,9 +443,9 @@ $translations = array(
   'None' =>
     'هیچ',
   'Logo Name' =>
-    'اسم لوگو',
+    'نام نماد',
   'Logo Management' =>
-    'مدیریت لوگو',
+    'مدیریت نمادها',
   'Session' =>
     'نشست',
   'Cookie' =>
@@ -462,7 +463,7 @@ $translations = array(
   'entry' =>
     'ورودی',
   'No Entries' =>
-    'هیچ ورودی ای',
+    'چیزی ثبت نشده است.',
   'Game Logs' =>
     'لاگ بازی',
   'Game Logs Timeline' =>
@@ -472,7 +473,7 @@ $translations = array(
   'Begin Game' =>
     'شروع مسابقه',
   'Game Admin' =>
-    'ادمین بازی',
+    'سرپرست بازی',
   'Controls' =>
     'کنترل ها',
   'Quiz' =>
@@ -484,7 +485,7 @@ $translations = array(
   'Countries' =>
     'کشورها',
   'Logos' =>
-    'لوگوها',
+    'نمادها',
   //Translations for inc/* and inc/gameboard/*
   'captured' =>
     'فتح شده',
@@ -517,7 +518,7 @@ $translations = array(
   'run : > boot_sequence' =>
     'game@ctfserver$ boot_sequence',
   'Extracting' =>
-    'استخراجینگ',
+    'درحال استخراج',
   //Translations for Utils.php's time_ago() function
   'just now' =>
     'همین الان',
@@ -538,7 +539,7 @@ $translations = array(
   'secs' =>
     'ثانیه', //seconds
   'ago' =>
-    'پیش',
+    'قبل',
   //Translations for ModalControllers
   'begin_' =>
     'شروع_',
@@ -547,23 +548,23 @@ $translations = array(
   'end_' =>
     'پایان_',
   'Are you sure you want to finish the current game?' =>
-    'مطمئن هستید که می خواهید بازی را تمام کنید؟',
+    'مطمئن هستید که می خواهید بازی کنونی را تمام کنید؟',
   'Are you sure you want to logout from the game?' =>
-    'مطمئن هستید که می خواهید لاگ اوت کنید؟',
+    'مطمئن هستید که می خواهید از بازی خارج شوید؟',
   'Saved' =>
-    'ذخیره شده',
+    'ذخیره شد',
   'All changes have been successfully saved.' =>
     'همه تغییرات با موفقیت ذخیره شدند.',
   'Error' =>
     'خطا',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'شرمنده! اطلاعات ذخیره نشدند. خطاها را بررسی کرده و دوباره ذخیره کنید.',
+    'متاسفیم! فرم شما ذخیره نشده است. خطاها را تصحیح کرده و دوباره ذخیره کنید.',
   'cancel_' =>
     'انصراف_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
-    'آیا مطمئن هستید که می خواهید کنسل کنید؟ تغییرات ذخیره نشده خواهند پرید.',
+    'آیا مطمئن هستید که می خواهید لغو کنید؟ تغییرات ذخیره نشده خواهند پرید.',
   'choose_logo' =>
-    'انتخاب_لوگو',
+    'انتخاب_نماد',
   'captured_' =>
     'فتح_شده_',
   'flag_owner_' =>
@@ -617,35 +618,35 @@ $translations = array(
   'total_pts' =>
     'کل_امتیاز',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
-    'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.',
+    'نوار ابزارها در اطراف صفحه بازی قرار دارند. برای بزرگ کردن و بستن هر نوار  ابزار روی دسته‌ای ضربه بزنید.',
   'Tool_Bars' =>
-    'Tool_Bars',
+    'نوارهای ابزار',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
-    'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.',
+    'برای اطلاع از ساعت درطول بازی، روی «ساعت بازی» ضربه بزنید.',
   'Game_Clock' =>
-    'Game_Clock',
+    'بازی_ساعت',
   'Countries marked with an ' =>
-    'Countries marked with an ',
+    'کشورهای علامت گذاری شده با ',
   'are captured by you.' =>
-    'are captured by you.',
+    'شما تسخیر کردید.',
   ' are owned by others.' =>
-    ' are owned by others.',
+    ' متعلق به دیگران هستند.',
   'Captures' =>
-    'Captures',
+    'موارد تسخیرشده',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'استفاد کنید از [+] برای زوم کردن. و همچنین از[-] برای دور شدن.',
+    'برای بزرگ‌نمایی از [+] استفاد کنید. و همچنین برای کوچک نمایی از [-] استفاده کنید.',
   'Click and Drag to move left, right, up and down.' =>
     'کلیک و دراگ برای حرکت به چپ راست بالا و پایین.',
   'Zoom' =>
-    'زوووم',
+    'بزرگنمایی',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'با زدن دکمه [/] روی صفحه کلید خط فرمان دستورات را باز کنید. لیستی از دستورات را می توانید آنجا ببینید.',
+    'با زدن دکمه [/] روی صفحه کلید خط فرمان دستورات را باز کنید. لیستی از دستورات را می توانید در بخش "قوانین" ببینید.',
   'Command_Line' =>
     'خط_فرمان',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    'روی "ناو" کلیک کنید تا لینک های اصلی مانند قوانین بازی، ثبت نام و بیاید.',
+    'برای دسترسی به پیوندهای اصلی راهبری مانند قوانین بازی، ثبت‌نام، وبلاگ، مشاغل و سایر موارد، روی «راهبری» کلیک کنید.',
   'Track your competition by clicking "scoreboard" to access real-time game statistics and graphs.' =>
-    'وضعیت بازی را با مشاهده "اسکوربورد" و آمار آنلاین بازی رصد کنید.',
+    'با کلیک کردن روی «تابلو امتیازها»،به آمار و جداول هم‌زمان بازی دسترسی پیدا کنید',
   'Have fun, be the best and conquer the world.' =>
     'لذت ببرید، بهترین باشید و جهان را تسخیر کنید.',
   'Game_On' =>
@@ -655,15 +656,15 @@ $translations = array(
   'Next' =>
     'بعدی',
   'Skip to play' =>
-    'برو به بازی',
+    'پرش به بازی',
   'Powered By Facebook' =>
-    'ساخته شده توسط فیسبوک',
+    'با پشتیبانی فیسبوک',
   'Active Directory / LDAP' =>
     'Active Directory / LDAP',
   'LDAP Server' =>
-    'LDAP Server',
+    'LDAP سرور',
   'LDAP Port' =>
-    'LDAP Port',
+    'LDAP پورت',
   'LDAP Domain' =>
-    'LDAP Domain',
+    'LDAP دامنه',
 );
