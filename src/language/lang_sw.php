@@ -8,13 +8,13 @@ $translations = array(
   'Facebook CTF' =>
     'Facebook CTF',
   'Conquer the world' =>
-    'Miliki Ulimwengu',
+    'miliki ulimwengu',
   'Play' =>
     'Cheza',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'Karibu katika Mifumo wa kimashindano wa Facebook. Kwa kubonyeza "Cheza," Utaingia Katika mfumowa rasmi wa Kimashando wa CTF. Nakutakia Ushindi mwema.',
+    'Karibu katika Mfumo wa kimashindano wa Facebook. Kwa kubofya "Cheza," Utaingizwa katika shindano rasmi la CTF. Nakutakia kila la kheri',
   'Get ready for the CTF to start and access the gameboard now!' =>
-    'Kuwa tayari kwa CTF kuanza na kupitia Ukurasa wa Mchezo!',
+    'Kuwa tayari kwa CTF ili kuanza na kufikia ubao wa mchezo sasa!',
   'Gameboard' =>
     'Ukurasa wa Mchezo',
   'Register Team' =>
@@ -26,25 +26,25 @@ $translations = array(
   'Soon' =>
     'Hivi karibuni',
   'Upcoming Game' =>
-    'Mchezo unaofuata',
+    'Mchezo Unaokuja',
   '_days' =>
-    '_Siku',
+    '_siku',
   '_hours' =>
-    '_Saa',
+    '_saa',
   '_minutes' =>
     '_dakika',
   '_seconds' =>
     '_Sekunde',
   'Official CTF Rules' =>
-    'Kanuni rasmi za CTF',
+    'Kanuni Rasmi za CTF',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'Yafuatayo ni matendo yasiyo ruhusiwa, isipokuwa pale tuu umeambiwa vinginevyo na msimamizi wako.',
+    'Yafuatayo ni vitendo visivyoruhusiwa, isipokuwa pale tu umeambiwa vinginevyo na Msimamizi wa tukio.',
   'Rule' =>
     'Kanuni',
   'Cooperation' =>
     'Ushirikiano',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'Hiaruhusiwi kuwa na ushirikiano kati ya timu zilizo na account tofauti. Kushirikiana  funguo yaani keys au kujaribu kutoa kidokezo kwa timu nyingine huo ni udanganyifu, usifanye hivyo.',
+    'Hakuna ushirikiano kati ya timu zilizo na akaunti tofauti. Kushiriki funguo au kujaribu kutoa vidokezo kwa timu nyingine ni udanganyifu, usifanye hivyo',
   'Attacking Scoreboard' =>
     'Ukurasa wa kufanyia mashambulizi',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
@@ -58,13 +58,13 @@ $translations = array(
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
     'Hairuhusiwi kuingilia kwa nguvu flag/ keys kinyume na inavyo takiwa kwenye ukurasa wa alama.',
   'Denial Of Service' =>
-    'KUzuia huduma',
+    'Kukataa Huduma',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
     'Kuzuia huduma za mfumo wa CTF au shindano lolote lile imezuiliwa kabisa.',
   'Legal' =>
     'Kisheria',
   'Disclaimer' =>
-    'Onyo',
+    'Kanusho',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
     'Kwa kushiriki katika shindano hili, unakubali kuiachia huru Facebook na wafanyakazi wake, pamoja na taasisi inayo andaa shindano kutoka katika dhima, ya madai au matendo ya aina yoyote ile la kimajeraha, uharibifu, au hasara ya watu na mali, ambayo wanaweza kuhalalishwa kwa kuwa na muunganiko na shindano hili. Unatambua na kukubali kuwa Facebook, Taasisi inayoandaa shindano,pamoja na wenzake haihusiki na makosa ya kiufundi, ya kivifaa au ya kiprogramu, au makosa yoyote au matatizo ambayo yatotokea na kuwa na muingiliano wa  aina yoyote na shindano hili.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
@@ -76,35 +76,35 @@ $translations = array(
   'Email' =>
     'Barua pepe',
   'Token' =>
-    'Ishara(Token)',
+    'Tuzo',
   'Team Registration' =>
     'Usajili wa Timu',
   'Team Name' =>
     'Jina la Timu',
   'Password' =>
-    'Neno Siri (Nywila)',
+    'Nenosiri',
   'Choose an Emblem' =>
     'Chagua Nembo',
   'Sign Up' =>
     'Jiunge',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'Jisajili kucheza Capture the Flag hapa. Mara utakapo jisajili, utaingia ndani moja kwa moja.',
+    'Jisajili kucheza Capture The Flag hapa. Mara utakapo jisajili, utaingia',
   'Not Available' =>
     'Haipo',
   'Team Registration will be open soon, stay tuned!' =>
-    'Usajili wa timu utafunguliwa hivi karibuni, Kaa chonjo!',
+    'Usajili wa Timu utafunguliwa hivi karibuni, makinika!',
   'Try Again' =>
     'Jaribu Tena',
   'Select' =>
     'Chagua',
   'Team Login' =>
-    'Timu ya kuingia',
+    'Kuingia kwa Timu',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'Tafadhali ingia hapa. Kama hujajisajili, unaweza kufanya hivyo kwa kubonyeza "Jiunge" Hapa chini. ',
+    'Tafadhali ingia hapa. Kama hujajisajili, unaweza kufanya hivyo kwa kubofya "Jiunge" hapa chini.',
   'Team Login will be open soon, stay tuned!' =>
-    'Timu ya kuingia itakuwa wazi hivi karibuni, kaa chonjo!',
+    'Timu ya kuingia itakuwa wazi hivi karibuni, makinika!',
   'ERROR' =>
-    'Makosa',
+    'KOSA',
   'Start Over' =>
     'Anza upya',
   'Window is too small' =>
@@ -123,15 +123,15 @@ $translations = array(
     'Kanuni',
   //Translations for GameboardController
   'Admin' =>
-    'Kiongozi',
+    'msimamizi',
   'ADMIN' =>
-    'Kiongozo',
+    'MSIMAMIZI',
   'Navigation' =>
     'Uelekezi',
   'View Mode' =>
-    'Hali ya kuingia',
+    'Hali ya Mwonekano',
   'View mode' =>
-    'Hali ya kuangalia',
+    'Hali ya mwonekano',
   'Tutorial' =>
     'Mafunzo',
   'Scoreboard' =>
@@ -149,14 +149,14 @@ $translations = array(
   'Teams' =>
     'Timu',
   'Filter' =>
-    'Vichujio',
+    'Kichujio',
   'Activity' =>
-    'Kazi',
+    'Shughuli',
   'Game Clock' =>
-    'Saa ya mchezo',
+    'Saa ya Mchezo',
   //Translations for AdminController
   'Auto' =>
-    'Moja kwa moja',
+    'Otomatiki',
   'All Categories' =>
     'Makundi yote',
   'Open' =>
@@ -166,7 +166,7 @@ $translations = array(
   'Hour' =>
     'Saa',
   'Hours' =>
-    'Masaa',
+    'Saa',
   'Used by' =>
     'Imetumiwa na',
   'Used By' =>
@@ -178,33 +178,33 @@ $translations = array(
   'Create More' =>
     'Tengeneza Zaidi',
   'Export Available' =>
-    'Toa nje zilizopo',
+    'Uhamishaji Haupatikani',
   'Not started yet' =>
-    'Haijaanza Bado',
+    'Bado haijaanza',
   'Configuration' =>
-    'Upangaji',
+    'Usanidi',
   'Tokens' =>
     'Tokens',
   'Game Configuration' =>
-    'Upangaji wa Mchezo',
+    'Usanidi wa Mchezo',
   'OK' =>
     'Sawa',
   'status_' =>
-    'Hali halisi_',
+    'hali_',
   'On' =>
     'Inawaka',
   'Off' =>
     'Imezima',
   'Player Names' =>
-    'Majina ya wanamichezo',
+    'Majina ya Mchezaji',
   'Players Per Team' =>
     'Wanamichezo kwa timu',
   'Registration Type' =>
-    'Aina ya usajili',
+    'Aina ya Usajili',
   'Strong Passwords' =>
-    'Neno siri gumu (Nywila ngumu)',
+    'Manenosiri Thabiti',
   'Team Selection' =>
-    'Uchaguzi wa timu',
+    'Uteuzi wa Timu',
   'Game' =>
     'Mchezo',
   'Scoring' =>
@@ -212,7 +212,7 @@ $translations = array(
   'Progressive Cycle (s)' =>
     'Mzunguko(mizunguko) ya maendeleo',
   'Refresh Gameboard' =>
-    'Manzisha upya Mchezo',
+    'Onyesha upya Ubao wa mchezo',
   'Default Bonus' =>
     'Zawadi za ziada',
   'Bases Cycle (s)' =>
