@@ -115,8 +115,18 @@ class IndexAjaxController extends AjaxController {
       return Utils::error_response('Registration failed', 'registration');
     }
 
+    // Check if strongs passwords are enforced
+    $login_strongpasswords = await Configuration::gen('login_strongpasswords');
+    if ($login_strongpasswords->getValue() !== '0') {
+      $password_type = await Configuration::genCurrentPasswordType();
+      if (!preg_match(strval($password_type->getValue()), $password)) {
+        return Utils::error_response('Password too simple', 'registration');
+      }
+    }
+
     // Check if ldap is enabled and verify credentials if successful
     $ldap = await Configuration::gen('ldap');
+    $ldap_password = '';
     if ($ldap->getValue() === '1') {
       // Get server information from configuration
       $ldap_server = await Configuration::gen('ldap_server');
@@ -145,10 +155,10 @@ class IndexAjaxController extends AjaxController {
       // This will help avoid leaking users ldap passwords if the server's database
       // is compromised.
       $ldap_password = $password;
-      $password = gmp_strval(
+      $password = strval(gmp_strval(
         gmp_init(bin2hex(openssl_random_pseudo_bytes(16)), 16),
         62,
-      );
+      ));
     }
 
     // Check if tokenized registration is enabled
@@ -205,9 +215,11 @@ class IndexAjaxController extends AjaxController {
           await Token::genUse($token, $team_id);
         }
         // Login the team
-        if ($ldap->getValue() === '1')
-          return await $this->genLoginTeam($team_id, $ldap_password); else
+        if ($ldap->getValue() === '1') {
+          return await $this->genLoginTeam($team_id, $ldap_password); 
+        } else {
           return await $this->genLoginTeam($team_id, $password);
+        }
       } else {
         return Utils::error_response('Registration failed', 'registration');
       }
