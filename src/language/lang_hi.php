@@ -5,21 +5,21 @@ $translations = array(
     'H:i:s D d/m/Y', //used by date() function
   //Translations for IndexController
   'Facebook CTF' =>
-    'फेसबुक CTF',
+    ' Facebook CTF',
   'Conquer the world' =>
     'दुनिया जीत लो',
   'Play' =>
     'प्ले',
   'Welcome to the Facebook Capture the Flag Competition. By clicking "Play," you will be entered into the official CTF challenge. Good luck in your conquest.' =>
-    'फेसबुक पर आपका स्वागत है ध्वज प्रतियोगिता पर कब्जा। क्लिक करके "खेलते हैं," आप सरकारी CTF चुनौती में दर्ज किया जाएगा। अपनी विजय में गुड लक।',
-  'Get ready for the CTF to start and access the gameboard now!' =>
-    'CTF शुरू किया और अब gameboard का उपयोग करने के लिए तैयार हो जाओ!',
+    'Facebook पर आपका स्वागत है फ़लैग प्रतियोगिता को कैप्चर करें. "खेलें" क्लिक करके आप औपचारिक रूप से CTF चुनौती में शामिल हो जाएँगे. आपकी जीत के लिए शुभ कामनाएँ.',
+  'Get ready for the CTF to start and access the board now!' =>
+    'अब CTF के शुरू होने और गेमबोर्ड एक्सेस करने के लिए तैयार रहें!!',
   'Gameboard' =>
-    'खेल का बोर्ड',
+    ‘गेमबोर्ड',
   'Register Team' =>
-    'रजिस्टर टीम',
+    'टीम पंजीकृत करें',
   'Get ready for the CTF to start and register your team now!' =>
-    'CTF शुरू करते हैं और अब अपनी टीम को पंजीकृत करने के लिए तैयार हो जाओ!',
+    'CTF के शुरू होने के लिए तैयार रहें और अपनी टीम को अभी पंजीकृत करें!',
   'Login' =>
     'लॉग इन करें',
   'Soon' =>
@@ -27,47 +27,47 @@ $translations = array(
   'Upcoming Game' =>
     'आगामी खेल',
   '_days' =>
-    '_days',
+    '_दिन',
   '_hours' =>
     '_घंटे',
   '_minutes' =>
-    '_minutes',
+    '_मिनट',
   '_seconds' =>
-    '_seconds',
+    '_सेकंड',
   'Official CTF Rules' =>
-    'सरकारी CTF नियम',
+    'आधिकारिक CTF नियम',
   'Following actions are prohibited, unless explicitly told otherwise by event Admins.' =>
-    'निम्न क्रियाओं में निषिद्ध कर रहे हैं, जब तक कि स्पष्ट रूप से घटना व्यवस्थापक द्वारा अन्यथा बताया।',
+    'निम्न क्रियाएँ निषिद्ध हैं, जब तक कि ईवेंट व्यवस्थापक द्वारा स्पष्ट रूप से अन्यथा न बताया गया हो',
   'Rule' =>
     'नियम',
   'Cooperation' =>
     'सहयोग',
   'No cooperation between teams with independent accounts. Sharing of keys or providing revealing hints to other teams is cheating, don’t do it.' =>
-    'स्वतंत्र खातों के साथ टीमों के बीच कोई सहयोग। चाबियों का साझा करने या अन्य टीमों को खुलासा संकेत उपलब्ध कराने धोखा दे रही है, यह मत करो। ',
+    'स्वतंत्र खातों वाली टीमों के बीच कोई सहयोग नहीं. चाबियों को साझा करना या अन्य टीमों को खुलासे के संकेत उपलब्ध कराना धोखा है, ऐसा न करें',
   'Attacking Scoreboard' =>
-    'हमला स्कोरबोर्ड',
+    'आक्रमण स्कोरबोर्ड',
   'No attacking the competition infrastructure. If bugs or vulns are found, please alert the competition organizers immediately.' =>
-    'कोई प्रतियोगिता के बुनियादी ढांचे पर हमला। अगर कीड़े या vulns पाए जाते हैं, प्रतियोगिता के आयोजकों को तुरंत सचेत करें।',
+    ' प्रतिस्पर्धी के बुनियादी ढांचे पर कोई आक्रमण नहीं. अगर बग या vulns पाए जाते हैं, तो कृपया प्रतियोगिता के आयोजकों को तुरंत सचेत करें.',
   'Sabotage' =>
-    'तोड़फोड़',
+    'नुकसान ',
   'Absolutely no sabotaging of other competing teams, or in any way hindering their independent progress.' =>
-    'बिल्कुल अन्य प्रतिस्पर्धी टीमों का कोई sabotaging, या किसी भी तरह से उनके स्वतंत्र प्रगति में बाधा उत्पन्न में।',
+    'अन्य प्रतिस्पर्धी टीमों को नुकसान, या किसी भी तरह से उनकी स्वतंत्र प्रगति में बाधा बिलकुल उत्पन्न नहीं करना',
   'Bruteforcing' =>
-    'Bruteforcing',
+    'ब्रूटफ़ोर्सिंग',
   'No brute forcing of challenge flag/ keys against the scoring site.' =>
-    'कोई जानवर चुनौती ध्वज के लिए मजबूर / स्कोरिंग साइट के खिलाफ। कुंजी',
+    'स्कोर साइट के विरूद्ध चुनौती फ़्लैग/ कुंजियों की ब्रूटफ़ोर्सिंग नहीं',
   'Denial Of Service' =>
-    'सेवा की मनाई',
+    'सेवा की मनाही',
   'DoSing the CTF platform or any of the challenges is forbidden.' =>
-    'CTF मंच या चुनौतियों में से किसी के लिए मना किया है खुराक।',
+    'CTF प्लेटफ़ॉर्म या अन्य किसी भी चुनौती की डॉसिंग निषिद्ध है',
   'Legal' =>
     'कानूनी',
   'Disclaimer' =>
     'अस्वीकरण',
   'By participating in the contest, you agree to release Facebook and its employees, and the hosting organization from any and all liability, claims or actions of any kind whatsoever for injuries, damages or losses to persons and property which may be sustained in connection with the contest. You acknowledge and agree that Facebook et al is not responsible for technical, hardware or software failures, or other errors or problems which may occur in connection with the contest.' =>
-    'प्रतियोगिता में भाग लेने से, आप किसी भी और सभी दायित्व, दावा या चोट, क्षति या व्यक्तियों और संपत्ति को नुकसान के साथ जो संबंध में निरंतर किया जा सकता है के लिए किसी भी तरह की कार्रवाई से फेसबुक और अपने कर्मचारियों, और होस्टिंग संगठन को रिहा करने के लिए सहमत प्रतियोगिता। आप स्वीकार करते हैं और मानते हैं कि फेसबुक एट अल तकनीकी, हार्डवेयर या सॉफ्टवेयर विफलताओं, या अन्य त्रुटियों या समस्याओं जो प्रतियोगिता के संबंध में हो सकता है के लिए जिम्मेदार नहीं है।',
+    'प्रतियोगिता में भाग लेने से, आप किसी भी और सभी दायित्व, दावे या चोट, क्षति या व्यक्तियों और संपत्ति को नुकसान के लिए किसी भी कार्यवाही, जो प्रतिस्पर्धा के संबंध में हो, के लिए Facebook और उसके कर्मचारियों, और होस्टिंग संगठनों को मुक्त करने के लिए सहमत होते हैं. आप स्वीकार करते हैं और मानते हैं कि Facebook और संबंधित सभी, प्रतिस्पर्धा के संबंध में होने वाली तकनीकी, हार्डवेयर या सॉफ्टवेयर विफलताओं, या अन्य त्रुटियों या समस्याओं के लिए जिम्मेदार नहीं है.',
   'If you have any questions about what is or is not allowed, please ask an organizer.' =>
-    'तुम क्या है या अनुमति नहीं है के बारे में किसी भी सवाल है, तो एक आयोजक कहें।',
+    'अगर आपके पास क्या अनुमत है और क्या नहीं, इस बारे में कोई सवाल हैं, तो किसी आयोजक से पूछें.',
   'Have fun!' =>
     'मज़े करो!',
   'Name' =>
@@ -87,7 +87,7 @@ $translations = array(
   'Sign Up' =>
     'साइन अप करें',
   'Register to play Capture The Flag here. Once you have registered, you will be logged in.' =>
-    'यहाँ पर कब्जा झंडा खेलने के लिए रजिस्टर। एक बार जब आप पंजीकृत है, तो आप में लॉग इन किया जाएगा।',
+    'फ़्लैग कैप्चर करें खेलने के लिए यहाँ रजिस्टर करें. एक बार जब आप पंजीकरण कर लेंगे, तो आपको लॉग इन किया जाएगा.',
   'Not Available' =>
     'उपलब्ध नहीं है',
   'Team Registration will be open soon, stay tuned!' =>
@@ -95,29 +95,29 @@ $translations = array(
   'Try Again' =>
     'पुनः प्रयास करें',
   'Select' =>
-    'चुनते हैं',
+    'चुनें ',
   'Team Login' =>
     'टीम लॉग इन',
   'Please login here. If you have not registered, you may do so by clicking "Sign Up" below. ' =>
-    'कृपया यहां लॉगिन करें। आप पंजीकृत नहीं किया है, तो आप क्लिक करके नीचे "साइन अप" से ऐसा कर सकते हैं। ',
+    'कृपया यहाँ लॉगिन करें. अगर आपने पंजीकरण नहीं किया है, तो आप नीचे "साइन अप करें" क्लिक करके ऐसा कर सकते हैं. ',
   'Team Login will be open soon, stay tuned!' =>
     'टीम लॉग इन जल्द ही खोल दिया जाएगा, देखते रहें!',
   'ERROR' =>
-    'त्रुटि',
+    'गूलती',
   'Start Over' =>
-    'फिर से शुरू करना',
+    'फिर से शुरू करें',
   'Window is too small' =>
     'विंडो बहुत छोटा है',
   'For the best CTF experience, please make window size bigger.' =>
-    'सर्वश्रेष्ठ CTF अनुभव के लिए, कृपया विंडो का आकार बड़ा बना।',
+    'सर्वश्रेष्ठ CTF अनुभव के लिए, कृपया विंडो का आकार बड़ा करें.',
   'Thank you.' =>
-    'धन्यवाद।',
+    'धन्यवाद. ',
   'Logout' =>
     'लोग आउट',
   'Registration' =>
     'पंजीकरण',
   'Play CTF' =>
-    'प्ले CTF',
+    'CTF खेलें',
   'Rules' =>
     'नियम',
   //Translations for GameboardController
@@ -126,7 +126,7 @@ $translations = array(
   'ADMIN' =>
     'व्यवस्थापक',
   'Navigation' =>
-    'पथ प्रदर्शन',
+    'नेविगेशन',
   'View Mode' =>
     'दृश्य मोड',
   'View mode' =>
@@ -138,7 +138,7 @@ $translations = array(
   'You' =>
     'आप',
   'Others' =>
-    'दूसरों',
+    'अन्य',
   'All' =>
     'सब',
   'Leaderboard' =>
@@ -146,7 +146,7 @@ $translations = array(
   'Announcements' =>
     'घोषणाएँ',
   'Teams' =>
-    ' टीमों के',
+    ' टीम',
   'Filter' =>
     'फिल्टर',
   'Activity' =>
@@ -157,13 +157,13 @@ $translations = array(
   'Auto' =>
     'ऑटो',
   'All Categories' =>
-    'सब वर्ग',
+    'सभी श्रेणियाँ',
   'Open' =>
     'खुला',
   'Tokenized' =>
-    'Tokenized',
+    'टोकन किया गया',
   'Hour' =>
-    'काल',
+    'घंटा',
   'Hours' =>
     'घंटे',
   'Used by' =>
@@ -175,7 +175,7 @@ $translations = array(
   'Registration Tokens' =>
     'पंजीकरण टोकन',
   'Create More' =>
-    'बनाएं अधिक',
+    'अधिक बनाएँ',
   'Export Available' =>
     'निर्यात उपलब्ध',
   'Not started yet' =>
@@ -191,19 +191,19 @@ $translations = array(
   'status_' =>
     'स्थिति_',
   'On' =>
-    'पर',
+    'चालू',
   'Off' =>
     'बंद',
   'Player Names' =>
     'खिलाड़ी के नाम',
   'Players Per Team' =>
-    'प्रति टीम के खिलाड़ियों को',
+    'प्रति टीम खिलाड़ी',
   'Registration Type' =>
     'पंजीकरण प्रकार',
   'Strong Passwords' =>
     'मजबूत पासवर्ड',
   'Team Selection' =>
-    'टीम के चयन',
+    'टीम का चयन',
   'Game' =>
     'खेल',
   'Scoring' =>
@@ -211,13 +211,13 @@ $translations = array(
   'Progressive Cycle (s)' =>
     'प्रगतिशील चक्र (s)',
   'Refresh Gameboard' =>
-    'ताज़ा gameboard',
+    'gameboard रीफ़्रेश करें',
   'Default Bonus' =>
-    'मूलभूत बोनस',
+    'डिफ़ॉल्ट बोनस',
   'Bases Cycle (s)' =>
-    'आधारों चक्र (s)',
+    'बेस चक्र ',
   'Default Bonus Dec' =>
-    'मूलभूत बोनस दिसम्बर',
+    ' डिफ़ॉल्ट बोनस दिसम्बर',
   'Timer' =>
     'टाइमर',
   'Server Time' =>
@@ -225,9 +225,9 @@ $translations = array(
   'Game Duration' =>
     'खेल अवधि',
   'Begin Time' =>
-    'शुरू टाइम',
+    'शुरू होने का समय',
   'Expected End Time' =>
-    'उम्मीद अंत समय',
+    'अपेक्षित समाप्ति समय',
   'Language' =>
     'भाषा',
   'DELETE' =>
@@ -235,41 +235,41 @@ $translations = array(
   'Delete' =>
     'हटाएँ',
   'No Announcements' =>
-    'नहीं घोषणाएँ',
+    'कोई घोषणाएँ नहीं',
   'Game Controls' =>
     'खेल नियंत्रण',
   'Write New Announcement here' =>
-    'नई घोषणा लिखें यहां',
+    'नई घोषणा यहाँ लिखें',
   'Create' =>
-    'सर्जन करना',
+    'बनाएँ',
   'General' =>
     'सामान्य',
   'Back Up Database' =>
-    'डेटाबेस वापस ऊपर',
+    'डेटाबेस बैक अप करें',
   'Export Full Game' =>
-    'निर्यात पूरा खेल',
+    'पूरा खेल एक्सपोर्ट करें',
   'Import Full Game' =>
-    'आयात पूरा खेल',
+    'पूरा खेल इम्पोर्ट करें',
   'Import Teams' =>
-    'आयात टीमों के',
+    'टीम इम्पोर्ट करें',
   'Export Teams' =>
-    'निर्यात टीमों के',
+    'टीम एक्सपोर्ट करें ',
   'Import Logos' =>
-    'आयात लोगो',
+    'लोगो इम्पोर्ट करें',
   'Export Logos' =>
-    'निर्यात लोगो',
+    'लोगो एक्सपोर्ट करें',
   'Import Levels' =>
-    'आयात के स्तर',
+    'स्तर इम्पोर्ट करें',
   'Export Levels' =>
-    'निर्यात का स्तर',
+    'स्तर एक्सपोर्ट करें',
   'Import Categories' =>
-    'आयात श्रेणियाँ',
+    'श्रेणियाँ इम्पोर्ट करें',
   'Export Categories' =>
-    'निर्यात श्रेणियाँ',
+    'श्रेणियाँ एक्सपोर्ट करें',
   'Levels' =>
     'स्तर',
   'New Quiz Level' =>
-    'नई प्रश्नोत्तरी स्तर',
+    'नया क्विज़ स्तर',
   'Title' =>
     'शीर्षक',
   'Question' =>
@@ -277,7 +277,7 @@ $translations = array(
   'Level title' =>
     'स्तर का शीर्षक',
   'Quiz question' =>
-    'क्विज सवाल',
+    'क्विज़ सवाल',
   'Country' =>
     'देश',
   'Answer' =>
@@ -291,9 +291,9 @@ $translations = array(
   'EDIT' =>
     'संपादन',
   'All Quiz Levels' =>
-    'सभी प्रश्नोत्तरी स्तर',
+    'सभी क्विज़ स्तर',
   'Filter By:' =>
-    'के द्वारा छनित:',
+    'के द्वारा फ़िल्टर:',
   'All Status' =>
     'सभी स्थिति',
   'Enabled' =>
@@ -307,69 +307,69 @@ $translations = array(
   'Bonus' =>
     'बोनस',
   '-Dec' =>
-    '-Dec',
+    '-दिसं',
   'Save' =>
-    'बचाना',
+    'सहेजें',
   'Quiz Management' =>
     'क्विज प्रबंधन',
   'Add Quiz Level' =>
-    'जोड़ें प्रश्नोत्तरी स्तर',
+    'क्विज़ स्तर जोड़ें',
   'New Flag Level' =>
-    'नया झंडा स्तर',
+    'नया फ़्लैग स्तर',
   'Description' =>
     'विवरण',
   'Level description' =>
     'स्तर विवरण',
   'Category' =>
-    'वर्ग',
+    'श्रेणी',
   'Flag' =>
-    'झंडा',
+    'फ़्लैग',
   'flag' =>
-    'झंडा',
+    'फ़्लैग',
   'All Flag Levels' =>
-    'सभी झंडा स्तर',
+    'सभी फ़्लैग स्तर',
   'New Attachment:' =>
-    'नई कुर्की:',
+    'नया अटैचमेंट:',
   'Attachment' =>
-    'अनुलग्नक',
+    ' अटैचमेंट',
   'Link' =>
     'संपर्क',
   'New Link:' =>
     'नई लिंक:',
   'Flag Level' =>
-    'ध्वज स्तर',
+    'फ़्लैग स्तर',
   'Categories' =>
     'श्रेणियाँ',
   '+ Attachment' =>
-    '+ अनुलग्नक',
+    '+ अटैचमेंट ',
   '+ Link' =>
     '+ लिंक',
   'Flags Management' =>
-    'झंडे प्रबंधन',
+    ' फ़्लैग प्रबंधन',
   'Add Flag Level' =>
-    'जोड़ें ध्वज स्तर',
+    'फ़्लैग स्तर जोड़ें',
   'New Base Level' =>
-    'न्यू आधार स्तर',
+    'नया बेस स्तर',
   'Keep Points' =>
-    'अंक रखना',
+    'अंक रखें',
   'Capture points' =>
-    'कैद अंक',
+    'अंक कैप्चर करें',
   'All Base Levels' =>
-    'सभी आधार स्तर',
+    'सभी बेस स्तर',
   'Base Level' =>
-    'आधार स्तर',
+    'बेस स्तर',
   'Bases Management' =>
-    'आधारों प्रबंधन',
+    'बेस प्रबंधन',
   'Add Base Level' =>
-    'जोड़ें आधार स्तर',
+    'बेस स्तर जोड़ें',
   'New Category' =>
     'नई श्रेणी',
   'Category: ' =>
-    'वर्ग: ',
+    ' श्रेणी: ',
   'Categories Management' =>
-    'श्रेणियाँ प्रबंधन',
+    'श्रेणी प्रबंधन',
   'Add Category' =>
-    'श्रेणी जोड़ना',
+    'श्रेणी जोड़ें',
   'All Countries' =>
     'सभी देश',
   'In Use' =>
@@ -385,11 +385,11 @@ $translations = array(
   'ISO Code' =>
     'आईएसओ कोड',
   'Countries Management' =>
-    'देशों प्रबंधन',
+    'देश प्रबंधन',
   'No Team Names' =>
-    'नहीं टीम के नाम',
+    'कोई टीम नाम नहीं',
   'time' =>
-    'पहर',
+    'समय',
   'type' =>
     'प्रकार',
   'pts' =>
@@ -399,11 +399,11 @@ $translations = array(
   'level' =>
     'स्तर',
   'No Scores' =>
-    'नहीं स्कोर',
+    'कोई स्कोर नहीं',
   'Attempt' =>
     'प्रयास',
   'No Failures' =>
-    'कोई विफलताओं',
+    'कोई विफलता नहीं',
   'Team' =>
     'टीम',
   'team' =>
@@ -413,7 +413,7 @@ $translations = array(
   'Scores' =>
     'स्कोर',
   'Failures' =>
-    'विफलताओं',
+    'विफलताएँ',
   'New Team' =>
     'नई टीम',
   'Team Logo' =>
@@ -423,7 +423,7 @@ $translations = array(
   'Select Logo' =>
     'लोगो चुनें',
   'All Teams' =>
-    'सभी टीमों के',
+    'सभी टीम',
   'Protected' =>
     'संरक्षित',
   'Score' =>
@@ -449,15 +449,15 @@ $translations = array(
   'Cookie' =>
     'कुकी',
   'Creation Time' =>
-    'रचना समय',
+    'बनाने का समय',
   'Last Access' =>
-    'अंतिम पहुंच',
+    'अंतिम एक्सेस',
   'Data' =>
-    'जानकारी',
+    'डेटा',
   'Sessions' =>
     'सत्र',
   'entry' =>
-    'प्रवेश',
+    'प्रविष्टि',
   'No Entries' =>
     'कोई प्रविष्टि नहीं',
   'Game Logs' =>
@@ -465,9 +465,9 @@ $translations = array(
   'Game Logs Timeline' =>
     'खेल लॉग टाइमलाइन',
   'End Game' =>
-    'End खेल',
+    'खेल समाप्त करें',
   'Begin Game' =>
-    'शुरू खेल',
+    'खेल शुरू करें',
   'Game Admin' =>
     'खेल व्यवस्थापक',
   'Controls' =>
@@ -475,16 +475,16 @@ $translations = array(
   'Quiz' =>
     'क्विज',
   'Flags' =>
-    'झंडे',
+    'फ़्लैग',
   'Bases' =>
-    'कुर्सियां',
+    'बेस',
   'Countries' =>
     'देश',
   'Logos' =>
      'लोगो',
   //Translations for inc/* and inc/gameboard/*
   'captured' =>
-    'पकड़े',
+    'कैप्चर किया गया',
   'Status' =>
     'स्थिति',
   'Completed' =>
@@ -496,30 +496,30 @@ $translations = array(
   'End' =>
     'समाप्त',
   'Rank' =>
-    'श्रेणी',
+    'रैंक',
   'pts' =>
     'अंक', // अंक
   'Your Rank' =>
     'आपका रैंक',
   'Your Score' =>
-    'अपने स्कोर',
+    'आपका स्कोर',
   'Everyone' =>
-    'हर कोई',
+    'सभी',
   'Your Team' =>
     'आपकी टीम',
   'Captured' =>
-    'पकड़े',
+    'कैप्चर किया गया',
   'Initiating' =>
-    'आरंभ',
+    'शुरू किया जा रहा है',
   'run : > boot_sequence' =>
-    'चलाने: > boot_sequence',
+    'चलाएँ: > boot_sequence',
   'Extracting' =>
-    'निकालने',
+    'एक्सट्रैक कर रहा है',
   //Translations for Utils.php's time_ago() function
   'just now' =>
     'अभी',
   'd' =>
-    'डी', //day
+    'दि', //दिन
   'hr' =>
     'घंटे', //घंटे
   'min' =>
@@ -527,7 +527,7 @@ $translations = array(
   'sec' =>
     'सेकंड', //सेकंड
   'ds' =>
-    'डी', //दिन
+    'दि', //दिन
   'hrs' =>
     'बजे', //घंटे
   'mins' =>
@@ -538,9 +538,9 @@ $translations = array(
     'पहले',
   //Translations for ModalControllers
   'begin_' =>
-    'शुरू_',
+    'शुरू करें_',
   'Are you sure you want to kick off the game? Logs will be cleared and progressive scoreboard will start' =>
-    'क्या आप वाकई खेल बंद किक करने के लिए चाहते हैं? Logs साफ हो जाएगा और प्रगतिशील स्कोरबोर्ड शुरू कर देंगे',
+    'क्या आप वाकई खेल बंद करना चाहते हैं? लॉग साफ हो जाएगा और प्रगतिशील स्कोरबोर्ड शुरू हो जाएगा',
   'end_' =>
     'समाप्त_',
   'Are you sure you want to finish the current game?' =>
@@ -548,21 +548,21 @@ $translations = array(
   'Are you sure you want to logout from the game?' =>
     'क्या आप वाकई इस खेल से लॉगआउट करना चाहते हैं?',
   'Saved' =>
-    'बचाया',
+    'सहेजा गया',
   'All changes have been successfully saved.' =>
-    'सभी परिवर्तन सफलतापूर्वक बचा लिया गया है।',
+    'सभी परिवर्तन सफलतापूर्वक सहेजे गए.',
   'Error' =>
-    'त्रुटि',
+    'गलती',
   'Sorry your form was not saved. Please correct the all errors and save again.' =>
-    'माफ करना अपने फार्म सहेजा नहीं गया था। कृपया सभी त्रुटियों को ठीक करें और फिर से बचाने के लिए।',
+    'माफ करें, आपका फार्म नहीं सहेजा गया. कृपया सभी गलतियों को ठीक करें और फिर से सहेजें.',
   'cancel_' =>
-    'रद्द करना_',
+    'रद्द करें_',
   'Are you sure you want to cancel? You have unsaved changes that will be reverted.' =>
-    'पक्का आप रद्द करना चाहते हैं? आप बिना सहेजे गए परिवर्तन है कि वापस सौंप दिया जाएगा।',
+    'क्या आप वाकई रद्द करना चाहते हैं? आपके पास बिना सहेजे गए परिवर्तन हैं जो वापस कर दिए जाएँगे.',
   'choose_logo' =>
     'Choose_logo',
   'captured_' =>
-    'पकड़े_',
+    'कैप्चर किया गया_',
   'flag_owner_' =>
     'flag_owner_',
   'INACTIVE' =>
@@ -570,13 +570,13 @@ $translations = array(
   'PTS' =>
     'पीटीएस',
   'category' =>
-    'वर्ग',
+    'श्रेणी',
   'capture_' =>
-    'कब्जा_',
+    'कैप्चर_',
   'Insert your answer' =>
     'आपका जवाब डालें',
   'Request Hint' =>
-    'अनुरोध सुझाव',
+    'सुझाव का अनुरोध करें',
   'Submit' =>
     'जमा करें',
   'hint_' =>
@@ -590,7 +590,7 @@ $translations = array(
   'filter_' =>
     'filter_',
   'rank_' =>
-    'श्रेणी_',
+    'रैंक_',
   'team_name_' =>
     'टीम का नाम_',
   'quiz_pts_' =>
@@ -604,7 +604,7 @@ $translations = array(
   'team_' =>
     'team_',
   'team_members' =>
-    'टीम का सदस्या',
+    'टीम के सदस्य',
   'base_pts' =>
     'base_pts',
   'quiz_pts' =>
@@ -614,37 +614,37 @@ $translations = array(
   'total_pts' =>
     'total_pts',
   'Tool bars are located on all edges of the gameboard. Tap a category to expand and close each tool bar.' =>
-    'उपकरण सलाखों gameboard के सभी किनारों पर स्थित हैं। विस्तार और प्रत्येक उपकरण पट्टी बंद करने के लिए एक वर्ग टैप करें।',
+    'टूल बार गेमबोर्ड के सभी किनारों पर स्थित हैं. हर टूल बार को विस्तृत और बंद करने के लिए किसी श्रेणी पर टैप करें.',
   'Tool_Bars' =>
     'Tool_Bars',
   'Tap the "Game Clock" to keep track of time during gameplay. Don’t let time get the best of you.' =>
-    'ठोकर "खेल घड़ी" gameplay के दौरान समय का ट्रैक रखने के लिए। बार जब आप का सबसे अच्छा मिल मत करो।',
+    'गेमप्ले के दौरान समय का ट्रैक रखने के लिए "खेल घड़ी" टैप करें. इस समय के कारण आप अपना अच्छा प्रदर्शन न खोएँ.',
   'Game_Clock' =>
     'Game_Clock',
   'Countries marked with an ' =>
-    'देशों के साथ चिह्नित ',
+    ' इसके साथ चिह्नित देश ',
   'are captured by you.' =>
-    'आप के द्वारा कब्जा कर रहे हैं।',
+    'आप के द्वारा कैप्चर किए गए हैं.',
   ' are owned by others.' =>
-    'दूसरों के स्वामित्व में हैं।',
+    'दूसरों के स्वामित्व में हैं.',
   'Captures' =>
-    'कब्जा',
+    'कैप्चर',
   'Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.' =>
-    'नल प्लस [+] ज़ूम करने के लिए। ठोकर ऋण [-] ज़ूम आउट करने के लिए ।',
+    'ज़ूम इन करने के लिए प्लस [+] टैप करें. ज़ूम आउट करने के लिए माइनस[-] टैप करें.',
   'Click and Drag to move left, right, up and down.' =>
-    'पर क्लिक करें और, ठीक है, ऊपर और नीचे करने के लिए छोड़ दिया और कदम खींचें।',
+    'बाएँ, दाएँ, ऊपर और नीचे ले जाने के लिए क्लिक करें और खींचें',
   'Zoom' =>
     'ज़ूम',
   'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".' =>
-    'आगे स्लेश टैप [/] कंप्यूटर आदेशों को सक्रिय करें। आदेशों की एक सूची "नियम" के नीचे पाया जा सकता है।',
+    'कंप्यूटर कमांड सक्रिय करने के लिए आगे का स्लेश [/] टैप करें. "नियम" के अंतर्गत कमांड की सूची प्राप्त की जा सकती है.',
   'Command_Line' =>
     'कमांड लाइन',
   'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.' =>
-    '"नव" प्ले, पंजीकरण, ब्लॉग, नौकरियों के नियम और अधिक की तरह मुख्य नेविगेशन लिंक का उपयोग करने के लिए क्लिक करें।',
+    ' खेल के नियम, पंजीकरण, ब्लॉग, नौकरी और अधिक जैसे मुख्य नेविगेशन एक्सेस करने के लिए "नेव" क्लिक करें.',
   'Track your competition by clicking "scorboard" to access real-time game statistics and graphs.' =>
-    '"स्कोरबोर्ड" वास्तविक समय खेल सांख्यिकी और रेखांकन का उपयोग करने के लिए क्लिक करके अपने प्रतियोगिता ट्रैक।',
+    ' रीयल टाइम खेल सांख्यिकी और ग्राफ़ एक्सेस करने के लिए "स्कोरबोर्ड" क्लिक करके अपने प्रतिस्पर्धी का ट्रैक रखें.',
   'Have fun, be the best and conquer the world.' =>
-    'मजेदार है, सबसे अच्छा हो सकता है और दुनिया को जीत है।',
+    'मज़े करें, सर्वश्रेष्ठ बनें और दुनिया जीतें',
   'Game_On' =>
     'खेल शुरू',
   'tutorial_' =>
@@ -652,7 +652,7 @@ $translations = array(
   'Next' =>
     'अगला',
   'Skip to play' =>
-    'खेलने के लिए जाएं',
+    'खेलने के लिए स्किप करें ',
   'Powered By Facebook' =>
-    'फेसबुक द्वारा संचालित',
+    ' Facebook द्वारा संचालित',
 );
