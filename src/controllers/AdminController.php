@@ -1010,10 +1010,16 @@ class AdminController extends Controller {
                 <div class="form-el el--block-label el--full-text">
                   <div class="admin-buttons">
                     <button
-                      class="fb-cta cta--yellow"
-                      data-action="backup-db">
-                      {tr('Back Up Database')}
+                      class="fb-cta cta--red"
+                      data-action="import-game">
+                      {tr('Import Full Game')}
                     </button>
+                    <input
+                      class="completely-hidden"
+                      id="import-game_file"
+                      type="file"
+                      name="game_file"
+                    />
                   </div>
                 </div>
               </div>
@@ -1025,23 +1031,6 @@ class AdminController extends Controller {
                       data-action="export-game">
                       {tr('Export Full Game')}
                     </button>
-                  </div>
-                </div>
-              </div>
-              <div class="col col-pad col-1-3">
-                <div class="form-el el--block-label el--full-text">
-                  <div class="admin-buttons">
-                    <button
-                      class="fb-cta cta--yellow"
-                      data-action="import-game">
-                      {tr('Import Full Game')}
-                    </button>
-                    <input
-                      class="completely-hidden"
-                      id="import-game_file"
-                      type="file"
-                      name="game_file"
-                    />
                   </div>
                 </div>
               </div>
@@ -1068,6 +1057,32 @@ class AdminController extends Controller {
                   <div class="admin-buttons">
                     <button class="fb-cta cta--red js-reset-database">
                       {tr('Reset Database')}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button class="fb-cta cta--red js-restore-database">
+                      {tr('Restore Database')}
+                    </button>
+                    <input
+                      class="completely-hidden"
+                      id="restore-database_file"
+                      type="file"
+                      name="database_file"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-3">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button
+                      class="fb-cta cta--yellow"
+                      data-action="backup-db">
+                      {tr('Backup Database')}
                     </button>
                   </div>
                 </div>
@@ -1170,6 +1185,41 @@ class AdminController extends Controller {
                   </div>
                 </div>
               </div>
+              <div class="col col-pad col-1-4">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button
+                      class="fb-cta cta--red"
+                      data-action="import-attachments">
+                      {tr('Import Attachments')}
+                    </button>
+                    <input
+                      class="completely-hidden"
+                      id="import-attachments_file"
+                      type="file"
+                      name="attachments_file"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col col-pad col-1-4">
+                <div class="form-el el--block-label el--full-text">
+                  <div class="admin-buttons">
+                    <button
+                      class="fb-cta cta--yellow"
+                      data-action="export-attachments">
+                      {tr('Export Attachments')}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="admin-box">
+            <header class="admin-box-header">
+              <h3>{tr('Categories')}</h3>
+            </header>
+            <div class="fb-column-container">
               <div class="col col-pad col-1-4">
                 <div class="form-el el--block-label el--full-text">
                   <div class="admin-buttons">
