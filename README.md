@@ -17,7 +17,6 @@ The Facebook CTF is a platform to host Jeopardy and “King of the Hill” style
     * If running an open competition:
         * Point participants towards the registration page
 * Enjoy!
-* Note: We're hiring! If you're interested in the remote eng lead position, apply [here](http://pro.applytojob.com/apply/Qe1YmW/CTF-Engineering-Lead)!
 
 # Installation
 
