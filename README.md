@@ -12,10 +12,6 @@ The Facebook CTF is a platform to host Jeopardy and “King of the Hill” style
 * Follow setup instructions below to spin up platform infrastructure.
 * Enter challenges into admin page
 * Have participants register as teams
-    * If running a closed competition:
-        * In the admin page, generate and export tokens to be shared with approved teams, then point participants towards the registration page
-    * If running an open competition:
-        * Point participants towards the registration page
 * Enjoy!
 
 For more information, see the [Admin Guide](https://github.com/facebook/fbctf/wiki/Admin-Guide)
@@ -46,4 +42,4 @@ Check out the [wiki pages](https://github.com/facebook/fbctf/wiki) attached to t
 
 ## License
 
-This source code is licensed under the Creative Commons Attribution-NonCommercial 4.0 International license found in the LICENSE file in the root directory of this source tree.
+This source code is licensed under the Creative Commons Attribution-NonCommercial 4.0 International license. View the license [here](https://github.com/facebook/fbctf/blob/master/LICENSE).
