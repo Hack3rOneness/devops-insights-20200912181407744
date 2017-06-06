@@ -1139,7 +1139,7 @@ class AdminController extends Controller {
     return
       <div>
         <header class="admin-page-header">
-          <h3>{tr('Game Controls')}</h3>
+          <h3>{tr('Announcement Controls')}</h3>
           <span class="admin-section--status">
             {tr('status_')}<span class="highlighted">{tr('OK')}</span>
           </span>
