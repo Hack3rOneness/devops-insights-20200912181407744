@@ -1593,14 +1593,26 @@ class AdminController extends Controller {
       $quiz_status_off_id =
         'fb--levels--level-'.strval($quiz->getId()).'-status--off';
 
-      $quiz_id = 'quiz_id'.strval($quiz->getId());
+      $quiz_id = strval($quiz->getId());
+      $quiz_id_txt = 'quiz_id'.strval($quiz->getId());
 
       $countries_select =
         await $this->genGenerateCountriesSelect($quiz->getEntityId());
 
+      $delete_button =
+        <div style="display: inline">
+          <input type="hidden" name="level_id" value={$quiz_id} />
+          <a
+            href="#"
+            class="fb-cta cta--red js-delete-level"
+            style="margin-right: 20px">
+            {tr('Delete')}
+          </a>
+        </div>;
+
       $adminsections->appendChild(
         <section class="admin-box validate-form section-locked">
-          <form class="level_form quiz_form" name={$quiz_id}>
+          <form class="level_form quiz_form" name={$quiz_id_txt}>
             <input type="hidden" name="level_type" value="quiz" />
             <input
               type="hidden"
@@ -1729,9 +1741,7 @@ class AdminController extends Controller {
                 <a href="#" class="admin--edit" data-action="edit">
                   {tr('EDIT')}
                 </a>
-                <button class="fb-cta cta--red" data-action="delete">
-                  {tr('Delete')}
-                </button>
+                {$delete_button}
                 <button class="fb-cta cta--yellow" data-action="save">
                   {tr('Save')}
                 </button>
@@ -1923,7 +1933,19 @@ class AdminController extends Controller {
       $flag_status_off_id =
         'fb--levels--level-'.strval($flag->getId()).'-status--off';
 
-      $flag_id = 'flag_id'.strval($flag->getId());
+      $flag_id_txt = 'flag_id'.strval($flag->getId());
+      $flag_id = strval($flag->getId());
+
+      $delete_button =
+        <div style="display: inline">
+          <input type="hidden" name="level_id" value={$flag_id} />
+          <a
+            href="#"
+            class="fb-cta cta--red js-delete-level"
+            style="margin-right: 20px">
+            {tr('Delete')}
+          </a>
+        </div>;
 
       $attachments_div =
         <div class="attachments">
@@ -2108,7 +2130,7 @@ class AdminController extends Controller {
 
       $adminsections->appendChild(
         <section class="validate-form admin-box section-locked">
-          <form class="level_form flag_form" name={$flag_id}>
+          <form class="level_form flag_form" name={$flag_id_txt}>
             <input type="hidden" name="level_type" value="flag" />
             <input
               type="hidden"
@@ -2248,9 +2270,7 @@ class AdminController extends Controller {
               <a href="#" class="admin--edit" data-action="edit">
                 {tr('EDIT')}
               </a>
-              <button class="fb-cta cta--red" data-action="delete">
-                {tr('Delete')}
-              </button>
+              {$delete_button}
               <button class="fb-cta cta--yellow" data-action="save">
                 {tr('Save')}
               </button>
@@ -2447,7 +2467,19 @@ class AdminController extends Controller {
       $base_status_off_id =
         'fb--levels--level-'.strval($base->getId()).'-status--off';
 
-      $base_id = 'base_id'.strval($base->getId());
+      $base_id = strval($base->getId());
+      $base_id_txt = 'base_id'.strval($base->getId());
+
+      $delete_button =
+        <div style="display: inline">
+          <input type="hidden" name="level_id" value={$base_id} />
+          <a
+            href="#"
+            class="fb-cta cta--red js-delete-level"
+            style="margin-right: 20px">
+            {tr('Delete')}
+          </a>
+        </div>;
 
       $attachments_div =
         <div class="attachments">
@@ -2635,7 +2667,7 @@ class AdminController extends Controller {
 
       $adminsections->appendChild(
         <section class="validate-form admin-box section-locked">
-          <form class="level_form base_form" name={$base_id}>
+          <form class="level_form base_form" name={$base_id_txt}>
             <input type="hidden" name="level_type" value="base" />
             <input
               type="hidden"
@@ -2748,9 +2780,7 @@ class AdminController extends Controller {
               <a href="#" class="admin--edit" data-action="edit">
                 {tr('EDIT')}
               </a>
-              <button class="fb-cta cta--red" data-action="delete">
-                {tr('Delete')}
-              </button>
+              {$delete_button}
               <button class="fb-cta cta--yellow" data-action="save">
                 {tr('Save')}
               </button>
