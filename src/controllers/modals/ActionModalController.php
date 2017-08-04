@@ -336,7 +336,7 @@ class ActionModalController extends ModalController {
           </div>;
         return tuple($title, $content);
       default:
-        invariant(false, "Invalid modal name $modal");
+        invariant(false, 'Invalid modal name %s', strval($modal));
     }
   }
 

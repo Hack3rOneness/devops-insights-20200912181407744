@@ -7,10 +7,7 @@ const MUST_MODIFY = /* UNSAFE_EXPR */ "<<must-modify:\xEE\xFF\xFF>";
 function must_have_idx<Tk, Tv>(?KeyedContainer<Tk, Tv> $arr, Tk $idx): Tv {
   invariant($arr !== null, 'Container is null');
   $result = idx($arr, $idx);
-  invariant(
-    $result !== null,
-    sprintf('Index %s not found in container', $idx),
-  );
+  invariant($result !== null, 'Index %s not found in container', $idx);
   return $result;
 }
 
@@ -19,7 +16,7 @@ function must_have_string<Tk as string, Tv>(
   Tk $idx,
 ): string {
   $result = must_have_idx($arr, $idx);
-  invariant(is_string($result), "Expected $idx to be a string");
+  invariant(is_string($result), 'Expected %s to be a string', strval($idx));
   return $result;
 }
 
@@ -28,7 +25,7 @@ function must_have_int<Tk as string, Tv>(
   Tk $idx,
 ): int {
   $result = must_have_idx($arr, $idx);
-  invariant(is_int($result), "Expected $idx to be an int");
+  invariant(is_int($result), 'Expected %s to be an int', strval($idx));
   return $result;
 }
 
@@ -37,7 +34,7 @@ function must_have_bool<Tk as string, Tv>(
   Tk $idx,
 ): bool {
   $result = must_have_idx($arr, $idx);
-  invariant(is_bool($result), "Expected $idx to be a bool");
+  invariant(is_bool($result), 'Expected %s to be a bool', strval($idx));
   return $result;
 }
 
