@@ -69,7 +69,7 @@ class ScoreLog extends Model {
     $db = await self::genDb();
     await $db->queryf('DELETE FROM scores_log WHERE id > 0');
     self::invalidateMCRecords(); // Invalidate Memcached ScoreLog data.
-    Control::invalidateMCRecords('ALL_ACTIVITY'); // Invalidate Memcached Control data.
+    ActivityLog::invalidateMCRecords('ALL_ACTIVITY'); // Invalidate Memcached ActivityLog data.
     MultiTeam::invalidateMCRecords('ALL_TEAMS'); // Invalidate Memcached MultiTeam data.
     MultiTeam::invalidateMCRecords('POINTS_BY_TYPE'); // Invalidate Memcached MultiTeam data.
     MultiTeam::invalidateMCRecords('LEADERBOARD'); // Invalidate Memcached MultiTeam data.
@@ -202,6 +202,24 @@ class ScoreLog extends Model {
     return $scores;
   }
 
+  // Get all scores by level.
+  public static async function genAllScoresByLevel(
+    int $level_id,
+  ): Awaitable<array<ScoreLog>> {
+    $db = await self::genDb();
+    $result = await $db->queryf(
+      'SELECT * FROM scores_log WHERE level_id = %d',
+      $level_id,
+    );
+
+    $scores = array();
+    foreach ($result->mapRows() as $row) {
+      $scores[] = self::scorelogFromRow($row);
+    }
+
+    return $scores;
+  }
+
   // Log successful score.
   public static async function genLogValidScore(
     int $level_id,
@@ -216,6 +234,55 @@ class ScoreLog extends Model {
       $team_id,
       $points,
       $type,
+    );
+    await ActivityLog::genCaptureLog($team_id, $level_id);
+    self::invalidateMCRecords(); // Invalidate Memcached ScoreLog data.
+    ActivityLog::invalidateMCRecords('ALL_ACTIVITY'); // Invalidate Memcached ActivityLog data.
+    MultiTeam::invalidateMCRecords('ALL_TEAMS'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('POINTS_BY_TYPE'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('LEADERBOARD'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('TEAMS_BY_LEVEL'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('TEAMS_FIRST_CAP'); // Invalidate Memcached MultiTeam data.
+  }
+
+  public static async function genScoreLogUpdate(
+    int $level_id,
+    int $team_id,
+    int $points,
+    string $type,
+    string $timestamp,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE scores_log SET ts = %s, level_id = %d, team_id = %d, points = %d, type = %s WHERE level_id = %d AND team_id = %d',
+      $timestamp,
+      $level_id,
+      $team_id,
+      $points,
+      $type,
+      $level_id,
+      $team_id,
+    );
+    self::invalidateMCRecords(); // Invalidate Memcached ScoreLog data.
+    Control::invalidateMCRecords('ALL_ACTIVITY'); // Invalidate Memcached Control data.
+    MultiTeam::invalidateMCRecords('ALL_TEAMS'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('POINTS_BY_TYPE'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('LEADERBOARD'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('TEAMS_BY_LEVEL'); // Invalidate Memcached MultiTeam data.
+    MultiTeam::invalidateMCRecords('TEAMS_FIRST_CAP'); // Invalidate Memcached MultiTeam data.
+  }
+
+  public static async function genUpdateScoreLogBonus(
+    int $level_id,
+    int $team_id,
+    int $points,
+  ): Awaitable<void> {
+    $db = await self::genDb();
+    await $db->queryf(
+      'UPDATE scores_log SET ts = ts, points = %d WHERE level_id = %d AND team_id = %d',
+      $points,
+      $level_id,
+      $team_id,
     );
     self::invalidateMCRecords(); // Invalidate Memcached ScoreLog data.
     Control::invalidateMCRecords('ALL_ACTIVITY'); // Invalidate Memcached Control data.
