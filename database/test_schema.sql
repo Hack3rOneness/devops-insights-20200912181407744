@@ -211,6 +211,7 @@ INSERT INTO `configuration` (field, value, description) VALUES("pause_ts", "0", 
 INSERT INTO `configuration` (field, value, description) VALUES("timer", "0", "(Boolean) Timer is enabled");
 INSERT INTO `configuration` (field, value, description) VALUES("scoring", "0", "(Boolean) Ability score levels");
 INSERT INTO `configuration` (field, value, description) VALUES("gameboard", "1", "(Boolean) Refresh all data in the gameboard");
+INSERT INTO `configuration` (field, value, description) VALUES("auto_announce", "0", "(Boolean) Auto game announcements");
 INSERT INTO `configuration` (field, value, description) VALUES("progressive_cycle", "300", "(Integer) Frequency to take progressive scoreboard in seconds");
 INSERT INTO `configuration` (field, value, description) VALUES("bases_cycle", "5", "(Integer) Frequency to score base levels in seconds");
 INSERT INTO `configuration` (field, value, description) VALUES("autorun_cycle", "30", "(Integer) Frequency to cycle autorun in seconds");
@@ -231,6 +232,10 @@ INSERT INTO `configuration` (field, value, description) VALUES("default_bonusdec
 INSERT INTO `configuration` (field, value, description) VALUES("language", "en", "(String) Language of the system");
 INSERT INTO `configuration` (field, value, description) VALUES("livesync", "0", "(Boolean) LiveSync functionality");
 INSERT INTO `configuration` (field, value, description) VALUES("livesync_auth_key", "", "(String) Optional LiveSync Auth Key");
+INSERT INTO `configuration` (field, value, description) VALUES("custom_logo", "0", "(Boolean) Custom branding logo");
+INSERT INTO `configuration` (field, value, description) VALUES("custom_org", "Facebook", "(String) Custom branding organization text");
+INSERT INTO `configuration` (field, value, description) VALUES("custom_byline", "Powered By Facebook", "(String) Custom branding byline text");
+INSERT INTO `configuration` (field, value, description) VALUES("custom_logo_image", "static/img/favicon.png", "(String) Custom logo image file");
 UNLOCK TABLES;
 
 --
@@ -411,6 +416,25 @@ CREATE TABLE `announcements_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ts` timestamp NOT NULL,
   `announcement` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `activity_log`
+--
+
+DROP TABLE IF EXISTS `activity_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject` text NOT NULL,
+  `action` text NOT NULL,
+  `entity` text NOT NULL,
+  `message` text NOT NULL,
+  `arguments` text NOT NULL,
+  `ts` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
