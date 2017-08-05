@@ -36,9 +36,11 @@ You’ve used it, now you want to make it better? Awesome! Pull requests are wel
 
 Facebook also has [bug bounty program](https://www.facebook.com/whitehat/) that includes FBCTF. If you find a security vulnerability in the platform, please submit it via the process outlined on that page and do not file a public issue.
 
+Feel free to join our slack by registering your email here: https://fbctf-slack.herokuapp.com/
+
 ## Have more questions?
 
-Check out the [wiki pages](https://github.com/facebook/fbctf/wiki) attached to this repo.
+Check out the [wiki pages](https://github.com/facebook/fbctf/wiki) attached to this repo. You can also ask on Slack by registering your email here: https://fbctf-slack.herokuapp.com/.
 
 ## License
 
