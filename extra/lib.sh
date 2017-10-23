@@ -128,6 +128,7 @@ function letsencrypt_cert() {
   fi
 
   if [[ "$__docker" = true ]]; then
+    mkdir -p /root/tmp
     cat <<- EOF > /root/tmp/certbot.sh
 		#!/bin/bash
 		if [[ ! ( -d /etc/letsencrypt && "\$(ls -A /etc/letsencrypt)" ) ]]; then
