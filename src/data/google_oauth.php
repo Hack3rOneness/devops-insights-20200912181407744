@@ -7,6 +7,11 @@ SessionUtils::sessionStart();
 SessionUtils::enforceLogin();
 
 if (Configuration::genGoogleOAuthFileExists()) {
+
+  $code = idx(Utils::getGET(), 'code', false);
+  $error = idx(Utils::getGET(), 'error', false);
+  $state = idx(Utils::getGET(), 'state', false);
+
   $google_oauth_file = Configuration::genGoogleOAuthFile();
   $client = new Google_Client();
   $client->setAuthConfig($google_oauth_file);
@@ -16,8 +21,32 @@ if (Configuration::genGoogleOAuthFileExists()) {
     'https://'.$_SERVER['HTTP_HOST'].'/data/google_oauth.php',
   );
 
-  if (isset($_GET['code'])) {
-    $client->authenticate($_GET['code']);
+  $integration_csrf_token = base64_encode(random_bytes(100));
+  // Cookie is sent with headers, and therefore not set until after the PHP code executes - this allows us to reset the cookie on each request without clobbering the state
+  setcookie(
+    'integration_csrf_token',
+    strval($integration_csrf_token),
+    0,
+    '/data/',
+    must_have_string(Utils::getSERVER(), 'SERVER_NAME'),
+    true,
+    true,
+  );
+  $client->setState(strval($integration_csrf_token));
+
+  if ($code !== false) {
+    $integration_csrf_token = /* HH_IGNORE_ERROR[2050] */
+      idx($_COOKIE, 'integration_csrf_token', false);
+    if (strval($integration_csrf_token) === '' ||
+        strval($state) === '' ||
+        strval($integration_csrf_token) != strval($state)) {
+      $code = false;
+      $error = false;
+    }
+  }
+
+  if ($code !== false) {
+    $client->authenticate($code);
     $access_token = $client->getAccessToken();
     $oauth_client = new Google_Service_Oauth2($client);
     $profile = $oauth_client->userinfo->get();
@@ -49,7 +78,7 @@ if (Configuration::genGoogleOAuthFileExists()) {
         '"';
     }
     $javascript_close = "window.open('', '_self', ''); window.close();";
-  } else if (isset($_GET['error'])) {
+  } else if ($error === true) {
     $message =
       tr(
         'There was an error connecting your account to Google, please try again later.',
