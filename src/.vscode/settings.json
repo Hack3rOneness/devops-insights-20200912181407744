@@ -1,0 +1,6 @@
+{
+    "hack.workspaceRootPath": "/Users/stephenmiller/Documents/fbctf",
+    "hack.enableCoverageCheck": true,
+    "hack.clientPath": "/usr/local/bin/hh_client"
+}
+
