@@ -1332,7 +1332,7 @@ function setupInputListeners() {
 
         var get = $.get(modulePath, function(data) {
           $self.html(data);
-        }).error(function(jqxhr, status, error) {
+        }).fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the module.");
           console.log(modulePath);
           console.log(status);
@@ -1371,7 +1371,7 @@ function setupInputListeners() {
         $mapSvg = $('#fb-gameboard-map');
         $countryHover = $('[class~="country-hover"]', $mapSvg);
         enableClickAndDrag.init();
-      }, 'html').error(function(jqxhr, status, error) {
+      }, 'html').fail(function(jqxhr, status, error) {
         console.error("There was a problem loading the svg map");
         console.log(status);
         console.log(error);
@@ -1397,7 +1397,7 @@ function setupInputListeners() {
         $mapSvg = $('#fb-gameboard-map');
         $countryHover = $('[class~="country-hover"]', $mapSvg);
         enableClickAndDrag.init();
-      }, 'html').error(function(jqxhr, status, error) {
+      }, 'html').fail(function(jqxhr, status, error) {
         console.error("There was a problem loading the svg map");
         console.log(status);
         console.log(error);
@@ -1419,7 +1419,7 @@ function setupInputListeners() {
         $listview = $('.fb-listview');
         $listview.html(data);
         listviewEventListeners($listview);
-      }, 'html').error(function(jqxhr, status, error) {
+      }, 'html').fail(function(jqxhr, status, error) {
         console.error("There was a problem loading the List View");
         console.log(status);
         console.log(error);
@@ -1443,7 +1443,7 @@ function setupInputListeners() {
             success_callback();
           }
         })
-        .error(function(jqxhr, status, error) {
+        .fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the module.");
           console.log(loadPath);
           console.log(status);
@@ -1513,7 +1513,7 @@ function setupInputListeners() {
           FB_CTF.data.TEAMS = data;
           var df = $.Deferred();
           return df.resolve(FB_CTF.data.TEAMS);
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the team data.");
           console.log(loadPath);
           console.log(status);
@@ -1542,7 +1542,7 @@ function setupInputListeners() {
           FB_CTF.data.CAPTURES = data;
           var df = $.Deferred();
           return df.resolve(FB_CTF.data.CAPTURES);
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the captures data.");
           console.log(loadPath);
           console.log(status);
@@ -1631,7 +1631,7 @@ function setupInputListeners() {
           FB_CTF.data.CONF = data;
           var df = $.Deferred();
           return df.resolve(FB_CTF.data.CONF);
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the conf data.");
           console.log(loadPath);
           console.log(status);
@@ -1661,7 +1661,7 @@ function setupInputListeners() {
             console.log("Redirecting to '/index.php?page=login'");
             window.location.replace('/index.php?page=login');
           }
-        }).error(function(jqxhr, status, error) {
+        }).fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the session data.");
           console.log(loadPath);
           console.log(status);
@@ -1721,7 +1721,7 @@ function setupInputListeners() {
               $('#' + key)[0].parentNode.setAttribute('data-captured', value.datacaptured);
             }
           });
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the map data.");
           console.log(loadPath);
           console.log(status);
@@ -1753,7 +1753,7 @@ function setupInputListeners() {
             $('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
             $('#' + key)[0].parentNode.children[1].classList.remove("captured--opponent");
           });
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the map data.");
           console.log(loadPath);
           console.log(status);
@@ -1786,7 +1786,7 @@ function setupInputListeners() {
           FB_CTF.data.COUNTRIES = data;
           var df = $.Deferred();
           return df.resolve(FB_CTF.data.COUNTRIES);
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the game data.");
           console.log(loadPath);
           console.log(status);
@@ -2072,7 +2072,7 @@ function setupInputListeners() {
           FB_CTF.data.COMMAND = data;
           var df = $.Deferred();
           return df.resolve(FB_CTF.data.COMMAND);
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the commands data.");
           console.log(loadPath);
           console.log(status);
@@ -2549,7 +2549,7 @@ function setupInputListeners() {
             });
             eventListeners();
           }
-        }, 'json').error(function(jqxhr, status, error) {
+        }, 'json').fail(function(jqxhr, status, error) {
           console.error("There was a problem retrieving the commands.");
           console.log(status);
           console.log(error);
@@ -2574,12 +2574,12 @@ function setupInputListeners() {
   FB_CTF.init = function() {
     $body = $('body');
 
-    $('#login_button').click(Index.loginTeam);
+    $('#login_button').on('click', Index.loginTeam);
     var names_required = $('input[name=action]').val() === 'register_names';
     if (names_required) {
-      $('#register_button').click(Index.registerNames);
+      $('#register_button').on('click', Index.registerNames);
     } else {
-      $('#register_button').click(Index.registerTeam);
+      $('#register_button').on('click', Index.registerTeam);
     }
 
     // load the svg sprite. This is in the FB_CTF namespace
@@ -2837,7 +2837,7 @@ function setupInputListeners() {
       $customEmblemInput.trigger('click');
     });
     // on file input change, set image preview and emblem carousel notice
-    $customEmblemInput.change(function() {
+    $customEmblemInput.on('change',',  function() {
       var input = this;
       if (input.files && input.files[0]) {
         if (input.files[0].size > (1000*1024)) {
