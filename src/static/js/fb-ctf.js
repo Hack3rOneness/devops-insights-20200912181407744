@@ -30,8 +30,7 @@ var filterList = {};
 $(document).on('keypress', 'input', function(e) {
   if (e.keyCode == Keycode.codes['enter']) {
     e.preventDefault();
-    var form_action = $('input[name=action]', e.target.form)[0].value;
-    if (form_action == 'register_team') {
+    if (e.target.form[0].value == 'register_team') {
       Index.registerTeam();
     }
     if (e.target.form[0].value == 'login_team') {
