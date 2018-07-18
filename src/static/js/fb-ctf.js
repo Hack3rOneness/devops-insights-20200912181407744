@@ -2837,7 +2837,7 @@ function setupInputListeners() {
       $customEmblemInput.trigger('click');
     });
     // on file input change, set image preview and emblem carousel notice
-    $customEmblemInput.on('change',',  function() {
+    $customEmblemInput.on('change', function() {
       var input = this;
       if (input.files && input.files[0]) {
         if (input.files[0].size > (1000*1024)) {
