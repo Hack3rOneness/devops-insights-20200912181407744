@@ -31,13 +31,7 @@ class CountryDataController extends DataController {
           $level->getId(),
         ),
         'links_list' => Link::genAllLinksValues($level->getId()),
-<<<<<<< HEAD
-        'completed' => MultiTeam::genCompletedLevel(
-          $level->getId(),
-        ),
-=======
         'completed' => MultiTeam::genCompletedLevel($level->getId(),),
->>>>>>> removing_completed_by_country_data
       };
       $awaitables_results = await \HH\Asio\m($awaitables); // TODO: Combine Awaits
 
