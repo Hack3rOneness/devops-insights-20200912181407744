@@ -722,6 +722,7 @@ class Level extends Model implements Importable, Exportable {
       $action = ($active === true) ? "enabled" : "disabled";
       $country_id = await self::genCountryIdForLevel($level_id);
       $country = await Country::gen($country_id);
+      await Country::genSetStatus($country_id, true);
       await \HH\Asio\va(
         ActivityLog::genAdminLog($action, "Country", $country_id),
         Announcement::genCreateAuto($country->getName().' '.$action.'!'),
