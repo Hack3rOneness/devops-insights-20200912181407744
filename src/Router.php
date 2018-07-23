@@ -36,8 +36,6 @@ class Router {
         return await (new CountryModalController())->genRender($modal);
       case 'scoreboard':
         return await (new ScoreboardModalController())->genRender($modal);
-      case 'team':
-        return await (new TeamModalController())->genRender($modal);
       case 'command-line':
         return await (new CommandLineModalController())->genRender($modal);
       case 'choose-logo':

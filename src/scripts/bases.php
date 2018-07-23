@@ -19,7 +19,6 @@ require_once (__DIR__.'/../models/ScoreLog.php');
 require_once (__DIR__.'/../models/Control.php');
 require_once (__DIR__.'/../models/MultiTeam.php');
 require_once (__DIR__.'/../models/Announcement.php');
-require_once (__DIR__.'/../models/ActivityLog.php');
 
 $conf_game = \HH\Asio\join(Configuration::gen('game'));
 while ($conf_game->getValue() === '1') {

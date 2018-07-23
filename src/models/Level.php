@@ -398,11 +398,7 @@ class Level extends Model implements Importable, Exportable {
     $country = await Country::gen($country_id);
     await \HH\Asio\va(
       Announcement::genCreateAuto($country->getName()." added!"),
-      ActivityLog::genAdminLog("added", "Country", $country_id),
     );
-
-    ActivityLog::invalidateMCRecords('ALL_ACTIVITY');
-
     return intval(must_have_idx($result->mapRows()[0], 'id'));
   }
 
@@ -642,11 +638,9 @@ class Level extends Model implements Importable, Exportable {
       $country_id = await self::genCountryIdForLevel($level_id);
       $country = await Country::gen($country_id);
       await \HH\Asio\va(
-        ActivityLog::genAdminLog("updated", "Country", $country_id),
         Announcement::genCreateAuto($country->getName()." updated!"),
       );
       self::invalidateMCRecords(); // Invalidate Memcached Level data.
-      ActivityLog::invalidateMCRecords('ALL_ACTIVITY'); // Invalidate Memcached ActivityLog data.
     }
   }
 
@@ -724,11 +718,9 @@ class Level extends Model implements Importable, Exportable {
       $country = await Country::gen($country_id);
       await Country::genSetStatus($country_id, true);
       await \HH\Asio\va(
-        ActivityLog::genAdminLog($action, "Country", $country_id),
         Announcement::genCreateAuto($country->getName().' '.$action.'!'),
       );
       self::invalidateMCRecords();
-      ActivityLog::invalidateMCRecords('ALL_ACTIVITY');
     }
   }
 
@@ -1211,7 +1203,6 @@ class Level extends Model implements Importable, Exportable {
             HintLog::genLogGetHint($level_id, $team_id, $penalty),
           );
 
-          ActivityLog::invalidateMCRecords('ALL_ACTIVITY'); // Invalidate Memcached ActivityLog data.
           MultiTeam::invalidateMCRecords('ALL_TEAMS'); // Invalidate Memcached MultiTeam data.
           MultiTeam::invalidateMCRecords('POINTS_BY_TYPE'); // Invalidate Memcached MultiTeam data.
           MultiTeam::invalidateMCRecords('LEADERBOARD'); // Invalidate Memcached MultiTeam data.

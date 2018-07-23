@@ -21,7 +21,6 @@ require_once (__DIR__.'/../models/ScoreLog.php');
 require_once (__DIR__.'/../models/HintLog.php');
 require_once (__DIR__.'/../models/FailureLog.php');
 require_once (__DIR__.'/../models/Announcement.php');
-require_once (__DIR__.'/../models/ActivityLog.php');
 
 while (1) {
   \HH\Asio\join(Control::genAutoRun());

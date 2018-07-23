@@ -16,8 +16,6 @@ var Keycode = require('keycode');
 var widgetsList = [
   'Leaderboard',
   'Announcements',
-  'Activity',
-  'Teams',
   'Filter',
   'Game Clock'
 ];
@@ -38,71 +36,6 @@ $(document).on('keypress', 'input', function(e) {
     }
   }
 });
-
-function activateTeams() {
-  var FB_CTF = window.FB_CTF;
-  var $teamgrid = $('aside[data-module="teams"]');
-  $teamgrid.on('click', 'a', function(event) {
-    event.preventDefault();
-    var team = String($(this).data('team'));
-
-    if (team === undefined || team === "") {
-      team = "Facebook CTF";
-    }
-    var teamData = FB_CTF.data.TEAMS[team];
-    if (teamData === undefined) {
-      console.error("Invalid team name in markup");
-      return;
-    }
-    Modal.loadPopup('p=team&modal=team', 'team', function() {
-      var $modal = $('#fb-modal'),
-          rank = teamData.rank + "",
-          $teamMembers = $('.team-members', $modal);
-
-      $('[data-modal=scoreboard]').on('click', function() {
-        Modal.load('p=scoreboard&modal=scoreboard', 'scoreboard');
-      });
-
-      // team name
-      $('.team-name', $modal).text(team);
-      // team badge
-      if (teamData.logo.custom) {
-        // css styles are applied here since 'svg' has a 'use' child, and
-        // css can't select parents based on children
-        $('svg.icon--badge', $modal)
-            .css('display', 'none')
-            .children('use')
-            .attr('xlink:href', "");
-        $('img.icon--badge', $modal)
-            .css('display', '')
-            .attr('src', teamData.logo.path);
-      } else {
-        $('svg.icon--badge', $modal)
-            .css('display', '')
-            .children('use')
-            .attr('xlink:href', "#icon--badge-" + teamData.logo.name);
-        $('img.icon--badge', $modal)
-            .css('display', 'none')
-            .attr('src', "");
-      }
-      // team members
-      $.each(teamData.team_members, function() {
-        $teamMembers.append('<li>' + this + '</li>');
-      });
-      // rank
-      if (rank.length === 1) {
-        rank = "0" + rank;
-      }
-      $('.points-number', $modal).text(rank);
-      // team points
-      $('.points--base', $modal).text(teamData.points.base);
-      $('.points--quiz', $modal).text(teamData.points.quiz);
-      $('.points--flag', $modal).text(teamData.points.flag);
-      $('.points--total', $modal).text(teamData.points.total);
-    });
-
-  });
-}
 
 function setupInputListeners() {
   var FB_CTF = window.FB_CTF;
@@ -279,9 +212,6 @@ function setupInputListeners() {
         refresh_active_map = false,
         refresh_active_captures = false,
         refresh_active_announcment = false,
-        refresh_active_activity = false,
-        refresh_active_team_data = false,
-        refresh_active_team_module = false,
         refresh_active_leaderboard = false,
         refresh_active_clear_map = false,
         refresh_active_filter = false,
@@ -455,7 +385,6 @@ function setupInputListeners() {
           mapLoaded,
           confDataLoaded = loadConfData(),
           listViewLoaded = loadListView(),
-          teamDataLoaded = loadTeamData(),
           loadingLoaded = loadIn();
 
       if (VIEW_ONLY) {
@@ -464,12 +393,12 @@ function setupInputListeners() {
         mapLoaded = loadMap();
       }
 
-      $.when(mapLoaded, countryDataLoaded).done(function() {
+      $.when(mapLoaded, confDataLoaded, countryDataLoaded, loadingLoaded).done(function() {
         renderCountryData();
       });
 
       // do stuff when the map and modules are loaded
-      $.when(modulesLoaded, mapLoaded, confDataLoaded, listViewLoaded, teamDataLoaded, loadingLoaded).done(function() {
+      $.when(modulesLoaded, mapLoaded, confDataLoaded, listViewLoaded, loadingLoaded).done(function() {
         console.log("modules, map, conf data, list view, team data, and loading screen are loaded");
 
         // trigger an event for the gameboard loaded, so
@@ -507,20 +436,12 @@ function setupInputListeners() {
         // Load initial filters
         loadSavedFilterModule();
         
-        // Load initial teams related modules and data
-        loadTeamData();
-        var loaded = loadTeamsModule();
-        $.when(loaded).done(function() {
-          activateTeams();
-        });
+        // Load leaderboard module
         loadLeaderboardModule();
 
         // Game clock
         loadClockModule();
 
-        // Load initial activity
-        loadActivityModule();
-        
         //Get current team captures
         getCaptureData();
 
@@ -545,30 +466,20 @@ function setupInputListeners() {
              if (Widget.getWidgetStatus('Filter') === 'open') {
               loadSavedFilterModule();
             }
-            // Activity
-            if (Widget.getWidgetStatus('Activity') === 'open') {
-              loadActivityModule();
-            }
           } else {
             clearMapData();
             clearAnnouncements();
-            clearActivity();
           }
         }, FB_CTF.data.CONF.refreshMap);
 
         // Teams
         setInterval(function() {
           if (FB_CTF.data.CONF.gameboard === '1') {
-            // Teams
-            loadTeamData();
-            if (Widget.getWidgetStatus('Teams') === 'open') {
-              loadTeamsModule();
-            }
+            // Leaderboard
             if (Widget.getWidgetStatus('Leaderboard') === 'open') {
               loadLeaderboardModule();
             }
           } else {
-            clearTeams();
             clearLeaderboard();
           }
         }, FB_CTF.data.CONF.refreshMap);
@@ -578,8 +489,6 @@ function setupInputListeners() {
           checkActiveSession(true);
           loadAnnouncementsModule(true);
           loadSavedFilterModule(true);
-          loadActivityModule(true);
-          loadTeamsModule(true);
           loadLeaderboardModule(true);
           loadClockModule();
         }, 60000);
@@ -596,11 +505,6 @@ function setupInputListeners() {
      * -------------------------------------------- */
 
 
-    function clearTeams() {
-      var $teamgrid = $('aside[data-module="teams"] .grid-list');
-      $('li', $teamgrid).remove();
-    }
-
     function clearLeaderboard() {
       var $leaderboard = $('aside[data-module="leaderboard"] .leaderboard-info');
       $('li', $leaderboard).remove();
@@ -608,11 +512,6 @@ function setupInputListeners() {
 
     function clearAnnouncements() {
       var $announcements = $('aside[data-module="announcements"] .announcements-list');
-      $('li', $announcements).remove();
-    }
-
-    function clearActivity() {
-      var $announcements = $('aside[data-module="activity"] .activity-stream');
       $('li', $announcements).remove();
     }
 
@@ -1456,21 +1355,6 @@ function setupInputListeners() {
     }
 
     /**
-     * load the teams module
-     */
-    function loadTeamsModule(force = false) {
-      if (refresh_active_team_module === false || force === true) {
-        refresh_active_team_module = true;  
-        var teamsModulePath = 'inc/gameboard/modules/teams.php';
-        var teamsTargetSelector = 'aside[data-module="teams"]';
-
-        return loadModuleGeneric(teamsModulePath, teamsTargetSelector, function() {
-          refresh_active_team_module = false;
-        });
-      }
-    }
-
-    /**
      * load the leaderboard module
      */
     function loadLeaderboardModule(force = false) {
@@ -1498,35 +1382,6 @@ function setupInputListeners() {
           Clock.runClock();
         }
       });
-    }
-
-    /**
-     * load the team data
-     */
-    function loadTeamData(force = false) {
-      if (refresh_active_team_data === false || force === true) {
-        refresh_active_team_data = true;
-        var loadPath = 'data/teams.php';
-
-        return $.get(loadPath, function(data) {
-          FB_CTF.data.TEAMS = data;
-          var df = $.Deferred();
-          return df.resolve(FB_CTF.data.TEAMS);
-        }, 'json').fail(function(jqxhr, status, error) {
-          console.error("There was a problem retrieving the team data.");
-          console.log(loadPath);
-          console.log(status);
-          console.log(error);
-          console.error("/error");
-          console.error("Team data request failed");
-          if (jqxhr.status === 500 && jqxhr.getResponseHeader('Error-Redirect') === "true") {
-              console.log("Redirecting to '/index.php?page=error'");
-              window.location.replace('/index.php?page=error');
-          }
-        }).done(function() {
-          refresh_active_team_data = false;
-        });
-      }
     }
     
     /**
@@ -1601,21 +1456,6 @@ function setupInputListeners() {
       filterList = Filter.detectFilters();
       // Load filter module
       return loadFilterModule(force);
-    }
-
-    /**
-     * load the activity module
-     */
-    function loadActivityModule(force = false) {
-      if (refresh_active_activity === false || force === true) {
-        refresh_active_activity = true;
-        var activityModulePath = 'inc/gameboard/modules/activity.php';
-        var activityTargetSelector = 'aside[data-module="activity"]';
-
-        return loadModuleGeneric(activityModulePath, activityTargetSelector, function() {
-          refresh_active_activity = false;
-        });
-      }
     }
 
     /**
@@ -1844,21 +1684,18 @@ function setupInputListeners() {
           $containerRow = $('.fb-module-container.container--row'),
 
           // the modules
-          $module_activity = $('aside[data-module="activity"]'),
           $module_leaderboard = $('aside[data-module="leaderboard"]'),
           $module_domination = $('aside[data-module="world-domination"]');
 
       if (toggle) {
         $gameboard.addClass(activeClass);
         LIST_VIEW = true;
-        $module_activity.prependTo($containerRow).addClass('module--outer-left');
         $module_domination.appendTo($containerLeft);
         $module_leaderboard.prependTo($containerRight);
       } else {
         $gameboard.removeClass(activeClass);
         LIST_VIEW = false;
         $module_leaderboard.appendTo($containerLeft);
-        $module_activity.appendTo($containerLeft).removeClass('module--outer-left');
         $module_domination.prependTo($containerRow);
       }
     }
