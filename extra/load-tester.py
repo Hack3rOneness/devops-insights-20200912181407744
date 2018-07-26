@@ -26,7 +26,6 @@ verify = False
 endpoints = [
     '/index.php?p=game',
     '/index.php?p=scoreboard&modal=scoreboard',
-    '/data/scores.php',
     '/data/configuration.php',
     '/data/country-data.php',
     '/data/map-data.php',
