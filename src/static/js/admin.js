@@ -1091,12 +1091,6 @@ module.exports = {
         case 'import-game':
             importGame();
             break;
-        case 'create-tokens':
-            createTokens($section);
-            break;
-        case 'export-tokens':
-            exportTokens($section);
-            break;
         case 'export-game':
             exportCurrentGame();
             break;
