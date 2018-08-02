@@ -1194,14 +1194,16 @@ class Level extends Model implements Importable, Exportable {
           }
 
           // Adjust points and log the hint
-          await \HH\Asio\va(
-            $db->queryf(
-              'UPDATE teams SET points = points - %d WHERE id = %d LIMIT 1',
-              $penalty,
-              $team_id,
-            ),
-            HintLog::genLogGetHint($level_id, $team_id, $penalty),
-          );
+	  if (!$hint) {
+            await \HH\Asio\va(
+              $db->queryf(
+                'UPDATE teams SET points = points - %d WHERE id = %d LIMIT 1',
+                $penalty,
+                $team_id,
+              ),
+              HintLog::genLogGetHint($level_id, $team_id, $penalty),
+            );
+	  }
 
           MultiTeam::invalidateMCRecords('ALL_TEAMS'); // Invalidate Memcached MultiTeam data.
           MultiTeam::invalidateMCRecords('POINTS_BY_TYPE'); // Invalidate Memcached MultiTeam data.
