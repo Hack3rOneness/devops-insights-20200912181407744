@@ -682,7 +682,6 @@ function setupInputListeners() {
      */
     function captureCountry(country) {
       var $selectCountry = $('.countries .land[title="' + country + '"]', $mapSvg),
-          capturedBy = getCapturedByMarkup($selectCountry.closest('g').data('captured')),
           showAnimation = !(is_ie || LIST_VIEW),
           animationDuration = !showAnimation ? 0 : 600;
 
