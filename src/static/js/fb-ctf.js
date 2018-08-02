@@ -516,23 +516,6 @@ function setupInputListeners() {
     }
 
     /**
-     * get the owner of the given country, and return the markup
-     *  for rendering somewhere
-     *
-     * @param capturedBy (string)
-     *   - the capturing team
-     */
-    function getCapturedByMarkup(capturedBy) {
-      if (capturedBy === undefined) {
-        return "Uncaptured";
-      }
-
-      var capturedClass = (capturedBy === FB_CTF.data.CONF.currentTeam) ? 'your-name' : 'opponent-name';
-      var span = $('<span/>').attr('class', capturedClass).text(capturedBy);
-      return span;
-    }
-
-    /**
      * automatically scroll through the content on the sidebar
      *  modules. This happens in the "view only" mode
      */
@@ -732,9 +715,6 @@ function setupInputListeners() {
      * @param country (string)
      *   - the country being captured
      *
-     * @param capturedBy (string)
-     *   - the user or team who has captured this country
-     *
      * @param capturingTeam (string)
      *   - an optional parameter for the team that is attempting
      *      to capture the given country
@@ -792,8 +772,6 @@ function setupInputListeners() {
      * @param country (string)
      *   - the country that is being captured
      *
-     * @param capturedBy (string)
-     *   - the user or team who has captured this country
      */
     function launchCaptureModal(country) {
       var data = FB_CTF.data.COUNTRIES[country];
