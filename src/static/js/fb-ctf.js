@@ -722,7 +722,7 @@ function setupInputListeners() {
         }, animationDuration);
       } else {
         setTimeout(function() {
-          launchCaptureModal(country, capturedBy);
+          launchCaptureModal(country);
         }, animationDuration);
       }
     } // function countryClick();
