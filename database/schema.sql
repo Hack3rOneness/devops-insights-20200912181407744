@@ -90,6 +90,9 @@ CREATE TABLE `attachments` (
   `created_ts` timestamp NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- Temp Fix by having a dummy row to prevent constant SELECT queries
+INSERT INTO attachments (filename, type, level_id, created_ts) VALUES ("test", "text/plain", 0, NOW());
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -428,6 +431,9 @@ CREATE TABLE `hints_log` (
   KEY `team_id` (`team_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+-- Temp fix by adding dummy row to hints_log
+INSERT INTO hints_log (ts, level_id, team_id, penalty) VALUES (NOW(), 0, 0, 0);
 
 
 --
