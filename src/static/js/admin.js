@@ -1107,7 +1107,7 @@ module.exports = {
             exportCurrentTeams();
             break;
         case 'import-logos':
-            iimportLogos();
+            importLogos();
             break;
         case 'export-logos':
             exportCurrentLogos();
