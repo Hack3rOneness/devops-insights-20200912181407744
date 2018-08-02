@@ -432,10 +432,6 @@ CREATE TABLE `hints_log` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
--- Temp fix by adding dummy row to hints_log
-INSERT INTO hints_log (ts, level_id, team_id, penalty) VALUES (NOW(), 0, 0, 0);
-
-
 --
 -- Table structure for table `progressive_log`
 --
