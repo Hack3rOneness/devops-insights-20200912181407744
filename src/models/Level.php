@@ -1305,7 +1305,7 @@ class Level extends Model implements Importable, Exportable {
 
     $result =
       await $db->queryf(
-        'SELECT COUNT(*) FROM levels WHERE type = %s AND title = %s AND entity_id IN (SELECT id FROM countries WHERE iso_code = %s)',
+        'SELECT EXISTS(SELECT * FROM levels WHERE type = %s AND title = %s AND entity_id IN (SELECT id from countries WHERE iso_code = %s))',
         $type,
         $title,
         $entity_iso_code,
@@ -1313,26 +1313,7 @@ class Level extends Model implements Importable, Exportable {
 
     if ($result->numRows() > 0) {
       invariant($result->numRows() === 1, 'Expected exactly one result');
-      return (intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0);
-    } else {
-      return false;
-    }
-  }
-
-  // Check if a level already exists by type, title and entity.
-  public static async function genAlreadyExistById(
-    int $level_id,
-  ): Awaitable<bool> {
-    $db = await self::genDb();
-
-    $result = await $db->queryf(
-      'SELECT COUNT(*) FROM levels WHERE id = %d',
-      $level_id,
-    );
-
-    if ($result->numRows() > 0) {
-      invariant($result->numRows() === 1, 'Expected exactly one result');
-      return (intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0);
+      return intval($result->mapRows()[0]->firstValue()) > 0;
     } else {
       return false;
     }
@@ -1374,7 +1355,7 @@ class Level extends Model implements Importable, Exportable {
     $db = await self::genDb();
     $result =
       await $db->queryf(
-        'SELECT COUNT(*) FROM levels WHERE type = %s AND title = %s AND description = %s AND points = %d',
+        'SELECT EXISTS(SELECT * FROM levels WHERE type = %s AND title = %s AND description = %s AND points = %d)',
         $type,
         $title,
         $description,
@@ -1382,7 +1363,7 @@ class Level extends Model implements Importable, Exportable {
       );
     if ($result->numRows() > 0) {
       invariant($result->numRows() === 1, 'Expected exactly one result');
-      return (intval(idx($result->mapRows()[0], 'COUNT(*)')) > 0);
+      return intval($result->mapRows()[0]->firstValue()) > 0;
     } else {
       return false;
     }
