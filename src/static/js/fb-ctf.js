@@ -395,6 +395,7 @@ function setupInputListeners() {
 
       $.when(mapLoaded, confDataLoaded, countryDataLoaded, loadingLoaded).done(function() {
         renderCountryData();
+        refreshMapData();
       });
 
       // do stuff when the map and modules are loaded
@@ -1530,6 +1531,7 @@ function setupInputListeners() {
               $('#' + key)[0].parentNode.children[1].classList.add("captured--you");
               //$('#' + key)[0].parentNode.removeAttribute('data-captured');
               $('#' + key)[0].parentNode.setAttribute('data-captured', value.datacaptured);
+              $('#' + key)[0].parentNode.setAttribute('data-status', 'completed');
             } else if (value.captured == 'opponent') {
               //$('#' + key)[0].parentNode.children[1].classList.remove("captured--you");
               $('#' + key)[0].parentNode.children[1].classList.add("captured--opponent");
@@ -1637,9 +1639,7 @@ function setupInputListeners() {
           // add the category
           $group.attr('data-category', data.category);
           // add the status
-          var completed_list = data.completed;
-          var data_status = (completed_list.indexOf(FB_CTF.data.CONF.currentTeam) >= 0) ? 'completed' : 'remaining';
-          $group.attr('data-status', data_status);
+          $group.attr('data-status', 'remaining');
         }
       });
     }
