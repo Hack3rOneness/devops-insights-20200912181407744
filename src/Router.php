@@ -79,7 +79,7 @@ class Router {
       case 'logout':
         // TODO: Make a confirmation modal?
         SessionUtils::sessionLogout();
-        invariant(false, 'should not reach here');
+        return await (new IndexController())->genRender();
       default:
         throw new NotFoundRedirectException();
     }
