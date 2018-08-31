@@ -50,10 +50,6 @@ class CountryDataController extends DataController {
         'category should be of type Category',
       );
 
-      if (!$country) {
-        continue;
-      }
-
       if ($level->getHint() !== '') {
         // There is hint, can this team afford it?
         if ($level->getPenalty() > $my_team->getPoints()) { // Not enough points

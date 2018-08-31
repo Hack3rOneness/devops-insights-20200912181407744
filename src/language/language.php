@@ -31,7 +31,7 @@ function tr(string $word): string {
   global $lang;
   global $language;
   /* HH_IGNORE_ERROR[2050] */
-  if ($language === 'en') { // temporary fix for 
+  if ($language === 'en' && $word != 'date and time format') { // temporary fix for 
     return $word;           // reducing function calls to
   }                         // tr()
   elseif (array_key_exists($word, $lang)) {
