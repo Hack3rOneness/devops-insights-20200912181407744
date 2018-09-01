@@ -251,7 +251,7 @@ class AdminController extends Controller {
         $team = await MultiTeam::genTeam($token->getTeamId()); // TODO: Combine Awaits
         $token_status =
           <span class="highlighted--red">
-            {tr('Used by')} {$team->getName()}
+            {tr('Used by')}&nbsp;{$team->getName()}
           </span>;
       } else {
         $token_status =
