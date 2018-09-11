@@ -18,7 +18,8 @@ class AttachmentDataController extends DataController {
     if (intval($attachment_id) !== 0) {
       $attachment_exists =
         await Attachment::genCheckExists(intval($attachment_id));
-      if ($attachment_exists === true) {
+        $active = await Attachment::checkActive(intval($attachment_id));
+      if ($attachment_exists === true && $active === true) {
         $attachment = await Attachment::gen(intval($attachment_id));
         $filename = $attachment->getFilename();
 

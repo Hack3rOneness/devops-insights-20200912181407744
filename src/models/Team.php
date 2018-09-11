@@ -665,16 +665,6 @@ class Team extends Model implements Importable, Exportable {
     return (intval($value['points']) === intval($value['sum']));
   }
 
-  // Update the last_score field.
-  public static async function genLastScore(int $team_id): Awaitable<void> {
-    $db = await self::genDb();
-    await $db->queryf(
-      'UPDATE teams SET last_score = NOW() WHERE id = %d LIMIT 1',
-      $team_id,
-    );
-    MultiTeam::invalidateMCRecords(); // Invalidate Memcached MultiTeam data.
-  }
-
   // Set all points to zero for all teams.
   public static async function genResetAllPoints(): Awaitable<void> {
     $db = await self::genDb();

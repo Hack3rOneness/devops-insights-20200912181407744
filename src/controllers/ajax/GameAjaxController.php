@@ -60,10 +60,11 @@ class GameAjaxController extends AjaxController {
             // Check if answer is valid
           } else if ($check_answer) {
             // Give points and update last score for team
-            await \HH\Asio\va(
-              Level::genScoreLevel($level_id, SessionUtils::sessionTeam()),
-              Team::genLastScore(SessionUtils::sessionTeam()),
-            );
+            $check_answered = await Level::genScoreLevel($level_id, SessionUtils::sessionTeam());
+            if (!$check_answered) {
+              return Utils::ok_response('Double score for you! SIKE!', 'game');
+            }
+            MultiTeam::invalidateMCRecords();
             return Utils::ok_response('Success', 'game');
           } else {
             await FailureLog::genLogFailedScore(
