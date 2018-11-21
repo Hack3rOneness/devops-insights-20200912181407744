@@ -48,52 +48,7 @@ class TutorialModalController extends ModalController {
               </svg>{tr(' are owned by others.')}
             </p>
           </div>;
-        return tuple($step, tr('Captures'), 'zoom', $header, $content);
-      case 'zoom':
-        $header =
-          <div class="header-graphic">
-            <svg class="icon--country-group--europe">
-              <use href="#icon--country-group--europe"></use>
-            </svg>
-            <svg class="icon--tutorial--zoom">
-              <use href="#icon--tutorial--zoom"></use>
-            </svg>
-          </div>;
-        $content =
-          <div class="main-text">
-            <p>{tr('Tap Plus[+] to Zoom In. Tap Minus[-] to Zoom Out.')}</p>
-            <p>{tr('Click and Drag to move left, right, up and down.')}</p>
-          </div>;
-        return tuple($step, tr('Zoom'), 'command-lines', $header, $content);
-      case 'command-lines':
-        $header =
-          <div class="header-graphic">
-            <div class="fb-column-container tutorial-graphic--command-lines">
-              <span class="indicator">/atk</span>
-              <ul>
-                <li>United_Arab_Emirates</li>
-                <li>United_Kingdom</li>
-                <li class="highlighted">United_States</li>
-                <li>Uruguay</li>
-                <li>Uzbekistan</li>
-              </ul>
-            </div>
-          </div>;
-        $content =
-          <div class="main-text">
-            <p>
-              {tr(
-                'Tap Forward Slash [/] to activate computer commands. A list of commands can be found under "Rules".',
-              )}
-            </p>
-          </div>;
-        return tuple(
-          $step,
-          tr('Command_Line'),
-          'navigation',
-          $header,
-          $content,
-        );
+        return tuple($step, tr('Captures'), 'navigation', $header, $content);
       case 'navigation':
         $content =
           <div class="main-text">

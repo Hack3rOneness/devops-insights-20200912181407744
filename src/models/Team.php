@@ -418,7 +418,7 @@ class Team extends Model implements Importable, Exportable {
 
     $team_name = trim($team_name);
 
-    if ($team_name === '') {
+    if ($team_name === '' || strlen($team_name) > 20) {
       return false;
     }
 

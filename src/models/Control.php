@@ -72,6 +72,7 @@ class Control extends Model {
       HintLog::genResetHints(), // Clear hints log
       FailureLog::genResetFailures(), // Clear failures log
       self::genResetBases(), // Clear bases log
+      Control::genFlushMemcached(), // Flush Memcached
       self::genClearScriptLog(),
       Configuration::genUpdate('registration', '0'), // Disable registration
       Configuration::genUpdate('login', '1'), // Enable login

@@ -64,7 +64,6 @@ class GameAjaxController extends AjaxController {
             if (!$check_answered) {
               return Utils::ok_response('Double score for you! SIKE!', 'game');
             }
-            MultiTeam::invalidateMCRecords();
             return Utils::ok_response('Success', 'game');
           } else {
             await FailureLog::genLogFailedScore(

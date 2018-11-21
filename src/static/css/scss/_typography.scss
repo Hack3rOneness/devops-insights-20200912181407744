@@ -521,7 +521,7 @@ dt {
   font-size: .9em;
 }
 
-.country-window dd {
+dd {
   font-size: 1.1em;
 
   &.country-owner {
@@ -544,8 +544,7 @@ dt {
   }
 
   & + dt {
-    margin-top: 5%;
-    margin-left: 10%;
+    margin-top: 1em;
   }
 }
 

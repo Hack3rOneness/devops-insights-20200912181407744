@@ -917,6 +917,7 @@ function setupInputListeners() {
             var responseData = JSON.parse(data);
             if (responseData.result === 'OK') {
               console.log('OK');
+              $('.js-trigger-score').unbind('click');
               $($container).on('keypress', function(e) {
               if (e.keyCode == 13) {
                   e.preventDefault();
@@ -1753,7 +1754,7 @@ function setupInputListeners() {
       }
 
       var firstTutorial = 'tool-bars',
-          tutorialSteps = 8,
+          tutorialSteps = 6,
           currStepIndex = 1;
 
       var tutorialPath = 'p=tutorial&modal=';
@@ -1773,6 +1774,7 @@ function setupInputListeners() {
             currStepIndex++;
             Utils.loadComponent('#fb-modal', loadPath, buildTutorial);
           } else {
+            currStepIndex = 1;
             closeTutorial();
           }
         });

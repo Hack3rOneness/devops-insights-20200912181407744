@@ -53,10 +53,6 @@ $(document).ready(function() {
   var page_location = window.location.pathname + window.location.search;
   if (window.innerWidth < 960 && page_location != '/index.php?page=mobile') {
   window.location = '/index.php?page=mobile';
-  } else if (window.innerWidth < 960 && page_location == '/index.php?page=mobile') {
-    setTimeout(function() {
-      window.location = '/index.php';
-    }, 2000);
   } else if (window.innerWidth >= 960 && page_location === '/index.php?page=mobile') {
     window.location = '/index.php';
   }

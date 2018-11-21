@@ -358,7 +358,7 @@ class ActionModalController extends ModalController {
 
         $content =
           <div class="action-main">
-            {tr('Change your team name.')}
+            {tr('Change your team name.')} (Max 20 characters)
             <form class="fb-form-no-padding team-name-form">
               <input name="set_team_name" type="hidden" value="" />
               <div class="form-el el--text">
