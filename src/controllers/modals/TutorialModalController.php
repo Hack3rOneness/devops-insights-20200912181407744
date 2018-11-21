@@ -54,7 +54,7 @@ class TutorialModalController extends ModalController {
           <div class="main-text">
             <p>
               {tr(
-                'Click "Nav" to access main navigation links like Rules of Play, Registration, Blog, Jobs & more.',
+                'Click "Navigation" to access main navigation links like Rules of Play, Account Settings, and to Logout.',
               )}
             </p>
           </div>;
@@ -64,7 +64,7 @@ class TutorialModalController extends ModalController {
           <div class="main-text">
             <p>
               {tr(
-                'Track your competition by clicking "scoreboard" to access real-time game statistics and graphs.',
+                'Track your competition by clicking "scoreboard" to access real-time game statistics.',
               )}
             </p>
           </div>;
