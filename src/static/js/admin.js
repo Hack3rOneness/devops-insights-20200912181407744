@@ -683,8 +683,6 @@ function createMChoiceLevel(section) {
   var choice2 = $('.level_form input[name=choice2]', section)[0].value;
   var choice3 = $('.level_form input[name=choice3]', section)[0].value;
   var choicesArr = [choice0, choice1, choice2, choice3];
-  console.log(choicesArr);
-  console.log(answer);
 
   var create_data = {
     action: 'create_mchoice',
