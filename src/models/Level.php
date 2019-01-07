@@ -18,6 +18,7 @@ class Level extends Model implements Importable, Exportable {
     private string $type,
     private string $title,
     private string $description,
+    private string $choices,
     private int $entity_id,
     private int $category_id,
     private int $points,
@@ -48,6 +49,10 @@ class Level extends Model implements Importable, Exportable {
 
   public function getDescription(): string {
     return mb_convert_encoding($this->description, 'UTF-8');
+  }
+
+  public function getMChoice(): string {
+    return mb_convert_encoding($this->choices, 'UTF-8');
   }
 
   public function getEntityId(): int {
@@ -86,6 +91,11 @@ class Level extends Model implements Importable, Exportable {
     return $this->penalty;
   }
 
+  public function getChoices($number): string {
+    $choiceArr = json_decode($this->choices);
+    return $choiceArr[$number];
+  }
+
   public function getCreatedTs(): string {
     return $this->created_ts;
   }
@@ -97,6 +107,7 @@ class Level extends Model implements Importable, Exportable {
       must_have_idx($row, 'type'),
       must_have_idx($row, 'title'),
       must_have_idx($row, 'description'),
+      must_have_idx($row, 'choices'),
       intval(must_have_idx($row, 'entity_id')),
       intval(must_have_idx($row, 'category_id')),
       intval(must_have_idx($row, 'points')),
@@ -176,6 +187,7 @@ class Level extends Model implements Importable, Exportable {
           must_have_string($level, 'flag'),
           must_have_string($level, 'hint'),
           must_have_int($level, 'penalty'),
+          must_have_string($level, 'choices'),
         );
         if (array_key_exists('links', $level)) {
           $links = must_have_idx($level, 'links');
@@ -233,6 +245,7 @@ class Level extends Model implements Importable, Exportable {
         'title' => $level->getTitle(),
         'active' => $level->getActive(),
         'description' => $level->getDescription(),
+        'choices' => $level->getMChoice(),
         'entity_iso_code' => $entity->getIsoCode(),
         'category' => $category->getCategory(),
         'points' => $level->getPoints(),
@@ -348,6 +361,7 @@ class Level extends Model implements Importable, Exportable {
     string $flag,
     string $hint,
     int $penalty,
+    string $choices = ""
   ): Awaitable<int> {
     $db = await self::genDb();
 
@@ -358,8 +372,8 @@ class Level extends Model implements Importable, Exportable {
     }
     await $db->queryf(
       'INSERT INTO levels '.
-      '(type, title, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, active, created_ts) '.
-      'VALUES (%s, %s, %s, %d, %d, %d, %d, %d, %d, %s, %s, %d, %d, NOW())',
+      '(type, title, description, entity_id, category_id, points, bonus, bonus_dec, bonus_fix, flag, hint, penalty, choices, active, created_ts) '.
+      'VALUES (%s, %s, %s, %d, %d, %d, %d, %d, %d, %s, %s, %d, %s, %d, NOW())',
       $type,
       $title,
       $description,
@@ -372,6 +386,7 @@ class Level extends Model implements Importable, Exportable {
       $flag,
       $hint,
       $penalty,
+      $choices,
       0, // active
     );
 
@@ -534,6 +549,83 @@ class Level extends Model implements Importable, Exportable {
     );
   }
 
+  // Create a mutiple choice level.
+  public static async function genCreateMChoice(
+    string $title,
+    string $question,
+    string $answer,
+    int $entity_id,
+    int $points,
+    int $bonus,
+    int $bonus_dec,
+    string $hint,
+    int $penalty,
+    string $choices
+  ): Awaitable<int> {
+    $db = await self::genDb();
+
+    $result = await $db->queryf(
+      'SELECT id FROM categories WHERE category = %s LIMIT 1',
+      'Multiple Choice',
+    );
+
+    $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
+    return await self::genCreate(
+      'mchoice',
+      $title,
+      $question,
+      $entity_id,
+      $category_id,
+      $points,
+      $bonus,
+      $bonus_dec,
+      $bonus,
+      $answer,
+      $hint,
+      $penalty,
+      $choices
+    );
+  }
+
+  // Update a multiple choice level.
+  public static async function genUpdateMChoice(
+    string $title,
+    string $question,
+    string $answer,
+    int $entity_id,
+    int $points,
+    int $bonus,
+    int $bonus_dec,
+    string $hint,
+    int $penalty,
+    int $level_id,
+    string $choices
+  ): Awaitable<void> {
+    $db = await self::genDb();
+
+    $result = await $db->queryf(
+      'SELECT id FROM categories WHERE category = %s LIMIT 1',
+      'Multiple Choice',
+    );
+
+    $category_id = intval(must_have_idx($result->mapRows()[0], 'id'));
+    await self::genUpdate(
+      $title,
+      $question,
+      $entity_id,
+      $category_id,
+      $points,
+      $bonus,
+      $bonus_dec,
+      $bonus,
+      $answer,
+      $hint,
+      $penalty,
+      $level_id,
+      $choices
+    );
+  }
+
   // Create a base level.
   public static async function genCreateBase(
     string $title,
@@ -603,6 +695,7 @@ class Level extends Model implements Importable, Exportable {
     string $hint,
     int $penalty,
     int $level_id,
+    string $choices = ""
   ): Awaitable<void> {
     $db = await self::genDb();
 
@@ -616,7 +709,7 @@ class Level extends Model implements Importable, Exportable {
       await $db->queryf(
         'UPDATE levels SET title = %s, description = %s, entity_id = %d, category_id = %d, points = %d, '.
         'bonus = %d, bonus_dec = %d, bonus_fix = %d, flag = %s, hint = %s, '.
-        'penalty = %d WHERE id = %d LIMIT 1',
+        'penalty = %d, choices = %s WHERE id = %d LIMIT 1',
         $title,
         $description,
         $ent_id,
@@ -629,6 +722,7 @@ class Level extends Model implements Importable, Exportable {
         $hint,
         $penalty,
         $level_id,
+        $choices,
       );
 
     // Make sure entities are consistent
@@ -941,6 +1035,11 @@ class Level extends Model implements Importable, Exportable {
     return await self::genAllTypeLevels('quiz');
   }
 
+  // All multiple choice levels.
+  public static async function genAllMChoiceLevels(): Awaitable<array<Level>> {
+    return await self::genAllTypeLevels('mchoice');
+  }
+
   // All base levels.
   public static async function genAllBaseLevels(): Awaitable<array<Level>> {
     return await self::genAllTypeLevels('base');
@@ -1066,6 +1165,7 @@ class Level extends Model implements Importable, Exportable {
   public static async function genScoreLevel(
     int $level_id,
     int $team_id,
+    bool $correct = true
   ): Awaitable<bool> {
     $result =
       await self::withLock(
@@ -1084,7 +1184,11 @@ class Level extends Model implements Importable, Exportable {
           $level = await self::gen($level_id);
 
           // Calculate points to give
-          $points = $level->getPoints() + $level->getBonus();
+          if ($correct) {
+            $points = $level->getPoints() + $level->getBonus();
+          } else {
+            $points = 0;
+          }
 
           // Log the score
           $captured = await ScoreLog::genLogValidScore(

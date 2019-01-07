@@ -558,6 +558,48 @@ input[type="checkbox"] {
 }
 
 /**
+ * --radio buttons for multiple choice
+ */
+ .radio-list .mcontainer {
+  position: relative;
+  padding-left: 25px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: .86em;
+  cursor: pointer;
+ }
+
+.radio-list span.mradio {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: $main-blue;
+  border: 2px solid $teal-blue;
+  border-radius: 50%;
+}
+
+.radio-list span.mradio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.radio-list input:checked ~ span.mradio:after {
+  display: block;
+}
+
+.radio-list span.mradio:after {
+ 	top: 3px;
+	left: 3px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: $yellow;
+}
+
+/**
  * --the radio-like form elements
  */
 input[type="radio"] + label,

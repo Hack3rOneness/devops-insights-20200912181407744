@@ -126,7 +126,7 @@ class CountryModalController extends ModalController {
                   <div
                     class=
                       "answer_captured col col-1-2 actions--right completely-hidden">
-                    <a class="fb-cta cta--yellowe">
+                    <a class="fb-cta cta--yellow">
                       {tr('Captured!')}
                     </a>
                   </div>
@@ -209,15 +209,164 @@ class CountryModalController extends ModalController {
                 <div class="form-el--multiple-actions fb-column-container">
                   <div class="col col-1-2"></div>
                   <div class="answer_no_bases col col-1-2 actions--right">
-                    <a class="fb-cta cta--yellowe">
+                    <a class="fb-cta cta--yellow">
                       {tr('Scoring Off')}
                     </a>
                   </div>
                   <div
                     class=
                       "answer_captured col col-1-2 actions--right completely-hidden">
-                    <a class="fb-cta cta--yellowe">
+                    <a class="fb-cta cta--yellow">
                       {tr('Captured!')}
+                    </a>
+                  </div>
+                </div>
+              </form>
+              <div class="capture-hints-and-help">
+                <div class="capture-hint">
+                  <h4>{tr('hint_')}</h4>
+                  <div></div>
+                </div>
+              </div>
+              <footer class="modal-footer fb-column-container">
+                <div
+                  class=
+                    "col country-capture-stats fb-column-container">
+                  <div class="points-display">
+                    <span class="points-number fb-numbers"></span>
+                    <span class="points-label">{tr('PTS')}</span>
+                  </div>
+                  <div class="col country-stats">
+                    <dl class="country-window">
+                      <dt>{tr('type')}</dt>
+                      <dd class="country-type"></dd>
+
+                      <dt>{tr('category')}</dt>
+                      <dd class="country-category"></dd>
+
+                      <dt>{tr('first_capture')}</dt>
+                      <dd class="opponent-name country-owner"></dd>
+                    </dl>
+                  </div>
+                </div>
+              </footer>
+            </div>;
+        }
+        case 'mchoice':
+        $scoring = await Configuration::gen('scoring');
+        if ($scoring->getValue() === '1') {
+          return
+            <div class="fb-modal-content">
+              <div class="modal-title">
+                <h4>
+                  {tr('capture_')}
+                  <span class="country-name highlighted"></span> -
+                  <span class="country-title"></span>
+                </h4>
+                <a href="#" class="js-close-modal">
+                  <svg class="icon icon--close">
+                    <use href="#icon--close" />
+                  </svg>
+                </a>
+              </div>
+              <form class="fb-form country-capture-form">
+                <input name="level_id" type="hidden" value="" />
+                <textarea rows={4} class="capture-text" readonly={true}>
+                </textarea>
+                <fieldset class="form-set">
+                  <div class="radio-list">
+                    <span class="mchoice_check"></span>
+                    <br />
+
+                  </div>
+                </fieldset>
+                <div class="form-el--multiple-actions fb-column-container">
+                  <div class="col col-1-2">
+                    <a class="fb-cta cta--blue js-trigger-hint">
+                      <span>{tr('Request Hint')}</span>
+                    </a>
+                  </div>
+                  <div class="answer_no_bases col col-1-2 actions--right ">
+                    <a class="fb-cta cta--yellow js-trigger-score">
+                      {tr('Submit')}
+                    </a>
+                  </div>
+                  <div
+                    class=
+                      "answer_captured col col-1-2 actions--right completely-hidden">
+                    <a class="fb-cta cta--yellow">
+                      Attempted
+                    </a>
+                  </div>
+                </div>
+              </form>
+              <div class="capture-hints-and-help">
+                <div class="capture-hint">
+                  <h4>{tr('hint_')}</h4>
+                  <div></div>
+                </div>
+              </div>
+              <footer class="modal-footer fb-column-container">
+                <div
+                  class=
+                    "col country-capture-stats fb-column-container">
+                  <div class="points-display">
+                    <span class="points-number fb-numbers"></span>
+                    <span class="points-label">{tr('PTS')}</span>
+                  </div>
+                  <div class="col country-stats">
+                    <dl class="country-window">
+                      <dt>{tr('type')}</dt>
+                      <dd class="country-type"></dd>
+
+                      <dt>{tr('category')}</dt>
+                      <dd class="country-category"></dd>
+
+                      <dt>{tr('first_capture')}</dt>
+                      <dd class="opponent-name country-owner"></dd>
+                    </dl>
+                  </div>
+                </div>
+              </footer>
+            </div>;
+
+        } else {
+          return
+            <div class="fb-modal-content">
+              <div class="modal-title">
+                <h4>
+                  {tr('capture_')}
+                  <span class="country-name highlighted"></span> -
+                  <span class="country-title"></span>
+                </h4>
+                <a href="#" class="js-close-modal">
+                  <svg class="icon icon--close">
+                    <use href="#icon--close" />
+                  </svg>
+                </a>
+              </div>
+              <form class="fb-form country-capture-form">
+                <input name="level_id" type="hidden" value="" />
+                <textarea rows={4} class="capture-text" readonly={true}>
+                </textarea>
+                <fieldset class="form-set">
+                  <div class="radio-list score-off">
+                  <br />
+
+                  </div>
+                </fieldset>
+                <div class="form-el--multiple-actions fb-column-container">
+                  <div class="col col-1-2"></div>
+                  <div class="answer_no_bases col col-1-2 actions--right">
+                    <a class="fb-cta cta--yellow">
+                      {tr('Scoring Off')}
+                    </a>
+                  </div>
+                  <div
+                    class=
+                      "answer_captured col col-1-2 actions--right completely-hidden">
+                    <a class="fb-cta cta--yellow">
+                      Attempted
                     </a>
                   </div>
                 </div>

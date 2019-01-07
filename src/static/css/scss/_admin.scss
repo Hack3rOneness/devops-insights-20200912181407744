@@ -152,6 +152,10 @@ General Admin
     display: none;
   }
 
+  .radio-list label.mcontainer {
+    color: $light-blue;
+  }
+  
   input:not(:checked) + label {
     color: $teal-blue;
   }

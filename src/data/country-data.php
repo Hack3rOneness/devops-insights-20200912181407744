@@ -93,6 +93,7 @@ class CountryDataController extends DataController {
         'level_id' => $level->getId(),
         'title' => $level->getTitle(),
         'intro' => $level->getDescription(),
+        'choices' => $level->getMChoice(),
         'type' => $level->getType(),
         'points' => $level->getPoints(),
         'bonus' => $level->getBonus(),

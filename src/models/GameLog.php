@@ -56,7 +56,7 @@ class GameLog extends Model {
     $db = await self::genDb();
     $result =
       await $db->queryf(
-        'SELECT ts, %s AS entry, team_id, level_id, points, type, %s AS flag FROM scores_log UNION SELECT ts, %s AS entry, team_id, level_id, 0 AS points, %s AS type, flag FROM failures_log ORDER BY ts DESC',
+        'SELECT ts, %s AS entry, team_id, level_id, points, type, %s AS flag FROM scores_log WHERE points !=0 UNION SELECT ts, %s AS entry, team_id, level_id, 0 AS points, %s AS type, flag FROM failures_log ORDER BY ts DESC',
         'score',
         '',
         'failure',

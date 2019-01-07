@@ -775,109 +775,354 @@ function setupInputListeners() {
      *
      */
     function launchCaptureModal(country) {
-      var data = FB_CTF.data.COUNTRIES[country];
+      var data = FB_CTF.data.COUNTRIES[country],
+          level_id = data ? data.level_id : 0,
+          title = data ? data.title : '',
+          intro = data ? data.intro : '',
+          choices = data ? data.choices : '',
+          hint = data ? data.hint : '',
+          hint_cost = data ? data.hint_cost : -1,
+          points = data ? data.points : '',
+          category = data ? data.category : '',
+          type = data ? data.type : '',
+          completed = data ? data.completed : '',
+          owner = data ? data.owner : '',
+          attachments = data ? data.attachments : '',
+          links = data ? data.links : '';
 
-      Modal.loadPopup('p=country&modal=capture', 'country-capture', function() {
-        var $container = $('.fb-modal-content'),
-            level_id = data ? data.level_id : 0,
-            title = data ? data.title : '',
-            intro = data ? data.intro : '',
-            hint = data ? data.hint : '',
-            hint_cost = data ? data.hint_cost : -1,
-            points = data ? data.points : '',
-            category = data ? data.category : '',
-            type = data ? data.type : '',
-            completed = data ? data.completed : '',
-            owner = data ? data.owner : '',
-            attachments = data ? data.attachments : '',
-            links = data ? data.links : '';
-        
-        $('.country-name', $container).text(country);
-        $('.country-title', $container).text(title);
-        $('input[name=level_id]', $container).attr('value', level_id);
-        $('.capture-text', $container).text(intro);
-        if (attachments instanceof Array) {
-          $.each(attachments, function() {
-            var filename = this['filename'];
-            var link = this['file_link'];
-            var f = filename.substr(filename.lastIndexOf('/') + 1);
-            var attachment = $('<a/>').attr('target', '_blank').attr('href', link).text('[ ' + f + ' ]');
-            $('.capture-links', $container).append(attachment);
-            $('.capture-links', $container).append($('<br/>'));
-          });
-        }
-        if (links instanceof Array) {
-          var link_c = 1;
-          $.each(links, function() {
-            var link;
-            if (this.startsWith('http')) {
-              link = $('<a/>').attr('target', '_blank').attr('href', this).text('[ Link ' + link_c + ' ]');
-            } else {
-              var ip = this.split(':')[0];
-              var port = this.split(':')[1];
-              link = $('<input/>').attr('type', 'text').attr('disabled', true).attr('value', 'nc ' + ip + ' ' + port);
+      if (type === 'mchoice') {
+        Modal.loadPopup('p=country&modal=mchoice', 'country-capture', function() {
+          var $container = $('.fb-modal-content'),
+              $mchoices = JSON.parse(choices);
+
+          $('.country-name', $container).text(country);
+          $('.country-title', $container).text(title);
+          $('input[name=level_id]', $container).attr('value', level_id);
+          $('.capture-text', $container).text(intro);
+          $('.points-number', $container).text(points);
+          $('.country-type', $container).text(type);
+          $('.country-category', $container).text(category);
+          $('.country-owner', $container).text(owner);
+    
+          // Loop for choices
+          for (var i = 0; i < $mchoices.length; i++) {
+            if ($mchoices[i] != '') {
+              $('div.radio-list').append('<input id="mchoice' + i + '" name="answer" type="radio" value="' + i +
+              '"/><label for="mchoice' + i + '" class="mchoice' + i + '"></label><br /><br />');
+              $('label.mchoice' + i + '', $container).text($mchoices[i]);
             }
-            $('.capture-links', $container).append(link);
-            $('.capture-links', $container).append($('<br/>'));
-            link_c++;
-          });
-        }
-        $('.points-number', $container).text(points);
-        $('.country-type', $container).text(type);
-        $('.country-category', $container).text(category);
-        $('.country-owner', $container).text(owner);
-
-        if (completed instanceof Array) {
-          $.each(completed, function() {
-            var li = $('<li/>').text(this);
-            $('.completed-list', $container).append(li);
-          });
-        }
-
-        // Hide flag submission for bases
-        if (type === 'base') {
-          $('.answer_no_bases').addClass('completely-hidden');
-        }
-
-        // Hide flag submission for captured levels
-        if ($.inArray(level_id, FB_CTF.data.CAPTURES) != -1) {
-          $('.answer_no_bases').addClass('completely-hidden');
-          $('.answer_captured').removeClass('completely-hidden');
-        }
+          }
         
-        //
-        // event listeners
-        //
-        if (hint_cost == -2) {
-          $('.js-trigger-hint span', $container).text('Need more points');
-          $('.capture-hint div', $container).text('Need more points');
-        } else if (hint_cost == -1) {
-          $('.js-trigger-hint span', $container).text('No Hint');
-          $('.capture-hint div', $container).text('No Hint');
-        } else {
-          if (hint_cost === 0) {
-            $('.js-trigger-hint span', $container).text('Free Hint');
-            $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
-            $('.capture-hint div', $container).text(hint);
-          } else {
-            $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
+          if ($.inArray(level_id, FB_CTF.data.CAPTURES) != -1) {
+            $('.answer_no_bases').addClass('completely-hidden');
+            $('.answer_captured').removeClass('completely-hidden');
+            $('input[type=radio').attr('disabled', true);
           }
 
-          $('.js-trigger-hint', $container).on('click', function(event) {
+          $('.score-off input[type=radio').attr('disabled',true);
+
+          // hint event
+          if (hint_cost == -2) {
+            $('.js-trigger-hint span', $container).text('Need more points');
+            $('.capture-hint div', $container).text('Need more points');
+          } else if (hint_cost == -1) {
+            $('.js-trigger-hint span', $container).text('No Hint');
+            $('.capture-hint div', $container).text('No Hint');
+          } else {
+            if (hint_cost === 0) {
+              $('.js-trigger-hint span', $container).text('Hint');
+              $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
+              $('.capture-hint div', $container).text(hint);
+            } else {
+              $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
+            }
+
+            $('.js-trigger-hint', $container).on('click', function(event) {
+              event.preventDefault();
+              $('.js-trigger-hint').unbind('click');
+              
+              if (hint_cost > 0) {
+                Modal.loadPopup('p=action&modal=hint-confirm', 'action-hint-confirm', function() {
+                  $('#hint_close').click(function() {
+                    launchCaptureModal(country);
+                  });
+                  $('#hint_cancel').click(function() {
+                    $('#hint_cancel').unbind('click');
+                    launchCaptureModal(country);
+                  });
+                  $('#hint_confirm').click(function() {
+                    $('#hint_confirm').unbind('click');
+                    $('.js-close-modal').hide();
+                    var hint_level = $('input[name=level_id]', $container)[0].value;
+                    var csrf_token = $('input[name=csrf_token]')[0].value;
+                    var counter = 5;
+                    var hint_data = {
+                      action: 'get_hint',
+                      level_id: hint_level,
+                      csrf_token: csrf_token
+                    };
+        
+                    $.post(
+                      'index.php?p=game&ajax=true',
+                      hint_data
+                    ).fail(function() {
+                      // TODO: Make this a modal
+                      console.log('ERROR');
+                    }).done(function(data) {
+                      var responseData = JSON.parse(data);
+                      if (responseData.result === 'OK') {
+                        getCountryData(true);
+                        console.log('OK');
+                        console.log('Hint: ' + responseData.hint);
+                        $('p.hint-confirmed').text('Hint: ' + responseData.hint);
+                      } else {
+                        console.log('Failed');
+                        $('.js-trigger-hint span', $container).text('ERROR');
+                      }
+                    });
+                    $('#hint_confirm').text(counter);
+                    var int = setInterval(function() {
+                      counter--;
+                      $('#hint_confirm').text(counter);
+                      if (counter == 0) {
+                        clearInterval(int);
+                        $('#hint_confirm').text('OK').on('click', function() {
+                          launchCaptureModal(country);
+                        });
+                      }
+                    }, 1000);
+
+                  });
+                });
+              } else {
+                  $('.js-trigger-hint span', $container).text('Hint');
+                  $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
+                  $('.capture-hint div', $container).text(hint);
+                }
+            });
+          }
+
+          $('.js-trigger-score', $container).on('click', function(event) {
+            event.preventDefault();
+  
+            var score_level = $('input[name=level_id]', $container)[0].value;
+            var score_answer = $('.country-capture-form input[name=answer]:checked', $container).val();
+            var csrf_token = $('input[name=csrf_token]')[0].value;
+
+            if (score_answer === undefined) {
+              $('span.mchoice_check').css("color", "#f00").text("Please choose an answer.");
+            } else {
+              var score_data = {
+                action: 'answer_level',
+                level_id: score_level,
+                answer: score_answer,
+                csrf_token: csrf_token
+              };
+    
+              $.post(
+                'index.php?p=game&ajax=true',
+                score_data
+              ).fail(function() {
+                // TODO: Make this a modal
+                console.log('ERROR');
+              }).done(function(data) {
+                var responseData = JSON.parse(data);
+                if (responseData.result === 'OK') {
+                  console.log('OK');
+                  $('.js-trigger-score').unbind('click');
+                  $($container).on('keypress', function(e) {
+                  if (e.keyCode == 13) {
+                      e.preventDefault();
+                    } 
+                  });
+                  $('.js-trigger-score', $container).text('YES!');
+                  $('.radio-list :input:checked', $container).next('label').css("color", "#00ff2a");
+                  $('.answer_no_bases > .fb-cta.cta--yellow.js-trigger-score').removeClass('js-trigger-score');
+                  refreshMapData(); // Refresh map so capture shows up right away
+                  getCaptureData(); // Refresh captured levels so we can't reload the modal and see a submit button
+                  setTimeout(function() {
+                    $('.answer_no_bases').addClass('completely-hidden');
+                    $('.answer_captured').removeClass('completely-hidden');
+                    $('.js-close-modal', $container).click();
+                  }, 2000);
+                } else {
+                  // TODO: Make this a modal
+                  console.log('Failed');
+                  $('.radio-list :input:checked', $container).next('label').css("color", "#f00");
+                  $('.js-trigger-score', $container).text('NOPE :(');
+                  setTimeout(function() {
+                    $('.js-trigger-score', $container).text('SUBMIT');
+                    //$('input[name=answer]')[0].value = '';
+                    //$('input[name=answer]', $container).css("background-color", "");
+                    if (responseData.message === 'MChoice Failed') {
+                      $('.js-close-modal', $container).click();
+                    }
+                  }, 2000);
+                }
+              });
+            }
+          });
+
+          $('.js-close-modal', $container).on('click', removeCaptured);
+        });
+        // if level type mchoice stops here
+      } else {
+        Modal.loadPopup('p=country&modal=capture', 'country-capture', function() {
+          var $container = $('.fb-modal-content');
+
+          
+          $('.country-name', $container).text(country);
+          $('.country-title', $container).text(title);
+          $('input[name=level_id]', $container).attr('value', level_id);
+          $('.capture-text', $container).text(intro);
+          if (attachments instanceof Array) {
+            $.each(attachments, function() {
+              var filename = this['filename'];
+              var link = this['file_link'];
+              var f = filename.substr(filename.lastIndexOf('/') + 1);
+              var attachment = $('<a/>').attr('target', '_blank').attr('href', link).text('[ ' + f + ' ]');
+              $('.capture-links', $container).append(attachment);
+              $('.capture-links', $container).append($('<br/>'));
+            });
+          }
+          if (links instanceof Array) {
+            var link_c = 1;
+            $.each(links, function() {
+              var link;
+              if (this.startsWith('http')) {
+                link = $('<a/>').attr('target', '_blank').attr('href', this).text('[ Link ' + link_c + ' ]');
+              } else {
+                var ip = this.split(':')[0];
+                var port = this.split(':')[1];
+                link = $('<input/>').attr('type', 'text').attr('disabled', true).attr('value', 'nc ' + ip + ' ' + port);
+              }
+              $('.capture-links', $container).append(link);
+              $('.capture-links', $container).append($('<br/>'));
+              link_c++;
+            });
+          }
+          $('.points-number', $container).text(points);
+          $('.country-type', $container).text(type);
+          $('.country-category', $container).text(category);
+          $('.country-owner', $container).text(owner);
+
+          if (completed instanceof Array) {
+            $.each(completed, function() {
+              var li = $('<li/>').text(this);
+              $('.completed-list', $container).append(li);
+            });
+          }
+
+          // Hide flag submission for bases
+          if (type === 'base') {
+            $('.answer_no_bases').addClass('completely-hidden');
+          }
+
+          // Hide flag submission for captured levels
+          if ($.inArray(level_id, FB_CTF.data.CAPTURES) != -1) {
+            $('.answer_no_bases').addClass('completely-hidden');
+            $('.answer_captured').removeClass('completely-hidden');
+          }
+          
+          //
+          // event listeners
+          //
+          if (hint_cost == -2) {
+            $('.js-trigger-hint span', $container).text('Need more points');
+            $('.capture-hint div', $container).text('Need more points');
+          } else if (hint_cost == -1) {
+            $('.js-trigger-hint span', $container).text('No Hint');
+            $('.capture-hint div', $container).text('No Hint');
+          } else {
+            if (hint_cost === 0) {
+              $('.js-trigger-hint span', $container).text('Hint');
+              $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
+              $('.capture-hint div', $container).text(hint);
+            } else {
+              $('.js-trigger-hint', $container).attr('data-hover', '-' + hint_cost + ' PTS');
+            }
+
+            $('.js-trigger-hint', $container).on('click', function(event) {
+              event.preventDefault();
+              $('.js-trigger-hint').unbind('click');
+              
+              if (hint_cost > 0) {
+                Modal.loadPopup('p=action&modal=hint-confirm', 'action-hint-confirm', function() {
+                  $('#hint_close').click(function() {
+                    launchCaptureModal(country);
+                  });
+                  $('#hint_cancel').click(function() {
+                    $('#hint_cancel').unbind('click');
+                    launchCaptureModal(country);
+                  });
+                  $('#hint_confirm').click(function() {
+                    $('#hint_confirm').unbind('click');
+                    $('.js-close-modal').hide();
+                    var hint_level = $('input[name=level_id]', $container)[0].value;
+                    var csrf_token = $('input[name=csrf_token]')[0].value;
+                    var counter = 5;
+                    var hint_data = {
+                      action: 'get_hint',
+                      level_id: hint_level,
+                      csrf_token: csrf_token
+                    };
+        
+                    $.post(
+                      'index.php?p=game&ajax=true',
+                      hint_data
+                    ).fail(function() {
+                      // TODO: Make this a modal
+                      console.log('ERROR');
+                    }).done(function(data) {
+                      var responseData = JSON.parse(data);
+                      if (responseData.result === 'OK') {
+                        getCountryData(true);
+                        console.log('OK');
+                        console.log('Hint: ' + responseData.hint);
+                        $('p.hint-confirmed').text('Hint: ' + responseData.hint);
+                      } else {
+                        console.log('Failed');
+                        $('.js-trigger-hint span', $container).text('ERROR');
+                      }
+                    });
+                    $('#hint_confirm').text(counter);
+                    var int = setInterval(function() {
+                      counter--;
+                      $('#hint_confirm').text(counter);
+                      if (counter == 0) {
+                        clearInterval(int);
+                        $('#hint_confirm').text('OK').on('click', function() {
+                          launchCaptureModal(country);
+                        });
+                      }
+                    }, 1000);
+
+                  });
+                });
+              } else {
+                  $('.js-trigger-hint span', $container).text('Hint');
+                  $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
+                  $('.capture-hint div', $container).text(hint);
+                }
+            });
+          }
+
+          $('.js-trigger-score', $container).on('click', function(event) {
             event.preventDefault();
 
-            $(this).onlySiblingWithClass('active').closest('.fb-modal-content').addClass('hint-enabled');
-            var hint_level = $('input[name=level_id]', $container)[0].value;
+            var score_level = $('input[name=level_id]', $container)[0].value;
+            var score_answer = $('input[name=answer]', $container)[0].value;
             var csrf_token = $('input[name=csrf_token]')[0].value;
-            var hint_data = {
-              action: 'get_hint',
-              level_id: hint_level,
+            var score_data = {
+              action: 'answer_level',
+              level_id: score_level,
+              answer: score_answer,
               csrf_token: csrf_token
             };
 
             $.post(
               'index.php?p=game&ajax=true',
-              hint_data
+              score_data
             ).fail(function() {
               // TODO: Make this a modal
               console.log('ERROR');
@@ -885,75 +1130,44 @@ function setupInputListeners() {
               var responseData = JSON.parse(data);
               if (responseData.result === 'OK') {
                 console.log('OK');
-                console.log('Hint: ' + responseData.hint);
-                $('.capture-hint div', $container).text(responseData.hint);
+                $('.js-trigger-score').unbind('click');
+                $($container).on('keypress', function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                  } 
+                });
+                $('.js-trigger-score', $container).text('YES!');
+                $('input[name=answer]', $container).css("background-color", "#1f7a1f");
+                $('.answer_no_bases > .fb-cta.cta--yellow.js-trigger-score').removeClass('js-trigger-score');
+                refreshMapData(); // Refresh map so capture shows up right away
+                getCaptureData(); // Refresh captured levels so we can't reload the modal and see a submit button
+                setTimeout(function() {
+                  $('.answer_no_bases').addClass('completely-hidden');
+                  $('.answer_captured').removeClass('completely-hidden');
+                  $('.js-close-modal', $container).click();
+                }, 2000);
               } else {
+                // TODO: Make this a modal
                 console.log('Failed');
-                $('.js-trigger-hint span', $container).text('ERROR');
+                $('input[name=answer]', $container).css("background-color", "#800000");
+                $('.js-trigger-score', $container).text('NOPE :(');
+                setTimeout(function() {
+                  $('.js-trigger-score', $container).text('SUBMIT');
+                  $('input[name=answer]')[0].value = '';
+                  $('input[name=answer]', $container).css("background-color", "");
+                }, 2000);
               }
             });
           });
-        }
-        $('.js-trigger-score', $container).on('click', function(event) {
-          event.preventDefault();
-
-          var score_level = $('input[name=level_id]', $container)[0].value;
-          var score_answer = $('input[name=answer]', $container)[0].value;
-          var csrf_token = $('input[name=csrf_token]')[0].value;
-          var score_data = {
-            action: 'answer_level',
-            level_id: score_level,
-            answer: score_answer,
-            csrf_token: csrf_token
-          };
-
-          $.post(
-            'index.php?p=game&ajax=true',
-            score_data
-          ).fail(function() {
-            // TODO: Make this a modal
-            console.log('ERROR');
-          }).done(function(data) {
-            var responseData = JSON.parse(data);
-            if (responseData.result === 'OK') {
-              console.log('OK');
-              $('.js-trigger-score').unbind('click');
-              $($container).on('keypress', function(e) {
-              if (e.keyCode == 13) {
-                  e.preventDefault();
-                } 
-              });
-              $('.js-trigger-score', $container).text('YES!');
-              $('input[name=answer]', $container).css("background-color", "#1f7a1f");
-              $('.answer_no_bases > .fb-cta.cta--yellow.js-trigger-score').removeClass('js-trigger-score');
-              refreshMapData(); // Refresh map so capture shows up right away
-              getCaptureData(); // Refresh captured levels so we can't reload the modal and see a submit button
-              setTimeout(function() {
-                $('.answer_no_bases').addClass('completely-hidden');
-                $('.answer_captured').removeClass('completely-hidden');
-                $('.js-close-modal', $container).click();
-              }, 2000);
-            } else {
-              // TODO: Make this a modal
-              console.log('Failed');
-              $('input[name=answer]', $container).css("background-color", "#800000");
-              $('.js-trigger-score', $container).text('NOPE :(');
-              setTimeout(function() {
-                $('.js-trigger-score', $container).text('SUBMIT');
-                $('input[name=answer]')[0].value = '';
-                $('input[name=answer]', $container).css("background-color", "");
-              }, 2000);
+          $($container).on('keypress', function(e) {
+            if (e.keyCode == 13) {
+              e.preventDefault();
+              $('.js-trigger-score').click();
             }
           });
+          $('.js-close-modal', $container).on('click', removeCaptured);
         });
-        $($container).on('keypress', function(e) {
-          if (e.keyCode == 13) {
-            e.preventDefault();
-            $('.js-trigger-score').click();
-          }
-        });
-        $('.js-close-modal', $container).on('click', removeCaptured);
-      });
+      }
     } // function launchCaptureModal();
 
     /**
@@ -2301,6 +2515,7 @@ function setupInputListeners() {
           // team points
           $('.points--base', $modal).text(teamData.points.base);
           $('.points--quiz', $modal).text(teamData.points.quiz);
+          $('.points--mchoice', $modal).text(teamData.points.mchoice);
           $('.points--flag', $modal).text(teamData.points.flag);
           $('.points--total', $modal).text(teamData.points.total);
         });

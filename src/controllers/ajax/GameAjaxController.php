@@ -62,7 +62,7 @@ class GameAjaxController extends AjaxController {
             // Give points and update last score for team
             $check_answered = await Level::genScoreLevel($level_id, SessionUtils::sessionTeam());
             if (!$check_answered) {
-              return Utils::ok_response('Double score for you! SIKE!', 'game');
+              return Utils::error_response('MChoice Failed', 'game');
             }
             MultiTeam::invalidateMCRecords();
             return Utils::ok_response('Success', 'game');
@@ -72,6 +72,14 @@ class GameAjaxController extends AjaxController {
               SessionUtils::sessionTeam(),
               $answer,
             );
+            $level = await Level::gen($level_id);
+            $type = $level->getType();
+            if ($type === "mchoice") {
+              await \HH\Asio\va(
+                Level::genScoreLevel($level_id, SessionUtils::sessionTeam(), false)
+              );
+              return Utils::error_response('MChoice Failed', 'game');
+            }
             return Utils::error_response('Failed', 'game');
           }
         } else {

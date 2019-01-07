@@ -8,7 +8,7 @@ class AdminAjaxController extends AjaxController {
         'level_id' => FILTER_VALIDATE_INT,
         'level_type' => array(
           'filter' => FILTER_VALIDATE_REGEXP,
-          'options' => array('regexp' => '/^[a-z]{4}$/'),
+          'options' => array('regexp' => '/^[a-z]{4,7}$/'),
         ),
         'team_id' => FILTER_VALIDATE_INT,
         'session_id' => FILTER_VALIDATE_INT,
@@ -22,7 +22,7 @@ class AdminAjaxController extends AjaxController {
         'visible' => FILTER_VALIDATE_INT,
         'all_type' => array(
           'filter' => FILTER_VALIDATE_REGEXP,
-          'options' => array('regexp' => '/^[a-z]{4}$/'),
+          'options' => array('regexp' => '/^[a-z]{4,7}$/'),
         ),
         'logo_id' => FILTER_VALIDATE_INT,
         'logo' => array(
@@ -54,6 +54,7 @@ class AdminAjaxController extends AjaxController {
         'description' => FILTER_UNSAFE_RAW,
         'question' => FILTER_UNSAFE_RAW,
         'flag' => FILTER_UNSAFE_RAW,
+        'choices' => FILTER_UNSAFE_RAW,
         'answer' => FILTER_UNSAFE_RAW,
         'hint' => FILTER_UNSAFE_RAW,
         'points' => FILTER_VALIDATE_INT,
@@ -91,6 +92,8 @@ class AdminAjaxController extends AjaxController {
       'create_team',
       'create_quiz',
       'update_quiz',
+      'create_mchoice',
+      'update_mchoice',
       'create_flag',
       'update_flag',
       'create_base',
@@ -196,6 +199,37 @@ class AdminAjaxController extends AjaxController {
           must_have_string($params, 'hint'),
           intval(must_have_idx($params, 'penalty')),
           must_have_int($params, 'level_id'),
+        );
+        return Utils::ok_response('Updated succesfully', 'admin');
+      case 'create_mchoice':
+        $bonus = $default_bonus->getValue();
+        $bonus_dec = $default_bonusdec->getValue();
+        await Level::genCreateMChoice(
+          must_have_string($params, 'title'),
+          must_have_string($params, 'question'),
+          must_have_string($params, 'answer'),
+          must_have_int($params, 'entity_id'),
+          must_have_int($params, 'points'),
+          intval($bonus),
+          intval($bonus_dec),
+          must_have_string($params, 'hint'),
+          intval(must_have_idx($params, 'penalty')),
+          must_have_string($params, 'choices'),
+        );
+        return Utils::ok_response('Created succesfully', 'admin');
+      case 'update_mchoice':
+        await Level::genUpdateMChoice(
+          must_have_string($params, 'title'),
+          must_have_string($params, 'question'),
+          must_have_string($params, 'answer'),
+          must_have_int($params, 'entity_id'),
+          must_have_int($params, 'points'),
+          must_have_int($params, 'bonus'),
+          must_have_int($params, 'bonus_dec'),
+          must_have_string($params, 'hint'),
+          intval(must_have_idx($params, 'penalty')),
+          must_have_int($params, 'level_id'),
+          must_have_string($params, 'choices'),
         );
         return Utils::ok_response('Updated succesfully', 'admin');
       case 'create_flag':

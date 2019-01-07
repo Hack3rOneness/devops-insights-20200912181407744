@@ -173,6 +173,7 @@ class MultiTeam extends Team {
         } else {
           $type_pair = Map {};
           $type_pair->add(Pair {'quiz', 0});
+          $type_pair->add(Pair {'mchoice', 0});
           $type_pair->add(Pair {'flag', 0});
           $type_pair->add(Pair {'base', 0});
           $points_by_type->add(Pair {intval($team->get('id')), $type_pair});
@@ -316,7 +317,7 @@ class MultiTeam extends Team {
       $teams_by_completed_level = array();
       $scores =
         await self::genTeamArrayFromDB(
-          'SELECT level_id, team_id FROM scores_log WHERE level_id IS NOT NULL ORDER BY ts',
+          'SELECT level_id, team_id FROM scores_log WHERE points != 0 AND level_id IS NOT NULL ORDER BY ts',
         );
       $team_scores_awaitables = Map {};
       $all_teams = await self::genAllTeamsCache($refresh);
@@ -500,7 +501,7 @@ class MultiTeam extends Team {
       $first_team_captured_by_level = array();
       $captures =
         await self::genTeamArrayFromDB(
-          'SELECT sl.level_id, sl.team_id FROM (SELECT level_id, MIN(ts) ts FROM scores_log LEFT JOIN teams ON team_id = teams.id WHERE teams.visible = 1 AND teams.active = 1 GROUP BY level_id) sl2 JOIN scores_log sl ON sl.level_id = sl2.level_id AND sl.ts = sl2.ts;',
+          'SELECT sl.level_id, sl.team_id FROM (SELECT level_id, MIN(ts) ts FROM scores_log LEFT JOIN teams ON team_id = teams.id WHERE teams.visible = 1 AND teams.active = 1 AND scores_log.points != 0 GROUP BY level_id) sl2 JOIN scores_log sl ON sl.level_id = sl2.level_id AND sl.ts = sl2.ts;',
         );
       $team_scores_awaitables = Map {};
       foreach ($captures->items() as $capture) {

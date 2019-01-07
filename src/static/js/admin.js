@@ -117,7 +117,8 @@ function validateAdminForm($clicked) {
   var valid = true,
       $validateForm = $clicked.closest('.validate-form'),
       $required = $('.form-el--required', $validateForm),
-      errorClass = 'form-error';
+      errorClass = 'form-error',
+      formid = $clicked.closest('form').attr('name');
 
   if ($validateForm.length === 0) {
     $validateForm = $clicked.closest('.fb-admin-main');
@@ -166,20 +167,7 @@ function addNewSection($clicked) {
 
   // Update some stuff in the cloned section
   var $title = $('.admin-box-header h3', $newSection),
-      titleText = $title.text().toLowerCase(),
-      switchName = $('input[type="radio"]', $newSection).first().attr('name');
-
-  var newSwitchName;
-
-  if (switchName) {
-    newSwitchName = switchName.substr(0, switchName.lastIndexOf('--')) + '--' + sectionIndex;
-
-    $('#' + switchName + '--on', $newSection).attr('id', newSwitchName + '--on');
-    $('label[for="' + switchName + '--on"]', $newSection).attr('for', newSwitchName + '--on');
-    $('#' + switchName + '--off', $newSection).attr('id', newSwitchName + '--off');
-    $('label[for="' + switchName + '--off"]', $newSection).attr('for', newSwitchName + '--off');
-    $('input[type="radio"]', $newSection).attr('name', newSwitchName);
-  }
+      titleText = $title.text().toLowerCase();
 
   $newSection.removeClass('section-locked');
   $newSection.removeClass('completely-hidden');
@@ -205,6 +193,8 @@ function addNewSection($clicked) {
     $title.text('Team ' + sectionIndex);
   } else if (titleText.indexOf('quiz level') > -1) {
     $title.text('Quiz Level ' + sectionIndex);
+  } else if (titleText.indexOf('mchoice level') > -1) {
+    $title.text('Multiple Choice Level ' + sectionIndex);
   } else if (titleText.indexOf('base level') > -1) {
     $title.text('Base Level ' + sectionIndex);
   } else if (titleText.indexOf('flag level') > -1) {
@@ -667,6 +657,9 @@ function createLevel(section) {
   case 'quiz':
     createQuizLevel(section);
     break;
+  case 'mchoice':
+    createMChoiceLevel(section);
+    break;
   case 'flag':
     createFlagLevel(section);
     break;
@@ -674,6 +667,37 @@ function createLevel(section) {
     createBaseLevel(section);
     break;
   }
+}
+
+// Create multiple choice level
+function createMChoiceLevel(section) {
+  var title = $('.level_form input[name=title]', section)[0].value;
+  var question = $('.level_form textarea[name=question]', section)[0].value;
+  var answer = $('.mchoice_form input[name=answer]:checked', section)[0].value;
+  var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
+  var points = $('.level_form input[name=points]', section)[0].value;
+  var hint = $('.level_form input[name=hint]', section)[0].value;
+  var penalty = $('.level_form input[name=penalty]', section)[0].value;
+  var choice0 = $('.level_form input[name=choice0]', section)[0].value;
+  var choice1 = $('.level_form input[name=choice1]', section)[0].value;
+  var choice2 = $('.level_form input[name=choice2]', section)[0].value;
+  var choice3 = $('.level_form input[name=choice3]', section)[0].value;
+  var choicesArr = [choice0, choice1, choice2, choice3];
+  console.log(choicesArr);
+  console.log(answer);
+
+  var create_data = {
+    action: 'create_mchoice',
+    title: title,
+    question: question,
+    answer: answer,
+    entity_id: entity_id,
+    points: points,
+    hint: hint,
+    penalty: penalty,
+    choices: JSON.stringify(choicesArr)
+  };
+  sendAdminRequest(create_data, true);
 }
 
 // Create quiz level
@@ -756,6 +780,9 @@ function updateLevel(section) {
   case 'quiz':
     updateQuizLevel(section);
     break;
+  case 'mchoice':
+    updateMChoiceLevel(section);
+    break;
   case 'flag':
     updateFlagLevel(section);
     break;
@@ -763,6 +790,41 @@ function updateLevel(section) {
     updateBaseLevel(section);
     break;
   }
+}
+
+// Update multiple choice level
+function updateMChoiceLevel(section) {
+  var title = $('.level_form input[name=title]', section)[0].value;
+  var question = $('.level_form textarea[name=question]', section)[0].value;
+  var answer = $('.level_form input[name=answer]:checked', section)[0].value;
+  var entity_id = $('.level_form select[name=entity_id] option:selected', section)[0].value;
+  var points = $('.level_form input[name=points]', section)[0].value;
+  var bonus = $('.level_form input[name=bonus]', section)[0].value;
+  var bonus_dec = $('.level_form input[name=bonus_dec]', section)[0].value;
+  var hint = $('.level_form input[name=hint]', section)[0].value;
+  var penalty = $('.level_form input[name=penalty]', section)[0].value;
+  var level_id = $('.level_form input[name=level_id]', section)[0].value;
+  var choice0 = $('.level_form input[name=choice0]', section)[0].value;
+  var choice1 = $('.level_form input[name=choice1]', section)[0].value;
+  var choice2 = $('.level_form input[name=choice2]', section)[0].value;
+  var choice3 = $('.level_form input[name=choice3]', section)[0].value;
+  var choicesArr = [choice0, choice1, choice2, choice3];
+
+  var update_data = {
+    action: 'update_mchoice',
+    title: title,
+    question: question,
+    answer: answer,
+    entity_id: entity_id,
+    points: points,
+    bonus: bonus,
+    bonus_dec: bonus_dec,
+    hint: hint,
+    penalty: penalty,
+    level_id: level_id,
+    choices: JSON.stringify(choicesArr)
+  };
+  sendAdminRequest(update_data, false);
 }
 
 // Update quiz level
@@ -1021,7 +1083,7 @@ function deleteSession(section) {
 function saveLevel($section: any, lockClass) {
   updateElement($section);
   $section.addClass(lockClass);
-  $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', true);
+  $('input[type="text"], input[type="password"], textarea, input[type="radio"][id*=mchoice]', $section).prop('disabled', true);
   var entity_select = $('[name=entity_id]', $section)[0];
   var category_select = $('[name=category_id]', $section)[0];
   if (entity_select !== undefined) {
@@ -1068,6 +1130,7 @@ module.exports = {
             saveLevel();
             break;
         case 'add-new':
+            $('button.fb-cta:last').attr("style", "display:none;");
             addNewSection($self);
             break;
         case 'save-category':
@@ -1135,7 +1198,7 @@ module.exports = {
             break;
         case 'edit':
             $section.removeClass(lockClass);
-            $('input[type="text"], input[type="password"], textarea', $section).prop('disabled', false);
+            $('input[type="text"], input[type="password"], textarea, input[type="radio"]', $section).prop('disabled', false);
             var entity_select = $('[name=entity_id]', $section)[0];
             var category_select = $('[name=category_id]', $section)[0];
             if (entity_select !== undefined) {
@@ -1146,6 +1209,7 @@ module.exports = {
             }
             break;
         case 'delete':
+            $('button.fb-cta:last').attr("style", "display:inline;");
             $section.remove();
             deleteElement($section);
             break;

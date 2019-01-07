@@ -139,6 +139,24 @@ class ActionModalController extends ModalController {
             </div>
           </div>;
         return tuple($title, $content);
+      case 'hint-confirm':
+        $title =
+          <h4>
+            hint_<span class="highlighted">Confirmation</span>
+          </h4>;
+        $content =
+          <div class="action-main">
+            <p class="hint-confirmed">Are you sure you want to use a hint? Points will be taken off your total score!</p>
+            <div class="action-actionable">
+              <a href="#" id="hint_cancel" class="fb-cta cta--red js-close-modal">
+                {tr('No')}
+              </a>
+              <a href="#" id="hint_confirm" class="fb-cta cta--yellow">
+                {tr('Yes')}
+              </a>
+            </div>
+          </div>;
+        return tuple($title, $content);
       case 'save':
         $title =
           <h4>
@@ -287,7 +305,7 @@ class ActionModalController extends ModalController {
               <a
                 name="facebook-oauth-button"
                 href="#"
-                class="fb-cta cta--yellowe">
+                class="fb-cta cta--yellow">
                 {tr($button_text)}<br />{tr('Account Is Linked')}
               </a>;
           }
@@ -329,7 +347,7 @@ class ActionModalController extends ModalController {
               <a
                 name="google-oauth-button"
                 href="#"
-                class="fb-cta cta--yellowe">
+                class="fb-cta cta--yellow">
                 {tr($button_text)}<br />{tr('Account Is Linked')}
               </a>;
           }
@@ -449,7 +467,7 @@ class ActionModalController extends ModalController {
       <div class="fb-modal-content">
         <header class="modal-title">
           {$title}
-          <a href="#" class="js-close-modal">
+          <a href="#" id="hint_close" class="js-close-modal">
             <svg class="icon icon--close">
               <use href="#icon--close" />
             </svg>

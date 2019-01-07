@@ -13,8 +13,9 @@ class ScoreboardModalController extends ModalController {
 
       foreach ($leaderboard as $team) {
         $team_id = 'fb-scoreboard--team-'.strval($team->getId());
-        list($quiz, $flag, $base) = await \HH\Asio\va(
+        list($quiz, $mchoice, $flag, $base) = await \HH\Asio\va(
           MultiTeam::genPointsByType($team->getId(), 'quiz'),
+          MultiTeam::genPointsByType($team->getId(), 'mchoice'),
           MultiTeam::genPointsByType($team->getId(), 'flag'),
           MultiTeam::genPointsByType($team->getId(), 'base'),
         );
@@ -23,6 +24,7 @@ class ScoreboardModalController extends ModalController {
             <td style="width: 10%;">{$rank}</td>
             <td style="width: 40%;">{$team->getName()}</td>
             <td style="width: 10%;">{strval($quiz)}</td>
+            <td style="width: 10%;">{strval($mchoice)}</td>
             <td style="width: 10%;">{strval($flag)}</td>
             <td style="width: 10%;">{strval($base)}</td>
             <td style="width: 10%;">{strval($team->getPoints())}</td>
@@ -49,6 +51,7 @@ class ScoreboardModalController extends ModalController {
                 <th style="width: 10%;">{tr('rank_')}</th>
                 <th style="width: 40%;">{tr('team_name_')}</th>
                 <th style="width: 10%;">{tr('quiz_pts_')}</th>
+                <th style="width: 10%;">mchoice_pts_</th>
                 <th style="width: 10%;">{tr('flag_pts_')}</th>
                 <th style="width: 10%;">{tr('base_pts_')}</th>
                 <th style="width: 10%;">{tr('total_pts_')}</th>
