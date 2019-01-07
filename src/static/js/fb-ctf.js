@@ -965,7 +965,6 @@ function setupInputListeners() {
 
           $('.js-close-modal', $container).on('click', removeCaptured);
         });
-        // if level type mchoice stops here
       } else {
         Modal.loadPopup('p=country&modal=capture', 'country-capture', function() {
           var $container = $('.fb-modal-content');

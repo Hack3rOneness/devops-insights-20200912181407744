@@ -117,8 +117,7 @@ function validateAdminForm($clicked) {
   var valid = true,
       $validateForm = $clicked.closest('.validate-form'),
       $required = $('.form-el--required', $validateForm),
-      errorClass = 'form-error',
-      formid = $clicked.closest('form').attr('name');
+      errorClass = 'form-error';
 
   if ($validateForm.length === 0) {
     $validateForm = $clicked.closest('.fb-admin-main');
