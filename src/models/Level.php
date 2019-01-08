@@ -721,8 +721,8 @@ class Level extends Model implements Importable, Exportable {
         $flag,
         $hint,
         $penalty,
-        $level_id,
         $choices,
+        $level_id,
       );
 
     // Make sure entities are consistent
