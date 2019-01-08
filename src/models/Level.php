@@ -1171,7 +1171,7 @@ class Level extends Model implements Importable, Exportable {
       await self::withLock(
         'score_level_lock',
         $team_id,
-        async function(): Awaitable<mixed> use ($level_id, $team_id) {
+        async function(): Awaitable<mixed> use ($level_id, $team_id, $correct) {
           $db = await self::genDb();
 
           // Check if team has already scored this level
