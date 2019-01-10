@@ -433,10 +433,10 @@ class Control extends Model {
     };
     $awaitables_results = await \HH\Asio\m($awaitables);
 
-    $game['logos'] = $awaitables['logos'];
-    $game['teams'] = $awaitables['teams'];
-    $game['categories'] = $awaitables['categories'];
-    $game['levels'] = $awaitables['levels'];
+    $game['logos'] = $awaitables_results['logos'];
+    $game['teams'] = $awaitables_results['teams'];
+    $game['categories'] = $awaitables_results['categories'];
+    $game['levels'] = $awaitables_results['levels'];
 
     $output_file = 'fbctf_game.json';
     JSONExporterController::sendJSON($game, $output_file);
