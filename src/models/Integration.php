@@ -69,7 +69,7 @@ class Integration extends Model {
       [
         'app_id' => $app_id,
         'app_secret' => $app_secret,
-        'default_graph_version' => 'v2.2',
+        'default_graph_version' => 'v3.1',
       ],
     );
 
@@ -96,7 +96,7 @@ class Integration extends Model {
       [
         'app_id' => $app_id,
         'app_secret' => $app_secret,
-        'default_graph_version' => 'v2.2',
+        'default_graph_version' => 'v3.1',
       ],
     );
 
@@ -160,7 +160,7 @@ class Integration extends Model {
         $response = false;
         try {
           $response =
-            $client->get('/me?fields=id,third_party_id,email', $accessToken);
+            $client->get('/me?fields=id,email', $accessToken);
         } catch (Facebook\Exceptions\FacebookResponseException $e) {
           error_log("Facebook OAuth Failed - Missing fields");
           $url = '/index.php?page=error';
@@ -172,7 +172,7 @@ class Integration extends Model {
         }
         $profile = $response->getGraphUser();
         $email = $profile['email'];
-        $id = $profile['third_party_id'];
+        $id = $profile['id'];
 
         if ($id === null) {
           error_log("Facebook OAuth Failed - Missing id Field");
@@ -181,9 +181,10 @@ class Integration extends Model {
         }
 
         if ($email === null) {
-          error_log("Facebook OAuth Failed - Missing email Field - $id");
-          list($client, $url) = await self::genFacebookAuthURL("login", true);
-          return $url;
+          #error_log("Facebook OAuth Failed - Missing email Field - $id");
+          #list($client, $url) = await self::genFacebookAuthURL("login", true);
+          #return $url;
+          $email = $id . '@unknown';
         }
 
         list($oauth_token_exists, $registration_facebook) =
@@ -336,15 +337,16 @@ class Integration extends Model {
         return false;
       } else {
         $response =
-          $client->get('/me?fields=id,third_party_id,email', $accessToken);
+          $client->get('/me?fields=id,email', $accessToken);
         $profile = $response->getGraphUser();
         $email = $profile['email'];
-        $id = $profile['third_party_id'];
+        $id = $profile['id'];
 
         if ($email === null) {
-          list($client, $url) = await self::genFacebookAuthURL("oauth", true);
-          header('Location: '.filter_var($url, FILTER_SANITIZE_URL));
-          exit;
+          #list($client, $url) = await self::genFacebookAuthURL("oauth", true);
+          #header('Location: '.filter_var($url, FILTER_SANITIZE_URL));
+          #exit;
+          $email = $id . '@unknown';
         }
 
         $set_integrations = await self::genSetTeamIntegrations(

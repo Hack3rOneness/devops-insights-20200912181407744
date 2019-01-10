@@ -91,7 +91,7 @@ class Level extends Model implements Importable, Exportable {
     return $this->penalty;
   }
 
-  public function getChoices($number): string {
+  public function getChoices(int $number): string {
     $choiceArr = json_decode($this->choices);
     return $choiceArr[$number];
   }
