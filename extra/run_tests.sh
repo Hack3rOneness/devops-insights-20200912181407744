@@ -71,8 +71,8 @@ fi
 
 # In the future, we should use the hh_client exit status.
 # Current there are some PHP built-ins not found in the hhi files upstream in HHVM.
-echo "[+] Verifying HHVM Strict Compliance and Error Checking"
-if [[ $(hh_client $CODE_PATH | grep -vP "Unbound" | wc -l) != 0 ]]; then
-  hh_client $CODE_PATH
-  exit 1
-fi
+#echo "[+] Verifying HHVM Strict Compliance and Error Checking"
+#if [[ $(hh_client $CODE_PATH | grep -vP "Unbound" | wc -l) != 0 ]]; then
+#  hh_client $CODE_PATH
+#  exit 1
+#fi
