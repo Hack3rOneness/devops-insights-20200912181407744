@@ -31,11 +31,17 @@ class Db {
   }
 
   public function getBackupCmd(): string {
+    $host = must_have_idx($this->config, 'DB_HOST');
+    $port = must_have_idx($this->config, 'DB_PORT');
     $usr = must_have_idx($this->config, 'DB_USERNAME');
     $pwd = must_have_idx($this->config, 'DB_PASSWORD');
     $db = must_have_idx($this->config, 'DB_NAME');
     $backup_cmd =
-      'mysqldump --add-drop-database -u '.
+      'mysqldump --set-gtid-purged=OFF -P '.
+      escapeshellarg($port).
+      ' -h '.
+      escapeshellarg($host).
+      ' --add-drop-database -u '.
       escapeshellarg($usr).
       ' --password='.
       escapeshellarg($pwd).
@@ -45,11 +51,17 @@ class Db {
   }
 
   public function getRestoreCmd(): string {
+    $host = must_have_idx($this->config, 'DB_HOST');
+    $port = must_have_idx($this->config, 'DB_PORT');
     $usr = must_have_idx($this->config, 'DB_USERNAME');
     $pwd = must_have_idx($this->config, 'DB_PASSWORD');
     $db = must_have_idx($this->config, 'DB_NAME');
     $restore_cmd =
-      'mysql -u '.
+      'mysql -P '.
+      escapeshellarg($port).
+      ' -h '.
+      escapeshellarg($host).
+      ' -u '.
       escapeshellarg($usr).
       ' --password='.
       escapeshellarg($pwd).
