@@ -3544,16 +3544,16 @@ class AdminController extends Controller {
 
     $all_countries = await Country::genAllCountries();
     foreach ($all_countries as $country) {
-      $using_country = await Level::genWhoUses($country->getId()); // TODO: Combine Awaits
+      $using_country = $country->getUsed();
       $current_use = ($using_country) ? tr('Yes') : tr('No');
       if ($country->getEnabled()) {
         $highlighted_action = 'disable_country';
         $highlighted_color = 'highlighted--red country-enabled';
-        $current_status = 'Disabled';
+        $current_status = 'Disable';
       } else {
         $highlighted_action = 'enable_country';
         $highlighted_color = 'highlighted--green country-disabled';
-        $current_status = 'Enabled';
+        $current_status = 'Enable';
       }
 
       if (!$using_country) {
