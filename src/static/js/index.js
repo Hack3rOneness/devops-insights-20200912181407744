@@ -1,9 +1,11 @@
 var $ = require('jquery');
 
 function teamNameFormError() {
-  $('.el--text')[0].classList.add('form-error');
+  $('.el--name')[0].classList.add('form-error');
+  $('#name_error')[0].classList.remove('completely-hidden');
   $('.fb-form input[name="team_name"]').on('change', function() {
-    $('.el--text')[0].classList.remove('form-error');
+    $('.el--name')[0].classList.remove('form-error');
+    $('#name_error')[0].classList.add('completely-hidden');
   });
 }
 
@@ -17,12 +19,14 @@ function teamLoginFormError() {
 }
 
 function teamPasswordFormError(toosimple) {
-  $('.el--text')[1].classList.add('form-error');
+  $('.el--password')[0].classList.add('form-error');
+  $('#confirm_error')[0].classList.remove('completely-hidden');
   if (toosimple) {
     $('#password_error')[0].classList.remove('completely-hidden');
   }
   $('.fb-form input[name="password"]').on('change', function() {
-    $('.el--text')[1].classList.remove('form-error');
+    $('.el--password')[0].classList.remove('form-error');
+    $('#confirm_error')[0].classList.add('completely-hidden');
     if (toosimple) {
       $('#password_error')[0].classList.add('completely-hidden');
     }
@@ -30,9 +34,11 @@ function teamPasswordFormError(toosimple) {
 }
 
 function teamTokenFormError() {
-  $('.el--text')[2].classList.add('form-error');
+  $('.el--token')[0].classList.add('form-error');
+  $('#token_error')[0].classList.remove('completely-hidden');
   $('.fb-form input[name="token"]').on('change', function() {
-    $('.el--text')[2].classList.remove('form-error');
+    $('#token_error')[0].classList.add('completely-hidden');
+    $('.el--token')[0].classList.remove('form-error');
   });
 }
 
@@ -64,6 +70,14 @@ function verifyTeamPassword() {
   if (teamPassword.length === 0) {
     teamPasswordFormError();
     return false;
+  } else if (verifyTeamPassword.caller.name === 'registerTeam' || verifyTeamPassword.caller.name === 'registerNames') {
+    var confirm_password = $('.fb-form input[name="confirm_password"]')[0].value;
+    if (teamPassword.length === 0 || teamPassword != confirm_password) {
+      teamPasswordFormError();
+      return false;
+    } else {
+      return teamPassword;
+    }
   } else {
     return teamPassword;
   }
@@ -132,6 +146,9 @@ function sendIndexRequest(request_data) {
       }
       if (responseData.message ===  'Login closed') {
         window.location.replace("/index.php?page=countdown");
+      }
+      if (responseData.message === 'Token failed') {
+        teamTokenFormError();
       }
       if (responseData.message === 'Registration failed') {
         teamNameFormError();

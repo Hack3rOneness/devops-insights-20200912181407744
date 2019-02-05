@@ -504,17 +504,19 @@ class MultiTeam extends Team {
           'SELECT sl.level_id, sl.team_id FROM (SELECT level_id, MIN(ts) ts FROM scores_log LEFT JOIN teams ON team_id = teams.id WHERE teams.visible = 1 AND teams.active = 1 AND scores_log.points != 0 GROUP BY level_id) sl2 JOIN scores_log sl ON sl.level_id = sl2.level_id AND sl.ts = sl2.ts;',
         );
       $team_scores_awaitables = Map {};
+      $all_teams = await self::genAllTeamsCache($refresh);
       foreach ($captures->items() as $capture) {
+        $teams = $all_teams->get(intval($capture->get('team_id')));
+        invariant($teams instanceof Team, 'team should be of type Team and not null');
         $team_scores_awaitables->add(
           Pair {
             $capture->get('level_id'),
-            self::genTeam(intval($capture->get('team_id'))),
+            $teams,
           },
         );
       }
-      $team_scores = await \HH\Asio\m($team_scores_awaitables);
 
-      foreach ($team_scores as $level_id_key => $team) {
+      foreach ($team_scores_awaitables as $level_id_key => $team) {
         $first_team_captured_by_level[intval($level_id_key)] = $team;
       }
       self::setMCRecords(

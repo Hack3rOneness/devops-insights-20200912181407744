@@ -365,7 +365,7 @@ class IndexController extends Controller {
 
     if ($registration_type->getValue() === '2') {
       $token_field =
-        <div class="form-el el--text">
+        <div class="form-el el--text el--token">
           <label for="">{tr('Token')}</label>
           <input autocomplete="off" name="token" type="text" />
         </div>;
@@ -453,7 +453,7 @@ class IndexController extends Controller {
           </fieldset>
           <br /><br />
           <fieldset class="form-set fb-container container--small">
-            <div class="form-el el--text">
+            <div class="form-el el--text el--name">
               <label for="">{tr('Team Name')}</label>
               <input
                 autocomplete="off"
@@ -464,11 +464,31 @@ class IndexController extends Controller {
               />
               {$ldap_domain_suffix}
             </div>
-            <div class="form-el el--text">
+            <div class="form-el el--text el--password">
               <label for="">{tr('Password')}</label>
               <input autocomplete="off" name="password" type="password" />
             </div>
+            <div class="form-el el--text">
+              <label for="">{tr('Confirm Password')}</label>
+              <input autocomplete="off" name="confirm_password" type="password" />
+            </div>
+            <div id="password_error" class="el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">{tr('Password is too simple')}</h6>
+            </div>
+            <div id="name_error" class="el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check team name</h6>
+            </div>
+            <div id="confirm_error" class="el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check password</h6>
+            </div>
             {$token_field}
+            <div id="token_error" class="el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check token</h6>
+            </div>
           </fieldset>
           <div class="fb-choose-emblem">
             <h6>{tr('Choose an Emblem')}</h6>
@@ -579,7 +599,7 @@ class IndexController extends Controller {
 
     if ($registration_type->getValue() === '2') {
       $token_field =
-        <div class="form-el el--text">
+        <div class="form-el el--text el--token">
           <label for="">{tr('Token')}</label>
           <input autocomplete="off" name="token" type="text" />
         </div>;
@@ -663,7 +683,7 @@ class IndexController extends Controller {
         <form class="fb-form">
           <input type="hidden" name="action" value="register_team" />
           <fieldset class="form-set fb-container container--small">
-            <div class="form-el el--text">
+            <div class="form-el el--text el--name">
               <label for="">{tr('Team Name')}</label>
               <input
                 autocomplete="off"
@@ -674,15 +694,31 @@ class IndexController extends Controller {
               />
               {$ldap_domain_suffix}
             </div>
-            <div class="form-el el--text">
+            <div class="form-el el--text el--password">
               <label for="">{tr('Password')}</label>
               <input autocomplete="off" name="password" type="password" />
+            </div>
+            <div class="form-el el--text">
+              <label for="">{tr('Confirm Password')}</label>
+              <input autocomplete="off" name="confirm_password" type="password" />
             </div>
             <div id="password_error" class="el--text completely-hidden">
               <label for=""></label>
               <h6 style="color:red;">{tr('Password is too simple')}</h6>
             </div>
+            <div id="name_error" class="el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check team name</h6>
+            </div>
+            <div id="confirm_error" class="el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check password</h6>
+            </div>
             {$token_field}
+            <div id="token_error" class="el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check token</h6>
+            </div>
           </fieldset>
           <div class="fb-choose-emblem">
             <h6>{tr('Choose an Emblem')}</h6>

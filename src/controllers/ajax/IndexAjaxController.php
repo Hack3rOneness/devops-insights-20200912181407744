@@ -178,7 +178,7 @@ class IndexAjaxController extends AjaxController {
       $token_check = await Token::genCheck((string) $token);
       // Check provided token
       if ($token === null || !$token_check) {
-        return Utils::error_response('Registration failed', 'registration');
+        return Utils::error_response('Token failed', 'registration');
       }
     }
 
