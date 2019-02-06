@@ -464,28 +464,32 @@ class IndexController extends Controller {
               />
               {$ldap_domain_suffix}
             </div>
+            <div id="name_error" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check team name</h6>
+            </div>
             <div class="form-el el--text el--password">
               <label for="">{tr('Password')}</label>
               <input autocomplete="off" name="password" type="password" />
             </div>
-            <div class="form-el el--text">
+            <div id="pw_error" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please enter a password</h6>
+            </div>
+            <div class="form-el el--text el--password">
               <label for="">{tr('Confirm Password')}</label>
               <input autocomplete="off" name="confirm_password" type="password" />
             </div>
-            <div id="password_error" class="el--text completely-hidden">
+            <div id="confirm_error" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Passwords do not match</h6>
+            </div>
+            <div id="password_error" class="form-el el--text completely-hidden">
               <label for=""></label>
               <h6 style="color:red;">{tr('Password is too simple')}</h6>
             </div>
-            <div id="name_error" class="el--text completely-hidden">
-              <label for=""></label>
-              <h6 style="color:red;">Please check team name</h6>
-            </div>
-            <div id="confirm_error" class="el--text completely-hidden">
-              <label for=""></label>
-              <h6 style="color:red;">Please check password</h6>
-            </div>
             {$token_field}
-            <div id="token_error" class="el--text completely-hidden">
+            <div id="token_error" class="form-el el--text completely-hidden">
               <label for=""></label>
               <h6 style="color:red;">Please check token</h6>
             </div>
@@ -694,25 +698,29 @@ class IndexController extends Controller {
               />
               {$ldap_domain_suffix}
             </div>
+            <div id="name_error" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please check team name</h6>
+            </div>
             <div class="form-el el--text el--password">
               <label for="">{tr('Password')}</label>
               <input autocomplete="off" name="password" type="password" />
             </div>
-            <div class="form-el el--text">
+            <div id="pw_error" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Please enter a password</h6>
+            </div>
+            <div class="form-el el--text el--password">
               <label for="">{tr('Confirm Password')}</label>
               <input autocomplete="off" name="confirm_password" type="password" />
             </div>
-            <div id="password_error" class="el--text completely-hidden">
+            <div id="confirm_error" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <h6 style="color:red;">Passwords do not match</h6>
+            </div>
+            <div id="password_error" class="form-el el--text completely-hidden">
               <label for=""></label>
               <h6 style="color:red;">{tr('Password is too simple')}</h6>
-            </div>
-            <div id="name_error" class="el--text completely-hidden">
-              <label for=""></label>
-              <h6 style="color:red;">Please check team name</h6>
-            </div>
-            <div id="confirm_error" class="el--text completely-hidden">
-              <label for=""></label>
-              <h6 style="color:red;">Please check password</h6>
             </div>
             {$token_field}
             <div id="token_error" class="el--text completely-hidden">

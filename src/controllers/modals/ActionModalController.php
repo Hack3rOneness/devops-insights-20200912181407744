@@ -386,6 +386,7 @@ class ActionModalController extends ModalController {
                   type="text"
                   value={$team_name}
                   autocomplete="off"
+                  maxlength="20"
                 />
                 <input
                   type="hidden"
