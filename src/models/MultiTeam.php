@@ -219,13 +219,20 @@ class MultiTeam extends Team {
   // All active teams.
   public static async function genAllActiveTeams(
     bool $refresh = false,
+    bool $sort = false,
   ): Awaitable<array<Team>> {
     $mc_result = self::getMCRecords('ALL_ACTIVE_TEAMS');
     if (!$mc_result || count($mc_result) === 0 || $refresh) {
       $all_active_teams = array();
-      $teams = await self::genTeamArrayFromDB(
-        'SELECT * FROM teams WHERE active = 1 ORDER BY id',
-      );
+      if ($sort === false) {
+        $teams = await self::genTeamArrayFromDB(
+          'SELECT * FROM teams WHERE active = 1 ORDER BY id',
+        );
+      } else {
+        $teams = await self::genTeamArrayFromDB(
+          'SELECT * FROM teams WHERE active = 1 ORDER BY name',
+        );
+      }
       foreach ($teams->items() as $team) {
         $all_active_teams[] = Team::teamFromRow($team);
       }

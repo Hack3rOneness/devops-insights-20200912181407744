@@ -476,6 +476,14 @@ class IndexController extends Controller {
               <label for=""></label>
               <h6 style="color:red;">Please enter a password</h6>
             </div>
+            <div id="strong_pw" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <ul>
+                <li>• Passwords must be at least 12 characters.</li>
+                <li>• Use upper and lower case letters.</li>
+                <li>• Use at least one number.</li>
+              </ul>
+            </div>
             <div class="form-el el--text el--password">
               <label for="">{tr('Confirm Password')}</label>
               <input autocomplete="off" name="confirm_password" type="password" />
@@ -709,6 +717,14 @@ class IndexController extends Controller {
             <div id="pw_error" class="form-el el--text completely-hidden">
               <label for=""></label>
               <h6 style="color:red;">Please enter a password</h6>
+            </div>
+            <div id="strong_pw" class="form-el el--text completely-hidden">
+              <label for=""></label>
+              <ul>
+                <li>• Passwords must be at least 12 characters.</li>
+                <li>• Use upper and lower case letters.</li>
+                <li>• Use at least one number.</li>
+              </ul>
             </div>
             <div class="form-el el--text el--password">
               <label for="">{tr('Confirm Password')}</label>
@@ -1045,9 +1061,8 @@ class IndexController extends Controller {
         $login_select = "on";
         $login_team = <select name="team_id" />;
         $login_team->appendChild(<option value="0">{tr('Select')}</option>);
-        $all_active_teams = await MultiTeam::genAllActiveTeams();
+        $all_active_teams = await MultiTeam::genAllActiveTeams(false, true);
         foreach ($all_active_teams as $team) {
-          error_log('Getting '.$team->getName());
           $login_team->appendChild(
             <option value={strval($team->getId())}>
               {$team->getName()}

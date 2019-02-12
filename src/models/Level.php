@@ -1198,7 +1198,7 @@ class Level extends Model implements Importable, Exportable {
             $level->getType(),
           );
 
-          if ($captured === true) {
+          if ($captured && $correct) {
             // Adjust bonus
             await self::genAdjustBonus($level_id);
 
