@@ -69,7 +69,7 @@ class Integration extends Model {
       [
         'app_id' => $app_id,
         'app_secret' => $app_secret,
-        'default_graph_version' => 'v3.1',
+        'default_graph_version' => 'v3.2',
       ],
     );
 
@@ -96,7 +96,7 @@ class Integration extends Model {
       [
         'app_id' => $app_id,
         'app_secret' => $app_secret,
-        'default_graph_version' => 'v3.1',
+        'default_graph_version' => 'v3.2',
       ],
     );
 
