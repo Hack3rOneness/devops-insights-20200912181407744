@@ -81,7 +81,7 @@ module.exports = {
             $('#' + filters[key]).prop("checked", true).trigger("click");
             $('div[data-tab="' + ftype + '"]').addClass('active');
           } else {
-            $('#' + filters[key]).prop("checked", true).trigger("click");
+            $('[id="' + filters[key] + '"]').prop("checked", true).trigger("click");
           }
         } else { // Cookie for this filter is not 'on'
           if (key.search('Filter-Main') === 0) {

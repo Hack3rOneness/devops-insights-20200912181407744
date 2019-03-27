@@ -1555,9 +1555,11 @@ function setupInputListeners() {
 
         var leaderboardModulePath = 'inc/gameboard/modules/leaderboard.php';
         var leaderboardSelector = 'aside[data-module="leaderboard"]';
+        var leaderPos = $('div .leaderboard-info').scrollTop();
 
         return loadModuleGeneric(leaderboardModulePath, leaderboardSelector, function() {
           refresh_active_leaderboard = false;
+          $('div .leaderboard-info').scrollTop(leaderPos);
         });
       }
     }
@@ -1628,6 +1630,7 @@ function setupInputListeners() {
         refresh_active_filter = true;
         var filterModulePath = 'inc/gameboard/modules/filter.php';
         var filterTargetSelector = 'aside[data-module="filter"]';
+        var filterPos = $('div .filter-category').scrollTop();
 
         return loadModuleGeneric(
           filterModulePath, 
@@ -1635,6 +1638,7 @@ function setupInputListeners() {
           function() {
             refresh_active_filter = false;
             Filter.rememberFilters(filterList);
+            $('div .filter-category').scrollTop(filterPos);
           }
         );
       }

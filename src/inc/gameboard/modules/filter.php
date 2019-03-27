@@ -74,7 +74,7 @@ class FilterModuleController extends ModuleController {
                 <span>{tr('Status')}</span>
               </label>
             </div>
-            <div class="tab-content-container module-scrollable">
+            <div class="tab-content-container module-scrollable filter-category">
               <div
                 class="radio-tab-content active"
                 data-tab="category"
