@@ -417,10 +417,12 @@ function quick_setup() {
   elif [[ "$__type" = "install_multi_cache" ]]; then
     ./extra/provision.sh -m $__mode -s $PWD --multiple-servers --server-type cache
   elif [[ "$__type" = "start_docker" ]]; then
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
     package_repo_update
     package docker-ce
     sudo docker build --build-arg MODE=$__mode -t="fbctf-image" .
-    sudo docker run --name fbctf -p 80:80 -p 443:443 fbctf-image
+    sudo docker run -d --name fbctf -p 80:80 -p 443:443 fbctf-image
   elif [[ "$__type" = "start_docker_multi" ]]; then
     package_repo_update
     package python-pip
