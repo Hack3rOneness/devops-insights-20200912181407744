@@ -418,14 +418,18 @@ function quick_setup() {
     ./extra/provision.sh -m $__mode -s $PWD --multiple-servers --server-type cache
   elif [[ "$__type" = "start_docker" ]]; then
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     package_repo_update
     package docker-ce
     sudo docker build --build-arg MODE=$__mode -t="fbctf-image" .
     sudo docker run -d --name fbctf -p 80:80 -p 443:443 fbctf-image
   elif [[ "$__type" = "start_docker_multi" ]]; then
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     package_repo_update
-    package python-pip
+    package docker-ce
+    package python
+    curl https://bootstrap.pypa.io/get-pip.py | sudo python3
     sudo pip install docker-compose
     if [[ "$__mode" = "prod" ]]; then
       sed -i -e 's|      #  MODE: prod|        MODE: prod|g' ./docker-compose.yml
@@ -434,7 +438,7 @@ function quick_setup() {
       sed -i -e 's|        MODE: prod|      #  MODE: prod|g' ./docker-compose.yml
       sed -i -e 's|      args|      #args|g' ./docker-compose.yml
     fi
-    sudo docker-compose up
+    sudo docker-compose up -d
   elif [[ "$__type" = "start_vagrant" ]]; then
     cp Vagrantfile-single Vagrantfile
     export FBCTF_PROVISION_ARGS="-m $__mode"
@@ -445,4 +449,3 @@ function quick_setup() {
     vagrant up
   fi
 }
-
