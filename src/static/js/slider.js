@@ -1,6 +1,6 @@
 window.jQuery = require('jquery');
 var $ = window.jQuery;
-require('bxslider');
+require('./bxslider');
 
 module.exports = {
   init: function() {
@@ -13,8 +13,7 @@ module.exports = {
       pager: false,
       minSlides: 2,
       maxSlides: 5,
-      moveSlides: 1,
-      touchEnabled: false
+      moveSlides: 1
     });
   }
 };
