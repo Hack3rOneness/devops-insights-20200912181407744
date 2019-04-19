@@ -7,7 +7,8 @@ var ACTIVE_CLASS = 'visible',
 
 var $modalContainer,
     $modal,
-    $countryHover;
+    $countryHover,
+    $sbtimer;
 
 function _load(modalParams, modalClasses, cb) {
   var loadPath = 'index.php?' + modalParams;
@@ -20,6 +21,14 @@ function _load(modalParams, modalClasses, cb) {
   }
 
   openAndLoad($modal, loadPath, cb);
+  if (modalParams == "p=scoreboard&modal=scoreboard") {
+    $sbtimer = setInterval(function () {
+      var sbPos = $('div .main-data').scrollTop();
+      openAndLoad($modal, loadPath, function () {
+        $('div .main-data').scrollTop(sbPos);
+      });
+    }, 5000);
+  }
 }
 
 function closeHoverPopup(event) {
@@ -51,7 +60,7 @@ function close(event) {
   if (event) {
     event.preventDefault();
   }
-
+  clearInterval($sbtimer);
   $('div[id^="fb-modal"]').removeClass(ACTIVE_CLASS);
 }
 
