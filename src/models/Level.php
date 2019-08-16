@@ -1330,7 +1330,7 @@ class Level extends Model implements Importable, Exportable {
   public static async function genBaseIP(int $base_id): Awaitable<string> {
     $links = await Link::genAllLinks($base_id);
     $link = $links[0];
-    $ip = explode(':', $link->getLink())[0];
+    $ip = $link->getLink();
 
     return $ip;
   }

@@ -2747,6 +2747,90 @@ function setupInputListeners() {
       }
     });
 
+    $body.on('keypress', '.team-password-form', function(e) {
+      if (e.keyCode == 13) {
+        e.preventDefault();
+        $('.js-trigger-account-team-password-save').click();
+      }
+    });
+    
+    // change password
+    $body.on('click', '.js-trigger-account-team-password-save', function(event) {
+      event.preventDefault();
+      
+      var current_password = $('.team-password-form input[name=current_password]')[0].value;
+      var csrf_token = $('.team-name-form input[name=csrf_token]')[0].value;
+      var new_password;
+
+      if ($('.team-password-form input[name=new_password]')[0].value ===
+      $('.team-password-form input[name=confirm_password]')[0].value) {
+        $('.team-password-form input[name=new_password]').css("background-color", "");
+        $('.team-password-form input[name=confirm_password]').css("background-color", "");
+        $('.confirm-pw').css("visibility", "hidden");
+        new_password = $('.team-password-form input[name=confirm_password]')[0].value;
+      } else {
+        $('.team-password-form input[name=new_password]').css("background-color", "#800000");
+        $('.team-password-form input[name=confirm_password]').css("background-color", "#800000");
+        $('.confirm-pw').css("visibility", "visible");
+        new_password = '';
+      }
+
+      var team_password_data = {
+        action: 'set_team_password',
+        team_password: current_password,
+        new_password: new_password,
+        csrf_token: csrf_token
+      };
+
+      $('.team-password-form input').on('focusin', function() {
+        $(this).css("background-color", "");
+      });
+
+      $('.team-password-form input[name=current_password]').on('change', function() {
+        $('.pw-error').css("visibility", "hidden");
+      });
+
+      if (current_password === '') {
+        $('.team-password-form input[name=current_password]').css("background-color", "#800000");
+        $('.pw-error').css("visibility", "visible");
+        $('.pw-updated').css("visibility", "hidden");
+        $('.strong-pw').css("visibility", "hidden");
+        $('.pw-error').text("Enter current password");
+      } else {
+        $.post(
+          'index.php?p=game&ajax=true',
+          team_password_data
+        ).fail(function() {
+          console.log('ERROR');
+        }).done(function(data) {
+          var responseData = JSON.parse(data);
+          if (responseData.result === 'OK') {
+            $('.team-password-form input').css("background-color", "#1f7a1f");
+            $('.pw-error').css("visibility", "hidden");
+            $('.strong-pw').css("display", "none");
+            $('.pw-updated').css("display", "block");
+          } else if (responseData.message === 'PW Error') {
+            $('.team-password-form input[name=current_password]').css("background-color", "#1f7a1f");
+            $('.pw-error').css("visibility", "hidden");
+            $('.pw-updated').css("display", "none");
+            $('.strong-pw').css("display", "none");
+          } else if (responseData.message === 'Password too simple') {
+            $('.strong-pw').css("display", "block");
+            $('.pw-updated').css("display", "none");
+            $('.pw-error').css("visibility", "hidden");
+            $('.team-password-form input[name=new_password]').css("background-color", "#800000");
+            $('.team-password-form input[name=confirm_password]').css("background-color", "#800000");
+          } else {
+            $('.pw-error').css("visibility", "visible");
+            $('.pw-updated').css("display", "none");
+            $('.strong-pw').css("display", "none");
+            $('.pw-error').text("Invalid password");
+            $('.team-password-form input[name=current_password]').css("background-color", "#800000");
+          }
+        });
+      }
+    });
+
     // submit account livesync modal
     $body.on('click', '.js-trigger-account-save', function(event) {
         event.preventDefault();

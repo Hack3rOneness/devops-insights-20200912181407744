@@ -375,7 +375,7 @@ class ActionModalController extends ModalController {
         $team_name = $team->getName();
 
         $content =
-          <div class="action-main">
+          <div class="action-main" style="height: 600px; overflow-y: scroll">
             {tr('Change your team name.')} (Max 20 characters)
             <form class="fb-form-no-padding team-name-form">
               <input name="set_team_name" type="hidden" value="" />
@@ -394,6 +394,7 @@ class ActionModalController extends ModalController {
                   value={SessionUtils::CSRFToken()}
                 />
               </div>
+              <span class="team-name-form-response highlighted--blue"></span>
               <div class="action-actionable">
                 <a
                   class=
@@ -401,9 +402,67 @@ class ActionModalController extends ModalController {
                   {tr('Update')}
                 </a>
               </div>
-              <br />
-              <span class="team-name-form-response highlighted--blue"></span>
             </form>
+            <br />
+            <form class="team-password-form">
+              Change your password.
+              <br />
+              <div style="margin-top: 10px">
+                <div style="float:left; width: 25%">
+                  Current:
+                </div>
+                <div style="float:left; width: 75%">
+                  <input
+                    placeholder="Current password"
+                    name="current_password"
+                    type="password"
+                    autocomplete="off"
+                    size={54}
+                  /><br />
+                  <span class="pw-error" style="visibility: hidden">&nbsp</span>
+                </div>
+              </div>
+              <div style="margin-top: 10px">
+                <div style="float: left; width: 25%">
+                  New:
+                </div>
+                <div style="float: left; width: 75%">
+                  <input
+                    placeholder="New password"
+                    name="new_password"
+                    type="password"
+                    autocomplete="off"
+                    size={54}
+                  /><br />
+                  <span class="newpw-error" style="visibility: hidden">Enter new password</span>
+                </div>
+              </div>
+              <div style="margin-top: 10px">
+                <div style="float: left; width: 25%">
+                  Re-type new:
+                </div>
+                <div style="float: left; width: 75%">
+                  <input
+                    placeholder="Re-type password"
+                    name="confirm_password"
+                    type="password"
+                    autocomplete="off"
+                    size={54}
+                  /><br />
+                  <span class="confirm-pw" style="visibility: hidden">Password does not match</span>
+                </div>
+                <span class="highlighted--blue pw-updated" style="display: none">Password Updated</span>
+                <span class="highlighted--blue strong-pw" style="display: none">Password required: Length >= 12, [a-z], [A-Z] and [0-9]</span>
+              </div>
+              <div class="action-actionable">
+                <a
+                  class=
+                    "fb-cta cta--yellow js-trigger-account-team-password-save">
+                  {tr('Update')}
+                </a>
+              </div>
+            </form>
+            
             {$oauth_header}
             <div class="fb-column-container">
               <div class="col col-pad col-1-2">
